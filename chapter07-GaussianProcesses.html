@@ -321,19 +321,6 @@
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505202243_46.webp" /></p>
 <p>图7.1显示，使用高斯分布的样本对函数进行编码并不是那么疯狂或愚蠢，因此我们可能是在正确的轨道上。然而，用于生成图7.1的方法是有限的，并且不够灵活。虽然我们期望实函数具有某种结构或模式，但我们表达第一个函数的方式并不允许我们编码数据点之间的任何关系。事实上，每个点都是完全独立的，因为我们只从一个常见的一维高斯分布中获得了10个独立的样本。对于第二个函数，我们引入了一些依赖项。该点的平均值就是值。然而，接下来我们将看到有一种更通用的方法来捕获依赖项(并且不仅仅是在连续点之间)。</p>
 <p>在继续之前，让我停一会儿问你们，为什么我们使用的是高斯分布，而不是任何其他的概率分布？首先，因为通过限制我们与高斯人合作，我们不会失去任何指定不同形状函数的灵活性，因为每个点都可能有其自己的均值和方差；其次，因为从数学的角度来看，与高斯人合作是很好的。</p>
-<p>前面简要介绍了如何用核函数构建统计模型去描述任意函数。也 许核函数回归听起来好像有点带有技巧性，而且其中需要指定结的个 数以及分布，这似乎有点问题。现在，我们将从另外一个角度使用核 函数，直接在函数空间做推断，该方法基于高斯过程，在数学上和计 算量方面都更受欢迎。</p>
-<p>在解释高斯过程之前，先想想什么是函数？函数可以看作是输入 到输出之间的映射关系。一种学习该映射的方法是将其限定为一条直 线，如我们在第4章做的那样，然后用贝叶斯的知识去推断出决定那</p>
-<p>条直线的参数。不过假设我们不希望将其限定为一条直线，也可以是 任意可能的函数。通常在贝叶斯统计中，对于一个不知道的量，我们 先给其设置一个先验，因此，在我们不知道怎样的函数才是一个对数 据拟合得很好的模型时，我们需要对函数设置一个先验。有趣的是， 多元高斯就是这样一个先验（实际上是一个与之相似的东西，不过我 们暂且这么认为），可以用一个多元高斯从很宽泛的（但很有用的） 角度来描述一个函数。我们认为对于每个变量*x~i~*都存在一个高斯变量</p>
-<p><em>y~i~</em>，其均值和标准差暂不清楚。这样，如果向量<em>x</em>的长度为<em>n</em>，那么就</p>
-<p>得到一个<em>n</em>元高斯分布。</p>
-<p>在真实世界中，对于一个实数范围内的映射函数，<em>x</em>和<em>y</em>实际上是 无限多的，因为两个点之间存在着无穷多个点。因此，理论上我们需 要一个无限元的高斯分布，这在数学上称为高斯过程，是一个参数化 的均值函数和一个协方差函数，此时我们有：</p>
-<p><img alt="" src="media/image2295.png" />{width=”2.311349518810149in” height=”0.187419072615923in”}</p>
-<p>295</p>
-<p>关于高斯过程的一个正式定义是说，连续空间中的每个点都有一 个与之对应的正态分布的变量，而高斯过程就是这无限多个随机变量 的联合分布。其中均值函数是一个无限维向量的均值，协方差函数则 是一个无限维的协方差矩阵，我们将看到协方差矩阵可以有效地建</p>
-<p>模<em>x</em>的变化量与<em>y</em>的变化量之间的关系。</p>
-<p><img alt="" src="media/image2297.png" />{width=”0.45810476815398077in” height=”0.187419072615923in”}总结一下，前面几章中，我们学习了如何估计，比如，在<br />
-线性回归中我们假设 ，其中，<em>f</em>是一个线性模型，然后估计</p>
-<p><img alt="" src="media/image2299.png" />{width=”0.5726312335958005in” height=”0.187419072615923in”}线性模型的参数。也就是说，我们是一个线性模型，并估计出 了其中的参数，从而得到了，后面将会看到，我们仍然需要估 计参数，不过从概念上讲，我们是在直接处理函数，这样思考更容易 理解一些。</p>
 <div class="section" id="id4">
 <h3>7.2.1 多元高斯与函数<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>在图7.1中，我们使用高斯表示一个函数来获取样本。一种替代方法是使用多变量高斯分布来获得长度的样本向量。实际上，您可能希望尝试通过使用 np.random.multivariate_normal(np.zeros_like(x), np.eye(len(x))) 替换np.random.normal(0, 1, len(x)) 来生成如图7.1所示的图形。</p>
@@ -536,7 +523,7 @@ p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) d f
 </div>
 <div class="section" id="id8">
 <h2>7.4 空间自相关回归<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
-<p>下面的例子取自理查德·麦克雷思(Richard McElreath)的“统计反思”(Statistics Reink)一书。作者好心地允许我在这里重复使用他的例子。我强烈推荐你读他的书，因为你会发现很多像这样的好例子和非常好的解释。唯一需要注意的是，书中的示例是R/stan格式的，但请不要担心，请继续采样；您可以在https：<span class="xref myst">//gihub.com/pymc-devs/Resources中找到这些示例的Python/PyMC3版本。</span></p>
+<p>下面的例子取自理查德·麦克雷思(Richard McElreath)的“统计反思”(Statistics Reink)一书。作者好心地允许我在这里重复使用他的例子。我强烈推荐你读他的书，因为你会发现很多像这样的好例子和非常好的解释。唯一需要注意的是，书中的示例是R/stan格式的，但请不要担心，请继续采样；您可以在https://github.com/pymc-devs/Resources中找到这些示例的Python/PyMC3版本。</p>
 <p>好的，回到这个例子，我们有10个不同的岛屿社会；对于每一个，我们都有他们使用的工具的数量。一些理论预测，较大的人口会比较小的人口开发和维持更多的工具。另一个重要因素是人群间的接触率。</p>
 <p>由于我们有许多工具作为因变量，我们可以使用泊松回归与总体作为自变量。事实上，我们可以使用人口的对数，因为(根据理论)真正重要的是人口的数量，而不是绝对的大小。将接触率包括在我们的模型中的一种方法是收集有关这些社会在历史上接触的频率的信息，并创建一个分类变量，如低/高接触率(请参阅岛屿数据帧中的Contact列)。另一种方式是使用社会之间的距离作为接触率的代理，因为可以合理地假设距离最近的社会比距离较远的社会更频繁地接触。</p>
 <p>我们可以通过阅读本书附带的ians_Dist.csv文件来访问以千公里为单位表示的值的距离矩阵：</p>
@@ -564,10 +551,11 @@ p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) d f
 </div>
 <p>我们要构建的模型是：</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} f \sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \\
+\[\begin{split}
+f \sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \\
  \mu \sim \exp (\alpha+\beta x+f) \\
- y \sim \operatorname{Poisson}(\mu) 
- \end{split}\]</div>
+ y \sim \operatorname{Poisson}(\mu)
+\end{split}\]</div>
 <p>这里，我们省略了和的前缀，以及内核的超级前缀。是日志填充，是工具总数。</p>
 <p>与第四章“推广线性模型”中的模型相比，该模型基本上是一个泊松回归模型，与第四章中的模型相比，线性模型中的一项来自GP。为了计算GP的内核，我们将使用距离矩阵ILANES_DIST。通过这种方式，我们将有效地纳入技术暴露的相似性度量(从距离矩阵估计)。因此，我们将把每个社会的工具数量建模为它们的地理相似性的函数，而不是假设总数量仅仅是人口的结果，并且从一个社会到另一个社会是独立的。</p>
 <p>此模型(包括之前的模型)类似于PyMC3中的以下代码：</p>
@@ -601,7 +589,7 @@ p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) d f
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205145_a6.webp" /></p>
 <p>图7.9中的粗线是成对社会之间协方差作为距离函数的后验中位数。我们使用中位数是因为和的分布非常不对称。我们可以看到，协方差平均没有那么高，在大约2000公里处也降到了几乎为0。细线代表不确定性，我们可以看到有很大的不确定性</p>
-<p>您可能会发现，将MODEL_IILAS及其计算出的后部与HTTPS：<span class="xref myst">//gihub.com/pymc-devs/参考资料中的模型m_10_10进行比较会很有趣。您可能希望使用ArviZ函数，例如az.Summary或az.lot_Forest。模型M1010类似于MODEL_ILANES，但不包含高斯过程项。</span></p>
+<p>您可能会发现，将MODEL_IILAS及其计算出的后部与 <a class="reference external" href="https://github.com/pymc-devs/">https://github.com/pymc-devs/</a> 参考资料中的模型m_10_10进行比较会很有趣。您可能希望使用ArviZ函数，例如az.Summary或az.lot_Forest。模型M1010类似于MODEL_ILANES，但不包含高斯过程项。</p>
 <p>根据我们的模型，我们现在要探索这些岛屿之间的社会联系有多强。为此，我们必须将协方差矩阵转换为相关矩阵：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute posterior median covariance among societies</span>
 <span class="n">Σ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">trace_η</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">trace_ℓ</span><span class="p">)</span> <span class="o">*</span> <span class="n">islands_dist_sqr</span><span class="p">))</span>
