@@ -1,0 +1,9 @@
+- file: preface
+- file: chapter01-ThinkingProbabilistically
+- file: chapter02-ProgrammingProbabilistically
+- file: chapter03-ModellingwithLinearRegression
+- file: chapter04-GeneralizedLinearRegression
+- file: chapter05-ModelComparison
+- file: chapter06-MixtureModels
+- file: chapter07-GaussianProcesses
+     
