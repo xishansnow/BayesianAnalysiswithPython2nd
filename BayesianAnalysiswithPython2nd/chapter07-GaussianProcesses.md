@@ -1,6 +1,6 @@
  
 
-#  第7章　高斯过程
+#  第7章 高斯过程
 
 
 
@@ -13,202 +13,53 @@
 - 具有高斯似然的高斯过程
 - 具有非高斯似然的高斯过程
 
+
+
 ## 7.1 线性模型和非线性数据
 
-**7.1**　非参统计
+7.1 非参统计
 
-非参统计通常用来描述一类不依赖于参数化概率分布的统计工\
- 具/模型。根据这个定义，贝叶斯统计似乎不可能是非参的，因为前
-
- 面我们学到过，贝叶斯统计的第一步就是在概率模型中准确地将概率 分布组合在一起。第1章中说过，概率分布是构建概率模型的基石。 在贝叶斯框架中，非参模型是指包含有无限多参数的模型，因此，我 们将参数可以随着数据大小而变化的模型称作非参数化模型。对于非 参数化模型而言，理论上其参数个数是无限的，实际使用中会根据数 据将其收缩到一个有限的值，从而让数据本身来决定参数的个数。
-
- 286
-
- **7.2**　基于核函数的模型
-
- 核函数方法相关的研究是一个非常高产而且活跃的领域，有许多 书讨论这个主题，其流行也是因为核函数具有一些有趣的数学特点。 这里只需要知道，核函数可以作为非线性模型的基础，并且相对来说 比较容易计算。比较流行的核函数方法有两种：支持向量机
-
- （Support Vector Machine，SVM）和高斯过程。后者是一种概率方\
-法，也正是本章将要介绍的主题，前者不是概率的方法，这里不做深 入讨论，你可以阅读Jake Vanderplas写的《Python Data Science\
- Handbook》和Sebastian Raschka写的《Python Machine Learning\
- Bayesian Analysis with Python》这两本书了解更多。在继续深入之\
-前，我们先了解一下什么是核以及如何使用。
-
-你可能会发现，在统计学中，核函数的定义不止一种，并且根据 定义的不同，核函数的数学特性也有所不同。结合本章讨论的目的， 这里将核函数看作是一个对称函数，接受两个输入并返回一个永远为 正数的值，从而可以将核函数的输出看作是两个输入变量之间的相似 度。
-
-核函数有许多种，其中某些经过特殊改造后能很好地用于解决图 像识别、文档分析等问题，还有些核函数适用于对周期性的函数建 模。有一个核函数在统计学和机器学习中非常流行，叫做高斯核，也 称作高斯径向基函数。
-
-**7.2.1**　高斯核函数
-
-高斯核函数的定义如下：
-
- 其中称为欧氏距离的平方（Squared Euclidean Distance， SED），对于一个*n*维的空间，我们有：
+非参统计通常用来描述一类不依赖于参数化概率分布的统计工具/模型。根据这个定义，贝叶斯统计似乎不可能是非参的，因为前面我们学到过，贝叶斯统计的第一步就是在概率模型中准确地将概率 分布组合在一起。第1章中说过，概率分布是构建概率模型的基石。 在贝叶斯框架中，非参模型是指包含有无限多参数的模型，因此，我 们将参数可以随着数据大小而变化的模型称作非参数化模型。对于非 参数化模型而言，理论上其参数个数是无限的，实际使用中会根据数 据将其收缩到一个有限的值，从而让数据本身来决定参数的个数。
 
  
 
- 注意，如果计算欧几里得距离的话需要求平方根。SED并不满足 三角不等式，因而并不是真实的距离，不过在许多常见的问题中，我 们只需要对不同的SED进行比较，例如，计算一些点中的最小欧氏距 离等价于找到最小的SED。
+## 7.2 对函数建模
 
-  
+ 我们将首先描述一种将函数表示为概率对象的方法，以开始对高斯过程的讨论。可以把函数 $f$ 看作是从一组输入 $x$ 到一组输出 $y$ 的映射。因此，可以这样写：
 
-有一点不太明显，高斯核函数与高斯分布的数学形式其实有一些 相似之处，将常数项去掉之后，可以得到，其中，*w*控制着核 函数的宽度，在这里正比于方差，因而有时候也称作带宽。
+$$ y=f(x) $$
 
- **7.2.2**　核线性回归
+表示函数的一种方式是为每个值 $x_i$ 列出其相应值 $y_i$ 。事实上，你可能还记得小学时函数的这种表示方式：
 
- 前面我们学习了线性回归模型的基本形式：
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505201816_b3.webp)
 
-![](media/image2233.png){width="1.0932053805774278in" height="0.187419072615923in"}
+一般情况下，$x$ 和 $y$ 的值将位于实数行上；因此，可将函数视为成对$( x_i,y_i)$ 值的(可能)无限有序列表。顺序很重要，因为如果打乱这些值，会得到不同的函数。
 
- ![](media/image2234.png){width="0.10411417322834646in" height="0.10412182852143483in"}其中， 是噪声或者误差，通常是高斯分布。
+函数也可以表示为一个由 $x$ 的值索引的(潜在)无限数组，但重要区别在于，$x$ 的值不限于整数，可以取实数。
 
-![](media/image2235.png){width="1.6762489063867017in" height="0.3331900699912511in"}
+使用这些描述，我们可以用数字表示任何想要的特定函数。但如果想要以概率表示函数呢？可以通过让映射具有概率性质来做到这一点。让我来解释一下：可以让每个 $y_i$ 值都是一个高斯分布的随机变量，具有给定的均值和方差。通过这种方式，我们不再有对单个特定功能的描述，而是对一系列分布族的描述。
 
- 这里我们用*f* (.)来表示线性函数（没有噪声），如果使用了其他 逆连结函数（比如第5章中的逻辑函数），我们就将它包含在*f* (.)内。
+为了使讨论具体化，让我们使用一些Python代码来构建和绘制这类函数的两个示例：
 
- ![](media/image2236.png){width="0.10411417322834646in" height="0.12494641294838145in"}这里向量表示一个系数向量，通常是一个系数和一个或多个斜率。
+```
+np.random.seed(42)
+x = np.linspace(0, 1, 10)
+y = np.random.normal(0, 1, len(x))
+plt.plot(x, y, 'o-', label='the first one')
+y = np.zeros_like(x)
+for i in range(len(x)):
+    y[i] = np.random.normal(y[i-1], 1)
+plt.plot(x, y, 'o-', label='the second one')
+plt.legend()
+```
 
- 在第4章中，我们介绍了多项式回归的概念，同时提到了，多项 式回归的唯一实际用途可能就是作为统计学的教学科研工具（至少对
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505202243_46.webp)
 
- 288
+图7.1显示，使用高斯分布的样本对函数进行编码并不是那么疯狂或愚蠢，因此我们可能是在正确的轨道上。然而，用于生成图7.1的方法是有限的，并且不够灵活。虽然我们期望实函数具有某种结构或模式，但我们表达第一个函数的方式并不允许我们编码数据点之间的任何关系。事实上，每个点都是完全独立的，因为我们只从一个常见的一维高斯分布中获得了10个独立的样本。对于第二个函数，我们引入了一些依赖项。该点的平均值就是值。然而，接下来我们将看到有一种更通用的方法来捕获依赖项(并且不仅仅是在连续点之间)。
 
- 于2次或3次以上的多项式回归）。此外我们还学习了如何将多项式回 归用于非线性数据的建模过程中。
+在继续之前，让我停一会儿问你们，为什么我们使用的是高斯分布，而不是任何其他的概率分布？首先，因为通过限制我们与高斯人合作，我们不会失去任何指定不同形状函数的灵活性，因为每个点都可能有其自己的均值和方差；其次，因为从数学的角度来看，与高斯人合作是很好的。
 
- 这里我们将多项式回归表示成如下形式：
 
-![](media/image2237.png){width="1.2597889326334208in" height="0.2707163167104112in"}
-
- 其中，*φ*函数表示一系列阶数逐渐增加的多项式，将向量***x***转成矩 阵后，矩阵的每一列都是向量***x***的幂次（逐渐增加），从而有效地将 数据映射到了更高维度的空间中，然后再从高维空间中找到一条直线 去拟合数据，最后将该直线投影回原始的低维空间时，不一定仍然是 直线，而有可能是一条曲线。整个过程通常称作将输入投影到特征空 间。
-
- 函数*φ*不一定是多项式，还有其他形式的函数将输入向量映射到 （高维的）特征空间中，在此条件下，除了使用*φ*函数之外，我们还 可以将其替换成一个核函数。尽管在数学形式上是等价的，使用核函
-
- 数会让计算更容易一些，这通常称作核函数技巧。这也是为什么核函 数是许多统计学方法和机器学习方法中的核心概念的主要原因，而特 征空间的概念在实际中反而不那么重要了（尽管在学习核函数方法的 时候还是能提供一些直观的解释）。
-
- 继续我们的讨论，这里不过多深入其中的数学细节，我们将φ替 换成一个核函数*K*，这里用*K*来表示高斯核函数，于是得到：
-
-![](media/image2239.png){width="1.7178947944007in" height="0.35401465441819774in"}
-
- 注意，这里用*x*来表示数据，此外还有一个向量叫做*x*′，后者也 是一个向量，通常称作结或者中心点，它均匀地分布在数据的范围 内。一个特例是*x* = *x*′，换句话说，我们完全可以将数据点作为结。
-
- 289
-
- ![](media/image2241.png){width="0.5518077427821523in" height="0.21865594925634296in"}我们为什么要增加这些点呢？在直接回答这个问题之前，我们先 看一下如何使用结。注意，如果结距离原数据越近，核函数的返回值 越大。为了简化分析，假设*w*=1，然后如果，那么有
-
- ![](media/image2242.png){width="0.166583552055993in" height="0.21865594925634296in"}；如果和相隔较远，那么 。换句话说，由\
- 于高斯核函数的输出衡量的是相似性，因此我们可以说，如果和 比较接近，那么函数这些点的均值也很接近，即。如果对改 动一点点，那么 也会相应地变化，*x*的变化越大，那么 的变化也就 越大。现在思考一下，我们可以将其看作是模型的一种特性，经验告 诉我们，有很多函数都有类似的表现，事实上，这类函数有一个名 字，称作平滑函数。尽管有些特例，不过许多问题都可以用平滑函数 来近似。
-
- ![](media/image2252.png){width="0.10411417322834646in" height="0.12494641294838145in"}进一步解释一下我们在做的事情，我们可以看作是在尝试使用第 1章和第2章中见过的网格搜索法去拟合一个平滑的未知函数，其中网 格的格点是*x*′，对于每个结，我们都有一个高斯函数，根据数据（通 过）增加或者降低这些高斯函数的权重。如果将所有的高斯函数都
-
- ![](media/image2253.png){width="0.10411417322834646in" height="0.11453412073490814in"}加起来，那么就得到了一个平滑的曲线并拟合出了。这种解释称作 权重空间视角。在本章接下来的高斯过程一节中，我们将看到描述该 问题的另一种视角：函数空间视角。
-
- 现在，将前面所有的想法汇总在一起，并应用到一个简单的合成 数据集上，其中因变量是一个sin函数，自变量是一系列从均匀分布 中得到的点。代码实现如下：
-
- np.random.seed(1)
-
- x = np.random.uniform(0, 10, size=20)
-
- y = np.sin(x)
-
- plt.plot(x, y, \'o\')
-
- plt.xlabel(\'\$x\$\', fontsize=16)\
- plt.ylabel(\'\$f(x)\$\', fontsize=16, rotation=0)
-
- 290
-
-![](media/image2259.png){width="5.01833552055993in" height="3.3527307524059493in"}
-
- 这里定义一个函数来计算模型中的高斯核函数，代码实现如下：
-
- def gauss_kernel(x, n_knots=5, w=2):
-
- \"\"\"
-
- Simple Gaussian radial kernel
-
- \"\"\"
-
- knots = np.linspace(np.floor(x.min()), np.ceil(x.max()), n_knots) return np.array(\[np.exp(-(x-k)\*\*2/w) for k in knots\])
-
- ![](media/image2264.png){width="0.10411417322834646in" height="0.12494641294838145in"}剩下的就是定义系数了，系数的个数应该与结的个数一致。注 意，这里系数决定了估计的曲线在结这里应该增加还是降低。
-
- 有时候将模型表示成线性回归更合理，对应的数学形式如下：
-
-![](media/image2267.png){width="2.51957895888014in" height="0.35401465441819774in"}
-
- 不过这里我们将省略截距*α*和斜率*β*，只保留最后一项。这里使用 柯西分布作为先验，稍后我们会讨论在使用核函数方法过程中选择先 验的一些关键点，现在先运行如下模型：
-
- ![](media/image2267.png){width="3.818897637795276e-2in" height="0.8399300087489063in"}with pm.Model() as kernel_model:
-
- gamma = pm.Cauchy(\'gamma\', alpha=0, beta=1, shape=n_knots) sd = pm.Uniform(\'sd\',0, 10)
-
- mu = pm.math.dot(gamma, gauss_kernel(x, n_knots))
-
- 291 ![](media/image2271.png){width="2.7777777777777776e-2in" height="2.7777777777777776e-2in"}
-
- ![](media/image2273.png){width="2.7777777777777776e-2in" height="2.7777777777777776e-2in"} yl = pm.Normal(\'yl\', mu=mu, sd=sd, observed=y)\
- kernel_trace = pm.sample(10000, step=pm.Metropolis()) chain = kernel_trace\[5000:\]
-
- pm.traceplot(chain);
-
-![](media/image2277.png){width="5.643024934383202in" height="1.7492508748906386in"}
-
- 可以看到模型的结果与sin函数很接近，接下来对得到的模型进 行后验检查，代码实现如下：
-
- ppc = pm.sample_ppc(chain, model=kernel_model, samples=100)
-
- plt.plot(x, ppc\[\'yl\'\].T, \'ro\', alpha=0.1)
-
- plt.plot(x, y, \'bo\')
-
- plt.xlabel(\'\$x\$\', fontsize=16)\
- plt.ylabel(5\$f(x)\$\', fontsize=16, rotation=0)
-
-![](media/image2282.png){width="5.01833552055993in" height="3.342318460192476in"}
-
- 模型似乎能够很好地捕捉到数据，现在我们再用之前未使用的数
-
- 292
-
- 据检查模型的效果，代码实现如下：
-
- new_x = np.linspace(np.floor(x.min()), np.ceil(x.max()), 100) k = gauss_kernel(new_x, n_knots)
-
- gamma_pred = chain\[\'gamma\'\]
-
- for i in range(100):
-
- idx = np.random.randint(0, len(gamma_pred))
-
- y_pred = np.math.dot(gamma_pred\[idx\], k)\
- plt.plot(new_x, y_pred, \'r-\', alpha=0.1)\
- plt.xlabel(\'\$x\$\', fontsize=16)
-
- plt.ylabel(\'\$f(x)\$\', fontsize=16, rotation=0)
-
- plt.plot(x, y, \'bo\');
-
-![](media/image2287.png){width="5.01833552055993in" height="3.373555336832896in"}
-
- 图中我们用蓝色的点表示数据，用红色的线表示拟合的曲线。你 可能会想要修改带宽和结的个数来看看模型的效果，本章的练习1中 有相关问题的描述，此外本章的练习2中还会探讨拟合另外一类函数 的效果。
-
- **7.2.3**　过拟合与先验
-
- 对于使用核函数方法的模型而言，人们常常关心的一点是如何选 择结的个数以及位置。一种方法是直接选择数据点作为结，即将高斯 分布放在数据点上，这里可以回想一下前面用过的KDE作图方法。
-
- 293
-
- 另外一种做法是，在建模过程中决定结的个数和位置。这种做法\
- 需要一些特殊的计算方法，不是很通用，或者至少不那么容易处理。
-
- ![](media/image2290.png){width="0.10411417322834646in" height="0.13535761154855644in"}还有一种做法是应用变量选择，其思想是引入一个模型索引变\
- 量，该向量的大小与参数的大小保持一致，每个元素的值只有两种
-
- ![](media/image2291.png){width="0.10411417322834646in" height="0.13535761154855644in"}可能------0或者1。采用这种方法，我们可以决定模型中对应系数的开 和关。不过这种方法的一个问题是，只对低维度的问题有效，因为可 能的索引组合是系数个数的2*^n^*倍。一种替代方案是使用正则先验，我 们希望先验集中在0附近，从而将系数拉向0，同时让具有长尾，从 而避免拉得太厉害了。一种正则先验是柯西分布，另外一种是拉普拉 斯分布。回忆一下第6章中我们讨论过的正则先验------岭回归和
-
- LASSO回归。
-
- 294
-
- **7.3**　高斯过程
 
  前面简要介绍了如何用核函数构建统计模型去描述任意函数。也 许核函数回归听起来好像有点带有技巧性，而且其中需要指定结的个 数以及分布，这似乎有点问题。现在，我们将从另外一个角度使用核 函数，直接在函数空间做推断，该方法基于高斯过程，在数学上和计 算量方面都更受欢迎。
 
@@ -216,11 +67,11 @@
 
  条直线的参数。不过假设我们不希望将其限定为一条直线，也可以是 任意可能的函数。通常在贝叶斯统计中，对于一个不知道的量，我们 先给其设置一个先验，因此，在我们不知道怎样的函数才是一个对数 据拟合得很好的模型时，我们需要对函数设置一个先验。有趣的是， 多元高斯就是这样一个先验（实际上是一个与之相似的东西，不过我 们暂且这么认为），可以用一个多元高斯从很宽泛的（但很有用的） 角度来描述一个函数。我们认为对于每个变量*x~i~*都存在一个高斯变量
 
- *y~i~*，其均值和标准差暂不清楚。这样，如果向量***x***的长度为*n*，那么就
+ *y~i~*，其均值和标准差暂不清楚。这样，如果向量*x*的长度为*n*，那么就
 
  得到一个*n*元高斯分布。
 
- 在真实世界中，对于一个实数范围内的映射函数，***x***和***y***实际上是 无限多的，因为两个点之间存在着无穷多个点。因此，理论上我们需 要一个无限元的高斯分布，这在数学上称为高斯过程，是一个参数化 的均值函数和一个协方差函数，此时我们有：
+ 在真实世界中，对于一个实数范围内的映射函数，*x*和*y*实际上是 无限多的，因为两个点之间存在着无穷多个点。因此，理论上我们需 要一个无限元的高斯分布，这在数学上称为高斯过程，是一个参数化 的均值函数和一个协方差函数，此时我们有：
 
 ![](media/image2295.png){width="2.311349518810149in" height="0.187419072615923in"}
 
@@ -228,501 +79,767 @@
 
  关于高斯过程的一个正式定义是说，连续空间中的每个点都有一 个与之对应的正态分布的变量，而高斯过程就是这无限多个随机变量 的联合分布。其中均值函数是一个无限维向量的均值，协方差函数则 是一个无限维的协方差矩阵，我们将看到协方差矩阵可以有效地建
 
- 模***x***的变化量与***y***的变化量之间的关系。
+ 模*x*的变化量与*y*的变化量之间的关系。
 
  ![](media/image2297.png){width="0.45810476815398077in" height="0.187419072615923in"}总结一下，前面几章中，我们学习了如何估计，比如，在\
  线性回归中我们假设 ，其中，*f*是一个线性模型，然后估计
 
  ![](media/image2299.png){width="0.5726312335958005in" height="0.187419072615923in"}线性模型的参数。也就是说，我们是一个线性模型，并估计出 了其中的参数，从而得到了，后面将会看到，我们仍然需要估 计参数，不过从概念上讲，我们是在直接处理函数，这样思考更容易 理解一些。
 
- **7.3.1**　构建协方差矩阵
 
- 在实践中，高斯过程的均值函数通常设为0（尽管这并非一定\
- 的），因而高斯过程的整个行为都受协方差矩阵的控制，所以这里重
 
- 点关注如何构建协方差函数。
+### 7.2.1 多元高斯与函数
 
- 从高斯过程先验中采样
+在图7.1中，我们使用高斯表示一个函数来获取样本。一种替代方法是使用多变量高斯分布来获得长度的样本向量。实际上，您可能希望尝试通过使用 np.random.multivariate_normal(np.zeros_like(x), np.eye(len(x))) 替换np.random.normal(0, 1, len(x)) 来生成如图7.1所示的图形。
 
- 高斯过程的概念有点像是脚手架，在实际使用中我们通常不直接 使用该无限维的对象，相反，我们将无限维的高斯过程收缩到一个有 限维的多元高斯。数学上，这是通过对模型中剩余的（无限的）未观 测维度进行边缘化得到的，这样做之后就可以得到一个多元高斯分
+您将看到第一条语句等同于第二条语句，但是现在我们可以使用协方差矩阵来编码有关数据点如何相互关联的信息。通过允许协方差矩阵为np.ye(len(X))，我们基本上表示这10个点中的每个点的方差为1，并且它们之间的方差(即，它们的协方差)为0(因此，它们是独立的)。如果我们用其他(正)数字替换这些零，我们可能得到的协方差告诉我们一个不同的故事。因此，要以概率方式表示函数，我们只需要一个具有合适协方差矩阵的多变量高斯函数，我们将在下一节中看到。
 
- 布。这么做遵循高斯过程的定义，即作为一系列随机变量，其中任意 有限的子集都有一个联合高斯分布，于是得到的多元高斯分布的维度 与我们现有数据的个数相同！这样，对于一个零均值函数的高斯过
+### 7.2.2 协方差函数与核
 
- 程，我们有：
+实际上，协方差矩阵是使用称为核的函数指定的。您可能会在统计文献中找到多个核的定义，它们的数学属性略有不同。出于我们讨论的目的，我们将说内核基本上是一个对称函数，它接受两个输入，并在输入中返回零值，否则相同或为正。如果满足这些条件，我们可以将核函数的输出解释为两个输入之间的相似性度量。
 
- 296
+在众多可用的有用内核中，常用的一种是指数二次核：
+$$
+K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left\|x-x^{\prime}\right\|^{2}}{2 \ell^{2}}\right)
+$$
+此处， $ \left\|x-x^{\prime}\right\|^{2} $ 为平方欧氏距离：
+$$
+\left\|x-x^{\prime}\right\|^{2}=\left(x_{1}-x_{1}^{\prime}\right)^{2}+\left(x_{2}-x_{2}^{\prime}\right)^{2}+\cdots+\left(x_{n}-x_{n}^{\prime}\right)^{2}
+$$
+乍一看可能不明显，但幂二次核具有与高斯分布类似的公式(见表达式1.3)。因此，您可能会发现有人将此内核称为高斯内核。该术语称为长度标度(或带宽或方差)，用于控制内核的宽度。
 
-![](media/image2302.png){width="3.6960772090988625in" height="0.19783136482939634in"}
+为了更好地理解内核的作用，让我们定义一个Python函数来计算指数二次内核：
 
- ![](media/image2303.png){width="0.6246883202099738in" height="0.187419072615923in"}现在我们搞定了无限维这个棘手的问题，接下来继续处理协方差 矩阵，注意，我们将协方差矩阵写成了，这里故意写成了前面 核函数回归例子中的定义，因为我们实际上是用核函数在构建协方差 函数。协方差函数描述的是，当***x***变化时，***y***是如何随之变化的。前面 核函数回归中，我们已经知道了使用高斯核函数是一个不错的假设， 其等价的含义是说，一个小的*x~i~*扰动会导致较小的*y~i~*变化，而一个较
+```
+def exp_quad_kernel(x, knots, ℓ=1):
+    """exponentiated quadratic kernel"""
+    return np.array([np.exp(-(x-k)**2 / (2*ℓ**2)) for k in knots])
+```
 
- 大的*x~i~*变化则会导致*y~i~*（平均来看）较大的变化。
+以下代码和图7.2旨在显示协方差矩阵如何查找不同的输入。我选择的输入相当简单，由值[-1，0，1，2]组成。理解此示例后，您应该尝试使用其他输入(请参见练习1)：
 
- 为了从直观上了解高斯过程先验是什么样的，我们将对其采样并 画出来。下图根据高斯过程先验画出了6个任意的函数（或者叫实 现）。注意，这里我们将实现画成了连续函数，实际上，我们只有每 个*x*~\*~以及与之对应的*f* (*x*~\*~)，不过根据平滑性假设以及无法计算出无限
+```
+data = np.array([-1, 0, 1, 2])
+cov = exp_quad_kernel(data, data, 1)
+_, ax = plt.subplots(1, 2, figsize=(12, 5))
+ax = np.ravel(ax)
+ax[0].plot(data, np.zeros_like(data), 'ko')
+ax[0].set_yticks([])
+for idx, i in enumerate(data):
+    ax[0].text(i, 0+0.005, idx)
+ax[0].set_xticks(data)
+ax[0].set_xticklabels(np.round(data, 2))
+#ax[0].set_xticklabels(np.round(data, 2), rotation=70)
+ax[1].grid(False)
+im = ax[1].imshow(cov)
+colors = ['w', 'k']
+for i in range(len(cov)):
+    for j in range(len(cov)):
+        ax[1].text(j, i, round(cov[i, j], 2),
+                   color=colors[int(im.norm(cov[i, j]) > 0.5)],
+                   ha='center', va='center', fontdict={'size': 16})
+ax[1].set_xticks(range(len(data)))
+ax[1].set_yticks(range(len(data)))
+ax[1].xaxis.tick_top()
+```
 
- 多个点这一事实，将实现中的点转换成连续的函数也是合理的。只要 测试点足够多，对应的结果就能准确反映出函数的真实形状。
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505203138_6f.webp)
 
- np.random.seed(1)
+图7.2左侧的面板显示输入，x轴上的值表示每个数据点的值，文本注释显示数据点的顺序(从零开始)。在右边的面板上，我们有一个热图，表示使用指数二次核获得的协方差矩阵。颜色越浅，协方差越大。如您所见，热图是对称的，对角线取较大的值。协方差矩阵中每个元素的值与点之间的距离成反比，因为对角线是每个数据点与其自身进行比较的结果。对于这个核，我们得到最接近的距离0和更高的协方差值1。其他值对于其他内核也是可能的。
 
- test_points = np.linspace(0, 10, 100)
+内核将数据点沿x轴的距离转换为预期函数值(在y轴上)的协方差值。因此，x轴上的两个点越近，我们预计它们在y轴上的值就越相似。
 
- cov = np.exp(-squared_distance(test_points, test_points))\
- plt.plot(test_points, stats.multivariate_normal.rvs(cov=cov, size=6). T)
+总而言之，到目前为止，我们已经看到，我们可以使用具有给定协方差的多元正态分布来建模函数。我们可以使用核函数来建立协方差。在下面的示例中，我们使用exp_quad_kernel函数来定义多变量正态分布的协方差矩阵，然后使用该分布中的样本来表示函数：
 
- plt.xlabel(\'\$x\$\', fontsize=16)\
- plt.ylabel(\'\$f(x)\$\', fontsize=16, rotation=0)
+```
+np.random.seed(24)
+test_points = np.linspace(0, 10, 200)
+fig, ax = plt.subplots(2, 2, figsize=(12, 6), sharex=True,
+                       sharey=True, constrained_layout=True)
+ax = np.ravel(ax)
+for idx, ℓ in enumerate((0.2, 1, 2, 10)):
+    cov = exp_quad_kernel(test_points, test_points, ℓ)
+    ax[idx].plot(test_points, stats.multivariate_normal.rvs(cov=cov,
+size=2).T)
+    ax[idx].set_title(f'ℓ ={ℓ}')
+fig.text(0.51, -0.03, 'x', fontsize=16)
+fig.text(-0.03, 0.5, 'f(x)', fontsize=16)
+```
 
- 297
+ ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505203247_f6.webp)
 
-![](media/image2309.png){width="5.01833552055993in" height="3.3943799212598424in"}
+如图7.3所示，高斯核包含多种函数，其参数控制函数的平滑度。的值越大，函数越平滑。
 
- 从这张图可以看出，高斯过程先验（以及一个高斯核函数）是一 系列在0附近的平滑函数。
 
- 使用参数化的核函数
 
- 为了从数据中学到关于未知函数的信息，我们用一个参数化的核 函数定义了协方差矩阵。我们将这里的参数称为超参。原因有如下两 点：
+### 7.2.3 高斯过程
 
- 这些参数是高斯过程的先验；\
- 这个名字强调了我们使用的是非参方法。
+现在我们已经准备好了解什么是高斯过程(GP)以及它们是如何在实践中使用的。
 
- 通过学习高斯过程的超参数，我们希望拟合出未知函数。
+从维基百科(Wikipedia)上摘取的对高斯过程的一个比较正式的定义如下：
 
- 前面我们已经提到了，核函数有很多种选择，其中最常见的是高 斯核函数。前面已经看到了高斯核函数的一个版本（即带宽）。现 在，我们介绍另外一个版本，用到了其他两个参数，我们可以将其写 成如下形式：
+按时间或空间索引的随机变量的集合，使得这些随机变量的每个有限集合都具有多元正态分布，即它们的每个有限线性组合都是正态分布的。
 
- 298
+理解高斯过程的诀窍是认识到GP的概念是一个心理(和数学)脚手架，因为在实践中，我们不需要直接处理这个无限的数学对象。相反，我们只在我们有数据的地方评估高斯过程。通过这样做，我们将无限维GP压缩成一个有限的多元高斯分布，其维数和数据点一样多。从数学上讲，这种崩溃是由无限不可观测的维度上的边际化造成的。理论向我们保证，省略(实际上边缘化)所有的点是可以的，除了我们正在观察的那些点。它还保证我们将始终得到多变量的高斯分布。因此，我们可以严格地将图7.3解释为来自高斯过程的实际样本！
 
-![](media/image2313.png){width="1.9677701224846895in" height="0.5310225284339457in"}
+请注意，我们将多变量高斯函数的平均值设置为零，并通过指数二次核仅使用协方差矩阵对函数进行建模。在使用高斯过程时，将多变量高斯的平均值设置为零是常见的做法。
 
- ![](media/image2314.png){width="0.7079800962379702in" height="0.20824365704286965in"}其中，*D*是SED，即； 是一个控制垂直尺度的参数，用 于让协方差矩阵建模*f* (***x***)更大或者更小的值；参数*ρ*是带宽，前面已 经知道了，*ρ*控制的是函数的平滑程度；参数*σ*控制的是数据中的噪 声。
+高斯过程对于构建贝叶斯非参数模型很有用，因为我们可以将它们用作函数上的先验分布。
 
- 让我们一起讨论下*σ*以及为什么当*i*和*j*不同时使用另外一个表达\
- 式。在一些场景中，比如进行插值的时候，我们希望模型对于每个观
 
- 测值*x~i~*都返回对应的观测量*f* (*x~i~*)而没有任何不确定性，而在另外一些 场景中，比如本书涉及的例子中，我们希望得到*f* (*x~i~*)估计值的不确定
 
- 性，因此希望得到一个接近于观测值但却又不是完全一样的值。于是 有：
+##  7.3 高斯过程回归
 
-![](media/image2233.png){width="1.0932053805774278in" height="0.187419072615923in"}
+让我们假设我们可以将一个值建模为加一些噪声的函数：
 
- ![](media/image2317.png){width="0.8641524496937882in" height="0.187419072615923in"}其中，误差项通过 建模。
+$$
+y \sim \mathcal{N}(\mu=f(x), \sigma=\epsilon) 
+$$
+此处 $ \epsilon \sim \mathcal{N}\left(0, \sigma_{\epsilon}\right) $
 
- 因此协方差矩阵的构成需要考虑到有噪声的数据，于是有：
+这类似于我们在第3章“线性回归建模”中对线性回归模型所做的假设。主要区别在于，现在我们将优先分配。高斯过程可以作为这样的先验，因此我们可以这样写：
 
-![](media/image2317.png){width="2.2801148293963256in" height="0.20824365704286965in"}
+$$
+f(x) \sim \mathcal{G} \mathcal{P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right)
+$$
 
- 其中：
+这里，$\mathcal{GP}$ 表示高斯过程分布， $\mu_x$ 为均值函数， $K(x,x')$ 为核函数或协方差函数。在这里，我们用函数这个词来表示，在数学上，均值和协方差是无限的对象，即使在实践中，我们总是处理有限的对象。
 
-![](media/image2319.png){width="1.1973206474190725in" height="0.5101979440069991in"}
+如果先验分布是GP，并且似然是正态分布，那么后验分布也是GP，我们可以解析地计算它：
+$$
+\begin{array}{c}
+p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) \sim \mathcal{N}(\mu, \Sigma) \\
+\mu=K_{*}^{T} K^{-1} y \\
+\Sigma=K_{* *}-K_{*}^{T} K^{-1} K_{*}
+\end{array}
+$$
+这里：
+$$
+\begin{array}{l}
+\text { - } K=K(X, X) \\
+\text { - } K_{*}=K\left(X_{*}, X\right) \\
+\text { - } K_{* *}=K\left(X_{*}, X_{*}\right)
+\end{array}
+$$
 
- ![](media/image2320.png){width="0.176994750656168in" height="0.1770067804024497in"}称作delta分布，也就是说，我们通过将协方差矩阵的对角线上 的值设置为不是正好等于1的值来对噪声建模，事实上，我们是直接 从数据中估计出对角线上的值。这么做相当于给模型加入了一个扰动 项，之所以加入该项是因为，在核函数所附带的假设中，两个输入越 接近，对应的输出也越接近，极限情况下，两个输入完全相等，它们
 
- 299
+$X$ 是观察到的数据点，$X_*$ 表示测试点；也就是我们希望知道推断函数值的新点。
 
- 的输出也应该完全相等，而增加扰动项则有利于捕捉到观测值的不确 定性。
+像往常一样，PyMC3允许我们通过为我们处理几乎所有的数学细节来执行推理，高斯过程也不例外。因此，让我们继续创建一些数据，然后创建一个PyMC3模型：
 
- 为了更好地理解超参的含义，我们可以把扩展后的高斯核函数画\
- 出来，你也可以随意选一些不同的超参值自己试试，代码实现如下：
+```
+np.random.seed(42)
+x = np.random.uniform(0, 10, size=15)
+y = np.random.normal(np.sin(x), 0.1)
+plt.plot(x, y, 'o')
+true_x = np.linspace(0, 10, 200)
+plt.plot(true_x, np.sin(true_x), 'k--')
+plt.xlabel('x')
+plt.ylabel('f(x)', rotation=0)
+```
+
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204212_c1.webp)
+
+在图7.4中，我们看到真正的未知函数是一条黑虚线，而点表示未知函数的样本(带有噪声)。
+
+请注意，为了将公式7.7和7.8编码到PyMC3模型中，我们只需要找出指数二次核的参数、正态似然方差和长度-尺度参数。
+
+GPS在PyMC3中实现为一系列Python类，与我们在以前的模型中看到的略有不同；然而，代码仍然非常PyMC3onic。我在以下代码中添加了一些注释，以指导您完成使用PyMC3定义GP的关键步骤：
 
- np.random.seed(1) eta = 1.5
+```
+# A one dimensional column vector of inputs.
+X = x[:, None]
+with pm.Model() as model_reg:
+    # hyperprior for lengthscale kernel parameter
+    ℓ = pm.Gamma('ℓ', 2, 0.5)
+    # instantiate a covariance function
+    cov = pm.gp.cov.ExpQuad(1, ls=ℓ)
+    # instantiate a GP prior
+    gp = pm.gp.Marginal(cov_func=cov)
+    # prior
+    ϵ = pm.HalfNormal('ϵ', 25)
+    # likelihood
+    y_pred = gp.marginal_likelihood('y_pred', X=X, y=y, noise=ϵ)
+```
 
- rho = 0.2
+请注意，我们使用的不是表达式7.7中预期的正态似然，而是gp.edge_lisilience方法。你可能还记得，在第一章“概率思维”(公式1.1)和第五章“模型比较”(公式5.13)中，边际似然是似然和先验的积分：
+$$
+p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) d f
+$$
+与往常一样，表示所有未知参数，是自变量，也是因变量。请注意，我们正在对函数的值进行边际化。对于GP先验和正常可能性，可以解析地执行边际化。
 
- sigma = 0.007
+根据PyMC3的核心开发者、GP模块的主要贡献者Bill Engels的说法，对于长度尺度参数，优先避免零通常效果更好。在此之前，一个有用的默认设置是pm.Gamma(2，0.5)。你可以从Stan team阅读更多关于默认有用历史的建议：https://github.com/stan-dev/stan/wiki/Prior-ChoiceRecommendations：
 
- D = squared_distance(test_points, test_points)
+```
+az.plot_trace(trace_reg)
+```
 
- cov = eta \* np.exp(-rho \* D) diag = eta + sigma
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204431_42.webp)
 
- np.fill_diagonal(cov, diag)
 
- for i in range(6):
 
- plt.plot(test_points, stats.multivariate_normal.rvs(cov=cov)) plt.xlabel(\'\$x\$\', fontsize=16)
+现在我们已经找到和的值，我们可能想要从GP后验中获取样本；即，拟合数据的函数的样本。我们可以通过使用gp.条件函数计算对新输入位置求值的条件分布来实现这一点：
 
- plt.ylabel(\'\$f(x)\$\', fontsize=16, rotation=0)
+```
+X_new = np.linspace(np.floor(x.min()), np.ceil(x.max()), 100)[:,None]
+with model_reg:
+    f_pred = gp.conditional('f_pred', X_new)
+```
 
-![](media/image2326.png){width="5.01833552055993in" height="3.4047911198600174in"}
+结果，我们得到了一个新的PyMC3随机变量f_pred，我们可以使用它从后验预测分布中获取样本(以X_NEW值计算)：
 
- **7.3.2**　根据高斯过程做预测
+```
+with model_reg:
+    pred_samples = pm.sample_posterior_predictive(trace_reg, vars=[f_pred],samples=82)
+```
 
- 300
+现在我们可以在原始数据上绘制拟合函数图，以直观地检查它们与数据的拟合程度以及预测中的相关不确定性：
 
- 接下来学习如何用高斯过程做预测。高斯过程的一个优点就是结 果可以从数学分析上直接推导。如果将高斯过程先验与高斯似然组合 在一起，我们得到的是一个高斯过程后验。也就是说，如果在一些测 试点上应用条件高斯，我们可以得到如下后验预测密度的表达式：
+```
+_, ax = plt.subplots(figsize=(12,5))
+ax.plot(X_new, pred_samples['f_pred'].T, 'C1-', alpha=0.3)
+ax.plot(X, y, 'ko')
+ax.set_xlabel('X')
+```
 
-![](media/image2327.png){width="2.623694225721785in" height="0.8954494750656168in"}
+<img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204540_3f.webp" style="zoom:67%;" />
 
- 在给定数据***X***、***y***以及一些测试点***x***~\*~条件下，计算未知函数在（暂 时）未知的点上的值*f* (***x***~\*~)。注意，这里我们使用符号\*来表示所有测
+或者，我们可以使用pm.gp.util.lot_gp_dist函数来获得一些不错的绘图。每个绘图代表一个百分位数，范围从51(浅色)到99(深色)：
 
- 试点上的运算，其中：
+```
+_, ax = plt.subplots(figsize=(12,5))
+pm.gp.util.plot_gp_dist(ax, pred_samples['f_pred'], X_new,
+palette='viridis', plot_samples=False);
+ax.plot(X, y, 'ko')
+ax.set_xlabel('x')
+ax.set_ylabel('f(x)', rotation=0, labelpad=15)
+```
 
- ***K***=*K*(***X***,***X***)
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204617_c7.webp)
 
- ***K***~\*\*~=*K*(***X***~\*~,***X***~\*~)
+另一种选择是计算在参数空间中给定点评估的条件分布的平均向量和标准差。在下面的示例中，我们对AND使用平均值(跟踪中的样本)。我们可以使用gp.recast函数计算平均值和方差。我们之所以能做到这一点，是因为PyMC3已经解析地计算了后验结果：
 
- ***K***~\*~=*K*(***X***,***X***~\*~)
+```
+_, ax = plt.subplots(figsize=(12,5))
+point = {'ℓ': trace_reg['ℓ'].mean(), 'ϵ': trace_reg['ϵ'].mean()}
+mu, var = gp.predict(X_new, point=point, diag=True)
+sd = var**0.5
+ax.plot(X_new, mu, 'C1')
+ax.fill_between(X_new.flatten(),
+                 mu - sd, mu + sd,
+                 color="C1",
+                 alpha=0.3)
+ax.fill_between(X_new.flatten(),
+                 mu - 2*sd, mu + 2*sd,
+                 color="C1",
+                 alpha=0.3)
+ax.plot(X, y, 'ko')
+ax.set_xlabel('X')
+```
 
- 这个式子初看可能有点吓人，稍后我们将看到如何用代码描述上 面的式子（但愿这样理解起来清晰一些），不过现在我们先从直观上 理解这些式子。
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204701_d1.webp)
 
- ![](media/image2329.png){width="0.15617125984251967in" height="0.187419072615923in"}***X***~\*\*~是***x***~\*~自己的协方差，其实就是***x***~\*~的方差。也就是说，测试点\
- 的方差其实就是先验的方差，注意，这里等价于***K***~\*\*~减去一个量，
+正如我们在第四章“推广线性模型”中所看到的，我们可以使用具有非高斯似然的线性模型和适当的逆链接函数来扩展线性模型的范围。我们可以为全科医生做同样的事情。例如，我们可以使用具有指数逆链接函数的泊松似然。对于这样的模型，后验不再是可分析处理的，但是，尽管如此，我们可以用数值方法来逼近它。在接下来的几节中，我们将讨论这种类型的模型。
+
+## 7.4 空间自相关回归
+
+下面的例子取自理查德·麦克雷思(Richard McElreath)的“统计反思”(Statistics Reink)一书。作者好心地允许我在这里重复使用他的例子。我强烈推荐你读他的书，因为你会发现很多像这样的好例子和非常好的解释。唯一需要注意的是，书中的示例是R/stan格式的，但请不要担心，请继续采样；您可以在https：//gihub.com/pymc-devs/Resources中找到这些示例的Python/PyMC3版本。
+
+好的，回到这个例子，我们有10个不同的岛屿社会；对于每一个，我们都有他们使用的工具的数量。一些理论预测，较大的人口会比较小的人口开发和维持更多的工具。另一个重要因素是人群间的接触率。
 
- 这个式子的含义是说，我们可以根据数据将先验的方差降低这么多。 此外，对于一个距离数据点*x~i~*较远的测试点***x***~\*~而言，核函数返回的值
+由于我们有许多工具作为因变量，我们可以使用泊松回归与总体作为自变量。事实上，我们可以使用人口的对数，因为(根据理论)真正重要的是人口的数量，而不是绝对的大小。将接触率包括在我们的模型中的一种方法是收集有关这些社会在历史上接触的频率的信息，并创建一个分类变量，如低/高接触率(请参阅岛屿数据帧中的Contact列)。另一种方式是使用社会之间的距离作为接触率的代理，因为可以合理地假设距离最近的社会比距离较远的社会更频繁地接触。
 
- 接近于0，因而这个量也接近于0，结果就是先验的方差也不会降低多 少。换句话说，评估远离数据点的函数并不会降低不确定性。因此， 推断基于的是数据在测试点附近的局部特性。
+我们可以通过阅读本书附带的ians_Dist.csv文件来访问以千公里为单位表示的值的距离矩阵：
 
- 301
-
- 如果你想知道更多有关多元高斯的数学特性及前面的表达式是如 何推导的，可以参考本章的阅读更多部分，我在那里添加了一些你可 能感兴趣的参考资料。针对当前的讨论内容，我们暂且假设前面的后 验预测的表达式是已知的。有一点需要注意的是，我们可以从高斯过 程后验中进行采样。我们得到的这个描述未知函数的表达式非常有
-
- 用，不过有一个问题是，计算过程中涉及求解矩阵的逆，而计算逆矩 阵的复杂度是*O*(*n*^3^)，如果你不知道这个表达式的含义，可以理解为\
- 该操作很慢，因此实际使用中，我们无法将高斯过程应用到超过几千 个数据点的场景，不过对于这种情况有一些近似的方法来加速计算， 这里暂不深入讨论。此外，在实践中，直接求逆矩阵可能会有一些数 值问题，而且不稳定，因此更倾向于使用一些替代方案，比如用\
- **Cholesky**分解来计算均值和协方差后验函数。Cholesky分解有点像我 们熟悉的对标量求平方根，不过其对象是矩阵。
-
- 在深入Cholesky分解和直接求逆矩阵的例子之前，我们先观察\
- 下。如果求逆矩阵会有问题，那么为什么还要将高斯过程表示成协方
-
- 差矩阵而不是直接用协方差矩阵的逆呢？原因是，当我们使用协方差 矩阵的时候，对其子集的计算是独立于其余部分的计算的，因而它是 独立于未观测到的点的计算。不过对于逆协方差矩阵而言，数据子集 的计算会依赖于我们是否观测到了其余点。只有使用协方差矩阵（而 不是它的逆），我们才能得出高斯过程基于一系列随机变量一致的定 义。
-
- 总结一下，为了完全从贝叶斯的角度使用高斯过程去近似一个函 数，我们需要：
-
- 选择一个核函数构建一个多元分布的协方差矩阵； 用贝叶斯统计的方法推断出核函数的参数；
-
- 302
-
- 计算出每个测试点的均值和标准差。
-
- 注意，实际上我们并没有真正地计算出高斯过程，只是借用了这 个数学概念来确保我们所做的是合理的，在实践中，所有的计算都是 通过多元高斯完成的。
-
- 读完前面理论方面的长篇大论之后，终于到了大家期待的时刻， 我们将把这些想法转化成代码。首先，假设已经知道了核函数的参 数，然后用代码描述后验的表达式。用到的超参和test_points的值
-
- 与前面定义的相同，数据也与前面核函数回归例子中用到的一样，代 码实现如下：
-
- np.random.seed(1)
-
- K_oo = eta \* np.exp(-rho \* D)
-
- D_x = squared_distance(x, x) K = eta \* np.exp(-rho \* D_x) diag_x = eta + sigma
-
- np.fill_diagonal(K, diag_x)
-
- D_off_diag = squared_distance(x, test_points) K_o = eta \* np.exp(-rho \* D_off_diag)
-
- mu_post = np.math.dot(np.math.dot(K_o, np.linalg.inv(K)), y)
-
- SIGMA_post = K_oo -- np.math.dot(np.math.dot(K_o, np.linalg.inv(K)), K_o .T)
-
- for i in range(100):
-
- fx = stats.multivariate_normal.rvs(mean=mu_post, cov=SIGMA_post) plt.plot(test_points, fx, \'r-\', alpha=0.1)
-
- plt.plot(x, y, \'o\')
-
- plt.xlabel(\'\$x\$\', fontsize=16)\
- plt.ylabel(\'\$f(x)\$\', fontsize=16, rotation=0)
-
- 303
-
-![](media/image2340.png){width="5.01833552055993in" height="3.425615704286964in"}
-
- 这里通过叠在一起的一些红线（从高斯过程中得到的实例）来表 示不确定性。从图中可以看到，在数据点附近的不确定性要小一些， 而在最后两个数据点之间的不确定性要大一些，在最右边没有数据点 的地方（*x*～9）不确定性要更大一些。
-
- 接下来，我们将重新实现前面的计算过程，不过这次用的是\
- Cholesky分解。下面的代码是根据 Nando de Freitas讲授机器学习课程
-
- 中的实例修改后得到的，在代码中，*N*表示数据点的个数，*n*表示测\
- 试点的个数。
-
- ![](media/image2341.png){width="3.8190069991251095e-2in" height="2.839073709536308in"}np.random.seed(1) eta = 1
-
- rho = 0.5
-
- sigma = 0.03
-
- f = lambda x: np.sin(x).flatten()
-
- def kernel(a, b):
-
- \"\"\" GP squared exponential kernel \"\"\"
-
- sqdist = np.sum(a\*\*2,1).reshape(-1,1) + np.sum(b\*\*2,1) - 2\*np.dot(a , b.T)
-
- return eta \* np.exp(- rho \* sqdist)
-
- N = 20
-
- 304
-
- ![](media/image2345.png){width="2.7777777777777776e-2in" height="2.7777777777777776e-2in"}n = 100
-
- X = np.random.uniform(0, 10, size=(N,1)) y = f(X) + sigma \* np.random.randn(N)
-
- K = kernel(X, X)
-
- L = np.linalg.cholesky(K + sigma \* np.eye(N))
-
- test_points = np.linspace(0, 10, n).reshape(-1,1)
-
- Lk = np.linalg.solve(L, kernel(X, test_points)) mu = np.dot(Lk.T, np.linalg.solve(L, y))
-
- K\_ = kernel(Xtest, Xtest)
-
- sd_pred = (np.diag(K\_) - np.sum(Lk\*\*2, axis=0))\*\*0.5
-
- plt.fill_between(test_points.flat, mu-2\*s, mu+2\*s, color=\"r\", alpha=0.2
-
- )
-
- plt.plot(test_points, mu, \'r\', lw=2)\
- plt.plot(x, y, \'o\')
-
- plt.xlabel(\'\$x\$\', fontsize=16)\
- plt.ylabel(\'\$f(x)\$\', fontsize=16, rotation=0)
-
-![](media/image2349.png){width="5.01833552055993in" height="3.3319061679790027in"}
-
- 这里我们将数据点用蓝色的点来表示，均值函数是一条红线，不 确定性用半透明的区域来表示。
-
- **7.3.3**　用**PyMC3**实现高斯过程
-
- 305
-
- 总结一下，我们有如下高斯先验：
-
-![](media/image2351.png){width="2.946450131233596in" height="0.19783136482939634in"}
-
- 一个高斯似然：
-
-![](media/image2352.png){width="2.196823053368329in" height="0.2498928258967629in"}
-
- 以及一个高斯过程后验：
-
-![](media/image2353.png){width="2.675751312335958in" height="0.20824365704286965in"}
-
- 记住，在实践中，我们使用的是多元高斯，因为在一个有限的数 据集上，高斯过程就是一个多元高斯。
-
- 我们将使用贝叶斯相关的原理来学习协方差矩阵的超参。你会看 到，尽管使用PyMC3很简单，但是现在代码量会增加一些，我们需 要手动求解矩阵的逆（或者计算Cholesky分解）。
-
- 很可能在不久的未来，PyMC3中会出现一个高斯过程模块，让\
- 高斯过程模型的构造更简单一些。说不定在你阅读本书的此刻，高斯
-
- 过程模型已经有了！^\[1\]^
-
- 下面的模型是从Chris Fonnesbeck写的Stan代码中改造的：
-
- ![](media/image2354.png){width="3.819444444444445e-2in" height="2.7349507874015746in"}with pm.Model() as GP:
-
- mu = np.zeros(N)
-
- eta = pm.HalfCauchy(\'eta\', 5)\
- rho = pm.HalfCauchy(\'rho\', 5)\
- sigma = pm.HalfCauchy(\'sigma\', 5)
-
- D = squared_distance(x, x)
-
- K = tt.fill_diagonal(eta \* pm.math.exp(-rho \* D), eta + sigma)
-
- obs = pm.MvNormal(\'obs\', mu, tt.nlinalg.matrix_inverse(K), observed =y)
-
- test_points = np.linspace(0, 10, 100)
-
- 306
-
- ![](media/image2357.png){width="2.7777777777777776e-2in" height="2.7777777777777776e-2in"} D_pred = squared_distance(test_points, test_points) D_off_diag = squared_distance(x, test_points)
-
- K_oo = eta \* pm.math.exp(-rho \* D_pred)\
- K_o = eta \* pm.math.exp(-rho \* D_off_diag)
-
- mu_post = pm.Deterministic(\'mu_post\', pm.math.dot(pm.math.dot(K_o, tt.nlinalg.matrix_inverse(K)), y))
-
- SIGMA_post = pm.Deterministic(\'SIGMA_post\', K_oo -- pm.math.dot(pm.m ath.dot(K_o, tt.nlinalg.matrix_inverse(K)), K_o.T))
-
- start = pm.find_MAP()
-
- trace = pm.sample(1000, start=start)
-
- varnames = \[\'eta\', \'rho\', \'sigma\'\] chain = trace\[100:\]\
- pm.traceplot(chain, varnames)
-
-![](media/image2362.png){width="5.643024934383202in" height="2.696761811023622in"}
-
- 如果留心的话，你会注意到估计出来的参数（*η*，*ρ*，*σ*）的均值 就是我们前面例子中用到的值。这也解释了为什么拟合的效果这么 好，这些超参可不是从我们脑袋里想出来的！
-
- pm.df_summary(chain, varnames).round(4)
-
-+-------+--------+--------+----------+---------+----------+
-|       |  mean | sd     | mc_error | hpd_2.5 | hpd_97.5 |
-+=======+========+========+==========+=========+==========+
-|  eta | 2.5798 | 2.5296 | 0.1587   | 0.1757  | 6.3445   |
-+-------+--------+--------+----------+---------+----------+
-
-![](media/image2367.png){width="3.818678915135608e-2in" height="0.25684601924759404in"}
-
- ![](media/image2379.png){width="2.7777777777777776e-2in" height="2.7777777777777776e-2in"}307
-
- ![](media/image2386.png){width="2.7777777777777776e-2in" height="2.7777777777777776e-2in"}rho 0.1288 0.0485 0.0027 0.0589 0.2290
-
-+---------+--------+--------+--------+--------+--------+
-|  sigma | 0.0006 | 0.0003 | 0.0000 | 0.0002 | 0.0012 |
-+---------+--------+--------+--------+--------+--------+
-
- 后验预测检查
-
- 现在我们把原始数据和从高斯过程后验中得到的实例都画出来， 注意，我们还画出了超参的不确定性，而不只是它们的均值，代码实 现如下：
-
- y_pred = \[np.random.multivariate_normal(m, S) for m,S in zip(chain\[\'mu\_ post\'\]\[::5\], chain\[\'SIGMA_post\'\]\[::5\])\]
-
- for yp in y_pred:
-
- plt.plot(test_points, yp, \'r-\', alpha=0.1)
-
- plt.plot(x, y, \'bo\')
-
- plt.xlabel(\'\$x\$\', fontsize=16)\
- plt.ylabel(\'\$f(x)\$\', fontsize=16, rotation=0)
-
-![](media/image2407.png){width="5.01833552055993in" height="3.279844706911636in"}
-
- 周期核函数
-
- 前一幅图中，你可能注意到了，我们可以很好地拟合sin函数，
-
- 308
-
- 不过模型在9到10之间不确定性非常大（该区间没有数据点）。该模 型的一个问题是，原始的数据是通过一个周期函数生成的，但是我们 的核函数并没有做出周期性的假设。某些情况下，当我们知道数据可 能是周期性的时候，应该使用一个周期性的核函数。一个典型的周期 性核函数如下：
-
-![](media/image2410.png){width="2.6445166229221346in" height="0.5726706036745407in"}
-
- 注意，这个核函数与高斯核函数的主要区别是包含了一个sin函\
- 数。我们可以复用前面的代码，唯一的区别是现在需要定义一个周期
-
- 函数而不是squared_distance，代码实现如下：
-
- periodic = lambda x, y: np.array(\[\[np.sin((x\[i\] - y\[j\])/2)\*\*2 for i in range(len(x))\] for j in range(len(y))\])
-
- 在这个模型中，我们需要将squared_distance替换成这个周期 函数。 运行模型之后，你应该会得到类似下面的图：
-
-![](media/image2415.png){width="5.01833552055993in" height="3.279844706911636in"}
-
- 309
-
- **7.4**　总结
-
- 本章一开始，我们学习了贝叶斯框架下的非参统计，以及如何用 核函数表示统计学中的问题，例如，我们用一种采用核函数的线性回 归去建模了非线性输出，随后继续讨论了另外一种构建和理解核函数 方法的方式------高斯过程。
-
- 高斯过程是多元高斯分布扩展到无限多维时的一种一般形式，可 以用一个均值函数和一个协方差函数来描述。由于从概念上我们可以 将函数看作无限长的向量，因而可以将高斯过程作为函数先验。实践 中，我们处理的是维度和数据点个数相同的多元高斯分布。为了定义 与之对应的协方差函数，我们使用了参数化的核函数，通过学习超参 数，最终可以拟合出任意复杂的未知函数。
+```
+islands_dist = pd.read_csv('../data/islands_dist.csv',
+                           sep=',', index_col=0)
+islands_dist.round(1)
+```
+
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204845_7c.webp)
+
+如你所见，主对角线上填满了零。每个岛国社会都处于零公里的状态。矩阵也是对称的；上三角形和下三角形都有相同的信息。这是从A点到B点的距离与B点到A点的距离相同的直接结果。
+
+工具数量和人口规模存储在另一个文件islands.csv中，该文件也随书一起分发：
+
+```
+islands = pd.read_csv('../data/islands.csv', sep=',')
+islands.head().round(1)
+```
+
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204920_fd.webp)
+
+在此DataFrame中，我们将只使用列culture, total_tools, lat, lon2,and logpop:
+
+```
+islands_dist_sqr = islands_dist.values**2
+culture_labels = islands.culture.values
+index = islands.index.values
+log_pop = islands.logpop
+total_tools = islands.total_tools
+x_data = [islands.lat.values[:, None], islands.lon.values[:, None]]
+```
+
+我们要构建的模型是：
+
+$$ f \sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \\
+ \mu \sim \exp (\alpha+\beta x+f) \\
+ y \sim \operatorname{Poisson}(\mu) 
+ $$
+
+这里，我们省略了和的前缀，以及内核的超级前缀。是日志填充，是工具总数。
+
+与第四章“推广线性模型”中的模型相比，该模型基本上是一个泊松回归模型，与第四章中的模型相比，线性模型中的一项来自GP。为了计算GP的内核，我们将使用距离矩阵ILANES_DIST。通过这种方式，我们将有效地纳入技术暴露的相似性度量(从距离矩阵估计)。因此，我们将把每个社会的工具数量建模为它们的地理相似性的函数，而不是假设总数量仅仅是人口的结果，并且从一个社会到另一个社会是独立的。
+
+此模型(包括之前的模型)类似于PyMC3中的以下代码：
+
+```
+with pm.Model() as model_islands:
+    η = pm.HalfCauchy('η', 1)
+    ℓ = pm.HalfCauchy('ℓ', 1)
+    cov = η * pm.gp.cov.ExpQuad(1, ls=ℓ)
+    gp = pm.gp.Latent(cov_func=cov)
+    f = gp.prior('f', X=islands_dist_sqr)
+    α = pm.Normal('α', 0, 10)
+    β = pm.Normal('β', 0, 1)
+    μ = pm.math.exp(α + f[index] + β * log_pop)
+    tt_pred = pm.Poisson('tt_pred', μ, observed=total_tools)
+    trace_islands = pm.sample(1000, tune=1000)
+```
+
+为了了解协方差函数关于距离的后验分布，我们可以根据后验分布绘制一些样本：
+
+```
+trace_η = trace_islands['η']
+trace_ℓ = trace_islands['ℓ']
+_, ax = plt.subplots(1, 1, figsize=(8, 5))
+xrange = np.linspace(0, islands_dist.values.max(), 100)
+ax.plot(xrange, np.median(trace_η) *
+        np.exp(-np.median(trace_ℓ) * xrange**2), lw=3)
+ax.plot(xrange, (trace_η[::20][:, None] * np.exp(- trace_ℓ[::20][:, None] *
+xrange**2)).T,
+        'C0', alpha=.1)
+ax.set_ylim(0, 1)
+ax.set_xlabel('distance (thousand kilometers)')
+ax.set_ylabel('covariance')
+```
+
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205145_a6.webp)
+
+图7.9中的粗线是成对社会之间协方差作为距离函数的后验中位数。我们使用中位数是因为和的分布非常不对称。我们可以看到，协方差平均没有那么高，在大约2000公里处也降到了几乎为0。细线代表不确定性，我们可以看到有很大的不确定性
+
+您可能会发现，将MODEL_IILAS及其计算出的后部与HTTPS：//gihub.com/pymc-devs/参考资料中的模型m_10_10进行比较会很有趣。您可能希望使用ArviZ函数，例如az.Summary或az.lot_Forest。模型M1010类似于MODEL_ILANES，但不包含高斯过程项。
+
+根据我们的模型，我们现在要探索这些岛屿之间的社会联系有多强。为此，我们必须将协方差矩阵转换为相关矩阵：
+
+```
+# compute posterior median covariance among societies
+Σ = np.median(trace_η) * (np.exp(-np.median(trace_ℓ) * islands_dist_sqr))
+# convert to correlation matrix
+Σ_post = np.diag(np.diag(Σ)**-0.5)
+ρ = Σ_post @  Σ @ Σ_post
+ρ = pd.DataFrame(ρ, index=islands_dist.columns,
+columns=islands_dist.columns)
+ρ.round(2)
+```
+
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205246_9e.webp)
+
+从其他地方跳出的两个观察是，夏威夷非常孤独。这是有道理的，因为夏威夷离其他岛屿社会很远。此外，我们还可以看到Malekula(Ml)、Tikopia(Ti)和Santa Cruz(Sc)之间高度相关。这也是有道理的，因为这些社会非常接近，而且他们也有类似数量的工具。
+
+现在我们将使用纬度和经度信息来绘制岛屿-社会的相对位置：
+
+```
+# scale point size to logpop
+logpop = np.copy(log_pop)
+logpop /= logpop.max()
+psize = np.exp(logpop*5.5)
+log_pop_seq = np.linspace(6, 14, 100)
+lambda_post = np.exp(trace_islands['α'][:, None] +
+                     trace_islands['β'][:, None] * log_pop_seq)
+_, ax = plt.subplots(1, 2, figsize=(12, 6))
+ax[0].scatter(islands.lon2, islands.lat, psize, zorder=3)
+ax[1].scatter(islands.logpop, islands.total_tools, psize, zorder=3)
+for i, itext in enumerate(culture_labels):
+    ax[0].text(islands.lon2[i]+1, islands.lat[i]+1, itext)
+    ax[1].text(islands.logpop[i]+.1, islands.total_tools[i]-2.5, itext)
+ax[1].plot(log_pop_seq, np.median(lambda_post, axis=0), 'k--')
+az.plot_hpd(log_pop_seq, lambda_post, fill_kwargs={'alpha':0},
+plot_kwargs={'color':'k', 'ls':'--', 'alpha':1})
+for i in range(10):
+    for j in np.arange(i+1, 10):
+        ax[0].plot((islands.lon2[i], islands.lon2[j]),
+                   (islands.lat[i], islands.lat[j]), 'C1-',
+                   alpha=ρ.iloc[i, j]**2, lw=4)
+        ax[1].plot((islands.logpop[i], islands.logpop[j]),
+                   (islands.total_tools[i], islands.total_tools[j]), 'C1-',
+                   alpha=ρ.iloc[i, j]**2, lw=4)
+ax[0].set_xlabel('longitude')
+ax[0].set_ylabel('latitude')
+ax[1].set_xlabel('log-population')
+ax[1].set_ylabel('total tools')
+ax[1].set_xlim(6.8, 12.8)
+ax[1].set_ylim(10, 73)
+```
+
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205338_5f.webp)
+
+图7.10的左侧面板显示了我们之前在相对地理位置上下文中计算的社会之间的后验中值相关性的线条。有些线条是不可见的，因为我们已经使用相关性来设置线条的不透明度(使用matplotlib的alpha参数)。在右侧面板上，我们再次显示了后验中值相关性，但这一次是根据对数总体与工具总数绘制的。虚线表示工具的中位数和HPD 94%的间隔作为对数填充的函数。在这两幅图中，圆点的大小与每个岛屿社会的人口成正比。
+
+请注意Malekula、Tikopia和Santa Cruz之间的相关性如何描述这样一个事实，即它们拥有的工具数量相当少，接近或低于其人口的预期工具数量。类似的事情正发生在特罗布里兰岛和马努斯；它们地理位置相近，拥有的工具比预期的人口规模要少。汤加为其人口提供的工具比预期的要多得多，而且与斐济的相关性相对较高。在某种程度上，这个模型告诉我们，汤加对Lua斐济有积极的影响，增加了工具的总数，抵消了其近邻Malekula、Tikopia和Santa Cruz的影响。
+
+
+
+## 7.5 高斯过程分类
+
+高斯过程不限于回归。我们也可以用它们来分类。正如我们在第4章“推广线性模型”中所看到的，我们通过使用带有Logistic逆链接函数的Bernoulli似然(然后应用边界判决规则来分离类)，将线性模型转化为适合分类的模型。对于虹膜数据集，我们将尝试概括第4章“推广线性模型”中的MODEL_0，这次使用的是GP而不是线性模型。
+
+让我们再次邀请虹膜数据集上台：
+
+```
+iris = pd.read_csv('../data/iris.csv')
+iris.head()
+```
+
+![image-20210505205534881](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205541_6c.webp)
+
+我们将从最简单的分类问题开始：两类，刚毛和杂色，只有一个自变量，萼片长度。像往常一样，我们将使用数字0和1对分类变量setosa和versicolor进行编码：
+
+```
+df = iris.query("species == ('setosa', 'versicolor')")
+y = pd.Categorical(df['species']).codes
+x_1 = df['sepal_length'].values
+X_1 = x_1[:, None]
+```
+
+对于此模型，我们将使用pm.gp.Latent类，而不是使用pm.gp.Marginal类来实例化GP之前。虽然后者更一般，可以与任何可能性一起使用，但前者仅限于高斯可能性，并且通过利用GP先验与高斯可能性的组合在数学上的易操纵性而具有更高效率的优势：
+
+```
+with pm.Model() as model_iris:
+    ℓ = pm.Gamma('ℓ', 2, 0.5)
+    cov = pm.gp.cov.ExpQuad(1, ℓ)
+    gp = pm.gp.Latent(cov_func=cov)
+    f = gp.prior("f", X=X_1)
+    # logistic inverse link function and Bernoulli likelihood
+    y_ = pm.Bernoulli("y", p=pm.math.sigmoid(f), observed=y)
+    trace_iris = pm.sample(1000, chains=1,
+compute_convergence_checks=False)
+```
+
+现在我们已经找到了的值，我们可能想要从GP后验获取样本。与我们对MARGING_GP_MODEL所做的操作一样，我们还可以借助gp.Conditional函数计算一组新输入位置上计算的条件分布，如以下代码所示：
+
+```
+X_new = np.linspace(np.floor(x_1.min()), np.ceil(x_1.max()), 200)[:, None]
+with model_iris:
+    f_pred = gp.conditional('f_pred', X_new)
+    pred_samples = pm.sample_posterior_predictive(
+        trace_iris, vars=[f_pred], samples=1000)
+```
+
+为了显示此模型的结果，我们将创建一个类似于图4.4的图。我们将使用以下便利函数直接从f_pred计算边界决策，而不是解析地获得边界决策：
+
+```
+def find_midpoint(array1, array2, value):
+    """
+    This should be a proper docstring :-)
+    """
+    array1 = np.asarray(array1)
+    idx0 = np.argsort(np.abs(array1 - value))[0]
+    idx1 = idx0 - 1 if array1[idx0] > value else idx0 + 1
+    if idx1 == len(array1):
+        idx1 -= 1
+    return (array2[idx0] + array2[idx1]) / 2
+```
+
+以下代码与第4章(泛化线性模型)中用于生成图4.4的代码非常相似：
+
+```
+_, ax = plt.subplots(figsize=(10, 6))
+fp = logistic(pred_samples['f_pred'])
+fp_mean = np.mean(fp, 0)
+ax.plot(X_new[:, 0], fp_mean)
+# plot the data (with some jitter) and the true latent function
+ax.scatter(x_1, np.random.normal(y, 0.02),
+           marker='.', color=[f'C{x}' for x in y])
+az.plot_hpd(X_new[:, 0], fp, color='C2')
+db = np.array([find_midpoint(f, X_new[:, 0], 0.5) for f in fp])
+db_mean = db.mean()
+db_hpd = az.hpd(db)
+ax.vlines(db_mean, 0, 1, color='k')
+ax.fill_betweenx([0, 1], db_hpd[0], db_hpd[1], color='k', alpha=0.5)
+ax.set_xlabel('sepal_length')
+ax.set_ylabel('θ', rotation=0)
+plt.savefig('B11197_07_11.png')
+```
+
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205739_e4.webp)
+
+如我们所见，图7.11与图4.4非常相似。F_pred曲线看起来像是一条S型曲线，除了尾部在较低的x_1值时上升，在较高的x_1值下降。这是当没有数据(或数据很少)时预测函数向前移动的结果。如果我们只关心边界决策，这应该不是一个真正的问题，但如果我们想要为不同的萼片长度值建立属于setosa或versicolor的概率模型，那么我们应该改进我们的模型，并做一些事情来获得更好的尾部模型。实现这一目标的一种方法是给高斯过程增加更多的结构。获得更好的高斯过程模型的一般方法是组合协方差函数，以便更好地捕捉我们试图建模的函数的细节。
+
+以下模型(Model_Iris2)与model_iris相同，不同之处在于协方差矩阵，我们将其建模为三个内核的组合：
+
+```
+cov = K_{ExpQuad} + K_{Linear} + K_{whitenoise}(1E-5)
+```
+
+通过添加线性内核，我们修复了尾部问题，如图7.12所示。白噪声核只是一个稳定协方差矩阵计算的计算技巧。对高斯过程的核进行了限制，以保证得到的协方差矩阵是正定的。然而，数字错误可能会导致违反此条件。这个问题的一个表现是，我们在计算拟合函数的后验预测样本时会得到NAN。减轻此错误的一种方法是通过添加一点噪声来稳定计算。事实上，PyMC3已经在幕后做到了这一点，但有时需要更多一点噪音，如以下代码所示：
+
+```
+with pm.Model() as model_iris2:
+    ℓ = pm.Gamma('ℓ', 2, 0.5)
+    c = pm.Normal('c', x_1.min())
+    τ = pm.HalfNormal('τ', 5)
+    cov = (pm.gp.cov.ExpQuad(1, ℓ) +
+           τ * pm.gp.cov.Linear(1, c) +
+           pm.gp.cov.WhiteNoise(1E-5))
+    gp = pm.gp.Latent(cov_func=cov)
+    f = gp.prior("f", X=X_1)
+    # logistic inverse link function and Bernoulli likelihood
+    y_ = pm.Bernoulli("y", p=pm.math.sigmoid(f), observed=y)
+    trace_iris2 = pm.sample(1000, chains=1,
+compute_convergence_checks=False)
+```
+
+现在，我们为先前生成的X_new值生成model_iris2的后验预测样本：
+
+```
+with model_iris2:
+    f_pred = gp.conditional('f_pred', X_new)
+    pred_samples = pm.sample_posterior_predictive(trace_iris2,
+                                                  vars=[f_pred],
+                                                  samples=1000)
+_, ax = plt.subplots(figsize=(10,6))
+fp = logistic(pred_samples['f_pred'])
+fp_mean = np.mean(fp, 0)
+ax.scatter(x_1, np.random.normal(y, 0.02), marker='.',
+           color=[f'C{ci}' for ci in y])
+db = np.array([find_midpoint(f, X_new[:,0], 0.5) for f in fp])
+db_mean = db.mean()
+db_hpd = az.hpd(db)
+ax.vlines(db_mean, 0, 1, color='k')
+ax.fill_betweenx([0, 1], db_hpd[0], db_hpd[1], color='k', alpha=0.5)
+ax.plot(X_new[:,0], fp_mean, 'C2', lw=3)
+az.plot_hpd(X_new[:,0], fp, color='C2')
+ax.set_xlabel('sepal_length')
+ax.set_ylabel('θ', rotation=0)
+```
+
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205912_68.webp)
+
+
+
+现在，图7.12看起来更类似于图4.4，而不是图7.11。此示例有两个主要目的：
+
+- 展示如何轻松组合内核以获得更具表现力的模型
+- 展示了如何使用高斯过程恢复Logistic回归
+
+关于第二点，Logistic回归确实是高斯过程的特例，因为简单的线性回归只是高斯过程的特例。事实上，许多已知的模型可以被视为全科医生的特例，或者至少它们以某种方式与全科医生联系在一起。你可以阅读凯文·墨菲(Kevin Murphy)的“机器学习：概率视角”中的第15章，了解详细信息。
+
+在实践中，使用GP对我们只能用Logistic回归来解决的问题进行建模并没有太大的意义。相反，我们希望使用GP来建模更复杂的数据，而这些数据使用灵活性较低的模型无法很好地捕获。例如，假设我们想要将患病概率建模为年龄的函数。事实证明，非常年轻和非常年长的人比中年人有更高的风险。数据集space_flu.csv是受前面描述启发的假数据集。让我们加载它：
+
+```
+df_sf = pd.read_csv('../data/space_flu.csv')
+age = df_sf.age.values[:, None]
+space_flu = df_sf.space_flu
+ax = df_sf.plot.scatter('age', 'space_flu', figsize=(8, 5))
+ax.set_yticks([0, 1])
+ax.set_yticklabels(['healthy', 'sick'])
+```
+
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210018_ba.webp)
+
+以下模型与model_iris基本相同：
+
+```
+with pm.Model() as model_space_flu:
+    ℓ = pm.HalfCauchy('ℓ', 1)
+    cov = pm.gp.cov.ExpQuad(1, ℓ) + pm.gp.cov.WhiteNoise(1E-5)
+    gp = pm.gp.Latent(cov_func=cov)
+    f = gp.prior('f', X=age)
+    y_ = pm.Bernoulli('y', p=pm.math.sigmoid(f), observed=space_flu)
+    trace_space_flu = pm.sample(
+        1000, chains=1, compute_convergence_checks=False)
+```
+
+现在，我们为model_space_flu生成后验预测样本，然后绘制结果：
+
+```
+X_new = np.linspace(0, 80, 200)[:, None]
+with model_space_flu:
+    f_pred = gp.conditional('f_pred', X_new)
+    pred_samples = pm.sample_posterior_predictive(trace_space_flu,
+                                                  vars=[f_pred],
+                                                  samples=1000)
+_, ax = plt.subplots(figsize=(10, 6))
+fp = logistic(pred_samples['f_pred'])
+fp_mean = np.nanmean(fp, 0)
+ax.scatter(age, np.random.normal(space_flu, 0.02),
+           marker='.', color=[f'C{ci}' for ci in space_flu])
+ax.plot(X_new[:, 0], fp_mean, 'C2', lw=3)
+az.plot_hpd(X_new[:, 0], fp, color='C2')
+ax.set_yticks([0, 1])
+ax.set_yticklabels(['healthy', 'sick'])
+ax.set_xlabel('age')
+```
+
+![image-20210505210106544](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210109_bb.webp)
+
+请注意，如图7.14所示，GP能够很好地适应此数据集，即使数据要求函数比逻辑函数更复杂。对于简单的逻辑回归来说，很好地拟合这个数据是不可能的，除非我们引入一些特殊的修改来帮助它(请参见练习6以了解有关此类修改的讨论)。
+
+
+
+##  7.6 Cox过程 
+
+现在让我们返回到对计数数据建模的示例。我们将看到两个示例；一个具有时变速率，另一个具有2D空间变化速率。为了做到这一点，我们将使用泊松似然，并且将使用高斯过程对速率进行建模。因为泊松分布的速率被限制为正值，所以我们将使用指数作为逆链接函数，就像我们在第4章-推广线性模型中对零膨胀泊松回归所做的那样。
+
+在文献中，可变速率也以强度的名称出现，因此，这种类型的问题被称为强度估计。此外，这种类型的模型通常被称为Cox模型。考克斯模型是泊松过程的一种，其速率本身就是一个随机过程。正如高斯过程是随机变量的集合，其中这些随机变量的每个有限集合都具有多元正态分布一样，泊松过程是随机变量的集合，其中这些随机变量的每个有限集合都具有泊松分布。我们可以把泊松过程看作是在给定空间中的点的集合上的分布。当泊松过程的速率本身是随机过程时，例如，高斯过程，那么我们就有所谓的Cox过程。
+
+### 7.6.1 煤矿灾害
+
+第一个例子被称为煤矿灾难例子。这个例子包括英国从1851年到1962年的煤矿灾难记录。灾难的数量被认为是在此期间受到安全法规变化的影响。我们希望将灾害率建模为时间的函数。我们的数据集只有一列，每个条目都对应于灾难发生的时间。
+
+让我们加载数据并查看它的一些值：
+
+```
+coal_df = pd.read_csv('../data/coal.csv', header=None)
+coal_df.head()
+```
+
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210251_00.webp)
+
+我们将用来拟合COREE_DF数据框中的数据的模型是：
+$$
+\begin{aligned} f(x) & \sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \\ 
+y & \sim \operatorname{Poisson}(f(x)) \end{aligned}
+$$
+如你所见，这是一个泊松回归问题。你可能会想，在这一点上，如果我们只有一个列，只有灾难发生的日期，我们将如何执行回归。答案是将数据离散化，就像我们正在构建直方图一样。我们将使用存储箱的中心作为变量，每个存储箱的计数作为变量：
+
+```
+# discretize data
+years = int(coal_df.max().values - coal_df.min().values)
+bins = years // 4
+hist, x_edges = np.histogram(coal_df, bins=bins)
+# compute the location of the centers of the discretized data
+x_centers = x_edges[:-1] + (x_edges[1] - x_edges[0]) / 2
+# arrange xdata into proper shape for GP
+x_data = x_centers[:, None]
+# express data as the rate number of disaster per year
+y_data = hist / 4
+```
+
+现在我们用PyMC3定义并求解该模型：
+
+```
+with pm.Model() as model_coal:
+    ℓ = pm.HalfNormal('ℓ', x_data.std())
+    cov = pm.gp.cov.ExpQuad(1, ls=ℓ) + pm.gp.cov.WhiteNoise(1E-5)
+    gp = pm.gp.Latent(cov_func=cov)
+    f = gp.prior('f', X=x_data)
+    y_pred = pm.Poisson('y_pred', mu=pm.math.exp(f), observed=y_data)
+    trace_coal = pm.sample(1000, chains=1)
+```
+
+现在我们绘制结果图：
+
+```
+_, ax = plt.subplots(figsize=(10, 6))
+f_trace = np.exp(trace_coal['f'])
+rate_median = np.median(f_trace, axis=0)
+ax.plot(x_centers, rate_median, 'w', lw=3)
+az.plot_hpd(x_centers, f_trace)
+az.plot_hpd(x_centers, f_trace, credible_interval=0.5,
+            plot_kwargs={'alpha': 0})
+ax.plot(coal_df, np.zeros_like(coal_df)-0.5, 'k|')
+ax.set_xlabel('years')
+ax.set_ylabel('rate')
+```
+
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210433_70.webp)
+
+图7.15用白线显示了灾害率的中位数与时间的关系。这些条带表示50%HPD间隔(较深)和94%HPD间隔(较浅)。在底部，我们用黑色记号笔标出了每一场灾难(这有时也被称为地毯图)。正如我们所看到的，事故率随着时间的推移而下降，除了最初的短暂上升。PyMC3文档包括煤矿灾难，但从不同的角度建模。我强烈建议您检查该示例，因为它本身非常有用，而且将其与我们刚刚使用model_Coal模型实现的方法进行比较也很有用。
+
+请注意，即使我们将数据入库，我们也会得到一条平滑的曲线。从这个意义上说，我们可以将MODEL_COIL(通常是这种类型的模型)看作是构建一个直方图，然后对其进行平滑。
+
+### 7.6.2 红杉数据集
+
+现在，我们将把注意力集中在使用红木数据对二维空间问题应用我们刚刚做过的相同类型的模型上。这个数据集(使用GPL许可证分发)来自GPStuff包，这是一个用于Matlab、Octave和R的高斯进程包。该数据集由给定区域上红杉树的位置组成。推论的动机是要找出这一地区的树木比率是如何分布的。
+
+像往常一样，我们加载数据并绘制它：
+
+```
+rw_df = pd.read_csv('../data/redwood.csv', header=None)
+_, ax = plt.subplots(figsize=(8, 8))
+ax.plot(rw_df[0], rw_df[1], 'C0.')
+ax.set_xlabel('x1 coordinate')
+ax.set_ylabel('x2 coordinate')
+```
+
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210601_88.webp)
+
+与煤矿灾难示例一样，我们需要对数据进行离散化：
+
+```
+# discretize spatial data
+bins = 20
+hist, x1_edges, x2_edges = np.histogram2d(
+    rw_df[1].values, rw_df[0].values, bins=bins)
+# compute the location of the centers of the discretized data
+x1_centers = x1_edges[:-1] + (x1_edges[1] - x1_edges[0]) / 2
+x2_centers = x2_edges[:-1] + (x2_edges[1] - x2_edges[0]) / 2
+# arrange xdata into proper shape for GP
+x_data = [x1_centers[:, None], x2_centers[:, None]]
+# arrange ydata into proper shape for GP
+y_data = hist.flatten()
+```
+
+请注意，我们将x1和x2数据视为分开的数据，而不是网格网格。这允许我们为每个坐标构建协方差矩阵，从而有效地减小了计算GP所需的矩阵的大小。在使用LatentKron类定义GP时，我们只需小心。重要的是要注意，这不是一个数字技巧，而是这类矩阵结构的数学属性，因此我们不会在我们的模型中引入任何近似或误差。我们只是用一种更快的计算方式来表达它：
+
+```
+with pm.Model() as model_rw:
+    ℓ = pm.HalfNormal('ℓ',  rw_df.std().values, shape=2)
+    cov_func1 = pm.gp.cov.ExpQuad(1, ls=ℓ[0])
+    cov_func2 = pm.gp.cov.ExpQuad(1, ls=ℓ[1])
+    gp = pm.gp.LatentKron(cov_funcs=[cov_func1, cov_func2])
+    f = gp.prior('f', Xs=x_data)
+    y = pm.Poisson('y', mu=pm.math.exp(f), observed=y_data)
+    trace_rw = pm.sample(1000)
+```
+
+最后，我们绘制结果图：
+
+```
+rate = np.exp(np.mean(trace_rw['f'], axis=0).reshape((bins, -1)))
+fig, ax = plt.subplots(figsize=(6, 6))
+ims = ax.imshow(rate, origin='lower')
+ax.grid(False)
+ticks_loc = np.linspace(0, bins-1, 6)
+ticks_lab = np.linspace(0, 1, 6).round(1)
+ax.set_xticks(ticks_loc)
+ax.set_yticks(ticks_loc)
+ax.set_xticklabels(ticks_lab)
+ax.set_yticklabels(ticks_lab)
+cbar = fig.colorbar(ims, fraction=0.046, pad=0.04)
+```
+
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210705_b5.webp)
+
+
+
+在图7.17中，较浅的颜色意味着比较深的颜色有更高的树木比率。我们可以想象，我们对寻找高增长率地区很感兴趣，因为我们可能对森林是如何从火灾中恢复的感兴趣，或者我们对土壤的性质感兴趣，我们把树木作为代理。
+
+
+
+## 7.7 总结
+
+ 高斯过程是多元高斯分布到无限多维的推广，由均值函数和协方差函数完全指定。因为我们可以在概念上把函数看作无限长的向量，所以我们可以使用高斯过程作为函数的先验。在实践中，我们处理的不是无限大的对象，而是维数与数据点一样多的多变量高斯分布。为了定义相应的协方差函数，我们使用了适当的参数化核；通过学习这些超参数，我们最终了解了任意复杂函数。
 
  这一章中，我们简要介绍了高斯过程，还有许多与之相关的主题 需要学习（比如构建一个半参数化模型，将线性模型作为均值函 数），或者是将两个或者多个核函数组合在一起来描述未知函数，或 者是如何将高斯过程用于分类任务，或者是如何将高斯过程与统计学 或者机器学习中的其他模型联系起来。不管怎么说，我希望本章对高 斯过程的介绍以及本书中一些其他主题的介绍能够激励你阅读、使用 和进一步学习贝叶斯统计。
 
- 310
+ 
 
- **7.5**　深入阅读
+##  7.8 练习
 
- Carl Edward Rasmussen和 Christopher K. I. Williams写的\
- 《Gaussian Processes for Machine Learning》一书。
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210819_20.webp)
 
- Kevin Murhpy的《Machine Learning a Probabilistic Perspective》 中的第4章和第15章。
-
- 《Statistical Rethinking》中的第11章。
-
- 《Bayesian Data Analysis, Third Edition》中的第22章。
-
- 311
-
- **7.6**　练习
-
- 1．在核回归的例子中，尝试修改结的个数以及带宽（一次修改 一个），这些改变有什么效果？尝试只使用一个结，你观察到了什 么？
-
- ![](media/image2426.png){width="1.9990048118985126in" height="0.187419072615923in"}2．用核回归拟合其他函数，比如 或者*y* = *x*。尝试像练习1中那样修改数据和参数的个数。
-
- 3．在前面从高斯过程先验中采样的例子里，增加实例的个数，\
- 将plt.plot(test_points,\
- stats.multivariate_normal.rvs(cov=cov, size=6).T)替换 成plt.plot(test_points,
-
- stats.multivariate_normal.rvs(cov=cov, size=1000).T,\
- alpha=0.05, color=\'b\')。高斯过程的先验是什么样子的？你是否 看出*f* (*x*)分布得像均值为0、标准差为1的高斯分布？
-
- 4．对于一个使用高斯核的高斯过程后验，尝试将测试点定义在 区间\[0,10\]之外，区间外的点有怎样的结果？这告诉我们在外推 （extrapolating）时需要注意什么（特别是非线性函数）？
-
- 5．重复练习4，这次换成周期性核，现在你的结论又是什么？
-
- \[1\]　 在最新版的PyMC3中，已经有该模块了，具体请参考\
- <https://pymc-devs.github.io/ pymc3/examples.html\#gaussian-processes。 ------译者注
-
- 312
-
- 欢迎来到异步社区！
-
- 异步社区的来历
-
- 异步社区([www.epubit.com.cn](http://www.epubit.com.cn))是人民邮电出版社旗下IT专业图书 旗舰社区，于2015年8月上线运营。
-
- 异步社区依托于人民邮电出版社20余年的IT专业优质出版资源和 编辑策划团队，打造传统出版与电子出版和自出版结合、纸质书与电 子书结合、传统印刷与POD按需印刷结合的出版平台，提供最新技术 资讯，为作者和读者打造交流互动的平台。
-
- 313
-
-![](media/image2437.png){width="6.267714348206474in" height="5.320637576552931in"}
-
- 314
-
- 社区里都有什么？
-
- 购买图书
-
- 我们出版的图书涵盖主流IT技术，在编程语言、Web技术、数据 科学等领域有众多经典畅销图书。社区现已上线图书1000余种，电子 书400多种，部分新书实现纸书、电子书同步出版。我们还会定期发
-
- 布新书书讯。
-
- 下载资源
-
- 社区内提供随书附赠的资源，如书中的案例或程序源代码。
-
- 另外，社区还提供了大量的免费电子书，只要注册成为社区用户 就可以免费下载。
-
- 与作译者互动
-
- 很多图书的作译者已经入驻社区，您可以关注他们，咨询技术问 题；可以阅读不断更新的技术文章，听作译者和编辑畅聊好书背后有 趣的故事；还可以参与社区的作者访谈栏目，向您关注的作者提出采 访题目。
-
- 315
-
- 灵活优惠的购书
-
- 您可以方便地下单购买纸质图书或电子图书，纸质图书直接从人 民邮电出版社书库发货，电子书提供多种阅读格式。
-
- 对于重磅新书，社区提供预售和新书首发服务，用户可以第一时 间买到心仪的新书。
-
- ![](media/image2442.png){width="1.0411482939632546in" height="0.15618219597550306in"}用户帐户中的积分可以用于购书优惠。100积分=1元，购买图书 时，在 里填入可使用的积分数值，即可扣减相应金额。
-
- 特别优惠
-
- 购买本电子书的读者专享异步社区优惠券。 使用方法：注册成为社区用户，在下单购 书时输入"**57AWG**"，然后点击"使用优惠码"，即可享受电子书8折优惠（本优惠券只可使 用一次）。
-
- 纸电图书组合购买
-
- 社区独家提供纸质图书和电子书组合购买方式，价格优惠，一次 购买，多种阅读选择。
-
- 316
-
-![](media/image2456.png){width="6.267714348206474in" height="4.144058398950131in"}
-
- 317
-
- 社区里还可以做什么？
-
- 提交勘误
-
- 您可以在图书页面下方提交勘误，每条勘误被确认后可以获得\
- 100积分。热心勘误的读者还有机会参与书稿的审校和翻译工作。
-
- 写作
-
- 社区提供基于Markdown的写作环境，喜欢写作的您可以在此一\
- 试身手，在社区里分享您的技术心得和读书体会，更可以体验自出版
-
- 的乐趣，轻松实现出版的梦想。
-
- 如果成为社区认证作译者，还可以享受异步社区提供的作者专享 特色服务。
-
- 会议活动早知道
-
- 您可以掌握IT圈的技术会议资讯，更有机会免费获赠大会门票。
-
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210830_d3.webp)
