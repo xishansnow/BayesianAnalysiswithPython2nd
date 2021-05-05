@@ -99,12 +99,12 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter02-ProgrammingProbabilistically.html">
-   第2章　概率编程
+   第2章 概率编程
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   第3章　利用线性回归模型理解并预测数据
+   第3章 利用线性回归模型理解并预测数据
   </a>
  </li>
  <li class="toctree-l1">
@@ -118,12 +118,12 @@
    <strong>
     5
    </strong>
-   章　模型比较
+   章 模型比较
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter06-MixtureModels.html">
-   第6章　混合模型
+   第6章 混合模型
   </a>
  </li>
  <li class="toctree-l1">
@@ -276,7 +276,7 @@
               <div>
                 
   <div class="section" id="id1">
-<h1>第3章　利用线性回归模型理解并预测数据<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1>第3章 利用线性回归模型理解并预测数据<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>音乐-从古典作品到Sheena是雷蒙斯乐队的朋克摇滚乐，经过车库乐队不为人知的热门歌曲和Piazzolla的自由探戈-是由反复出现的模式制成的。同样的音阶、和弦组合、即兴小品、主题等等一遍又一遍地出现，形成了一幅美妙的声音景观，能够激发和调节人类可以体验到的全部情感。以类似的方式，统计和机器学习的世界建立在重复出现的模式上，这些模式是时不时出现的小主题。</p>
 <p>在本章中，我们将介绍其中最流行、最有用的一种模型–线性模型。其本身就是非常有用的模型，也是许多其他模型的基础。如果你学过统计学课程，你可能听说过简单线性回归、多元线性回归、逻辑回归、方差分析、方差分析等。所有这些方法都是同一基本主题–线性回归模型的变体。在本章中，我们将介绍以下主题：</p>
 <ul class="simple">
@@ -720,7 +720,7 @@ plt.xlim(x_m.min()-1, x_m.max()+1)</p>
 <p>k += N</p>
 <p>plt.tight_layout()</p>
 <p>![](C:/Program Files/Typora/media/image1448.png){width=”5.643024934383202in” height=”2.686349518810149in”}</p>
-<p>3.3.1　相关性与因果性</p>
+<p>3.3.1 相关性与因果性</p>
 <p>现在假设已经知道了当地的太阳辐射量，我们想要预测冬天家里 的燃气费。在该问题中，太阳的辐射量是自变量<em>x</em>，燃气费是因变 量<em>y</em>。当然，我们完全可以将问题反过来，根据燃气费推算太阳辐射 量，一旦我们建立了一种线性关系（或者其他什么关系），我们就可 以根据<em>x</em>得出<em>y</em>，或者反过来这么做。我们称一个变量为自变量是因为 它的值不是从模型中预测出来的，而是作为模型的输入，相应的因变 量作为模型的输出。当我们说一个变量依赖于另一个变量的时候，这 其中的依赖关系是由模型决定的。</p>
 <p>我们建立的并不是变量之间的因果关系，即并不是说<em>x</em>导致了<em>y</em>。 永远要记住这句话：相关性并不意味着因果关系。就该话题多说一 点，我们可能根据家中的燃气费预测出太阳辐射量或者反过来根据太</p>
 <p>160</p>
@@ -777,14 +777,14 @@ plt.ylabel(‘$y$’, fontsize=16, rotation=0)</p>
 <p>plt.plot(x_p, y_p, c=’r’)</p>
 <p>165</p>
 <p>![](C:/Program Files/Typora/media/image1475.png){width=”5.643024934383202in” height=”3.790042650918635in”}</p>
-<p>3.3.1　解释多项式回归的系数</p>
+<p>3.3.1 解释多项式回归的系数</p>
 <p>多项式回归的问题之一在于参数的可解释性。如果我们想知道<em>y</em><br />
 相对于<em>x</em>的变化量，不能只看<em>β</em>~1~，因为<em>β</em>~2~和更高项的系数对其也有影 响。因此，系数<em>β</em>的值不再表示斜率。前面的例子中<em>β</em>~1~是正数，因而 曲线是以一个大于0的斜率开始的，不过由于<em>β</em>~2~是负数，因而随后曲</p>
 <p>线的斜率开始下降。这看起来就好像有两股力量，一个使直线向上， 另一个使直线向下，二者相互作用的结果取决于<em>x</em>，当<em>x~i~</em>&lt;～11时，<em>β</em>~1~ 起决定作用，而当<em>x~i~</em>\～11时，<em>β</em>~2~起决定作用。</p>
 <p>如何解释参数不仅仅是个数学问题，因为我们可以通过仔细检查 和理解模型来解决该问题。不过许多情况下，参数并不能根据我们 的领域知识转换成有意义的量，我们无法将其与细胞的新陈代谢速率 或者恒星释放的能量或者房间里的卧室数联系起来。它们只是些没有 物理意义的参数。这样一个模型或许对于预测很有用，不过对于理解 数据在底层是如何生成的并没有多大帮助。而且在实际中，超过2阶</p>
 <p>166</p>
 <p>或者3阶的多项式模型并没有多大用途，我们更倾向于使用一些其他 模型，这部分将在后面的章节中讨论。</p>
-<p>3.3.2　多项式回归——终极模型？<br />
+<p>3.3.2 多项式回归——终极模型？<br />
 我们知道，直线可以看作是当<em>β</em>~2~为0时的抛物线的子模型，还可</p>
 <p>以看作是<em>β</em>~2~和<em>β</em>~3~都为0时的3次方模型的子模型。显然，抛物线模型也 可以看作是当<em>β</em>~3~为0时3次方模型的子模型……这意味着有一种算法可</p>
 <p>以使用线性回归模型去拟合任意复杂的模型，我们先构建一个无限高 阶的多项式，然后将其中的大部分参数置零，直到我们得到对数据的 完美拟合。为了验证该想法，你可以从简单的例子开始，用刚刚构 建的2次模型去拟合安斯库姆四重奏的第3个数据集。</p>
@@ -873,7 +873,7 @@ pm.traceplot(trace_mlr, varnames)</p>
 | epsilon | 0.47 | 0.03 | 3.63e-04 | 0.41 | 0.54 |
 +———–+——+——+———-+——+——+</p>
 <p>可以看到，模型能够重现正确的值（对比生成数据用的值）。接 下来，我们将重点关注在分析多变量线性回归模型中需要注意的点， 特别是对斜率的解释。这里需要特别提醒的是：每个参数只有在整体 考虑了其他参数的情况下才有意义。</p>
-<p>3.5.1　混淆变量和多余变量</p>
+<p>3.5.1 混淆变量和多余变量</p>
 <p>设想这样一种情况：有一个变量<em>z</em>与预测变量<em>x</em>相关，同时还与另 一个被预测的变量<em>y</em>相关。假设<em>z</em>对<em>x</em>和<em>y</em>都有影响，例如，<em>z</em>可以是工 业革命（一个相当复杂的变量），<em>x</em>是海盗的数量，<em>y</em>是二氧化碳浓 度。如果在分析中将<em>z</em>去掉，我们会得出结论：<em>x</em>与<em>y</em>之间有着完美的 线性相关性，我们甚至可以通过<em>x</em>预测<em>y</em>。不过，如果我们关注的重点 是如何缓解全球变暖问题，那么可能完全没搞清到底发生了什么以及 其内在机制是什么。记住，前面已经讨论了相关性并不意味着因果关 系，原因是我们可能在分析过程中忽略了变量<em>z</em>。这种情况下，<em>z</em>称作 混淆变量，或者是混淆因素。问题是在很多情况下，<em>z</em>很容易被忽 略。也许是因为我们压根没有测量<em>z</em>，或者是因为没有包含在传给我 们的数据集中，又或者是因为我们压根没想到它可能与我们的问题有 联系。没有考虑到混淆变量可能会导致我们的分析得出奇怪的相关 性，在解释数据和做预测（有时候我们不关心内在的机制）的时候， 这可能是个问题。理解底层的机制有利于将学到的东西迁移到新的场</p>
 <p>172</p>
 <p>景中，相反，盲目的预测很难迁移。例如，帆布鞋产量可以作为一个 国家经济实力的易测指标，不过对于生产链不同或者文化背景不同的 国家而言，这可能是个糟糕的指标。</p>
@@ -919,7 +919,7 @@ beta = pm.Normal(‘beta’, mu=0, sd=10, shape=2) epsilon = pm.HalfCauchy(‘ep
 <p>问，这3种情况下beta系数的均值有多大区别？如果你做了实验，就<br />
 会注意到，对于<em>β</em>~2~的值，多元线性回归模型中得到的要比一元线性回 归模型得到的更低。换句话说，当<em>x</em>~1~加入到模型中之后，<em>x</em>~2~对模型的</p>
 <p>解释性降低了（甚至降为0）。</p>
-<p>3.5.2　多重共线性或相关性太高</p>
+<p>3.5.2 多重共线性或相关性太高</p>
 <p>前面的例子中，我们看到了多元线性回归模型是如何处理冗余变 量的，同时还了解了混淆变量的重要性。接下来我们沿着前面的例子 继续深入学习当两个变量高度相关时会发生什么。为了研究该问题 及其对推断的影响，我们使用和前面一样的合成数据和模型，不过通 过减小根据<em>x</em>~1~生成<em>x</em>~2~时的随机噪声，增加了<em>x</em>~1~和<em>x</em>~2~之间的相关性：</p>
 <p>x_2 = x_1 + np.random.normal(size=N, scale=0.01)</p>
 <p>上面这行代码相当于对<em>x</em>~1~增加了一个很小的扰动，因而得到的两</p>
@@ -958,7 +958,7 @@ beta = pm.Normal(‘beta’, mu=0, sd=10, shape=2) epsilon = pm.HalfCauchy(‘ep
 常会对结果的可解释性造成模糊。</p>
 <p>还有一种办法是给变量可能的取值设置一个较强的先验。在第6<br />
 章中我们会简要讨论如何选择这类先验（通常称作正则先验）。</p>
-<p>3.5.3　隐藏的有效变量</p>
+<p>3.5.3 隐藏的有效变量</p>
 <p>有一种情况与前面见过的类似，其中某个变量与预测变量正相关 而另外一个与预测变量负相关。这里先构建一些玩具数据来说明。</p>
 <p>N = 100<br />
 r = 0.8<br />
@@ -988,7 +988,7 @@ beta = pm.Normal(‘beta’, mu=0, sd=10, shape=2) epsilon = pm.HalfCauchy(‘ep
 <p>增加时<em>x</em>~2~也增加，而当<em>x</em>~2~增加时<em>y</em>也降低，因此如果单独看变量<em>x</em>~1~而忽 略<em>x</em>~2~的话，我们会看到当<em>x</em>~1~增加的时候，<em>y</em>几乎不增加，而当<em>x</em>~2~增加</p>
 <p>时，<em>y</em>几乎不降低。因变量之间具有相关性，每个因变量都有反作<br />
 用，因而忽略其中任何一个都会造成对变量影响力的低估。</p>
-<p>3.5.4　增加相互作用</p>
+<p>3.5.4 增加相互作用</p>
 <p>目前为止，所有多元回归模型的定义中，在其他预测变量固定的 条件下，<em>x</em>~1~的变化都会（隐式地）带来<em>y</em>的稳定变化。不过这显然并 非一定的，有可能改变<em>x</em>~2~之后，原来<em>y</em>与<em>x</em>~1~之间的关系发生了改变。一</p>
 <p>个经典的例子是药物之间的相互作用，例如，在没有使用药物B（或 者药物B的剂量较低）时，增加药物A的剂量有正向影响，而当增加<br />
 药物B的剂量时，药物A反而有负向（甚至致命的）影响。</p>
@@ -1010,7 +1010,7 @@ beta = pm.Normal(‘beta’, mu=0, sd=10, shape=2) epsilon = pm.HalfCauchy(‘ep
 <p>的似然，后面我们会将该模型扩展到其他分布。我们还处理了一些计 算方面的问题，以及如何通过中心化和（或）标准化数据解决问题， 还有幸见识到了NUTS相比Metropolis的优势。</p>
 <p>在一元线性模型中，我们应用了多层模型，同时探讨了如何使用 多项式回归拟合曲线以及这类模型的一些问题。此外，还讨论了如何 用多个参数构建线性回归模型，解释线性模型中的一些注意事项，下 一章我们将学习如何扩展线性回归模型并用于分类问题。</p>
 <p>184</p>
-<p>3.8　深入阅读</p>
+<p>3.8 深入阅读</p>
 <p>《Statistical Rethinking》中的第4章和第5章。</p>
 <p>《Doing Bayesian Data Analysis, Second Edition》中的第17章和第 18章。</p>
 <p>《An Introduction to Statistical Learning》中的第4章。</p>
@@ -1019,7 +1019,7 @@ beta = pm.Normal(‘beta’, mu=0, sd=10, shape=2) epsilon = pm.HalfCauchy(‘ep
 <p>《Data Analysis Using Regression and Multilevel/Hierarchical<br />
 Models》一书。</p>
 <p>185</p>
-<p>3.9　练习</p>
+<p>3.9 练习</p>
 <p>（1）选一个你觉得有意思的数据集并用一元线性回归去拟合。 用不同的方法重跑一遍，重新画图并计算出皮尔逊相关系数。如果没</p>
 <p>有合适的数据，可以上网找一下，网址为：&lt;<a class="reference external" href="http://data.worldbank.org/">http://data.worldbank.org/</a><br />
 或者&lt;<a class="reference external" href="http://www.stat.ufl.edu/~winner/datasets.html">http://www.stat.ufl.edu/~winner/datasets.html</a><a class="reference external" href="http://www.stat.ufl.edu/~winner/datasets.html%E3%80%82">。</a></p>
@@ -1041,8 +1041,8 @@ find_MAP()，能否观察到这样做的优势？</p>
 &lt;<a class="reference external" href="https://pymc-devs.github.io/pymc3/notebooks/GLM-robust.html">https://pymc-devs.github.io/pymc3/notebooks/GLM-robust.html</a><br />
 &lt;<a class="reference external" href="https://pymc-devs.github.io/pymc3/notebooks/GLM-hierarchical.html">https://pymc-devs.github.io/pymc3/notebooks/GLM-hierarchical.html</a></p>
 <p>（8）运行多元线性回归模型部分的练习。</p>
-<p>[1] 　Machine Learning: a Probabilistic Perspective 一书的作者。—— 译者注</p>
-<p>[2] 　Wishart distribution虽然是协方差矩阵的共轭先验，在MCMC中 它的混合度很差而且很难从中准确采样，我们推荐使用LKJCorr 或<br />
+<p>[1]  Machine Learning: a Probabilistic Perspective 一书的作者。—— 译者注</p>
+<p>[2]  Wishart distribution虽然是协方差矩阵的共轭先验，在MCMC中 它的混合度很差而且很难从中准确采样，我们推荐使用LKJCorr 或<br />
 LKJCholeskyCov作为协方差矩阵的先验。——译者注</p>
 <p>187</p>
 </div>
@@ -1073,7 +1073,7 @@ LKJCholeskyCov作为协方差矩阵的先验。——译者注</p>
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="chapter02-ProgrammingProbabilistically.html" title="previous page">第2章　概率编程</a>
+    <a class='left-prev' id="prev-link" href="chapter02-ProgrammingProbabilistically.html" title="previous page">第2章 概率编程</a>
     <a class='right-next' id="next-link" href="chapter04-GeneralizedLinearRegression.html" title="next page">第4章 利用Logistic 回归 对结果进行分类</a>
 
         </div>

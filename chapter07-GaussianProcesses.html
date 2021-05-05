@@ -96,12 +96,12 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter02-ProgrammingProbabilistically.html">
-   第2章　概率编程
+   第2章 概率编程
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter03-ModellingwithLinearRegression.html">
-   第3章　利用线性回归模型理解并预测数据
+   第3章 利用线性回归模型理解并预测数据
   </a>
  </li>
  <li class="toctree-l1">
@@ -115,12 +115,12 @@
    <strong>
     5
    </strong>
-   章　模型比较
+   章 模型比较
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter06-MixtureModels.html">
-   第6章　混合模型
+   第6章 混合模型
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -194,6 +194,19 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   7.1 线性模型和非线性数据
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -204,19 +217,22 @@
                 
   <div class="section" id="id1">
 <h1>第7章　高斯过程<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>目前为止我们见过的所有模型都是参数化的模型，这些模型包含 固定个数的参数。此外还有一类模型称为非参模型，在非参模型中， 参数的个数是随着数据大小变化的，换句话说，模型中潜在着无限多 个参数，我们通过某种方式将其减少到某个值，从而正好能够用来描 述全部数据。这一章中，我们将学习核函数的概念，以及如何从核函 数的角度重新思考问题。高斯分布是统计学中的核心内容，不仅仅是 对传统的方法，对于贝叶斯统计学和机器学习也是如此。我们将以高 斯分布为例子，探讨如何将高斯模型的概念扩展到无限多维，并学习 这类描述函数的概率分布。尽管这么做一开始看起来有点奇怪，不过 好处是可以通过参数化的核函数来推断函数。</p>
+<p>在上一章中，我们学习了Dirichlet过程，它是Dirichlet分布的无限维推广，可用于设置未知连续分布的先验。在本章中，我们将学习高斯过程，这是高斯分布的无限维推广，可用于设置未知函数的先验。在贝叶斯统计中，Dirichlet过程和Gauss过程都被用来建立灵活的模型，其中允许参数的数量随着数据的大小而增加。</p>
 <p>本章我们将学习：</p>
-<p>非参统计；</p>
-<p>核函数；</p>
-<p>核函数回归；<br />
-高斯过程以及函数的先验。</p>
-<p>285</p>
-<p><strong>8.1</strong>　非参统计</p>
+<ul class="simple">
+<li><p>函数作为概率对象</p></li>
+<li><p>核</p></li>
+<li><p>具有高斯似然的高斯过程</p></li>
+<li><p>具有非高斯似然的高斯过程</p></li>
+</ul>
+<div class="section" id="id2">
+<h2>7.1 线性模型和非线性数据<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><strong>7.1</strong>　非参统计</p>
 <p>非参统计通常用来描述一类不依赖于参数化概率分布的统计工<br />
 具/模型。根据这个定义，贝叶斯统计似乎不可能是非参的，因为前</p>
 <p>面我们学到过，贝叶斯统计的第一步就是在概率模型中准确地将概率 分布组合在一起。第1章中说过，概率分布是构建概率模型的基石。 在贝叶斯框架中，非参模型是指包含有无限多参数的模型，因此，我 们将参数可以随着数据大小而变化的模型称作非参数化模型。对于非 参数化模型而言，理论上其参数个数是无限的，实际使用中会根据数 据将其收缩到一个有限的值，从而让数据本身来决定参数的个数。</p>
 <p>286</p>
-<p><strong>8.2</strong>　基于核函数的模型</p>
+<p><strong>7.2</strong>　基于核函数的模型</p>
 <p>核函数方法相关的研究是一个非常高产而且活跃的领域，有许多 书讨论这个主题，其流行也是因为核函数具有一些有趣的数学特点。 这里只需要知道，核函数可以作为非线性模型的基础，并且相对来说 比较容易计算。比较流行的核函数方法有两种：支持向量机</p>
 <p>（Support Vector Machine，SVM）和高斯过程。后者是一种概率方<br />
 法，也正是本章将要介绍的主题，前者不是概率的方法，这里不做深 入讨论，你可以阅读Jake Vanderplas写的《Python Data Science<br />
@@ -225,15 +241,12 @@ Bayesian Analysis with Python》这两本书了解更多。在继续深入之<br
 前，我们先了解一下什么是核以及如何使用。</p>
 <p>你可能会发现，在统计学中，核函数的定义不止一种，并且根据 定义的不同，核函数的数学特性也有所不同。结合本章讨论的目的， 这里将核函数看作是一个对称函数，接受两个输入并返回一个永远为 正数的值，从而可以将核函数的输出看作是两个输入变量之间的相似 度。</p>
 <p>核函数有许多种，其中某些经过特殊改造后能很好地用于解决图 像识别、文档分析等问题，还有些核函数适用于对周期性的函数建 模。有一个核函数在统计学和机器学习中非常流行，叫做高斯核，也 称作高斯径向基函数。</p>
-<p><strong>8.2.1</strong>　高斯核函数</p>
+<p><strong>7.2.1</strong>　高斯核函数</p>
 <p>高斯核函数的定义如下：</p>
-<p>287</p>
-<p><img alt="" src="media/image2229.png" />{width=”2.488344269466317in” height=”0.5726706036745407in”}</p>
-<p><img alt="" src="media/image2230.png" />{width=”0.6975688976377953in” height=”0.21865594925634296in”}其中称为欧氏距离的平方（Squared Euclidean Distance， SED），对于一个<em>n</em>维的空间，我们有：</p>
-<p><img alt="" src="media/image2231.png" />{width=”4.508172572178478in” height=”0.2394805336832896in”}</p>
+<p>其中称为欧氏距离的平方（Squared Euclidean Distance， SED），对于一个<em>n</em>维的空间，我们有：</p>
 <p>注意，如果计算欧几里得距离的话需要求平方根。SED并不满足 三角不等式，因而并不是真实的距离，不过在许多常见的问题中，我 们只需要对不同的SED进行比较，例如，计算一些点中的最小欧氏距 离等价于找到最小的SED。</p>
-<p><img alt="" src="media/image2232.png" />{width=”0.6142771216097987in” height=”0.15618219597550306in”}有一点不太明显，高斯核函数与高斯分布的数学形式其实有一些 相似之处，将常数项去掉之后，可以得到，其中，<em>w</em>控制着核 函数的宽度，在这里正比于方差，因而有时候也称作带宽。</p>
-<p><strong>8.2.2</strong>　核线性回归</p>
+<p>有一点不太明显，高斯核函数与高斯分布的数学形式其实有一些 相似之处，将常数项去掉之后，可以得到，其中，<em>w</em>控制着核 函数的宽度，在这里正比于方差，因而有时候也称作带宽。</p>
+<p><strong>7.2.2</strong>　核线性回归</p>
 <p>前面我们学习了线性回归模型的基本形式：</p>
 <p><img alt="" src="media/image2233.png" />{width=”1.0932053805774278in” height=”0.187419072615923in”}</p>
 <p><img alt="" src="media/image2234.png" />{width=”0.10411417322834646in” height=”0.10412182852143483in”}其中， 是噪声或者误差，通常是高斯分布。</p>
@@ -244,7 +257,7 @@ Bayesian Analysis with Python》这两本书了解更多。在继续深入之<br
 <p>288</p>
 <p>于2次或3次以上的多项式回归）。此外我们还学习了如何将多项式回 归用于非线性数据的建模过程中。</p>
 <p>这里我们将多项式回归表示成如下形式：</p>
-<p><img alt="" src="media/image2238.png" />{width=”1.2597889326334208in” height=”0.2707163167104112in”}</p>
+<p><img alt="" src="media/image2237.png" />{width=”1.2597889326334208in” height=”0.2707163167104112in”}</p>
 <p>其中，<em>φ</em>函数表示一系列阶数逐渐增加的多项式，将向量<em><strong>x</strong></em>转成矩 阵后，矩阵的每一列都是向量<em><strong>x</strong></em>的幂次（逐渐增加），从而有效地将 数据映射到了更高维度的空间中，然后再从高维空间中找到一条直线 去拟合数据，最后将该直线投影回原始的低维空间时，不一定仍然是 直线，而有可能是一条曲线。整个过程通常称作将输入投影到特征空 间。</p>
 <p>函数<em>φ</em>不一定是多项式，还有其他形式的函数将输入向量映射到 （高维的）特征空间中，在此条件下，除了使用<em>φ</em>函数之外，我们还 可以将其替换成一个核函数。尽管在数学形式上是等价的，使用核函</p>
 <p>数会让计算更容易一些，这通常称作核函数技巧。这也是为什么核函 数是许多统计学方法和机器学习方法中的核心概念的主要原因，而特 征空间的概念在实际中反而不那么重要了（尽管在学习核函数方法的 时候还是能提供一些直观的解释）。</p>
@@ -276,7 +289,7 @@ plt.ylabel(‘$f(x)$’, fontsize=16, rotation=0)</p>
 <p>有时候将模型表示成线性回归更合理，对应的数学形式如下：</p>
 <p><img alt="" src="media/image2267.png" />{width=”2.51957895888014in” height=”0.35401465441819774in”}</p>
 <p>不过这里我们将省略截距<em>α</em>和斜率<em>β</em>，只保留最后一项。这里使用 柯西分布作为先验，稍后我们会讨论在使用核函数方法过程中选择先 验的一些关键点，现在先运行如下模型：</p>
-<p><img alt="" src="media/image2268.png" />{width=”3.818897637795276e-2in” height=”0.8399300087489063in”}with pm.Model() as kernel_model:</p>
+<p><img alt="" src="media/image2267.png" />{width=”3.818897637795276e-2in” height=”0.8399300087489063in”}with pm.Model() as kernel_model:</p>
 <p>gamma = pm.Cauchy(‘gamma’, alpha=0, beta=1, shape=n_knots) sd = pm.Uniform(‘sd’,0, 10)</p>
 <p>mu = pm.math.dot(gamma, gauss_kernel(x, n_knots))</p>
 <p>291 <img alt="" src="media/image2271.png" />{width=”2.7777777777777776e-2in” height=”2.7777777777777776e-2in”}</p>
@@ -303,9 +316,9 @@ plt.plot(new_x, y_pred, ‘r-‘, alpha=0.1)<br />
 plt.xlabel(‘$x$’, fontsize=16)</p>
 <p>plt.ylabel(‘$f(x)$’, fontsize=16, rotation=0)</p>
 <p>plt.plot(x, y, ‘bo’);</p>
-<p><img alt="" src="media/image2288.png" />{width=”5.01833552055993in” height=”3.373555336832896in”}</p>
+<p><img alt="" src="media/image2287.png" />{width=”5.01833552055993in” height=”3.373555336832896in”}</p>
 <p>图中我们用蓝色的点表示数据，用红色的线表示拟合的曲线。你 可能会想要修改带宽和结的个数来看看模型的效果，本章的练习1中 有相关问题的描述，此外本章的练习2中还会探讨拟合另外一类函数 的效果。</p>
-<p><strong>8.2.3</strong>　过拟合与先验</p>
+<p><strong>7.2.3</strong>　过拟合与先验</p>
 <p>对于使用核函数方法的模型而言，人们常常关心的一点是如何选 择结的个数以及位置。一种方法是直接选择数据点作为结，即将高斯 分布放在数据点上，这里可以回想一下前面用过的KDE作图方法。</p>
 <p>293</p>
 <p>另外一种做法是，在建模过程中决定结的个数和位置。这种做法<br />
@@ -315,7 +328,7 @@ plt.xlabel(‘$x$’, fontsize=16)</p>
 <p><img alt="" src="media/image2291.png" />{width=”0.10411417322834646in” height=”0.13535761154855644in”}可能——0或者1。采用这种方法，我们可以决定模型中对应系数的开 和关。不过这种方法的一个问题是，只对低维度的问题有效，因为可 能的索引组合是系数个数的2*^n^*倍。一种替代方案是使用正则先验，我 们希望先验集中在0附近，从而将系数拉向0，同时让具有长尾，从 而避免拉得太厉害了。一种正则先验是柯西分布，另外一种是拉普拉 斯分布。回忆一下第6章中我们讨论过的正则先验——岭回归和</p>
 <p>LASSO回归。</p>
 <p>294</p>
-<p><strong>8.3</strong>　高斯过程</p>
+<p><strong>7.3</strong>　高斯过程</p>
 <p>前面简要介绍了如何用核函数构建统计模型去描述任意函数。也 许核函数回归听起来好像有点带有技巧性，而且其中需要指定结的个 数以及分布，这似乎有点问题。现在，我们将从另外一个角度使用核 函数，直接在函数空间做推断，该方法基于高斯过程，在数学上和计 算量方面都更受欢迎。</p>
 <p>在解释高斯过程之前，先想想什么是函数？函数可以看作是输入 到输出之间的映射关系。一种学习该映射的方法是将其限定为一条直 线，如我们在第4章做的那样，然后用贝叶斯的知识去推断出决定那</p>
 <p>条直线的参数。不过假设我们不希望将其限定为一条直线，也可以是 任意可能的函数。通常在贝叶斯统计中，对于一个不知道的量，我们 先给其设置一个先验，因此，在我们不知道怎样的函数才是一个对数 据拟合得很好的模型时，我们需要对函数设置一个先验。有趣的是， 多元高斯就是这样一个先验（实际上是一个与之相似的东西，不过我 们暂且这么认为），可以用一个多元高斯从很宽泛的（但很有用的） 角度来描述一个函数。我们认为对于每个变量*x~i~*都存在一个高斯变量</p>
@@ -329,7 +342,7 @@ plt.xlabel(‘$x$’, fontsize=16)</p>
 <p><img alt="" src="media/image2297.png" />{width=”0.45810476815398077in” height=”0.187419072615923in”}总结一下，前面几章中，我们学习了如何估计，比如，在<br />
 线性回归中我们假设 ，其中，<em>f</em>是一个线性模型，然后估计</p>
 <p><img alt="" src="media/image2299.png" />{width=”0.5726312335958005in” height=”0.187419072615923in”}线性模型的参数。也就是说，我们是一个线性模型，并估计出 了其中的参数，从而得到了，后面将会看到，我们仍然需要估 计参数，不过从概念上讲，我们是在直接处理函数，这样思考更容易 理解一些。</p>
-<p><strong>8.3.1</strong>　构建协方差矩阵</p>
+<p><strong>7.3.1</strong>　构建协方差矩阵</p>
 <p>在实践中，高斯过程的均值函数通常设为0（尽管这并非一定<br />
 的），因而高斯过程的整个行为都受协方差矩阵的控制，所以这里重</p>
 <p>点关注如何构建协方差函数。</p>
@@ -368,7 +381,7 @@ plt.ylabel(‘$f(x)$’, fontsize=16, rotation=0)</p>
 <p><img alt="" src="media/image2233.png" />{width=”1.0932053805774278in” height=”0.187419072615923in”}</p>
 <p><img alt="" src="media/image2317.png" />{width=”0.8641524496937882in” height=”0.187419072615923in”}其中，误差项通过 建模。</p>
 <p>因此协方差矩阵的构成需要考虑到有噪声的数据，于是有：</p>
-<p><img alt="" src="media/image2318.png" />{width=”2.2801148293963256in” height=”0.20824365704286965in”}</p>
+<p><img alt="" src="media/image2317.png" />{width=”2.2801148293963256in” height=”0.20824365704286965in”}</p>
 <p>其中：</p>
 <p><img alt="" src="media/image2319.png" />{width=”1.1973206474190725in” height=”0.5101979440069991in”}</p>
 <p><img alt="" src="media/image2320.png" />{width=”0.176994750656168in” height=”0.1770067804024497in”}称作delta分布，也就是说，我们通过将协方差矩阵的对角线上 的值设置为不是正好等于1的值来对噪声建模，事实上，我们是直接 从数据中估计出对角线上的值。这么做相当于给模型加入了一个扰动 项，之所以加入该项是因为，在核函数所附带的假设中，两个输入越 接近，对应的输出也越接近，极限情况下，两个输入完全相等，它们</p>
@@ -386,10 +399,10 @@ plt.ylabel(‘$f(x)$’, fontsize=16, rotation=0)</p>
 <p>plt.plot(test_points, stats.multivariate_normal.rvs(cov=cov)) plt.xlabel(‘$x$’, fontsize=16)</p>
 <p>plt.ylabel(‘$f(x)$’, fontsize=16, rotation=0)</p>
 <p><img alt="" src="media/image2326.png" />{width=”5.01833552055993in” height=”3.4047911198600174in”}</p>
-<p><strong>8.3.2</strong>　根据高斯过程做预测</p>
+<p><strong>7.3.2</strong>　根据高斯过程做预测</p>
 <p>300</p>
 <p>接下来学习如何用高斯过程做预测。高斯过程的一个优点就是结 果可以从数学分析上直接推导。如果将高斯过程先验与高斯似然组合 在一起，我们得到的是一个高斯过程后验。也就是说，如果在一些测 试点上应用条件高斯，我们可以得到如下后验预测密度的表达式：</p>
-<p><img alt="" src="media/image2328.png" />{width=”2.623694225721785in” height=”0.8954494750656168in”}</p>
+<p><img alt="" src="media/image2327.png" />{width=”2.623694225721785in” height=”0.8954494750656168in”}</p>
 <p>在给定数据<em><strong>X</strong></em>、<em><strong>y</strong></em>以及一些测试点<em><strong>x</strong></em>~*~条件下，计算未知函数在（暂 时）未知的点上的值<em>f</em> (<em><strong>x</strong></em>~*~)。注意，这里我们使用符号*来表示所有测</p>
 <p>试点上的运算，其中：</p>
 <p><em><strong>K</strong></em>=<em>K</em>(<em><strong>X</strong></em>,<em><strong>X</strong></em>)</p>
@@ -460,7 +473,7 @@ plt.plot(x, y, ‘o’)</p>
 plt.ylabel(‘$f(x)$’, fontsize=16, rotation=0)</p>
 <p><img alt="" src="media/image2349.png" />{width=”5.01833552055993in” height=”3.3319061679790027in”}</p>
 <p>这里我们将数据点用蓝色的点来表示，均值函数是一条红线，不 确定性用半透明的区域来表示。</p>
-<p><strong>8.3.3</strong>　用<strong>PyMC3</strong>实现高斯过程</p>
+<p><strong>7.3.3</strong>　用<strong>PyMC3</strong>实现高斯过程</p>
 <p>305</p>
 <p>总结一下，我们有如下高斯先验：</p>
 <p><img alt="" src="media/image2351.png" />{width=”2.946450131233596in” height=”0.19783136482939634in”}</p>
@@ -484,7 +497,7 @@ sigma = pm.HalfCauchy(‘sigma’, 5)</p>
 <p>obs = pm.MvNormal(‘obs’, mu, tt.nlinalg.matrix_inverse(K), observed =y)</p>
 <p>test_points = np.linspace(0, 10, 100)</p>
 <p>306</p>
-<p><img alt="" src="media/image2358.png" />{width=”2.7777777777777776e-2in” height=”2.7777777777777776e-2in”} D_pred = squared_distance(test_points, test_points) D_off_diag = squared_distance(x, test_points)</p>
+<p><img alt="" src="media/image2357.png" />{width=”2.7777777777777776e-2in” height=”2.7777777777777776e-2in”} D_pred = squared_distance(test_points, test_points) D_off_diag = squared_distance(x, test_points)</p>
 <p>K_oo = eta * pm.math.exp(-rho * D_pred)<br />
 K_o = eta * pm.math.exp(-rho * D_off_diag)</p>
 <p>mu_post = pm.Deterministic(‘mu_post’, pm.math.dot(pm.math.dot(K_o, tt.nlinalg.matrix_inverse(K)), y))</p>
@@ -515,7 +528,7 @@ pm.traceplot(chain, varnames)</p>
 <p>plt.plot(x, y, ‘bo’)</p>
 <p>plt.xlabel(‘$x$’, fontsize=16)<br />
 plt.ylabel(‘$f(x)$’, fontsize=16, rotation=0)</p>
-<p><img alt="" src="media/image2408.png" />{width=”5.01833552055993in” height=”3.279844706911636in”}</p>
+<p><img alt="" src="media/image2407.png" />{width=”5.01833552055993in” height=”3.279844706911636in”}</p>
 <p>周期核函数</p>
 <p>前一幅图中，你可能注意到了，我们可以很好地拟合sin函数，</p>
 <p>308</p>
@@ -528,19 +541,19 @@ plt.ylabel(‘$f(x)$’, fontsize=16, rotation=0)</p>
 <p>在这个模型中，我们需要将squared_distance替换成这个周期 函数。 运行模型之后，你应该会得到类似下面的图：</p>
 <p><img alt="" src="media/image2415.png" />{width=”5.01833552055993in” height=”3.279844706911636in”}</p>
 <p>309</p>
-<p><strong>8.4</strong>　总结</p>
+<p><strong>7.4</strong>　总结</p>
 <p>本章一开始，我们学习了贝叶斯框架下的非参统计，以及如何用 核函数表示统计学中的问题，例如，我们用一种采用核函数的线性回 归去建模了非线性输出，随后继续讨论了另外一种构建和理解核函数 方法的方式——高斯过程。</p>
 <p>高斯过程是多元高斯分布扩展到无限多维时的一种一般形式，可 以用一个均值函数和一个协方差函数来描述。由于从概念上我们可以 将函数看作无限长的向量，因而可以将高斯过程作为函数先验。实践 中，我们处理的是维度和数据点个数相同的多元高斯分布。为了定义 与之对应的协方差函数，我们使用了参数化的核函数，通过学习超参 数，最终可以拟合出任意复杂的未知函数。</p>
 <p>这一章中，我们简要介绍了高斯过程，还有许多与之相关的主题 需要学习（比如构建一个半参数化模型，将线性模型作为均值函 数），或者是将两个或者多个核函数组合在一起来描述未知函数，或 者是如何将高斯过程用于分类任务，或者是如何将高斯过程与统计学 或者机器学习中的其他模型联系起来。不管怎么说，我希望本章对高 斯过程的介绍以及本书中一些其他主题的介绍能够激励你阅读、使用 和进一步学习贝叶斯统计。</p>
 <p>310</p>
-<p><strong>8.5</strong>　深入阅读</p>
+<p><strong>7.5</strong>　深入阅读</p>
 <p>Carl Edward Rasmussen和 Christopher K. I. Williams写的<br />
 《Gaussian Processes for Machine Learning》一书。</p>
 <p>Kevin Murhpy的《Machine Learning a Probabilistic Perspective》 中的第4章和第15章。</p>
 <p>《Statistical Rethinking》中的第11章。</p>
 <p>《Bayesian Data Analysis, Third Edition》中的第22章。</p>
 <p>311</p>
-<p><strong>8.6</strong>　练习</p>
+<p><strong>7.6</strong>　练习</p>
 <p>1．在核回归的例子中，尝试修改结的个数以及带宽（一次修改 一个），这些改变有什么效果？尝试只使用一个结，你观察到了什 么？</p>
 <p><img alt="" src="media/image2426.png" />{width=”1.9990048118985126in” height=”0.187419072615923in”}2．用核回归拟合其他函数，比如 或者<em>y</em> = <em>x</em>。尝试像练习1中那样修改数据和参数的个数。</p>
 <p>3．在前面从高斯过程先验中采样的例子里，增加实例的个数，<br />
@@ -592,26 +605,7 @@ alpha=0.05, color=’b’)。高斯过程的先验是什么样子的？你是否
 <p>如果成为社区认证作译者，还可以享受异步社区提供的作者专享 特色服务。</p>
 <p>会议活动早知道</p>
 <p>您可以掌握IT圈的技术会议资讯，更有机会免费获赠大会门票。</p>
-<p>318</p>
-<p>加入异步</p>
-<p>扫描任意二维码都能找到我们：</p>
-<p><img alt="" src="media/image2461.png" />{width=”2.8111012685914263in” height=”2.8217082239720037in”}</p>
-<p>异步社区</p>
-<p><img alt="" src="media/image2462.png" />{width=”3.133857174103237in” height=”3.134073709536308in”}</p>
-<p>微信订阅号</p>
-<p>319</p>
-<p><img alt="" src="media/image2464.png" />{width=”3.133857174103237in” height=”3.134073709536308in”}</p>
-<p>微信服务号</p>
-<p><img alt="" src="media/image2465.png" />{width=”2.8111012685914263in” height=”2.8217082239720037in”}</p>
-<p>官方微博</p>
-<p>320</p>
-<p><img alt="" src="media/image2467.png" />{width=”3.133857174103237in” height=”3.092425634295713in”}</p>
-<p>QQ群：436746675</p>
-<p>社区网址：<a class="reference external" href="http://www.epubit.com.cn">www.epubit.com.cn</a></p>
-<p>官方微信：异步社区</p>
-<p>官方微博：&#64;人邮异步社区，&#64;人民邮电出版社-信息技术分社</p>
-<p>投稿**&amp;**咨询：contact&#64;epubit.com.cn</p>
-<p>321</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -639,7 +633,7 @@ alpha=0.05, color=’b’)。高斯过程的先验是什么样子的？你是否
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="chapter06-MixtureModels.html" title="previous page">第6章　混合模型</a>
+    <a class='left-prev' id="prev-link" href="chapter06-MixtureModels.html" title="previous page">第6章 混合模型</a>
 
         </div>
         

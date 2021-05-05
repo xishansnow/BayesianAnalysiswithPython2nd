@@ -1,4 +1,4 @@
-# 第2章　概率编程
+# 第2章 概率编程
 
 上一章对贝叶斯统计有了基本了解，本章将学习如何使用计算工具构建概率模型。我们将学习使用  PyMC3  进行概率编程。其基本思想是使用代码指定模型，然后以或多或少自动的方式求解它们。选择编程的背后原因是：许多模型无法得到闭合的解析解，因此只能使用数值方法来求解。
 
@@ -839,7 +839,7 @@ PyMC3 是一个 Python 库，用于概率编程，具有非常简单、直观和
 
 （9）对本章中的至少一个模型使用你自己的数据并运行。牢记 第1章中提到的构建模型的3个步骤。
 
-\[1\]　 Python 之禅的最后一句话是："命名空间是一种绝妙的理念，我 们应当多加利用！"。------译者注
+\[1\]  Python 之禅的最后一句话是："命名空间是一种绝妙的理念，我 们应当多加利用！"。------译者注
 
 126
 
@@ -872,7 +872,7 @@ PyMC3 是一个 Python 库，用于概率编程，具有非常简单、直观和
 
 
 
-2.5　深入阅读
+2.5 深入阅读
 
  PyMC3 的文档，一定要记得查看例子部分：https://pymc-
 devs.github.io/ PyMC3 /。
@@ -906,7 +906,7 @@ https://github.com/aloctavodia/Doing_bayesian_data_analysis。[5]
 
 
 
-2.6　练习
+2.6 练习
 
 （1）用其他先验尝试网格算法。例如，尝试将代码改成prior
 =(grid<=0.5).astype(int)或者prior=abs(grid-
@@ -947,9 +947,9 @@ devs.github.io/ PyMC3 /notebooks/getting_started.html#Case-study-2:-Coal-mining-
 devs.github.io/ PyMC3 /examples.html），或者在 PyMC3 的论坛
 （https://discourse.pymc.io）上提问。
 
-[1]　可阅读https://zh.wikipedia.org/wiki/维数灾难，了解更多信息。——译者注
+[1] 可阅读https://zh.wikipedia.org/wiki/维数灾难，了解更多信息。——译者注
 
-[2]　该文章notebook形式的翻译见
+[2] 该文章notebook形式的翻译见
 
 92 
 
@@ -958,9 +958,9 @@ devs.github.io/ PyMC3 /examples.html），或者在 PyMC3 的论坛
 https://github.com/findmyway/Bayesian-Analysis-with-
  Python /blob/master/MCMC-sampling-for-dummies.ipynb。——译者注
 
-[3]　“球状奶牛”起源于一个物理学家的笑话，具体含义可自行搜索维基百科。——译者注
+[3] “球状奶牛”起源于一个物理学家的笑话，具体含义可自行搜索维基百科。——译者注
 
-[4]　此处已根据原书的勘误更正。——译者注
+[4] 此处已根据原书的勘误更正。——译者注
 
-[5]　第2版也有人转成了 Python ，
+[5] 第2版也有人转成了 Python ，
 https://github.com/JWarmenhoven/DBDA- Python 。——译者注

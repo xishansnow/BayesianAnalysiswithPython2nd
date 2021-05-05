@@ -99,12 +99,12 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   第2章　概率编程
+   第2章 概率编程
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter03-ModellingwithLinearRegression.html">
-   第3章　利用线性回归模型理解并预测数据
+   第3章 利用线性回归模型理解并预测数据
   </a>
  </li>
  <li class="toctree-l1">
@@ -118,12 +118,12 @@
    <strong>
     5
    </strong>
-   章　模型比较
+   章 模型比较
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter06-MixtureModels.html">
-   第6章　混合模型
+   第6章 混合模型
   </a>
  </li>
  <li class="toctree-l1">
@@ -362,7 +362,7 @@
               <div>
                 
   <div class="section" id="id1">
-<h1>第2章　概率编程<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1>第2章 概率编程<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>上一章对贝叶斯统计有了基本了解，本章将学习如何使用计算工具构建概率模型。我们将学习使用  PyMC3  进行概率编程。其基本思想是使用代码指定模型，然后以或多或少自动的方式求解它们。选择编程的背后原因是：许多模型无法得到闭合的解析解，因此只能使用数值方法来求解。</p>
 <p>学习概率编程的另一个原因是，现代贝叶斯统计主要是通过编写代码来完成的，既然已经了解  Python ，为什么还要用另一种方式呢？概率编程提供了一种构建和求解复杂模型的有效方法，使我们可以更多地关注模型设计、评估和解释，而更少地关注数学或计算细节。在本章以及本书的其余部分中，我们将使用  PyMC3  和 ArviZ ， PyMC3  是一个非常灵活的概率编程  Python  库，ArviZ 是一个新的  Python  库，它将帮助我们解释概率模型的结果。了解  PyMC3  和 ArviZ 还将帮助我们以更实际的方式学习先进的贝叶斯概念。</p>
 <p>本章涵盖以下主题：</p>
@@ -957,10 +957,10 @@ y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right) \end{aligned} \tag{2
 <p>125</p>
 <p>（8）对所有模型进行诊断测试并采取相应措施，比如，如果有 必要，增加采样次数。</p>
 <p>（9）对本章中的至少一个模型使用你自己的数据并运行。牢记 第1章中提到的构建模型的3个步骤。</p>
-<p>[1]　 Python 之禅的最后一句话是：”命名空间是一种绝妙的理念，我 们应当多加利用！”。——译者注</p>
+<p>[1]  Python 之禅的最后一句话是：”命名空间是一种绝妙的理念，我 们应当多加利用！”。——译者注</p>
 <p>126</p>
 <p>89</p>
-<p>2.5　深入阅读</p>
+<p>2.5 深入阅读</p>
 <p>PyMC3 的文档，一定要记得查看例子部分：https://pymc-
 <a class="reference external" href="http://devs.github.io/">devs.github.io/</a> PyMC3 /。
 《贝叶斯方法——概率编程与贝叶斯推断》（注：该书已出
@@ -976,7 +976,7 @@ and- PyMC3 。
 《DoingBayesianDataAnalysis》，JohnK.Kruschke写的另一本关于贝叶斯分析的入门书，也有跟前面一本书类似的问题，该书第1版中的大部分例子也都转成了 Python / PyMC3 ，相关代码可以查看
 <a class="reference external" href="https://github.com/aloctavodia/Doing_bayesian_data_analysis%E3%80%82%5B5%5D">https://github.com/aloctavodia/Doing_bayesian_data_analysis。[5]</a></p>
 <p>90</p>
-<p>2.6　练习</p>
+<p>2.6 练习</p>
 <p>（1）用其他先验尝试网格算法。例如，尝试将代码改成prior
 =(grid&lt;=0.5).astype(int)或者prior=abs(grid-
 0.5)，或者你可以将其定义成你所想的任意形式。换一些其他数据
@@ -1003,14 +1003,14 @@ Jupyter/I Python 记事本中运行代码，尤其需要注意这点。）</p>
 <p>除了每章最后的练习之外，你还可以将已经学到的内容应用到你感兴趣的问题上。也许，你需要重新定义你的问题，或者需要扩展或者修改你已经学到的模型。试着修改模型，如果你觉得该任务已经超出了你实际掌握的部分，那么先将问题记下来，等读完本书其余章节后再回过头来重新思考这些问题。如果最后本书仍然无法解决你的问题，那么你可以查看下 PyMC3 的例子（http://pymc-
 <a class="reference external" href="http://devs.github.io/">devs.github.io/</a> PyMC3 /examples.html），或者在 PyMC3 的论坛
 （<a class="reference external" href="https://discourse.pymc.io">https://discourse.pymc.io</a>）上提问。</p>
-<p>[1]　可阅读https://zh.wikipedia.org/wiki/维数灾难，了解更多信息。——译者注</p>
-<p>[2]　该文章notebook形式的翻译见</p>
+<p>[1] 可阅读https://zh.wikipedia.org/wiki/维数灾难，了解更多信息。——译者注</p>
+<p>[2] 该文章notebook形式的翻译见</p>
 <p>92</p>
 <p><a class="reference external" href="https://github.com/findmyway/Bayesian-Analysis-with-">https://github.com/findmyway/Bayesian-Analysis-with-</a>
 Python /blob/master/MCMC-sampling-for-dummies.ipynb。——译者注</p>
-<p>[3]　“球状奶牛”起源于一个物理学家的笑话，具体含义可自行搜索维基百科。——译者注</p>
-<p>[4]　此处已根据原书的勘误更正。——译者注</p>
-<p>[5]　第2版也有人转成了 Python ，
+<p>[3] “球状奶牛”起源于一个物理学家的笑话，具体含义可自行搜索维基百科。——译者注</p>
+<p>[4] 此处已根据原书的勘误更正。——译者注</p>
+<p>[5] 第2版也有人转成了 Python ，
 <a class="reference external" href="https://github.com/JWarmenhoven/DBDA-">https://github.com/JWarmenhoven/DBDA-</a> Python 。——译者注</p>
 </div>
 </div>
@@ -1041,7 +1041,7 @@ Python /blob/master/MCMC-sampling-for-dummies.ipynb。——译者注</p>
         <div class='prev-next-bottom'>
             
     <a class='left-prev' id="prev-link" href="chapter01-ThinkingProbabilistically.html" title="previous page">第1章 概率思维</a>
-    <a class='right-next' id="next-link" href="chapter03-ModellingwithLinearRegression.html" title="next page">第3章　利用线性回归模型理解并预测数据</a>
+    <a class='right-next' id="next-link" href="chapter03-ModellingwithLinearRegression.html" title="next page">第3章 利用线性回归模型理解并预测数据</a>
 
         </div>
         
