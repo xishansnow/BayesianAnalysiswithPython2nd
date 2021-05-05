@@ -493,7 +493,7 @@ $$
 
 作为本章的结束语，我们简要讨论了有多少模型可以解释为连续混合模型，如贝塔-二项式（用于抛硬币问题的模型）、负二项模型、学生 $t$ 分布，甚至分层模型。
 
-## 6.5 习题
+## 6.6 习题
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505200439_80.webp)
 
