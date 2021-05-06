@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第4章 利用Logistic 回归 对结果进行分类 &#8212; 用Python做贝叶斯分析</title>
+    <title>第4章 广义线性回归与分类的贝叶斯视角 &#8212; 用Python做贝叶斯分析</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -54,7 +54,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="第5章 模型比较" href="chapter05-ModelComparison.html" />
-    <link rel="prev" title="第3章 利用线性回归模型理解并预测数据" href="chapter03-ModellingwithLinearRegression.html" />
+    <link rel="prev" title="第3章 线性回归模型的贝叶斯视角" href="chapter03-ModellingwithLinearRegression.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -104,21 +104,17 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter03-ModellingwithLinearRegression.html">
-   第3章 利用线性回归模型理解并预测数据
+   第3章 线性回归模型的贝叶斯视角
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   第4章 利用Logistic 回归 对结果进行分类
+   第4章 广义线性回归与分类的贝叶斯视角
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter05-ModelComparison.html">
-   第
-   <strong>
-    5
-   </strong>
-   章 模型比较
+   第5章 模型比较
   </a>
  </li>
  <li class="toctree-l1">
@@ -203,12 +199,12 @@
             <nav id="bd-toc-nav">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
+  <a class="reference internal nav-link" href="#id2">
    4.1 广义线性回归
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
+  <a class="reference internal nav-link" href="#logistic">
    4.2  用于分类的Logistic 回归
   </a>
   <ul class="nav section-nav flex-column">
@@ -324,8 +320,8 @@
         
               <div>
                 
-  <div class="section" id="logistic">
-<h1>第4章 利用Logistic 回归 对结果进行分类<a class="headerlink" href="#logistic" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="id1">
+<h1>第4章 广义线性回归与分类的贝叶斯视角<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>在上一章中，我们使用输入变量的线性组合来预测输出变量的平均值，其中假设了后者为高斯分布。在许多情况下都可以使用高斯分布，但对于其他许多情况，选择不同分布可能更明智；当我们用学生 <span class="math notranslate nohighlight">\(t\)</span> 分布替换高斯分布时，已经看到了一个鲁棒的例子。在本章中，我们将看到更多使用高斯分布以外分布的例子。正如即将了解到的，有一个通用的主题或模式，可用于将线性模型推广到许多问题中。</p>
 <p>本章将会讨论以下内容：</p>
 <ul class="simple">
@@ -337,8 +333,8 @@
 <li><p>泊松回归</p></li>
 <li><p>零膨胀泊松回归</p></li>
 </ul>
-<div class="section" id="id1">
-<h2>4.1 广义线性回归<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h2>4.1 广义线性回归<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>本章的核心思想相当简单：为预测输出变量的平均值，我们可以对输入变量的线性组合应用任意函数。
 $<span class="math notranslate nohighlight">\(
 \mu = f ( \alpha + X \beta )\tag{4.1}
@@ -347,8 +343,8 @@ $<span class="math notranslate nohighlight">\(
 <p>希望使用逆链接函数的一种情况是在处理定类变量时（例如：颜色名称、性别、生物物种或政党/从属关系）。上述所有定类变量都没有被高斯学派很好地建模，因为高斯函数原则上适用于在实数集上取任何值的连续变量，而定类变量是离散的，只取几个值。如果改变数据分布，通常也需要改变对这些分布平均值的建模方式，例如，如果使用二项分布，就像在第1章和第2章中一样，我们将需要一个返回 [0，1] 区间平均值的线性模型。实现的一种方法是保留线性模型，但使用逆链接函数将输出限制在所需区间内。该技巧并不局限于离散变量，例如：我们可能希望对只能取正值的数据建模，因此希望将线性模型限制为返回分布平均值的正值，例如伽马或指数分布。</p>
 <p>在继续之前，请注意：一些变量可以被编码为定量的，也可以编码成定性的。这必须根据您的问题上下文做出决定；例如：如果谈论颜色名称时，可以采用“红色”和“绿色”定类变量，或者使用 650 nm 和 510 nm 等连续变量。</p>
 </div>
-<div class="section" id="id2">
-<h2>4.2  用于分类的Logistic 回归<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="logistic">
+<h2>4.2  用于分类的Logistic 回归<a class="headerlink" href="#logistic" title="Permalink to this headline">¶</a></h2>
 <p>回归问题是关于在给定一个或多个输入变量的值的情况下，预测输出变量的连续值。于此不同，分类是在给定一些输入变量时，将离散值（代表离散类）赋给输出变量。在两种情况中，任务都是获得一个能够正确模拟输出与输入变量之间映射的模型。为做到此点，需要具有正确输出–输入变量对的样本。从机器学习视角看，回归和分类都是监督学习的实例。</p>
 <p>我妈妈准备了一道名为 <code class="docutils literal notranslate"><span class="pre">sopa</span> <span class="pre">seca</span></code> 的美味菜肴，是以意大利面为基础的食谱，字面意思是干汤。虽然听起来可能是用词不当，甚至是自相矛盾，但当我们了解它是如何烹调时，这道菜的名字就完全有意义了。</p>
 <p>Logistic 回归也是如此，它主要用来解决分类问题。 Logistic 回归模型是线性回归模型的一种扩展，这也是其名称来源。其模型是将式 4. 1中的逆连接函数设定为Logistic函数而形成，Logistic函数为以下形式：
@@ -947,8 +943,8 @@ io/en/latest/index.html)。它是提供了一种公式微语言语法的Python�
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="chapter03-ModellingwithLinearRegression.html" title="previous page">第3章 利用线性回归模型理解并预测数据</a>
-    <a class='right-next' id="next-link" href="chapter05-ModelComparison.html" title="next page">第<strong>5</strong>章 模型比较</a>
+    <a class='left-prev' id="prev-link" href="chapter03-ModellingwithLinearRegression.html" title="previous page">第3章 线性回归模型的贝叶斯视角</a>
+    <a class='right-next' id="next-link" href="chapter05-ModelComparison.html" title="next page">第5章 模型比较</a>
 
         </div>
         
