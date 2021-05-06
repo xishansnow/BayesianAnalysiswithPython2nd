@@ -335,7 +335,8 @@ $$
 $$
 p(\theta \mid y) \propto \theta^{y+\alpha-1}(1-\theta)^{N-y+\beta-1}\tag{1.13}
 $$
-如果注意会发现，上述表达式与贝塔分布具有相同的函数形式（除了归一化项），其中，参数 $ \alpha_{\text {posterior }}=\alpha_{\text {prior }}+y $  ， 参数$ \beta_{\text {posterior }}=\beta_{\text {prior }}+N-y $。事实上，问题的后验分布依然是贝塔分布：
+如果注意会发现，上述表达式与贝塔分布具有相同的函数形式（除了归一化项），其中，参数 $ \alpha_{\text {posterior }}=\alpha_{\text {prior }}+y $  ， 参数 $\beta_{\text {posterior}}=\beta_{\text {prior }}+N-y$ 。事实上，问题的后验分布依然是贝塔分布：
+
 $$
 p(\theta \mid y) \propto \operatorname{Beta}\left(\alpha_{\text {prior }}+y, \beta_{\text {prior }}+N-y\right)\tag{1.14}
 $$
@@ -419,10 +420,13 @@ $$
 ### 1.4.1 模型注释和可视化
 
 根据受众不同，你可能在交流分析结果的同时还需要交流模型。以下是一种简单表示概率模型的常见方式：
-
 $$
+\begin{equation}
+\begin{aligned}
 \theta \sim \operatorname{Beta}(\alpha, \beta) \\
- y \sim \operatorname{Bin}(n=1, p=\theta)\tag{1.16}
+y \sim \operatorname{Bin}(n=1, p=\theta)
+\end{aligned}
+\end{equation}\tag{1.16}
 $$
 
 这是抛硬币例子中用到的模型。符号～表示左边随机变量的分布服从右边的分布形式，也就是说，这里 $θ$ 服从于参数为$α$ 和 $β$ 的贝塔分布，而 $y$ 服从于参数为 $n=1$ 和 $p=θ$ 的二项分布。该模型还可以用类似 Kruschke 书中的图表示成如下形式：
@@ -454,14 +458,16 @@ az.plot_posterior({'θ':stats.beta.rvs(5, 11, size=1000)})
 
 ## 1.5 后验预测检查
 
-贝叶斯方法的一个优势是：一旦得到了后验分布 $p(\theta|y)$ ，就可以根据该后验生成未来的数据 $\hat y$ ，即用来做预测。后验预测分布为：
+贝叶斯方法的一个优势是：一旦得到了后验分布 $p(\theta|y)$ ，就可以根据该后验生成未来的数据 $ \hat y $ ，即用来做预测。后验预测分布为：
+
 $$
 p(\hat{y} \mid y)=\int p(\hat{y} \mid \theta) p(\theta \mid y) d \theta \tag{1.17}
 $$
+
 后验预测分布是条件预测相对于后验分布的平均值。从概念上(和计算上)，我们将此积分1.17近似为迭代的两步过程：
 
 - 从后验 $p(\theta|y)$  取样 $\theta$ 值，
-- 将 $\theta$ 值馈给似然（如果愿意，也可以是抽样分布），获得一个数据点 $\hat y$。
+- 将 $\theta$ 值馈给似然（如果愿意，也可以是抽样分布），获得一个数据点 $\hat y$ 。
 
 请注意该过程如何组合两个不确定性来源：参数不确定性（由后验捕获）；以及采样不确定性（由似然捕获）。
 

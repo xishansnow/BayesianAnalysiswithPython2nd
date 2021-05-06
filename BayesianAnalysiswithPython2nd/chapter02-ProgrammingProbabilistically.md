@@ -51,10 +51,12 @@ data = stats.bernoulli.rvs(p=theta_real, size=trials)
 ### （1）模型描述
 
 现在有了数据，需要再指定模型。回想一下，模型可以通过指定似然函数和先验的概率分布完成。对于似然，可以用参数分别为 $n=1$  和 $p=\theta$ 的二项分布来描述，对于先验，用参数为 $\alpha=\beta=1$ 的贝塔分布描述，该贝塔分布与 [0,1] 区间内的均匀分布等价。我们可以用数学表达式描述如下：
+
 $$
 \theta \sim \operatorname{Beta}(\alpha, \beta) \\
 y \sim \operatorname{Bern}(p=\theta) \tag{2.1}
 $$
+
 该统计模型与 PyMC3 的语法几乎一一对应。
 
 ```python
