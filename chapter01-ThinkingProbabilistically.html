@@ -619,10 +619,11 @@ p(\theta \mid y) \propto \theta^{y}(1-\theta)^{N-y} \theta^{\alpha-1}(1-\theta)^
 $<span class="math notranslate nohighlight">\(
 p(\theta \mid y) \propto \theta^{y+\alpha-1}(1-\theta)^{N-y+\beta-1}\tag{1.13}
 \)</span><span class="math notranslate nohighlight">\(
-如果注意会发现，上述表达式与贝塔分布具有相同的函数形式（除了归一化项），其中，参数 \)</span> \alpha_{\text {posterior }}=\alpha_{\text {prior }}+y <span class="math notranslate nohighlight">\(  ， 参数\)</span> \beta_{\text {posterior }}=\beta_{\text {prior }}+N-y <span class="math notranslate nohighlight">\(。事实上，问题的后验分布依然是贝塔分布：
-\)</span><span class="math notranslate nohighlight">\(
+如果注意会发现，上述表达式与贝塔分布具有相同的函数形式（除了归一化项），其中，参数 \)</span> \alpha_{\text {posterior }}=\alpha_{\text {prior }}+y <span class="math notranslate nohighlight">\(  ， 参数 \)</span>\beta_{\text {posterior}}=\beta_{\text {prior }}+N-y$ 。事实上，问题的后验分布依然是贝塔分布：</p>
+<div class="math notranslate nohighlight">
+\[
 p(\theta \mid y) \propto \operatorname{Beta}\left(\alpha_{\text {prior }}+y, \beta_{\text {prior }}+N-y\right)\tag{1.14}
-\)</span>$</p>
+\]</div>
 </div>
 <div class="section" id="id17">
 <h3>（6）后验诊断<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
@@ -692,12 +693,15 @@ p(\theta \mid y) \propto \operatorname{Beta}\left(\alpha_{\text {prior }}+y, \be
 <p>创建报告和交流结果是统计和数据科学实践的核心。在本节中，我们将简要讨论使用贝叶斯模型时此任务的一些特点。在接下来的章节中，我们将继续看有关这一重要问题的例子。</p>
 <div class="section" id="id20">
 <h3>1.4.1 模型注释和可视化<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
-<p>根据受众不同，你可能在交流分析结果的同时还需要交流模型。以下是一种简单表示概率模型的常见方式：</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
+<p>根据受众不同，你可能在交流分析结果的同时还需要交流模型。以下是一种简单表示概率模型的常见方式：
+$<span class="math notranslate nohighlight">\(
+\begin{equation}
+\begin{aligned}
 \theta \sim \operatorname{Beta}(\alpha, \beta) \\
- y \sim \operatorname{Bin}(n=1, p=\theta)\tag{1.16}
-\end{split}\]</div>
+y \sim \operatorname{Bin}(n=1, p=\theta)
+\end{aligned}
+\end{equation}\tag{1.16}
+\)</span>$</p>
 <p>这是抛硬币例子中用到的模型。符号～表示左边随机变量的分布服从右边的分布形式，也就是说，这里 <span class="math notranslate nohighlight">\(θ\)</span> 服从于参数为<span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 的贝塔分布，而 <span class="math notranslate nohighlight">\(y\)</span> 服从于参数为 <span class="math notranslate nohighlight">\(n=1\)</span> 和 <span class="math notranslate nohighlight">\(p=θ\)</span> 的二项分布。该模型还可以用类似 Kruschke 书中的图表示成如下形式：</p>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505155942_31.webp" style="zoom:67%;" />
 <p>在第一层，根据先验生成了 <span class="math notranslate nohighlight">\(θ\)</span> ，然后通过似然生成最下面的数据。图中的箭头表示变量之间的依赖关系，符号～表示变量的随机性。</p>
@@ -719,14 +723,15 @@ p(\theta \mid y) \propto \operatorname{Beta}\left(\alpha_{\text {prior }}+y, \be
 </div>
 <div class="section" id="id22">
 <h2>1.5 后验预测检查<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
-<p>贝叶斯方法的一个优势是：一旦得到了后验分布 <span class="math notranslate nohighlight">\(p(\theta|y)\)</span> ，就可以根据该后验生成未来的数据 <span class="math notranslate nohighlight">\(\hat y\)</span> ，即用来做预测。后验预测分布为：
-$<span class="math notranslate nohighlight">\(
+<p>贝叶斯方法的一个优势是：一旦得到了后验分布 <span class="math notranslate nohighlight">\(p(\theta|y)\)</span> ，就可以根据该后验生成未来的数据 <span class="math notranslate nohighlight">\( \hat y \)</span> ，即用来做预测。后验预测分布为：</p>
+<div class="math notranslate nohighlight">
+\[
 p(\hat{y} \mid y)=\int p(\hat{y} \mid \theta) p(\theta \mid y) d \theta \tag{1.17}
-\)</span>$
-后验预测分布是条件预测相对于后验分布的平均值。从概念上(和计算上)，我们将此积分1.17近似为迭代的两步过程：</p>
+\]</div>
+<p>后验预测分布是条件预测相对于后验分布的平均值。从概念上(和计算上)，我们将此积分1.17近似为迭代的两步过程：</p>
 <ul class="simple">
 <li><p>从后验 <span class="math notranslate nohighlight">\(p(\theta|y)\)</span>  取样 <span class="math notranslate nohighlight">\(\theta\)</span> 值，</p></li>
-<li><p>将 <span class="math notranslate nohighlight">\(\theta\)</span> 值馈给似然（如果愿意，也可以是抽样分布），获得一个数据点 <span class="math notranslate nohighlight">\(\hat y\)</span>。</p></li>
+<li><p>将 <span class="math notranslate nohighlight">\(\theta\)</span> 值馈给似然（如果愿意，也可以是抽样分布），获得一个数据点 <span class="math notranslate nohighlight">\(\hat y\)</span> 。</p></li>
 </ul>
 <p>请注意该过程如何组合两个不确定性来源：参数不确定性（由后验捕获）；以及采样不确定性（由似然捕获）。</p>
 <p>当我们需要进行预测时，可以使用生成的预测。但我们也可以用它们通过比较观测数据和预测数据来批评模型，以找出这两组数据之间的差异，这就是所谓的后验预测检验，主要目标是一致性检查。</p>

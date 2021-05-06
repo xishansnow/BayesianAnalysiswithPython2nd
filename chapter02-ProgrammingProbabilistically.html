@@ -397,12 +397,13 @@
 </div>
 <div class="section" id="id3">
 <h3>（1）模型描述<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>现在有了数据，需要再指定模型。回想一下，模型可以通过指定似然函数和先验的概率分布完成。对于似然，可以用参数分别为 <span class="math notranslate nohighlight">\(n=1\)</span>  和 <span class="math notranslate nohighlight">\(p=\theta\)</span> 的二项分布来描述，对于先验，用参数为 <span class="math notranslate nohighlight">\(\alpha=\beta=1\)</span> 的贝塔分布描述，该贝塔分布与 [0,1] 区间内的均匀分布等价。我们可以用数学表达式描述如下：
-$<span class="math notranslate nohighlight">\(
+<p>现在有了数据，需要再指定模型。回想一下，模型可以通过指定似然函数和先验的概率分布完成。对于似然，可以用参数分别为 <span class="math notranslate nohighlight">\(n=1\)</span>  和 <span class="math notranslate nohighlight">\(p=\theta\)</span> 的二项分布来描述，对于先验，用参数为 <span class="math notranslate nohighlight">\(\alpha=\beta=1\)</span> 的贝塔分布描述，该贝塔分布与 [0,1] 区间内的均匀分布等价。我们可以用数学表达式描述如下：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
 \theta \sim \operatorname{Beta}(\alpha, \beta) \\
 y \sim \operatorname{Bern}(p=\theta) \tag{2.1}
-\)</span>$
-该统计模型与 PyMC3 的语法几乎一一对应。</p>
+\end{split}\]</div>
+<p>该统计模型与 PyMC3 的语法几乎一一对应。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">our_first_model</span><span class="p">:</span>
     <span class="n">θ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">θ</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
