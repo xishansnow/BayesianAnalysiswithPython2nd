@@ -53,7 +53,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="第3章 线性回归模型的贝叶斯视角" href="chapter03-ModellingwithLinearRegression.html" />
+    <link rel="next" title="第3章线性回归模型的贝叶斯视角" href="chapter03-ModellingwithLinearRegression.html" />
     <link rel="prev" title="第1章 概率思维" href="chapter01-ThinkingProbabilistically.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -104,7 +104,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter03-ModellingwithLinearRegression.html">
-   第3章 线性回归模型的贝叶斯视角
+   第3章线性回归模型的贝叶斯视角
   </a>
  </li>
  <li class="toctree-l1">
@@ -281,7 +281,7 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id15">
-     2.4.2 鲁棒推断
+     2.4.2 更稳健的推断
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
@@ -400,8 +400,10 @@
 <p>现在有了数据，需要再指定模型。回想一下，模型可以通过指定似然函数和先验的概率分布完成。对于似然，可以用参数分别为 <span class="math notranslate nohighlight">\(n=1\)</span>  和 <span class="math notranslate nohighlight">\(p=\theta\)</span> 的二项分布来描述，对于先验，用参数为 <span class="math notranslate nohighlight">\(\alpha=\beta=1\)</span> 的贝塔分布描述，该贝塔分布与 [0,1] 区间内的均匀分布等价。我们可以用数学表达式描述如下：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\theta \sim \operatorname{Beta}(\alpha, \beta) \\
-y \sim \operatorname{Bern}(p=\theta) \tag{2.1}
+\begin{align}
+\theta &amp;\sim \operatorname{Beta}(\alpha, \beta) \notag \\
+y &amp;\sim \operatorname{Bern}(p=\theta) \tag{2.1}
+\end{align} 
 \end{split}\]</div>
 <p>该统计模型与 PyMC3 的语法几乎一一对应。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">our_first_model</span><span class="p">:</span>
@@ -412,9 +414,10 @@ y \sim \operatorname{Bern}(p=\theta) \tag{2.1}
 </div>
 <p>第1行代码构建了一个模型的容器， PyMC3 使用 with 语法将所有位于该语法块内的代码都指向同一个模型，你可以把它看作是简化模型描述的“语法糖”，这里将模型命名为 our_first_model 。</p>
 <p>第2行代码指定了先验，可以看到语法与数学表示很接近。</p>
-<blockquote>
-<div><p>需要注意的是，我们把随机变量命名为 <span class="math notranslate nohighlight">\(\theta\)</span> ，这里变量名与贝塔函数的第1个参数名一样；保持相同的名字是个好习惯，这样能避免混淆。然后，我们通过变量名从后验采样中提取信息。这里变量是一个随机变量，我们可以将该变量看做是从某个分布（在这里是贝塔分布）中生成数值的方法而不是某个具体的值。</p>
-</div></blockquote>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>需要注意的是，我们把随机变量命名为 <span class="math notranslate nohighlight">\(\theta\)</span> ，这里变量名与贝塔函数的第1个参数名一样；保持相同的名字是个好习惯，这样能避免混淆。然后，我们通过变量名从后验采样中提取信息。这里变量是一个随机变量，我们可以将该变量看做是从某个分布（在这里是贝塔分布）中生成数值的方法而不是某个具体的值。</p>
+</div>
 <p>第3行代码用跟先验相同的语法描述了似然，唯一不同的是我们用 observed 变量传递了观测到的数据，这样就告诉了 PyMC3 似然。其中，data 可以是一个 Python 列表或者 Numpy 数组或者 Pandas 的 DataFrame 。</p>
 </div>
 <div class="section" id="id4">
@@ -430,17 +433,21 @@ NUTS: [θ]
 <p>第一行和第二行告诉我们，PyMC3 已经自动分配了 NUTS 采样器(一个非常适用于连续变量的推理引擎)，并使用了一种方法来初始化该采样器。第三行说明 PyMC3 将并行运行两个链，因此我们从后端可以同时获得两个独立样本。链的确切数量是根据计算机中处理器数量计算的，您可以使用 sample 函数的 chains 参数来更改它。</p>
 <p>下一行告诉我们哪些变量是由哪个采样器采样的。对于此特定情况，此行不会添加新信息。因为 NUTS 是用来对我们拥有的唯一变量 <span class="math notranslate nohighlight">\(θ\)</span> 进行采样的。但情况并不总是如此，因为 PyMC3 可以将不同采样器分配给不同变量。这是由 PyMC3 根据变量属性自动完成的，以确保为每个变量使用尽可能好的采样器。用户可以使用 sample 函数的 step 参数手动分配采样器。</p>
 <p>最后一行是进度条，其中有几个相关度量指示采样器的工作速度，包括每秒迭代的次数。如果运行代码，您将看到进度条更新得非常快。在这里，我们看到的是采样器完成其工作的最后一个阶段。数字是3000/3000，其中第一个数字是运行采样器编号（从1开始），最后一个数字是样本总数。您会注意到，我们要求了 1,000 个样本，但 PyMC3 正在计算 3,000 个样本。我们每条链有 500 个样本来自动调整采样算法（本例中为NUTS）。默认情况下，此示例将被丢弃。我们每条链也有1,000 个生产图纸，因此总共生成了3,000个样本。调谐阶段帮助 PyMC3 从后端提供可靠样本。我们可以使用 sample 函数的 tune 参数更改调优步骤数。</p>
-<blockquote>
-<div><p>注意：本书第一版中稍有不同，有人工定义起点和采样方法的设置。具体如下：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">start</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">find_MAP</span><span class="p">()</span>
-<span class="n">step</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">Metropolis</span><span class="p">()</span>
-<span class="n">trace</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">)</span>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>注意：本书第一版中稍有不同，有人工定义起点和采样方法的设置。具体如下：</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">start</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">find_MAP</span><span class="p">()</span>
+ <span class="n">step</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">Metropolis</span><span class="p">()</span>
+ <span class="n">trace</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>代码中的第1行，调用了 find_MAP 函数，该函数调用 SciPy 中常用的优化函数尝试返回最大后验。调用 find_MAP 是可选的，有时候其返回值能够为采样方法提供一个不错的初始点，不过有时候却并没有多大用，因此大多数时候会避免使用它。</p>
 <p>下一行定义了采样方法。这里用的是Metropolis-Hastings算法，函数名取了简写Metropolis。 PyMC3 可以让我们将不同的采样器赋给不同的随机变量；眼下我们的模型只有一个参数，不过后面我们会有多个参数。我们也可以省略该行， PyMC3 会根据不同参数的特性自动地赋予一个采样器，例如，NUTS算法只对连续变量有用，因而不能用于离散的变量，Metropolis 算法能够处理离散的变量，而另外一些类型的变量有专门的采样方法。总的来说，我们可以让 PyMC3 为我们选一个采样方法。</p>
 <p>最后一行执行推断，其中第1个参数是采样次数，第2个和第3个参数分别是采样方法和初始点，可以看到这两个参数是可选的。</p>
-</div></blockquote>
+</div>
 </div>
 </div>
 <div class="section" id="id5">
@@ -467,7 +474,7 @@ NUTS: [θ]
 </div>
 <div class="section" id="id7">
 <h3>（2）常用解决办法<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<p>如果我们通过样本发现了问题，解决办法有如下几种：</p>
+<p>如果通过样本发现了问题，解决办法有如下几种：</p>
 <p><strong>（1）增加样本数量</strong></p>
 <p>从样本链（迹）的前面部分去掉一定数量的样本，称为老化（Burn-in）。在实践中，MCMC 方法通常需要经过一段时间的采样之后，才得到真正的目标分布。老化在无限多次采样中并不是必须的，因为这部分并没有包含在马尔科夫理论中。事实上，去掉前面部分样本只不过是在有限次采样中提升结果的一个小技巧。需注意，不要被数学对象和数学对象的近似弄糊涂了，球体、高斯分布以及马尔科夫链等数学对象只存在于柏拉图式想象世界中，并不存在于不完美但却真实的世界中。</p>
 <p><strong>（2）重新参数化你的模型</strong></p>
@@ -599,9 +606,11 @@ NUTS: [θ]
 <p>暂且先不考虑偏离均值的那两个点，假设以上分布就是高斯分布。由于我们不知道均值和方差，需要先对这两个变量设置先验。然后，顺理成章地得到如下模型：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\mu \sim U(l, h) \\
-\sigma \sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \\
-y \sim \mathcal{N}(\mu, \sigma) \tag{2.2}
+\begin{align}
+\mu &amp;\sim U(l, h) \notag \\
+\sigma &amp;\sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \notag \\
+y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{2.2}
+\end{align}
 \end{split}\]</div>
 <p>其中，<span class="math notranslate nohighlight">\(\mu\)</span> 来自上下界分别为 <em>l</em> 和 <em>h</em> 的均匀分布，<span class="math notranslate nohighlight">\(\sigma\)</span> 来自标准差为 <span class="math notranslate nohighlight">\(\sigma_\sigma\)</span> 的半正态分布。半正态分布和普通正态分布很像，不过只包含正数，看起来就好像将普通的正态分布沿着均值对折了。通过从正态分布中采样，然后取绝对值，可以获取半正态分布的样本。最后，在我们的模型中，数据 <span class="math notranslate nohighlight">\(y\)</span> 来自参数分别为 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 的正态分布，可以用Kruschke风格的图将其画出来：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504213129_7f.webp" /></p>
@@ -641,7 +650,7 @@ y \sim \mathcal{N}(\mu, \sigma) \tag{2.2}
 <p>从上图中，可以看到模拟数据的平均值稍微向右移动，并且模拟数据的方差似乎比实际数据方差更大。这是从大量数据中分离出来的两个观察结果的直接结果。我们能不能用这张图自信地说，模型有问题，需要改变？像往常一样，模型的解释和评估取决于上下文。根据我对这类测量的经验和我通常使用这些数据的方式，我想说这个模型是一个足够合理的数据表示方法，对我的大多数分析都很有用。然而，在下一节中，我们将学习如何改进model_g并获得与数据更接近的预测。</p>
 </div>
 <div class="section" id="id15">
-<h3>2.4.2 鲁棒推断<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<h3>2.4.2 更稳健的推断<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p>对于model_g模型，您可能会有一个异议，那就是我们假设的是正态分布，但是我们在分布的尾部有两个数据点，这使得假设有点勉强。由于正态分布的尾部随着我们远离平均值而迅速下降，正态分布（至少是拟人化的正态分布）看到这两个点会感到惊讶，并会做出反应，向这些点移动并增加标准差。可以想象这些点在决定正态分布参数时具有过大的权重。那么，我们能做些什么呢？</p>
 <p>一个做法是将这两个点看做是异常点并将其从观测值中剔除，因为这两个值有可能是因为仪器异常或者人为疏忽导致的。有 时候我们也许能够直接矫正这些点，因为有可能只是我们处理数据时的代码出了些问题，但更多时候，我们希望能够根据某种异常值的处理规则自动消除这些异常点，其中的两个规则如下：</p>
 <ul class="simple">
@@ -652,43 +661,43 @@ y \sim \mathcal{N}(\mu, \sigma) \tag{2.2}
 <h4>（1）学生 <span class="math notranslate nohighlight">\(t\)</span>  分布<a class="headerlink" href="#t" title="Permalink to this headline">¶</a></h4>
 <p>除了利用以上规则改变原始数据之外，我们还可以修改模型。按照贝叶斯的思想，我们更倾向于通过使用不同的先验或似然将假设编码到模型中，而不是通过特殊的启发式方法（例如前面这些剔除异常值的准则）。</p>
 <p>一个用来解决异常值的非常有用的方法是：将高斯分布替换成t分布。t分布有3个参数：均值、尺度（与标准差类似）和自由度（通常用<em>v</em>表示，取值范围为[0,¥]。根据 Kruschke 的命名方式，我们将<em>v</em>称 为正态参数，这是因为该参数决定了t分布与正态分布的相似程度。对于<em>v</em>=1的情况，t分布的尾部要比高斯分布更重，在不同的领域也称 柯西分布或者洛伦兹分布，这里尾部更重的意思是：相比高斯分布， 我们更有可能观测到偏离均值的点，换句话说，该分布并不像高斯分 布那样聚集在均值附近。举例来说，柯西分布95%的点都分布在−12.7～12.7，而对于（标准差为1的）高斯分布，对应的区间为−1.96 ～1.96。此外，当正态参数<em>v</em>趋近于无穷大时，我们就会得到高斯分布（你不可能比正态分布还正态对吧？）。t分布一个有意思的特性是：当时，该分布没有准确定义的均值。当然，实际中从t分布得到的采样不过是一些数字，因而总是可以算出经验性的均值来，不过理论上还没有一个准确定义的均值。直观上可以这么理解：t分布的尾部很重，因而我们得到的采样值很可能是实轴上的任意一点，所 以只要不停地采样，我们永远也无法得到一个固定值。你可以尝试多 次运行下面的代码（或者将参数df换成一个更大的值，比如100）：</p>
-<p>np.mean(stats.t(loc=0, scale=1, df=1).rvs(100))</p>
-<p>![](C:/Program Files/Typora/media/image1043.png){width=”0.3123436132983377in” height=”0.12494641294838145in”}类似地，只有当时，分布的方差才有明确定义，因此，需要 注意t分布的尺度与标准差不是同一个概念。对于的分布，方差 并没有明确定义，因而也没有明确定义的标准差。当v趋向于无穷大 时，尺度趋近于标准差。</p>
-<p>x_values = np.linspace(-10, 10, 200)</p>
-<p>for df in [1, 2, 5, 30]:</p>
-<p>distri = stats.t(df)</p>
-<p>x_pdf = distri.pdf(x_values)</p>
-<p>plt.plot(x_values, x_pdf, label=r’$\nu$ = {}’.format(df))</p>
-<p>x_pdf = stats.norm.pdf(x_values)<br />
-plt.plot(x_values, x_pdf, label=r’$\nu = \infty$’) plt.xlabel(‘x’)</p>
-<p>plt.ylabel(‘p(x)’, rotation=0)</p>
-<p>plt.legend(loc=0, fontsize=14)</p>
-<p>plt.xlim(-7, 7)</p>
-<p>104</p>
-<p>![](C:/Program Files/Typora/media/image1050.png){width=”5.01833552055993in” height=”3.3631430446194224in”}</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>类似地，只有当时，分布的方差才有明确定义，因此，需要 注意t分布的尺度与标准差不是同一个概念。对于的分布，方差 并没有明确定义，因而也没有明确定义的标准差。当v趋向于无穷大 时，尺度趋近于标准差。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> \<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">30</span>\<span class="p">]:</span>
+<span class="n">distri</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">x_pdf</span> <span class="o">=</span> <span class="n">distri</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_values</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">x_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">r</span>\<span class="s1">&#39;\$</span><span class="se">\\</span><span class="s1">nu\$ = </span><span class="si">{}</span><span class="se">\&#39;</span><span class="s1">.format(df))</span>
+<span class="n">x_pdf</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_values</span><span class="p">)</span>\
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">x_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">r</span>\<span class="s1">&#39;\$</span><span class="se">\\</span><span class="s1">nu = </span><span class="se">\\</span><span class="s1">infty\$</span><span class="se">\&#39;</span><span class="s1">) plt.xlabel(</span><span class="se">\&#39;</span><span class="s1">x</span><span class="se">\&#39;</span><span class="s1">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span>\<span class="s1">&#39;p(x)</span><span class="se">\&#39;</span><span class="s1">, rotation=0)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>利用t分布将模型表示成如下形式：</p>
 <p>![](C:/Program Files/Typora/media/image1051.png){width=”1.5200765529308837in” height=”0.187419072615923in”}</p>
 <p>![](C:/Program Files/Typora/media/image1052.png){width=”1.8011865704286965in” height=”0.187419072615923in”}</p>
 <p>![](C:/Program Files/Typora/media/image1053.png){width=”1.62419072615923in” height=”0.187419072615923in”}</p>
 <p>![](C:/Program Files/Typora/media/image1054.png){width=”1.62419072615923in” height=”0.187419072615923in”}</p>
-<p>上面该模型与前面的高斯模型的主要区别是：现在似然是t分<br />
-布，由于t分布多了一个新的参数，我们需要为其增加一个先验。这 里用了一个均值为30的指数分布。上图可以看出，t分布看起来很像 高斯分布（尽管其实并不一样）。<em>v</em>值较小的分布更分散，因而，均 值为30的指数分布是一个很弱的先验，认为正态参数<em>v</em>在30附近，不 过也可以很容易地将其调大或调小。从图像上看，我们的模型表示如</p>
-<p>下：</p>
-<p>105</p>
+<p>上面该模型与前面的高斯模型的主要区别是：现在似然是t分布，由于t分布多了一个新的参数，我们需要为其增加一个先验。这 里用了一个均值为30的指数分布。上图可以看出，t分布看起来很像 高斯分布（尽管其实并不一样）。<em>v</em>值较小的分布更分散，因而，均 值为30的指数分布是一个很弱的先验，认为正态参数<em>v</em>在30附近，不 过也可以很容易地将其调大或调小。从图像上看，我们的模型表示如下：</p>
 <p>![](C:/Program Files/Typora/media/image1056.png){width=”3.768956692913386in” height=”2.957066929133858in”}</p>
 <p>同样， PyMC3 让我们只需要几行代码便可修改模型。唯一需要 注意的是， PyMC3 中指数分布的参数用的是分布均值的倒数。</p>
-<p>with pm.Model() as model_t:</p>
-<p>mu = pm.Uniform(‘mu’, 40, 75)</p>
-<p>sigma = pm.HalfNormal(‘sigma’, sd=10)</p>
-<p>nu = pm.Exponential(‘nu’, 1/30)</p>
-<p>y = pm.StudentT(‘y’, mu=mu, sd=sigma, nu=nu, observed=data) trace_t = pm.sample(1100)</p>
-<p>chain_t = trace_t[100:]</p>
-<p>pm.trace_plot(chain_t)</p>
-<p>![](C:/Program Files/Typora/media/image1061.png){width=”5.643024934383202in” height=”3.248607830271216in”}</p>
-<p>106</p>
-<p>现在用summary函数将迹的总结打印出来并与前面的结果对比。</p>
-<p>继续深入阅读之前，花点时间对比分析下两组不同的结果，你能发现 什么有趣的地方吗？</p>
-<p>pm.df_summary(chain_t)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_t</span><span class="p">:</span>
+	<span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span>\<span class="s1">&#39;mu</span><span class="se">\&#39;</span><span class="s1">, 40, 75)</span>
+	<span class="n">sigma</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span>\<span class="s1">&#39;sigma</span><span class="se">\&#39;</span><span class="s1">, sd=10)</span>
+	<span class="n">nu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span>\<span class="s1">&#39;nu</span><span class="se">\&#39;</span><span class="s1">, 1/30)</span>
+	<span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">StudentT</span><span class="p">(</span>\<span class="s1">&#39;y</span><span class="se">\&#39;</span><span class="s1">, mu=mu, sd=sigma, nu=nu, observed=data) trace_t = pm.sample(1100)</span>
+	<span class="n">chain_t</span> <span class="o">=</span> <span class="n">trace_t</span>\<span class="p">[</span><span class="mi">100</span><span class="p">:</span>\<span class="p">]</span>
+	<span class="n">pm</span><span class="o">.</span><span class="n">trace_plot</span><span class="p">(</span><span class="n">chain_t</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>现在用summary函数将迹的总结打印出来并与前面的结果对比。继续深入阅读之前，花点时间对比分析下两组不同的结果，你能发现 什么有趣的地方吗？</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">df_summary</span><span class="p">(</span><span class="n">chain_t</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>+———+——–+——+———-+———+———-+
 |         | mean | sd   | mc_error | hpd_2.5 | hpd_97.5 |
 +=========+========+======+==========+=========+==========+
@@ -698,18 +707,16 @@ plt.plot(x_values, x_pdf, label=r’$\nu = \infty$’) plt.xlabel(‘x’)</p>
 +———+——–+——+———-+———+———-+
 | nu    | 4.13   | 2.78 | 0.19     | 1.19    | 8.54     |
 +———+——–+——+———-+———+———-+</p>
-<p>可以看到，两个模型对<em>µ</em>的估计比较接近，只相差0.5左右，而<em>σ</em><br />
-的估计则从3.5变成了2.1，这正是因为t分布对于偏离均值的点所赋予</p>
-<p>的权重较小所致。此外还可以看到，<em>µ</em>的值接近4，也就是说，该分布 并不太像高斯分布，而是更接近重尾分布。</p>
-<p>接下来我们对t分布模型做后验检查，并将其与高斯分布对比：</p>
-<p>y_pred = pm.sample_ppc(chain_t, 100, model_t, size=len(data)) sns.kdeplot(data, c=’b’)</p>
-<p>for i in y_pred[‘y’]:</p>
-<p>sns.kdeplot(i, c=’r’, alpha=0.1)</p>
-<p>plt.xlim(35, 75)</p>
-<p>plt.title(“Student’s t model”, fontsize=16)</p>
-<p>plt.xlabel(‘$x$’, fontsize=16)</p>
-<p>107</p>
-<p>![](C:/Program Files/Typora/media/image1072.png){width=”5.01833552055993in” height=”3.706745406824147in”}</p>
+<p>可以看到，两个模型对<em>µ</em>的估计比较接近，只相差0.5左右，而<em>σ</em>的估计则从3.5变成了2.1，这正是因为t分布对于偏离均值的点所赋予的权重较小所致。此外还可以看到，<em>µ</em>的值接近4，也就是说，该分布 并不太像高斯分布，而是更接近重尾分布。接下来我们对t分布模型做后验检查，并将其与高斯分布对比：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_ppc</span><span class="p">(</span><span class="n">chain_t</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">model_t</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span> <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span>\<span class="s1">&#39;b</span><span class="se">\&#39;</span><span class="s1">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y_pred</span>\<span class="p">[</span>\<span class="s1">&#39;y</span><span class="se">\&#39;</span><span class="s1">\]:</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span>\<span class="s1">&#39;r</span><span class="se">\&#39;</span><span class="s1">, alpha=0.1)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">75</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>\<span class="s2">&quot;Student</span><span class="se">\&#39;</span><span class="s2">s t model</span><span class="se">\&quot;</span><span class="s2">, fontsize=16)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span>\<span class="s1">&#39;\$x\$</span><span class="se">\&#39;</span><span class="s1">, fontsize=16)</span>
+
+</pre></div>
+</div>
 <p>可以看到，使用t分布之后，从分布的峰值和形状来看，模型的预测值与观测数据更吻合了（留意预测值远离观测值中心的部分）。</p>
 <p>这是因为t分布希望看到在偏离数据中心的两个方向上都有数据。在我们的模型中，t分布的估计值更鲁棒，因为异常点降低了正态参数<em>v</em> 的值，从而均值和尺度更多地是从观测数据的中心估计出来的，而不 是像前面高斯分布的例子中那样，均值和标准差都偏向了异常值。再 强调一次，这里的尺度并不是标准差。不过，尺度该参数确实与数 据的分散程度有关，尺度越小，数据分布得越集中。此外，对应正态 参数<em>v</em>大于2的情况，尺度的值倾向于接近去掉异常值之后的标准差。 因此，粗略地讲，对于不是特别小的<em>v</em>值，我们可以将t分布的尺度大 致看做是去掉异常值之后的数据的标准差（理论上这么说可能不太对）。</p>
 </div>
@@ -724,7 +731,7 @@ plt.plot(x_values, x_pdf, label=r’$\nu = \infty$’) plt.xlabel(‘x’)</p>
 <p>Cohen’s d 是一种用来描述效应值的常见方式：</p>
 <div class="math notranslate nohighlight">
 \[
-\frac{\mu_{2}-\mu_{1}}{\sqrt{\frac{\sigma_{2}^{2}+\sigma_{1}^{2}}{2}}}
+\frac{\mu_{2}-\mu_{1}}{\sqrt{\frac{\sigma_{2}^{2}+\sigma_{1}^{2}}{2}}} \tag{2.3}
 \]</div>
 <p>也就是说，效应值是在考虑不同组的标准差的情况下，均值的差 异。在前面的代码中，我们根据估计值的均值和标准差算出了 Cohen’s d 的值，因而我们可以添加对Cohen’s d的描述而不仅仅是均值。</p>
 <p>比较各组数据的时候，很重要的一点是要考虑组内的波动性（比 如标准差）。一组数据相比另一组数据变化了<em>x</em>个单位，可能是每个 点都整体变化了<em>x</em>个单位，也可能是其中一半的数据没有变化而另外 一半数据变化了2<em>x</em>，还可能是其他组合。根据Cohen’s d得到的效应值 可以看做是Z-score，因而Cohen’s d为0.5可以解释为一组数据相比另一组数据点的差别是0.5倍的标准差。使用Cohen’s d的一个问题是不太好解释，我们需要根据具体的问题来说明该值是太大、太小或者是 适中。当然，我们可以从实践中得到些经验，不过更多地还是依赖于 具体问题。假如说我们对同一类问题做了一些分析，然后得到 Cohen’s d 的值约为1，这时如果得到另外一个Cohen’s d的值（比如说 2），那么我们很可能有了重要发现（也可能是某个地方弄错了）。在[<a class="reference external" href="http://rpsychologist.com/d3/cohend">http://rpsychologist.com/d3/cohend</a>](<a class="reference external" href="http://rpsychologist.com/d3/cohend">http://rpsychologist.com/d3/cohend</a> 该网页中，你可以探索一下不同 Cohen’s d的值都长什么样，此外，在该网页中还可以看到一些描 述效应值的其他方式，其中某些方式可能更直观（比如概率优势）。</p>
@@ -734,7 +741,7 @@ plt.plot(x_values, x_pdf, label=r’$\nu = \infty$’) plt.xlabel(‘x’)</p>
 <p>概率优势是表示效应值的另一种方式，描述的是从一组数据中取 出的一个点大于从另外一组中取出的点的概率。假设两个组中数据的 分布都是正态分布，我们可以通过以下表达式从Cohen’s d中得到概率 优势：</p>
 <div class="math notranslate nohighlight">
 \[
-p s=\Phi\left(\frac{\delta}{\sqrt{2}}\right)
+p s=\Phi\left(\frac{\delta}{\sqrt{2}}\right)\tag{2.4}
 \]</div>
 <p>这里，<span class="math notranslate nohighlight">\(\Phi\)</span> 是累积正态分布，<span class="math notranslate nohighlight">\(\delta\)</span> 是Cohen‘s d。我们可以计算优势概率的点估计，也可以计算值的整个后验分布。如果我们同意正态假设，我们可以使用该公式从 Cohen‘s d 得到优势概率。否则，当我们有后验样本时，我们可以直接计算它（参见练习部分）。这是使用马尔可夫链蒙特卡罗(MCMC)方法的一个非常好的优点；一旦我们从后验获得样本，我们就可以从它计算出很多量。</p>
 </div>
@@ -939,24 +946,15 @@ y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right) \end{aligned} \tag{2
 </div>
 <div class="section" id="id23">
 <h2>2.8 练习<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
-<p>（1）对于本章的第一个模型，将高斯分布的先验均值修改为一 个经验性均值，用几个对应的标准差多跑几遍，观察推断过程对这些</p>
-<p>变化的鲁棒性/敏感性如何。你觉得用一个没有限制上下界的高斯分<br />
-布对有上下界的数据建模的效果怎样？记住我们说过数据不可能大于 100或者小于0。</p>
+<p>（1）对于本章的第一个模型，将高斯分布的先验均值修改为一 个经验性均值，用几个对应的标准差多跑几遍，观察推断过程对这些变化的鲁棒性/敏感性如何。你觉得用一个没有限制上下界的高斯分布对有上下界的数据建模的效果怎样？记住我们说过数据不可能大于 100或者小于0。</p>
 <p>（2）利用第一个例子中的数据，分别在包含和不包含异常值情 况下，计算出经验均值和标准差。将结果与使用高斯分布和t分布的 贝叶斯估计进行比较，增加更多异常值并重复该过程。</p>
 <p>（3）修改小费例子中的模型，使其对于异常点更鲁棒。分别尝 试对所有组使用一个共享的<em>v</em>和单独为每个组设置一个<em>v</em>，最后对这3 个模型进行后验预测检查。</p>
-<p>（4）直接从后验中计算出概率优势（先不要计算Cohen’s d），<br />
-你可以用sample_ppc()函数从每个组中获取一个采样值。对比这样</p>
-<p>做与基于正态假设的计算是否不同？并对结果做出解释。</p>
-<p>![](C:/Program Files/Typora/media/image1206.png){width=”1.5408989501312336in” height=”0.187419072615923in”}（5）重复水质对比的例子，不过不用多层模型，而是使用一个 均匀分布（比如 ）。比较两种模型的结果。</p>
+<p>（4）直接从后验中计算出概率优势（先不要计算Cohen’s d），你可以用sample_ppc()函数从每个组中获取一个采样值。对比这样做与基于正态假设的计算是否不同？并对结果做出解释。</p>
+<p>（5）重复水质对比的例子，不过不用多层模型，而是使用一个 均匀分布（比如 ）。比较两种模型的结果。</p>
 <p>（6）在小费的例子中，对一个星期中的不同天使用部分池化操 作，构建一个多层模型，将结果与不使用多层模型的结果进行对比。</p>
-<p>（7）重复本章中的所有例子，用findMAP()函数的返回值来初<br />
-始化采样。看是否能得到相同的推断结果。同时看一下 find_MAP ()</p>
-<p>函数对退化过程的数量以及推断的速度有什么影响。</p>
-<p>125</p>
+<p>（7）重复本章中的所有例子，用findMAP()函数的返回值来初始化采样。看是否能得到相同的推断结果。同时看一下 find_MAP ()函数对退化过程的数量以及推断的速度有什么影响。</p>
 <p>（8）对所有模型进行诊断测试并采取相应措施，比如，如果有 必要，增加采样次数。</p>
 <p>（9）对本章中的至少一个模型使用你自己的数据并运行。牢记 第1章中提到的构建模型的3个步骤。</p>
-<p>[1]  Python 之禅的最后一句话是：”命名空间是一种绝妙的理念，我 们应当多加利用！”。——译者注</p>
-<p>126</p>
 <p>89</p>
 <p>2.5 深入阅读</p>
 <p>PyMC3 的文档，一定要记得查看例子部分：https://pymc-
@@ -1039,7 +1037,7 @@ Python /blob/master/MCMC-sampling-for-dummies.ipynb。——译者注</p>
         <div class='prev-next-bottom'>
             
     <a class='left-prev' id="prev-link" href="chapter01-ThinkingProbabilistically.html" title="previous page">第1章 概率思维</a>
-    <a class='right-next' id="next-link" href="chapter03-ModellingwithLinearRegression.html" title="next page">第3章 线性回归模型的贝叶斯视角</a>
+    <a class='right-next' id="next-link" href="chapter03-ModellingwithLinearRegression.html" title="next page">第3章线性回归模型的贝叶斯视角</a>
 
         </div>
         
