@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第7章 高斯过程 &#8212; 用Python做贝叶斯分析</title>
+    <title>第 7 章 高斯过程 &#8212; 用Python做贝叶斯分析</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -106,12 +106,12 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter04-GeneralizedLinearRegression.html">
-   第 4 章 广义线性回归及分类的贝叶斯视角
+   第 4 章 广义线性回归模型与分类任务
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter05-ModelComparison.html">
-   第 5 章模型比较
+   第 5 章 模型比较
   </a>
  </li>
  <li class="toctree-l1">
@@ -121,7 +121,7 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   第7章 高斯过程
+   第 7 章 高斯过程
   </a>
  </li>
 </ul>
@@ -239,7 +239,7 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#cox">
-   7.6 Cox过程
+   7.6 Cox 过程
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -276,9 +276,9 @@
               <div>
                 
   <div class="section" id="id1">
-<h1>第7章 高斯过程<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1>第 7 章 高斯过程<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <style>p{text-indent:2em;2}</style>
-<p>在上一章中，我们学习了Dirichlet过程，它是Dirichlet分布的无限维推广，可用于设置未知连续分布的先验。在本章中，我们将学习高斯过程，这是高斯分布的无限维推广，可用于设置未知函数的先验。在贝叶斯统计中，Dirichlet过程和Gauss过程都被用来建立灵活的模型，其中允许参数的数量随着数据的大小而增加。</p>
+<p>在上一章中，我们学习了狄利克雷过程，它是狄利克雷分布的无限维推广，可用于设置未知连续分布的先验。在本章中，我们将学习高斯过程，这是高斯分布的无限维推广，可用于设置未知函数的先验。在贝叶斯统计中，狄利克雷过程和高斯过程都被用来建立灵活的模型，其中允许参数的数量随着数据的大小而增加。</p>
 <p>本章我们将学习：</p>
 <ul class="simple">
 <li><p>函数作为概率对象</p></li>
@@ -286,10 +286,11 @@
 <li><p>具有高斯似然的高斯过程</p></li>
 <li><p>具有非高斯似然的高斯过程</p></li>
 </ul>
+<hr class="docutils" />
 <div class="section" id="id2">
 <h2>7.1 线性模型和非线性数据<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>7.1 非参统计</p>
-<p>非参统计通常用来描述一类不依赖于参数化概率分布的统计工具/模型。根据这个定义，贝叶斯统计似乎不可能是非参的，因为前面我们学到过，贝叶斯统计的第一步就是在概率模型中准确地将概率 分布组合在一起。第1章中说过，概率分布是构建概率模型的基石。 在贝叶斯框架中，非参模型是指包含有无限多参数的模型，因此，我 们将参数可以随着数据大小而变化的模型称作非参数化模型。对于非 参数化模型而言，理论上其参数个数是无限的，实际使用中会根据数 据将其收缩到一个有限的值，从而让数据本身来决定参数的个数。</p>
+<p>非参统计通常用来描述一类不依赖于参数化概率分布的统计工具/模型。根据这个定义，贝叶斯统计似乎不可能是非参的，因为前面我们学到过，贝叶斯统计的第一步就是在概率模型中准确地将概率 分布组合在一起。第 1 章中说过，概率分布是构建概率模型的基石。 在贝叶斯框架中，非参模型是指包含有无限多参数的模型，因此，我 们将参数可以随着数据大小而变化的模型称作非参数化模型。对于非 参数化模型而言，理论上其参数个数是无限的，实际使用中会根据数 据将其收缩到一个有限的值，从而让数据本身来决定参数的个数。</p>
 </div>
 <div class="section" id="id3">
 <h2>7.2 对函数建模<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
@@ -297,10 +298,10 @@
 <p>$$ y=f(x) $$</p>
 <p>表示函数的一种方式是为每个值 $x_i$ 列出其相应值 $y_i$ 。事实上，你可能还记得小学时函数的这种表示方式：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505201816_b3.webp" /></p>
-<p>一般情况下，$x$ 和 $y$ 的值将位于实数行上；因此，可将函数视为成对$( x_i,y_i)$ 值的(可能)无限有序列表。顺序很重要，因为如果打乱这些值，会得到不同的函数。</p>
-<p>函数也可以表示为一个由 $x$ 的值索引的(潜在)无限数组，但重要区别在于，$x$ 的值不限于整数，可以取实数。</p>
+<p>一般情况下，$x$ 和 $y$ 的值将位于实数行上；因此，可将函数视为成对$( x_i,y_i)$ 值的（可能）无限有序列表。顺序很重要，因为如果打乱这些值，会得到不同的函数。</p>
+<p>函数也可以表示为一个由 $x$ 的值索引的（潜在）无限数组，但重要区别在于，$x$ 的值不限于整数，可以取实数。</p>
 <p>使用这些描述，我们可以用数字表示任何想要的特定函数。但如果想要以概率表示函数呢？可以通过让映射具有概率性质来做到这一点。让我来解释一下：可以让每个 $y_i$ 值都是一个高斯分布的随机变量，具有给定的均值和方差。通过这种方式，我们不再有对单个特定功能的描述，而是对一系列分布族的描述。</p>
-<p>为了使讨论具体化，让我们使用一些Python代码来构建和绘制这类函数的两个示例：</p>
+<p>为了使讨论具体化，让我们使用一些 Python 代码来构建和绘制这类函数的两个示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
@@ -313,12 +314,12 @@
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505202243_46.webp" /></p>
-<p>图7.1显示，使用高斯分布的样本对函数进行编码并不是那么疯狂或愚蠢，因此我们可能是在正确的轨道上。然而，用于生成图7.1的方法是有限的，并且不够灵活。虽然我们期望实函数具有某种结构或模式，但我们表达第一个函数的方式并不允许我们编码数据点之间的任何关系。事实上，每个点都是完全独立的，因为我们只从一个常见的一维高斯分布中获得了10个独立的样本。对于第二个函数，我们引入了一些依赖项。该点的平均值就是值。然而，接下来我们将看到有一种更通用的方法来捕获依赖项(并且不仅仅是在连续点之间)。</p>
+<p>图 7.1 显示，使用高斯分布的样本对函数进行编码并不是那么疯狂或愚蠢，因此我们可能是在正确的轨道上。然而，用于生成图 7.1 的方法是有限的，并且不够灵活。虽然我们期望实函数具有某种结构或模式，但我们表达第一个函数的方式并不允许我们编码数据点之间的任何关系。事实上，每个点都是完全独立的，因为我们只从一个常见的一维高斯分布中获得了 10 个独立的样本。对于第二个函数，我们引入了一些依赖项。该点的平均值就是值。然而，接下来我们将看到有一种更通用的方法来捕获依赖项（并且不仅仅是在连续点之间）。</p>
 <p>在继续之前，让我停一会儿问你们，为什么我们使用的是高斯分布，而不是任何其他的概率分布？首先，因为通过限制我们与高斯人合作，我们不会失去任何指定不同形状函数的灵活性，因为每个点都可能有其自己的均值和方差；其次，因为从数学的角度来看，与高斯人合作是很好的。</p>
 <div class="section" id="id4">
 <h3>7.2.1 多元高斯与函数<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<p>在图7.1中，我们使用高斯表示一个函数来获取样本。一种替代方法是使用多变量高斯分布来获得长度的样本向量。实际上，您可能希望尝试通过使用 np.random.multivariate_normal(np.zeros_like(x), np.eye(len(x))) 替换np.random.normal(0, 1, len(x)) 来生成如图7.1所示的图形。</p>
-<p>您将看到第一条语句等同于第二条语句，但是现在我们可以使用协方差矩阵来编码有关数据点如何相互关联的信息。通过允许协方差矩阵为np.ye(len(X))，我们基本上表示这10个点中的每个点的方差为1，并且它们之间的方差(即，它们的协方差)为0(因此，它们是独立的)。如果我们用其他(正)数字替换这些零，我们可能得到的协方差告诉我们一个不同的故事。因此，要以概率方式表示函数，我们只需要一个具有合适协方差矩阵的多变量高斯函数，我们将在下一节中看到。</p>
+<p>在图 7.1 中，我们使用高斯表示一个函数来获取样本。一种替代方法是使用多变量高斯分布来获得长度的样本向量。实际上，您可能希望尝试通过使用 np.random.multivariate_normal(np.zeros_like(x), np.eye(len(x))) 替换 np.random.normal(0, 1, len(x)) 来生成如图 7.1 所示的图形。</p>
+<p>您将看到第一条语句等同于第二条语句，但是现在我们可以使用协方差矩阵来编码有关数据点如何相互关联的信息。通过允许协方差矩阵为 np.ye(len(X))，我们基本上表示这 10 个点中的每个点的方差为 1，并且它们之间的方差（即，它们的协方差）为 0（因此，它们是独立的）。如果我们用其他（正）数字替换这些零，我们可能得到的协方差告诉我们一个不同的故事。因此，要以概率方式表示函数，我们只需要一个具有合适协方差矩阵的多变量高斯函数，我们将在下一节中看到。</p>
 </div>
 <div class="section" id="id5">
 <h3>7.2.2 协方差函数与核<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
@@ -331,14 +332,14 @@ $$
 $$
 \left|x-x^{\prime}\right|^{2}=\left(x_{1}-x_{1}^{\prime}\right)^{2}+\left(x_{2}-x_{2}^{\prime}\right)^{2}+\cdots+\left(x_{n}-x_{n}^{\prime}\right)^{2}
 $$
-乍一看可能不明显，但幂二次核具有与高斯分布类似的公式(见表达式1.3)。因此，您可能会发现有人将此内核称为高斯内核。该术语称为长度标度(或带宽或方差)，用于控制内核的宽度。</p>
-<p>为了更好地理解内核的作用，让我们定义一个Python函数来计算指数二次内核：</p>
+乍一看可能不明显，但幂二次核具有与高斯分布类似的公式（见表达式 1.3)。因此，您可能会发现有人将此内核称为高斯内核。该术语称为长度标度（或带宽或方差），用于控制内核的宽度。</p>
+<p>为了更好地理解内核的作用，让我们定义一个 Python 函数来计算指数二次内核：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">exp_quad_kernel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">ℓ</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;exponentiated quadratic kernel&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">k</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">ℓ</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">knots</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>以下代码和图7.2旨在显示协方差矩阵如何查找不同的输入。我选择的输入相当简单，由值[-1，0，1，2]组成。理解此示例后，您应该尝试使用其他输入(请参见练习1)：</p>
+<p>以下代码和图 7.2 旨在显示协方差矩阵如何查找不同的输入。我选择的输入相当简单，由值 [-1，0，1，2] 组成。理解此示例后，您应该尝试使用其他输入（请参见练习 1)：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
 <span class="n">cov</span> <span class="o">=</span> <span class="n">exp_quad_kernel</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -364,9 +365,9 @@ $$
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505203138_6f.webp" /></p>
-<p>图7.2左侧的面板显示输入，x轴上的值表示每个数据点的值，文本注释显示数据点的顺序(从零开始)。在右边的面板上，我们有一个热图，表示使用指数二次核获得的协方差矩阵。颜色越浅，协方差越大。如您所见，热图是对称的，对角线取较大的值。协方差矩阵中每个元素的值与点之间的距离成反比，因为对角线是每个数据点与其自身进行比较的结果。对于这个核，我们得到最接近的距离0和更高的协方差值1。其他值对于其他内核也是可能的。</p>
-<p>内核将数据点沿x轴的距离转换为预期函数值(在y轴上)的协方差值。因此，x轴上的两个点越近，我们预计它们在y轴上的值就越相似。</p>
-<p>总而言之，到目前为止，我们已经看到，我们可以使用具有给定协方差的多元正态分布来建模函数。我们可以使用核函数来建立协方差。在下面的示例中，我们使用exp_quad_kernel函数来定义多变量正态分布的协方差矩阵，然后使用该分布中的样本来表示函数：</p>
+<p>图 7.2 左侧的面板显示输入，x 轴上的值表示每个数据点的值，文本注释显示数据点的顺序（从零开始）。在右边的面板上，我们有一个热图，表示使用指数二次核获得的协方差矩阵。颜色越浅，协方差越大。如您所见，热图是对称的，对角线取较大的值。协方差矩阵中每个元素的值与点之间的距离成反比，因为对角线是每个数据点与其自身进行比较的结果。对于这个核，我们得到最接近的距离 0 和更高的协方差值 1。其他值对于其他内核也是可能的。</p>
+<p>内核将数据点沿 x 轴的距离转换为预期函数值（在 y 轴上）的协方差值。因此，x 轴上的两个点越近，我们预计它们在 y 轴上的值就越相似。</p>
+<p>总而言之，到目前为止，我们已经看到，我们可以使用具有给定协方差的多元正态分布来建模函数。我们可以使用核函数来建立协方差。在下面的示例中，我们使用 exp_quad_kernel 函数来定义多变量正态分布的协方差矩阵，然后使用该分布中的样本来表示函数：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
 <span class="n">test_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -382,14 +383,14 @@ $$
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505203247_f6.webp" /></p>
-<p>如图7.3所示，高斯核包含多种函数，其参数控制函数的平滑度。的值越大，函数越平滑。</p>
+<p>如图 7.3 所示，高斯核包含多种函数，其参数控制函数的平滑度。的值越大，函数越平滑。</p>
 </div>
 <div class="section" id="id6">
 <h3>7.2.3 高斯过程<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<p>现在我们已经准备好了解什么是高斯过程(GP)以及它们是如何在实践中使用的。</p>
-<p>从维基百科(Wikipedia)上摘取的对高斯过程的一个比较正式的定义如下：</p>
+<p>现在我们已经准备好了解什么是高斯过程 (GP) 以及它们是如何在实践中使用的。</p>
+<p>从维基百科 (Wikipedia) 上摘取的对高斯过程的一个比较正式的定义如下：</p>
 <p>按时间或空间索引的随机变量的集合，使得这些随机变量的每个有限集合都具有多元正态分布，即它们的每个有限线性组合都是正态分布的。</p>
-<p>理解高斯过程的诀窍是认识到GP的概念是一个心理(和数学)脚手架，因为在实践中，我们不需要直接处理这个无限的数学对象。相反，我们只在我们有数据的地方评估高斯过程。通过这样做，我们将无限维GP压缩成一个有限的多元高斯分布，其维数和数据点一样多。从数学上讲，这种崩溃是由无限不可观测的维度上的边际化造成的。理论向我们保证，省略(实际上边缘化)所有的点是可以的，除了我们正在观察的那些点。它还保证我们将始终得到多变量的高斯分布。因此，我们可以严格地将图7.3解释为来自高斯过程的实际样本！</p>
+<p>理解高斯过程的诀窍是认识到 GP 的概念是一个心理（和数学）脚手架，因为在实践中，我们不需要直接处理这个无限的数学对象。相反，我们只在我们有数据的地方评估高斯过程。通过这样做，我们将无限维 GP 压缩成一个有限的多元高斯分布，其维数和数据点一样多。从数学上讲，这种崩溃是由无限不可观测的维度上的边际化造成的。理论向我们保证，省略（实际上边缘化）所有的点是可以的，除了我们正在观察的那些点。它还保证我们将始终得到多变量的高斯分布。因此，我们可以严格地将图 7.3 解释为来自高斯过程的实际样本！</p>
 <p>请注意，我们将多变量高斯函数的平均值设置为零，并通过指数二次核仅使用协方差矩阵对函数进行建模。在使用高斯过程时，将多变量高斯的平均值设置为零是常见的做法。</p>
 <p>高斯过程对于构建贝叶斯非参数模型很有用，因为我们可以将它们用作函数上的先验分布。</p>
 </div>
@@ -401,12 +402,12 @@ $$
 y \sim \mathcal{N}(\mu=f(x), \sigma=\epsilon)
 $$
 此处 $ \epsilon \sim \mathcal{N}\left(0, \sigma_{\epsilon}\right) $</p>
-<p>这类似于我们在第3章“线性回归建模”中对线性回归模型所做的假设。主要区别在于，现在我们将优先分配。高斯过程可以作为这样的先验，因此我们可以这样写：</p>
+<p>这类似于我们在第 3 章“线性回归建模”中对线性回归模型所做的假设。主要区别在于，现在我们将优先分配。高斯过程可以作为这样的先验，因此我们可以这样写：</p>
 <p>$$
 f(x) \sim \mathcal{G} \mathcal{P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right)
 $$</p>
 <p>这里，$\mathcal{GP}$ 表示高斯过程分布， $\mu_x$ 为均值函数， $K(x,x’)$ 为核函数或协方差函数。在这里，我们用函数这个词来表示，在数学上，均值和协方差是无限的对象，即使在实践中，我们总是处理有限的对象。</p>
-<p>如果先验分布是GP，并且似然是正态分布，那么后验分布也是GP，我们可以解析地计算它：
+<p>如果先验分布是 GP，并且似然是正态分布，那么后验分布也是 GP，我们可以解析地计算它：
 $$
 \begin{array}{c}
 p\left(f\left(X_{<em>}\right) \mid X_{</em>}, X, y\right) \sim \mathcal{N}(\mu, \Sigma) \
@@ -423,7 +424,7 @@ $$
 \end{array}
 $$</p>
 <p>$X$ 是观察到的数据点，$X_*$ 表示测试点；也就是我们希望知道推断函数值的新点。</p>
-<p>像往常一样，PyMC3允许我们通过为我们处理几乎所有的数学细节来执行推理，高斯过程也不例外。因此，让我们继续创建一些数据，然后创建一个PyMC3模型：</p>
+<p>像往常一样，PyMC3 允许我们通过为我们处理几乎所有的数学细节来执行推理，高斯过程也不例外。因此，让我们继续创建一些数据，然后创建一个 PyMC3 模型：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="mf">0.1</span><span class="p">)</span>
@@ -435,9 +436,9 @@ $$</p>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204212_c1.webp" /></p>
-<p>在图7.4中，我们看到真正的未知函数是一条黑虚线，而点表示未知函数的样本(带有噪声)。</p>
-<p>请注意，为了将公式7.7和7.8编码到PyMC3模型中，我们只需要找出指数二次核的参数、正态似然方差和长度-尺度参数。</p>
-<p>GPS在PyMC3中实现为一系列Python类，与我们在以前的模型中看到的略有不同；然而，代码仍然非常PyMC3onic。我在以下代码中添加了一些注释，以指导您完成使用PyMC3定义GP的关键步骤：</p>
+<p>在图 7.4 中，我们看到真正的未知函数是一条黑虚线，而点表示未知函数的样本（带有噪声）。</p>
+<p>请注意，为了将公式 7.7 和 7.8 编码到 PyMC3 模型中，我们只需要找出指数二次核的参数、正态似然方差和长度-尺度参数。</p>
+<p>GPS 在 PyMC3 中实现为一系列 Python 类，与我们在以前的模型中看到的略有不同；然而，代码仍然非常 PyMC3onic。我在以下代码中添加了一些注释，以指导您完成使用 PyMC3 定义 GP 的关键步骤：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># A one dimensional column vector of inputs.</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
 <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_reg</span><span class="p">:</span>
@@ -453,23 +454,23 @@ $$</p>
     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">marginal_likelihood</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="n">ϵ</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>请注意，我们使用的不是表达式7.7中预期的正态似然，而是gp.edge_lisilience方法。你可能还记得，在第一章“概率思维”(公式1.1)和第五章“模型比较”(公式5.13)中，边际似然是似然和先验的积分：
+<p>请注意，我们使用的不是表达式 7.7 中预期的正态似然，而是 gp.edge_lisilience 方法。你可能还记得，在第一章“概率思维”（公式 1.1) 和第五章“模型比较”（公式 5.13) 中，边际似然是似然和先验的积分：
 $$
 p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) d f
 $$
-与往常一样，表示所有未知参数，是自变量，也是因变量。请注意，我们正在对函数的值进行边际化。对于GP先验和正常可能性，可以解析地执行边际化。</p>
-<p>根据PyMC3的核心开发者、GP模块的主要贡献者Bill Engels的说法，对于长度尺度参数，优先避免零通常效果更好。在此之前，一个有用的默认设置是pm.Gamma(2，0.5)。你可以从Stan team阅读更多关于默认有用历史的建议：https://github.com/stan-dev/stan/wiki/Prior-ChoiceRecommendations：</p>
+与往常一样，表示所有未知参数，是自变量，也是因变量。请注意，我们正在对函数的值进行边际化。对于 GP 先验和正常可能性，可以解析地执行边际化。</p>
+<p>根据 PyMC3 的核心开发者、GP 模块的主要贡献者 Bill Engels 的说法，对于长度尺度参数，优先避免零通常效果更好。在此之前，一个有用的默认设置是 pm.Gamma(2，0.5)。你可以从 Stan team 阅读更多关于默认有用历史的建议：https://github.com/stan-dev/stan/wiki/Prior-ChoiceRecommendations：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_reg</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204431_42.webp" /></p>
-<p>现在我们已经找到和的值，我们可能想要从GP后验中获取样本；即，拟合数据的函数的样本。我们可以通过使用gp.条件函数计算对新输入位置求值的条件分布来实现这一点：</p>
+<p>现在我们已经找到和的值，我们可能想要从 GP 后验中获取样本；即，拟合数据的函数的样本。我们可以通过使用 gp. 条件函数计算对新输入位置求值的条件分布来实现这一点：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="mi">100</span><span class="p">)[:,</span><span class="kc">None</span><span class="p">]</span>
 <span class="k">with</span> <span class="n">model_reg</span><span class="p">:</span>
     <span class="n">f_pred</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">conditional</span><span class="p">(</span><span class="s1">&#39;f_pred&#39;</span><span class="p">,</span> <span class="n">X_new</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>结果，我们得到了一个新的PyMC3随机变量f_pred，我们可以使用它从后验预测分布中获取样本(以X_NEW值计算)：</p>
+<p>结果，我们得到了一个新的 PyMC3 随机变量 f_pred，我们可以使用它从后验预测分布中获取样本（以 X_NEW 值计算）：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model_reg</span><span class="p">:</span>
     <span class="n">pred_samples</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_reg</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="n">f_pred</span><span class="p">],</span><span class="n">samples</span><span class="o">=</span><span class="mi">82</span><span class="p">)</span>
 </pre></div>
@@ -482,7 +483,7 @@ $$
 </pre></div>
 </div>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204540_3f.webp" style="zoom:67%;" />
-<p>或者，我们可以使用pm.gp.util.lot_gp_dist函数来获得一些不错的绘图。每个绘图代表一个百分位数，范围从51(浅色)到99(深色)：</p>
+<p>或者，我们可以使用 pm.gp.util.lot_gp_dist 函数来获得一些不错的绘图。每个绘图代表一个百分位数，范围从 51（浅色）到 99（深色）：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">plot_gp_dist</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">pred_samples</span><span class="p">[</span><span class="s1">&#39;f_pred&#39;</span><span class="p">],</span> <span class="n">X_new</span><span class="p">,</span>
 <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">plot_samples</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
@@ -492,7 +493,7 @@ $$
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204617_c7.webp" /></p>
-<p>另一种选择是计算在参数空间中给定点评估的条件分布的平均向量和标准差。在下面的示例中，我们对AND使用平均值(跟踪中的样本)。我们可以使用gp.recast函数计算平均值和方差。我们之所以能做到这一点，是因为PyMC3已经解析地计算了后验结果：</p>
+<p>另一种选择是计算在参数空间中给定点评估的条件分布的平均向量和标准差。在下面的示例中，我们对 AND 使用平均值（跟踪中的样本）。我们可以使用 gp.recast 函数计算平均值和方差。我们之所以能做到这一点，是因为 PyMC3 已经解析地计算了后验结果：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">point</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ℓ&#39;</span><span class="p">:</span> <span class="n">trace_reg</span><span class="p">[</span><span class="s1">&#39;ℓ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="s1">&#39;ϵ&#39;</span><span class="p">:</span> <span class="n">trace_reg</span><span class="p">[</span><span class="s1">&#39;ϵ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()}</span>
 <span class="n">mu</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_new</span><span class="p">,</span> <span class="n">point</span><span class="o">=</span><span class="n">point</span><span class="p">,</span> <span class="n">diag</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -515,24 +516,24 @@ $$
 </div>
 <div class="section" id="id8">
 <h2>7.4 空间自相关回归<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
-<p>下面的例子取自理查德·麦克雷思(Richard McElreath)的“统计反思”(Statistics Reink)一书。作者好心地允许我在这里重复使用他的例子。我强烈推荐你读他的书，因为你会发现很多像这样的好例子和非常好的解释。唯一需要注意的是，书中的示例是R/stan格式的，但请不要担心，请继续采样；您可以在https://github.com/pymc-devs/Resources中找到这些示例的Python/PyMC3版本。</p>
-<p>好的，回到这个例子，我们有10个不同的岛屿社会；对于每一个，我们都有他们使用的工具的数量。一些理论预测，较大的人口会比较小的人口开发和维持更多的工具。另一个重要因素是人群间的接触率。</p>
-<p>由于我们有许多工具作为因变量，我们可以使用泊松回归与总体作为自变量。事实上，我们可以使用人口的对数，因为(根据理论)真正重要的是人口的数量，而不是绝对的大小。将接触率包括在我们的模型中的一种方法是收集有关这些社会在历史上接触的频率的信息，并创建一个分类变量，如低/高接触率(请参阅岛屿数据帧中的Contact列)。另一种方式是使用社会之间的距离作为接触率的代理，因为可以合理地假设距离最近的社会比距离较远的社会更频繁地接触。</p>
-<p>我们可以通过阅读本书附带的ians_Dist.csv文件来访问以千公里为单位表示的值的距离矩阵：</p>
+<p>下面的例子取自理查德·麦克雷思 (Richard McElreath) 的“统计反思”(Statistics Reink) 一书。作者好心地允许我在这里重复使用他的例子。我强烈推荐你读他的书，因为你会发现很多像这样的好例子和非常好的解释。唯一需要注意的是，书中的示例是 R/stan 格式的，但请不要担心，请继续采样；您可以在 https://github.com/pymc-devs/Resources 中找到这些示例的 Python/PyMC3 版本。</p>
+<p>好的，回到这个例子，我们有 10 个不同的岛屿社会；对于每一个，我们都有他们使用的工具的数量。一些理论预测，较大的人口会比较小的人口开发和维持更多的工具。另一个重要因素是人群间的接触率。</p>
+<p>由于我们有许多工具作为因变量，我们可以使用泊松回归与总体作为自变量。事实上，我们可以使用人口的对数，因为（根据理论）真正重要的是人口的数量，而不是绝对的大小。将接触率包括在我们的模型中的一种方法是收集有关这些社会在历史上接触的频率的信息，并创建一个分类变量，如低/高接触率（请参阅岛屿数据帧中的 Contact 列）。另一种方式是使用社会之间的距离作为接触率的代理，因为可以合理地假设距离最近的社会比距离较远的社会更频繁地接触。</p>
+<p>我们可以通过阅读本书附带的 ians_Dist.csv 文件来访问以千公里为单位表示的值的距离矩阵：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">islands_dist</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/islands_dist.csv&#39;</span><span class="p">,</span>
                            <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">islands_dist</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204845_7c.webp" /></p>
-<p>如你所见，主对角线上填满了零。每个岛国社会都处于零公里的状态。矩阵也是对称的；上三角形和下三角形都有相同的信息。这是从A点到B点的距离与B点到A点的距离相同的直接结果。</p>
-<p>工具数量和人口规模存储在另一个文件islands.csv中，该文件也随书一起分发：</p>
+<p>如你所见，主对角线上填满了零。每个岛国社会都处于零公里的状态。矩阵也是对称的；上三角形和下三角形都有相同的信息。这是从 A 点到 B 点的距离与 B 点到 A 点的距离相同的直接结果。</p>
+<p>工具数量和人口规模存储在另一个文件 islands.csv 中，该文件也随书一起分发：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">islands</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/islands.csv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
 <span class="n">islands</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204920_fd.webp" /></p>
-<p>在此DataFrame中，我们将只使用列culture, total_tools, lat, lon2,and logpop:</p>
+<p>在此 DataFrame 中，我们将只使用列 culture, total_tools, lat, lon2,and logpop:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">islands_dist_sqr</span> <span class="o">=</span> <span class="n">islands_dist</span><span class="o">.</span><span class="n">values</span><span class="o">**</span><span class="mi">2</span>
 <span class="n">culture_labels</span> <span class="o">=</span> <span class="n">islands</span><span class="o">.</span><span class="n">culture</span><span class="o">.</span><span class="n">values</span>
 <span class="n">index</span> <span class="o">=</span> <span class="n">islands</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
@@ -548,8 +549,8 @@ f \sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \
 y \sim \operatorname{Poisson}(\mu)
 $$
 这里，我们省略了和的前缀，以及内核的超级前缀。是日志填充，是工具总数。</p>
-<p>与第四章“推广线性模型”中的模型相比，该模型基本上是一个泊松回归模型，与第四章中的模型相比，线性模型中的一项来自GP。为了计算GP的内核，我们将使用距离矩阵ILANES_DIST。通过这种方式，我们将有效地纳入技术暴露的相似性度量(从距离矩阵估计)。因此，我们将把每个社会的工具数量建模为它们的地理相似性的函数，而不是假设总数量仅仅是人口的结果，并且从一个社会到另一个社会是独立的。</p>
-<p>此模型(包括之前的模型)类似于PyMC3中的以下代码：</p>
+<p>与第四章“推广线性模型”中的模型相比，该模型基本上是一个泊松回归模型，与第四章中的模型相比，线性模型中的一项来自 GP。为了计算 GP 的内核，我们将使用距离矩阵 ILANES_DIST。通过这种方式，我们将有效地纳入技术暴露的相似性度量（从距离矩阵估计）。因此，我们将把每个社会的工具数量建模为它们的地理相似性的函数，而不是假设总数量仅仅是人口的结果，并且从一个社会到另一个社会是独立的。</p>
+<p>此模型（包括之前的模型）类似于 PyMC3 中的以下代码：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_islands</span><span class="p">:</span>
     <span class="n">η</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;η&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">ℓ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;ℓ&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -579,8 +580,8 @@ $$
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205145_a6.webp" /></p>
-<p>图7.9中的粗线是成对社会之间协方差作为距离函数的后验中位数。我们使用中位数是因为和的分布非常不对称。我们可以看到，协方差平均没有那么高，在大约2000公里处也降到了几乎为0。细线代表不确定性，我们可以看到有很大的不确定性</p>
-<p>您可能会发现，将MODEL_IILAS及其计算出的后部与 https://github.com/pymc-devs/ 参考资料中的模型m_10_10进行比较会很有趣。您可能希望使用ArviZ函数，例如az.Summary或az.lot_Forest。模型M1010类似于MODEL_ILANES，但不包含高斯过程项。</p>
+<p>图 7.9 中的粗线是成对社会之间协方差作为距离函数的后验中位数。我们使用中位数是因为和的分布非常不对称。我们可以看到，协方差平均没有那么高，在大约 2000 公里处也降到了几乎为 0。细线代表不确定性，我们可以看到有很大的不确定性</p>
+<p>您可能会发现，将 MODEL_IILAS 及其计算出的后部与 https://github.com/pymc-devs/ 参考资料中的模型 m_10_10 进行比较会很有趣。您可能希望使用 ArviZ 函数，例如 az.Summary 或 az.lot_Forest。模型 M1010 类似于 MODEL_ILANES，但不包含高斯过程项。</p>
 <p>根据我们的模型，我们现在要探索这些岛屿之间的社会联系有多强。为此，我们必须将协方差矩阵转换为相关矩阵：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute posterior median covariance among societies</span>
 <span class="n">Σ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">trace_η</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">trace_ℓ</span><span class="p">)</span> <span class="o">*</span> <span class="n">islands_dist_sqr</span><span class="p">))</span>
@@ -593,7 +594,7 @@ $$
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205246_9e.webp" /></p>
-<p>从其他地方跳出的两个观察是，夏威夷非常孤独。这是有道理的，因为夏威夷离其他岛屿社会很远。此外，我们还可以看到Malekula(Ml)、Tikopia(Ti)和Santa Cruz(Sc)之间高度相关。这也是有道理的，因为这些社会非常接近，而且他们也有类似数量的工具。</p>
+<p>从其他地方跳出的两个观察是，夏威夷非常孤独。这是有道理的，因为夏威夷离其他岛屿社会很远。此外，我们还可以看到 Malekula(Ml)、Tikopia(Ti) 和 Santa Cruz(Sc) 之间高度相关。这也是有道理的，因为这些社会非常接近，而且他们也有类似数量的工具。</p>
 <p>现在我们将使用纬度和经度信息来绘制岛屿-社会的相对位置：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># scale point size to logpop</span>
 <span class="n">logpop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">log_pop</span><span class="p">)</span>
@@ -628,26 +629,26 @@ $$
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205338_5f.webp" /></p>
-<p>图7.10的左侧面板显示了我们之前在相对地理位置上下文中计算的社会之间的后验中值相关性的线条。有些线条是不可见的，因为我们已经使用相关性来设置线条的不透明度(使用matplotlib的alpha参数)。在右侧面板上，我们再次显示了后验中值相关性，但这一次是根据对数总体与工具总数绘制的。虚线表示工具的中位数和HPD 94%的间隔作为对数填充的函数。在这两幅图中，圆点的大小与每个岛屿社会的人口成正比。</p>
-<p>请注意Malekula、Tikopia和Santa Cruz之间的相关性如何描述这样一个事实，即它们拥有的工具数量相当少，接近或低于其人口的预期工具数量。类似的事情正发生在特罗布里兰岛和马努斯；它们地理位置相近，拥有的工具比预期的人口规模要少。汤加为其人口提供的工具比预期的要多得多，而且与斐济的相关性相对较高。在某种程度上，这个模型告诉我们，汤加对Lua斐济有积极的影响，增加了工具的总数，抵消了其近邻Malekula、Tikopia和Santa Cruz的影响。</p>
+<p>图 7.10 的左侧面板显示了我们之前在相对地理位置上下文中计算的社会之间的后验中值相关性的线条。有些线条是不可见的，因为我们已经使用相关性来设置线条的不透明度（使用 matplotlib 的 alpha 参数）。在右侧面板上，我们再次显示了后验中值相关性，但这一次是根据对数总体与工具总数绘制的。虚线表示工具的中位数和 HPD 94%的间隔作为对数填充的函数。在这两幅图中，圆点的大小与每个岛屿社会的人口成正比。</p>
+<p>请注意 Malekula、Tikopia 和 Santa Cruz 之间的相关性如何描述这样一个事实，即它们拥有的工具数量相当少，接近或低于其人口的预期工具数量。类似的事情正发生在特罗布里兰岛和马努斯；它们地理位置相近，拥有的工具比预期的人口规模要少。汤加为其人口提供的工具比预期的要多得多，而且与斐济的相关性相对较高。在某种程度上，这个模型告诉我们，汤加对 Lua 斐济有积极的影响，增加了工具的总数，抵消了其近邻 Malekula、Tikopia 和 Santa Cruz 的影响。</p>
 </div>
 <div class="section" id="id9">
 <h2>7.5 高斯过程分类<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
-<p>高斯过程不限于回归。我们也可以用它们来分类。正如我们在第4章“推广线性模型”中所看到的，我们通过使用带有Logistic逆链接函数的Bernoulli似然(然后应用边界判决规则来分离类)，将线性模型转化为适合分类的模型。对于虹膜数据集，我们将尝试概括第4章“推广线性模型”中的MODEL_0，这次使用的是GP而不是线性模型。</p>
+<p>高斯过程不限于回归。我们也可以用它们来分类。正如我们在第 4 章“推广线性模型”中所看到的，我们通过使用带有 Logistic 逆链接函数的 Bernoulli 似然（然后应用边界判决规则来分离类），将线性模型转化为适合分类的模型。对于虹膜数据集，我们将尝试概括第 4 章“推广线性模型”中的 MODEL_0，这次使用的是 GP 而不是线性模型。</p>
 <p>让我们再次邀请虹膜数据集上台：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/iris.csv&#39;</span><span class="p">)</span>
 <span class="n">iris</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 <p><img alt="image-20210505205534881" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205541_6c.webp" /></p>
-<p>我们将从最简单的分类问题开始：两类，刚毛和杂色，只有一个自变量，萼片长度。像往常一样，我们将使用数字0和1对分类变量setosa和versicolor进行编码：</p>
+<p>我们将从最简单的分类问题开始：两类，刚毛和杂色，只有一个自变量，萼片长度。像往常一样，我们将使用数字 0 和 1 对分类变量 setosa 和 versicolor 进行编码：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;species == (&#39;setosa&#39;, &#39;versicolor&#39;)&quot;</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">codes</span>
 <span class="n">x_1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sepal_length&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">X_1</span> <span class="o">=</span> <span class="n">x_1</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>对于此模型，我们将使用pm.gp.Latent类，而不是使用pm.gp.Marginal类来实例化GP之前。虽然后者更一般，可以与任何可能性一起使用，但前者仅限于高斯可能性，并且通过利用GP先验与高斯可能性的组合在数学上的易操纵性而具有更高效率的优势：</p>
+<p>对于此模型，我们将使用 pm.gp.Latent 类，而不是使用 pm.gp.Marginal 类来实例化 GP 之前。虽然后者更一般，可以与任何可能性一起使用，但前者仅限于高斯可能性，并且通过利用 GP 先验与高斯可能性的组合在数学上的易操纵性而具有更高效率的优势：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_iris</span><span class="p">:</span>
     <span class="n">ℓ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;ℓ&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
     <span class="n">cov</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ExpQuad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ℓ</span><span class="p">)</span>
@@ -659,7 +660,7 @@ $$
 <span class="n">compute_convergence_checks</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>现在我们已经找到了的值，我们可能想要从GP后验获取样本。与我们对MARGING_GP_MODEL所做的操作一样，我们还可以借助gp.Conditional函数计算一组新输入位置上计算的条件分布，如以下代码所示：</p>
+<p>现在我们已经找到了的值，我们可能想要从 GP 后验获取样本。与我们对 MARGING_GP_MODEL 所做的操作一样，我们还可以借助 gp.Conditional 函数计算一组新输入位置上计算的条件分布，如以下代码所示：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x_1</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">x_1</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="mi">200</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
 <span class="k">with</span> <span class="n">model_iris</span><span class="p">:</span>
     <span class="n">f_pred</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">conditional</span><span class="p">(</span><span class="s1">&#39;f_pred&#39;</span><span class="p">,</span> <span class="n">X_new</span><span class="p">)</span>
@@ -667,7 +668,7 @@ $$
         <span class="n">trace_iris</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="n">f_pred</span><span class="p">],</span> <span class="n">samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>为了显示此模型的结果，我们将创建一个类似于图4.4的图。我们将使用以下便利函数直接从f_pred计算边界决策，而不是解析地获得边界决策：</p>
+<p>为了显示此模型的结果，我们将创建一个类似于图 4.4 的图。我们将使用以下便利函数直接从 f_pred 计算边界决策，而不是解析地获得边界决策：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_midpoint</span><span class="p">(</span><span class="n">array1</span><span class="p">,</span> <span class="n">array2</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This should be a proper docstring :-)</span>
@@ -680,7 +681,7 @@ $$
     <span class="k">return</span> <span class="p">(</span><span class="n">array2</span><span class="p">[</span><span class="n">idx0</span><span class="p">]</span> <span class="o">+</span> <span class="n">array2</span><span class="p">[</span><span class="n">idx1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
 </pre></div>
 </div>
-<p>以下代码与第4章(泛化线性模型)中用于生成图4.4的代码非常相似：</p>
+<p>以下代码与第 4 章（泛化线性模型）中用于生成图 4.4 的代码非常相似：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">fp</span> <span class="o">=</span> <span class="n">logistic</span><span class="p">(</span><span class="n">pred_samples</span><span class="p">[</span><span class="s1">&#39;f_pred&#39;</span><span class="p">])</span>
 <span class="n">fp_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -700,12 +701,12 @@ $$
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205739_e4.webp" /></p>
-<p>如我们所见，图7.11与图4.4非常相似。F_pred曲线看起来像是一条S型曲线，除了尾部在较低的x_1值时上升，在较高的x_1值下降。这是当没有数据(或数据很少)时预测函数向前移动的结果。如果我们只关心边界决策，这应该不是一个真正的问题，但如果我们想要为不同的萼片长度值建立属于setosa或versicolor的概率模型，那么我们应该改进我们的模型，并做一些事情来获得更好的尾部模型。实现这一目标的一种方法是给高斯过程增加更多的结构。获得更好的高斯过程模型的一般方法是组合协方差函数，以便更好地捕捉我们试图建模的函数的细节。</p>
-<p>以下模型(Model_Iris2)与model_iris相同，不同之处在于协方差矩阵，我们将其建模为三个内核的组合：</p>
+<p>如我们所见，图 7.11 与图 4.4 非常相似。F_pred 曲线看起来像是一条 S 型曲线，除了尾部在较低的 x_1 值时上升，在较高的 x_1 值下降。这是当没有数据（或数据很少）时预测函数向前移动的结果。如果我们只关心边界决策，这应该不是一个真正的问题，但如果我们想要为不同的萼片长度值建立属于 setosa 或 versicolor 的概率模型，那么我们应该改进我们的模型，并做一些事情来获得更好的尾部模型。实现这一目标的一种方法是给高斯过程增加更多的结构。获得更好的高斯过程模型的一般方法是组合协方差函数，以便更好地捕捉我们试图建模的函数的细节。</p>
+<p>以下模型 (Model_Iris2) 与 model_iris 相同，不同之处在于协方差矩阵，我们将其建模为三个内核的组合：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cov</span> <span class="o">=</span> <span class="n">K_</span><span class="p">{</span><span class="n">ExpQuad</span><span class="p">}</span> <span class="o">+</span> <span class="n">K_</span><span class="p">{</span><span class="n">Linear</span><span class="p">}</span> <span class="o">+</span> <span class="n">K_</span><span class="p">{</span><span class="n">whitenoise</span><span class="p">}(</span><span class="mf">1E-5</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>通过添加线性内核，我们修复了尾部问题，如图7.12所示。白噪声核只是一个稳定协方差矩阵计算的计算技巧。对高斯过程的核进行了限制，以保证得到的协方差矩阵是正定的。然而，数字错误可能会导致违反此条件。这个问题的一个表现是，我们在计算拟合函数的后验预测样本时会得到NAN。减轻此错误的一种方法是通过添加一点噪声来稳定计算。事实上，PyMC3已经在幕后做到了这一点，但有时需要更多一点噪音，如以下代码所示：</p>
+<p>通过添加线性内核，我们修复了尾部问题，如图 7.12 所示。白噪声核只是一个稳定协方差矩阵计算的计算技巧。对高斯过程的核进行了限制，以保证得到的协方差矩阵是正定的。然而，数字错误可能会导致违反此条件。这个问题的一个表现是，我们在计算拟合函数的后验预测样本时会得到 NAN。减轻此错误的一种方法是通过添加一点噪声来稳定计算。事实上，PyMC3 已经在幕后做到了这一点，但有时需要更多一点噪音，如以下代码所示：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_iris2</span><span class="p">:</span>
     <span class="n">ℓ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;ℓ&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">x_1</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
@@ -721,7 +722,7 @@ $$
 <span class="n">compute_convergence_checks</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>现在，我们为先前生成的X_new值生成model_iris2的后验预测样本：</p>
+<p>现在，我们为先前生成的 X_new 值生成 model_iris2 的后验预测样本：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model_iris2</span><span class="p">:</span>
     <span class="n">f_pred</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">conditional</span><span class="p">(</span><span class="s1">&#39;f_pred&#39;</span><span class="p">,</span> <span class="n">X_new</span><span class="p">)</span>
     <span class="n">pred_samples</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_iris2</span><span class="p">,</span>
@@ -744,13 +745,13 @@ $$
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205912_68.webp" /></p>
-<p>现在，图7.12看起来更类似于图4.4，而不是图7.11。此示例有两个主要目的：</p>
+<p>现在，图 7.12 看起来更类似于图 4.4，而不是图 7.11。此示例有两个主要目的：</p>
 <ul class="simple">
 <li><p>展示如何轻松组合内核以获得更具表现力的模型</p></li>
-<li><p>展示了如何使用高斯过程恢复Logistic回归</p></li>
+<li><p>展示了如何使用高斯过程恢复 Logistic 回归</p></li>
 </ul>
-<p>关于第二点，Logistic回归确实是高斯过程的特例，因为简单的线性回归只是高斯过程的特例。事实上，许多已知的模型可以被视为全科医生的特例，或者至少它们以某种方式与全科医生联系在一起。你可以阅读凯文·墨菲(Kevin Murphy)的“机器学习：概率视角”中的第15章，了解详细信息。</p>
-<p>在实践中，使用GP对我们只能用Logistic回归来解决的问题进行建模并没有太大的意义。相反，我们希望使用GP来建模更复杂的数据，而这些数据使用灵活性较低的模型无法很好地捕获。例如，假设我们想要将患病概率建模为年龄的函数。事实证明，非常年轻和非常年长的人比中年人有更高的风险。数据集space_flu.csv是受前面描述启发的假数据集。让我们加载它：</p>
+<p>关于第二点，Logistic 回归确实是高斯过程的特例，因为简单的线性回归只是高斯过程的特例。事实上，许多已知的模型可以被视为全科医生的特例，或者至少它们以某种方式与全科医生联系在一起。你可以阅读凯文·墨菲 (Kevin Murphy) 的“机器学习：概率视角”中的第 15 章，了解详细信息。</p>
+<p>在实践中，使用 GP 对我们只能用 Logistic 回归来解决的问题进行建模并没有太大的意义。相反，我们希望使用 GP 来建模更复杂的数据，而这些数据使用灵活性较低的模型无法很好地捕获。例如，假设我们想要将患病概率建模为年龄的函数。事实证明，非常年轻和非常年长的人比中年人有更高的风险。数据集 space_flu.csv 是受前面描述启发的假数据集。让我们加载它：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">df_sf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/space_flu.csv&#39;</span><span class="p">)</span>
 <span class="n">age</span> <span class="o">=</span> <span class="n">df_sf</span><span class="o">.</span><span class="n">age</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
 <span class="n">space_flu</span> <span class="o">=</span> <span class="n">df_sf</span><span class="o">.</span><span class="n">space_flu</span>
@@ -760,7 +761,7 @@ $$
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210018_ba.webp" /></p>
-<p>以下模型与model_iris基本相同：</p>
+<p>以下模型与 model_iris 基本相同：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_space_flu</span><span class="p">:</span>
     <span class="n">ℓ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;ℓ&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">cov</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ExpQuad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ℓ</span><span class="p">)</span> <span class="o">+</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">WhiteNoise</span><span class="p">(</span><span class="mf">1E-5</span><span class="p">)</span>
@@ -771,7 +772,7 @@ $$
         <span class="mi">1000</span><span class="p">,</span> <span class="n">chains</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">compute_convergence_checks</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>现在，我们为model_space_flu生成后验预测样本，然后绘制结果：</p>
+<p>现在，我们为 model_space_flu 生成后验预测样本，然后绘制结果：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">200</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
 <span class="k">with</span> <span class="n">model_space_flu</span><span class="p">:</span>
     <span class="n">f_pred</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">conditional</span><span class="p">(</span><span class="s1">&#39;f_pred&#39;</span><span class="p">,</span> <span class="n">X_new</span><span class="p">)</span>
@@ -791,22 +792,22 @@ $$
 </pre></div>
 </div>
 <p><img alt="image-20210505210106544" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210109_bb.webp" /></p>
-<p>请注意，如图7.14所示，GP能够很好地适应此数据集，即使数据要求函数比逻辑函数更复杂。对于简单的逻辑回归来说，很好地拟合这个数据是不可能的，除非我们引入一些特殊的修改来帮助它(请参见练习6以了解有关此类修改的讨论)。</p>
+<p>请注意，如图 7.14 所示，GP 能够很好地适应此数据集，即使数据要求函数比逻辑函数更复杂。对于简单的逻辑回归来说，很好地拟合这个数据是不可能的，除非我们引入一些特殊的修改来帮助它（请参见练习 6 以了解有关此类修改的讨论）。</p>
 </div>
 <div class="section" id="cox">
-<h2>7.6 Cox过程<a class="headerlink" href="#cox" title="Permalink to this headline">¶</a></h2>
-<p>现在让我们返回到对计数数据建模的示例。我们将看到两个示例；一个具有时变速率，另一个具有2D空间变化速率。为了做到这一点，我们将使用泊松似然，并且将使用高斯过程对速率进行建模。因为泊松分布的速率被限制为正值，所以我们将使用指数作为逆链接函数，就像我们在第4章-推广线性模型中对零膨胀泊松回归所做的那样。</p>
-<p>在文献中，可变速率也以强度的名称出现，因此，这种类型的问题被称为强度估计。此外，这种类型的模型通常被称为Cox模型。考克斯模型是泊松过程的一种，其速率本身就是一个随机过程。正如高斯过程是随机变量的集合，其中这些随机变量的每个有限集合都具有多元正态分布一样，泊松过程是随机变量的集合，其中这些随机变量的每个有限集合都具有泊松分布。我们可以把泊松过程看作是在给定空间中的点的集合上的分布。当泊松过程的速率本身是随机过程时，例如，高斯过程，那么我们就有所谓的Cox过程。</p>
+<h2>7.6 Cox 过程<a class="headerlink" href="#cox" title="Permalink to this headline">¶</a></h2>
+<p>现在让我们返回到对计数数据建模的示例。我们将看到两个示例；一个具有时变速率，另一个具有 2D 空间变化速率。为了做到这一点，我们将使用泊松似然，并且将使用高斯过程对速率进行建模。因为泊松分布的速率被限制为正值，所以我们将使用指数作为逆链接函数，就像我们在第 4 章-推广线性模型中对零膨胀泊松回归所做的那样。</p>
+<p>在文献中，可变速率也以强度的名称出现，因此，这种类型的问题被称为强度估计。此外，这种类型的模型通常被称为 Cox 模型。考克斯模型是泊松过程的一种，其速率本身就是一个随机过程。正如高斯过程是随机变量的集合，其中这些随机变量的每个有限集合都具有多元正态分布一样，泊松过程是随机变量的集合，其中这些随机变量的每个有限集合都具有泊松分布。我们可以把泊松过程看作是在给定空间中的点的集合上的分布。当泊松过程的速率本身是随机过程时，例如，高斯过程，那么我们就有所谓的 Cox 过程。</p>
 <div class="section" id="id10">
 <h3>7.6.1 煤矿灾害<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
-<p>第一个例子被称为煤矿灾难例子。这个例子包括英国从1851年到1962年的煤矿灾难记录。灾难的数量被认为是在此期间受到安全法规变化的影响。我们希望将灾害率建模为时间的函数。我们的数据集只有一列，每个条目都对应于灾难发生的时间。</p>
+<p>第一个例子被称为煤矿灾难例子。这个例子包括英国从 1851 年到 1962 年的煤矿灾难记录。灾难的数量被认为是在此期间受到安全法规变化的影响。我们希望将灾害率建模为时间的函数。我们的数据集只有一列，每个条目都对应于灾难发生的时间。</p>
 <p>让我们加载数据并查看它的一些值：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">coal_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/coal.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">coal_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210251_00.webp" /></p>
-<p>我们将用来拟合COREE_DF数据框中的数据的模型是：
+<p>我们将用来拟合 COREE_DF 数据框中的数据的模型是：
 $$
 \begin{aligned} f(x) &amp; \sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \
 y &amp; \sim \operatorname{Poisson}(f(x)) \end{aligned}
@@ -824,7 +825,7 @@ $$
 <span class="n">y_data</span> <span class="o">=</span> <span class="n">hist</span> <span class="o">/</span> <span class="mi">4</span>
 </pre></div>
 </div>
-<p>现在我们用PyMC3定义并求解该模型：</p>
+<p>现在我们用 PyMC3 定义并求解该模型：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_coal</span><span class="p">:</span>
     <span class="n">ℓ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;ℓ&#39;</span><span class="p">,</span> <span class="n">x_data</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
     <span class="n">cov</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ExpQuad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="n">ℓ</span><span class="p">)</span> <span class="o">+</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">WhiteNoise</span><span class="p">(</span><span class="mf">1E-5</span><span class="p">)</span>
@@ -848,12 +849,12 @@ $$
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210433_70.webp" /></p>
-<p>图7.15用白线显示了灾害率的中位数与时间的关系。这些条带表示50%HPD间隔(较深)和94%HPD间隔(较浅)。在底部，我们用黑色记号笔标出了每一场灾难(这有时也被称为地毯图)。正如我们所看到的，事故率随着时间的推移而下降，除了最初的短暂上升。PyMC3文档包括煤矿灾难，但从不同的角度建模。我强烈建议您检查该示例，因为它本身非常有用，而且将其与我们刚刚使用model_Coal模型实现的方法进行比较也很有用。</p>
-<p>请注意，即使我们将数据入库，我们也会得到一条平滑的曲线。从这个意义上说，我们可以将MODEL_COIL(通常是这种类型的模型)看作是构建一个直方图，然后对其进行平滑。</p>
+<p>图 7.15 用白线显示了灾害率的中位数与时间的关系。这些条带表示 50%HPD 间隔（较深）和 94%HPD 间隔（较浅）。在底部，我们用黑色记号笔标出了每一场灾难（这有时也被称为地毯图）。正如我们所看到的，事故率随着时间的推移而下降，除了最初的短暂上升。PyMC3 文档包括煤矿灾难，但从不同的角度建模。我强烈建议您检查该示例，因为它本身非常有用，而且将其与我们刚刚使用 model_Coal 模型实现的方法进行比较也很有用。</p>
+<p>请注意，即使我们将数据入库，我们也会得到一条平滑的曲线。从这个意义上说，我们可以将 MODEL_COIL（通常是这种类型的模型）看作是构建一个直方图，然后对其进行平滑。</p>
 </div>
 <div class="section" id="id11">
 <h3>7.6.2 红杉数据集<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-<p>现在，我们将把注意力集中在使用红木数据对二维空间问题应用我们刚刚做过的相同类型的模型上。这个数据集(使用GPL许可证分发)来自GPStuff包，这是一个用于Matlab、Octave和R的高斯进程包。该数据集由给定区域上红杉树的位置组成。推论的动机是要找出这一地区的树木比率是如何分布的。</p>
+<p>现在，我们将把注意力集中在使用红木数据对二维空间问题应用我们刚刚做过的相同类型的模型上。这个数据集（使用 GPL 许可证分发）来自 GPStuff 包，这是一个用于 Matlab、Octave 和 R 的高斯进程包。该数据集由给定区域上红杉树的位置组成。推论的动机是要找出这一地区的树木比率是如何分布的。</p>
 <p>像往常一样，我们加载数据并绘制它：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rw_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/redwood.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
@@ -877,7 +878,7 @@ $$
 <span class="n">y_data</span> <span class="o">=</span> <span class="n">hist</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>请注意，我们将x1和x2数据视为分开的数据，而不是网格网格。这允许我们为每个坐标构建协方差矩阵，从而有效地减小了计算GP所需的矩阵的大小。在使用LatentKron类定义GP时，我们只需小心。重要的是要注意，这不是一个数字技巧，而是这类矩阵结构的数学属性，因此我们不会在我们的模型中引入任何近似或误差。我们只是用一种更快的计算方式来表达它：</p>
+<p>请注意，我们将 x1 和 x2 数据视为分开的数据，而不是网格网格。这允许我们为每个坐标构建协方差矩阵，从而有效地减小了计算 GP 所需的矩阵的大小。在使用 LatentKron 类定义 GP 时，我们只需小心。重要的是要注意，这不是一个数字技巧，而是这类矩阵结构的数学属性，因此我们不会在我们的模型中引入任何近似或误差。我们只是用一种更快的计算方式来表达它：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_rw</span><span class="p">:</span>
     <span class="n">ℓ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;ℓ&#39;</span><span class="p">,</span>  <span class="n">rw_df</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">cov_func1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ExpQuad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="n">ℓ</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -903,7 +904,7 @@ $$
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210705_b5.webp" /></p>
-<p>在图7.17中，较浅的颜色意味着比较深的颜色有更高的树木比率。我们可以想象，我们对寻找高增长率地区很感兴趣，因为我们可能对森林是如何从火灾中恢复的感兴趣，或者我们对土壤的性质感兴趣，我们把树木作为代理。</p>
+<p>在图 7.17 中，较浅的颜色意味着比较深的颜色有更高的树木比率。我们可以想象，我们对寻找高增长率地区很感兴趣，因为我们可能对森林是如何从火灾中恢复的感兴趣，或者我们对土壤的性质感兴趣，我们把树木作为代理。</p>
 </div>
 </div>
 <div class="section" id="id12">

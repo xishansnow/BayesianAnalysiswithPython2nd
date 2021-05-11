@@ -109,12 +109,12 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter04-GeneralizedLinearRegression.html">
-   第 4 章 广义线性回归及分类的贝叶斯视角
+   第 4 章 广义线性回归模型与分类任务
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter05-ModelComparison.html">
-   第 5 章模型比较
+   第 5 章 模型比较
   </a>
  </li>
  <li class="toctree-l1">
@@ -124,7 +124,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter07-GaussianProcesses.html">
-   第7章 高斯过程
+   第 7 章 高斯过程
   </a>
  </li>
 </ul>
@@ -394,8 +394,8 @@
 <h3>（1）模型描述<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>现在有了数据，需要再指定模型。回想一下，模型可以通过指定似然函数和先验的概率分布完成。对于似然，可以用参数分别为 $ n=1 $ 和 $ p=\theta $ 的二项分布来描述，对于先验，用参数为 $ \alpha=\beta=1 $ 的贝塔分布描述，该贝塔分布与 [0,1] 区间内的均匀分布等价。我们可以用数学表达式描述如下：</p>
 <p>$$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-454233c0-6c7d-4198-b30f-b86eae86160d">
-<span class="eqno">(2)<a class="headerlink" href="#equation-454233c0-6c7d-4198-b30f-b86eae86160d" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d6fe353b-b875-4839-a923-e3b84963ce81">
+<span class="eqno">(2)<a class="headerlink" href="#equation-d6fe353b-b875-4839-a923-e3b84963ce81" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \theta &amp;\sim \operatorname{Beta}(\alpha, \beta) \notag \\
 y &amp;\sim \operatorname{Bern}(p=\theta) \tag{2.1}
 \end{align}\]</div>
@@ -600,8 +600,8 @@ trace=pm.sample(1000,step=step,start=start)</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504212534_30.webp" /></p>
 <p>暂且先不考虑偏离均值的那两个点，假设以上分布就是高斯分布。由于我们不知道均值和方差，需要先对这两个变量设置先验。然后，顺理成章地得到如下模型：</p>
 <p>$$</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a96761fb-93de-42b4-b251-3a1722e68349">
-<span class="eqno">(3)<a class="headerlink" href="#equation-a96761fb-93de-42b4-b251-3a1722e68349" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-aadc8529-e416-4754-82de-83031a0843d8">
+<span class="eqno">(3)<a class="headerlink" href="#equation-aadc8529-e416-4754-82de-83031a0843d8" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \mu &amp;\sim U(l, h) \notag \\
 \sigma &amp;\sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \notag \\
 y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{2.2}
