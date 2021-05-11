@@ -49,8 +49,6 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="第6章 混合模型" href="chapter06-MixtureModels.html" />
@@ -295,14 +293,13 @@
 </div>
 <div class="section" id="id3">
 <h2>7.2 对函数建模<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>我们将首先描述一种将函数表示为概率对象的方法，以开始对高斯过程的讨论。可以把函数 <span class="math notranslate nohighlight">\(f\)</span> 看作是从一组输入 <span class="math notranslate nohighlight">\(x\)</span> 到一组输出 <span class="math notranslate nohighlight">\(y\)</span> 的映射。因此，可以这样写：</p>
-<div class="math notranslate nohighlight">
-\[ y=f(x) \]</div>
-<p>表示函数的一种方式是为每个值 <span class="math notranslate nohighlight">\(x_i\)</span> 列出其相应值 <span class="math notranslate nohighlight">\(y_i\)</span> 。事实上，你可能还记得小学时函数的这种表示方式：</p>
+<p>我们将首先描述一种将函数表示为概率对象的方法，以开始对高斯过程的讨论。可以把函数 $f$ 看作是从一组输入 $x$ 到一组输出 $y$ 的映射。因此，可以这样写：</p>
+<p>$$ y=f(x) $$</p>
+<p>表示函数的一种方式是为每个值 $x_i$ 列出其相应值 $y_i$ 。事实上，你可能还记得小学时函数的这种表示方式：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505201816_b3.webp" /></p>
-<p>一般情况下，<span class="math notranslate nohighlight">\(x\)</span> 和 <span class="math notranslate nohighlight">\(y\)</span> 的值将位于实数行上；因此，可将函数视为成对<span class="math notranslate nohighlight">\(( x_i,y_i)\)</span> 值的(可能)无限有序列表。顺序很重要，因为如果打乱这些值，会得到不同的函数。</p>
-<p>函数也可以表示为一个由 <span class="math notranslate nohighlight">\(x\)</span> 的值索引的(潜在)无限数组，但重要区别在于，<span class="math notranslate nohighlight">\(x\)</span> 的值不限于整数，可以取实数。</p>
-<p>使用这些描述，我们可以用数字表示任何想要的特定函数。但如果想要以概率表示函数呢？可以通过让映射具有概率性质来做到这一点。让我来解释一下：可以让每个 <span class="math notranslate nohighlight">\(y_i\)</span> 值都是一个高斯分布的随机变量，具有给定的均值和方差。通过这种方式，我们不再有对单个特定功能的描述，而是对一系列分布族的描述。</p>
+<p>一般情况下，$x$ 和 $y$ 的值将位于实数行上；因此，可将函数视为成对$( x_i,y_i)$ 值的(可能)无限有序列表。顺序很重要，因为如果打乱这些值，会得到不同的函数。</p>
+<p>函数也可以表示为一个由 $x$ 的值索引的(潜在)无限数组，但重要区别在于，$x$ 的值不限于整数，可以取实数。</p>
+<p>使用这些描述，我们可以用数字表示任何想要的特定函数。但如果想要以概率表示函数呢？可以通过让映射具有概率性质来做到这一点。让我来解释一下：可以让每个 $y_i$ 值都是一个高斯分布的随机变量，具有给定的均值和方差。通过这种方式，我们不再有对单个特定功能的描述，而是对一系列分布族的描述。</p>
 <p>为了使讨论具体化，让我们使用一些Python代码来构建和绘制这类函数的两个示例：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
@@ -321,19 +318,19 @@
 <div class="section" id="id4">
 <h3>7.2.1 多元高斯与函数<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>在图7.1中，我们使用高斯表示一个函数来获取样本。一种替代方法是使用多变量高斯分布来获得长度的样本向量。实际上，您可能希望尝试通过使用 np.random.multivariate_normal(np.zeros_like(x), np.eye(len(x))) 替换np.random.normal(0, 1, len(x)) 来生成如图7.1所示的图形。</p>
-<p>您将看到第一条语句等同于第二条语句，但是现在我们可以使用协方差矩阵来编码有关数据点如何相互关联的信息。<a class="reference external" href="http://%E9%80%9A%E8%BF%87%E5%85%81%E8%AE%B8%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5%E4%B8%BAnp.ye">通过允许协方差矩阵为np.ye</a>(len(X))，我们基本上表示这10个点中的每个点的方差为1，并且它们之间的方差(即，它们的协方差)为0(因此，它们是独立的)。如果我们用其他(正)数字替换这些零，我们可能得到的协方差告诉我们一个不同的故事。因此，要以概率方式表示函数，我们只需要一个具有合适协方差矩阵的多变量高斯函数，我们将在下一节中看到。</p>
+<p>您将看到第一条语句等同于第二条语句，但是现在我们可以使用协方差矩阵来编码有关数据点如何相互关联的信息。通过允许协方差矩阵为np.ye(len(X))，我们基本上表示这10个点中的每个点的方差为1，并且它们之间的方差(即，它们的协方差)为0(因此，它们是独立的)。如果我们用其他(正)数字替换这些零，我们可能得到的协方差告诉我们一个不同的故事。因此，要以概率方式表示函数，我们只需要一个具有合适协方差矩阵的多变量高斯函数，我们将在下一节中看到。</p>
 </div>
 <div class="section" id="id5">
 <h3>7.2.2 协方差函数与核<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>实际上，协方差矩阵是使用称为核的函数指定的。您可能会在统计文献中找到多个核的定义，它们的数学属性略有不同。出于我们讨论的目的，我们将说内核基本上是一个对称函数，它接受两个输入，并在输入中返回零值，否则相同或为正。如果满足这些条件，我们可以将核函数的输出解释为两个输入之间的相似性度量。</p>
 <p>在众多可用的有用内核中，常用的一种是指数二次核：
-$<span class="math notranslate nohighlight">\(
-K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left\|x-x^{\prime}\right\|^{2}}{2 \ell^{2}}\right)
-\)</span><span class="math notranslate nohighlight">\(
-此处， \)</span> \left|x-x^{\prime}\right|^{2} <span class="math notranslate nohighlight">\( 为平方欧氏距离：
-\)</span><span class="math notranslate nohighlight">\(
-\left\|x-x^{\prime}\right\|^{2}=\left(x_{1}-x_{1}^{\prime}\right)^{2}+\left(x_{2}-x_{2}^{\prime}\right)^{2}+\cdots+\left(x_{n}-x_{n}^{\prime}\right)^{2}
-\)</span>$
+$$
+K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left|x-x^{\prime}\right|^{2}}{2 \ell^{2}}\right)
+$$
+此处， $ \left|x-x^{\prime}\right|^{2} $ 为平方欧氏距离：
+$$
+\left|x-x^{\prime}\right|^{2}=\left(x_{1}-x_{1}^{\prime}\right)^{2}+\left(x_{2}-x_{2}^{\prime}\right)^{2}+\cdots+\left(x_{n}-x_{n}^{\prime}\right)^{2}
+$$
 乍一看可能不明显，但幂二次核具有与高斯分布类似的公式(见表达式1.3)。因此，您可能会发现有人将此内核称为高斯内核。该术语称为长度标度(或带宽或方差)，用于控制内核的宽度。</p>
 <p>为了更好地理解内核的作用，让我们定义一个Python函数来计算指数二次内核：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">exp_quad_kernel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">ℓ</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
@@ -400,34 +397,32 @@ K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left\|x-x^{\prime}\right\|^{2}}{2
 <div class="section" id="id7">
 <h2>7.3 高斯过程回归<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>让我们假设我们可以将一个值建模为加一些噪声的函数：</p>
-<div class="math notranslate nohighlight">
-\[
-y \sim \mathcal{N}(\mu=f(x), \sigma=\epsilon) 
-\]</div>
-<p>此处 <span class="math notranslate nohighlight">\( \epsilon \sim \mathcal{N}\left(0, \sigma_{\epsilon}\right) \)</span></p>
+<p>$$
+y \sim \mathcal{N}(\mu=f(x), \sigma=\epsilon)
+$$
+此处 $ \epsilon \sim \mathcal{N}\left(0, \sigma_{\epsilon}\right) $</p>
 <p>这类似于我们在第3章“线性回归建模”中对线性回归模型所做的假设。主要区别在于，现在我们将优先分配。高斯过程可以作为这样的先验，因此我们可以这样写：</p>
-<div class="math notranslate nohighlight">
-\[
+<p>$$
 f(x) \sim \mathcal{G} \mathcal{P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right)
-\]</div>
-<p>这里，<span class="math notranslate nohighlight">\(\mathcal{GP}\)</span> 表示高斯过程分布， <span class="math notranslate nohighlight">\(\mu_x\)</span> 为均值函数， <span class="math notranslate nohighlight">\(K(x,x')\)</span> 为核函数或协方差函数。在这里，我们用函数这个词来表示，在数学上，均值和协方差是无限的对象，即使在实践中，我们总是处理有限的对象。</p>
+$$</p>
+<p>这里，$\mathcal{GP}$ 表示高斯过程分布， $\mu_x$ 为均值函数， $K(x,x’)$ 为核函数或协方差函数。在这里，我们用函数这个词来表示，在数学上，均值和协方差是无限的对象，即使在实践中，我们总是处理有限的对象。</p>
 <p>如果先验分布是GP，并且似然是正态分布，那么后验分布也是GP，我们可以解析地计算它：
-$<span class="math notranslate nohighlight">\(
+$$
 \begin{array}{c}
-p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) \sim \mathcal{N}(\mu, \Sigma) \\
-\mu=K_{*}^{T} K^{-1} y \\
-\Sigma=K_{* *}-K_{*}^{T} K^{-1} K_{*}
+p\left(f\left(X_{<em>}\right) \mid X_{</em>}, X, y\right) \sim \mathcal{N}(\mu, \Sigma) \
+\mu=K_{<em>}^{T} K^{-1} y \
+\Sigma=K_{</em> <em>}-K_{</em>}^{T} K^{-1} K_{<em>}
 \end{array}
-\)</span><span class="math notranslate nohighlight">\(
+$$
 这里：
-\)</span><span class="math notranslate nohighlight">\(
+$$
 \begin{array}{l}
-\text { - } K=K(X, X) \\
-\text { - } K_{*}=K\left(X_{*}, X\right) \\
-\text { - } K_{* *}=K\left(X_{*}, X_{*}\right)
+\text { - } K=K(X, X) \
+\text { - } K_{</em>}=K\left(X_{<em>}, X\right) \
+\text { - } K_{</em> <em>}=K\left(X_{</em>}, X_{*}\right)
 \end{array}
-\)</span>$</p>
-<p><span class="math notranslate nohighlight">\(X\)</span> 是观察到的数据点，<span class="math notranslate nohighlight">\(X_*\)</span> 表示测试点；也就是我们希望知道推断函数值的新点。</p>
+$$</p>
+<p>$X$ 是观察到的数据点，$X_*$ 表示测试点；也就是我们希望知道推断函数值的新点。</p>
 <p>像往常一样，PyMC3允许我们通过为我们处理几乎所有的数学细节来执行推理，高斯过程也不例外。因此，让我们继续创建一些数据，然后创建一个PyMC3模型：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
@@ -459,11 +454,11 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) \sim \mathcal{N}(\mu, \Sigma)
 </pre></div>
 </div>
 <p>请注意，我们使用的不是表达式7.7中预期的正态似然，而是gp.edge_lisilience方法。你可能还记得，在第一章“概率思维”(公式1.1)和第五章“模型比较”(公式5.13)中，边际似然是似然和先验的积分：
-$<span class="math notranslate nohighlight">\(
+$$
 p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) d f
-\)</span>$
+$$
 与往常一样，表示所有未知参数，是自变量，也是因变量。请注意，我们正在对函数的值进行边际化。对于GP先验和正常可能性，可以解析地执行边际化。</p>
-<p>根据PyMC3的核心开发者、GP模块的主要贡献者Bill Engels的说法，对于长度尺度参数，优先避免零通常效果更好。在此之前，一个有用的默认设置是pm.Gamma(2，0.5)。你可以从Stan team阅读更多关于默认有用历史的建议：<a class="reference external" href="https://github.com/stan-dev/stan/wiki/Prior-ChoiceRecommendations%EF%BC%9A">https://github.com/stan-dev/stan/wiki/Prior-ChoiceRecommendations：</a></p>
+<p>根据PyMC3的核心开发者、GP模块的主要贡献者Bill Engels的说法，对于长度尺度参数，优先避免零通常效果更好。在此之前，一个有用的默认设置是pm.Gamma(2，0.5)。你可以从Stan team阅读更多关于默认有用历史的建议：https://github.com/stan-dev/stan/wiki/Prior-ChoiceRecommendations：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_reg</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -547,13 +542,12 @@ p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) d f
 </pre></div>
 </div>
 <p>我们要构建的模型是：</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-f \sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \\
- \mu \sim \exp (\alpha+\beta x+f) \\
- y \sim \operatorname{Poisson}(\mu)
-\end{split}\]</div>
-<p>这里，我们省略了和的前缀，以及内核的超级前缀。是日志填充，是工具总数。</p>
+<p>$$
+f \sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \
+\mu \sim \exp (\alpha+\beta x+f) \
+y \sim \operatorname{Poisson}(\mu)
+$$
+这里，我们省略了和的前缀，以及内核的超级前缀。是日志填充，是工具总数。</p>
 <p>与第四章“推广线性模型”中的模型相比，该模型基本上是一个泊松回归模型，与第四章中的模型相比，线性模型中的一项来自GP。为了计算GP的内核，我们将使用距离矩阵ILANES_DIST。通过这种方式，我们将有效地纳入技术暴露的相似性度量(从距离矩阵估计)。因此，我们将把每个社会的工具数量建模为它们的地理相似性的函数，而不是假设总数量仅仅是人口的结果，并且从一个社会到另一个社会是独立的。</p>
 <p>此模型(包括之前的模型)类似于PyMC3中的以下代码：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_islands</span><span class="p">:</span>
@@ -586,7 +580,7 @@ f \sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \\
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205145_a6.webp" /></p>
 <p>图7.9中的粗线是成对社会之间协方差作为距离函数的后验中位数。我们使用中位数是因为和的分布非常不对称。我们可以看到，协方差平均没有那么高，在大约2000公里处也降到了几乎为0。细线代表不确定性，我们可以看到有很大的不确定性</p>
-<p>您可能会发现，将MODEL_IILAS及其计算出的后部与 <a class="reference external" href="https://github.com/pymc-devs/">https://github.com/pymc-devs/</a> 参考资料中的模型m_10_10进行比较会很有趣。您可能希望使用ArviZ函数，例如az.Summary或az.lot_Forest。模型M1010类似于MODEL_ILANES，但不包含高斯过程项。</p>
+<p>您可能会发现，将MODEL_IILAS及其计算出的后部与 https://github.com/pymc-devs/ 参考资料中的模型m_10_10进行比较会很有趣。您可能希望使用ArviZ函数，例如az.Summary或az.lot_Forest。模型M1010类似于MODEL_ILANES，但不包含高斯过程项。</p>
 <p>根据我们的模型，我们现在要探索这些岛屿之间的社会联系有多强。为此，我们必须将协方差矩阵转换为相关矩阵：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute posterior median covariance among societies</span>
 <span class="n">Σ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">trace_η</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">trace_ℓ</span><span class="p">)</span> <span class="o">*</span> <span class="n">islands_dist_sqr</span><span class="p">))</span>
@@ -813,10 +807,10 @@ f \sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \\
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210251_00.webp" /></p>
 <p>我们将用来拟合COREE_DF数据框中的数据的模型是：
-$<span class="math notranslate nohighlight">\(
-\begin{aligned} f(x) &amp; \sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \\ 
+$$
+\begin{aligned} f(x) &amp; \sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \
 y &amp; \sim \operatorname{Poisson}(f(x)) \end{aligned}
-\)</span>$
+$$
 如你所见，这是一个泊松回归问题。你可能会想，在这一点上，如果我们只有一个列，只有灾难发生的日期，我们将如何执行回归。答案是将数据离散化，就像我们正在构建直方图一样。我们将使用存储箱的中心作为变量，每个存储箱的计数作为变量：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># discretize data</span>
 <span class="n">years</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">coal_df</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">coal_df</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>

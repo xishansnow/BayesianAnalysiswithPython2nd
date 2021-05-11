@@ -49,8 +49,6 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -395,7 +393,7 @@
 <p>贝叶斯统计学的基础最早是在托马斯·贝叶斯牧师1763年撰写的一篇文章中描述的，这篇文章由理查德·普里切尔(Richard Price1)发表，主题是逆概率（即如何仅根据过去事件来确定未来事件的概率）。直到1825年，皮埃尔·西蒙·拉普拉斯(Pierre Simon Laplace)才发表了众所周知的贝叶斯定理(见Box 1)。虽然逆概率和贝叶斯定理的思想在数学中由来已久，但这些工具在过去50年才在应用统计学中变得突出起来。</p>
 <p>本文概述了贝叶斯统计学当前和未来的使用情况，适用于在广泛的科学相关领域工作的定量研究人员，这些领域至少对回归建模有一定的了解。文章对可用于进一步研究的文献进行了概述，并说明了如何在真实数据上实现贝叶斯模型。所有数据和代码均可用于教学目的。本文讨论了贝叶斯统计学的一般框架，并介绍了贝叶斯研究周期(图1)。文章首先讨论先验分布的形式化、先验预测检验和确定似然分布（实验），讨论了相关算法和模型拟合，描述了变量选择和变分推断的实例，并给出了一个后验预测检查的算例。然后，描述了贝叶斯统计在不同科学领域(应用)中的应用，接着是关于数据共享、再现性和报告标准(再现性和数据沉积)的指导方针。最后，我们讨论了如何避免使用不正确模型（限制和优化）带来的偏差，并展望了贝叶斯人工智能的未来。</p>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210507165117_2a.webp" alt="Fig. 1" style="zoom: 50%;" />
-<p>图1 贝叶斯统计方法的研究周期。使用贝叶斯统计方法做研究既包含标准的研究周期，也包含贝叶斯特定的工作流程。 a）标准研究周期部分：①文献阅读、问题定义、确定技术问题和假设；②确定问题分析和解决方案，可以预先声明以提高透明度。 b）贝叶斯特定的工作流程包括：①基于背景知识和先验的形式化先验分布；②通过指定数据生成模型并包括观测数据来确定似然函数；③指定先验和似然后获得后验分布；④在获得后验结果后，可以通过推断完成后续任务。 <span class="math notranslate nohighlight">\(θ\)</span> 指未知参数; <span class="math notranslate nohighlight">\(p(.)\)</span> 指概率分布; <span class="math notranslate nohighlight">\(y\)</span> 指数据。</p>
+<p>图1 贝叶斯统计方法的研究周期。使用贝叶斯统计方法做研究既包含标准的研究周期，也包含贝叶斯特定的工作流程。 a）标准研究周期部分：①文献阅读、问题定义、确定技术问题和假设；②确定问题分析和解决方案，可以预先声明以提高透明度。 b）贝叶斯特定的工作流程包括：①基于背景知识和先验的形式化先验分布；②通过指定数据生成模型并包括观测数据来确定似然函数；③指定先验和似然后获得后验分布；④在获得后验结果后，可以通过推断完成后续任务。 $θ$ 指未知参数; $p(.)$ 指概率分布; $y$ 指数据。</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210507183401_65.webp" /></p>
 </div>
 <div class="section" id="id3">
@@ -403,19 +401,19 @@
 <p>本节概述了图1中所描述贝叶斯工作流程中的前两个步骤。一是确定先验分布（后文简称先验）。先验通常被认为是研究人员在实施贝叶斯模型时做出的重要选择之一，因为它可以对最终结果产生实质性影响。可以使用先验预测检查过程来确定所选择先验的适用性。二是确定似然函数（后文简称似然）。似然与先验组合形成后验分布（简称后验）。先验和似然对于确定后验分布非常重要，必须谨慎执行。本文提供了多个示例来展示该过程。</p>
 <div class="section" id="id4">
 <h3><strong>2.1 实验背景概述</strong><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<p>为说明贝叶斯统计的诸多方面，我们提供了一个基于真实数据的示例。考虑一项预测博士推迟毕业的研究实证案例，研究人员询问了荷兰333名博士获得者关于完成博士论文所需时间的问题。基于调查结果，研究人员计算了毕业推迟时间（用 <span class="math notranslate nohighlight">\(y\)</span> 表示，定义为计划毕业时间和实际毕业时间之差，量纲为月，平均值=9.97，最小/最大=-31/91，标准差=14.43)。假设我们对博士推迟毕业时间和其年龄（以年为单位）之间的关系感兴趣，并采用多项式回归模型来为该关系建模。
-$<span class="math notranslate nohighlight">\(
+<p>为说明贝叶斯统计的诸多方面，我们提供了一个基于真实数据的示例。考虑一项预测博士推迟毕业的研究实证案例，研究人员询问了荷兰333名博士获得者关于完成博士论文所需时间的问题。基于调查结果，研究人员计算了毕业推迟时间（用 $y$ 表示，定义为计划毕业时间和实际毕业时间之差，量纲为月，平均值=9.97，最小/最大=-31/91，标准差=14.43)。假设我们对博士推迟毕业时间和其年龄（以年为单位）之间的关系感兴趣，并采用多项式回归模型来为该关系建模。
+$$
 y=\beta_{\text {intercept }}+\beta_{\text {age }} A g e+\beta_{a g e^{2}} A g e^{2}+\varepsilon
-\)</span>$</p>
-<p>我们期望该关系是二次的，用 <span class="math notranslate nohighlight">\(β_{age^2}\)</span> 表示。该模型包含截距项 <span class="math notranslate nohighlight">\(β_{intercept}\)</span> ，误差 <span class="math notranslate nohighlight">\(ε\)</span> 服从均值为0，方差为 <span class="math notranslate nohighlight">\(σ_ε^2\)</span> 的正态分布。请注意，我们简化了统计模型，因此结果仅用于教学目的。运行代码的说明可用于不同的软件12，包括数据探索的步骤13。我们在接下来的几节中都会引用这个示例来说明关键概念第一个示例是关于<strong>博士延毕</strong>的。研究者询问 333 名博士生完成博士论文所需的时间，进而计算延迟时间，即计划时间与实际时间的差距（时间单位为月）。</p>
+$$</p>
+<p>我们期望该关系是二次的，用 $β_{age^2}$ 表示。该模型包含截距项 $β_{intercept}$ ，误差 $ε$ 服从均值为0，方差为 $σ_ε^2$ 的正态分布。请注意，我们简化了统计模型，因此结果仅用于教学目的。运行代码的说明可用于不同的软件12，包括数据探索的步骤13。我们在接下来的几节中都会引用这个示例来说明关键概念第一个示例是关于<strong>博士延毕</strong>的。研究者询问 333 名博士生完成博士论文所需的时间，进而计算延迟时间，即计划时间与实际时间的差距（时间单位为月）。</p>
 </div>
 <div class="section" id="id5">
 <h3><strong>2.2 形式化先验分布</strong><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>先验分布在贝叶斯统计中扮演着非常重要的角色。先验可以有许多不同的分布形式，例如正态分布、均匀分布或泊松分布等。先验也可以包含不同程度的信息量，该信息量由定义在连续区间上、源于绝对或相对不确定性的先验概率分布反映。虽然先验可落在沿该连续区间的任何位置，但通常根据参数值的(不)确定性程度将其分为三类先验：信息性先验、弱信息性先验和弥散性先验。此分类法可根据研究人员个人判断进行。例如：正态分布由均值和方差定义，而其方差与信息量水平相关联。方差设置为1000在一项研究中可能被认为是弥散性的，但在另一个研究中可能被认为是信息性的，这取决于似然函数以及参数的比例。</p>
-<p>图2显示了博士推迟毕业案例中，不同先验设置的似然、先验和后验之间的关系。第一列表示 <span class="math notranslate nohighlight">\(\beta_{age}\)</span> 的先验假设（本例采用正态分布），共5行，分别代表不同信息程度和均值方差的先验。第二列为基于数据的似然，为便于解释，此处统一为相同的分布。第三列为后验。根据贝叶斯准则，先验信息和似然信息结合起来生成后验信息。因此，产生的后验取决于先验数据的信息量(或方差)以及观测数据。如何获得后验将在结果部分讨论。</p>
-<p>控制先验中不确定性程度的参数称为 <code class="docutils literal notranslate"><span class="pre">超参数</span></code> 。以正态分布为例，定义该分布的均值和方差即为其超参数，我们可将此分布记为 <span class="math notranslate nohighlight">\(\mathcal{N}(μ_0,σ_0^2)\)</span> ，其中 <span class="math notranslate nohighlight">\(μ_0\)</span> 表示平均值，<span class="math notranslate nohighlight">\(σ_0^2\)</span> 表示方差。方差越大平均值领域的不确定性就越大，反之亦然。例如，图2示出了具有不同 <span class="math notranslate nohighlight">\(μ_0\)</span> 和 <span class="math notranslate nohighlight">\(σ_0^2\)</span> 值的五个先验设置。弥散性和弱信息性先验由于其较大方差而表现出比信息性先验更宽泛的分布。平均值超参数 <span class="math notranslate nohighlight">\(\mu_0\)</span> 可以视为分布中的峰值。</p>
+<p>图2显示了博士推迟毕业案例中，不同先验设置的似然、先验和后验之间的关系。第一列表示 $\beta_{age}$ 的先验假设（本例采用正态分布），共5行，分别代表不同信息程度和均值方差的先验。第二列为基于数据的似然，为便于解释，此处统一为相同的分布。第三列为后验。根据贝叶斯准则，先验信息和似然信息结合起来生成后验信息。因此，产生的后验取决于先验数据的信息量(或方差)以及观测数据。如何获得后验将在结果部分讨论。</p>
+<p>控制先验中不确定性程度的参数称为 <code class="docutils literal notranslate"><span class="pre">超参数</span></code> 。以正态分布为例，定义该分布的均值和方差即为其超参数，我们可将此分布记为 $\mathcal{N}(μ_0,σ_0^2)$ ，其中 $μ_0$ 表示平均值，$σ_0^2$ 表示方差。方差越大平均值领域的不确定性就越大，反之亦然。例如，图2示出了具有不同 $μ_0$ 和 $σ_0^2$ 值的五个先验设置。弥散性和弱信息性先验由于其较大方差而表现出比信息性先验更宽泛的分布。平均值超参数 $\mu_0$ 可以视为分布中的峰值。</p>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210507180922_63.webp" alt="Fig. 2" style="zoom: 33%;" />
-<p>图2 贝叶斯定理关键组成部分图解。在计算博士推迟毕业案例时，将先验分布(蓝色)和似然函数(黄色)结合在一起，得到后验分布(绿色)。图中提供了五个先验实例：一个是弥散性先验，两个是均值不同但方差相同的弱信息性先验，两个是均值相同但方差不同的信息性先验。似然由观测数据确定的，因此保持不变。后验分布是先验分布和似然分布之间的折衷。通过本例可看出，后验分布受先验类型影响非常大。图中 <span class="math notranslate nohighlight">\(β\)</span> 表示年龄(年)的线性效应；<span class="math notranslate nohighlight">\(θ\)</span> 为未知参数；<span class="math notranslate nohighlight">\(P(.)\)</span> 表示概率分布；<span class="math notranslate nohighlight">\(y\)</span> 表示数据。</p>
+<p>图2 贝叶斯定理关键组成部分图解。在计算博士推迟毕业案例时，将先验分布(蓝色)和似然函数(黄色)结合在一起，得到后验分布(绿色)。图中提供了五个先验实例：一个是弥散性先验，两个是均值不同但方差相同的弱信息性先验，两个是均值相同但方差不同的信息性先验。似然由观测数据确定的，因此保持不变。后验分布是先验分布和似然分布之间的折衷。通过本例可看出，后验分布受先验类型影响非常大。图中 $β$ 表示年龄(年)的线性效应；$θ$ 为未知参数；$P(.)$ 表示概率分布；$y$ 表示数据。</p>
 <div class="section" id="id6">
 <h4><strong>（1）启发式先验</strong><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <p>先验启发是构造合适先验分布的过程。先验启发的策略包括请专家或专家小组提供先验分布的超参数值。MATCH是一个通用的专家启发工具，但很多可用于从专家那里获取信息的方法都需要定制的启发程序和工具。有关为特定任务设计启发式程序的示例，请参阅REFS。关于启发式案例和方法，请读者参考 <code class="docutils literal notranslate"><span class="pre">TU</span> <span class="pre">Delft</span> <span class="pre">专家判决数据库</span></code>。该数据库包含67,000多个启发式判决。此外，可以使用先前发表的结果，或使用这些策略的任何组合和变体。</p>
@@ -432,7 +430,7 @@ y=\beta_{\text {intercept }}+\beta_{\text {age }} A g e+\beta_{a g e^{2}} A g e^
 <p><strong>弥散性先验</strong>反映了对总体参数的完全不确定。</p>
 <p><strong>不恰当先验</strong>表示积分为无穷大的先验分布。</p>
 </div></blockquote>
-<p>信息性先验反映了有关被估模型参数的高度确定性。例如：信息量很大的正态先验会有非常小的方差。当已有信息建议对某个（些）参数的可能范围或参数间关系进行限制时，研究人员可能想要使用信息性先验，例如：对各种医疗条件易感性之间的关系。在某些情况下，信息性先验可能会导致不能反映总体模型参数的后验。有些情况下需要信息性先验，但通过敏感度分析来评估这些先验对后验的影响也很重要。针对博士延期毕业的案例，根据我们的经验，其信息性先验为 <span class="math notranslate nohighlight">\(\beta_{age} \sim N(2.5，5)\)</span> ，其博士年龄与延迟时间线性关系的先验均值为2.5，先验方差为5。</p>
+<p>信息性先验反映了有关被估模型参数的高度确定性。例如：信息量很大的正态先验会有非常小的方差。当已有信息建议对某个（些）参数的可能范围或参数间关系进行限制时，研究人员可能想要使用信息性先验，例如：对各种医疗条件易感性之间的关系。在某些情况下，信息性先验可能会导致不能反映总体模型参数的后验。有些情况下需要信息性先验，但通过敏感度分析来评估这些先验对后验的影响也很重要。针对博士延期毕业的案例，根据我们的经验，其信息性先验为 $\beta_{age} \sim N(2.5，5)$ ，其博士年龄与延迟时间线性关系的先验均值为2.5，先验方差为5。</p>
 <p>弱信息性先验具有中等程度的确定性，既不太分散，也不太严格。例如：弱信息正态先验具有比信息性先验更大的方差超参数。与信息性先验相比，弱信息性先验对后验影响相对较小。这取决于变量规模，并且后验结果更多由数据驱动的似然来加权。当假设某个参数有些信息，但仍存在不确定性时，研究人员可能希望使用信息较弱的先验。在图2中，回归系数的两个弱信息正态先验允许95%的先验密度质量落在-10 和 10 之间或 0 和 10 之间。弱信息性先验比弥散性先验提供更多信息，但通常不像信息性先验那样代表特定信息。在构造弱信息先验时，通常会指定一个合理的参数区间，以便捕获系列合理的参数值–那些在合理选择范围内的参数值–并通过在其上放置有限密度质量来使不太可能的值变得unlikely 。例如：如已知回归系数接近0，则可以指定弱信息先验将合理范围减小到±5，该先验将减少观测数据中越界值(例如：回归系数为100)的概率。</p>
 <p>弥散性先验反映了模型参数的较大不确定性。该先验形式表示为平坦的概率密度，不包含有关参数的具体知识(图2)。当参数完全不确定时，研究人员可能希望使用弥散性先验。在这种情况下，数据将在更大程度上决定后验。研究人员会将非信息性先验这一术语用作弥散性的同义词，但应尽量避免。因为即使是完全平坦的先例，仍然能够提供关于不确定性程度的信息，也就是说，没有任何先验是真正非信息性的。</p>
 <p>弥散性先验表示对参数的领域完全缺乏确定性，但其也可能对后验产生意想不到的后果。例如：当样本量小时，弥散性先验可能会通过后验对参数估计产生不利影响，特别是在涉及元分析模型、Logistic回归模型或混合模型的复杂建模情况下。此外，使用不适当的先验，也会导致不正确的后验。我们在此提到此警示，因为获得不适当后验会影响结果被实质性解释的程度。总体而言，我们注意到，<strong>在对相同或后续数据进行分析前，弥散性先验可以作为信息性先验的占位符使用</strong>。</p>
@@ -451,7 +449,7 @@ y=\beta_{\text {intercept }}+\beta_{\text {age }} A g e+\beta_{a g e^{2}} A g e^
 <div><p>**先验预测检验：**通过根据先验生成数据来检查先验是否有意义的过程，以便评估结果是否在合理的参数空间内。</p>
 <p>**先验预测分布：**如果基于先验的模型为真，则可能出现的所有可能样本。</p>
 <p>**核密度估计：**一种用于估计观测数据概率密度函数的非参数方法。</p>
-<p>**先验预测 <span class="math notranslate nohighlight">\(p\)</span> 值：**用于指示观测数据由模型基于先验预测分布生成的可能性有多大的估计。</p>
+<p>**先验预测 $p$ 值：**用于指示观测数据由模型基于先验预测分布生成的可能性有多大的估计。</p>
 <p>**贝叶斯因子：**指两个相互竞争的假设中，后验赔率与先验赔率之比，也是两个假设下边际似然之比。可用来比较候选模型，每个模型对应一个假设。</p>
 <p>**置信区间：**包含具有指定概率的参数区间。区间的界限是参数后验分布的上下限百分位数。例如，95%的置信区间以后验分布的上下限2.5%为界。</p>
 <p>**封闭形式：**可使用有限数量的标准运算编写的数学表达式。</p>
@@ -461,7 +459,7 @@ y=\beta_{\text {intercept }}+\beta_{\text {age }} A g e+\beta_{a g e^{2}} A g e^
 <p>BOX 建议从指定先验推导出“<strong>先验预测分布</strong>”。先验预测分布是在模型为真的情况下，所有可能出现样本的分布。理论上，“正确的” 先验提供了类似于真实数据分布的先验预测分布。“<strong>先验预测检查</strong>” 将观测数据（或其统计量）与先验预测分布（或其统计量）进行比较，并检查其兼容性。例如：值抽取自先验分布。常用方法：</p>
 <ul class="simple">
 <li><p>核密度估计：使用<strong>核密度估计</strong>可以比较原始样本和来自预测分布的样本</p></li>
-<li><p>先验预测 <span class="math notranslate nohighlight">\(p\)</span> 值：兼容性也可通过**“先验预测 <span class="math notranslate nohighlight">\(p\)</span> 值”**来表示，该值描述了观测数据的特征在参考的先验预测分布尾部中的位置。Evans 和 Moshonov 建议将 Box 的方法限制在最小范围的充分统计量上，即尽可能有效地传递有关样本中某个参数值信息的统计数据。</p></li>
+<li><p>先验预测 $p$ 值：兼容性也可通过**“先验预测 $p$ 值”**来表示，该值描述了观测数据的特征在参考的先验预测分布尾部中的位置。Evans 和 Moshonov 建议将 Box 的方法限制在最小范围的充分统计量上，即尽可能有效地传递有关样本中某个参数值信息的统计数据。</p></li>
 <li><p>贝叶斯因子：Young 和 Pettit认为，基于先验预测分布尾部面积的方法在两个先验都被指定为正确值的情况下，不利于更精确的先验。相反，他们建议使用贝叶斯因子来比较两个先验(见 Box 2)。贝叶斯因子有利于更精确的先验。</p></li>
 </ul>
 <p>上述三种方法将最终确定先验冲突的决定权都交给了主观指定的阈值。数据一致性标准试图通过引入明确的分类法来解决先验冲突确定的主观性问题。该方法以选择某种基于散度的评判规则为代价。另外，还出现了一种用来计算先验数据和观测数据间的距离是否出乎意料的判断规则。我们向读者推荐 Lek和van de Schoot【68】的文献，以比较两个标准。</p>
@@ -469,15 +467,15 @@ y=\beta_{\text {intercept }}+\beta_{\text {age }} A g e+\beta_{a g e^{2}} A g e^
 <blockquote>
 <div><p>继续有关博士延迟毕业的案例：</p>
 </div></blockquote>
-<p>先验预测检查还有助于防止先验形式化中的错误。例如：不同软件包可以不同方式定义相同的分布，先验的正态分布可以由超参数“均值和方差”、“均值和标准差”或“均值和精度(方差的倒数)” 来指定。为说明数据输入错误的影响，对于图2 中所示均值为2.5、方差为5的信息性先验，我们展示了故意将其方差指定为精确值(0.2)的错误先验，如 <span class="math notranslate nohighlight">\(β_{age}\sim\mathcal{N}(2.5，0.2)\)</span> 所示。如果用户没有意识到方差和精确度定义之间存在的错误，那么原本弱信息性先验很容易变成信息性先验。注意：该例中数据和先验预测分布的比较，是根据平均值和标准差两个统计量进行的（这两个统计量通常用于检查先验预测的性能）。也可以选择其他能够反映数据特征的其他统计量，例如数据偏斜度。</p>
+<p>先验预测检查还有助于防止先验形式化中的错误。例如：不同软件包可以不同方式定义相同的分布，先验的正态分布可以由超参数“均值和方差”、“均值和标准差”或“均值和精度(方差的倒数)” 来指定。为说明数据输入错误的影响，对于图2 中所示均值为2.5、方差为5的信息性先验，我们展示了故意将其方差指定为精确值(0.2)的错误先验，如 $β_{age}\sim\mathcal{N}(2.5，0.2)$ 所示。如果用户没有意识到方差和精确度定义之间存在的错误，那么原本弱信息性先验很容易变成信息性先验。注意：该例中数据和先验预测分布的比较，是根据平均值和标准差两个统计量进行的（这两个统计量通常用于检查先验预测的性能）。也可以选择其他能够反映数据特征的其他统计量，例如数据偏斜度。</p>
 <p>例如：当将错误使用精度的先验预测分布（图3a）与基于正确超参数方差的先验预测分布(图3b)进行比较时，图3 中所示先验预测检查有助于避免错误指定。我们在图3C中给出了观测数据与模拟数据的核密度估计（或概率密度函数的估计）。由于先验中不确定性的组合，先验预测核密度估计可能与观测数据有很大不同。</p>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210507181045_ae.webp" alt="Fig. 3" style="zoom:33%;" />
 <p>图3：博士延毕示例中的先验预测检验。</p>
-<p>a）参数 <span class="math notranslate nohighlight">\(β_{age}\)</span> 错误地使用了精度而不是方差( 0.2 vs 5)，先验预测分布显示出意外模式。检验统计量 <span class="math notranslate nohighlight">\(T\)</span> 是平均值和标准差的组合：T(均值，标准差)。观测数据的统计量 T(<span class="math notranslate nohighlight">\(y\)</span>) (绿色)与从先验预测分布中所抽取样本的统计量 <span class="math notranslate nohighlight">\(T(y_{rep})\)</span> (蓝色) 显示在一起。b) 此场景中，先验预测分布采用正确的方差实现；其先验预测检查看起来能够合理地解释数据。c）观测数据的核密度估计 <span class="math notranslate nohighlight">\((y；绿色)\)</span> ，以及抽自先验预测分布样本的核密度估计 <span class="math notranslate nohighlight">\((y_{rep}；蓝色)\)</span> 。先验覆盖了整个似然参数空间，而观测数据位于中间（采用Stan计算）。</p>
+<p>a）参数 $β_{age}$ 错误地使用了精度而不是方差( 0.2 vs 5)，先验预测分布显示出意外模式。检验统计量 $T$ 是平均值和标准差的组合：T(均值，标准差)。观测数据的统计量 T($y$) (绿色)与从先验预测分布中所抽取样本的统计量 $T(y_{rep})$ (蓝色) 显示在一起。b) 此场景中，先验预测分布采用正确的方差实现；其先验预测检查看起来能够合理地解释数据。c）观测数据的核密度估计 $(y；绿色)$ ，以及抽自先验预测分布样本的核密度估计 $(y_{rep}；蓝色)$ 。先验覆盖了整个似然参数空间，而观测数据位于中间（采用Stan计算）。</p>
 </div>
 <div class="section" id="id10">
 <h3><strong>2.4 确定似然函数</strong><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
-<p>似然在贝叶斯学派和频率学派中都有使用。在两种范式中，其作用是量化观测数据对未知参数似然的支持强度。贝叶斯派和频率派间的关键区别在于：频率派不认为有关未知参数的概率陈述有用。相反，认为未知参数是确定且固定的；在给定固定参数 <span class="math notranslate nohighlight">\(θ\)</span> 的情况下，似然是数据 <span class="math notranslate nohighlight">\(y\)</span> 的条件概率分布 <span class="math notranslate nohighlight">\(p(y|θ)\)</span> 。贝叶斯派认为未知参数是一个用概率来表达的随机变量。观测数据被视为固定已知的，而参数的值是变化的；似然是给定固定观测数据 <span class="math notranslate nohighlight">\(y\)</span> 的情况下 <span class="math notranslate nohighlight">\(θ\)</span> 的函数。因此，似然函数汇总了以下要素：随机生成了所有数据的统计模型、<span class="math notranslate nohighlight">\(θ\)</span> 的可能值范围、观测到的数据 <span class="math notranslate nohighlight">\(y\)</span> 。</p>
+<p>似然在贝叶斯学派和频率学派中都有使用。在两种范式中，其作用是量化观测数据对未知参数似然的支持强度。贝叶斯派和频率派间的关键区别在于：频率派不认为有关未知参数的概率陈述有用。相反，认为未知参数是确定且固定的；在给定固定参数 $θ$ 的情况下，似然是数据 $y$ 的条件概率分布 $p(y|θ)$ 。贝叶斯派认为未知参数是一个用概率来表达的随机变量。观测数据被视为固定已知的，而参数的值是变化的；似然是给定固定观测数据 $y$ 的情况下 $θ$ 的函数。因此，似然函数汇总了以下要素：随机生成了所有数据的统计模型、$θ$ 的可能值范围、观测到的数据 $y$ 。</p>
 <p>由于似然的概念并非贝叶斯方法所特有，所以本文不提供相关统计概念的更详细介绍。取而代之，我们推荐读者阅读一个最近的教程【70】，该教程描述了常用频率统计方法和贝叶斯统计方法的似然。有关此主题的完整数学解释，请参阅参考文献【71】。围绕贝叶斯推断的大部分讨论都集中在先验的选择上，而且有大量关于先验的文献【72，73】。将已有知识纳入先验是贝叶斯法和频率法间最显著的区别。尽管由似然表示的、有关数据的特定模型是分析的基础，但人们往往忽略了似然的重要性。后验分布是先验分布与数据上下文支撑下的假设概率模型之间交互作用的结果。如果没有与似然匹配的上下文，则先验也无法解释。</p>
 <p>在某些情况下，指定的似然函数似乎非常简单(Box 3)。然而，实践中底层数据的生成模型并不总是已知的，研究人员常出于习惯或在软件中对模型调整的简便性选择某种数据生成模式。虽理论上应基于背景知识，但统计数据生成模型的选择通常是主观的，因此应该被很好地理解和清楚地记录下来，并提供给读者。</p>
 <p>应该对所选的似然函数执行稳健性检查，以验证其对后验估计的影响。尽管大多数关于贝叶斯稳健性的研究都集中在后验结果对先验指标的敏感性上，但也有一些文献集中在后验对似然函数指标的敏感性上。</p>
@@ -496,7 +494,7 @@ y=\beta_{\text {intercept }}+\beta_{\text {age }} A g e+\beta_{a g e^{2}} A g e^
 <h4>（1）马尔可夫链蒙特卡罗方法（MCMC）<a class="headerlink" href="#mcmc" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>**马尔科夫链蒙特卡洛：**一种通过仿真间接获得后验分布推断的方法。马尔可夫链的构造使得其对应的平稳分布是感兴趣的后验分布。一旦链达到平稳分布，实现可以被视为来自后验分布的一组独立的采样参数值。然后，使用蒙特卡罗积分，这些采样参数值可用于获得后验分布的经验估计，以及感兴趣的相关汇总统计。</p>
-<p>**马尔科夫链：**一种迭代过程，在该过程中，时间 <span class="math notranslate nohighlight">\(t+1\)</span> 处的马尔可夫链值仅依赖于时间 <span class="math notranslate nohighlight">\(t\)</span> 处的链值。</p>
+<p>**马尔科夫链：**一种迭代过程，在该过程中，时间 $t+1$ 处的马尔可夫链值仅依赖于时间 $t$ 处的链值。</p>
 <p>**蒙特卡洛：**通过模拟给定分布的随机数来近似积分的随机算法。特别地，来自某分布的采样值汇总得到的某些统计量，是该分布实际统计量的估计。</p>
 <p>**转移核：**马尔可夫链内参数值的更新过程。</p>
 </div></blockquote>
@@ -507,14 +505,14 @@ y=\beta_{\text {intercept }}+\beta_{\text {age }} A g e+\beta_{a g e^{2}} A g e^
 <p>由于无法直接、独立地从后验分布中获取参数值的抽样，因此引出了马尔可夫链。其思想是通过构造具有指定一阶转移核的马尔可夫链，从感兴趣的后验分布获得一组参数值的抽样，使得该马尔可夫链的平稳分布与感兴趣的后验分布相同。</p>
 <p>如果马尔科夫链运行足够长并达到其平稳分布，则链的后部实现可被视为后验分布的依赖样本，并可用于获得相应蒙特卡罗估计(图4a)。需要注意，从马尔可夫链获得的采样值是自相关的（每个采样值均依赖于在链中的先前值），且由一阶马尔可夫链产生。马尔可夫链由初始参数值和转移核定义，Gibbs采样器、Metropolis-Hastings算法和Hamilton Monte Carlo是定义转移核的标准方法。</p>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210507181137_a6.webp" alt="Fig. 4" style="zoom:33%;" />
-<p>图4 以博士推迟毕业为例，使用 MCMC 进行后验估计。a）四种采用马尔可夫链蒙特卡罗方法获取模型参数 <span class="math notranslate nohighlight">\(β_{intercept}\)</span>  后验分布的的独立 MCMC 链，图中横轴为迭代次数，纵轴为参数值的迹图。阴影部分表示热身阶段，通常在构造后验分布时被省略。b）<span class="math notranslate nohighlight">\(β_{intercept}\)</span> 的 <span class="math notranslate nohighlight">\(\hat R\)</span> 统计量（一种用于度量收敛性的统计量），在大约2,000次迭代后似乎收敛于1(阴影部分)。c~e）给出了 <span class="math notranslate nohighlight">\(β_{intercept}\)</span>  （图c）、 <span class="math notranslate nohighlight">\(β_{age}\)</span> （图d）和 <span class="math notranslate nohighlight">\(β_{age^2}\)</span> （图e）的先验分布和后验分布。对于每个链，前2,000次迭代作为预热被丢弃。f）为说明两个参数之间的相互关系，给出了 <span class="math notranslate nohighlight">\(β_{age}\)</span> 和 <span class="math notranslate nohighlight">\(β_{age^2}\)</span> 的先验(蓝色)和后验(绿色)的边缘密度。所有结果都由Stan计算获得。</p>
+<p>图4 以博士推迟毕业为例，使用 MCMC 进行后验估计。a）四种采用马尔可夫链蒙特卡罗方法获取模型参数 $β_{intercept}$  后验分布的的独立 MCMC 链，图中横轴为迭代次数，纵轴为参数值的迹图。阴影部分表示热身阶段，通常在构造后验分布时被省略。b）$β_{intercept}$ 的 $\hat R$ 统计量（一种用于度量收敛性的统计量），在大约2,000次迭代后似乎收敛于1(阴影部分)。c~e）给出了 $β_{intercept}$  （图c）、 $β_{age}$ （图d）和 $β_{age^2}$ （图e）的先验分布和后验分布。对于每个链，前2,000次迭代作为预热被丢弃。f）为说明两个参数之间的相互关系，给出了 $β_{age}$ 和 $β_{age^2}$ 的先验(蓝色)和后验(绿色)的边缘密度。所有结果都由Stan计算获得。</p>
 </div>
 <div class="section" id="id13">
 <h4>（2）MCMC 技术方面<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
 <blockquote>
 <div><p>**辅助变量：**在模型中输入的其他变量，使联合分布能够以封闭形式给出，并可快速评估。</p>
 <p>**迹图：**描述马尔可夫链每次迭代(在y轴上)相对于迭代次数(在x轴上)的后验参数值的曲线图。</p>
-<p>**<span class="math notranslate nohighlight">\(\hat R\)</span> 统计量：**链内变异性和链间变异性的比率。通常参数的该统计量值接近于1时，表明 MCMC 算法已充分收敛到平稳分布。</p>
+<p>**$\hat R$ 统计量：**链内变异性和链间变异性的比率。通常参数的该统计量值接近于1时，表明 MCMC 算法已充分收敛到平稳分布。</p>
 </div></blockquote>
 <p>由于模型复杂度或数据收集问题，将模型拟合到观测数据来获得后验推断有可能非常复杂。例如：对于随机效应模型或存在潜变量的情况，似然无法以封闭形式给出，只能表示为随机效应项或潜变量难以处理的积分项。或者，似然可以是封闭形式的但可能是多模态的（例如：对于有限混合模型或离散潜变量模型）。这些都会导致算法在一个(或多个)模式尚未被探索的情况下就已经出现较差的性能。在此情况下，经常使用数据增强方法，其中我们定义了附加变量或辅助变量，使得数据和辅助变量的联合分布能够以封闭形式给出，并且可以快速估计。例如，在随机效应模型中，辅助变量对应于先前已经积分出来的单个随机效应项；对于有限混合模型，辅助变量对应于每个观测所属的混合分量。</p>
 <p>然后，在模型参数和辅助变量上构造新的联合后验分布。该后验分布被定义为与参数上指定的完整数据似然和相关先验分布成比例。然后可以应用标准 MCMC 算法，该算法在模型参数和辅助变量两者上获得一组采样参数值。丢弃辅助变量并仅考虑马尔可夫链内感兴趣的模型参数的值提供了根据观测数据条件的模型参数的原始后验分布的样本。在某些情况下，辅助变量本身可能是感兴趣的，例如，在这些情况下，它们表示丢失的数据值或一些有形的概念，例如同质子组(对于混合模型)或真实的基础状态(对于状态空间模型)，并且可以使用采样值容易地获得对这些的推断。</p>
@@ -522,8 +520,8 @@ y=\beta_{\text {intercept }}+\beta_{\text {age }} A g e+\beta_{a g e^{2}} A g e^
 </div>
 <div class="section" id="id14">
 <h4>（3）性能评估<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
-<p>转移核的选择决定了 MCMC 的运行性能，因为不同转移核可能需要不同长度的马尔可夫链以得到可靠的后验推断。迹图可以显示多次迭代中的参数值。一维迹图较为常用，它描述了在 <span class="math notranslate nohighlight">\(y\)</span> 轴马尔科夫链相对于 <span class="math notranslate nohighlight">\(x\)</span> 轴迭代次数在每次迭代时的参数值，是一个非常有用的探索工具（图4a）。特别是，迹图以可视化方式展示了每个参数探索参数空间的方式（也被称为混合）。如果该混合很差，则链需要更长时间来探索后验参数空间，此时可能需要修改转移核。例如：较差的混合可能是由于连续迭代间只有非常小的参数值变化，或者建议的参数值有很高拒绝率，使得参数值 MCMC 算法的多次连续迭代中保持不变。这些曲线图也非正式地用于识别马尔可夫链何时能够达到平稳分布。马尔可夫链在收敛到平稳分布前的部分通常被丢弃（被称为老化 Burn-in，本书采用术语预热Warm-up）。</p>
-<p>评估马尔可夫链收敛的常用技术是 <span class="math notranslate nohighlight">\(\hat R\)</span> 统计量，它被定义为链内与链间变异性之比。为应用该方法，需运行多次独立的 MCMC 算法(图4b)。理想情况下，每个马尔可夫链使用不同的随机种子从不同起始值开始，以便在马尔可夫链上提供更大的初始可变性，以便有更大可能识别出链不收敛的情况。例如：如果正在探索后验分布的不同子模式，可能发生这种不收敛。对于所有参数和感兴趣的量，接近于1的值表明链已充分收敛到平稳分布，因此未来的实现可以被视为后验分布的样本(图4b)。达到平稳分布时的迭代步数可以视为获得可靠的、低误差的蒙特卡罗估计所需的迭代次数。为了评估所需迭代次数，通常对采样值进行批处理，这涉及将采样值细分为不重叠的连续迭代批次，并使用每个批次中的采样值考虑估计统计量的可变性。</p>
+<p>转移核的选择决定了 MCMC 的运行性能，因为不同转移核可能需要不同长度的马尔可夫链以得到可靠的后验推断。迹图可以显示多次迭代中的参数值。一维迹图较为常用，它描述了在 $y$ 轴马尔科夫链相对于 $x$ 轴迭代次数在每次迭代时的参数值，是一个非常有用的探索工具（图4a）。特别是，迹图以可视化方式展示了每个参数探索参数空间的方式（也被称为混合）。如果该混合很差，则链需要更长时间来探索后验参数空间，此时可能需要修改转移核。例如：较差的混合可能是由于连续迭代间只有非常小的参数值变化，或者建议的参数值有很高拒绝率，使得参数值 MCMC 算法的多次连续迭代中保持不变。这些曲线图也非正式地用于识别马尔可夫链何时能够达到平稳分布。马尔可夫链在收敛到平稳分布前的部分通常被丢弃（被称为老化 Burn-in，本书采用术语预热Warm-up）。</p>
+<p>评估马尔可夫链收敛的常用技术是 $\hat R$ 统计量，它被定义为链内与链间变异性之比。为应用该方法，需运行多次独立的 MCMC 算法(图4b)。理想情况下，每个马尔可夫链使用不同的随机种子从不同起始值开始，以便在马尔可夫链上提供更大的初始可变性，以便有更大可能识别出链不收敛的情况。例如：如果正在探索后验分布的不同子模式，可能发生这种不收敛。对于所有参数和感兴趣的量，接近于1的值表明链已充分收敛到平稳分布，因此未来的实现可以被视为后验分布的样本(图4b)。达到平稳分布时的迭代步数可以视为获得可靠的、低误差的蒙特卡罗估计所需的迭代次数。为了评估所需迭代次数，通常对采样值进行批处理，这涉及将采样值细分为不重叠的连续迭代批次，并使用每个批次中的采样值考虑估计统计量的可变性。</p>
 <p>可以计算获得采样参数值的有效样本大小，作为算法效率的指示。有效样本大小表示有多少独立采样参数值包含了与自相关 MCMC 样本相同的信息；回想一下，采样的 MCMC 值并不独立，而是使用一阶马尔可夫链生成。此处有效样本量不是指数据的样本量，而是MCMC 链的有效长度。低采样率与高自相关性（导致参数值在连续迭代中变化较小）、以及后验直方图的不平滑有关。在此情况下，通常需要更长的模拟来获得可靠后验分布估计和足够小的蒙特卡罗误差。当然，有效样本量较小有可能指向模型估计中的潜在问题或参数的弱可识别性。因此，当难以获得可靠蒙特卡罗估计时，一个很好的起点是根据有效样本量对所有变量进行排序，并调查有效样本量最小的变量。同样，有效样本量对于诊断较多变量的采样效率也很有用。</p>
 </div>
 <div class="section" id="id15">
@@ -532,7 +530,7 @@ y=\beta_{\text {intercept }}+\beta_{\text {age }} A g e+\beta_{a g e^{2}} A g e^
 <blockquote>
 <div><p>继续博士推迟毕业的例子。</p>
 </div></blockquote>
-<p>用这些数据更新博士推迟毕业的先验，并在Stan中计算后验。图4a显示了用于 <span class="math notranslate nohighlight">\(β_{intercept}\)</span> 的四个独立运行的 MCMC 算法的迹图，并标示了预热后的稳定性。相关的 <span class="math notranslate nohighlight">\(\hat R\)</span> 统计量在大约2,000次迭代后稳定下来（图4b）。图4 c-e显示了多个模型参数的先验和后验分布。可以看出，先验和后验非常接近，表明先验知识被新收集的数据“证实”了。此外，可以看到不确定性已经减小（例如：后验方差比之前的方差小），表明已经更新了我们的知识。为说明计算参数的相互关系是多么容易，我们还绘制了 <span class="math notranslate nohighlight">\(β_{age}\)</span> 和 <span class="math notranslate nohighlight">\(β_{age^2}\)</span> 之间先验和后验边缘密度（图4f）。</p>
+<p>用这些数据更新博士推迟毕业的先验，并在Stan中计算后验。图4a显示了用于 $β_{intercept}$ 的四个独立运行的 MCMC 算法的迹图，并标示了预热后的稳定性。相关的 $\hat R$ 统计量在大约2,000次迭代后稳定下来（图4b）。图4 c-e显示了多个模型参数的先验和后验分布。可以看出，先验和后验非常接近，表明先验知识被新收集的数据“证实”了。此外，可以看到不确定性已经减小（例如：后验方差比之前的方差小），表明已经更新了我们的知识。为说明计算参数的相互关系是多么容易，我们还绘制了 $β_{age}$ 和 $β_{age^2}$ 之间先验和后验边缘密度（图4f）。</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210509160149_3a.webp" /></p>
 </div>
 <div class="section" id="id16">
@@ -560,14 +558,14 @@ y=\beta_{\text {intercept }}+\beta_{\text {age }} A g e+\beta_{a g e^{2}} A g e^
 <li><p>基于惩罚参数估计的变量选择方法</p></li>
 </ul>
 <p>在贝叶斯框架中，假设检验方法使用贝叶斯因子和后验概率，而惩罚参数估计方法则指定具有稀疏性的收缩先验。贝叶斯因子通常在处理少数潜在预测因子时使用，因为其涉及拟合所有候选模型并在候选模型间进行选择。另一方面，惩罚方法适用于单一模型，并能够扩展到高维数据。</p>
-<p>我们在一个经典线性回归模型背景下简要回顾这些方法，其中来自 <span class="math notranslate nohighlight">\(n\)</span> 个独立观测值的因变量 <span class="math notranslate nohighlight">\(y\)</span> , 通过模型 <span class="math notranslate nohighlight">\(y=Xβ+ε\)</span> 与定义在 <span class="math notranslate nohighlight">\(n×p\)</span> 个自变量矩阵 <span class="math notranslate nohighlight">\(X\)</span> 中的 <span class="math notranslate nohighlight">\(p\)</span> 个势预测因子相关。回归系数 <span class="math notranslate nohighlight">\(β\)</span> 捕捉自变量对因变量的影响，<span class="math notranslate nohighlight">\(ε\)</span> 表示假设服从均值为零和方差为 <span class="math notranslate nohighlight">\(σ^2\)</span> 正态分布的残差。</p>
+<p>我们在一个经典线性回归模型背景下简要回顾这些方法，其中来自 $n$ 个独立观测值的因变量 $y$ , 通过模型 $y=Xβ+ε$ 与定义在 $n×p$ 个自变量矩阵 $X$ 中的 $p$ 个势预测因子相关。回归系数 $β$ 捕捉自变量对因变量的影响，$ε$ 表示假设服从均值为零和方差为 $σ^2$ 正态分布的残差。</p>
 <div class="section" id="id18">
 <h4>（1）贝叶斯因子和后验模型概率<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
-<p>贝叶斯因子( 见Box 2)可用于在候选模型间进行比较和选择，其中每个候选模型对应一个假设。与频率派的假设检验方法不同，贝叶斯因子不要求模型嵌套。在变量选择上下文中，每个候选模型对应于 <span class="math notranslate nohighlight">\(p\)</span> 个潜在预测器的不同子集。这 <span class="math notranslate nohighlight">\(2^p\)</span> 个可能的模型由二进制向量 <span class="math notranslate nohighlight">\(γ=(γ_1,…,γ_p)'\)</span> 来索引，其中当模型中包括自变量 <span class="math notranslate nohighlight">\(x_j\)</span> 时，<span class="math notranslate nohighlight">\(γ_j=1\)</span>，即 <span class="math notranslate nohighlight">\(β_j≠0\)</span>，否则 <span class="math notranslate nohighlight">\(γ_j=0\)</span> 。设 <span class="math notranslate nohighlight">\(M_γ\)</span> 是包括<span class="math notranslate nohighlight">\(γ_j=1\)</span> 的 <span class="math notranslate nohighlight">\(X_j\)</span> 值的模型，指定每个模型的先验分布为 <span class="math notranslate nohighlight">\(p(M_γ)\)</span> ，每个模型下的参数为 <span class="math notranslate nohighlight">\(p(β_γ，σ^2|M_γ)\)</span>，并且评估贝叶斯因子 <span class="math notranslate nohighlight">\(BF_{γb}\)</span>，以将每个模型 <span class="math notranslate nohighlight">\(M_γ\)</span> 与作为基准的模型 <span class="math notranslate nohighlight">\(M_b\)</span> 进行比较。每个模型的后验概率 <span class="math notranslate nohighlight">\(p(M_γ|y)\)</span> 可以用贝叶斯因子表示为：
-$<span class="math notranslate nohighlight">\(
-p\left(M_{\gamma} \mid y\right)=\frac{BF_{\gamma \mathrm{b}} p\left(M_{\gamma}\right)}{\sum_{\gamma^{\prime}} B F_{\gamma' \mathrm{b}} p\left(M_{\gamma'}\right)}
-\)</span><span class="math notranslate nohighlight">\(
-其中分母对所有模型 \)</span>M_{γ’}<span class="math notranslate nohighlight">\( 求和。后验概率最大的模型将对应于具有最高数量有利证据的模型。当 \)</span>p<span class="math notranslate nohighlight">\( 相对较小(例如，\)</span>&lt;20<span class="math notranslate nohighlight">\( )时，可以评估所有 \)</span>2^p<span class="math notranslate nohighlight">\( 个变量子集及其后验概率。可以选择具有最高后验概率的模型作为最受数据支持的模型。或者可以选择具有高边际后验包含概率的自变量 \)</span>p(\gamma <em>j=1|y)=∑</em>{X_j \in Mγ}(M_\gamma|y)<span class="math notranslate nohighlight">\( 。对于中到大的 \)</span>p<span class="math notranslate nohighlight">\( ，该策略实际上不可行，因为对所有 \)</span>2^p$ 可能模型进行穷举评估计算非常昂贵。取而代之的方法是，通过将不相关自变量的回归系数设置为零或通过将它们向零收缩来指定引起稀疏性的收缩先验，并且使用 MCMC 技术从后验分布中进行采样。</p>
+<p>贝叶斯因子( 见Box 2)可用于在候选模型间进行比较和选择，其中每个候选模型对应一个假设。与频率派的假设检验方法不同，贝叶斯因子不要求模型嵌套。在变量选择上下文中，每个候选模型对应于 $p$ 个潜在预测器的不同子集。这 $2^p$ 个可能的模型由二进制向量 $γ=(γ_1,…,γ_p)’$ 来索引，其中当模型中包括自变量 $x_j$ 时，$γ_j=1$，即 $β_j≠0$，否则 $γ_j=0$ 。设 $M_γ$ 是包括$γ_j=1$ 的 $X_j$ 值的模型，指定每个模型的先验分布为 $p(M_γ)$ ，每个模型下的参数为 $p(β_γ，σ^2|M_γ)$，并且评估贝叶斯因子 $BF_{γb}$，以将每个模型 $M_γ$ 与作为基准的模型 $M_b$ 进行比较。每个模型的后验概率 $p(M_γ|y)$ 可以用贝叶斯因子表示为：
+$$
+p\left(M_{\gamma} \mid y\right)=\frac{BF_{\gamma \mathrm{b}} p\left(M_{\gamma}\right)}{\sum_{\gamma^{\prime}} B F_{\gamma’ \mathrm{b}} p\left(M_{\gamma’}\right)}
+$$
+其中分母对所有模型 $M_{γ’}$ 求和。后验概率最大的模型将对应于具有最高数量有利证据的模型。当 $p$ 相对较小(例如，$&lt;20$ )时，可以评估所有 $2^p$ 个变量子集及其后验概率。可以选择具有最高后验概率的模型作为最受数据支持的模型。或者可以选择具有高边际后验包含概率的自变量 $p(\gamma <em>j=1|y)=∑</em>{X_j \in Mγ}(M_\gamma|y)$ 。对于中到大的 $p$ ，该策略实际上不可行，因为对所有 $2^p$ 可能模型进行穷举评估计算非常昂贵。取而代之的方法是，通过将不相关自变量的回归系数设置为零或通过将它们向零收缩来指定引起稀疏性的收缩先验，并且使用 MCMC 技术从后验分布中进行采样。</p>
 </div>
 <div class="section" id="id19">
 <h4>（2）收缩先验<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
@@ -576,11 +574,11 @@ p\left(M_{\gamma} \mid y\right)=\frac{BF_{\gamma \mathrm{b}} p\left(M_{\gamma}\r
 <p>**全局-局部收缩先验：**一种连续收缩先验分布，其特征是在零附近具有较高的浓度，以将小参数值收缩为零，并使用重尾来防止大参数值的过度收缩。</p>
 <p>**马蹄形先验：**一个全局-局部收缩先验的例子，使用正态分布的半柯西比例混合实现变量选择。</p>
 </div></blockquote>
-<p>多年来，人们提出了多种收缩先验。一个广泛使用的收缩先验是 <code class="docutils literal notranslate"><span class="pre">spike-and-slab先验</span></code> ，它使用潜二元指示向量 <span class="math notranslate nohighlight">\(γ=(γ_1,...,γ_p) \in \{0,1\}^p\)</span> 来引入 <span class="math notranslate nohighlight">\(β_j\)</span> 上的两个混合分布，一个在零附近达到峰值(spike)，另一个是扩散分布(slab)。spik分量标识零个元素，而slab分量捕获非零系数。离散的 spike-and-slab 先验使用0处的点质量先验和弥散性先验的混合(图5a)，而连续的 spike-and-slab 先验使用两个连续分布的混合(图5b)。另一种广泛使用的公式是把spike和slab放在回归系数的方差上。在指定其他模型参数的先验分布后，使用 MCMC 算法来探索大模型空间并产生访问模型链。然后通过边际后验包含概率 <span class="math notranslate nohighlight">\(P(γ_j=1|y)\)</span> 实现变量选择。集成参数 <span class="math notranslate nohighlight">\(β\)</span> 和 <span class="math notranslate nohighlight">\(σ^2\)</span> 可以加速 MCMC 的实现，加快其收敛和混合。通过将变量选择方法与现代蒙特卡罗抽样技术结合，人们还提出了各种计算方法来快速识别有前景的高后验概率模型(Table 1)。</p>
-<p>另一类近年来备受关注的惩罚先验是连续收缩先验。这些是在 <span class="math notranslate nohighlight">\(β_j\)</span> 上促进小回归系数向零收缩的单峰分布，类似于频率派的惩罚回归方法通过最大化受惩罚的对数似然来实现正则化。最小绝对收缩和选择运算(或套索)使用惩罚函数 <span class="math notranslate nohighlight">\(λ∑_{j=1}^{p}|β_j|\)</span> ，其中 <span class="math notranslate nohighlight">\(λ\)</span> 控制稀疏程度。<span class="math notranslate nohighlight">\(β_j\)</span> 的套索估计可以解释为在独立的拉普拉斯先验分布下最大化后验分布的贝叶斯估计。受这种联系启发，贝叶斯套索规定了 <span class="math notranslate nohighlight">\(β_j|σ^2\)</span> 上的条件拉普拉斯先验。与频率派的套索方法不同，贝叶斯惩罚方法不会将回归系数收缩到恰好为零。取而代之的是，使用 <span class="math notranslate nohighlight">\(β_j\)</span> 的可信区间或通过在后验样本上定义选择标准来执行变量选择。许多连续收缩先验可以参数化为正态分布的尺度混合，这便于它们在 MCMC 方法中的实现。例如，贝叶斯套索中的拉普拉斯先验可以表示为具有指数混合密度的尺度正态分布混合。指数混合分布只有一个超参数，限制了它在收缩小效应和大效应方面的灵活性(图5c)。该局限性可以通过使用一种收缩先验来克服，该先验引入两个收缩参数，分别控制每个回归系数的全局稀疏性和收缩量。由此产生的 <span class="math notranslate nohighlight">\(β_j\)</span> 的边际先验的特征是在零附近有一个紧密峰值。将小系数缩小到零，并且厚尾可以防止大系数的过度收缩。这些先验被称为全局-局部收缩先验。马蹄形先验作为全局-局部收缩先验的例子，通过指定回归系数 <span class="math notranslate nohighlight">\(β_j\)</span> 的正态分布来实现零附近的峰值和重尾，条件是其尺度参数本身遵循半柯西分布(图5d)。有关不同收缩先验的特点和性能的全面回顾和深入比较，请参阅文献【115】。</p>
+<p>多年来，人们提出了多种收缩先验。一个广泛使用的收缩先验是 <code class="docutils literal notranslate"><span class="pre">spike-and-slab先验</span></code> ，它使用潜二元指示向量 $γ=(γ_1,…,γ_p) \in {0,1}^p$ 来引入 $β_j$ 上的两个混合分布，一个在零附近达到峰值(spike)，另一个是扩散分布(slab)。spik分量标识零个元素，而slab分量捕获非零系数。离散的 spike-and-slab 先验使用0处的点质量先验和弥散性先验的混合(图5a)，而连续的 spike-and-slab 先验使用两个连续分布的混合(图5b)。另一种广泛使用的公式是把spike和slab放在回归系数的方差上。在指定其他模型参数的先验分布后，使用 MCMC 算法来探索大模型空间并产生访问模型链。然后通过边际后验包含概率 $P(γ_j=1|y)$ 实现变量选择。集成参数 $β$ 和 $σ^2$ 可以加速 MCMC 的实现，加快其收敛和混合。通过将变量选择方法与现代蒙特卡罗抽样技术结合，人们还提出了各种计算方法来快速识别有前景的高后验概率模型(Table 1)。</p>
+<p>另一类近年来备受关注的惩罚先验是连续收缩先验。这些是在 $β_j$ 上促进小回归系数向零收缩的单峰分布，类似于频率派的惩罚回归方法通过最大化受惩罚的对数似然来实现正则化。最小绝对收缩和选择运算(或套索)使用惩罚函数 $λ∑_{j=1}^{p}|β_j|$ ，其中 $λ$ 控制稀疏程度。$β_j$ 的套索估计可以解释为在独立的拉普拉斯先验分布下最大化后验分布的贝叶斯估计。受这种联系启发，贝叶斯套索规定了 $β_j|σ^2$ 上的条件拉普拉斯先验。与频率派的套索方法不同，贝叶斯惩罚方法不会将回归系数收缩到恰好为零。取而代之的是，使用 $β_j$ 的可信区间或通过在后验样本上定义选择标准来执行变量选择。许多连续收缩先验可以参数化为正态分布的尺度混合，这便于它们在 MCMC 方法中的实现。例如，贝叶斯套索中的拉普拉斯先验可以表示为具有指数混合密度的尺度正态分布混合。指数混合分布只有一个超参数，限制了它在收缩小效应和大效应方面的灵活性(图5c)。该局限性可以通过使用一种收缩先验来克服，该先验引入两个收缩参数，分别控制每个回归系数的全局稀疏性和收缩量。由此产生的 $β_j$ 的边际先验的特征是在零附近有一个紧密峰值。将小系数缩小到零，并且厚尾可以防止大系数的过度收缩。这些先验被称为全局-局部收缩先验。马蹄形先验作为全局-局部收缩先验的例子，通过指定回归系数 $β_j$ 的正态分布来实现零附近的峰值和重尾，条件是其尺度参数本身遵循半柯西分布(图5d)。有关不同收缩先验的特点和性能的全面回顾和深入比较，请参阅文献【115】。</p>
 <p>贝叶斯变量选择方法已扩展到各种模型。对多变量回归模型的扩展包括选择与所有或不与所有因变量相关的变量的 spike and slab 先验，以及允许每个自变量与子集和/或单个因变量相关的多变量结构。其他扩展包括广义线性模型、随机效应和时变系数模型、用于无监督聚类的混合模型以及单高斯和多高斯图形模型的估计。</p>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210507181233_8c.webp" alt="Fig. 5" style="zoom:33%;" />
-<p>图5 贝叶斯变量选择的收缩先验示例。先验密度 <span class="math notranslate nohighlight">\(π(β)\)</span> 与 <span class="math notranslate nohighlight">\(β\)</span> 值。a）<span class="math notranslate nohighlight">\(β\)</span> (实线)的离散spike-and-slab 先验被指定为零点处的点质量(spike,虚线)和弥散性先验(slab，虚线)的混合。b）<span class="math notranslate nohighlight">\(β\)</span>(实线)的连续 spike-and-slab 先验被指定为两个正态分布的混合，一个在零附近达到峰值(虚线)，另一个具有较大方差(虚线)。c) 贝叶斯套索规定了一个条件拉普拉斯先验，它可以作为具有指数混合密度的正态分布的尺度混合来获得。这一先验没有提供足够的灵活性来同时允许0峰值和重尾周围的概率质量。d）马蹄形先验属于全局-局部收缩先验，其特征是在零附近高度集中以收缩较小系数，以及重尾以避免较大系数的过度收缩。</p>
+<p>图5 贝叶斯变量选择的收缩先验示例。先验密度 $π(β)$ 与 $β$ 值。a）$β$ (实线)的离散spike-and-slab 先验被指定为零点处的点质量(spike,虚线)和弥散性先验(slab，虚线)的混合。b）$β$(实线)的连续 spike-and-slab 先验被指定为两个正态分布的混合，一个在零附近达到峰值(虚线)，另一个具有较大方差(虚线)。c) 贝叶斯套索规定了一个条件拉普拉斯先验，它可以作为具有指数混合密度的正态分布的尺度混合来获得。这一先验没有提供足够的灵活性来同时允许0峰值和重尾周围的概率质量。d）马蹄形先验属于全局-局部收缩先验，其特征是在零附近高度集中以收缩较小系数，以及重尾以避免较大系数的过度收缩。</p>
 </div>
 <div class="section" id="id20">
 <h4>（3）生物医学中的变量选择<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
@@ -605,7 +603,7 @@ p\left(M_{\gamma} \mid y\right)=\frac{BF_{\gamma \mathrm{b}} p\left(M_{\gamma}\r
 <p>贝叶斯推理已经应用于科学的各个领域。我们在这里描述几个例子，尽管还有许多其他的应用领域，如哲学、药理学、经济学、物理学、政治学等等【略】。</p>
 <blockquote>
 <div><p>**自编码器：**一种用于无监督学习的特殊类型的多层神经网络，由两个组件组成：编码器和解码器。编码器将输入信息压缩成输入的低维摘要。解码器获取这些摘要，并尝试从这些摘要重新创建输入。通过同时训练编码器和解码器，希望自动编码器能够学习数据的低维但信息量高的表示法。</p>
-<p>**<span class="math notranslate nohighlight">\(Split-\hat R\)</span> :**在单独的马尔可夫链蒙特卡罗链内检测非公平性（例如，如果第一部分逐渐增加值，而第二部分涉及逐渐减小的值），则每个链分为两个部分，并且计算R统计数据比较的。</p>
+<p>**$Split-\hat R$ :**在单独的马尔可夫链蒙特卡罗链内检测非公平性（例如，如果第一部分逐渐增加值，而第二部分涉及逐渐减小的值），则每个链分为两个部分，并且计算R统计数据比较的。</p>
 <p>**摊销：**在变分推理中使用的技术，以减少通过用训练预测函数替换可替代的可训练预测函数来估计的可自由参数的数量来估计，该可训练预测函数可以改为预测这些参数的值。</p>
 </div></blockquote>
 </div>
@@ -613,7 +611,7 @@ p\left(M_{\gamma} \mid y\right)=\frac{BF_{\gamma \mathrm{b}} p\left(M_{\gamma}\r
 <h2><strong>5. 可复现性与数据处理</strong><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
 <p>适当地报告统计数据（包括共享数据和脚本）是核实和重现研究的关键要素。图7显示了一个结合了鼓励贝叶斯研究周期可重复性的工作流程。我们展示了适合于更广泛研究透明度的贝叶斯研究周期(图1)和 WAMBS (何时担心以及如何避免滥用贝叶斯统计)核对表(方框5)。在本节中，将重点介绍可重现性以及数据和脚本存储的方面。</p>
 <p><img alt="Fig. 7" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210507181334_72.webp" /></p>
-<p>图7 研究工作流程中的可再现性要素。研究工作流程中的良好研究实践有助于提高可重复性，图中展示了贝叶斯研究周期(a部分)和WAMBS(何时担心以及如何避免滥用贝叶斯统计)核对表在更广泛研究透明度背景下的适用性。并非所有要素都适用于所有类型的研究（例如：预先登记通常用于假设驱动的研究），但先验和似然的说明可能是预先登记的。数据不能公开共享可能有法律原因，但运行贝叶斯模型的所有脚本都可以在数据存储库中共享。 <span class="math notranslate nohighlight">\(θ\)</span> 为未知参数；<span class="math notranslate nohighlight">\(RRID\)</span> 为研究资源标识符；<span class="math notranslate nohighlight">\(P(.)\)</span> 为概率分布；<span class="math notranslate nohighlight">\(y\)</span> 为数据。</p>
+<p>图7 研究工作流程中的可再现性要素。研究工作流程中的良好研究实践有助于提高可重复性，图中展示了贝叶斯研究周期(a部分)和WAMBS(何时担心以及如何避免滥用贝叶斯统计)核对表在更广泛研究透明度背景下的适用性。并非所有要素都适用于所有类型的研究（例如：预先登记通常用于假设驱动的研究），但先验和似然的说明可能是预先登记的。数据不能公开共享可能有法律原因，但运行贝叶斯模型的所有脚本都可以在数据存储库中共享。 $θ$ 为未知参数；$RRID$ 为研究资源标识符；$P(.)$ 为概率分布；$y$ 为数据。</p>
 <p>允许其他人评估研究中使用的统计方法和基础数据(通过透明报告和提供代码和数据)有助于解释研究结果、评估所用参数的适宜性以及检测和修复错误。各领域甚至各领域的日记帐之间的报告做法尚不一致。对心理学中的贝叶斯统计进行的系统审查发现，社会科学在报告实践和标准方面存在巨大差异；例如，在167篇使用心理学人类样本的回归贝叶斯文章中，31%没有提到实施的先验，43.1%没有报告马尔科夫链的收敛性，只有40%使用了信息性先例的文章进行了敏感性分析。我们认为这是在社会科学和行为科学以及其他研究领域实施贝叶斯统计的重大障碍。</p>
 <p>对于任何贝叶斯论文来说，不报告任何有关先验的信息都是有问题的。天真地使用先验有很多危险，如果可能的话，人们可能想要预先登记先验和似然的说明。此外，先验对最终模型估计的影响很容易被忽略。研究人员可能使用某些先验来估计模型，而没有意识到对相同模型和数据使用不同的先验可能会导致实质上不同的结果，在这两种情况下，结果看起来都完全可行，马尔可夫链看起来也是收敛的，后验看起来合适而且信息丰富。如果不通过敏感性分析和先验预测检查来检验先验的影响，研究人员就不会意识到结果对先验数据的变化有多敏感。</p>
 <p>为了实现可再现性，并允许其他人使用不同参数、先验、模型或似然对同一数据进行贝叶斯统计，并进行敏感性分析，重要的是按照公平原则：可发现性、可访问性、互操作性和可重用性，适当记录和共享所使用的基础数据和代码。优先做法是：数据和代码应该在可信储存库中与其持久标识符(例如DOI)共享，并用描述数据集或代码库的元数据来标记。这还允许将数据集和代码识别为单独的研究输出，并允许其他人引用它们。存储库可以是通用的（如 Zenodo）；特定于语言的（如用于R包的CRAN和用于Python代码的PyPI) 等。由于数据和代码需要不同的许可选项和元数据，数据最好存储在专用数据库中，该库可以是通用的，也可以是特定于学科的。有些期刊，如《科学数据》，有自己推荐的数据仓库列表。为方便研究人员存放数据和代码，两个储存库(Zenodo和Dryad)正在探索合作，允许通过一个界面存放代码和数据，数据存储在 Dryad 中，代码存储在 Zenod 中。许多科学期刊遵守透明度和开放性促进指南，其中规定了代码和数据共享的要求。</p>
@@ -623,13 +621,13 @@ p\left(M_{\gamma} \mid y\right)=\frac{BF_{\gamma \mathrm{b}} p\left(M_{\gamma}\r
 <div class="section" id="id24">
 <h2><strong>6. 局限性和优化</strong><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
 <p>贝叶斯推理的优化是以假设模型为条件的。如果参数抽取自先验分布，且数据抽取自驱动了这些参数的模型，则贝叶斯后验概率被校准为长期的均值。当在生成模型上求均值时，具有既定概率的事件在长期内会以该频率发生（大数定律）。实践中的模型从来都不是正确的，克服该问题有两种主要方法：一是识别和修复模型中的问题；二是证明某些推论对于模型合理的偏离是健壮的。</p>
-<p>即使最简单和最被接受的贝叶斯推断也可能有严重局限性。例如，假设进行一项实验，得到代表某种治疗效果的参数 <span class="math notranslate nohighlight">\(θ\)</span> 的无偏估计 <span class="math notranslate nohighlight">\(z\)</span> 。如果这个估计 <span class="math notranslate nohighlight">\(z\)</span> 是正态分布，标准误差为 <span class="math notranslate nohighlight">\(s\)</span> ，我们就可以写出 <span class="math notranslate nohighlight">\(z\sim N(θ，S^2)\)</span>，这是一个正态分布，由它的位置和尺度参数参数化。假设 <span class="math notranslate nohighlight">\(θ\)</span> 具有平坦的均匀先验分布，则后验分布为 <span class="math notranslate nohighlight">\(θ \sim N(z，s^2)\)</span> 。现假设我们观察到 <span class="math notranslate nohighlight">\(z=s\)</span> ；也就是说，<span class="math notranslate nohighlight">\(θ\)</span> 的估计值是零的一个标准误差</p>
-<p>这将被认为与噪声在统计上无法区分，因为即使真实参数值为零，该估计也可能偶然出现。但贝叶斯计算给出了后验概率 <span class="math notranslate nohighlight">\(Pr(θ&gt;0|z)=0.84\)</span> 。这使概率的校准成问题(校准的推论或预测平均而言是正确的，条件是预测)。</p>
-<p>在此示例中，如果对之前的概率进行平均会校准该概率。在数学上不可能在无限范围内的均匀分布上求平均，但可以考虑一个非常分散的先验，例如 <span class="math notranslate nohighlight">\(θ~N(0,1000^2)\)</span> ，其中假设s大致在单位尺度上，也就是说，它是一个无量纲参数，预计其绝对值将取不远于1的值。在此模型下，当观察到z等于s时，参数θ将有大约84%的时间为正。84%的概率似乎不正确的原因是，均匀的或非常分散的优先通常看起来并不合适。在实践中，研究旨在以合理的精确度评估治疗效果。真正的效果可能是0的1或2个标准误差，但它们很少有5个、10个或100个标准误差。在这个例子中，如果按字面意思理解，贝叶斯推断将导致过度确定：84%的后验概率。然而，从积极的角度来看这一点，后验的明显问题让我们认识到我们的模型中没有包括的先验信息，在这种情况下，先验信息不太可能看到非常大的θ值。此外，诸如θ~N(0，S2)的弱信息先验对后验没有很大影响，因为后验变得正常：
-$<span class="math notranslate nohighlight">\(
+<p>即使最简单和最被接受的贝叶斯推断也可能有严重局限性。例如，假设进行一项实验，得到代表某种治疗效果的参数 $θ$ 的无偏估计 $z$ 。如果这个估计 $z$ 是正态分布，标准误差为 $s$ ，我们就可以写出 $z\sim N(θ，S^2)$，这是一个正态分布，由它的位置和尺度参数参数化。假设 $θ$ 具有平坦的均匀先验分布，则后验分布为 $θ \sim N(z，s^2)$ 。现假设我们观察到 $z=s$ ；也就是说，$θ$ 的估计值是零的一个标准误差</p>
+<p>这将被认为与噪声在统计上无法区分，因为即使真实参数值为零，该估计也可能偶然出现。但贝叶斯计算给出了后验概率 $Pr(θ&gt;0|z)=0.84$ 。这使概率的校准成问题(校准的推论或预测平均而言是正确的，条件是预测)。</p>
+<p>在此示例中，如果对之前的概率进行平均会校准该概率。在数学上不可能在无限范围内的均匀分布上求平均，但可以考虑一个非常分散的先验，例如 $θ~N(0,1000^2)$ ，其中假设s大致在单位尺度上，也就是说，它是一个无量纲参数，预计其绝对值将取不远于1的值。在此模型下，当观察到z等于s时，参数θ将有大约84%的时间为正。84%的概率似乎不正确的原因是，均匀的或非常分散的优先通常看起来并不合适。在实践中，研究旨在以合理的精确度评估治疗效果。真正的效果可能是0的1或2个标准误差，但它们很少有5个、10个或100个标准误差。在这个例子中，如果按字面意思理解，贝叶斯推断将导致过度确定：84%的后验概率。然而，从积极的角度来看这一点，后验的明显问题让我们认识到我们的模型中没有包括的先验信息，在这种情况下，先验信息不太可能看到非常大的θ值。此外，诸如θ~N(0，S2)的弱信息先验对后验没有很大影响，因为后验变得正常：
+$$
 N\left(\frac{s}{2}, \frac{s^{2}}{2}\right)
-\)</span><span class="math notranslate nohighlight">\(
-因此，\)</span>Pr(θ&gt;0|z)=0.76$ ，而上一个示例中为0.84。归根结底，只有强先验才能产生大的差别。只有在对参数的真实先验分布或总体分布进行平均时，才会校准贝叶斯概率。关于这个例子，重要的不是具体的数字，这取决于上下文，而是任何统计方法都应该在它将应用到的问题范围内进行评估的想法。</p>
+$$
+因此，$Pr(θ&gt;0|z)=0.76$ ，而上一个示例中为0.84。归根结底，只有强先验才能产生大的差别。只有在对参数的真实先验分布或总体分布进行平均时，才会校准贝叶斯概率。关于这个例子，重要的不是具体的数字，这取决于上下文，而是任何统计方法都应该在它将应用到的问题范围内进行评估的想法。</p>
 <p>更一般地，可以通过将后验预测模拟与数据135进行比较以及通过估计样本外预测误差202来检查贝叶斯模型。强先验分布的好处是将参数约束到合理的值，以允许包含更多的数据，同时避免过度拟合。更多的数据可以来自不同的来源，包括额外的数据点，对现有数据的额外测量，以及总结其他数据或理论的先验信息。所有的方法，无论是贝叶斯方法还是其他方法，都需要主观的解释来讲述一个可信的故事，而所有的模型都来自研究人员的决定。任何模型的选择都会有影响；平坦的先验是弱的，没有提供估计的缩水，但可能导致关于θ的很强的(可能不合适的)确定性水平。</p>
 </div>
 <div class="section" id="id25">
@@ -647,31 +645,31 @@ N\left(\frac{s}{2}, \frac{s^{2}}{2}\right)
 <ol class="simple">
 <li><p>Bayes, M. &amp; Price, M. LII. An essay towards  solving a problem in the doctrine of chances.  By the late Rev. Mr. Bayes, F . R. S. communicated  by Mr. Price, in a letter to John Canton, A. M. F . R. S. Philos. T rans. R Soc. Lond. B Biol. Sci. 53, 370–418 (1997).</p></li>
 <li><p>Laplace, P . S. Essai Philosophique sur les Probabilities (Courcier, 1814).</p></li>
-<li><p>König, C. &amp; van de Schoot, R. Bayesian statistics in educational research: a look at the current state of affairs. Educ. Rev. <a class="reference external" href="https://doi.org/10.1080/00131911.2017.1350636">https://doi.org/10.1080/00131911.2017.1350636</a> (2017).</p></li>
+<li><p>König, C. &amp; van de Schoot, R. Bayesian statistics in educational research: a look at the current state of affairs. Educ. Rev. https://doi.org/10.1080/00131911.2017.1350636 (2017).</p></li>
 <li><p>van de Schoot, R., Winter, S., Zondervan-Zwijnenburg, M., Ryan, O. &amp; Depaoli, S. A systematic
 review of Bayesian applications in psychology: the last 25 years. Psychol. Methods 22, 217–239 (2017).</p></li>
 <li><p>Ashby, D. Bayesian statistics in medicine: a 25 year review. Stat. Med. 25, 3589–3631 (2006).</p></li>
-<li><p>Rietbergen, C., Debray, T . P . A., Klugkist, I.,  Janssen, K. J. M. &amp; Moons, K. G. M. Reporting of Bayesian analysis in epidemiologic research should become more transparent. J. Clin. Epidemiol.  <a class="reference external" href="https://doi.org/10.1016/j.jclinepi.2017.04.008">https://doi.org/10.1016/j.jclinepi.2017.04.008</a> (2017).</p></li>
-<li><p>Spiegelhalter, D. J., Myles, J. P ., Jones, D. R. &amp; Abrams, K. R. Bayesian methods in health technology assessment: a review. Health T echnol. Assess.  <a class="reference external" href="https://doi.org/10.3310/hta4380">https://doi.org/10.3310/hta4380</a> (2000).</p></li>
+<li><p>Rietbergen, C., Debray, T . P . A., Klugkist, I.,  Janssen, K. J. M. &amp; Moons, K. G. M. Reporting of Bayesian analysis in epidemiologic research should become more transparent. J. Clin. Epidemiol.  https://doi.org/10.1016/j.jclinepi.2017.04.008 (2017).</p></li>
+<li><p>Spiegelhalter, D. J., Myles, J. P ., Jones, D. R. &amp; Abrams, K. R. Bayesian methods in health technology assessment: a review. Health T echnol. Assess.  https://doi.org/10.3310/hta4380 (2000).</p></li>
 <li><p>Kruschke, J. K., Aguinis, H. &amp; Joo, H. The time has come: Bayesian methods for data analysis in the organizational sciences. Organ. Res. Methods 15, 722–752 (2012).</p></li>
 <li><p>Smid, S. C., McNeish, D., Miočević, M. &amp; van de Schoot, R. Bayesian versus frequentist estimation for structural equation models in small sample contexts:  a systematic review. Struct. Equ. Modeling 27,  131–161 (2019).</p></li>
 <li><p>Rupp, A. A., Dey, D. K. &amp; Zumbo, B. D. T o Bayes  or not to Bayes, from whether to when: applications  of Bayesian methodology to modeling. Struct. Equ. Modeling 11, 424–451 (2004).</p></li>
 <li><p>van de Schoot, R., Y erkes, M. A., Mouw, J. M. &amp; Sonneveld, H. What took them so long? Explaining
 PhD delays among doctoral candidates. PloS ONE 8,e68839 (2013).</p></li>
-<li><p>van de Schoot, R. Online stats training. Zenodo <a class="reference external" href="https://zenodo.org/communities/stats_training">https://zenodo.org/communities/stats_training</a><br />
+<li><p>van de Schoot, R. Online stats training. Zenodo https://zenodo.org/communities/stats_training<br />
 (2020).</p></li>
 <li><p>Heo, I. &amp; van de Schoot, R. T utorial: advanced Bayesian regression in JASP . Zenodo https://
-<a class="reference external" href="http://doi.org/10.5281/zenodo.3991325">doi.org/10.5281/zenodo.3991325</a> (2020).</p></li>
+doi.org/10.5281/zenodo.3991325 (2020).</p></li>
 <li><p>O’Hagan, A. et al. Uncertain Judgements: Eliciting Experts’ Probabilities (Wiley, 2006).  This book presents a great collection of information with respect to prior elicitation,  and includes elicitation techniques, summarizes potential pitfalls and describes examples across  a wide variety of disciplines.</p></li>
 <li><p>Howard, G. S., Maxwell, S. E. &amp; Fleming, K. J.  The proof of the pudding: an illustration of the relative strengths of null hypothesis, meta-analysis, and Bayesian analysis. Psychol. Methods 5, 315–332 (2000).</p></li>
 <li><p>Veen, D., Stoel, D., Zondervan-Zwijnenburg, M. &amp;  van de Schoot, R. Proposal for a five-step method  to elicit expert judgement. Front. Psychol. 8, 2110 (2017).</p></li>
 <li><p>Johnson, S. R., T omlinson, G. A., Hawker, G. A., Granton, J. T . &amp; Feldman, B. M. Methods to elicit beliefs for Bayesian priors: a systematic review.  J. Clin. Epidemiol. 63, 355–369 (2010).</p></li>
-<li><p>Morris, D. E., Oakley, J. E. &amp; Crowe, J. A. A web-based tool for eliciting probability distributions from experts. Environ. Model. Softw. <a class="reference external" href="https://doi.org/10.1016/j.envsoft.2013.10.010">https://doi.org/10.1016/j.envsoft.2013.10.010</a> (2014).</p></li>
+<li><p>Morris, D. E., Oakley, J. E. &amp; Crowe, J. A. A web-based tool for eliciting probability distributions from experts. Environ. Model. Softw. https://doi.org/10.1016/j.envsoft.2013.10.010 (2014).</p></li>
 <li><p>Garthwaite, P . H., Al-Awadhi, S. A., Elfadaly, F . G.  &amp; Jenkinson, D. J. Prior distribution elicitation  for generalized linear and piecewise-linear models.  J. Appl. Stat. 40, 59–75 (2013).</p></li>
 <li><p>Elfadaly, F . G. &amp; Garthwaite, P . H. Eliciting Dirichlet  and Gaussian copula prior distributions for multinomial models. Stat. Comput. 27, 449–467 (2017).</p></li>
 <li><p>Veen, D., Egberts, M. R., van Loey, N. E. E. &amp;  van de Schoot, R. Expert elicitation for latent growth curve models: the case of posttraumatic stress symptoms development in children with burn injuries. Front. Psychol. 11, 1 197 (2020).</p></li>
 <li><p>Runge, A. K., Scherbaum, F ., Curtis, A. &amp; Riggelsen, C. An interactive tool for the elicitation of subjective probabilities in probabilistic seismic-hazard analysis. Bull. Seismol. Soc. Am. 103, 2862–2874 (2013).</p></li>
-<li><p>Zondervan-Zwijnenburg, M., van de Schoot-Hubeek, W., Lek, K., Hoijtink, H. &amp; van de Schoot, R. Application and evaluation of an expert judgment elicitation procedure for correlations. Front. Psychol.  <a class="reference external" href="https://doi.org/10.3389/fpsyg.2017.00090">https://doi.org/10.3389/fpsyg.2017.00090</a>  (2017).</p></li>
+<li><p>Zondervan-Zwijnenburg, M., van de Schoot-Hubeek, W., Lek, K., Hoijtink, H. &amp; van de Schoot, R. Application and evaluation of an expert judgment elicitation procedure for correlations. Front. Psychol.  https://doi.org/10.3389/fpsyg.2017.00090  (2017).</p></li>
 <li><p>Cooke, R. M. &amp; Goossens, L. H. J. TU Delft expert judgment data base. Reliab. Eng. Syst. Saf. 93,  657–674 (2008).</p></li>
 <li><p>Hanea, A. M., Nane, G. F ., Bedford, T . &amp; French, S. Expert Judgment in Risk and Decision Analysis (Springer, 2020).</p></li>
 <li><p>Dias, L. C., Morton, A. &amp; Quigley, J. Elicitation (Springer, 2018).</p></li>
@@ -681,7 +679,7 @@ PhD delays among doctoral candidates. PloS ONE 8,e68839 (2013).</p></li>
 <li><p>Berger, J. The case for objective Bayesian analysis. Bayesian Anal. 1, 385–402 (2006).<br />
 This discussion of objective Bayesian analysis includes criticisms of the approach and a personal
 perspective on the debate on the value of objective Bayesian versus subjective Bayesian analysis.</p></li>
-<li><p>Brown, L. D. In-season prediction of batting averages:  a field test of empirical Bayes and Bayes methodologies. Ann. Appl. Stat. <a class="reference external" href="https://doi.org/10.1214/07-AOAS138">https://doi.org/10.1214/07-AOAS138</a> (2008).</p></li>
+<li><p>Brown, L. D. In-season prediction of batting averages:  a field test of empirical Bayes and Bayes methodologies. Ann. Appl. Stat. https://doi.org/10.1214/07-AOAS138 (2008).</p></li>
 <li><p>Candel, M. J. &amp; Winkens, B. Performance of empirical Bayes estimators of level-2 random parameters in multilevel analysis: a Monte Carlo study for longitudinal designs. J. Educ. Behav. Stat. 28, 169–194 (2003).</p></li>
 <li><p>van der Linden, W. J. Using response times for item selection in adaptive testing. J. Educ. Behav. Stat. 33, 5–20 (2008).</p></li>
 <li><p>Darnieder, W. F . Bayesian Methods for Data-Dependent Priors (The Ohio State Univ., 201 1).</p></li>
@@ -690,7 +688,7 @@ perspective on the debate on the value of objective Bayesian versus subjective B
 Soc. Series B 62, 159–180 (2000).</p></li>
 <li><p>Muthen, B. &amp; Asparouhov, T . Bayesian structural equation modeling: a more flexible representation of substantive theory. Psychol. Methods 17, 313–335 (2012).</p></li>
 <li><p>van de Schoot, R. et al. Facing off with Scylla and Charybdis: a comparison of scalar, partial, and the novel possibility of approximate measurement invariance. Front. Psychol. 4, 770 (2013).</p></li>
-<li><p>Smeets, L. &amp; van de Schoot, R. Code for the ShinyApp to determine the plausible parameter space for the PhD-delay data (version v1.0). Zenodo <a class="reference external" href="https://doi.org/10.5281/zenodo.3999424">https://doi.org/10.5281/zenodo.3999424</a> (2020).</p></li>
+<li><p>Smeets, L. &amp; van de Schoot, R. Code for the ShinyApp to determine the plausible parameter space for the PhD-delay data (version v1.0). Zenodo https://doi.org/10.5281/zenodo.3999424 (2020).</p></li>
 <li><p>Chung, Y ., Gelman, A., Rabe-Hesketh, S., Liu, J. &amp; Dorie, V. Weakly informative prior for point estimation of covariance matrices in hierarchical models. J. Educ. Behav. Stat. 40, 136–157 (2015).</p></li>
 <li><p>Gelman, A., Jakulin, A., Pittau, M. G. &amp; Su, Y .-S. A weakly informative default prior distribution for logistic and other regression models. Ann. Appl. Stat. 2, 1360–1383 (2008).</p></li>
 <li><p>Gelman, A., Carlin, J. B., Stern, H. S. &amp; Rubin, D. B. Bayesian Data Analysis Vol. 2 (Chapman&amp;HallCRC, 2004).</p></li>
@@ -709,7 +707,7 @@ Practitioners (T aylor &amp; Francis, 2020).</p></li>
 <li><p>Schuurman, N. K., Grasman, R. P . &amp; Hamaker, E. L.  A comparison of inverse-Wishart prior specifications for covariance matrices in multilevel autoregressive models. Multivariate Behav. Res. 51, 185–206 (2016).</p></li>
 <li><p>Liu, H., Zhang, Z. &amp; Grimm, K. J. Comparison of inverse Wishart and separation-strategy priors for
 Bayesian estimation of covariance parameter matrix in growth curve analysis. Struct. Equ. Modeling 23, 354–367 (2016).</p></li>
-<li><p>Ranganath, R. &amp; Blei, D. M. Population predictive checks. Preprint at <a class="reference external" href="https://arxiv.org/abs/1908.00882">https://arxiv.org/abs/1908.00882</a> (2019).</p></li>
+<li><p>Ranganath, R. &amp; Blei, D. M. Population predictive checks. Preprint at https://arxiv.org/abs/1908.00882 (2019).</p></li>
 <li><p>Daimon, T . Predictive checking for Bayesian interim analyses in clinical trials. Contemp. Clin. T rials 29, 740–750 (2008).</p></li>
 <li><p>Box, G. E. Sampling and Bayes’ inference in scientific modelling and robustness. J. R. Stat. Soc. Ser. A 143, 383–404 (1980).</p></li>
 <li><p>Gabry, J., Simpson, D., Vehtari, A., Betancourt, M.  &amp; Gelman, A. Visualization in Bayesian workflow.  J. R. Stat. Soc. Ser. A 182, 389–402 (2019).</p></li>
@@ -723,7 +721,7 @@ Bayesian estimation of covariance parameter matrix in growth curve analysis. Str
 <li><p>Bousquet, N. Diagnostics of prior–data agreement  in applied Bayesian analysis. J. Appl. Stat. 35,  101 1–1029 (2008).</p></li>
 <li><p>Veen, D., Stoel, D., Schalken, N., Mulder, K. &amp;  van de Schoot, R. Using the data agreement criterion to rank experts’ beliefs. Entropy 20, 592 (2018).</p></li>
 <li><p>Nott, D. J., Xueou, W., Evans, M. &amp; Englert, B. Checking for prior–data conflict using prior to
-posterior divergences. Preprint at <a class="reference external" href="https://arxiv.org/abs/161">https://arxiv.org/abs/161</a> 1.001 13 (2016).</p></li>
+posterior divergences. Preprint at https://arxiv.org/abs/161 1.001 13 (2016).</p></li>
 <li><p>Lek, K. &amp; van de Schoot, R. How the choice of distance measure influences the detection of prior–data conflict. Entropy 21, 446 (2019).</p></li>
 <li><p>O’Hagan, A. Bayesian statistics: principles and benefits. Frontis 3, 31–45 (2004).</p></li>
 <li><p>Etz, A. Introduction to the concept of likelihood and its applications. Adv. Methods Practices Psychol. Sci. 1, 60–69 (2018).</p></li>
@@ -737,7 +735,7 @@ posterior divergences. Preprint at <a class="reference external" href="https://a
 <li><p>Rubin, D. B. Bayesianly justifiable and relevant frequency calculations for the applied statistician.  Ann. Stat. 12, 1 151–1 172 (1984).</p></li>
 <li><p>Gelfand, A. E. &amp; Smith, A. F . M. Sampling-based approaches to calculating marginal densities.  J. Am. Stat. Assoc. 85, 398–409 (1990).  This seminal article identifies MCMC as a practical
 approach for Bayesian inference.</p></li>
-<li><p>Geyer, C. J. Markov chain Monte Carlo maximum likelihood. IFNA <a class="reference external" href="http://hdl.handle.net/11299/58440">http://hdl.handle.net/11299/58440</a>
+<li><p>Geyer, C. J. Markov chain Monte Carlo maximum likelihood. IFNA http://hdl.handle.net/11299/58440
 (1991).</p></li>
 <li><p>van de Schoot, R., Veen, D., Smeets, L., Winter, S. D. &amp; Depaoli, S. in Small Sample Size Solutions: A Guide for Applied Researchers and Practitioners Ch. 3  (eds van de Schoot, R. &amp; Miocevic, M.) 30–49 (Routledge, 2020).</p></li>
 <li><p>Veen, D. &amp; Egberts, M. in Small Sample Size Solutions: A Guide for Applied Researchers and Practitioners  Ch. 4 (eds van de Schoot, R. &amp; Miocevic, M.) 50–70 (Routledge, 2020).</p></li>
@@ -751,19 +749,19 @@ approach for Bayesian inference.</p></li>
 when direct computation of the posterior density  of the parameters of interest is not possible.</p></li>
 <li><p>Gamerman, D. &amp; Lopes, H. F . Markov Chain Monte Carlo: Stochastic Simulation for Bayesian Inference (CRC, 2006).</p></li>
 <li><p>Brooks, S. P ., Gelman, A., Jones, G. &amp; Meng, X.-L. Handbook of Markov Chain Monte Carlo (CRC, 201 1).  This book presents a comprehensive review of MCMC and its use in many different applications.</p></li>
-<li><p>Gelman, A. Burn-in for MCMC, why we prefer the  term warm-up. Satistical Modeling, Causal Inference, and Social Science <a class="reference external" href="https://statmodeling.stat.columbia.edu/2017/12/15/burn-vs-warm-iterative-simulation-">https://statmodeling.stat.columbia.edu/2017/12/15/burn-vs-warm-iterative-simulation-</a> algorithms/ (2017).</p></li>
+<li><p>Gelman, A. Burn-in for MCMC, why we prefer the  term warm-up. Satistical Modeling, Causal Inference, and Social Science https://statmodeling.stat.columbia.edu/2017/12/15/burn-vs-warm-iterative-simulation- algorithms/ (2017).</p></li>
 <li><p>Gelman, A. &amp; Rubin, D. B. Inference from iterative simulation using multiple sequences. Stat. Sci. 7, 457–51 1 (1992).</p></li>
 <li><p>Brooks, S. P . &amp; Gelman, A. General methods for monitoring convergence of iterative simulations.  J. Comput. Graph. Stat. 7, 434–455 (1998).</p></li>
 <li><p>Roberts, G. O. Markov chain concepts related to sampling algorithms. Markov Chain Monte Carlo  in Practice 57, 45–58 (1996).</p></li>
-<li><p>Vehtari, A., Gelman, A., Simpson, D., Carpenter, B.  &amp; Bürkner, P . Rank-normalization, folding, and localization: an improved Rˆ for assessing convergence of MCMC. Preprint at <a class="reference external" href="https://arxiv.org/abs/1903.08008">https://arxiv.org/abs/1903.08008</a> (2020).</p></li>
-<li><p>Bürkner, P .-C. Advanced Bayesian multilevel modeling with the R package brms. Preprint at <a class="reference external" href="https://arxiv.org/abs/1705.11123">https://arxiv.org/abs/1705.11123</a> (2017).</p></li>
+<li><p>Vehtari, A., Gelman, A., Simpson, D., Carpenter, B.  &amp; Bürkner, P . Rank-normalization, folding, and localization: an improved Rˆ for assessing convergence of MCMC. Preprint at https://arxiv.org/abs/1903.08008 (2020).</p></li>
+<li><p>Bürkner, P .-C. Advanced Bayesian multilevel modeling with the R package brms. Preprint at https://arxiv.org/abs/1705.11123 (2017).</p></li>
 <li><p>Merkle, E. C. &amp; Rosseel, Y . blavaan: Bayesian structural equation models via parameter expansion.
-Preprint at <a class="reference external" href="https://arxiv.org/abs/1511.05604">https://arxiv.org/abs/1511.05604</a>  (2015).</p></li>
-<li><p>Carpenter, B. et al. Stan: a probabilistic programming language. J. Stat. Softw. <a class="reference external" href="https://doi.org/10.18637/">https://doi.org/10.18637/</a> jss.v076.i01 (2017).</p></li>
+Preprint at https://arxiv.org/abs/1511.05604  (2015).</p></li>
+<li><p>Carpenter, B. et al. Stan: a probabilistic programming language. J. Stat. Softw. https://doi.org/10.18637/ jss.v076.i01 (2017).</p></li>
 <li><p>Blei, D. M., Kucukelbir, A. &amp; McAuliffe, J. D. Variational inference: a review for statisticians.  J. Am. Stat. Assoc. 11 2, 859–877 (2017).  This recent review of variational inference  methods includes stochastic variants that underpin popular approximate Bayesian inference methods for large data or complex modelling problems.</p></li>
-<li><p>Minka, T . P . Expectation propagation for approximate Bayesian inference. Preprint at <a class="reference external" href="https://arxiv.org/abs/1301.2294">https://arxiv.org/abs/1301.2294</a> (2013).</p></li>
+<li><p>Minka, T . P . Expectation propagation for approximate Bayesian inference. Preprint at https://arxiv.org/abs/1301.2294 (2013).</p></li>
 <li><p>Hoffman, M. D., Blei, D. M., Wang, C. &amp; Paisley, J. Stochastic variational inference. J. Mach. Learn. Res. 14, 1303–1347 (2013).</p></li>
-<li><p>Kingma, D. P . &amp; Ba, J. Adam: a method for stochastic optimization. Preprint at <a class="reference external" href="https://arxiv.org/abs/">https://arxiv.org/abs/</a> 1412.6980 (2014).</p></li>
+<li><p>Kingma, D. P . &amp; Ba, J. Adam: a method for stochastic optimization. Preprint at https://arxiv.org/abs/ 1412.6980 (2014).</p></li>
 <li><p>Li, Y ., Hernández-Lobato, J. M. &amp; T urner, R. E. Stochastic expectation propagation. Adv. Neural Inf. Process. Syst. 28, 2323–2331 (2015).</p></li>
 <li><p>Liang, F ., Paulo, R., Molina, G., Clyde, M. A. &amp;  Berger, J. O. Mixtures of g priors for Bayesian  variable selection. J. Am. Stat. Assoc. 103, 410–423 (2008).</p></li>
 <li><p>Forte, A., Garcia-Donato, G. &amp; Steel, M. Methods  and tools for Bayesian variable selection and model averaging in normal linear regression. Int. Stat.Rev. 86, 237–258 (2018).</p></li>
@@ -782,7 +780,7 @@ Psychol. 89, 31–50 (2019).</p></li>
 <li><p>Lee, K. H., T adesse, M. G., Baccarelli, A. A., Schwartz, J. &amp; Coull, B. A. Multivariate Bayesian variable selection exploiting dependence structure among outcomes: application to air pollution effects on DNA methylation. Biometrics 73, 232–241 (2017).</p></li>
 <li><p>Frühwirth-Schnatter, S. &amp; Wagner, H. Stochastic  model specification search for Gaussian and partially non-Gaussian state space models. J. Econom. 154, 85–100 (2010).</p></li>
 <li><p>Scheipl, F ., Fahrmeir, L. &amp; Kneib, T . Spike-and-slab priors for function selection in structured additive regression models. J. Am. Stat. Assoc. 107, 1518–1532 (2012).</p></li>
-<li><p>T adesse, M. G., Sha, N. &amp; Vannucci, M. Bayesian variable selection in clustering high dimensional  data. J. Am. Stat. Assoc. <a class="reference external" href="https://doi.org/10.1198/016214504000001565">https://doi.org/10.1198/016214504000001565</a> (2005).</p></li>
+<li><p>T adesse, M. G., Sha, N. &amp; Vannucci, M. Bayesian variable selection in clustering high dimensional  data. J. Am. Stat. Assoc. https://doi.org/10.1198/016214504000001565 (2005).</p></li>
 <li><p>Wang, H. Scaling it up: stochastic search structure learning in graphical models. Bayesian Anal. 10, 351–377 (2015).</p></li>
 <li><p>Peterson, C. B., Stingo, F . C. &amp; Vannucci, M.  Bayesian inference of multiple Gaussian graphical
 models. J. Am. Stat. Assoc. 110, 159–174 (2015).</p></li>
@@ -799,7 +797,7 @@ evolutionary stochastic search algorithm. PLoS Genetics 9, e1003657–e1003657 (
 <li><p>Gorrostieta, C., Fiecas, M., Ombao, H., Burke, E.  &amp; Cramer, S. Hierarchical vector auto-regressive
 models and their applications to multi-subject effective connectivity. Front. Computat. Neurosci. 7, 159–159 (2013).</p></li>
 <li><p>Chiang, S. et al. Bayesian vector autoregressive  model for multi-subject effective connectivity inference using multi-modal neuroimaging data. Human Brain Mapping 38, 131 1–1332 (2017).</p></li>
-<li><p>Schad, D. J., Betancourt, M. &amp; Vasishth, S. T oward  a principled Bayesian workflow in cognitive science. Preprint at <a class="reference external" href="https://arxiv.org/abs/1904.12765">https://arxiv.org/abs/1904.12765</a> (2019).</p></li>
+<li><p>Schad, D. J., Betancourt, M. &amp; Vasishth, S. T oward  a principled Bayesian workflow in cognitive science. Preprint at https://arxiv.org/abs/1904.12765 (2019).</p></li>
 <li><p>Gelman, A., Meng, X.-L. &amp; Stern, H. Posterior predictive assessment of model fitness via realized
 discrepancies. Stat. Sinica 6, 733–760 (1996).</p></li>
 <li><p>Meng, X.-L. Posterior predictive p-values. Ann. Stat.22, 1 142–1 160 (1994).</p></li>
@@ -808,8 +806,8 @@ discrepancies. Stat. Sinica 6, 733–760 (1996).</p></li>
 dynamic factor model. Struct. Equ. Modeling 15, 377–402 (2008).</p></li>
 <li><p>Hamaker, E., Ceulemans, E., Grasman, R. &amp;  T uerlinckx, F . Modeling affect dynamics: state of the
 art and future challenges. Emot. Rev. 7, 316–322 (2015).</p></li>
-<li><p>Meissner, P . wikipediatrend: Public Subject Attention via Wikipedia Page View Statistics. R package version 2.1.6. Peter Meissner <a class="reference external" href="https://CRAN.R-project.org/package=wikipediatrend">https://CRAN.R-project.org/package=wikipediatrend</a> (2020).</p></li>
-<li><p>Veen, D. &amp; van de Schoot, R. Bayesian analysis for PhD-delay dataset. OSF <a class="reference external" href="https://doi.org/10.17605/OSF.IO/JA859">https://doi.org/10.17605/OSF.IO/JA859</a> (2020).</p></li>
+<li><p>Meissner, P . wikipediatrend: Public Subject Attention via Wikipedia Page View Statistics. R package version 2.1.6. Peter Meissner https://CRAN.R-project.org/package=wikipediatrend (2020).</p></li>
+<li><p>Veen, D. &amp; van de Schoot, R. Bayesian analysis for PhD-delay dataset. OSF https://doi.org/10.17605/OSF.IO/JA859 (2020).</p></li>
 <li><p>Harvey, A. C. &amp; Peters, S. Estimation procedures for structural time series models. J. Forecast. 9, 89–108 (1990).</p></li>
 <li><p>T aylor, S. J. &amp; Letham, B. Forecasting at scale.  Am. Stat. 72, 37–45 (2018).</p></li>
 <li><p>Gopnik, A. &amp; Bonawitz, E. Bayesian models of child development. Wiley Interdiscip. Rev. Cogn. Sci. 6, 75–86 (2015).</p></li>
@@ -845,7 +843,7 @@ multistate random walks. Ecol. Monog. 82, 335–349 (2012).</p></li>
 <li><p>Dennis, B., Ponciano, J. M., Lele, S. R., T aper, M. L. &amp; Staples, D. F . Estimating density dependence, process noise, and observation error. Ecol. Monog. 76, 323–341 (2006).</p></li>
 <li><p>Aeberhard, W. H., Mills Flemming, J. &amp; Nielsen, A. Review of state-space models for fisheries science. Ann. Rev. Stat. Appl. 5, 215–235 (2018).</p></li>
 <li><p>Isaac, N. J. B. et al. Data integration for large-scale models of species distributions. T rends Ecol Evol 35, 56–67 (2020).</p></li>
-<li><p>McClintock, B. T . et al. Uncovering ecological state dynamics with hidden Markov models. Preprint at <a class="reference external" href="https://arxiv.org/abs/2002.10497">https://arxiv.org/abs/2002.10497</a> (2020).</p></li>
+<li><p>McClintock, B. T . et al. Uncovering ecological state dynamics with hidden Markov models. Preprint at https://arxiv.org/abs/2002.10497 (2020).</p></li>
 <li><p>King, R. Statistical ecology. Ann. Rev. Stat. Appl. 1, 401–426 (2014).</p></li>
 <li><p>Fearnhead, P . in Handbook of Markov Chain Monte Carlo Ch. 21 (eds Brooks, S., Gelman, A., Jones, G.L. &amp; Meng, X.L.) 513–529 (Chapman &amp; Hall/CRC,  201 1).</p></li>
 <li><p>Andrieu, C., Doucet, A. &amp; Holenstein, R. Particle Markov chain Monte Carlo methods. J. R. Stat. Soc. Series B 72, 269–342 (2010).</p></li>
@@ -865,44 +863,44 @@ integrated population models. J. Agric. Biol. Environ. Stat. 24, 204–224 (2019
 <li><p>Vallejos, C. A., Marioni, J. C. &amp; Richardson, S.  BASiCS: Bayesian analysis of single-cell sequencing data. PLoS Comput. Biol. 11, e1004333 (2015).</p></li>
 <li><p>Wang, J. et al. Data denoising with transfer learning  in single-cell transcriptomics. Nat. Methods 16,  875–878 (2019).</p></li>
 <li><p>Lopez, R., Regier, J., Cole, M. B., Jordan, M. I.  &amp; Y osef, N. Deep generative modeling for single-cell transcriptomics. Nat. Methods 15, 1053–1058 (2018).</p></li>
-<li><p>National Cancer Institute. The Cancer Genome Atlas. Qeios <a class="reference external" href="https://doi.org/10.32388/e1plqh">https://doi.org/10.32388/e1plqh</a> (2020).</p></li>
+<li><p>National Cancer Institute. The Cancer Genome Atlas. Qeios https://doi.org/10.32388/e1plqh (2020).</p></li>
 <li><p>Kuipers, J. et al. Mutational interactions define novel cancer subgroups. Nat. Commun. 9, 4353 (2018).</p></li>
 <li><p>Schwartz, R. &amp; Schaffer, A. A. The evolution of  tumour phylogenetics: principles and practice. Nat. Rev. Genet. 18, 213–229 (2017).</p></li>
-<li><p>Munafò, M. R. et al. A manifesto for reproducible science. Nat. Hum. Behav. <a class="reference external" href="https://doi.org/10.1038/s41562-016-0021">https://doi.org/10.1038/s41562-016-0021</a> (2017).</p></li>
+<li><p>Munafò, M. R. et al. A manifesto for reproducible science. Nat. Hum. Behav. https://doi.org/10.1038/s41562-016-0021 (2017).</p></li>
 <li><p>Wilkinson, M. D. et al. The FAIR guiding principles  for scientific data management and stewardship.  Sci. Data 3, 160018 (2016).</p></li>
 <li><p>Lamprecht, A.-L. et al. T owards FAIR principles for research software. Data Sci. 3, 37–59 (2020).</p></li>
 <li><p>Smith, A. M., Katz, D. S. &amp; Niemeyer, K. E. Software citation principles. PeerJ Comput. Sci. 2, e86 (2016).</p></li>
 <li><p>Clyburne-Sherin, A., Fei, X. &amp; Green, S. A. Computational reproducibility via containers in
-psychology. Meta Psychol. <a class="reference external" href="https://doi.org/10.15626/MP.2018.892">https://doi.org/10.15626/MP.2018.892</a> (2019).</p></li>
-<li><p>Lowenberg, D. Dryad &amp; Zenodo: our path ahead. WordPress <a class="reference external" href="https://blog.datadryad.org/2020/03/10/">https://blog.datadryad.org/2020/03/10/</a>
+psychology. Meta Psychol. https://doi.org/10.15626/MP.2018.892 (2019).</p></li>
+<li><p>Lowenberg, D. Dryad &amp; Zenodo: our path ahead. WordPress https://blog.datadryad.org/2020/03/10/
 dryad-zenodo-our-path-ahead/ (2020).</p></li>
 <li><p>Nosek, B. A. et al. Promoting an open research culture. Science 348, 1422–1425 (2015).</p></li>
 <li><p>Vehtari, A. &amp; Ojanen, J. A survey of Bayesian predictive methods for model assessment, selection
 and comparison. Stat. Surv. 6, 142–228 (2012).</p></li>
 <li><p>Abadi, M. et al. in USENIX Symposium on Operating Systems Design and Implementation (OSDI’16)  265–283 (USENIX Association, 2016).</p></li>
 <li><p>Paszke, A. et al. in Advances in Neural Information Processing Systems (eds Wallach, H. et al.)  8026–8037 (Urran Associates, 2019).</p></li>
-<li><p>Kingma, D. P . &amp; Welling, M. An introduction to variational autoencoders. Preprint at <a class="reference external" href="https://arxiv.org/abs/1906.02691">https://arxiv.org/abs/1906.02691</a> (2019). This recent review of variational autoencoders encompasses deep generative models, the re-parameterization trick and current inference methods.</p></li>
-<li><p>Higgins, I. et al. beta-VAE: learning basic visual concepts with a constrained variational framework. ICLR 2017 <a class="reference external" href="https://openreview.net/forum?id=Sy2fzU9gl">https://openreview.net/forum?id=Sy2fzU9gl</a> (2017).</p></li>
-<li><p>Märtens, K. &amp; Y au, C. BasisVAE:tT ranslation-invariant feature-level clustering with variational autoencoders. Preprint at <a class="reference external" href="https://arxiv.org/abs/2003.03462">https://arxiv.org/abs/2003.03462</a>  (2020).</p></li>
+<li><p>Kingma, D. P . &amp; Welling, M. An introduction to variational autoencoders. Preprint at https://arxiv.org/abs/1906.02691 (2019). This recent review of variational autoencoders encompasses deep generative models, the re-parameterization trick and current inference methods.</p></li>
+<li><p>Higgins, I. et al. beta-VAE: learning basic visual concepts with a constrained variational framework. ICLR 2017 https://openreview.net/forum?id=Sy2fzU9gl (2017).</p></li>
+<li><p>Märtens, K. &amp; Y au, C. BasisVAE:tT ranslation-invariant feature-level clustering with variational autoencoders. Preprint at https://arxiv.org/abs/2003.03462  (2020).</p></li>
 <li><p>Liu, Q., Allamanis, M., Brockschmidt, M. &amp; Gaunt, A. in Advances in Neural Information Processing  Systems 31 (eds Bengio, S. et al.) 7795–7804 (Curran Associates, 2018).</p></li>
 <li><p>Louizos, C., Shi, X., Schutte, K. &amp; Welling, M. in Advances in Neural Information Processing Systems 8743-8754 (MIT Press, 2019).</p></li>
 <li><p>Garnelo, M. et al. in Proceedings of the 35th International Conference on Machine Learning Vol. 80
 (eds Dy, J. &amp; Krause, A.) 1704–1713 (PMLR, 2018).</p></li>
-<li><p>Kim, H. et al. Attentive neural processes. Preprint at <a class="reference external" href="https://arxiv.org/abs/1901.05761">https://arxiv.org/abs/1901.05761</a> (2019).</p></li>
+<li><p>Kim, H. et al. Attentive neural processes. Preprint at https://arxiv.org/abs/1901.05761 (2019).</p></li>
 <li><p>Rezende, D. &amp; Mohamed, S. in Proceedings of the 32nd International Conference on Machine Learning
 Vol. 37 (eds Bach, F . &amp; Blei, D.) 1530–1538 (PMLR, 2015).</p></li>
 <li><p>Papamakarios, G., Nalisnick, E., Rezende, D. J., Mohamed, S. &amp; Lakshminarayanan, B. Normalizing
-flows for probabilistic modeling and inference. Preprint at <a class="reference external" href="https://arxiv.org/abs/1912.02762">https://arxiv.org/abs/1912.02762</a> (2019).</p></li>
-<li><p>Korshunova, I. et al. in Advances in Neural Information Processing Systems 31 (eds Bengio, <a class="reference external" href="http://S.et">S.et</a> al.)  7190–7198 (Curran Associates, 2018).</p></li>
-<li><p>Zhang, R., Li, C., Zhang, J., Chen, C. &amp; Wilson, A. G. Cyclical stochastic gradient MCMC for Bayesian  deep learning. Preprint at <a class="reference external" href="https://arxiv.org/abs/1902.03932">https://arxiv.org/abs/1902.03932</a> (2019).</p></li>
+flows for probabilistic modeling and inference. Preprint at https://arxiv.org/abs/1912.02762 (2019).</p></li>
+<li><p>Korshunova, I. et al. in Advances in Neural Information Processing Systems 31 (eds Bengio, S.et al.)  7190–7198 (Curran Associates, 2018).</p></li>
+<li><p>Zhang, R., Li, C., Zhang, J., Chen, C. &amp; Wilson, A. G. Cyclical stochastic gradient MCMC for Bayesian  deep learning. Preprint at https://arxiv.org/abs/1902.03932 (2019).</p></li>
 <li><p>Neal, R. M. Bayesian Learning for Neural Networks (Springer Science &amp; Business Media, 2012).</p></li>
 <li><p>Neal, R. M. in Bayesian Learning for Neural Networks Lecture Notes in Statistics Ch 2 (ed Nea, R. M.) 29–53 (Springer, 1996).  This classic text highlights the connection between neural networks and Gaussian processes and the application of Bayesian approaches for fitting neural networks.</p></li>
 <li><p>Williams, C. K. I. in Advances in Neural Information Processing Systems 295–301 (MIT Press, 1997).</p></li>
-<li><p>MacKay David, J. C. A practical Bayesian framework for backprop networks. Neural. Comput. <a class="reference external" href="https://doi.org/10.1162/neco.1992.4.3.448">https://doi.org/10.1162/neco.1992.4.3.448</a> (1992).</p></li>
-<li><p>Sun, S., Zhang, G., Shi, J. &amp; Grosse, R. Functional variational Bayesian neural networks. Preprint at <a class="reference external" href="https://arxiv.org/abs/1903.05779">https://arxiv.org/abs/1903.05779</a> (2019).</p></li>
+<li><p>MacKay David, J. C. A practical Bayesian framework for backprop networks. Neural. Comput. https://doi.org/10.1162/neco.1992.4.3.448 (1992).</p></li>
+<li><p>Sun, S., Zhang, G., Shi, J. &amp; Grosse, R. Functional variational Bayesian neural networks. Preprint at https://arxiv.org/abs/1903.05779 (2019).</p></li>
 <li><p>Lakshminarayanan, B., Pritzel, A. &amp; Blundell, C. Simple and scalable predictive uncertainty estimation using deep ensembles. Advances in Neural Information Processing Systems 30, 6402–6413
 (2017).</p></li>
-<li><p>Wilson, A. G. The case for Bayesian deep learning. Preprint at <a class="reference external" href="https://arxiv.org/abs/2001.10995">https://arxiv.org/abs/2001.10995</a> (2020).</p></li>
+<li><p>Wilson, A. G. The case for Bayesian deep learning. Preprint at https://arxiv.org/abs/2001.10995 (2020).</p></li>
 <li><p>Srivastava, N., Hinton, G., Krizhevsky, A., Sutskever, I. &amp; Salakhutdinov, R. Dropout: a simple way to prevent neural networks from overfitting. J. Mach. Learn. Res. 15, 1929–1958 (2014).</p></li>
 <li><p>Gal, Y . &amp; Ghahramani, Z. in International Conference on Machine Learning 1050–1059 (JMLR, 2016).</p></li>
 <li><p>Green, P . J. Reversible jump Markov chain Monte Carlo computation and Bayesian model determination. Biometrika 82, 71 1–732 (1995).</p></li>
@@ -920,20 +918,20 @@ concepts, structure, and extensibility. Stat. Comput. 10, 325–337 (2000).</p><
 <li><p>Lunn, D. J., Thomas, A., Best, N. &amp; Spiegelhalter, D. WinBUGS — a Bayesian modelling framework:
 concepts, structure, and extensibility. Stat. Comput. 10, 325–337 (2000).  This paper provides an early user-friendly and freely available black-box MCMC sampler, opening up Bayesian inference to the wider scientific community.</p></li>
 <li><p>Spiegelhalter, D., Thomas, A., Best, N. &amp; Lunn, D. OpenBUGS User Manual version 3.2.3. Openbugs
-<a class="reference external" href="http://www.openbugs.net/w/Manuals?action=AttachFile&amp;do=view&amp;target=OpenBUGS_Manual.pdf">http://www.openbugs.net/w/Manuals?action=AttachFile&amp;do=view&amp;target=OpenBUGS_Manual.pdf</a>
+http://www.openbugs.net/w/Manuals?action=AttachFile&amp;do=view&amp;target=OpenBUGS_Manual.pdf
 (2014).</p></li>
 <li><p>Plummer, M. JAGS: a program for analysis of Bayesian graphical models using Gibbs sampling. Proc. 3rd International Workshop on Distributed Statistical Computing 124, 1–10 (2003).</p></li>
 <li><p>Plummer, M. rjags: Bayesian graphical models  using MCMC. R package version, 4(6) (2016).</p></li>
 <li><p>Salvatier, J., Wiecki, T . V. &amp; Fonnesbeck, C. Probabilistic programming in Python using PyMC3. PeerJ Comput. Sci. 2, e55 (2016).</p></li>
 <li><p>de Valpine, P . et al. Programming with models: writing statistical algorithms for general model structures  with NIMBLE. J. Comput. Graph. Stat.s 26, 403–413 (2017).</p></li>
-<li><p>Dillon, J. V. et al. T ensorflow distributions. Preprint at <a class="reference external" href="https://arxiv.org/abs/1711.10604">https://arxiv.org/abs/1711.10604</a> (2017).</p></li>
-<li><p>Keydana, S. tfprobability: R interface to TensorFlow probability. github <a class="reference external" href="https://rstudio.github.io/">https://rstudio.github.io/</a>
+<li><p>Dillon, J. V. et al. T ensorflow distributions. Preprint at https://arxiv.org/abs/1711.10604 (2017).</p></li>
+<li><p>Keydana, S. tfprobability: R interface to TensorFlow probability. github https://rstudio.github.io/
 tfprobability/index.html (2020).</p></li>
 <li><p>Bingham, E. et al. Pyro: deep universal probabilistic programming. J. Mach. Learn. Res. 20, 973–978
 (2019).</p></li>
-<li><p>Bezanson, J., Karpinski, S., Shah, V. B. &amp; Edelman, A. Julia: a fast dynamic language for technical computing. Preprint at <a class="reference external" href="https://arxiv.org/abs/1209.5145">https://arxiv.org/abs/1209.5145</a> (2012).</p></li>
+<li><p>Bezanson, J., Karpinski, S., Shah, V. B. &amp; Edelman, A. Julia: a fast dynamic language for technical computing. Preprint at https://arxiv.org/abs/1209.5145 (2012).</p></li>
 <li><p>Ge, H., Xu, K. &amp; Ghahramani, Z. T uring: a language  for flexible probabilistic inference. Proceedings of Machine Learning Research 84, 1682–1690 (2018).</p></li>
-<li><p>Smith, B. J. et al. brian-j-smith/Mamba.jl: v0.12.4. Zenodo <a class="reference external" href="https://doi.org/10.5281/zenodo.3740216">https://doi.org/10.5281/zenodo.3740216</a>
+<li><p>Smith, B. J. et al. brian-j-smith/Mamba.jl: v0.12.4. Zenodo https://doi.org/10.5281/zenodo.3740216
 (2020).</p></li>
 <li><p>JASP T eam. JASP (version 0.14) [computer software] (2020).</p></li>
 <li><p>Lindgren, F . &amp; Rue, H. Bayesian spatial modelling with R-INLA. J. Stat. Soft. 63, 1–25 (2015).</p></li>
@@ -941,11 +939,11 @@ tfprobability/index.html (2020).</p></li>
 1 175–1 179 (2013).</p></li>
 <li><p>Blaxter, L. How to Research (McGraw-Hill Education, 2010).</p></li>
 <li><p>Neuman, W. L. Understanding Research (Pearson, 2016).</p></li>
-<li><p>Betancourt, M. T owards a principled Bayesian workflow. github <a class="reference external" href="https://betanalpha.github.io/assets/">https://betanalpha.github.io/assets/</a>
+<li><p>Betancourt, M. T owards a principled Bayesian workflow. github https://betanalpha.github.io/assets/
 case_studies/principled_bayesian_workflow.html (2020).</p></li>
-<li><p>Veen, D. &amp; van de Schoot, R. Posterior predictive checks for the Premier League. OSF <a class="reference external" href="https://doi.org/10.17605/OSF.IO/7YRUD">https://doi.org/10.17605/OSF.IO/7YRUD</a> (2020).</p></li>
+<li><p>Veen, D. &amp; van de Schoot, R. Posterior predictive checks for the Premier League. OSF https://doi.org/10.17605/OSF.IO/7YRUD (2020).</p></li>
 <li><p>Kramer, B. &amp; Bosman, J. Summerschool open  science and scholarship 2019 — Utrecht University.
-ZENODO <a class="reference external" href="https://doi.org/10.5281/ZENODO.3925004">https://doi.org/10.5281/ZENODO.3925004</a> (2020).</p></li>
+ZENODO https://doi.org/10.5281/ZENODO.3925004 (2020).</p></li>
 <li><p>Rényi, A. On a new axiomatic theory of probability. Acta Math. Hung. 6, 285–335 (1955).</p></li>
 <li><p>Lesaffre, E. &amp; Lawson, A. B. Bayesian Biostatistics (Wiley, 2012).</p></li>
 <li><p>Hoijtink, H., Beland, S. &amp; Vermeulen, J. A. Cognitive diagnostic assessment via Bayesian evaluation of informative diagnostic hypotheses. Psychol Methods 19, 21–38 (2014).</p></li>

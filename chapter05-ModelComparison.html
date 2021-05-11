@@ -49,8 +49,6 @@
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="第6章 混合模型" href="chapter06-MixtureModels.html" />
@@ -333,12 +331,12 @@
 <p>在图5.4中，黑色虚线表示根据数据计算的统计量(平均值或IQR)。因为我们只有一个数据集，所以我们只有一个统计值(而不是分布)。这些曲线(使用与图5.3相同的颜色代码)表示根据后验预测样本计算出的平均值(左图)或四分位数范围(右图)的分布。您可能还注意到，图5.4还包括标记为-Values的值。我们通过将模拟数据与实际数据进行比较来计算这样的值。对于这两个集合，我们计算汇总统计信息(在本例中为平均值或IQR)，然后计算模拟汇总统计信息等于或大于根据数据计算的汇总统计信息的比例。如果数据和模拟结果一致，我们应该预期-值在0.5左右，否则我们将处于有偏的后验预测分布。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>贝叶斯 <span class="math notranslate nohighlight">\(p\)</span> 值只是一种获得衡量后验预测检验适合性的数字的方法。</p>
+<p>贝叶斯 $p$ 值只是一种获得衡量后验预测检验适合性的数字的方法。</p>
 </div>
 <p>如果你熟悉频率主义者的方法，而且你读这本书是因为你被告知那些酷的家伙不再做价值观了，那么你可能会对你以前深爱的作者感到震惊，甚至失望。但请保持冷静，继续阅读。这些贝叶斯值是实实在在的值，因为它们的定义基本上与它们的表亲相同：
-$<span class="math notranslate nohighlight">\(
-Bayesian\quad p-value  \triangleq p\left(T_{s i m} \geq T_{o b s} \mid y \right) 
-\)</span>$</p>
+$$
+Bayesian\quad p-value  \triangleq p\left(T_{s i m} \geq T_{o b s} \mid y \right)
+$$</p>
 <p>也就是说，我们可以从数据中获得与统计数据相等或更极端的模拟统计数据的概率。这里，几乎可以是提供数据摘要的任何内容。在图5.4中，是左侧面板的平均值和右侧面板的标准偏差。应该在考虑到最初推动推理的问题的同时选择。</p>
 <p>这些值是贝叶斯的，因为对于抽样分布，我们使用的是后验预测分布。还要注意，我们不是以任何零假设为条件的；事实上，我们有整个后验分布，我们是以观察到的数据为条件的。还有一个不同之处在于，我们没有使用任何预定义的阈值来声明统计显著性，也没有执行假设检验-我们只是试图计算一个数字来评估后验预测分布与数据集的适合性。</p>
 <p>后验预测检验，无论是使用曲线图还是数字汇总(如贝叶斯p值)，甚至是两者的组合，都是非常灵活的想法。这个概念足够普遍，可以让分析师用他们的想象力想出不同的方法来探索后验预测分布，并使用任何合适的方法来讲述一个数据驱动的故事，包括但不限于模型比较。在接下来的几节中，我们将探索其他比较模型的方法。</p>
@@ -346,7 +344,7 @@ Bayesian\quad p-value  \triangleq p\left(T_{s i m} \geq T_{o b s} \mid y \right)
 <div class="section" id="id3">
 <h2>5.2 奥卡姆剃刀 — 简约性与准确性<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>假设对于同一个问题/数据有两个模型，二者对数据解释得同样好，应该选哪个模型呢？有一个准则叫做奥卡姆剃刀，描述的是如果对于同一现象有两种不同的假说，我们应该采取比较简单的那一种。关于奥卡姆剃刀的论证有很多，其中之一与波普尔的可证伪性标准有关，还有一种说法是从实用的角度提出的，因为更简单的模型相比复杂的模型更容易理解，另外还有一种论证是基于贝叶斯统计。这里暂且不深入这些论证的细节，只是将该准则当做一个有用而合理的常识。</p>
-<p>在比较模型时，通常还需要考虑模型的准确性，即模型对数据拟合得怎么样。我们已经见过了一些衡量准确性的标准，如测定 <span class="math notranslate nohighlight">\(R^2\)</span> 的系数，可以将其理解为线性回归中可解释方差的比例。如果我们有两个模型，其中一个模型对数据的解释比另一个更好，我们是否更倾向于该模型呢？换句话说，我们是否应该选准确率更高的模型呢？我们更倾向于更简单的模型。</p>
+<p>在比较模型时，通常还需要考虑模型的准确性，即模型对数据拟合得怎么样。我们已经见过了一些衡量准确性的标准，如测定 $R^2$ 的系数，可以将其理解为线性回归中可解释方差的比例。如果我们有两个模型，其中一个模型对数据的解释比另一个更好，我们是否更倾向于该模型呢？换句话说，我们是否应该选准确率更高的模型呢？我们更倾向于更简单的模型。</p>
 <p>直观上讲，在比较模型时，我们似乎更倾向于准确率较高，同时比较简单的模型。本章剩余部分将讨论如何平衡这两者。</p>
 <p>本章要比前面几章更偏理论一些。为简化问题，这里引入一个例子来帮助理解如何平衡准确性与复杂性，实现从感性认识到理论证明的跨越。</p>
 <p>在该例子中，我们将使用一系列逐渐复杂的多项式来拟合一个非常简单的数据集，这里没有采用贝叶斯方法，而是采用最小二乘方近似来拟合线性模型。后者其实可以转化成一个带均匀先验的贝叶斯模型，因此，暂时可以理解为还是用的贝叶斯模型，只不过走了个捷径。</p>
@@ -723,7 +721,7 @@ pm.traceplot(trace_BF_1);</p>
 <p>《StatisticalRethinking》中的第 6 章。</p>
 <p>《DoingBayesianDataAnalysis,SecondEdition》中的第 10 章。《BayesianDataAnalysis,ThirdEdition》中的第 7 章。</p>
 <p>JakeVanderPlas 关于模型选择的一篇博客：</p>
-<p>&lt;<a class="reference external" href="http://jakevdp.github.io/blog/2015/08/07/frequentism-and-">http://jakevdp.github.io/blog/2015/08/07/frequentism-and-</a><br />
+<p>&lt;http://jakevdp.github.io/blog/2015/08/07/frequentism-and-<br />
 bayesianism-5-model-selection/。<br />
 用 LOOCV 和 WAIC 对贝叶斯模型进行评估：<br />
 <a class="reference external" href="http://arxiv.org/abs/1507.04544%E3%80%82">http://arxiv.org/abs/1507.04544。</a></p>
@@ -737,8 +735,8 @@ sd=np.array([10,0.1,0.1,0.1,0.1]) 呢？</p>
 <p>（3）用 3 阶的数据去拟合，计算 WAIC 和 LOO，画出结果，将它们与线性和抛物线模型进行比较。</p>
 <p>（4）用 pm.sample_ppc() 重跑 PPC 的例子，不过画出* y *的值而非其均值。</p>
 <p>（5）阅读并运行 PyMC3 官方文档中后验预测的例子：<br />
-[<a class="reference external" href="https://pymc-devs.github.io/pymc3/notebooks/posterior_predictive.html%E3%80%82">https://pymc-devs.github.io/pymc3/notebooks/posterior_predictive.html。</a>](<a class="reference external" href="https://pymc-devs.github.io/pymc3/notebooks/posterior_predictive.html%E3%80%82%E7%89%B9%E5%88%AB%E7%95%99%E6%84%8F">https://pymc-devs.github.io/pymc3/notebooks/posterior_predictive.html。特别留意</a> Theano 中共享变量的使用。)</p>
-<p>[特别留意 Theano 中共享变量的使用。](<a class="reference external" href="https://pymc-devs.github.io/pymc3/notebooks/posterior_predictive.html%E3%80%82%E7%89%B9%E5%88%AB%E7%95%99%E6%84%8F">https://pymc-devs.github.io/pymc3/notebooks/posterior_predictive.html。特别留意</a> Theano 中共享变量的使用。)</p>
+[https://pymc-devs.github.io/pymc3/notebooks/posterior_predictive.html。](https://pymc-devs.github.io/pymc3/notebooks/posterior_predictive.html。特别留意 Theano 中共享变量的使用。)</p>
+<p>[特别留意 Theano 中共享变量的使用。](https://pymc-devs.github.io/pymc3/notebooks/posterior_predictive.html。特别留意 Theano 中共享变量的使用。)</p>
 <p>（6）分别用均匀先验 beta(1,1) 和其他先验（如 beta(0.5,0.5)）比、
 较抛硬币问题中的贝叶斯因子。将数据个数设为 30，其中 15 次正面朝</p>
 <p>上。将推断结果与第 1 章中得到的结果进行比较。</p>
