@@ -82,7 +82,7 @@ sns.stripplot(x="species", y="sepal_length", data=iris, jitter=True)
 此外可以用 pairplot 画出散点图矩阵，用该函数可以得到一个 4×4 网格（因为有 4 种特征）。网格是对称的，上三角和下三角表示同样的信息。由于对角线上的散点图其实是变量本身，因此用一个特征的 KDE 图代替了散点图。可以看到，每个子图中分别用 3 种颜色表示 3 种不同的类别标签，这与前面图中的表示一致。
 
 ```python
-sns.pairplot（iris, hue='species', diag_kind='kde')
+sns.pairplot(iris, hue='species', diag_kind='kde')
 ```
 
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210429224656_78.webp" style="zoom:67%;" />
