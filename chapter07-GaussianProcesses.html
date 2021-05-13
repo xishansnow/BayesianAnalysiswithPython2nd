@@ -207,7 +207,7 @@
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id4">
-     7.2.1 多元高斯与函数
+     7.2.1 多维高斯与函数
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -294,7 +294,7 @@
 \[
 \theta=\psi(\phi(X) \beta) \tag{7.1}
 \]</div>
-<p>这里，<span class="math notranslate nohighlight">\(\theta\)</span> 是因变量概率分布的某个参数，如高斯分布的平均值 <span class="math notranslate nohighlight">\(\mu\)</span> 、二项式的参数 <span class="math notranslate nohighlight">\(p\)</span>、泊松分布的比率 <span class="math notranslate nohighlight">\(\lambda\)</span> 等。<span class="math notranslate nohighlight">\(\psi\)</span> 为反连接函数，<span class="math notranslate nohighlight">\(\phi\)</span> 是平方根或多项式函数，<span class="math notranslate nohighlight">\(\beta\)</span> 为线性回归的权重参数。对于最简单的一元线性回归情况，<span class="math notranslate nohighlight">\(\psi\)</span> 为恒等函数。</p>
+<p>这里，<span class="math notranslate nohighlight">\(\theta\)</span> 是因变量概率分布的某个参数，如高斯分布的平均值 <span class="math notranslate nohighlight">\(\mu\)</span> 、二项式的参数 <span class="math notranslate nohighlight">\(p\)</span>、泊松分布的比率 <span class="math notranslate nohighlight">\(\lambda\)</span> 等。<span class="math notranslate nohighlight">\(\psi\)</span> 为逆连接函数，<span class="math notranslate nohighlight">\(\phi\)</span> 是平方根或多项式函数，<span class="math notranslate nohighlight">\(\beta\)</span> 为线性回归的权重参数。对于最简单的一元线性回归情况，<span class="math notranslate nohighlight">\(\psi\)</span> 为恒等函数。</p>
 <p>对上述贝叶斯模型的拟合可以视为推断获得权重参数 <span class="math notranslate nohighlight">\(\beta\)</span> 的后验分布，因此，被称为估计的
 <code class="docutils literal notranslate"><span class="pre">权值视角</span></code>。正如所看到的，以多项式回归为例，通过设为非线性函数，可以将输入映射到特征空间，然后在特征空间中拟合一个在实际空间中非线性的线性关系。理论上通过使用适当阶次的多项式，可以完美拟合任何函数。但除非应用某种形式的正则化（如使用强先验分布），否则容易导致过拟合，模型泛化能力非常差。</p>
 <p><code class="docutils literal notranslate"><span class="pre">高斯过程</span></code> 通过让数据决定函数复杂度的方法，在避免（或最小化）过拟合问题同时，为任意函数的建模提供了原则性解决方案，为复杂问题建模提供了一种 <code class="docutils literal notranslate"><span class="pre">函数视角</span></code> 。</p>
@@ -316,9 +316,12 @@ y=f(x) \tag{7.2}
 <p>采用这种描述方式，可以表示任何想要的函数。但如果想要表示函数的概率呢（例如：混合模型中的多个组分分别对应一个概率分布函数，通过描述函数的概率分布似乎可以对混合模型建模）？我们可以通过让映射具有概率性质来实现。让每个 <span class="math notranslate nohighlight">\(y_i\)</span> 的值都是一个随机变量，该随机变量服从给定均值和方差的高斯分布。通过该方式，不再是对单个特定函数的描述，而形成对一系列分布族的描述。</p>
 <p>为了使讨论具体化，让我们使用一些 Python 代码来构建和绘制这类函数的两个示例：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="c1"># 曲线1：10个自变量，10个高斯采样的因变量</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;o-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;the first one&#39;</span><span class="p">)</span>
+
+<span class="c1"># 曲线2：相同的10个自变量，10个采用了不同均值高斯采样的因变量</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
     <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
@@ -330,34 +333,39 @@ y=f(x) \tag{7.2}
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505202243_46.webp" /></p>
 <p>图 7.1</p>
 </center>
-<p>图 7.1 显示，使用高斯分布的样本对函数进行编码并不复杂。但用于生成图 7.1 的方法有限且不够灵活。虽然我们期望实函数具有某种结构或模式，但第一个函数的表达方式无法编码数据点间的任何关系。事实上，每个点都是完全独立的，因为我们是从一个一维高斯分布中获得了 10 个独立样本。对于第二个函数，我们引入了一些依赖关系，将点 <span class="math notranslate nohighlight">\(y_{i+1}\)</span> 的均值设置为 <span class="math notranslate nohighlight">\(y_i\)</span> 的值。接下来我们将看到，有一种更通用的方法来捕获依赖（不仅限于相邻点）。</p>
-<p>此处使用高斯分布的主要原因是它会带来指定任何形状函数的灵活性，因为每个点都有其自己的均值和方差；其次从数学角度看，高斯分布具有一些非常好的特性。</p>
+<p>图 7.1 显示，使用高斯分布的样本对函数进行编码并不复杂。但用于生成图 7.1 的方法有限且不够灵活。我们期望实函数具有某种结构或模式，但第一种函数表达方式无法编码数据点之间的关系。事实上，由于实验是从一维高斯分布中获得了 10 个独立样本，所以数据点之间完全独立。对于第二个函数，实验引入了一些依赖关系，将点 <span class="math notranslate nohighlight">\(y_{i+1}\)</span> 的均值设置为 <span class="math notranslate nohighlight">\(y_i\)</span> 的值，使得数据点之间有了某种依赖关系，进而为编码预期的函数提供了思路。而本章后续内容，将介绍一种更通用的方法来捕获这种依赖，而且不仅限于相邻点之间。</p>
+<p>此处使用高斯分布的主要原因是它具备指定任何形状函数的灵活性，因为每个点都有自己的均值和方差；其次从数学角度看，高斯分布具有一些非常好的特性。</p>
 <div class="section" id="id4">
-<h3>7.2.1 多元高斯与函数<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<p>在图 7.1 中，我们使用一维高斯的 <span class="math notranslate nohighlight">\(n\)</span> 个样本来表示一个函数。其实，还可以换一种方式思考，就是使用 <span class="math notranslate nohighlight">\(n\)</span> 维多元高斯分布来获得一个向量形式（长度为 <span class="math notranslate nohighlight">\(n\)</span> ）的样本。即视每个数据点均为来自特定高斯分布的一个采样，则连续 <span class="math notranslate nohighlight">\(n\)</span> 个数据点来自于对一个 <span class="math notranslate nohighlight">\(n\)</span> 维多元高斯分布的采样。在 PyMC3 中，通过使用 <code class="docutils literal notranslate"><span class="pre">np.random.multivariate_normal(np.zeros_like(x),</span> <span class="pre">np.eye(len(x)))</span></code> 替换 <code class="docutils literal notranslate"><span class="pre">np.random.normal(0,</span> <span class="pre">1,</span> <span class="pre">len(x))</span></code> ，即可生成与图 7.1 相同的图形。</p>
-<p>也就是说，上述两条语句是等价的。但基于多元高斯分布有一个优势，它可以通过 <span class="math notranslate nohighlight">\(n\)</span> 个随机变量间的协方差矩阵来编码数据点之间的相关性信息。例如，PyMC3 通过允许协方差矩阵为单位矩阵 <code class="docutils literal notranslate"><span class="pre">np.eye(len(X))</span></code>，表示图中 10 个数据点的方差为 1，而协方差为 0（因为观测独立性假设）。如果我们用其他正数替换这些零，则可能告诉我们一个不同的故事。该也意味着，要以概率方式表示函数，需要一个具有合适协方差矩阵的多元高斯函数。</p>
+<h3>7.2.1 多维高斯与函数<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>在图 7.1 中，我们使用一维高斯的 <span class="math notranslate nohighlight">\(n\)</span> 个样本来表示一个函数。其实，还可以换一种方式思考：既然每个数据点均被视为来自特定高斯分布的一个采样，是否可以将连续 <span class="math notranslate nohighlight">\(n\)</span> 个数据点视为一个来自于 <span class="math notranslate nohighlight">\(n\)</span> 维高斯分布的采样呢？ 更进一步的，如果样本数量无限大，是否可以用一个无限维高斯分布来对其建模呢？</p>
+<p>答案是肯定的。 在每个数据点均为独立的高斯分布样本假设下，可以使用 <span class="math notranslate nohighlight">\(n\)</span> 维高斯分布来对连续 <span class="math notranslate nohighlight">\(n\)</span> 个数据点进行建模，而此样本则可以视为 <span class="math notranslate nohighlight">\(n\)</span> 维高斯分布的一个向量形式（长度为 <span class="math notranslate nohighlight">\(n\)</span> ）的抽样。如果自变量 <span class="math notranslate nohighlight">\(x\)</span> 代表时间，则该模型就表示了一个基于高斯的随机过程，即高斯过程。</p>
+<p>通过上述分析，大家会发现高斯过程本质上是一个无限维高斯分布（虽然实践种中通常是有限维的），它的每一维的边缘概率密度都是高斯分布，也代表着每个数据点都是来自某个一维高斯分布的抽样。</p>
+<p>在 PyMC3 中，通过使用 <code class="docutils literal notranslate"><span class="pre">np.random.multivariate_normal(np.zeros_like(x),</span> <span class="pre">np.eye(len(x)))</span></code> 替换 <code class="docutils literal notranslate"><span class="pre">np.random.normal(0,</span> <span class="pre">1,</span> <span class="pre">len(x))</span></code> ，即可生成与图 7.1 相同的图形。也证明了上述分析。</p>
+<p>将模型视为多维高斯分布有一个比较大的优势，即可以利用协方差矩阵来编码数据点之间的相关性信息，进而打破观测独立性假设，为数据点间的依赖关系建模。例如，PyMC3 允许协方差矩阵为单位矩阵 <code class="docutils literal notranslate"><span class="pre">np.eye(len(X))</span></code>，表示图中 10 个数据点的方差为 1，而协方差为 0（因为观测独立性假设）。如果用其他正数替换单位矩阵中的零，则可能反映了另外一个完全不同的故事。</p>
+<p>该也意味着，要以概率方式对函数建模，可能需要打破观测独立性假设，通过选择合适的协方差矩阵，来构造一个能够反映函数特征的多维高斯分布（或高斯过程）。</p>
 </div>
 <div class="section" id="id5">
 <h3>7.2.2 协方差函数与核<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p>在实际工作中，协方差矩阵是用 <code class="docutils literal notranslate"><span class="pre">核函数</span></code> 指定的。出于讨论目的，我们简化地定义核函数为一个对称函数，它接受两个输入，当两个输入相同时返回 0 否则返回一个正值。如果该条件满足，可将核函数的输出解释为两个输入之间的相似性度量。</p>
-<p>在众多可用的有用核中，常用的一种是指数二次核：</p>
+<p>书接上文，与其他无限维高斯分布不同，高斯过程的维度间是有序的。某个维度与其相邻维度之间可能会存在某种关系，在此我们成这种关系为相关性。从数学上，反映不同变量之间相关性的主要工具是协方差矩阵（此处不展开，请参阅相关文献）。设想一下，如果通过某种方式，结合样本数据，量化了某个高斯过程中相邻维度间的特殊依赖关系，是否就完成了对该高斯过程的建模？</p>
+<p>在实际工作中，协方差矩阵是用 <code class="docutils literal notranslate"><span class="pre">核函数</span></code> 指定的。也就是说，对高斯过程的建模转变为了对核函数的建模。出于讨论目的，此处简化地定义核函数为一个对称函数，它接受两个输入，当两个输入相同时返回 1 否则返回一个 [0,1) 间的正值。如果该条件满足，可将核函数的输出解释为两个输入之间的相似性度量，并用于构造协方差矩阵。</p>
+<p>在众多可用的核中，指数族二次核是比较常用的一种：</p>
 <div class="math notranslate nohighlight">
 \[
 K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left\|x-x^{\prime}\right\|^{2}}{2 \ell^{2}}\right)
 \]</div>
-<p>此处， <span class="math notranslate nohighlight">\( \left\|x-x^{\prime}\right\|^{2} \)</span> 为平方欧氏距离：</p>
+<p>此处， <span class="math notranslate nohighlight">\(x,x'\)</span>是随机变量的值， <span class="math notranslate nohighlight">\(\left\|x-x^{\prime}\right\|^{2}\)</span> 为平方欧氏距离：</p>
 <div class="math notranslate nohighlight">
 \[
 \left\|x-x^{\prime}\right\|^{2}=\left(x_{1}-x_{1}^{\prime}\right)^{2}+\left(x_{2}-x_{2}^{\prime}\right)^{2}+\cdots+\left(x_{n}-x_{n}^{\prime}\right)^{2}
 \]</div>
-<p>乍一看可能不明显，但指数二次核具有与高斯分布类似的公式（见表达式 1.3)。因此，您可能会发现有人将此核称为高斯核。 <span class="math notranslate nohighlight">\(\ell\)</span> 为长度尺度（或带宽、方差），用于控制核宽度。</p>
-<p>为更好地理解核的作用，定义一个 Python 函数来计算指数二次核：</p>
+<p>乍一看可能不明显，但指数族二次核具有与高斯分布类似的公式（见表达式 1.3)。因此，您可能会发现有人将此核称为高斯核。 <span class="math notranslate nohighlight">\(\ell\)</span> 为长度尺度（或带宽、方差），用于控制核的宽度。</p>
+<p>为更好地理解核的作用，定义一个 Python 函数来计算指数族二次核：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">exp_quad_kernel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">ℓ</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;exponentiated quadratic kernel&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">k</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">ℓ</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">knots</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>以下代码和图 7.2 旨在展示不同输入的 <span class="math notranslate nohighlight">\(4x4\)</span> 协方差矩阵。此处选择的输入相当简单，由值 [-1，0，1，2] 组成。</p>
+<p>以下代码和图 7.2 旨在展示了一个 <span class="math notranslate nohighlight">\(4 \times 4\)</span> 协方差矩阵。此处选择的输入相当简单，由值 [-1，0，1，2] 组成。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
 <span class="n">cov</span> <span class="o">=</span> <span class="n">exp_quad_kernel</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -386,19 +394,23 @@ K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left\|x-x^{\prime}\right\|^{2}}{2
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505203138_6f.webp" /></p>
 <p>图 7.2</p>
 </center>
-<p>图 7.2 左侧显示了输入，x 轴上的值表示每个数据点的值，文本注释显示数据点的顺序（从零开始）。右侧有一个热图，表示使用指数二次核获得的协方差矩阵。颜色越浅协方差越大。热图是对称的，对角线取值较大。协方差矩阵中每个元素的值与两点间距离成反比，而对角线为每个数据点自身比较的结果。该核的最近邻距离为 0 和最大协方差值为 1。</p>
+<p>图 7.2 左侧显示了输入，x 轴上的值表示每个数据点的值，文本注释显示数据点的顺序（从零开始）。右侧有一个热图，表示使用指数族二次核获得的协方差矩阵。颜色越浅协方差越大。热图是对称的，对角线取值较大。协方差矩阵中每个元素的值与两点间距离成反比，而对角线为每个数据点自身比较的结果。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>该核将数据点沿 x 轴的距离转换为预期函数值的协方差值。因此，x 轴上的两个点越近，预计它们在 y 轴上的值就越相似。</p>
 </div>
-<p>总而言之，我们可以使用具有给定协方差的多元正态分布来对函数建模。可以使用核函数来建立协方差，如下例中，使用 <code class="docutils literal notranslate"><span class="pre">exp_quad_kernel</span></code> 函数来定义了一个多元正态分布的协方差矩阵，然后使用该分布中的样本来表示函数：</p>
+<p>总之，我们可以使用具有给定协方差的多维高斯分布对函数建模，而使用核对协方差建模，如下例中，使用 <code class="docutils literal notranslate"><span class="pre">exp_quad_kernel</span></code> 函数来定义了一个多维高斯分布的协方差矩阵，然后使用该分布中的样本来表示函数：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
 <span class="n">test_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                        <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="c1"># 四种核宽度</span>
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">ℓ</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">((</span><span class="mf">0.2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)):</span>
+    <span class="c1"># 四种核函数生成的协方差矩阵</span>
     <span class="n">cov</span> <span class="o">=</span> <span class="n">exp_quad_kernel</span><span class="p">(</span><span class="n">test_points</span><span class="p">,</span> <span class="n">test_points</span><span class="p">,</span> <span class="n">ℓ</span><span class="p">)</span>
+    
+    <span class="c1"># 基于协方差矩阵从多维高斯分布中抽样</span>
     <span class="n">ax</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_points</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">cov</span><span class="o">=</span><span class="n">cov</span><span class="p">,</span>
 <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
     <span class="n">ax</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ℓ =</span><span class="si">{</span><span class="n">ℓ</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -410,21 +422,20 @@ K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left\|x-x^{\prime}\right\|^{2}}{2
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505203247_f6.webp" /></p>
 <p>图7.3</p>
 </center>
-<p>如图 7.3 所示，高斯核蕴含了多个函数，通过 <span class="math notranslate nohighlight">\(\ell\)</span> 参数控制函数的平滑度。<span class="math notranslate nohighlight">\(\ell\)</span> 的值越大，函数越平滑。</p>
+<p>如图 7.3 所示，高斯核蕴含了多个函数，通过超参数 <span class="math notranslate nohighlight">\(\ell\)</span> 控制函数的平滑度。<span class="math notranslate nohighlight">\(\ell\)</span> 的值越大，函数越平滑。</p>
 </div>
 <div class="section" id="id6">
 <h3>7.2.3 高斯过程<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<p>了解对函数建模的原理后，就可以进一步理解什么是高斯过程以及其应用了。</p>
-<p>从维基百科摘取的对高斯过程的一个比较正式的定义如下：</p>
+<p>了解对函数建模的原理后，就可以进一步理解什么是高斯过程以及其应用了。从维基百科摘取的对高斯过程的一个比较正式的定义如下：</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>按时间或空间索引的随机变量集合，这些随机变量的每个有限集合都服从多元正态分布，亦即这些随机变量的每个有限的线性组合服从正态分布。</p>
+<p>按时间或空间索引的随机变量集合，这些随机变量的每个有限集合都服从多维高斯分布，亦即这些随机变量的每个有限的线性组合服从正态分布。</p>
 </div>
-<p>理解高斯过程的诀窍是理解 高斯过程的概念仅仅是一个数学定义，在实践中实际不需要处理无限的数学对象。相反，我们只评估有数据的地方评估高斯过程。即将所有数据点视为多元高斯分布中的一维，从而将无限维高斯过程压缩成一个有限维的多元高斯分布。从数学上讲，这种压缩是由无限不可观测维度上的边际化造成的，并且在理论上得到了证明。该方法还保证将始终能够得到一个多元高斯分布。因此，可以严肃地将图 7.3 解释为来自高斯过程的真实样本！</p>
-<p>注意：我们此处将多元高斯函数的平均值设置为零，并通过指数二次核构建了协方差矩阵，进而对函数进行建模。在使用高斯过程时，将多元高斯的平均值设置为零是常见做法。</p>
+<p>理解高斯过程的诀窍是理解 高斯过程的概念仅仅是一个数学定义，在实践中实际不需要处理无限数学对象。相反，我们只对有数据的地方使用高斯过程。即将所有数据点视为来自多维高斯分布中的某一维的抽样，从而将无限维高斯过程压缩成一个有限维的多维高斯分布。从数学上讲，这种压缩是由无限不可观测维度上的边际化造成的，并且在理论上得到了证明（此处略）。该方法还保证将始终能够得到一个多维高斯分布。因此，可以将图 7.3 解释为来自高斯过程的真实样本！</p>
+<p>注意：此处将多维高斯函数的平均值设置为零（即零均值假设），并通过指数族二次核构建了协方差矩阵，进而对函数进行建模。在使用高斯过程时，做出零均值假设是较为常见的做法。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>高斯过程对于构建贝叶斯非参数模型非常有用，因为可以将它们用作函数空间上的先验分布。</p>
+<p>高斯过程对于构建贝叶斯非参数模型非常有用，因为可以将它们用作函数的先验分布。</p>
 </div>
 </div>
 </div>
@@ -435,13 +446,13 @@ K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left\|x-x^{\prime}\right\|^{2}}{2
 \[
 y \sim \mathcal{N}(\mu=f(x), \sigma=\epsilon) \tag{7.5}
 \]</div>
-<p>此处 <span class="math notranslate nohighlight">\( \epsilon \sim \mathcal{N}\left(0, \sigma_{\epsilon}\right) \)</span></p>
-<p>这类似于我们在第 3 章“线性回归建模”中对线性回归模型所做的假设。主要区别在于，现在将在 <span class="math notranslate nohighlight">\(f\)</span> 上配置先验。而高斯过程可以作为该先验：</p>
+<p>此处 <span class="math notranslate nohighlight">\(\epsilon \sim \mathcal{N}\left(0, \sigma_{\epsilon}\right)\)</span></p>
+<p>这类似于我们在第 3 章“线性回归模型”中所做的假设。主要区别在于，现在将在 <span class="math notranslate nohighlight">\(f\)</span> 上配置高斯先验：</p>
 <div class="math notranslate nohighlight">
 \[
 f(x) \sim \mathcal{G} \mathcal{P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{7.6}
 \]</div>
-<p>这里，<span class="math notranslate nohighlight">\(\mathcal{GP}\)</span> 表示高斯过程分布， <span class="math notranslate nohighlight">\(\mu_x\)</span> 为均值函数， <span class="math notranslate nohighlight">\(K(x,x')\)</span> 为核（或协方差）函数。我们用 <code class="docutils literal notranslate"><span class="pre">函数</span></code> 该词来表示，在数学上是指均值和协方差都是无限的对象，尽管实践中总是作为有限对象处理。</p>
+<p>这里，<span class="math notranslate nohighlight">\(\mathcal{GP}\)</span> 表示高斯过程分布， <span class="math notranslate nohighlight">\(\mu_x\)</span> 为均值函数， <span class="math notranslate nohighlight">\(K(x,x')\)</span> 为核（或协方差）函数。我们用 <code class="docutils literal notranslate"><span class="pre">函数</span></code> 这个词来表示，在数学上是指均值和协方差都是无限的对象，尽管实践中总是作为有限对象处理。</p>
 <p>如果先验分布是高斯过程分布，且似然是正态分布，那么后验分布也是高斯过程分布，我们可以解析地计算它：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -461,7 +472,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 \end{align}
 \end{split}\]</div>
 <p><span class="math notranslate nohighlight">\(X\)</span> 是观察到的数据点，<span class="math notranslate nohighlight">\(X_*\)</span> 表示测试点；也就是我们希望知道推断函数值的新点。</p>
-<p>像往常一样，PyMC3 允许自动完成整个推断过程，高斯过程也不例外。因此，让我们继续创建一些数据，然后创建一个 PyMC3 模型：</p>
+<p>像往常一样，PyMC3 自动完成整个推断过程，高斯过程也不例外。因此，让我们继续创建一些数据，然后创建一个 PyMC3 模型：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="mf">0.1</span><span class="p">)</span>
@@ -477,7 +488,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 <p>图7.4</p>
 </center>
 <p>在图 7.4 中，我们看到真正的未知函数是一条黑虚线，而点表示未知函数的样本（带有噪声）。</p>
-<p>请注意，为了将公式 7.7 和 7.8 编码到 PyMC3 模型中，我们需要设置指数二次核的 <span class="math notranslate nohighlight">\(\epsilon\)</span> 参数、核宽 <span class="math notranslate nohighlight">\(\ell\)</span> 和正态似然方差。</p>
+<p>请注意，为了将公式 7.7 和 7.8 编码到 PyMC3 模型中，我们需要设置指数族二次核的 <span class="math notranslate nohighlight">\(\epsilon\)</span> 参数、核宽 <span class="math notranslate nohighlight">\(\ell\)</span> 和正态似然方差。</p>
 <p>高斯过程在 PyMC3 中实现为一系列 Python 类，与以前的模型略有不同；然而，代码仍然非常 <code class="docutils literal notranslate"><span class="pre">PyMC3onic</span></code>。我在以下代码中添加了一些注释，以指导您完成使用 PyMC3 定义高斯过程的关键步骤：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># A one dimensional column vector of inputs.</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
@@ -486,8 +497,8 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
     <span class="n">ℓ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;ℓ&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
     <span class="c1"># instantiate a covariance function</span>
     <span class="n">cov</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ExpQuad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="n">ℓ</span><span class="p">)</span>
-    <span class="c1"># instantiate a 高斯过程prior</span>
-    <span class="n">高斯过程</span><span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">Marginal</span><span class="p">(</span><span class="n">cov_func</span><span class="o">=</span><span class="n">cov</span><span class="p">)</span>
+    <span class="c1"># instantiate a GP prior</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">Marginal</span><span class="p">(</span><span class="n">cov_func</span><span class="o">=</span><span class="n">cov</span><span class="p">)</span>
     <span class="c1"># prior</span>
     <span class="n">ϵ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;ϵ&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
     <span class="c1"># likelihood</span>
@@ -500,7 +511,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) d f \tag{7.9}
 \]</div>
 <p>与往常一样，<span class="math notranslate nohighlight">\(\theta\)</span> 表示所有未知参数，<span class="math notranslate nohighlight">\(X\)</span> 是自变量，<span class="math notranslate nohighlight">\(y\)</span> 是因变量。请注意，我们正在对函数 <span class="math notranslate nohighlight">\(f\)</span> 的值进行边际化。对于高斯过程先验和正态似然，可以解析地执行边际化。</p>
-<p>根据 PyMC3 的核心开发者、GP 模块的主要贡献者 Bill Engels 的说法，对于长度尺度参数，避免采用零先验通常效果更好。<span class="math notranslate nohighlight">\(\ell\)</span> 的一个有用默认设置是 <code class="docutils literal notranslate"><span class="pre">pm.Gamma(2，0.5)</span></code>。你可以从 <a class="reference external" href="https://github.com/stan-dev/stan/wiki/Prior-ChoiceRecommendations">Stan team</a> 阅读更多关于默认有用先验的建议。</p>
+<p>根据 PyMC3 的核心开发者、GP 模块的主要贡献者 Bill Engels 的说法，对于核宽度参数，避免采用零先验通常效果更好。<span class="math notranslate nohighlight">\(\ell\)</span> 的一个有用默认设置是 <code class="docutils literal notranslate"><span class="pre">pm.Gamma(2，0.5)</span></code>。你可以从 <a class="reference external" href="https://github.com/stan-dev/stan/wiki/Prior-ChoiceRecommendations">Stan team</a> 阅读更多关于默认有用先验的建议。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_reg</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -508,7 +519,7 @@ p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) d f \ta
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204431_42.webp" /></p>
 <p>图 7.5</p>
 </center>
-<p>现在已经找到 <span class="math notranslate nohighlight">\(\ell\)</span> 和 <span class="math notranslate nohighlight">\(\epsilon\)</span> 的值，我们可能想要从高斯过程分布的后验中获取样本；即已与数据拟合的函数的样本。可以通过使用 <code class="docutils literal notranslate"><span class="pre">gp.conditional</span></code> 条件函数计算新输入位置的条件分布来实现这一点：</p>
+<p>现在已经找到 <span class="math notranslate nohighlight">\(\ell\)</span> 和 <span class="math notranslate nohighlight">\(\epsilon\)</span> 的值，我们可能想要从高斯过程分布的后验中获取样本；即已与数据拟合的函数的样本。通过使用 <code class="docutils literal notranslate"><span class="pre">gp.conditional</span></code> 条件函数计算新输入位置的条件分布来实现这一点：</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="mi">100</span><span class="p">)[:,</span><span class="kc">None</span><span class="p">]</span>
 <span class="k">with</span> <span class="n">model_reg</span><span class="p">:</span>
     <span class="n">f_pred</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">conditional</span><span class="p">(</span><span class="s1">&#39;f_pred&#39;</span><span class="p">,</span> <span class="n">X_new</span><span class="p">)</span>
@@ -822,8 +833,7 @@ f &amp;\sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right
 <li><p>展示如何轻松组合核以获得更具表现力的模型</p></li>
 <li><p>展示了如何使用高斯过程实现 Logistic 回归</p></li>
 </ul>
-<p>尤其是第二点，Logistic 回归确实是高斯过程的特例，因为一元线性回归是高斯过程的特例。事实上，许多已知的模型都可以被视为高斯过程的特例，或者至少以某种方式与高斯过程联系在一起。你可以阅读凯文·墨菲 (Kevin Murphy) 的《 Machine
-Learning: A Probabilistic Perspective 》中的第 15 章。</p>
+<p>尤其是第二点，Logistic 回归确实是高斯过程的特例，因为一元线性回归是高斯过程的特例。事实上，许多已知的模型都可以被视为高斯过程的特例，或者至少以某种方式与高斯过程联系在一起。你可以阅读凯文·墨菲 (Kevin Murphy) 的《 Machine Learning: A Probabilistic Perspective 》中的第 15 章。</p>
 <p>实践中，使用高斯过程对只能用 Logistic 回归来解决的问题进行建模没有太大意义。相反，我们希望使用高斯过程来建模更复杂的数据，而这些数据使用灵活性较低的模型无法很好地捕获。例如，假设想要将患病概率建模为年龄的函数。事实证明，非常年轻和非常年长的人比中年人有更高风险。数据集 <code class="docutils literal notranslate"><span class="pre">space_flu.csv</span></code> 是受前面描述启发的假数据集。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df_sf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/space_flu.csv&#39;</span><span class="p">)</span>
 <span class="n">age</span> <span class="o">=</span> <span class="n">df_sf</span><span class="o">.</span><span class="n">age</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
@@ -875,8 +885,8 @@ Learning: A Probabilistic Perspective 》中的第 15 章。</p>
 </div>
 <div class="section" id="cox">
 <h2>7.6 考克斯 （Cox） 过程<a class="headerlink" href="#cox" title="Permalink to this headline">¶</a></h2>
-<p>现在考虑计数类数据的建模问题。在此将看到两个示例；一个具有时变速率，另一个具有 2D 空间变化速率。为做到这点，将使用泊松似然，并使用高斯过程对速率建模。因泊松分布的速率被限制为正值，所以我们将使用指数函数作为逆连接函数，类似第 4 章 “广义线性模型” 中的零膨胀泊松回归。</p>
-<p>在很多资料中，可变速率也以强度名称出现，此类型问题统称为强度估计问题，此类型的模型则被称为考克斯（Cox）模型。考克斯模型是泊松过程的一种，其速率本身就是一个随机过程。正如高斯过程是随机变量的集合，而且这些随机变量的每个有限集合都具有多元正态分布一样，泊松过程也是随机变量集合，其中这些随机变量的每个有限集合都具有泊松分布。可以把泊松过程看作是在给定空间的点集合上的分布。当泊松过程的速率本身是一个随机过程（如高斯过程）时，称之为考克斯（Cox）过程。</p>
+<p>现在考虑计数类数据的建模问题。在此将看到两个示例；一个具有时变计数，另一个具有 2D 空间计数。为做到这点，使用泊松分布对似然建模（每个数据点来自于一个泊松分布的抽样），使用高斯过程对计数函数建模（所有数据点计数的集合来自一个高斯过程的抽样）。因泊松分布的计数被限制为正值，所以我们将使用指数函数作为逆连接函数，类似第 4 章 “广义线性模型” 中的零膨胀泊松回归。</p>
+<p>在很多资料中，可变计数也以强度名称出现，此类型问题统称为强度估计问题，此类型的模型则被称为考克斯（Cox）模型。考克斯模型是泊松过程的一种，其计数本身就是一个随机过程。正如高斯过程是随机变量的集合，而且这些随机变量的每个有限集合都具有多维高斯分布一样，泊松过程也是随机变量集合，其中这些随机变量的每个有限集合都具有泊松分布。当泊松过程的计数本身是一个随机过程（如高斯过程）时，称之为考克斯（Cox）过程。</p>
 <div class="section" id="id10">
 <h3>7.6.1 煤矿灾害<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>第一个例子是煤矿灾难。该案例包括英国从 1851 年到 1962 年的煤矿灾难记录。灾难数量被认为受到安全法规变化的影响。我们希望将灾害率建模为时间的函数，数据集只有一列，每个条目都对应灾难发生的时间。让我们加载数据并查看它的一些值：</p>
@@ -933,12 +943,12 @@ y &amp; \sim \operatorname{Poisson}(f(x)) \end{aligned}
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210433_70.webp" /></p>
 <p>图 7.15</p>
 </center>
-<p>图 7.15 用白线显示了灾害率的中位数与时间的关系。这些条带表示 50%HPD 区间（较深）和 94%HPD 区间（较浅）。在底部，用黑色记号笔标出了每一场灾难（这被称为地毯图）。如图所示，除最初的短暂上升外，事故率随时间的推移而下降。PyMC3 的文档中包括煤矿灾难这个案例，但从不同角度建的模。建议您检查下该示例，因为其本身非常有用，而且将其与刚刚使用 <code class="docutils literal notranslate"><span class="pre">model_coal</span></code> 模型实现的方法进行比较也很有用。</p>
-<p>请注意，将数据装入了抽屉后，会得到一条平滑的曲线。从该意义上说，可以将 <code class="docutils literal notranslate"><span class="pre">model_coal</span></code>看作是构建了一个直方图，并对其做了平滑。</p>
+<p>图 7.15 用白线显示了灾害计数的中位数与时间的关系。这些条带表示 50%HPD 区间（较深）和 94%HPD 区间（较浅）。在底部，用黑色记号笔标出了每一场灾难（这被称为地毯图）。如图所示，除最初的短暂上升外，事故计数随时间的推移而下降。PyMC3 的文档中包括煤矿灾难这个案例，但从不同角度建的模。建议您检查下该示例，因为其本身非常有用，而且将其与刚刚使用 <code class="docutils literal notranslate"><span class="pre">model_coal</span></code> 模型实现的方法进行比较也很有用。</p>
+<p>请注意，将数据装入了抽屉后，会得到一条平滑的曲线。从该意义上说，可将 <code class="docutils literal notranslate"><span class="pre">model_coal</span></code>看作是构建了一个直方图，并对其做了平滑。</p>
 </div>
 <div class="section" id="id11">
 <h3>7.6.2 红杉数据集<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-<p>第二个案例是面向二维空间的红杉木数据。该数据集来自 <code class="docutils literal notranslate"><span class="pre">GPStuff</span></code> 包（一个用于 Matlab、Octave 和 R 的高斯过程包）。该数据集由给定区域上红杉树的位置组成。推断的目的是找出该地区树木比率是如何分布的。</p>
+<p>第二个案例是面向二维空间的红杉木数据。该数据集来自 <code class="docutils literal notranslate"><span class="pre">GPStuff</span></code> 包（一个用于 Matlab、Octave 和 R 的高斯过程包）。该数据集由给定区域上红杉树的位置组成。推断目的是找出该地区树木计数是如何分布的。</p>
 <p>像往常一样，我们加载数据并绘制它：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rw_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/redwood.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
@@ -999,7 +1009,7 @@ y &amp; \sim \operatorname{Poisson}(f(x)) \end{aligned}
 </div>
 <div class="section" id="id12">
 <h2>7.7 总结<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
-<p>高斯过程是多元高斯分布向无限维的推广，并且由均值函数和协方差函数完全指定。由于可以在概念上把函数看作无限长的向量，所以可使用高斯过程作为函数的先验。在实践中，通常处理的不是无限大的对象，而是维数与数据点一样多的多元高斯分布。为定义相应的协方差函数，我们使用了适当的参数化核；通过学习这些超参数，最终结束于任意复杂的函数。</p>
+<p>高斯过程是多维高斯分布向无限维的推广，并且由均值函数和协方差函数完全指定。由于可以在概念上把函数看作无限长的向量，所以可使用高斯过程作为函数的先验。在实践中，通常处理的不是无限大的对象，而是维数与数据点一样多的多维高斯分布。为定义相应的协方差函数，我们使用了适当的参数化核；通过学习这些超参数，最终来描述任意复杂的函数。</p>
 <p>本章中，我们简要介绍了高斯过程，还有很多与之相关的主题需要进一步学习（比如构建一个半参数化模型，将线性模型作为均值函数），或是将两个或者多个核函数组合在一起来描述未知函数，或将高斯过程用于分类任务，或是如何将高斯过程与统计学或者机器学习中的其他模型联系起来。不管怎么说，希望本章对高斯过程的介绍以及本书中一些其他主题的介绍能够激励你阅读、使用和进一步学习贝叶斯统计。</p>
 </div>
 <div class="section" id="id13">
