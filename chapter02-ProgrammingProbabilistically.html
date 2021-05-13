@@ -203,90 +203,84 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#pymc3">
-   2.2 用 PyMC3 做后验推断
+   2.2 用
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     PyMC3
+    </span>
+   </code>
+   做后验推断
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id3">
-     （1）模型描述
+     2.2.1 建立模型
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id4">
-     （2）按下推断按钮
+     2.2.2 执行推断
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     2.2.3 诊断推断结果
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       2.2.3.1 诊断工具和方法
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id7">
+       2.2.3.2 常用解决办法
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id8">
+       2.2.3.3 收敛性问题
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id9">
+       2.2.3.4 自相关问题
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id10">
+       2.2.3.5 有效后验采样次数
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     2.2.4 基于后验推断的决策
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id5">
-   2.3 对后验推断做诊断
+  <a class="reference internal nav-link" href="#id12">
+   2.3 随处可见的高斯分布
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id6">
-     （1）诊断工具和方法
+    <a class="reference internal nav-link" href="#id13">
+     2.3.1 高斯推断
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id7">
-     （2）常用解决办法
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id8">
-     （3）收敛性问题
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id9">
-     （4）自相关问题
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
-     （5）有效后验采样次数
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id11">
-   2.4 基于后验推断的决策
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#rope">
-     （1）ROPE
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
-     （2）损失函数
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id13">
-   2.4 随处可见的高斯分布
-  </a>
-  <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id14">
-     2.4.1 高斯推断
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id15">
-     2.4.2 更稳健的推断
+     2.3.2 更稳健的推断
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#t">
        （1）学生
        <span class="math notranslate nohighlight">
-        \( t \)
+        \(t\)
        </span>
        分布
       </a>
@@ -296,52 +290,52 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id16">
-   2.5 组间比较
+  <a class="reference internal nav-link" href="#id15">
+   2.4 组间比较
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#cohen-s-d">
-     2.5.1 Cohen’s d
+     2.4.1 Cohen’s d
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id16">
+     2.4.2 优势概率
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id17">
-     2.5.2 优势概率
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id18">
-     2.5.3 小费数据集
+     2.4.3 小费数据集
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id19">
-   2.6 分层模型
+  <a class="reference internal nav-link" href="#id18">
+   2.5 分层模型
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id20">
-     2.6.1 收缩
+    <a class="reference internal nav-link" href="#id19">
+     2.5.1 收缩
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id21">
-     2.6.2 再举一个例子
+    <a class="reference internal nav-link" href="#id20">
+     2.5.2 再举一个例子
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id22">
-   2.7 总结
+  <a class="reference internal nav-link" href="#id21">
+   2.6 总结
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id23">
-   2.8 练习
+  <a class="reference internal nav-link" href="#id22">
+   2.7 练习
   </a>
  </li>
 </ul>
@@ -358,34 +352,34 @@
   <div class="section" id="id1">
 <h1>第 2 章 概率编程<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <style>p{text-indent:2em;2}</style>
-<p>上一章对贝叶斯统计有了基本了解，本章将学习如何使用计算工具构建概率模型。我们将学习使用 PyMC3 进行概率编程。其基本思想是使用代码指定模型，然后以或多或少自动的方式求解它们。选择编程的背后原因是：许多模型无法得到闭合的解析解，因此只能使用数值方法来求解。学习概率编程的另一个原因是，现代贝叶斯统计主要是通过编写代码来完成的，既然已经了解 Python ，为什么还要用另一种方式呢？概率编程提供了一种构建和求解复杂模型的有效方法，使我们可以更多地关注模型设计、评估和解释，而更少地关注数学或计算细节。在本章以及本书的其余部分中，我们将使用 PyMC3 和 ArviZ ， PyMC3 是一个非常灵活的概率编程 Python 库，ArviZ 是一个新的 Python 库，它将帮助我们解释概率模型的结果。了解 PyMC3 和 ArviZ 还将帮助我们以更实际的方式学习先进的贝叶斯概念。</p>
+<p>上一章对贝叶斯统计有了基本了解，本章将学习如何使用计算工具构建概率模型。我们将学习使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 进行概率编程。其基本思想是使用代码指定模型，然后以或多或少自动的方式求解它们。选择编程的背后原因是：许多模型无法得到闭合的解析解，因此只能使用数值方法来求解。学习概率编程的另一个原因是，现代贝叶斯统计主要是通过编写代码来完成的，既然已经了解 <code class="docutils literal notranslate"><span class="pre">Python</span></code> ，为什么还要用另一种方式呢？概率编程提供了一种构建和求解复杂模型的有效方法，使我们可以更多地关注模型设计、评估和解释，而更少地关注数学或计算细节。在本章以及本书的其余部分中，我们将使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 和 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> ， <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 是一个非常灵活的概率编程 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 库，<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 是一个新的 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 库，它将帮助我们解释概率模型的结果。了解 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 和 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 还将帮助我们以更实际的方式学习先进的贝叶斯概念。</p>
 <p>本章涵盖以下主题：</p>
 <ul class="simple">
 <li><p>概率编程；</p></li>
 <li><p>推断引擎；</p></li>
-<li><p>PyMC3 指南；</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 指南；</p></li>
 <li><p>重温抛硬币问题；</p></li>
 <li><p>模型检查和诊断；</p></li>
-<li><p>高斯模型和学生 <span class="math notranslate nohighlight">\( t \)</span> 模型；</p></li>
+<li><p>高斯模型和学生 <span class="math notranslate nohighlight">\(t\)</span> 模型；</p></li>
 <li><p>分组比较和有效容量；</p></li>
 <li><p>分层模型和收缩。</p></li>
 </ul>
 <div class="section" id="id2">
 <h2>2.1 概率编程<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>贝叶斯统计在概念上非常简单：我们有已知和未知的量；我们使用贝叶斯定理将后者以前者为条件。如果我们幸运的话，该过程将减少未知量的不确定性。通常，我们把已知量称为<strong>数据</strong>并将其视为常数，将未知量称为参数并将其视为概率分布。在更正式的术语中，我们给未知量分配先验概率分布；然后利用贝叶斯定理将其先验概率分布转化为后验分布。尽管概念简单，但全概率公式常常导致难以解析的表达式。多年来，该问题是阻碍贝叶斯方法广泛采用的主要原因之一。</p>
-<p>随着计算时代的到来，数值方法使得解决任何推理问题成为可能。这极大改变了贝叶斯数据分析的应用。我们可以把这些数值方法看作通用推理引擎，或者 PyMC3 核心开发者 Thomas Wiecki 所称呼的推理按钮。自动化推理过程的可能性导致了**概率编程语言（PPL）**的发展，它允许模型创建和推理之间的明确分离。</p>
-<p>在概率编程语言的框架中，用户只需要寥寥数行代码描述概率模型，后面的推断过程就能自动完成了。概率编程使得人们能够更快速地构建复杂的概率模型并减少出错的可能，可以预见，这将给数据科学和其他学科带来极大的影响。我认为，编程语言对科学计算的影响可以与 60 多年前 Fortran 语言的问世相对比。尽管如今 Fortran 语言风光不再，不过在当时 Fortran 语言被认为是相当革命性的。科学家们第一次从计算的细节中解放出来，开始用一种更自然的方式关注构建数值化的方法、模型和仿真系统。类似地，概率编程将处理概率和推断的过程对用户隐藏起来，从而使得用户更多的去关注模型构建和结果分析。</p>
-<p>在本章中，我们将学习如何使用 PyMC3 定义和求解模型。我们将把推断按钮看作一个黑盒，它给我们提供了来自后验分布的适当样本。我们将要使用的方法是随机的，所以每次我们运行它们时，样本都会有所不同。然而，如果推理过程如预期的那样工作，样本将代表后验分布，因此我们将从这些样本中的任何一个获得相同的结论。当我们按下推理按钮时，引擎盖下会发生什么，以及如何检查样本是否确实值得信任，这些细节将在第 8 章-推理引擎中解释。</p>
+<p>随着计算时代的到来，数值方法使得解决任何推理问题成为可能。这极大改变了贝叶斯数据分析的应用。我们可以把这些数值方法看作通用推理引擎，或者 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 核心开发者 <code class="docutils literal notranslate"><span class="pre">Thomas</span> <span class="pre">Wiecki</span></code> 所称呼的推理按钮。自动化推理过程的可能性导致了 <strong>概率编程语言（PPL）</strong> 的发展，它允许模型创建和推理之间的明确分离。</p>
+<p>在概率编程语言的框架中，用户只需要寥寥数行代码描述概率模型，后面的推断过程就能自动完成了。概率编程使得人们能够更快速地构建复杂的概率模型并减少出错的可能，可以预见，这将给数据科学和其他学科带来极大的影响。我认为，编程语言对科学计算的影响可以与 60 多年前 <code class="docutils literal notranslate"><span class="pre">Fortran</span></code> 语言的问世相对比。尽管如今 <code class="docutils literal notranslate"><span class="pre">Fortran</span></code> 语言风光不再，不过在当时 <code class="docutils literal notranslate"><span class="pre">Fortran</span></code> 语言被认为是相当革命性的。科学家们第一次从计算的细节中解放出来，开始用一种更自然的方式关注构建数值化的方法、模型和仿真系统。类似地，概率编程将处理概率和推断的过程对用户隐藏起来，从而使得用户更多的去关注模型构建和结果分析。</p>
+<p>在本章中，我们将学习如何使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 定义和求解模型。我们将把推断按钮看作一个黑盒，它给我们提供了来自后验分布的适当样本。我们将要使用的方法是随机的，所以每次我们运行它们时，样本都会有所不同。然而，如果推理过程如预期的那样工作，样本将代表后验分布，因此我们将从这些样本中的任何一个获得相同的结论。当我们按下推理按钮时，引擎盖下会发生什么，以及如何检查样本是否确实值得信任，这些细节将在第 8 章-推理引擎中解释。</p>
 </div>
 <div class="section" id="pymc3">
-<h2>2.2 用 PyMC3 做后验推断<a class="headerlink" href="#pymc3" title="Permalink to this headline">¶</a></h2>
-<p>PyMC3 是一个 Python 库，用于概率编程。撰写本文时的最后一个版本是 3.6 。 PyMC3 提供了非常简单直观的语法，易于阅读，与统计文献中用于描述概率模型的语法非常接近。 PyMC3 的基本代码是用 Python 编写的，计算要求高的部分是用 Numpy 和 Theano 编写的。</p>
-<p>Theano 是为深度学习而开发的一个 Python 库，允许我们高效地定义、优化和计算涉及多维数组的数学表达式。 PyMC3 使用 Theano 的主要原因是，有些采样方法需要计算梯度，而 Theano 知道如何使用自动微分来计算梯度。此外，Theano 将 Python 代码编译成 C 代码，因此 PyMC3 非常快。这是关于 Theano 的所有信息，我们必须使用 PyMC3 。</p>
-<p>如果您还想了解更多，请开始阅读 <a class="reference external" href="http://deeplearning.net/software/theano/tutorial/index.html#tutorial">http://deeplearning.net/software/theano/tutorial/index.html#tutorial</a> 上的官方 Theano 教程。</p>
+<h2>2.2 用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 做后验推断<a class="headerlink" href="#pymc3" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 是一个 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 库，用于概率编程。撰写本文时的最后一个版本是 3.6 。 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 提供了非常简单直观的语法，易于阅读，与统计文献中用于描述概率模型的语法非常接近。 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的基本代码是用 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 编写的，计算要求高的部分是用 <code class="docutils literal notranslate"><span class="pre">Numpy</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 编写的。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Theano</span></code> 是为深度学习而开发的一个 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 库，允许我们高效地定义、优化和计算涉及多维数组的数学表达式。 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 使用 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 的主要原因是，有些采样方法需要计算梯度，而 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 知道如何使用自动微分来计算梯度。此外，<code class="docutils literal notranslate"><span class="pre">Theano</span></code> 将 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 代码编译成 C 代码，因此 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 非常快。这是关于 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 的所有信息，我们必须使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 。</p>
+<p>如果您还想了解更多，请开始阅读<a class="reference external" href="http://deeplearning.net/software/theano/tutorial/index.html#tutorial">官方 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 教程</a>。</p>
 <blockquote>
-<div><p>你可能听说过 Theano 已经不再开发了，但这没什么好担心的。PyMC 开发人员将接管 Theano 维护，确保 Theano 在未来几年内继续为 PyMC3 服务。与此同时，PyMC 开发人员正在迅速行动，以创建 PyMC3 的继任者。这可能会基于 TensorFlow 作为后端，尽管其他选项也在分析中。有关这方面的更多信息，请访问以下博客：<a class="reference external" href="https://medium.com/&#64;pymc_devs/theano-tensorflow-and-the-future-of-pymc-6c9987bb19d5">https://medium.com/&#64;pymc_devs/theano-tensorflow-and-the-future-of-pymc-6c9987bb19d5</a></p>
+<div><p>你可能听说过 Theano 已经不再开发了，但这没什么好担心的。PyMC 开发人员将接管 Theano 维护，确保 Theano 在未来几年内继续为 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 服务。与此同时，PyMC 开发人员正在迅速行动，以创建 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的继任者。这可能会基于 TensorFlow 作为后端，尽管其他选项也在分析中。有关这方面的更多信息，请访问<a class="reference external" href="https://medium.com/&#64;pymc_devs/theano-tensorflow-and-the-future-of-pymc-6c9987bb19d5">博客</a> 。</p>
 </div></blockquote>
-<p>让我们重新回顾下抛硬币问题，这次我们使用 PyMC3 。首先需要获取数据，这里使用手动构造的数据。由于数据是我们自己生成的，所以知道真实参数，以下代码中用 theta_real 变量表示。显然，在真实数据中，我们并不知道参数的真实值，而是要将其估计出来。</p>
+<p>让我们重新回顾下抛硬币问题，这次我们使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 。首先需要获取数据，这里使用手动构造的数据。由于数据是我们自己生成的，所以知道真实参数，以下代码中用 <code class="docutils literal notranslate"><span class="pre">theta_real</span></code> 变量表示。显然，在真实数据中，我们并不知道参数的真实值，而是要将其估计出来。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
 <span class="n">trials</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">theta_real</span> <span class="o">=</span> <span class="mf">0.35</span> <span class="c1"># unknown value in a real experiment</span>
@@ -393,193 +387,179 @@
 </pre></div>
 </div>
 <div class="section" id="id3">
-<h3>（1）模型描述<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>现在有了数据，需要再指定模型。回想一下，模型可以通过指定似然函数和先验的概率分布完成。对于似然，可以用参数分别为 <span class="math notranslate nohighlight">\( n=1 \)</span> 和 <span class="math notranslate nohighlight">\( p=\theta \)</span> 的二项分布来描述，对于先验，用参数为 <span class="math notranslate nohighlight">\( \alpha=\beta=1 \)</span> 的贝塔分布描述，该贝塔分布与 [0,1] 区间内的均匀分布等价。我们可以用数学表达式描述如下：</p>
+<h3>2.2.1 建立模型<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>现在有了数据，需要再指定模型。回想一下，模型可以通过指定似然函数和先验的概率分布完成。对于似然，可以用参数分别为 <span class="math notranslate nohighlight">\(n=1\)</span> 和 <span class="math notranslate nohighlight">\(p=\theta\)</span> 的二项分布来描述，对于先验，用参数为 <span class="math notranslate nohighlight">\(\alpha=\beta=1\)</span> 的贝塔分布描述，该贝塔分布与 [0,1] 区间内的均匀分布等价。我们可以用数学表达式描述如下：</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} 
-\begin{align}
-\theta &amp;\sim \operatorname{Beta}(\alpha, \beta) \notag \\
-y &amp;\sim \operatorname{Bern}(p=\theta) \tag{2.1}
-\end{align} 
- \end{split}\]</div>
-<p>该统计模型与 PyMC3 的语法几乎一一对应。</p>
+\[
+\theta \sim \operatorname{Beta}(\alpha, \beta) 
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y \sim \operatorname{Bern}(p=\theta) \tag{2.1}
+\]</div>
+<p>该统计模型与 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的语法几乎一一对应。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">our_first_model</span><span class="p">:</span>
-  <span class="n">θ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
-  <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">θ</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-  <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+ <span class="n">θ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+ <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">θ</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+ <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>第 1 行代码构建了一个模型的容器， PyMC3 使用 with 语法将所有位于该语法块内的代码都指向同一个模型，你可以把它看作是简化模型描述的“语法糖”，这里将模型命名为 our_first_model 。</p>
+<p>第 1 行代码构建了一个模型的容器， <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 使用 <code class="docutils literal notranslate"><span class="pre">with</span></code> 语法将所有位于该语法块内的代码都指向同一个模型，你可以把它看作是简化模型描述的“语法糖”，这里将模型命名为 <code class="docutils literal notranslate"><span class="pre">our_first_model</span></code> 。</p>
 <p>第 2 行代码指定了先验，可以看到语法与数学表示很接近。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>需要注意的是，我们把随机变量命名为 <span class="math notranslate nohighlight">\( \theta \)</span> ，这里变量名与贝塔函数的第 1 个参数名一样；保持相同的名字是个好习惯，这样能避免混淆。然后，我们通过变量名从后验采样中提取信息。这里变量是一个随机变量，我们可以将该变量看做是从某个分布（在这里是贝塔分布）中生成数值的方法而不是某个具体的值。</p>
+<p>需要注意的是，我们把随机变量命名为 θ ，这里变量名与贝塔函数的第 1 个参数名一样；保持相同的名字是个好习惯，这样能避免混淆。然后，我们通过变量名从后验采样中提取信息。这里变量是一个随机变量，我们可以将该变量看做是从某个分布（在这里是贝塔分布）中生成数值的方法而不是某个具体的值。</p>
 </div>
-<p>第 3 行代码用跟先验相同的语法描述了似然，唯一不同的是我们用 observed 变量传递了观测到的数据，这样就告诉了 PyMC3 似然。其中，data 可以是一个 Python 列表或者 Numpy 数组或者 Pandas 的 DataFrame 。</p>
+<p>第 3 行代码用跟先验相同的语法描述了似然，唯一不同的是我们用 <code class="docutils literal notranslate"><span class="pre">observed</span></code> 变量传递了观测到的数据，这样就告诉了 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 似然。其中，<code class="docutils literal notranslate"><span class="pre">data</span></code> 可以是一个 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 列表或者 <code class="docutils literal notranslate"><span class="pre">Numpy</span></code> 数组或者 <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> 的 <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> 。</p>
 </div>
 <div class="section" id="id4">
-<h3>（2）按下推断按钮<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<p>最后一行可以视为推断按钮。我们要求从后验中做 1000 次采样， 并且将其白存在 trace 对象中。在这行代码背后，PyMC3 在执行数百个贝叶斯推理任务！如果您运行该代码，您将收到如下消息：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Auto-assigning NUTS sampler...
+<h3>2.2.2 执行推断<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>最后一行可以视为推断按钮。我们要求从后验中做 1000 次采样， 并且将其白存在 <code class="docutils literal notranslate"><span class="pre">trace</span></code> 对象中。在这行代码背后，<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 在执行数百个贝叶斯推理任务！如果您运行该代码，您将收到如下消息：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>Auto-assigning NUTS sampler...
 Initializing NUTS using jitter+adapt_diag...
 Multiprocess sampling (2 chains in 2 jobs)
 NUTS: [θ]
 100%|██████████| 3000/3000 [00:00&lt;00:00, 3695.42it/s]
 </pre></div>
 </div>
-<p>第一行和第二行告诉我们，PyMC3 已经自动分配了 NUTS 采样器（一个非常适用于连续变量的推理引擎），并使用了一种方法来初始化该采样器。第三行说明 PyMC3 将并行运行两个链，因此我们从后端可以同时获得两个独立样本。链的确切数量是根据计算机中处理器数量计算的，您可以使用 sample 函数的 chains 参数来更改它。</p>
-<p>下一行告诉我们哪些变量是由哪个采样器采样的。对于此特定情况，此行不会添加新信息。因为 NUTS 是用来对我们拥有的唯一变量 <span class="math notranslate nohighlight">\( θ \)</span> 进行采样的。但情况并不总是如此，因为 PyMC3 可以将不同采样器分配给不同变量。这是由 PyMC3 根据变量属性自动完成的，以确保为每个变量使用尽可能好的采样器。用户可以使用 sample 函数的 step 参数手动分配采样器。</p>
-<p>最后一行是进度条，其中有几个相关度量指示采样器的工作速度，包括每秒迭代的次数。如果运行代码，您将看到进度条更新得非常快。在这里，我们看到的是采样器完成其工作的最后一个阶段。数字是 3000/3000，其中第一个数字是运行采样器编号（从 1 开始），最后一个数字是样本总数。您会注意到，我们要求了 1,000 个样本，但 PyMC3 正在计算 3,000 个样本。我们每条链有 500 个样本来自动调整采样算法（本例中为 NUTS）。默认情况下，此示例将被丢弃。我们每条链也有 1,000 个生产图纸，因此总共生成了 3,000 个样本。调谐阶段帮助 PyMC3 从后端提供可靠样本。我们可以使用 sample 函数的 tune 参数更改调优步骤数。</p>
+<p>第一行和第二行告诉我们，<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 已经自动分配了 NUTS 采样器（一个非常适用于连续变量的推理引擎），并使用了一种方法来初始化该采样器。第三行说明 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 将并行运行两个链，因此我们从后端可以同时获得两个独立样本。链的确切数量是根据计算机中处理器数量计算的，您可以使用 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 函数的 <code class="docutils literal notranslate"><span class="pre">chains</span></code> 参数来更改它。</p>
+<p>下一行告诉我们哪些变量是由哪个采样器采样的。对于此特定情况，此行不会添加新信息。因为 <code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 是用来对我们拥有的唯一变量 <span class="math notranslate nohighlight">\(θ\)</span> 进行采样的。但情况并不总是如此，因为 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 可以将不同采样器分配给不同变量。这是由 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 根据变量属性自动完成的，以确保为每个变量使用尽可能好的采样器。用户可以使用 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 函数的 <code class="docutils literal notranslate"><span class="pre">step</span></code> 参数手动分配采样器。</p>
+<p>最后一行是进度条，其中有几个相关度量指示采样器的工作速度，包括每秒迭代的次数。如果运行代码，您将看到进度条更新得非常快。在这里，我们看到的是采样器完成其工作的最后一个阶段。数字是 <code class="docutils literal notranslate"><span class="pre">3000/3000</span></code>，其中第一个数字是运行采样器编号（从 1 开始），最后一个数字是样本总数。您会注意到，我们要求了 1,000 个样本，但 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 正在计算 3,000 个样本。我们每条链有 500 个样本来自动调整采样算法（本例中为 NUTS）。默认情况下，此示例将被丢弃。我们每条链也有 1,000 个生产图纸，因此总共生成了 3,000 个样本。调谐阶段帮助 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 从后端提供可靠样本。我们可以使用 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 函数的 <code class="docutils literal notranslate"><span class="pre">tune</span></code> 参数更改调优步骤数。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>注意：本书第一版中稍有不同，有人工定义起点和采样方法的设置。具体如下：</p>
-</div>
-<p>start=pm.find_MAP()
-step=pm.Metropolis()
-trace=pm.sample(1000,step=step,start=start)</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```{note}
- 代码中的第 1 行，调用了 find_MAP 函数，该函数调用 SciPy 中常用的优化函数尝试返回最大后验。调用 find_MAP 是可选的，有时候其返回值能够为采样方法提供一个不错的初始点，不过有时候却并没有多大用，因此大多数时候会避免使用它。
-
- 下一行定义了采样方法。这里用的是 Metropolis-Hastings 算法，函数名取了简写 Metropolis。 PyMC3 可以让我们将不同的采样器赋给不同的随机变量；眼下我们的模型只有一个参数，不过后面我们会有多个参数。我们也可以省略该行， PyMC3 会根据不同参数的特性自动地赋予一个采样器，例如，NUTS 算法只对连续变量有用，因而不能用于离散的变量，Metropolis 算法能够处理离散的变量，而另外一些类型的变量有专门的采样方法。总的来说，我们可以让 PyMC3 为我们选一个采样方法。
-
- 最后一行执行推断，其中第 1 个参数是采样次数，第 2 个和第 3 个参数分别是采样方法和初始点，可以看到这两个参数是可选的。
-</pre></div>
-</div>
+<p>注意：本书第一版中稍有不同，有人工定义起点和采样方法的设置。</p>
 </div>
 </div>
 <div class="section" id="id5">
-<h2>2.3 对后验推断做诊断<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h3>2.2.3 诊断推断结果<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id6">
-<h3>（1）诊断工具和方法<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<p>现在我们根据有限数量的样本对后验做出了（近似）推断，接下来要做的是检查推断是否合理。可以通过可视化的或者定量的手段做一些测试，从中尝试发现样本中的问题。诊断并不能证明得到的分布是正确的，但能够提供证据证明样本看起来是合理的。ArviZ 中的 plot_trace 函数非常适合执行此任务：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<h4>2.2.3.1 诊断工具和方法<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>现在我们根据有限数量的样本对后验做出了（近似）推断，接下来要做的是检查推断是否合理。可以通过可视化的或者定量的手段做一些测试，从中尝试发现样本中的问题。诊断并不能证明得到的分布是正确的，但能够提供证据证明样本看起来是合理的。<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">plot_trace</span></code> 函数非常适合执行此任务：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504190255_62.webp" /></p>
-<p>通过使用 az.plot_trace，我们可以为每个非观测变量绘制两个子图。我们模型中唯一的非观测变量是 <span class="math notranslate nohighlight">\( \theta \)</span> 。请注意： <span class="math notranslate nohighlight">\( \mathbb{y} \)</span> 表示观测变量，因其值已知，不需采样。上图中，左边为核密度估计（KDE）图，该图类似于直方图的平滑版本；右图为采样过程中每一步的采样值，称为轨迹图。轨迹图中可以直观地查看从后端获得的采样结果。你可以尝试将 PyMC3 的结果与上一章通过解析获得的结果进行比较。</p>
-<p>ArviZ 还提供了其他几个绘图来帮助解释轨迹图，我们将在后面看到它们。此外 az.summary 可以提供 DataFrame 形式的摘要数据。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<p>通过使用 <code class="docutils literal notranslate"><span class="pre">az.plot_trace</span></code>，我们可以为每个非观测变量绘制两个子图。我们模型中唯一的非观测变量是 <span class="math notranslate nohighlight">\(\theta\)</span> 。请注意： <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 表示观测变量，因其值已知，不需采样。上图中，左边为核密度估计（ <code class="docutils literal notranslate"><span class="pre">KDE</span></code> ）图，该图类似于直方图的平滑版本；右图为采样过程中每一步的采样值，称为轨迹图。轨迹图中可以直观地查看从后端获得的采样结果。你可以尝试将 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的结果与上一章通过解析获得的结果进行比较。</p>
+<p><code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 还提供了其他几个绘图来帮助解释轨迹图，我们将在后面看到它们。此外 <code class="docutils literal notranslate"><span class="pre">az.summary</span></code> 可以提供 <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> 形式的摘要数据。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504200055_94.webp" /></p>
-<p>通过上图所示的摘要数据，可以得到均值、标准差和 94%HPD 区间（HPD 3%和 HPD 97%)。正如在第一章“概率思维”中所讨论，可以使用这些数字来解释和报告贝叶斯推理的结果。后两个指标与诊断样本相关。详细信息请参阅第 8 章-推理引擎。</p>
-<p>另一种直观总结后验的方法是使用 ArviZ 附带的 plot_posterior 函数。默认情况下，plot_posterior 为离散变量显示直方图，为连续变量显示 KDE 。我们还获得了分布的均值（可以使用 point_estimate 参数指定中位数或其他模式），94%HPD 作为图底部的一条黑线。可以使用 credible_interval 参数为 HPD 设置不同的间隔值。此类型的图由 John K.Kruschke 在其著作《Doing Bayesian Data Analysis》中引入。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<p>通过上图所示的摘要数据，可以得到均值、标准差和 <code class="docutils literal notranslate"> <span class="pre">94%</span> <span class="pre">HPD</span></code> 区间（<code class="docutils literal notranslate"><span class="pre">HPD</span> <span class="pre">3%</span></code>和 <code class="docutils literal notranslate"><span class="pre">HPD</span> <span class="pre">97%</span></code> )。正如在第一章“概率思维”中所讨论，可以使用这些数字来解释和报告贝叶斯推理的结果。后两个指标与诊断样本相关。详细信息请参阅第 8 章-推理引擎。</p>
+<p>另一种直观总结后验的方法是使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 附带的 <code class="docutils literal notranslate"><span class="pre">plot_posterior</span></code> 函数。默认情况下，<code class="docutils literal notranslate"><span class="pre">plot_posterior</span></code> 为离散变量显示直方图，为连续变量显示 <code class="docutils literal notranslate"><span class="pre">KDE</span></code> 。我们还获得了分布的均值（可以使用 <code class="docutils literal notranslate"><span class="pre">point_estimate</span></code> 参数指定中位数或其他模式），<code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">HPD</span></code> 作为图底部的一条黑线。可以使用 <code class="docutils literal notranslate"><span class="pre">credible_interval</span></code> 参数为 <code class="docutils literal notranslate"><span class="pre">HPD</span></code> 设置不同的间隔值。此类型的图由 John K.Kruschke 在其著作《Doing Bayesian Data Analysis》中引入。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504200820_a7.webp" /></p>
 </div>
 <div class="section" id="id7">
-<h3>（2）常用解决办法<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<h4>2.2.3.2 常用解决办法<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
 <p>如果通过样本发现了问题，解决办法有如下几种：</p>
 <p><strong>（1）增加样本数量</strong></p>
-<p>从样本链（迹）的前面部分去掉一定数量的样本，称为老化（Burn-in）。在实践中，MCMC 方法通常需要经过一段时间的采样之后，才得到真正的目标分布。老化在无限多次采样中并不是必须的，因为这部分并没有包含在马尔科夫理论中。事实上，去掉前面部分样本只不过是在有限次采样中提升结果的一个小技巧。需注意，不要被数学对象和数学对象的近似弄糊涂了，球体、高斯分布以及马尔科夫链等数学对象只存在于柏拉图式想象世界中，并不存在于不完美但却真实的世界中。</p>
+<p>从样本链（迹）的前面部分去掉一定数量的样本，称为老化（<code class="docutils literal notranslate"><span class="pre">Burn-in</span></code>）。在实践中，<code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 方法通常需要经过一段时间的采样之后，才得到真正的目标分布。老化在无限多次采样中并不是必须的，因为这部分并没有包含在马尔科夫理论中。事实上，去掉前面部分样本只不过是在有限次采样中提升结果的一个小技巧。需注意，不要被数学对象和数学对象的近似弄糊涂了，球体、高斯分布以及马尔科夫链等数学对象只存在于柏拉图式想象世界中，并不存在于不完美但却真实的世界中。</p>
 <p><strong>（2）重新参数化你的模型</strong></p>
 <p>也就是说换一种不同但却等价的方式描述模型。</p>
 <p><strong>（3）转换数据</strong></p>
 <p>这么做有可能得到更高效的采样。转换数据的时候需要注意对结果在转换后的空间内进行解释，或者再重新转换回去，然后再解释结果。</p>
 </div>
 <div class="section" id="id8">
-<h3>（3）收敛性问题<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
-<p>在 az.plot_trace 图中，我们需要观察什么呢？首先，KDE 图看起来应该是光滑曲线。通常随着数据的增加，根据中心极限定理，参数分布会趋近于高斯分布。当然，这并不一定是正确的。右侧图看起来应该像白噪声，也就是说有很好的混合度，通常不希望看到任何可以识别的模式，相反希望看到曲线在某个值附近震荡。对于多峰分布或者离散分布，我们希望曲线不要在某个值或区域停留过多时间，我们希望看到采样值在多个区间自由移动。此外，我们希望迹表现出稳定的相似性，也就是说，前 10%看起来跟后 50%或者 10%差不多。再次强调，我们不希望看到规律的模式，相反期望看到的是噪声。下图展示了一些迹呈现较好混合度（右侧）与较差混合度（左侧）的对比。</p>
+<h4>2.2.3.3 收敛性问题<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>在 <code class="docutils literal notranslate"><span class="pre">az.plot_trace</span></code> 图中，我们需要观察什么呢？首先，<code class="docutils literal notranslate"><span class="pre">KDE</span></code> 图看起来应该是光滑曲线。通常随着数据的增加，根据中心极限定理，参数分布会趋近于高斯分布。当然，这并不一定是正确的。右侧图看起来应该像白噪声，也就是说有很好的混合度，通常不希望看到任何可以识别的模式，相反希望看到曲线在某个值附近震荡。对于多峰分布或者离散分布，我们希望曲线不要在某个值或区域停留过多时间，我们希望看到采样值在多个区间自由移动。此外，我们希望迹表现出稳定的相似性，也就是说，前 10% 看起来跟后 50% 或者 10% 差不多。再次强调，我们不希望看到规律的模式，相反期望看到的是噪声。下图展示了一些迹呈现较好混合度（右侧）与较差混合度（左侧）的对比。</p>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504202103_98.webp" style="zoom:67%;" />
 <p>如果迹的前面部分跟其他部分看起来不太一样，那就意味着需要进行老化处理，如果其他部分没有呈现稳定的相似性或者可以看到某种模式，那这意味着需要更多的采样，或者需要更换采样方法或者参数化方法。对于一些复杂的模型，我们可能需要结合使用前面所有的策略。</p>
-<p>PyMC3 可以实现并行地运行一个模型多次，因而对同一个参数可以得到多条并行的迹。这可以通过在采样函数中指定 njobs 参数实现。此时使用 plot_trace 函数，便可在同一幅图中得到同一个参数的所有迹。由于每组迹都是相互独立的，所有的迹看起来都应该差不多。除了检查收敛性之外，这些并行的迹也可以用于推断，我们可以将这些并行的迹组合起来提升采样大小而不是扔掉多余的迹：</p>
+<p><code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 可以实现并行地运行一个模型多次，因而对同一个参数可以得到多条并行的迹。这可以通过在采样函数中指定 <code class="docutils literal notranslate"><span class="pre">njobs</span></code> 参数实现。此时使用 <code class="docutils literal notranslate"><span class="pre">plot_trace</span></code> 函数，便可在同一幅图中得到同一个参数的所有迹。由于每组迹都是相互独立的，所有的迹看起来都应该差不多。除了检查收敛性之外，这些并行的迹也可以用于推断，我们可以将这些并行的迹组合起来提升采样大小而不是扔掉多余的迹：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">our_first_model</span><span class="p">:</span>
-  <span class="n">step</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Metropolis</span><span class="p">()</span>
-  <span class="n">multi_trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span> <span class="n">njobs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-  
+ <span class="n">step</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Metropolis</span><span class="p">()</span>
+ <span class="n">multi_trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span> <span class="n">njobs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+ 
 <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">multi_trace</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;theta&#39;</span><span class="p">:</span><span class="n">theta_real</span><span class="p">});</span>
 </pre></div>
 </div>
-<p>一种定量检测收敛性的方法是 <strong>Gelman-Rubin 检验</strong> （ az.summary 输出的表格中的 <span class="math notranslate nohighlight">\( \hat R \)</span> 值）。该检验的思想是比较不同迹之间的差异和迹内部的差异，因此，需要多组迹来执行检验。理想状态下，我们希望得到 <span class="math notranslate nohighlight">\( \hat R=1 \)</span> 。但根据经验，值低于 1.1 也可以认为是收敛的，更高的值则意味着不收敛。</p>
+<p>一种定量检测收敛性的方法是 <strong>Gelman-Rubin 检验</strong> （ <code class="docutils literal notranslate"><span class="pre">az.summary</span></code> 输出的表格中的 <span class="math notranslate nohighlight">\(\hat R\)</span> 值）。该检验的思想是比较不同迹之间的差异和迹内部的差异，因此，需要多组迹来执行检验。理想状态下，我们希望得到 <span class="math notranslate nohighlight">\(\hat R=1\)</span> 。但根据经验，值低于 1.1 也可以认为是收敛的，更高的值则意味着不收敛。</p>
 </div>
 <div class="section" id="id9">
-<h3>（4）自相关问题<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p>最理想的采样应该不会是自相关的，也就是说，某点的值应该与其他点的值相互独立。在实际中，从 MCMC 方法（特别是 Metropolis-Hastings）中得到的采样值通常是自相关的。由于参数间的相互依赖关系，模型会导致更多自相关采样。 PyMC3 有一个很方便的函数用来描述自相关。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_autocorr</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<h4>2.2.3.4 自相关问题<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p>最理想的采样应该不会是自相关的，也就是说，某点的值应该与其他点的值相互独立。在实际中，从 <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 方法（特别是 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span></code>）中得到的采样值通常是自相关的。由于参数间的相互依赖关系，模型会导致更多自相关采样。 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 有一个很方便的函数用来描述自相关。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_autocorr</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><img alt="image-20210504203037224" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504203039_fe.webp" /></p>
 <p>该图显示了采样值与相邻连续点之间的平均相关性。理想状态下，不应看到自相关性，实际中希望看到自相关性降低到较低水平。参数越自相关，要达到指定精度的采样次数就需要越多，也就是说，自相关性不利于降低采样次数。</p>
 </div>
 <div class="section" id="id10">
-<h3>（5）有效后验采样次数<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
-<p>有自相关性的采样要比没有自相关性的采样包含的信息量更少，给定采样大小和采样的自相关性之后，可以尝试估计出该采样在采样次数为多少时，没有自相关性且包含信息量不变，该值称为有效采样次数（ az.summary 输出表格中的 eff_n 值）。理想情况下，两个值是一模一样的；二者越接近，采样效率越高。有效采样次数可以作为一个参考，如果想要估计出分布的均值，需要的最小采样数至少为 100；如果想要估计出依赖于尾部分布的量，比如可信区间的边界，那么可能需要 1000 到 10000 次采样。</p>
-<p>提高采样效率的一个方法是换一个更好的采样方法；另一个办法是转换数据或者对模型重新设计参数，此外，还有一个常用的办法是对采样链压缩。所谓压缩其实就是每隔 k 个观测值取一个，在 Python 中我们称为切片。压缩会降低自相关性，但代价是同时降低了样本量。因此，实际使用中通常更倾向于增加样本量而不是切片。</p>
+<h4>2.2.3.5 有效后验采样次数<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<p>有自相关性的采样要比没有自相关性的采样包含的信息量更少，给定采样大小和采样的自相关性之后，可以尝试估计出该采样在采样次数为多少时，没有自相关性且包含信息量不变，该值称为有效采样次数（ <code class="docutils literal notranslate"><span class="pre">az.summary</span></code> 输出表格中的 <code class="docutils literal notranslate"><span class="pre">eff_n</span></code> 值）。理想情况下，两个值是一模一样的；二者越接近，采样效率越高。有效采样次数可以作为一个参考，如果想要估计出分布的均值，需要的最小采样数至少为 100；如果想要估计出依赖于尾部分布的量，比如可信区间的边界，那么可能需要 1000 到 10000 次采样。</p>
+<p>提高采样效率的一个方法是换一个更好的采样方法；另一个办法是转换数据或者对模型重新设计参数，此外，还有一个常用的办法是对采样链压缩。所谓压缩其实就是每隔 k 个观测值取一个，在 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 中我们称为切片。压缩会降低自相关性，但代价是同时降低了样本量。因此，实际使用中通常更倾向于增加样本量而不是切片。</p>
 </div>
 </div>
 <div class="section" id="id11">
-<h2>2.4 基于后验推断的决策<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
-<p>有时候，仅描述后验还不够，还需要根据推断结果做决策。也就是说，我们不得不将一个连续的估计（后验分布）简化为一个二分法，如：是还是否、健康还是生病、污染还是安全等。回到抛硬币问题上，我们需要回答硬币是否公平。一枚公平的硬币 <span class="math notranslate nohighlight">\( \theta \)</span> 值应当恰好是 0.5，严格来说，出现这种情况的概率为 0，因而实际中会对定义稍稍放松，即假如一枚硬币的 <span class="math notranslate nohighlight">\( \theta \)</span> 值在 0.5 左右，就可以认为判定该硬币是公平的。这里“左右”的具体含义依赖于具体问题，并没有一个满足所有问题的普适准则。因此决策是偏主观的，我们的任务就是根据目标做出最可能的决策。</p>
-<p>直观上，一个明智的做法是将 HPD 区间与我们感兴趣的值进行比较，在抛硬币的例子中，该值是 0.5。前面的图中可以看出 HPD 的范围是 0.02～0.71，包含 0.5 ，根据后验分布来看，硬币似乎倾向于反面朝上，但我们并不能完全排除这枚硬币的公平的。如果想要一个更清晰的决定，将需要收集更多数据来减少后验数据的扩散，或者需要找出如何定义一个更有信息量的先验。</p>
-<div class="section" id="rope">
-<h3>（1）ROPE<a class="headerlink" href="#rope" title="Permalink to this headline">¶</a></h3>
-<p>严格地说，恰好观察到 0.5 的机会为零。此外，实践中我们通常不关心确切结果，而是在一定范围内的结果。因此，可以放宽公平的定义，例如我们可以说区间 [0.45，0.55] 中的任何值实际上等于 0.5。我们称这个区间为实际等价区域（ROPE）。一旦定义了 ROPE，将其与最高后验密度（HPD）比较，至少可以得到三个场景：</p>
+<h3>2.2.4 基于后验推断的决策<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>有时候，仅描述后验还不够，还需要根据推断结果做决策。也就是说，我们不得不将一个连续的估计（后验分布）简化为一个二分法，如：是还是否、健康还是生病、污染还是安全等。回到抛硬币问题上，我们需要回答硬币是否公平。一枚公平的硬币 <span class="math notranslate nohighlight">\(\theta\)</span> 值应当恰好是 0.5，严格来说，出现这种情况的概率为 0，因而实际中会对定义稍稍放松，即假如一枚硬币的 <span class="math notranslate nohighlight">\(\theta\)</span> 值在 0.5 左右，就可以认为判定该硬币是公平的。这里“左右”的具体含义依赖于具体问题，并没有一个满足所有问题的普适准则。因此决策是偏主观的，我们的任务就是根据目标做出最可能的决策。</p>
+<p>直观上，一个明智的做法是将 <code class="docutils literal notranslate"><span class="pre">HPD</span></code> 区间与我们感兴趣的值进行比较，在抛硬币的例子中，该值是 0.5。前面的图中可以看出 <code class="docutils literal notranslate"><span class="pre">HPD</span></code> 的范围是 0.02～0.71 ，包含 0.5 ，根据后验分布来看，硬币似乎倾向于反面朝上，但我们并不能完全排除这枚硬币的公平的。如果想要一个更清晰的决定，将需要收集更多数据来减少后验数据的扩散，或者需要找出如何定义一个更有信息量的先验。</p>
+<p><strong>（1）<code class="docutils literal notranslate"><span class="pre">ROPE</span></code></strong></p>
+<p>严格地说，恰好观察到 0.5 的机会为零。此外，实践中我们通常不关心确切结果，而是在一定范围内的结果。因此，可以放宽公平的定义，例如我们可以说区间 [0.45，0.55] 中的任何值实际上等于 0.5。我们称这个区间为实际等价区域（<code class="docutils literal notranslate"><span class="pre">ROPE</span></code>）。一旦定义了 <code class="docutils literal notranslate"><span class="pre">ROPE</span></code>，将其与最高后验密度（<code class="docutils literal notranslate"><span class="pre">HPD</span></code>）比较，至少可以得到三个场景：</p>
 <ul class="simple">
-<li><p>ROPE 与 HPD 区间没有重叠，因此我们可以说硬币是不公平的。</p></li>
-<li><p>ROPE 包含整个 HPD 区间，我们可以认为硬币是公平的。</p></li>
-<li><p>ROPE 与 HPD 区间部分重叠，此时我们不能判断硬币是否公平。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ROPE</span></code> 与 <code class="docutils literal notranslate"><span class="pre">HPD</span></code> 区间没有重叠，因此我们可以说硬币是不公平的。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ROPE</span></code> 包含整个 <code class="docutils literal notranslate"><span class="pre">HPD</span></code> 区间，我们可以认为硬币是公平的。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ROPE</span></code> 与 <code class="docutils literal notranslate"><span class="pre">HPD</span></code> 区间部分重叠，此时我们不能判断硬币是否公平。</p></li>
 </ul>
-<p>当然，如果选择区间 [0,1] 作为 ROPE，那么不管结果怎样我们都会说这枚硬币是公平的，不过恐怕没人会同意我们对 ROPE 的定义。</p>
+<p>当然，如果选择区间 [0,1] 作为 <code class="docutils literal notranslate"><span class="pre">ROPE</span></code>，那么不管结果怎样我们都会说这枚硬币是公平的，不过恐怕没人会同意我们对 <code class="docutils literal notranslate"><span class="pre">ROPE</span></code> 的定义。</p>
 <blockquote>
-<div><p>ROPE 是我们根据背景知识选择的任意区间。假设该区间内的任何值都具有实际等价性。</p>
+<div><p><code class="docutils literal notranslate"><span class="pre">ROPE</span></code> 是我们根据背景知识选择的任意区间。假设该区间内的任何值都具有实际等价性。</p>
 </div></blockquote>
-<p>plot_posterior 函数可以用来刻画 ROPE。从图中可以看到，ROPE 是一段较宽的半透明的红色线段，同时上面有两个数值表示 ROPE 的两个端点。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">rope</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span> <span class="mf">.55</span><span class="p">])</span>
+<p>plot_posterior 函数可以用来刻画 <code class="docutils literal notranslate"><span class="pre">ROPE</span></code>。从图中可以看到，<code class="docutils literal notranslate"><span class="pre">ROPE</span></code> 是一段较宽的半透明的红色线段，同时上面有两个数值表示 <code class="docutils literal notranslate"><span class="pre">ROPE</span></code> 的两个端点。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>az.plot_posterior(trace, `ROPE`=[0.45, .55])
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504204839_cb.webp" /></p>
-<p>我们还可以给 plot_posterior 传递一个参考值，例如 0.5，用来和后验进行对比。从图中可以看出我们会得到一个橙色的垂直线以及大于该值和小于该值的后验比例。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span><span class="n">ref_val</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<p>我们还可以给 <code class="docutils literal notranslate"><span class="pre">plot_posterior</span></code> 传递一个参考值，例如 0.5，用来和后验进行对比。从图中可以看出我们会得到一个橙色的垂直线以及大于该值和小于该值的后验比例。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span><span class="n">ref_val</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504204959_25.webp" /></p>
-<p>关于如何使用 ROPE 的更多细节，可以阅读 Kruschke 的《Doing Bayesian Data Analysis》一书的第 12 章。该章还讨论了在贝叶斯框架下如何做假设检验，以及一些（贝叶斯或者非贝叶斯的）假设检验方面的警告。</p>
-</div>
-<div class="section" id="id12">
-<h3>（2）损失函数<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
-<p>如果你认为 ROPE 准则听起来有点笨拙，而你想要更正式的东西，那么损失函数就是你想要的！要做出好的决策，重要的是参数的估计值有尽可能高的精度，但也要考虑犯错的代价。成本/收益的权衡在数学上可以使用损失函数形式化。损失函数或其逆函数的名称在不同的领域中各不相同，可以找到成本函数、目标函数、适应度函数、效用函数等名称。无论名称如何，关键思想都是使用一个函数来捕获参数的真实值和估计值的差别。损失函数值越大，估计就越差（根据损失函数）。损失函数的一些常见示例包括：</p>
+<p>关于如何使用 <code class="docutils literal notranslate"><span class="pre">ROPE</span></code> 的更多细节，可以阅读 Kruschke 的《<code class="docutils literal notranslate"><span class="pre">Doing</span> <span class="pre">Bayesian</span> <span class="pre">Data</span> <span class="pre">Analysis</span></code>》一书的第 12 章。该章还讨论了在贝叶斯框架下如何做假设检验，以及一些（贝叶斯或者非贝叶斯的）假设检验方面的警告。</p>
+<p><strong>（2）损失函数</strong></p>
+<p>如果你认为 <code class="docutils literal notranslate"><span class="pre">ROPE</span></code> 准则听起来有点笨拙，而你想要更正式的东西，那么损失函数就是你想要的！要做出好的决策，重要的是参数的估计值有尽可能高的精度，但也要考虑犯错的代价。成本/收益的权衡在数学上可以使用损失函数形式化。损失函数或其逆函数的名称在不同的领域中各不相同，可以找到成本函数、目标函数、适应度函数、效用函数等名称。无论名称如何，关键思想都是使用一个函数来捕获参数的真实值和估计值的差别。损失函数值越大，估计就越差（根据损失函数）。损失函数的一些常见示例包括：</p>
 <ul class="simple">
-<li><p>二次损失 <span class="math notranslate nohighlight">\( (\theta-\hat{\theta})^{2} \)</span></p></li>
-<li><p>绝对损失 <span class="math notranslate nohighlight">\( |\theta-\hat{\theta}| \)</span></p></li>
-<li><p>0-1 损失  <span class="math notranslate nohighlight">\( I(\theta \neq \hat{\theta}) \)</span> ，其中 <span class="math notranslate nohighlight">\( I \)</span> 为指示函数</p></li>
+<li><p>二次损失 <span class="math notranslate nohighlight">\((\theta-\hat{\theta})^{2}\)</span></p></li>
+<li><p>绝对损失 <span class="math notranslate nohighlight">\(|\theta-\hat{\theta}|\)</span></p></li>
+<li><p>0-1 损失 <span class="math notranslate nohighlight">\(I(\theta \neq \hat{\theta})\)</span> ，其中 <span class="math notranslate nohighlight">\(I\)</span> 为指示函数</p></li>
 </ul>
-<p>实践中通常手头没有真实参数 <span class="math notranslate nohighlight">\( \theta \)</span> 的值，仅有一个后验分布形式的估计。因此，我们能做的就是找出最小化期望损失函数的 <span class="math notranslate nohighlight">\( \hat \theta \)</span> 值。期望损失函数是指整个后验分布的平均损失函数。在下面代码块中，我们有两个损失函数：绝对损失（ lossf_a）和平方损失（ lossf_b）。我们将尝试超过 200 个网格的 <span class="math notranslate nohighlight">\( \hat \theta \)</span> 值，然后绘制其曲线，还将包括最小化每个损失函数的 <span class="math notranslate nohighlight">\( \hat \theta \)</span> 值：</p>
+<p>实践中通常手头没有真实参数 <span class="math notranslate nohighlight">\(\theta\)</span> 的值，仅有一个后验分布形式的估计。因此，我们能做的就是找出最小化期望损失函数的 <span class="math notranslate nohighlight">\(\hat \theta\)</span> 值。期望损失函数是指整个后验分布的平均损失函数。在下面代码块中，我们有两个损失函数：绝对损失（ <code class="docutils literal notranslate"><span class="pre">lossf_a</span></code>）和平方损失（ <code class="docutils literal notranslate"><span class="pre">lossf_b</span></code>）。我们将尝试超过 200 个网格的 <span class="math notranslate nohighlight">\(\hat \theta\)</span> 值，然后绘制其曲线，还将包括最小化每个损失函数的 <span class="math notranslate nohighlight">\(\hat \theta\)</span> 值：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 <span class="n">θ_pos</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;θ&#39;</span><span class="p">]</span>
 <span class="n">lossf_a</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">θ_pos</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">]</span>
 <span class="n">lossf_b</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">i</span> <span class="o">-</span> <span class="n">θ_pos</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">lossf</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">lossf_a</span><span class="p">,</span> <span class="n">lossf_b</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="s1">&#39;C1&#39;</span><span class="p">]):</span>
-  <span class="n">mini</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">lossf</span><span class="p">)</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">lossf</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">mini</span><span class="p">],</span> <span class="n">lossf</span><span class="p">[</span><span class="n">mini</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">mini</span><span class="p">]),</span>
-         <span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">mini</span><span class="p">],</span> <span class="n">lossf</span><span class="p">[</span><span class="n">mini</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.03</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39; $ \hat \theta $ &#39;</span><span class="p">)</span>
+ <span class="n">mini</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">lossf</span><span class="p">)</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">lossf</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">mini</span><span class="p">],</span> <span class="n">lossf</span><span class="p">[</span><span class="n">mini</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">mini</span><span class="p">]),</span>
+     <span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">mini</span><span class="p">],</span> <span class="n">lossf</span><span class="p">[</span><span class="n">mini</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.03</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39; $\hat \theta $ &#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504210053_d2.webp" /></p>
-<p>正如我们所看到的，结果显示 lossf_a 的最优解是 <span class="math notranslate nohighlight">\( \hat \theta=0.32 \)</span> ，lossf_b 的最优解是 <span class="math notranslate nohighlight">\( \hat \theta=0.33 \)</span> ​ 。该结果中比较有趣的是，前一个值等于后验的中位数，后一个值等于后验的平均值。通过计算 <code class="docutils literal notranslate"><span class="pre">np.Means(θ_pos)</span></code>、<code class="docutils literal notranslate"><span class="pre">np.Medium(θ_pos)</span></code> 可以检查这个情况。这似乎在暗示：不同的损失函数与不同的点估计有关。</p>
+<p>正如我们所看到的，结果显示 <code class="docutils literal notranslate"><span class="pre">lossf_a</span></code> 的最优解是 <span class="math notranslate nohighlight">\(\hat \theta=0.32\)</span> ，<code class="docutils literal notranslate"><span class="pre">lossf_b</span></code> 的最优解是 <span class="math notranslate nohighlight">\(\hat \theta=0.33\)</span> ​ 。该结果中比较有趣的是，前一个值等于后验的中位数，后一个值等于后验的平均值。通过计算 <code class="docutils literal notranslate"><span class="pre">np.Means(θ_pos)</span></code>、<code class="docutils literal notranslate"><span class="pre">np.Medium(θ_pos)</span></code> 可以检查这个情况。这似乎在暗示：不同的损失函数与不同的点估计有关。</p>
 <p>OK，如果想要形式化的结果并给出点估计，必须决定想要哪个损失函数，或者反过来，如果选择一个给定点估计，就隐含地（甚至可能是无意识地）决定了一个损失函数。显式选择损失函数的好处是可以根据问题调整函数，而不是使用一些可能不适合特定情况的预定义规则。</p>
 <p>在许多问题中，做出决定的成本是不对称的；例如，决定给五岁以下的儿童接种疫苗还是不接种疫苗。一个糟糕的决定可能会造成数千人生命损失，并产生健康危机，而这场危机本可以通过接种一种廉价而安全的疫苗来避免。因此，如果问题需要的话，可以构造一个不对称损失函数。</p>
 <p>同样重要的是要注意，由于后验分布是数字采样的形式，因此理论上可以计算任意复杂的损失函数，而不需要受数学形式上的限制。</p>
 <p>以下只是一个愚蠢的例子：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lossf</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">:</span>
-  <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">θ_pos</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">θ_pos</span><span class="p">))</span>
-  <span class="k">else</span><span class="p">:</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">θ_pos</span><span class="p">))</span>
-  <span class="n">lossf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+ <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+  <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">θ_pos</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">θ_pos</span><span class="p">))</span>
+ <span class="k">else</span><span class="p">:</span>
+  <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">θ_pos</span><span class="p">))</span>
+ <span class="n">lossf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 <span class="n">mini</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">lossf</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">lossf</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">mini</span><span class="p">],</span> <span class="n">lossf</span><span class="p">[</span><span class="n">mini</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">mini</span><span class="p">]),</span>
-       <span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">mini</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">lossf</span><span class="p">[</span><span class="n">mini</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">))</span>
+    <span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="n">mini</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">lossf</span><span class="p">[</span><span class="n">mini</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39; $ \hat \theta $ &#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39; $\hat \theta $ &#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504211017_cb.webp" /></p>
@@ -587,288 +567,310 @@ trace=pm.sample(1000,step=step,start=start)</p>
 <p>我们刚刚看到对损失函数的简单而浅显的介绍。如果你想了解更多这方面知识，可以尝试阅读决策理论，这是一个研究正式决策的领域。</p>
 </div>
 </div>
+<div class="section" id="id12">
+<h2>2.3 随处可见的高斯分布<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<p>前面我们用贝塔–二项分布模型介绍了贝叶斯思想，该模型很简单。另外一个非常简单的模型是高斯分布或者叫正态分布。从数学的角度来看，高斯分布非常受欢迎的原因是它处理起来非常简单，例如，高斯分布的均值，其共轭先验还是高斯分布。此外，许多现象都可以用高斯分布来近似；本质上来说，每当测量某种均值时，只要采样样本量足够大，观测值的分布就会呈现高斯分布。至于这种近似什么时候是对的，什么时候是错的，可以了解下中心极限定理。这里举一个例子，身高（以及其他描述人的特征）是受到基因和许多环境因素影响的，因而我们观测到的成年人的身高符合高斯分布。不过事实上，我们得到的其实是一个双峰分布，男人和女人的身高分布重叠在了一起。总的来说，高斯分布用起来很简单，而且自然界中随处可见，这也是为什么你了解或者听说过的许多统计方法都基于高斯分布。学习如何构建这类模型非常重要，此外，学会如何放宽正态分布的假设也同等重要，该点在贝叶斯框架中利用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 之类的现代计算工具很容易处理。</p>
 <div class="section" id="id13">
-<h2>2.4 随处可见的高斯分布<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
-<p>前面我们用贝塔–二项分布模型介绍了贝叶斯思想，该模型很简 单。另外一个非常简单的模型是高斯分布或者叫正态分布。从数学的 角度来看，高斯分布非常受欢迎的原因是它处理起来非常简单，例如，高斯分布的均值，其共轭先验还是高斯分布。此外，许多现象都可以用高斯分布来近似；本质上来说，每当测量某种均值时，只 要采样样本量足够大，观测值的分布就会呈现高斯分布。至于这种近似什么时候是对的，什么时候是错的，可以了解下中心极限定理。这里举一个例子，身高（以及其他描述人的特征）是受到基因和许多环境因素影响的，因而我们观测到的成年人的身高符合高斯分布。不过事实上，我们得到的其实是一个双峰分布，男人和女人的身高分布重叠在了一起。总的来说，高斯分布用起来很简单，而且自然 界中随处可见，这也是为什么你了解或者听说过的许多统计方法都基于高斯分布。学习如何构建这类模型非常重要，此外，学会如何放宽正态分布的假设也同等重要，该点在贝叶斯框架中利用 PyMC3 之类的现代计算工具很容易处理。</p>
-<div class="section" id="id14">
-<h3>2.4.1 高斯推断<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
-<p>下面的例子与核磁共振实验有关，核磁共振是一种研究分子和生物的技术。下面这组数据，可能来自一群人身高的测量值、回家的平均时间、从超市买回来橙子的重量、大壁虎的伴侣个数或者任何可以用高斯分布近似的测量值。在这 个例子中，我们有 48 个测量值：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;../data/chemical_shifts.csv&#39;</span><span class="p">)</span>
+<h3>2.3.1 高斯推断<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>下面的例子与核磁共振实验有关，核磁共振是一种研究分子和生物的技术。下面这组数据，可能来自一群人身高的测量值、回家的平均时间、从超市买回来橙子的重量、大壁虎的伴侣个数或者任何可以用高斯分布近似的测量值。在这个例子中，我们有 48 个测量值：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;../data/chemical_shifts.csv&#39;</span><span class="p">)</span>
 <span class="n">az</span><span class="o">.</span><span class="n">plot_kde</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">rug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">0</span>
 </pre></div>
 </div>
-<p>除了两个远离平均值的数据点外，该数据集的 KD E 图显示出类似高斯的分布：</p>
+<p>除了两个远离平均值的数据点外，该数据集的 <code class="docutils literal notranslate"><span class="pre">KDE</span></code> 图显示出类似高斯的分布：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504212534_30.webp" /></p>
 <p>暂且先不考虑偏离均值的那两个点，假设以上分布就是高斯分布。由于我们不知道均值和方差，需要先对这两个变量设置先验。然后，顺理成章地得到如下模型：</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} 
-\begin{align}
-\mu &amp;\sim U(l, h) \notag \\
-\sigma &amp;\sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \notag \\
-y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{2.2}
-\end{align}
- \end{split}\]</div>
-<p>其中， <span class="math notranslate nohighlight">\( \mu \)</span> 来自上下界分别为 <em>l</em> 和 <em>h</em> 的均匀分布， <span class="math notranslate nohighlight">\( \sigma \)</span> 来自标准差为 <span class="math notranslate nohighlight">\( \sigma_\sigma \)</span> 的半正态分布。半正态分布和普通正态分布很像，不过只包含正数，看起来就好像将普通的正态分布沿着均值对折了。通过从正态分布中采样，然后取绝对值，可以获取半正态分布的样本。最后，在我们的模型中，数据 <span class="math notranslate nohighlight">\( y \)</span> 来自参数分别为 <span class="math notranslate nohighlight">\( \mu \)</span> 和 <span class="math notranslate nohighlight">\( \sigma \)</span> 的正态分布，可以用 Kruschke 风格的图将其画出来：</p>
+\[\mu \sim U(l, h) \notag \]</div>
+<div class="math notranslate nohighlight">
+\[\sigma \sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \notag \]</div>
+<div class="math notranslate nohighlight">
+\[y \sim \mathcal{N}(\mu, \sigma) \tag{2.2}\]</div>
+<p>其中， <span class="math notranslate nohighlight">\(\mu\)</span> 来自上下界分别为 <span class="math notranslate nohighlight">\(l\)</span> 和 <span class="math notranslate nohighlight">\(h\)</span> 的均匀分布， <span class="math notranslate nohighlight">\(\sigma\)</span> 来自标准差为 <span class="math notranslate nohighlight">\(\sigma_\sigma\)</span> 的半正态分布。半正态分布和普通正态分布很像，不过只包含正数，看起来就好像将普通的正态分布沿着均值对折了。通过从正态分布中采样，然后取绝对值，可以获取半正态分布的样本。最后，在我们的模型中，数据 <span class="math notranslate nohighlight">\(y\)</span> 来自参数分别为 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 的正态分布，可以用 Kruschke 风格的图将其画出来：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504213129_7f.webp" /></p>
-<p>如果不知道 <span class="math notranslate nohighlight">\( \mu \)</span> 和 <span class="math notranslate nohighlight">\( \sigma \)</span> 的值，可以通过先验来表示该未知信息。例如， 可以将均匀分布的上下界分别设为（<em>l</em> = 40, <em>h</em> = 75），该范围要比数据本身的范围稍大一些。或者，可以根据先验知识设得更广一些，比如知道这类观测值不可能小于 0 或者大于 100 ，可以将均匀先验参数设为（<em>l</em> = 0, <em>h</em> = 100）。对于半正态分布而言，可以把 <span class="math notranslate nohighlight">\( \sigma_\sigma \)</span> 的值设为 10，该值相对于数据分布而言算是较大的。 利用 PyMC3 ，我们可以将模型表示如下：</p>
+<p>如果不知道 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 的值，可以通过先验来表示该未知信息。例如，可以将均匀分布的上下界分别设为（<span class="math notranslate nohighlight">\(l\)</span> = 40, <span class="math notranslate nohighlight">\(h\)</span> = 75），该范围要比数据本身的范围稍大一些。或者，可以根据先验知识设得更广一些，比如知道这类观测值不可能小于 0 或者大于 100 ，可以将均匀先验参数设为（<span class="math notranslate nohighlight">\(l\)</span> = 0, <span class="math notranslate nohighlight">\(h\)</span> = 100）。对于半正态分布而言，可以把 <span class="math notranslate nohighlight">\(\sigma_\sigma\)</span> 的值设为 10，该值相对于数据分布而言算是较大的。 利用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> ，我们可以将模型表示如下：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_g</span><span class="p">:</span>
-  <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">70</span><span class="p">)</span>
-  <span class="n">σ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-  <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">σ</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-  <span class="n">trace_g</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+ <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">70</span><span class="p">)</span>
+ <span class="n">σ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+ <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">σ</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+ <span class="n">trace_g</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_g</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504213401_14.webp" /></p>
-<p>您可能已经注意到了，使用 ArviZ 的 plot_trace 函数生成的图中，每个未知参数都有一行。对于这个模型，后验是二维的，所以上图显示了每个参数的边缘分布。我们可以使用 ArviZ 中的 plot_joint 函数来查看二维的后验分布是什么样子，以及 <span class="math notranslate nohighlight">\( μ \)</span> 和 <span class="math notranslate nohighlight">\( σ \)</span> 的边缘分布：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_joint</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;kde&#39;</span><span class="p">,</span> <span class="n">fill_last</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<p>您可能已经注意到了，使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的 <code class="docutils literal notranslate"><span class="pre">plot_trace</span></code> 函数生成的图中，每个未知参数都有一行。对于这个模型，后验是二维的，所以上图显示了每个参数的边缘分布。我们可以使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">plot_joint</span></code> 函数来查看二维的后验分布是什么样子，以及 <span class="math notranslate nohighlight">\(μ\)</span> 和 <span class="math notranslate nohighlight">\(σ\)</span> 的边缘分布：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_joint</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;kde&#39;</span><span class="p">,</span> <span class="n">fill_last</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><img alt="image-20210504213715796" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504213728_51.webp" /></p>
-<p>如果要访问存储在跟踪对象中的任何参数的值，可以使用相关参数的名称为跟踪编制索引。因此，您将获得一个 NumPy 数组。尝试执行 trace_g[‘σ’] 或 az.plot_kde(trace_g[‘σ’]) 。顺便说一下，使用 Jupyter Notebook/lab，您可以通过在代码单元格中写入 \sigma，然后按 Tab 键来获取字符。</p>
+<p>如果要访问存储在跟踪对象中的任何参数值，可以使用相关参数的名称做为跟踪索引。因此，您将获得一个 NumPy 数组。尝试执行 <code class="docutils literal notranslate"><span class="pre">trace_g['σ']</span></code> 或 <code class="docutils literal notranslate"><span class="pre">az.plot_kde(trace_g['σ'])</span></code>。顺便说一下，使用 Jupyter Notebook/lab，您可以通过在代码单元格中写入 \sigma，然后按 Tab 键来获取字符。</p>
 <p>我们将打印该摘要以供以后使用：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_g</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_g</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504213925_74.webp" /></p>
-<p>现在已经计算了后验概率，可以用它来模拟数据，并检查模拟数据与观测数据的一致性。如果你还记得第一章，概率思维，我们通常称这种比较为后验预测检验，因为使用后验进行预测，并使用这些预测来检验模型。如果使用 sample_posterior_predictive 函数，使用 PyMC3 可以非常容易获得后验预测样本。使用以下代码，我们将从后端生成 100 个预测，每个预测的大小与数据相同。请注意，我们必须将跟踪和模型传递给 sample_posterior_predictive ，而其他参数是可选的：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_g</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">model_g</span><span class="p">)</span>
+<p>现在已经计算了后验概率，可以用它来模拟数据，并检查模拟数据与观测数据的一致性。如果你还记得第1章“概率思维”，这种比较被称为后验预测检查，因为使用后验进行预测，并使用这些预测来检验模型。如果使用 <code class="docutils literal notranslate"><span class="pre">sample_posterior_predictive</span></code> 函数，使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 可以非常容易获得后验预测样本。使用以下代码，我们将从后端生成 100 个预测，每个预测的大小与数据相同。请注意，我们必须将跟踪和模型传递给 <code class="docutils literal notranslate"><span class="pre">sample_posterior_predictive</span></code> ，而其他参数是可选的：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_g</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">model_g</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>y_pred_g 变量是一个字典，keys 是模型中观察到的变量名称，values 是形状为（samples、size）的数组，在本例中为 <span class="math notranslate nohighlight">\( (100，len(data)) \)</span> 。我们有一本字典，因为至少有一个可观测变量的模型。可以使用 plot_ppc 函数进行可视化后验预测检查：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data_ppc</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">from_pymc3</span><span class="p">(</span><span class="n">trace</span><span class="o">=</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">posterior_predictive</span><span class="o">=</span><span class="n">y_pred_g</span><span class="p">)</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">plot_ppc</span><span class="p">(</span><span class="n">data_ppc</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">mean</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<p><code class="docutils literal notranslate"><span class="pre">y_pred_g</span></code> 变量是一个字典，<code class="docutils literal notranslate"><span class="pre">keys</span></code> 是模型中观察到的变量名称，<code class="docutils literal notranslate"><span class="pre">values</span></code> 是形状为（<code class="docutils literal notranslate"><span class="pre">samples</span></code>、<code class="docutils literal notranslate"><span class="pre">size</span></code>）的数组，在本例中为 <span class="math notranslate nohighlight">\((100，len(data))\)</span> 。我们有一本字典，因为至少有一个可观测变量的模型。可以使用 <code class="docutils literal notranslate"><span class="pre">plot_ppc</span></code> 函数进行可视化后验预测检查：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>data_ppc = az.from_`PyMC3`(trace=trace_g, posterior_predictive=y_pred_g)
+ax = az.plot_ppc(data_ppc, figsize=(12, 6), mean=False)
+ax[0].legend(fontsize=15)
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504214541_d9.webp" /></p>
-<p>上图中，黑色的线是观测数据的 KDE，半透明（青色）线反映了我们对预测数据的推断分布的不确定性。有时，当你只有很少数据点时。像此类曲线图可能会显示预测曲线是毛茸茸的或摇摇晃晃的；这是由于 KDE 在 ArviZ 中的实现方式所致。密度是在传递给 KDE 函数的数据的实际范围内估计的，而在这个范围之外，密度被假定为零。虽然有些人可能认为这是一个错误，但我认为这是一个功能，因为它反映了数据的一个属性，而不是过度平滑。</p>
-<p>从上图中，可以看到模拟数据的平均值稍微向右移动，并且模拟数据的方差似乎比实际数据方差更大。这是从大量数据中分离出来的两个观察结果的直接结果。我们能不能用这张图自信地说，模型有问题，需要改变？像往常一样，模型的解释和评估取决于上下文。根据我对这类测量的经验和我通常使用这些数据的方式，我想说这个模型是一个足够合理的数据表示方法，对我的大多数分析都很有用。然而，在下一节中，我们将学习如何改进 model_g 并获得与数据更接近的预测。</p>
+<p>上图中，黑色的线是观测数据的 <code class="docutils literal notranslate"><span class="pre">KDE</span></code> ，半透明（青色）线反映了我们对预测数据的推断分布的不确定性。有时，当你只有很少数据点时。像此类曲线图可能会显示预测曲线是毛茸茸的或摇摇晃晃的；这是由于 <code class="docutils literal notranslate"><span class="pre">KDE</span></code> 在 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 中的实现方式所致。密度是在传递给 <code class="docutils literal notranslate"><span class="pre">KDE</span></code> 函数的数据的实际范围内估计的，而在这个范围之外，密度被假定为零。虽然有些人可能认为这是一个错误，但我认为这是一个功能，因为它反映了数据的一个属性，而不是过度平滑。</p>
+<p>从上图中，可以看到模拟数据的平均值稍微向右移动，并且模拟数据的方差似乎比实际数据方差更大。这是从大量数据中分离出来的两个观察结果的直接结果。我们能不能用这张图自信地说，模型有问题，需要改变？像往常一样，模型的解释和评估取决于上下文。根据测量经验和数据使用方式，我个人认为该模型是一个足够合理的数据表示方法，对我的大多数分析都够了。但在下一节中，我们会学习如何改进 <code class="docutils literal notranslate"><span class="pre">model_g</span></code> 并获得与数据更接近的预测。</p>
 </div>
-<div class="section" id="id15">
-<h3>2.4.2 更稳健的推断<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
-<p>对于 model_g 模型，您可能会有一个异议，那就是我们假设的是正态分布，但是我们在分布的尾部有两个数据点，这使得假设有点勉强。由于正态分布的尾部随着我们远离平均值而迅速下降，正态分布（至少是拟人化的正态分布）看到这两个点会感到惊讶，并会做出反应，向这些点移动并增加标准差。可以想象这些点在决定正态分布参数时具有过大的权重。那么，我们能做些什么呢？</p>
-<p>一个做法是将这两个点看做是异常点并将其从观测值中剔除，因为这两个值有可能是因为仪器异常或者人为疏忽导致的。有 时候我们也许能够直接矫正这些点，因为有可能只是我们处理数据时的代码出了些问题，但更多时候，我们希望能够根据某种异常值的处理规则自动消除这些异常点，其中的两个规则如下：</p>
+<div class="section" id="id14">
+<h3>2.3.2 更稳健的推断<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>对于 <code class="docutils literal notranslate"><span class="pre">model_g</span></code> 模型，您可能会有异议，那就是假设是正态分布，但是实际数据分布的尾部有两个特殊的数据点，使得假设有点勉强。对于正态分布，其尾部应随远离平均值而迅速下降，因此，当尾部出现这两个点时，正态分布的直接反应就是均值向此点移动，同时可能增加标准差。因此，可以想象这些点对决定正态分布的参数具有过大的影响，那么怎么处理呢？ 有两个最常用的做法，一是将两个点作为异常样本剔除，二是调整模型。</p>
+<p>对于第一种做法，将两个点看做异常并将其剔除，主要是因为有可能这些点是仪器异常或者人为疏忽导致，又或是处理数据时代码出了问题，但更多时候，我们希望有一些可以遵循的处理规则来自动消除异常点，其中的两个规则如下：</p>
 <ul class="simple">
 <li><p>低于下四分位数 1.5 倍的四分位数范围或高于上四分位数 1.5 倍的任何数据点都是异常值</p></li>
-<li><p>任何低于或大于数据标准差两倍的数据点都应被宣布为异常值，并从我们的数据中剔除</p></li>
+<li><p>任何低于或大于数据标准差两倍的数据点都应被宣布为异常值，并从数据中剔除</p></li>
 </ul>
 <div class="section" id="t">
-<h4>（1）学生 <span class="math notranslate nohighlight">\( t \)</span> 分布<a class="headerlink" href="#t" title="Permalink to this headline">¶</a></h4>
-<p>除了利用以上规则改变原始数据之外，我们还可以修改模型。按照贝叶斯的思想，我们更倾向于通过使用不同的先验或似然将假设编码到模型中，而不是通过特殊的启发式方法（例如前面这些剔除异常值的准则）。</p>
-<p>一个用来解决异常值的非常有用的方法是：将高斯分布替换成 t 分布。t 分布有 3 个参数：均值、尺度（与标准差类似）和自由度（通常用* v <em>表示，取值范围为、[0,¥]。根据 Kruschke 的命名方式，我们将</em> v <em>称 为正态参数，这是因为该参数决定了 t 分布与正态分布的相似程度。对于</em> v*=1 的情况，t 分布的尾部要比高斯分布更重，在不同的领域也称 柯西分布或者洛伦兹分布，这里尾部更重的意思是：相比高斯分布， 我们更有可能观测到偏离均值的点，换句话说，该分布并不像高斯分 布那样聚集在均值附近。举例来说，柯西分布 95%的点都分布在−12.7～12.7，而对于（标准差为 1 的）高斯分布，对应的区间为−1.96 ～1.96。此外，当正态参数* v *趋近于无穷大时，我们就会得到高斯分布（你不可能比正态分布还正态对吧？）。t 分布一个有意思的特性是：当时，该分布没有准确定义的均值。当然，实际中从 t 分布得到的采样不过是一些数字，因而总是可以算出经验性的均值来，不过理论上还没有一个准确定义的均值。直观上可以这么理解：t 分布的尾部很重，因而我们得到的采样值很可能是实轴上的任意一点，所 以只要不停地采样，我们永远也无法得到一个固定值。你可以尝试多 次运行下面的代码（或者将参数 df 换成一个更大的值，比如 100）：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<h4>（1）学生 <span class="math notranslate nohighlight">\(t\)</span> 分布<a class="headerlink" href="#t" title="Permalink to this headline">¶</a></h4>
+<p>除了改变原始数据外，还可以修改模型。按照贝叶斯思想，我们更倾向于通过使用不同的先验或似然将假设编码到模型中，而不是通过剔除异常值这种方法。</p>
+<p>一个解决异常值的常用方法是将高斯分布替换成 <span class="math notranslate nohighlight">\(t\)</span> 分布。 <span class="math notranslate nohighlight">\(t\)</span> 分布有 3 个参数：<code class="docutils literal notranslate"><span class="pre">均值</span> <span class="pre">mean</span> </code>、<code class="docutils literal notranslate"><span class="pre">尺度</span> <span class="pre">scale</span></code>（类似标准差）和<code class="docutils literal notranslate"><span class="pre">自由度</span> <span class="pre">df</span></code>（通常用 <span class="math notranslate nohighlight">\(\nu\)</span> 表示，取值范围为[0,∞] )。根据 Kruschke 的命名方式，我们将 <span class="math notranslate nohighlight">\(\nu\)</span> 称为正态参数，因为该参数决定了 <span class="math notranslate nohighlight">\(t\)</span> 分布与正态分布的相似程度。 <span class="math notranslate nohighlight">\(t\)</span> 分布在不同领域也称柯西分布或者洛伦兹分布：</p>
+<ul class="simple">
+<li><p>当 <span class="math notranslate nohighlight">\(\nu=1\)</span> 时</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(t\)</span> 分布的尾部比高斯分布重（尾部更重的意思是：相比高斯分布，更有可能观测到偏离均值的点，亦即该分布不像高斯分布那样聚集在均值附近）;</p></li>
+</ul>
+</li>
+<li><p>当 <span class="math notranslate nohighlight">\(\nu \to \infty\)</span> 时</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(t\)</span> 分布就是高斯分布， 尺度趋近于标准差；</p></li>
+</ul>
+</li>
+<li><p>当 <span class="math notranslate nohighlight">\(\nu \leq 1\)</span> 时</p>
+<ul>
+<li><p>该分布没有准确定义的均值（当然，实际从 <span class="math notranslate nohighlight">\(t\)</span> 分布得到的采样终究是一些数字，总是可以算出经验性的均值，不过理论上还没有一个准确定义的均值）。 直观地说，这可以理解为：<span class="math notranslate nohighlight">\(t\)</span> 分布的尾部太重了，以至于随时可能从距离真实直线的几乎任何地方获得采样值，所以如果一直得到数字，该数字永远不会收敛于某个固定值。</p></li>
+</ul>
+</li>
+<li><p>当 <span class="math notranslate nohighlight">\(\nu \leq 2\)</span>时</p>
+<ul>
+<li><p>分布的方差没有明确定义，因此，需要注意 <span class="math notranslate nohighlight">\(t\)</span> 分布的尺度参数与标准差不是同一个概念。对于的分布，方差并没有明确定义，因而也没有明确定义的标准差。</p></li>
+<li></li>
+</ul>
+</li>
+</ul>
+<p>你可以尝试多次运行下面的代码，查看是否有稳定的均值（ 其中 <code class="docutils literal notranslate"><span class="pre">df</span></code> 为自由度）。将参数 <code class="docutils literal notranslate"><span class="pre">df</span></code> 换成一个更大100在尝试一下。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>类似地，只有当时，分布的方差才有明确定义，因此，需要 注意 t 分布的尺度与标准差不是同一个概念。对于的分布，方差 并没有明确定义，因而也没有明确定义的标准差。当 v 趋向于无穷大 时，尺度趋近于标准差。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> \<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">30</span>\<span class="p">]:</span>
-<span class="n">distri</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="n">x_pdf</span> <span class="o">=</span> <span class="n">distri</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_values</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">x_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">r</span>\<span class="s1">&#39;\ $ </span><span class="se">\\</span><span class="s1">nu\ $ = </span><span class="si">{}</span><span class="se">\&#39;</span><span class="s1">.format(df))</span>
+<p>下面的代码绘制了自由度为 1，2，5，30 时的 <span class="math notranslate nohighlight">\(t\)</span> 分布曲线：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">30</span><span class="p">]:</span>
+  <span class="n">distri</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+  <span class="n">x_pdf</span> <span class="o">=</span> <span class="n">distri</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_values</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">x_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">r</span>\<span class="s1">&#39;\ $</span><span class="se">\\</span><span class="s1">nu\ $ = </span><span class="si">{}</span><span class="se">\&#39;</span><span class="s1">.format(df))</span>
 <span class="n">x_pdf</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_values</span><span class="p">)</span>\
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">x_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">r</span>\<span class="s1">&#39;\ $ </span><span class="se">\\</span><span class="s1">nu = </span><span class="se">\\</span><span class="s1">infty\ $ </span><span class="se">\&#39;</span><span class="s1">) plt.xlabel(</span><span class="se">\&#39;</span><span class="s1">x</span><span class="se">\&#39;</span><span class="s1">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">x_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">r</span>\<span class="s1">&#39;\ $</span><span class="se">\\</span><span class="s1">nu = </span><span class="se">\\</span><span class="s1">infty\ $</span><span class="se">\&#39;</span><span class="s1">) plt.xlabel(</span><span class="se">\&#39;</span><span class="s1">x</span><span class="se">\&#39;</span><span class="s1">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span>\<span class="s1">&#39;p(x)</span><span class="se">\&#39;</span><span class="s1">, rotation=0)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>利用 t 分布将模型表示成如下形式：</p>
-<p>![](C:/Program Files/Typora/media/image1051.png){width=”1.5200765529308837in” height=”0.187419072615923in”}</p>
-<p>![](C:/Program Files/Typora/media/image1052.png){width=”1.8011865704286965in” height=”0.187419072615923in”}</p>
-<p>![](C:/Program Files/Typora/media/image1053.png){width=”1.62419072615923in” height=”0.187419072615923in”}</p>
-<p>![](C:/Program Files/Typora/media/image1054.png){width=”1.62419072615923in” height=”0.187419072615923in”}</p>
-<p>上面该模型与前面的高斯模型的主要区别是：现在似然是 t 分布，由于 t 分布多了一个新的参数，我们需要为其增加一个先验。这 里用了一个均值为 30 的指数分布。上图可以看出，t 分布看起来很像 高斯分布（尽管其实并不一样）。*v <em>值较小的分布更分散，因而，均 值为 30 的指数分布是一个很弱的先验，认为正态参数</em> v *在 30 附近，不 过也可以很容易地将其调大或调小。从图像上看，我们的模型表示如下：</p>
-<p>![](C:/Program Files/Typora/media/image1056.png){width=”3.768956692913386in” height=”2.957066929133858in”}</p>
-<p>同样， PyMC3 让我们只需要几行代码便可修改模型。唯一需要 注意的是， PyMC3 中指数分布的参数用的是分布均值的倒数。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_t</span><span class="p">:</span>
-	<span class="n">mu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span>\<span class="s1">&#39;mu</span><span class="se">\&#39;</span><span class="s1">, 40, 75)</span>
-	<span class="n">sigma</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span>\<span class="s1">&#39;sigma</span><span class="se">\&#39;</span><span class="s1">, sd=10)</span>
-	<span class="n">nu</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span>\<span class="s1">&#39;nu</span><span class="se">\&#39;</span><span class="s1">, 1/30)</span>
-	<span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">StudentT</span><span class="p">(</span>\<span class="s1">&#39;y</span><span class="se">\&#39;</span><span class="s1">, mu=mu, sd=sigma, nu=nu, observed=data) trace_t = pm.sample(1100)</span>
-	<span class="n">chain_t</span> <span class="o">=</span> <span class="n">trace_t</span>\<span class="p">[</span><span class="mi">100</span><span class="p">:</span>\<span class="p">]</span>
-	<span class="n">pm</span><span class="o">.</span><span class="n">trace_plot</span><span class="p">(</span><span class="n">chain_t</span><span class="p">)</span>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210513181355ce.webp" /></p>
+<p>利用 <span class="math notranslate nohighlight">\(t\)</span> 分布可以将模型调整为如下形式：</p>
+<div class="math notranslate nohighlight">
+\[ \mu \sim U(l, h) \notag\]</div>
+<div class="math notranslate nohighlight">
+\[ \sigma \sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \notag\]</div>
+<div class="math notranslate nohighlight">
+\[ \nu \sim \operatorname{Exp}(\lambda) \notag\]</div>
+<div class="math notranslate nohighlight">
+\[ y \sim \mathcal{T}(\mu, \sigma, \nu) \tag{2.3}\]</div>
+<p>此模型与高斯模型的主要区别是：似然调整为 <span class="math notranslate nohighlight">\(t\)</span> 分布，由于 <span class="math notranslate nohighlight">\(t\)</span> 分布多了一个新的参数 <span class="math notranslate nohighlight">\(\nu\)</span>，需要为其增加一个先验。这里计划采用均值为 30 的指数分布。通过上图可以看出，当 <span class="math notranslate nohighlight">\(\nu = 30\)</span> 时， <span class="math notranslate nohighlight">\(t\)</span> 分布看起来与高斯分布很相似。 从图中也可以看出， <span class="math notranslate nohighlight">\(\nu\)</span> 在 30 附近是一个比较适中的值，既可以调大也可以调小，因此属于弱信息先验。我们的模型可以表示如下：</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210513182721ce.webp" /></p>
+<p>同样， <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 让我们只需要几行代码便可修改模型。唯一需要 注意的是， <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中指数分布的参数用的是分布均值的倒数。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_t</span><span class="p">:</span>
+    <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">75</span><span class="p">)</span>
+    <span class="n">σ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ν</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;ν&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">StudentT</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">σ</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="n">ν</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">trace_t</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_t</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>现在用 summary 函数将迹的总结打印出来并与前面的结果对比。继续深入阅读之前，花点时间对比分析下两组不同的结果，你能发现 什么有趣的地方吗？</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">df_summary</span><span class="p">(</span><span class="n">chain_t</span><span class="p">)</span>
+<center>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021051318284221.webp" /></p>
+<p>图 2.14</p>
+</center>
+<p>将 <code class="docutils literal notranslate"><span class="pre">model_g</span></code> 的轨迹图（图2.9）与 <code class="docutils literal notranslate"><span class="pre">model_t</span></code> 的跟踪（图2.14）进行比较。现在，打印 <code class="docutils literal notranslate"><span class="pre">model_t</span></code> 的摘要，并将其与 <code class="docutils literal notranslate"><span class="pre">model_g</span></code> 的摘要进行比较。在继续阅读之前，请花点时间找出两个结果之间的差异。你注意到什么有趣的事情了吗？</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_t</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>+———+——–+——+———-+———+———-+
-|     | mean | sd  | mc_error | hpd_2.5 | hpd_97.5 |
-+=========+========+======+==========+=========+==========+
-| mu  | 52.99 | 0.38 | 0.01   | 52.28  | 53.81  |
-+———+——–+——+———-+———+———-+
-| sigma | 2.15  | 0.39 | 0.02   | 1.42  | 2.97   |
-+———+——–+——+———-+———+———-+
-| nu  | 4.13  | 2.78 | 0.19   | 1.19  | 8.54   |
-+———+——–+——+———-+———+———-+</p>
-<p>可以看到，两个模型对<em>µ</em>的估计比较接近，只相差 0.5 左右，而<em>σ</em>的估计则从 3.5 变成了 2.1，这正是因为 t 分布对于偏离均值的点所赋予的权重较小所致。此外还可以看到，<em>µ</em>的值接近 4，也就是说，该分布 并不太像高斯分布，而是更接近重尾分布。接下来我们对 t 分布模型做后验检查，并将其与高斯分布对比：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_ppc</span><span class="p">(</span><span class="n">chain_t</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">model_t</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span> <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span>\<span class="s1">&#39;b</span><span class="se">\&#39;</span><span class="s1">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y_pred</span>\<span class="p">[</span>\<span class="s1">&#39;y</span><span class="se">\&#39;</span><span class="s1">\]:</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span>\<span class="s1">&#39;r</span><span class="se">\&#39;</span><span class="s1">, alpha=0.1)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">35</span><span class="p">,</span> <span class="mi">75</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>\<span class="s2">&quot;Student</span><span class="se">\&#39;</span><span class="s2">s t model</span><span class="se">\&quot;</span><span class="s2">, fontsize=16)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span>\<span class="s1">&#39;\ $ x\ $ </span><span class="se">\&#39;</span><span class="s1">, fontsize=16)</span>
-
+<center>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021051318370550.webp" /></p>
+</center>
+<p>可以看到，高斯分布模型和基于 <span class="math notranslate nohighlight">\(t\)</span> 分布模型对 <span class="math notranslate nohighlight">\(µ\)</span> 的估计比较接近，只相差 0.5 左右，而 <span class="math notranslate nohighlight">\(σ\)</span> 的估计则从 3.5 变成了 2.1，这是因为 <span class="math notranslate nohighlight">\(t\)</span> 分布对于偏离均值的点赋予的权重较小。此外还可以看到， <span class="math notranslate nohighlight">\(\nu\)</span> 的值接近 4.5，也就是说，该分布并不太像高斯分布，而是更接近重尾分布。</p>
+<p>接下来对 <span class="math notranslate nohighlight">\(t\)</span> 分布模型做后验检查，并将其与高斯分布对比：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_ppc_t</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span>
+    <span class="n">trace_t</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">model_t</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">y_pred_t</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">from_pymc3</span><span class="p">(</span><span class="n">trace</span><span class="o">=</span><span class="n">trace_t</span><span class="p">,</span> <span class="n">posterior_predictive</span><span class="o">=</span><span class="n">y_ppc_t</span><span class="p">)</span>
+<span class="n">az</span><span class="o">.</span><span class="n">plot_ppc</span><span class="p">(</span><span class="n">y_pred_t</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">mean</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">70</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>可以看到，使用 t 分布之后，从分布的峰值和形状来看，模型的预测值与观测数据更吻合了（留意预测值远离观测值中心的部分）。</p>
-<p>这是因为 t 分布希望看到在偏离数据中心的两个方向上都有数据。在我们的模型中，t 分布的估计值更鲁棒，因为异常点降低了正态参数* v* 的值，从而均值和尺度更多地是从观测数据的中心估计出来的，而不 是像前面高斯分布的例子中那样，均值和标准差都偏向了异常值。再 强调一次，这里的尺度并不是标准差。不过，尺度该参数确实与数 据的分散程度有关，尺度越小，数据分布得越集中。此外，对应正态 参数* v <em>大于 2 的情况，尺度的值倾向于接近去掉异常值之后的标准差。 因此，粗略地讲，对于不是特别小的</em> v *值，我们可以将 t 分布的尺度大 致看做是去掉异常值之后的数据的标准差（理论上这么说可能不太对）。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021051318400612.webp" /></p>
+<p>可以看到，使用 <span class="math notranslate nohighlight">\(t\)</span> 分布之后，从分布的峰值和形状来看，模型的预测值与观测数据更吻合了。留意预测值远离观测值中心的部分，那是因为 <span class="math notranslate nohighlight">\(t\)</span> 分布希望看到在偏离数据中心的两个方向上都有数据。</p>
+<p>在新模型中， <span class="math notranslate nohighlight">\(t\)</span> 分布的估计值更鲁棒，因为异常点降低了正态参数 <span class="math notranslate nohighlight">\(\nu\)</span> 的值，从而均值和尺度更多地是从观测数据的中心估计出来的，而不是像前面高斯分布的例子中那样，均值和标准差都偏向了异常值。再强调一次，这里的尺度并非标准差。不过，尺度参数确实与数据分散程度有关，尺度越小数据分布得越集中。此外，对应正态参数 <span class="math notranslate nohighlight">\(\nu\)</span> 大于 2 的情况，尺度值倾向于接近去掉异常值之后的标准差。因此，粗略地讲，对于不是特别小的 <span class="math notranslate nohighlight">\(\nu\)</span> 值，可以将 <span class="math notranslate nohighlight">\(t\)</span> 分布的尺度大致看做是去掉异常值之后的数据标准差。</p>
 </div>
 </div>
+</div>
+<div class="section" id="id15">
+<h2>2.4 组间比较<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<p>统计分析中一个常见的任务是对不同的组进行比较，例如我们可能想知道病人对某种药的反应如何、引入某种交通法规后车祸数量是否会降低、学生对不同教学方式的表现如何等。有时候，这类问题统一归到了假设检验的框架下，其目的是得到统计学意义上的显著性。仅仅依赖于统计显著性可能会带来很多问题：一方面，统计显著性并非实际显著性；另一方面，即使是很小的作用，只要收集尽可能多的数据，都会被看做具有显著性。而且，统计显著性的核心思想往往需要计算 <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">值</span></code> 。已经有很多文章和研究记录表明，通常，<code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">值</span></code> 会被错误地使用和解释，即使那些每天跟统计打交道的科学家也会犯错。不过在贝叶斯框架下，我们不需要计算 <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">值</span></code>，所以这里暂且将其放一边。毕竟，在实践中我们最想知道的是效应值，也就是量化估计出某种现象的强弱。</p>
+<p>在比较不同组的数据时，人们往往会将其分为一个实验组和一个对照组（也可能超过一个实验组和对照组），例如当我们测试一个新药时，由于安慰剂效应或者某些其他原因，我们希望将使用新药的组（实验组）和不使用新药的组（对照组）进行对比。在该例子中，我们想知道对于治疗某种疾病，使用药物对比不用药物（或者是使用安慰剂）的作用有多大。另一个有趣的问题是：与治疗某种疾病最常用的（已经被审批的）药相比，我们的药效果如何？此时，对照组不再是使用安慰剂的组，而是使用其他药物的组。从统计学上讲，使用假的对照组是一种不错的撒谎方式，例如，假设某家邪恶的乳制品公司想要卖某种糖过量的酸奶给小朋友，同时告诉他们的家长乳酸有利于免疫系统。一种支撑该说法的做法是：使用牛奶或者水作为对照组，而不是用更便宜、糖更少、市场更小的酸奶。这么做听起来很笨，不过下次再听到有人说某种东西更坚固、更好、更快、更强时，记得问一下他对比的基准线是什么。</p>
+<div class="section" id="cohen-s-d">
+<h3>2.4.1 Cohen’s d<a class="headerlink" href="#cohen-s-d" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 是一种用来描述效应值的常见方式：
+$<span class="math notranslate nohighlight">\(
+\frac{\mu_{2}-\mu_{1}}{\sqrt{\frac{\sigma_{2}^{2}+\sigma_{1}^{2}}{2}}} \tag{2.3}
+\)</span>$
+也就是说，效应值是在考虑不同组的标准差的情况下，均值的差异。在前面的代码中，我们根据估计值的均值和标准差算出了 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 的值，因而我们可以添加对 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 的描述而不仅仅是均值。</p>
+<p>比较各组数据的时候，很重要的一点是要考虑组内的波动性（比如标准差）。一组数据相比另一组数据变化了 <span class="math notranslate nohighlight">\(x\)</span> 个单位，可能是每个点都整体变化了 <span class="math notranslate nohighlight">\(x\)</span> 个单位，也可能是其中一半的数据没有变化而另外一半数据变化了 <span class="math notranslate nohighlight">\(2x\)</span> ，还可能是其他组合。根据 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 得到的效应值可以看做是 <code class="docutils literal notranslate"><span class="pre">Z-score</span></code>，因而 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 为 0.5 可以解释为一组数据相比另一组数据点的差别是 0.5 倍的标准差。使用 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 的一个问题是不太好解释，我们需要根据具体的问题来说明该值是太大、太小或者是适中。当然，我们可以从实践中得到些经验，不过更多地还是依赖于具体问题。假如说我们对同一类问题做了一些分析，然后得到 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 的值约为 1，这时如果得到另外一个 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 的值（比如说 2 ），那么我们很可能有了重要发现（也可能是某个地方弄错了）。在 [<a class="reference external" href="http://rpsychologist.com/d3/cohend">http://rpsychologist.com/d3/cohend</a>](<a class="reference external" href="http://rpsychologist.com/d3/cohend">http://rpsychologist.com/d3/cohend</a> 该网页中，你可以探索一下不同 Cohen’s d 的值都长什么样，此外，在该网页中还可以看到一些描述效应值的其他方式，其中某些方式可能更直观（比如概率优势)。</p>
 </div>
 <div class="section" id="id16">
-<h2>2.5 组间比较<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
-<p>统计分析中一个常见的任务是对不同的组进行比较，例如我们可 能想知道病人对某种药的反应如何、引入某种交通法规后车祸数量是 否会降低、学生对不同教学方式的表现如何等。有时候，这类问题统 一归到了假设检验的框架下，其目的是得到统计学意义上的显著性。 仅仅依赖于统计显著性可能会带来很多问题：一方面，统计显著性并 非实际显著性；另一方面，即使是很小的作用，只要收集尽可能多的 数据，都会被看做具有显著性。而且，统计显著性的核心思想往往需 要计算* p *值。已经有很多文章和研究记录表明，通常，*p <em>值会被错误地 使用和解释，即使那些每天跟统计打交道的科学家也会犯错。不过在 贝叶斯框架下，我们不需要计算</em> p *值，所以这里暂且将其放一边。毕竟，在实践中我们最想知道的是效应值，也就是量化估计出某种现象 的强弱。</p>
-<p>在比较不同组的数据时，人们往往会将其分为一个实验组和一个 对照组（也可能超过一个实验组和对照组），例如当我们测试一个新 药时，由于安慰剂效应或者某些其他原因，我们希望将使用新药的组 （实验组）和不使用新药的组（对照组）进行对比。在该例子中， 我们想知道对于治疗某种疾病，使用药物对比不用药物（或者是使用 安慰剂）的作用有多大。另一个有趣的问题是：与治疗某种疾病最常 用的（已经被审批的）药相比，我们的药效果如何？此时，对照组不 再是使用安慰剂的组，而是使用其他药物的组。从统计学上讲，使用 假的对照组是一种不错的撒谎方式，例如，假设某家邪恶的乳制品公 司想要卖某种糖过量的酸奶给小朋友，同时告诉他们的家长乳酸有利 于免疫系统。一种支撑该说法的做法是：使用牛奶或者水作为对照组，而不是用更便宜、糖更少、市场更小的酸奶。这么做听起来很笨，不过下次再听到有人说某种东西更坚固、更好、更快、更强时， 记得问一下他对比的基准线是什么。</p>
-<div class="section" id="cohen-s-d">
-<h3>2.5.1 Cohen’s d<a class="headerlink" href="#cohen-s-d" title="Permalink to this headline">¶</a></h3>
-<p>Cohen’s d 是一种用来描述效应值的常见方式：</p>
+<h3>2.4.2 优势概率<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>概率优势是表示效应值的另一种方式，描述的是从一组数据中取出的一个点大于从另外一组中取出的点的概率。假设两个组中数据的分布都是正态分布，我们可以通过以下表达式从 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 中得到概率优势：</p>
 <div class="math notranslate nohighlight">
-\[ 
-\frac{\mu_{2}-\mu_{1}}{\sqrt{\frac{\sigma_{2}^{2}+\sigma_{1}^{2}}{2}}} \tag{2.3}
- \]</div>
-<p>也就是说，效应值是在考虑不同组的标准差的情况下，均值的差 异。在前面的代码中，我们根据估计值的均值和标准差算出了 Cohen’s d 的值，因而我们可以添加对 Cohen’s d 的描述而不仅仅是均值。</p>
-<p>比较各组数据的时候，很重要的一点是要考虑组内的波动性（比 如标准差）。一组数据相比另一组数据变化了* x <em>个单位，可能是每个 点都整体变化了</em> x <em>个单位，也可能是其中一半的数据没有变化而另外 一半数据变化了 2</em>x*，还可能是其他组合。根据 Cohen’s d 得到的效应值 可以看做是 Z-score，因而 Cohen’s d 为 0.5 可以解释为一组数据相比另一组数据点的差别是 0.5 倍的标准差。使用 Cohen’s d 的一个问题是不太好解释，我们需要根据具体的问题来说明该值是太大、太小或者是 适中。当然，我们可以从实践中得到些经验，不过更多地还是依赖于 具体问题。假如说我们对同一类问题做了一些分析，然后得到 Cohen’s d 的值约为 1，这时如果得到另外一个 Cohen’s d 的值（比如说 2），那么我们很可能有了重要发现（也可能是某个地方弄错了）。在 [<a class="reference external" href="http://rpsychologist.com/d3/cohend">http://rpsychologist.com/d3/cohend</a>](<a class="reference external" href="http://rpsychologist.com/d3/cohend">http://rpsychologist.com/d3/cohend</a> 该网页中，你可以探索一下不同 Cohen’s d 的值都长什么样，此外，在该网页中还可以看到一些描 述效应值的其他方式，其中某些方式可能更直观（比如概率优势)。</p>
+\[
+p s=\Phi\left(\frac{\delta}{\sqrt{2}}\right)\tag{2.4}
+\]</div>
+<p>这里， <span class="math notranslate nohighlight">\(\Phi \)</span> 是累积正态分布， <span class="math notranslate nohighlight">\(\delta \)</span> 是 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code>。我们可以计算优势概率的点估计，也可以计算值的整个后验分布。如果我们同意正态假设，我们可以使用该公式从 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 得到优势概率。否则，当我们有后验样本时，我们可以直接计算它（参见练习部分）。这是使用马尔可夫链蒙特卡罗 (<code class="docutils literal notranslate"><span class="pre">MCMC</span></code>) 方法的一个非常好的优点；一旦我们从后验获得样本，我们就可以从它计算出很多量。</p>
 </div>
 <div class="section" id="id17">
-<h3>2.5.2 优势概率<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
-<p>概率优势是表示效应值的另一种方式，描述的是从一组数据中取 出的一个点大于从另外一组中取出的点的概率。假设两个组中数据的 分布都是正态分布，我们可以通过以下表达式从 Cohen’s d 中得到概率 优势：</p>
-<div class="math notranslate nohighlight">
-\[ 
-p s=\Phi\left(\frac{\delta}{\sqrt{2}}\right)\tag{2.4}
- \]</div>
-<p>这里， <span class="math notranslate nohighlight">\( \Phi \)</span> 是累积正态分布， <span class="math notranslate nohighlight">\( \delta \)</span> 是 Cohen‘s d。我们可以计算优势概率的点估计，也可以计算值的整个后验分布。如果我们同意正态假设，我们可以使用该公式从 Cohen‘s d 得到优势概率。否则，当我们有后验样本时，我们可以直接计算它（参见练习部分）。这是使用马尔可夫链蒙特卡罗 (MCMC) 方法的一个非常好的优点；一旦我们从后验获得样本，我们就可以从它计算出很多量。</p>
-</div>
-<div class="section" id="id18">
-<h3>2.5.3 小费数据集<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
-<p>接下来，我们将使用 seaborn 中的 tips 数据集来讨论前面提到的那些思想。我们希望知道星期几对于餐馆小费数量的影响。该例子 中，实际上并没有明确的实验组和对照组之分，这只是观察性的实验，并非像前面药物测试的例子一样。如果愿意的话，我们可以任选 一天（例如星期四）作为实验组，或者对照组，尽管我们并没有控制 某个具体的东西。需要注意的一点是：对于观察性实验，我们没法得 出某种因果关系，能得到的只是相关性。事实上，如何从数据中得出 因果关系是一个非常热门的研究问题，我们会在第 4 章重新讨论该问题。现在，我们首先用一行代码将数据导入成 Pandas 中的数据结构，如果你对 Pandas 不太熟悉，这里需要说明下，tail 函数返回数据 中的最后一部分（当然你也可以用 head 函数返回前面一部分数据）。</p>
+<h3>2.4.3 小费数据集<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>接下来，我们将使用 <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">tips</span></code> 数据集来讨论前面提到的那些思想。我们希望知道星期几对于餐馆小费数量的影响。该例子中，实际上并没有明确的实验组和对照组之分，这只是观察性的实验，并非像前面药物测试的例子一样。如果愿意的话，我们可以任选一天（例如星期四）作为实验组，或者对照组，尽管我们并没有控制某个具体的东西。需要注意的一点是：对于观察性实验，我们没法得出某种因果关系，能得到的只是相关性。事实上，如何从数据中得出因果关系是一个非常热门的研究问题，我们会在第 4 章重新讨论该问题。现在，我们首先用一行代码将数据导入成 <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> 中的数据结构，如果你对 <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> 不太熟悉，这里需要说明下，<code class="docutils literal notranslate"><span class="pre">tail</span></code> 函数返回数据中的最后一部分（当然你也可以用 <code class="docutils literal notranslate"><span class="pre">head</span></code> 函数返回前面一部分数据）。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tips</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/tips.csv&#39;</span><span class="p">)</span>
 <span class="n">tips</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504182713_db.webp" /></p>
-<p>对于该数据集，我们只关心其中的 day 和 tip 列，利 用 seaborn 中的 violinplot 函数可以将其画出来：</p>
+<p>对于该数据集，我们只关心其中的 <code class="docutils literal notranslate"><span class="pre">day</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tip</span></code> 列，利用 <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">violinplot</span></code> 函数可以将其画出来：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;day&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;tip&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504182600_5a.webp" /></p>
-<p>把问题简化下，我们创建两个变量：变量 y 表示 tips；变量 idx 表示分类变量的编码。也就是说，我们用数字 0、1、2、3 表示星期 四、星期五、星期六和星期天。</p>
+<p>把问题简化下，我们创建两个变量：变量 y 表示<code class="docutils literal notranslate"> <span class="pre">tips</span></code>；变量 <code class="docutils literal notranslate"><span class="pre">idx</span></code> 表示分类变量的编码。也就是说，我们用数字 0、1、2、3 表示星期四、星期五、星期六和星期天。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tip</span> <span class="o">=</span> <span class="n">tips</span><span class="p">[</span><span class="s1">&#39;tip&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">tips</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">],</span>
-           <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Thur&#39;</span><span class="p">,</span> <span class="s1">&#39;Fri&#39;</span><span class="p">,</span> <span class="s1">&#39;Sat&#39;</span><span class="p">,</span> <span class="s1">&#39;Sun&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">codes</span>
+      <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Thur&#39;</span><span class="p">,</span> <span class="s1">&#39;Fri&#39;</span><span class="p">,</span> <span class="s1">&#39;Sat&#39;</span><span class="p">,</span> <span class="s1">&#39;Sun&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">codes</span>
 <span class="n">groups</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>的时候，我们会得到 4 个和 4 个。 PyMC3 的语法能够很好地适应该场景，我们可以直接用向量的方式表示模型，而不用使用 for 循环，代码的变化相比前面的模型很小。对应先验，我们需要传一个维 度变量 shape，对于似然，我们需要对和正确地进行编码，这也是 为什么创建了 idx 变量。</p>
+<p>的时候，我们会得到 4 个和 4 个。 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的语法能够很好地适应该场景，我们可以直接用向量的方式表示模型，而不用使用 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环，代码的变化相比前面的模型很小。对应先验，我们需要传一个维度变量 <code class="docutils literal notranslate"><span class="pre">shape</span></code>，对于似然，我们需要对和正确地进行编码，这也是 为什么创建了 <code class="docutils literal notranslate"><span class="pre">idx</span></code> 变量。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">comparing_groups</span><span class="p">:</span>
-  <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
-  <span class="n">σ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
-  <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">sd</span><span class="o">=</span><span class="n">σ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="n">tip</span><span class="p">)</span>
-  <span class="n">trace_cg</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+ <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
+ <span class="n">σ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
+ <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">sd</span><span class="o">=</span><span class="n">σ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="n">tip</span><span class="p">)</span>
+ <span class="n">trace_cg</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
 <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_cg</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504182332_b3.webp" /></p>
-<p>这里照常使用 df_summary 函数来描述估计点，同样你还可以进</p>
-<p>行诊断测试。切记贝叶斯分析返回的是（在给定数据和模型条件下） 参数的完整分布，因而我们可以对后验进行进一步处理，并从中提出 一些合理的问题。比如，我们可能想知道组与组之间均值差别的分布 情况，下面，我们就来分析看看。</p>
-<p>这里我们使用 PyMC3 中的 plot_posterior 函数画出后验分布， 其中选取参考值（ref_val）为 0，因为我们希望将后验与 0 进行比</p>
-<p>较。下面的代码将两个变量的差画了出来，没有进行重复比较。注意 这里并没有一对一的对比矩阵，只是画出了上三角部分。代码和图中最陌生的部分是** Cohen’s d **和概率优势，后面会详细解释，其实它们 都是对效应值的不同表示方式而已。</p>
+<p>这里照常使用 <code class="docutils literal notranslate"><span class="pre">df_summary</span></code> 函数来描述估计点，同样你还可以进行诊断测试。切记贝叶斯分析返回的是（在给定数据和模型条件下）参数的完整分布，因而我们可以对后验进行进一步处理，并从中提出一些合理的问题。比如，我们可能想知道组与组之间均值差别的分布情况，下面，我们就来分析看看。这里我们使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">plot_posterior</span></code> 函数画出后验分布，其中选取参考值（ref_val）为 0，因为我们希望将后验与 0 进行比较。下面的代码将两个变量的差画了出来，没有进行重复比较。注意这里并没有一对一的对比矩阵，只是画出了上三角部分。代码和图中最陌生的部分是 <code class="docutils literal notranslate"> <span class="pre">Cohen's</span> <span class="pre">d</span></code> 和概率优势，后面会详细解释，其实它们 都是对效应值的不同表示方式而已。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dist</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">comparisons</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
 <span class="n">pos</span> <span class="o">=</span> <span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
 <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">),</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">comparisons</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-  <span class="n">means_diff</span> <span class="o">=</span> <span class="n">trace_cg</span><span class="p">[</span><span class="s1">&#39;μ&#39;</span><span class="p">][:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">trace_cg</span><span class="p">[</span><span class="s1">&#39;μ&#39;</span><span class="p">][:,</span> <span class="n">j</span><span class="p">]</span>
-  <span class="n">d_cohen</span> <span class="o">=</span> <span class="p">(</span><span class="n">means_diff</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">trace_cg</span><span class="p">[</span><span class="s1">&#39;σ&#39;</span><span class="p">][:,</span> <span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">trace_cg</span><span class="p">[</span><span class="s1">&#39;σ&#39;</span><span class="p">][:,</span> <span class="n">j</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-  <span class="n">ps</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">d_cohen</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mf">0.5</span><span class="p">))</span>
-  <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">means_diff</span><span class="p">,</span> <span class="n">ref_val</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">])</span>
-  <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; $ \mu_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">-\mu_</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s1"> $ &#39;</span><span class="p">)</span>
-  <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Cohen&#39;s d = </span><span class="si">{</span><span class="n">d_cohen</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="se">\n</span><span class="s2">Prob sup = </span><span class="si">{</span><span class="n">ps</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-  <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+ <span class="n">means_diff</span> <span class="o">=</span> <span class="n">trace_cg</span><span class="p">[</span><span class="s1">&#39;μ&#39;</span><span class="p">][:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">trace_cg</span><span class="p">[</span><span class="s1">&#39;μ&#39;</span><span class="p">][:,</span> <span class="n">j</span><span class="p">]</span>
+ <span class="n">d_cohen</span> <span class="o">=</span> <span class="p">(</span><span class="n">means_diff</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">trace_cg</span><span class="p">[</span><span class="s1">&#39;σ&#39;</span><span class="p">][:,</span> <span class="n">i</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">trace_cg</span><span class="p">[</span><span class="s1">&#39;σ&#39;</span><span class="p">][:,</span> <span class="n">j</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+ <span class="n">ps</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">d_cohen</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="mf">0.5</span><span class="p">))</span>
+ <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">means_diff</span><span class="p">,</span> <span class="n">ref_val</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">])</span>
+ <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; $\mu_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">-\mu_</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s1"> $ &#39;</span><span class="p">)</span>
+ <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Cohen&#39;s d = </span><span class="si">{</span><span class="n">d_cohen</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="se">\n</span><span class="s2">Prob sup = </span><span class="si">{</span><span class="n">ps</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+ <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>前面的例子中，一种解释结果的方式是将参考值与 HPD 区间进行 比较。只有一种情况下 95%HPD 没有包含 0（我们的参考值），即星 期四与星期天的对比。对于所有其他情况，我们没法得出两者的区别 为 0 的结论（根据 HPD 区间与参考值的重叠性准则）。但是即便如 此，平均下来 0.5 美元的小费差别是否足够大了呢？该差别是否大 到让人们牺牲星期日陪家人或者朋友的时间去工作呢？是否大到就应 该这 4 天都给相同的小费而且男服务员和女服务员的小费一模一样 呢？诸如此类的问题很难用统计学来回答，只能从统计学中找到些启 发。 描述效应值的方式有好几种，我们接下来将学习其中的两个： Cohen’s d 和概率优势。</p>
+<p>前面的例子中，一种解释结果的方式是将参考值与 <code class="docutils literal notranslate"><span class="pre">HPD</span></code> 区间进行 比较。只有一种情况下 95%<code class="docutils literal notranslate"><span class="pre">HPD</span></code> 没有包含 0（我们的参考值），即星期四与星期天的对比。对于所有其他情况，我们没法得出两者的区别为 0 的结论（根据 <code class="docutils literal notranslate"><span class="pre">HPD</span></code> 区间与参考值的重叠性准则）。但是即便如此，平均下来 0.5 美元的小费差别是否足够大了呢？该差别是否大到让人们牺牲星期日陪家人或者朋友的时间去工作呢？是否大到就应该这 4 天都给相同的小费而且男服务员和女服务员的小费一模一样呢？诸如此类的问题很难用统计学来回答，只能从统计学中找到些启发。描述效应值的方式有好几种，我们接下来将学习其中的两个： <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 和优势概率。</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504182144_09.webp" /></p>
 </div>
 </div>
-<div class="section" id="id19">
-<h2>2.6 分层模型<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
-<p>假设我们想要分析一个城市的水质，然后将城市分成了多个相邻 （或者水文学上）的区域。我们可以用如下两种方法进行分析：</p>
+<div class="section" id="id18">
+<h2>2.5 分层模型<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
+<p>假设我们想要分析一个城市的水质，然后将城市分成了多个相邻（或者水文学上）的区域。我们可以用如下两种方法进行分析：</p>
 <ul class="simple">
 <li><p>分别对每个区域单独进行估计；</p></li>
 <li><p>将所有数据都混合在一起，把整个城市看做一个整体进行估计。</p></li>
 </ul>
-<p>两种方式都是合理的，具体使用哪种取决于我们想知道什么。如果我们想了解具体细节，那么可以采用第 1 种方式，因为假如对数据进一步做一些平均处理，那么一些细节就不太容易看出来了。采用第 2 种方式则可以将数据都聚在一起，得到一个更大的样本集，从而得出更准确的估计。两种方式都有其合理性，不过我们还可以找到些中间方案。我们可以在对相邻区域的水质进行评估的同时对整个城市的水质进行评估，这类模型称为层次化模型或者分层模型，这么称呼的原因是我们对数据采用了一种层次化（或者是分层）的建模方 式。</p>
-<p>那么如何构建分层模型呢？简单说，就是在先验之上使用一个共享先验。也就是说，我们不再固定先验参数，而是直接从数据中将其估计出来。这类更高层的先验通常称为超先验（hyper-prior），它们的参数称为超参数，这里”超”在希腊语中是”在某某之上”的意思。当然，还可以在超先验之上再增加先验，做到尽可能分层。问题是这么做会使得模型变得相当复杂而难以理解，而且除非问题确实需要更复 杂的结构，增加分层对于做推断并没有更大帮助，相反，我们会陷入超参和超先验的混乱中而无法对其做出任何有意义的解释，从而降低模型的可解释性。毕竟，建模的首要目的是理解数据。</p>
-<p>为了更好地解释分层模型中的主要概念，我们以本节开头提到的水质模型作为例子，使用一些构造的数据来讲解。假设我们从同一个城市的 3 个不同水域得到了含铅量的采样值：其中高于世界卫生组织（World Health Organization,WHO）标准的值标记为 0；低于标准的值标记为 1。该例只用来教学，实际中会使用铅含量的连续值，并且可能会分成更多组。不过对我们来说，该例足以用来揭示多层模型的细节。</p>
+<p>两种方式都是合理的，具体使用哪种取决于我们想知道什么。如果我们想了解具体细节，那么可以采用第 1 种方式，因为假如对数据进一步做一些平均处理，那么一些细节就不太容易看出来了。采用第 2 种方式则可以将数据都聚在一起，得到一个更大的样本集，从而得出更准确的估计。两种方式都有其合理性，不过我们还可以找到些中间方案。我们可以在对相邻区域的水质进行评估的同时对整个城市的水质进行评估，这类模型称为层次化模型或者分层模型，这么称呼的原因是我们对数据采用了一种层次化（或者是分层）的建模方式。</p>
+<p>那么如何构建分层模型呢？简单说，就是在先验之上使用一个共享先验。也就是说，我们不再固定先验参数，而是直接从数据中将其估计出来。这类更高层的先验通常称为超先验（<code class="docutils literal notranslate"><span class="pre">hyper-prior</span></code>），它们的参数称为超参数，这里”超”在希腊语中是”在某某之上”的意思。当然，还可以在超先验之上再增加先验，做到尽可能分层。问题是这么做会使得模型变得相当复杂而难以理解，而且除非问题确实需要更复杂的结构，增加分层对于做推断并没有更大帮助，相反，我们会陷入超参和超先验的混乱中而无法对其做出任何有意义的解释，从而降低模型的可解释性。毕竟，建模的首要目的是理解数据。</p>
+<p>为了更好地解释分层模型中的主要概念，我们以本节开头提到的水质模型作为例子，使用一些构造的数据来讲解。假设我们从同一个城市的 3 个不同水域得到了含铅量的采样值：其中高于世界卫生组织标准的值标记为 0；低于标准的值标记为 1。该例只用来教学，实际中会使用铅含量的连续值，并且可能会分成更多组。不过对我们来说，该例足以用来揭示多层模型的细节。</p>
 <p>我们通过以下代码合成数据：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">N_samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
 <span class="n">G_samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
 <span class="n">group_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">N_samples</span><span class="p">)),</span> <span class="n">N_samples</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">N_samples</span><span class="p">)):</span>
-  <span class="n">data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">G_samples</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">N_samples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span>
+ <span class="n">data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">G_samples</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">N_samples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span>
 <span class="n">G_samples</span><span class="p">[</span><span class="n">i</span><span class="p">]]))</span>
 </pre></div>
 </div>
-<p>我们正在模拟一个实验，其中测量了三组，每组包含一定数量样本；我们将每组的样本总数存储在 N_samples 列表中。使用 G_samples 列表，记录每组高质量样本的数量。代码的其余部分用来生成一个数据列表，其中填满了 0 和 1 。</p>
+<p>我们正在模拟一个实验，其中测量了三组，每组包含一定数量样本；我们将每组的样本总数存储在 <code class="docutils literal notranslate"><span class="pre">N_samples</span></code> 列表中。使用 <code class="docutils literal notranslate"><span class="pre">G_samples</span></code> 列表，记录每组高质量样本的数量。代码的其余部分用来生成一个数据列表，其中填满了 0 和 1 。</p>
 <p>这个模型基本上与我们用来解决硬币问题的模型相同，只是有两个重要的特征：</p>
 <ul class="simple">
 <li><p>我们定义了两个影响贝塔先验的超先验。</p></li>
-<li><p>我们不是把超先验放在参数 <span class="math notranslate nohighlight">\( \alpha \)</span> 和 <span class="math notranslate nohighlight">\( \beta \)</span> 上，而是间接地用贝塔分布的平均值 <span class="math notranslate nohighlight">\( \mu \)</span> 和 精度 <span class="math notranslate nohighlight">\( \kappa \)</span> 来定义它们。精度与标准偏差的倒数类似； <span class="math notranslate nohighlight">\( \kappa \)</span> 的值越大，贝塔分布越集中</p></li>
+<li><p>我们不是把超先验放在参数 <span class="math notranslate nohighlight">\(\alpha\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span> 上，而是间接地用贝塔分布的平均值 <span class="math notranslate nohighlight">\(\mu\)</span> 和 精度 <span class="math notranslate nohighlight">\(\kappa\)</span> 来定义它们。精度与标准偏差的倒数类似； <span class="math notranslate nohighlight">\(\kappa\)</span> 的值越大，贝塔分布越集中</p></li>
 </ul>
 <div class="math notranslate nohighlight">
-\[\begin{split} 
+\[\begin{split}
 \begin{aligned} \mu &amp; \sim \operatorname{Beta}\left(\alpha_{\mu}, \beta_{\mu}\right) \\
 \kappa &amp; \sim\left|\operatorname{Normal}\left(0, \sigma_{\kappa}\right)\right| \\ 
 \alpha &amp;=\mu * \kappa \\ 
 \beta &amp;=(1-\mu) * \kappa \\ 
 \theta_{i} &amp; \sim \operatorname{Beta}\left(\alpha_{i}, \beta_{i}\right) \\ 
 y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right) \end{aligned} \tag{2.6}
- \end{split}\]</div>
-<p>注意，使用子索引 <span class="math notranslate nohighlight">\( i \)</span> 来指示模型中的一些参数具有不同值的组。也就是说，并非所有参数都在组之间共享。使用 Kruschke 图，很明显与我们迄今看到的所有模型相比，这个新模型有一个额外的级别。</p>
+\end{split}\]</div>
+<p>注意，使用子索引 <span class="math notranslate nohighlight">\(i\)</span> 来指示模型中的一些参数具有不同值的组。也就是说，并非所有参数都在组之间共享。使用 Kruschke 图，很明显与我们迄今看到的所有模型相比，这个新模型有一个额外的级别。</p>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504181501_31.webp" style="zoom:67%;" />
-<p>请注意，在上图中，我们如何使用符号 <span class="math notranslate nohighlight">\( = \)</span> 而不是 <span class="math notranslate nohighlight">\( ∼ \)</span> 来定义 <span class="math notranslate nohighlight">\( \alpha_i \)</span> 和 <span class="math notranslate nohighlight">\( \beta_i \)</span> ，一旦我们知道 <span class="math notranslate nohighlight">\( \mu \)</span> 和 <span class="math notranslate nohighlight">\( \kappa \)</span> ， <span class="math notranslate nohighlight">\( \alpha_i \)</span> 和 <span class="math notranslate nohighlight">\( \beta_i \)</span> 的值就完全确定了。因此，我们称这类变量为确定性变量，与随机变量（如 <span class="math notranslate nohighlight">\( \mu,\kappa,\theta \)</span> 等）相对。</p>
-<p>让我们来讨论一下参数化。使用平均值和精度在数学上等同于使用 <span class="math notranslate nohighlight">\( \alpha \)</span> 和 <span class="math notranslate nohighlight">\( \beta \)</span> 参数化，这意味着我们应该得到相同的结果。那么，我们为什么要绕道而不是更直接的路线呢？这有两个原因：</p>
+<p>请注意，在上图中，我们如何使用符号 <span class="math notranslate nohighlight">\(=\)</span> 而不是 <span class="math notranslate nohighlight">\(∼\)</span> 来定义 <span class="math notranslate nohighlight">\(\alpha_i\)</span> 和 <span class="math notranslate nohighlight">\(\beta_i\)</span> ，一旦我们知道 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\kappa\)</span> ， <span class="math notranslate nohighlight">\(\alpha_i\)</span> 和 <span class="math notranslate nohighlight">\(\beta_i\)</span> 的值就完全确定了。因此，我们称这类变量为确定性变量，与随机变量（如 <span class="math notranslate nohighlight">\(\mu,\kappa,\theta\)</span> 等）相对。</p>
+<p>让我们来讨论一下参数化。使用平均值和精度在数学上等同于使用 <span class="math notranslate nohighlight">\(\alpha\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span> 参数化，这意味着我们应该得到相同的结果。那么，我们为什么要绕道而不是更直接的路线呢？这有两个原因：</p>
 <ul class="simple">
-<li><p>首先，均值和精度参数化虽然在数学上等价，但在数值上更适合采样器，因此我们对 PyMC3 返回的结果更有信心，我们将在第 8 章-推理引擎中了解这一语句背后的原因和直觉。</p></li>
-<li><p>第二个原因是教育性的。这是一个具体的例子，表明表达模型的方式可能不止一种。然而，在数学上等价的实现可能会有实际差异；采样器的效率是需要考虑的一个方面，而另一个方面可能是模型的可解释性。对于某些特定的问题或特定的受众，报告贝塔分布的平均值和精确度可能比报告 <span class="math notranslate nohighlight">\( \alpha \)</span> 和 <span class="math notranslate nohighlight">\( \beta \)</span> 参数更好。</p></li>
+<li><p>首先，均值和精度参数化虽然在数学上等价，但在数值上更适合采样器，因此我们对 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 返回的结果更有信心，我们将在第 8 章-推理引擎中了解这一语句背后的原因和直觉。</p></li>
+<li><p>第二个原因是教育性的。这是一个具体的例子，表明表达模型的方式可能不止一种。然而，在数学上等价的实现可能会有实际差异；采样器的效率是需要考虑的一个方面，而另一个方面可能是模型的可解释性。对于某些特定的问题或特定的受众，报告贝塔分布的平均值和精确度可能比报告 <span class="math notranslate nohighlight">\(\alpha\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span> 参数更好。</p></li>
 </ul>
-<p>让我们在 PyMC3 中实现并求解该模型，这样我们就可以继续讨论层次模型：</p>
+<p>让我们在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中实现并求解该模型，这样我们就可以继续讨论层次模型：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_h</span><span class="p">:</span>
-  <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
-  <span class="n">κ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;κ&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-  <span class="n">θ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">μ</span><span class="o">*</span><span class="n">κ</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">μ</span><span class="p">)</span><span class="o">*</span><span class="n">κ</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">N_samples</span><span class="p">))</span>
-  <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">θ</span><span class="p">[</span><span class="n">group_idx</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-  <span class="n">trace_h</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+ <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
+ <span class="n">κ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;κ&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+ <span class="n">θ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">μ</span><span class="o">*</span><span class="n">κ</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">μ</span><span class="p">)</span><span class="o">*</span><span class="n">κ</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">N_samples</span><span class="p">))</span>
+ <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">θ</span><span class="p">[</span><span class="n">group_idx</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+ <span class="n">trace_h</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
 <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_h</span><span class="p">)</span>
 </pre></div>
 </div>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504181604_78.webp" style="zoom:67%;" />
-<div class="section" id="id20">
-<h3>2.6.1 收缩<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
-<p>现在和我一起做个简单的实验。我需要您使用 az.summary(trace_h) 打印并保存摘要。然后，希望您在对合成数据进行微小更改后再重新运行模型两次，并始终保留汇总记录。总共，我们将运行三次：</p>
+<div class="section" id="id19">
+<h3>2.5.1 收缩<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>现在和我一起做个简单的实验。我需要您使用 <code class="docutils literal notranslate"><span class="pre">az.summary(trace_h)</span></code> 打印并保存摘要。然后，希望您在对合成数据进行微小更改后再重新运行模型两次，并始终保留汇总记录。总共，我们将运行三次：</p>
 <ul class="simple">
-<li><p>一次运行将 G_Samples 的所有元素设置为 18</p></li>
-<li><p>一次运行将 G_Samples 的所有元素设置为 3</p></li>
+<li><p>一次运行将 <code class="docutils literal notranslate"><span class="pre">G_Samples</span></code> 的所有元素设置为 18</p></li>
+<li><p>一次运行将 <code class="docutils literal notranslate"><span class="pre">G_Samples</span></code> 的所有元素设置为 3</p></li>
 <li><p>最后一次运行将一个元素设置为 18，将其他两个元素设置为 3</p></li>
 </ul>
-<p>继续之前，先想想该实验的结果会是 什么。重点关注每次实验中 <span class="math notranslate nohighlight">\( \theta_i \)</span> 的均值。根据前两次模型的运行结果，你能猜出第 3 种情况下的结果吗？如果将结果汇总在表格中，会得到类似如下的值（注意由于 NUTS 采样方法的随机性，结果可能会有小幅波动）：</p>
+<p>继续之前，先想想该实验的结果会是什么。重点关注每次实验中 <span class="math notranslate nohighlight">\(\theta_i\)</span> 的均值。根据前两次模型的运行结果，你能猜出第 3 种情况下的结果吗？如果将结果汇总在表格中，会得到类似如下的值（注意由于 <code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 采样方法的随机性，结果可能会有小幅波动）：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504181632_cf.webp" /></p>
-<p>表中第一行，可以看到对于 30 个样本中有 18 个正样本的情况，估计值的均值为 0.6；注意现在 <span class="math notranslate nohighlight">\( θ \)</span> 是一个向量，因为现在有 3 个 组，每个组都有一个均值。第 2 行中，30 个样本中有 3 个是正样本，得到 <span class="math notranslate nohighlight">\( \theta \)</span> 的均值为 0.11。最后一行中的结果有点意外， <span class="math notranslate nohighlight">\( \theta \)</span> 的均值并非是前面两组中均值的组合（比如 0.6, 0.11, 0.11），而是（0.53, 0.14, 0.14）。为什么呢？是模型收敛问题还是模型选型出了问题？都不是，是我们的估计结果趋向了整体的均值。事实上，这正是我们模型预期的结果，在设置了超先验后，我们直接从数据中估计贝塔先验，每个组的估计都受到其他组的估计值影响，同时也影响着其他组的估计值。 换句话说，所有组都通过超先验共享了部分信息，从而看到一种称为收缩（shrinkage）的现象，其效果相当于对数据做了部分”池化”（pooling），我们既不是在对数据分组建模，也不是将数据看做一个大组在建模，而是介于二者之间，其结果之一就是收缩效应。</p>
-<p>收缩有利于更稳定的推断。该点和前面讨论过的 <span class="math notranslate nohighlight">\( t \)</span> 分布与异常点的关系很像。使用重尾分布之后的模型对于偏离均值的异常点表现得更鲁棒（更不受其影响）。引入超先验后，在更高层次上进行推断，从而得到一个更”保守”的模型（这可能是我第一次将”保守”该词当做褒义词），更少地受到每个组中极限值的影响。举例来说，假设我们在某个相邻区域得到了一组不同数量的采样值；采样数量越小就越容易得到错误的结果。极限情况下，假设在这片区域只有一个采样值，你可能恰好是从这片区域的某个铅管中得到的采样值，或者，有可能恰好是从 PVC 管道中得到的采样值，从而可能导致你对这片区域的水质高估或者低估。在多层模型中，估计出错的情况可以通过其他组提供的信息进行改善。当然，更大的采样值同样能达到类似的效果，不过大多数情况下这并不是个候选方案。</p>
-<p>显然，收缩的程度取决于数据，数量更大的组会对其他数量较小的组造成更大的影响。如果大多数组都比较相似，而其中某组不太一 样，相似的组之间会共享这种相似性，从而强化共同的估计值，并拉近表现不太一样的那一组的估计值，前面的例子中也已经体现了该点。</p>
-<p>此外，超先验也对收缩的程度有影响。如果我们对所有组的整体分布有一些可以信赖的先验信息，那么可以将其加入到模型中并将收缩程度调整到一个合理的值。我们完全可以只用两个组来构建层级化模型，不过通常我们更倾向于使用多个组。直观上的原因是，收缩其实是将每个组看成了一个数据点，然后我们在组该层估计标准差。 通常我们不会太相信点数较少的估计值，除非对估计值有很强的先验，该点对层次化模型也适用。</p>
-<p>你可能对估计到的先验分布比较感兴趣，以下是将其表示出来的 一种方式：</p>
+<p>表中第一行，可以看到对于 30 个样本中有 18 个正样本的情况，估计值的均值为 0.6；注意现在 <span class="math notranslate nohighlight">\(θ\)</span> 是一个向量，因为现在有 3 个组，每个组都有一个均值。第 2 行中，30 个样本中有 3 个是正样本，得到 <span class="math notranslate nohighlight">\(\theta\)</span> 的均值为 0.11。最后一行中的结果有点意外， <span class="math notranslate nohighlight">\(\theta\)</span> 的均值并非是前面两组中均值的组合（比如 <code class="docutils literal notranslate"><span class="pre">0.6,</span> <span class="pre">0.11,</span> <span class="pre">0.11</span></code>），而是（<code class="docutils literal notranslate"><span class="pre">0.53,</span> <span class="pre">0.14,</span> <span class="pre">0.14</span></code>）。为什么呢？是模型收敛问题还是模型选型出了问题？都不是，是我们的估计结果趋向了整体的均值。事实上，这正是我们模型预期的结果，在设置了超先验后，我们直接从数据中估计贝塔先验，每个组的估计都受到其他组的估计值影响，同时也影响着其他组的估计值。换句话说，所有组都通过超先验共享了部分信息，从而看到一种称为收缩（<code class="docutils literal notranslate"><span class="pre">shrinkage</span></code>）的现象，其效果相当于对数据做了部分”池化”（<code class="docutils literal notranslate"><span class="pre">pooling</span></code>），我们既不是在对数据分组建模，也不是将数据看做一个大组在建模，而是介于二者之间，其结果之一就是收缩效应。</p>
+<p>收缩有利于更稳定的推断。该点和前面讨论过的 <span class="math notranslate nohighlight">\(t\)</span> 分布与异常点的关系很像。使用重尾分布之后的模型对于偏离均值的异常点表现得更鲁棒（更不受其影响）。引入超先验后，在更高层次上进行推断，从而得到一个更”保守”的模型（这可能是我第一次将”保守”该词当做褒义词），更少地受到每个组中极限值的影响。举例来说，假设我们在某个相邻区域得到了一组不同数量的采样值；采样数量越小就越容易得到错误的结果。极限情况下，假设在这片区域只有一个采样值，你可能恰好是从这片区域的某个铅管中得到的采样值，或者，有可能恰好是从 PVC 管道中得到的采样值，从而可能导致你对这片区域的水质高估或者低估。在多层模型中，估计出错的情况可以通过其他组提供的信息进行改善。当然，更大的采样值同样能达到类似的效果，不过大多数情况下这并不是个候选方案。</p>
+<p>显然，收缩的程度取决于数据，数量更大的组会对其他数量较小的组造成更大的影响。如果大多数组都比较相似，而其中某组不太一样，相似的组之间会共享这种相似性，从而强化共同的估计值，并拉近表现不太一样的那一组的估计值，前面的例子中也已经体现了该点。</p>
+<p>此外，超先验也对收缩的程度有影响。如果我们对所有组的整体分布有一些可以信赖的先验信息，那么可以将其加入到模型中并将收缩程度调整到一个合理的值。我们完全可以只用两个组来构建层级化模型，不过通常我们更倾向于使用多个组。直观上的原因是，收缩其实是将每个组看成了一个数据点，然后我们在组该层估计标准差。通常我们不会太相信点数较少的估计值，除非对估计值有很强的先验，该点对层次化模型也适用。</p>
+<p>你可能对估计到的先验分布比较感兴趣，以下是将其表示出来的一种方式：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">trace_h</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
-  <span class="n">u</span> <span class="o">=</span> <span class="n">trace_h</span><span class="p">[</span><span class="s1">&#39;μ&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
-  <span class="n">k</span> <span class="o">=</span> <span class="n">trace_h</span><span class="p">[</span><span class="s1">&#39;κ&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
-  <span class="n">pdf</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="n">u</span><span class="o">*</span><span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">u</span><span class="p">)</span><span class="o">*</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf</span><span class="p">,</span> <span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+ <span class="n">u</span> <span class="o">=</span> <span class="n">trace_h</span><span class="p">[</span><span class="s1">&#39;μ&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+ <span class="n">k</span> <span class="o">=</span> <span class="n">trace_h</span><span class="p">[</span><span class="s1">&#39;κ&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+ <span class="n">pdf</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="n">u</span><span class="o">*</span><span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">u</span><span class="p">)</span><span class="o">*</span><span class="n">k</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+ <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf</span><span class="p">,</span> <span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="n">u_mean</span> <span class="o">=</span> <span class="n">trace_h</span><span class="p">[</span><span class="s1">&#39;μ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">k_mean</span> <span class="o">=</span> <span class="n">trace_h</span><span class="p">[</span><span class="s1">&#39;κ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">dist</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="n">u_mean</span><span class="o">*</span><span class="n">k_mean</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">u_mean</span><span class="p">)</span><span class="o">*</span><span class="n">k_mean</span><span class="p">)</span>
@@ -885,126 +887,73 @@ y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right) \end{aligned} \tag{2
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504181857_6e.webp" style="zoom:67%;" />
 <p>这本应该是本章的最后一个例子，但根据大众的要求，我将再玩一个层次模型作为补充，所以请加入我的行列。</p>
 </div>
-<div class="section" id="id21">
-<h3>2.6.2 再举一个例子<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
-<p>再一次，我们有化学漂移数据。这些数据来自我亲自准备的一组蛋白质分子。准确地说，我们应该说化学漂移来自蛋白质的 <span class="math notranslate nohighlight">\( ^{13}C_a \)</span> 原子核，因为这是我们能够观测的有限类型原子核。蛋白质由被称为氨基酸残基的 20 个构件组成的序列组成。每种氨基酸可以在序列中出现零次或多次，序列可以从几个氨基酸到数百个甚至数千个氨基酸不等。每种氨基酸都有且只有一种，所以我们可以很有把握地将每一种化学位移与蛋白质中特定的氨基酸残基联系起来。此外，这 20 种氨基酸中的每一种都有不同的化学性质，对蛋白质的生物学特性有贡献；有些可以带净电荷，有些只能是中性的；有些喜欢被水分子包围，而另一些则喜欢与同类型或类似类型的氨基酸作伴等。关键的方面是它们相似但不相等，因此，根据氨基酸类型的定义，将任何与化学位移相关的推论建立在 20 个基团上听起来可能是合理的，甚至是自然的。你可以通过这个精彩的视频了解更多关于蛋白质的知识：<a class="reference external" href="https://www.youtube.com/watch?v=wvTv8TqWC48">https://www.youtube.com/watch?v=wvTv8TqWC48</a></p>
+<div class="section" id="id20">
+<h3>2.5.2 再举一个例子<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p>再一次，我们有化学漂移数据。这些数据来自我亲自准备的一组蛋白质分子。准确地说，我们应该说化学漂移来自蛋白质的 <span class="math notranslate nohighlight">\(^{13}C_a\)</span> 原子核，因为这是我们能够观测的有限类型原子核。蛋白质由被称为氨基酸残基的 20 个构件组成的序列组成。每种氨基酸可以在序列中出现零次或多次，序列可以从几个氨基酸到数百个甚至数千个氨基酸不等。每种氨基酸都有且只有一种，所以我们可以很有把握地将每一种化学位移与蛋白质中特定的氨基酸残基联系起来。此外，这 20 种氨基酸中的每一种都有不同的化学性质，对蛋白质的生物学特性有贡献；有些可以带净电荷，有些只能是中性的；有些喜欢被水分子包围，而另一些则喜欢与同类型或类似类型的氨基酸作伴等。关键的方面是它们相似但不相等，因此，根据氨基酸类型的定义，将任何与化学位移相关的推论建立在 20 个基团上听起来可能是合理的，甚至是自然的。你可以通过这个精彩的视频了解更多关于蛋白质的知识：<a class="reference external" href="https://www.youtube.com/watch?v=wvTv8TqWC48">https://www.youtube.com/watch?v=wvTv8TqWC48</a></p>
 <p>为了实现这个示例，我在这里稍微简化了一下。在实践中，实验是杂乱无章的，我们总是有可能得不到完整的化学位移记录。一个常见的问题是信号重叠，即实验没有足够的分辨率来区分两个或更多接近的信号。对于本例，我刚刚删除了这些案例，因此我们将假定数据集是完整的。</p>
-<p>在下面的代码块中，我们将数据加载到 DataFrame 中；请花一些时间检查 DataFrame。您将看到四列：第一列是蛋白质的 ID-如果您感到好奇，您可以使用此页面中的 ID 访问大量有关蛋白质的信息：<a class="reference external" href="https://www.rcsb.org/%E3%80%82%E7%AC%AC%E4%BA%8C%E5%88%97%E5%8C%85%E6%8B%AC%E6%B0%A8%E5%9F%BA%E9%85%B8%E7%9A%84%E5%90%8D%E7%A7%B0%EF%BC%8C%E4%BD%BF%E7%94%A8%E6%A0%87%E5%87%86%E7%9A%84%E4%B8%89%E4%B8%AA%E5%AD%97%E6%AF%8D%E7%9A%84%E4%BB%A3%E7%A0%81%EF%BC%8C%E8%80%8C%E4%B8%8B%E9%9D%A2%E7%9A%84%E5%88%97%E5%AF%B9%E5%BA%94%E4%BA%8E%E7%90%86%E8%AE%BA%E8%AE%A1%E7%AE%97%E7%9A%84%E5%8C%96%E5%AD%A6%E4%BD%8D%E7%A7%BB%E5%80%BC%EF%BC%88%E4%BD%BF%E7%94%A8%E9%87%8F%E5%AD%90%E5%8C%96%E5%AD%A6%E8%AE%A1%E7%AE%97%EF%BC%89%E5%92%8C%E5%AE%9E%E9%AA%8C%E6%B5%8B%E9%87%8F%E7%9A%84%E5%8C%96%E5%AD%A6%E4%BD%8D%E7%A7%BB%E3%80%82%E8%BF%99%E4%B8%AA%E4%BE%8B%E5%AD%90%E7%9A%84%E5%8A%A8%E6%9C%BA%E6%98%AF%E6%AF%94%E8%BE%83%E8%AE%BF%E9%97%AE%E7%9A%84%E5%B7%AE%E5%BC%82%EF%BC%8C%E4%BB%A5%E5%8F%8A%E5%85%B6%E4%BB%96%E5%8E%9F%E5%9B%A0%EF%BC%8C%E5%85%B6%E4%B8%AD%E5%8C%85%E6%8B%AC%E7%90%86%E8%AE%BA%E8%AE%A1%E7%AE%97%E9%87%8D%E7%8E%B0%E5%AE%9E%E9%AA%8C%E6%B5%8B%E9%87%8F%E7%9A%84%E6%83%85%E5%86%B5%E3%80%82%E5%87%BA%E4%BA%8E%E8%BF%99%E4%B8%AA%E5%8E%9F%E5%9B%A0%EF%BC%8C%E6%88%91%E4%BB%AC%E6%AD%A3%E5%9C%A8%E8%AE%A1%E7%AE%97">https://www.rcsb.org/。第二列包括氨基酸的名称，使用标准的三个字母的代码，而下面的列对应于理论计算的化学位移值（使用量子化学计算）和实验测量的化学位移。这个例子的动机是比较访问的差异，以及其他原因，其中包括理论计算重现实验测量的情况。出于这个原因，我们正在计算</a> pandas 的系列差异：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cs_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/chemical_shifts_theo_exp.csv&#39;</span><span class="p">)</span>
+<p>在下面的代码块中，我们将数据加载到 <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> 中；请花一些时间检查 <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>。您将看到四列：第一列是蛋白质的 ID-如果您感到好奇，您可以使用此页面中的 ID 访问大量有关蛋白质的信息：<a class="reference external" href="https://www.rcsb.org/%E3%80%82%E7%AC%AC%E4%BA%8C%E5%88%97%E5%8C%85%E6%8B%AC%E6%B0%A8%E5%9F%BA%E9%85%B8%E7%9A%84%E5%90%8D%E7%A7%B0%EF%BC%8C%E4%BD%BF%E7%94%A8%E6%A0%87%E5%87%86%E7%9A%84%E4%B8%89%E4%B8%AA%E5%AD%97%E6%AF%8D%E7%9A%84%E4%BB%A3%E7%A0%81%EF%BC%8C%E8%80%8C%E4%B8%8B%E9%9D%A2%E7%9A%84%E5%88%97%E5%AF%B9%E5%BA%94%E4%BA%8E%E7%90%86%E8%AE%BA%E8%AE%A1%E7%AE%97%E7%9A%84%E5%8C%96%E5%AD%A6%E4%BD%8D%E7%A7%BB%E5%80%BC%EF%BC%88%E4%BD%BF%E7%94%A8%E9%87%8F%E5%AD%90%E5%8C%96%E5%AD%A6%E8%AE%A1%E7%AE%97%EF%BC%89%E5%92%8C%E5%AE%9E%E9%AA%8C%E6%B5%8B%E9%87%8F%E7%9A%84%E5%8C%96%E5%AD%A6%E4%BD%8D%E7%A7%BB%E3%80%82%E8%BF%99%E4%B8%AA%E4%BE%8B%E5%AD%90%E7%9A%84%E5%8A%A8%E6%9C%BA%E6%98%AF%E6%AF%94%E8%BE%83%E8%AE%BF%E9%97%AE%E7%9A%84%E5%B7%AE%E5%BC%82%EF%BC%8C%E4%BB%A5%E5%8F%8A%E5%85%B6%E4%BB%96%E5%8E%9F%E5%9B%A0%EF%BC%8C%E5%85%B6%E4%B8%AD%E5%8C%85%E6%8B%AC%E7%90%86%E8%AE%BA%E8%AE%A1%E7%AE%97%E9%87%8D%E7%8E%B0%E5%AE%9E%E9%AA%8C%E6%B5%8B%E9%87%8F%E7%9A%84%E6%83%85%E5%86%B5%E3%80%82%E5%87%BA%E4%BA%8E%E8%BF%99%E4%B8%AA%E5%8E%9F%E5%9B%A0%EF%BC%8C%E6%88%91%E4%BB%AC%E6%AD%A3%E5%9C%A8%E8%AE%A1%E7%AE%97">https://www.rcsb.org/。第二列包括氨基酸的名称，使用标准的三个字母的代码，而下面的列对应于理论计算的化学位移值（使用量子化学计算）和实验测量的化学位移。这个例子的动机是比较访问的差异，以及其他原因，其中包括理论计算重现实验测量的情况。出于这个原因，我们正在计算</a> <code class="docutils literal notranslate"><span class="pre">pandas</span></code> 的系列差异：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cs_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/chemical_shifts_theo_exp.csv&#39;</span><span class="p">)</span>
 <span class="n">diff</span> <span class="o">=</span> <span class="n">cs_data</span><span class="o">.</span><span class="n">theo</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">cs_data</span><span class="o">.</span><span class="n">exp</span><span class="o">.</span><span class="n">values</span>
 <span class="n">idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">cs_data</span><span class="p">[</span><span class="s1">&#39;aa&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">codes</span>
 <span class="n">groups</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
 
 </pre></div>
 </div>
-<p>为了了解分层模型和非分层模型之间的区别，我们将构建两个模型。第一个与 comparing_groups 模型基本相同：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">cs_nh</span><span class="p">:</span>
-  <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
-  <span class="n">σ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
-  <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">sd</span><span class="o">=</span><span class="n">σ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="n">diff</span><span class="p">)</span>
-  <span class="n">trace_cs_nh</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<p>为了了解分层模型和非分层模型之间的区别，我们将构建两个模型。第一个与 <code class="docutils literal notranslate"><span class="pre">comparing_groups</span></code> 模型基本相同：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">cs_nh</span><span class="p">:</span>
+ <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
+ <span class="n">σ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
+ <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">sd</span><span class="o">=</span><span class="n">σ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="n">diff</span><span class="p">)</span>
+ <span class="n">trace_cs_nh</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>现在，我们将构建模型的分层版本。我们将添加两个超先验：一个用于 <span class="math notranslate nohighlight">\( \mu \)</span> 的平均值，另一个用于 <span class="math notranslate nohighlight">\( \mu \)</span> 的标准差。我们未将 <span class="math notranslate nohighlight">\( \sigma \)</span> 作为超先验。这只是一个模式选择；我决定选择一个更简单的模型，只是为了教学目的。您可能会遇到这样的问题，这似乎是不可接受的，您可能认为有必要为 <span class="math notranslate nohighlight">\( \sigma \)</span> 添加一个超级先验；请自便。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">cs_h</span><span class="p">:</span>
-  <span class="c1"># hyper_priors</span>
-  <span class="n">μ_μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;μ_μ&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-  <span class="n">σ_μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ_μ&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-  <span class="c1"># priors</span>
-  <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ_μ</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">σ_μ</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
-  <span class="n">σ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
-  <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">sd</span><span class="o">=</span><span class="n">σ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="n">diff</span><span class="p">)</span>
-  <span class="n">trace_cs_h</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<p>现在，我们将构建模型的分层版本。我们将添加两个超先验：一个用于 <span class="math notranslate nohighlight">\(\mu\)</span> 的平均值，另一个用于 <span class="math notranslate nohighlight">\(\mu\)</span> 的标准差。我们未将 <span class="math notranslate nohighlight">\(\sigma\)</span> 作为超先验。这只是一个模式选择；我决定选择一个更简单的模型，只是为了教学目的。您可能会遇到这样的问题，这似乎是不可接受的，您可能认为有必要为 <span class="math notranslate nohighlight">\(\sigma\)</span> 添加一个超级先验；请自便。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">cs_h</span><span class="p">:</span>
+ <span class="c1"># hyper_priors</span>
+ <span class="n">μ_μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;μ_μ&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+ <span class="n">σ_μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ_μ&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+ <span class="c1"># priors</span>
+ <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ_μ</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">σ_μ</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
+ <span class="n">σ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
+ <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">sd</span><span class="o">=</span><span class="n">σ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="n">diff</span><span class="p">)</span>
+ <span class="n">trace_cs_h</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>我们将使用 ArviZ 的 plot_forest 函数比较结果。我们可以将多个模型传递给此函数。当我们想要比较不同模型（如本例）的参数值时，这很有用。请注意，我们将几个参数传递给 plot_forest 以获得我们想要的绘图，如 combined=True 以合并所有链的结果。我邀请你们探讨其余的论点：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">plot_forest</span><span class="p">([</span><span class="n">trace_cs_nh</span><span class="p">,</span> <span class="n">trace_cs_h</span><span class="p">],</span>
-             <span class="n">model_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;n_h&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">],</span>
-             <span class="n">var_names</span><span class="o">=</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">combined</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;cycle&#39;</span><span class="p">)</span>
+<p>我们将使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的 <code class="docutils literal notranslate"><span class="pre">plot_forest</span></code> 函数比较结果。我们可以将多个模型传递给此函数。当我们想要比较不同模型（如本例）的参数值时，这很有用。请注意，我们将几个参数传递给 <code class="docutils literal notranslate"><span class="pre">plot_forest</span></code> 以获得我们想要的绘图，如 <code class="docutils literal notranslate"><span class="pre">combined=True</span></code> 以合并所有链的结果。我邀请你们探讨其余的论点：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">plot_forest</span><span class="p">([</span><span class="n">trace_cs_nh</span><span class="p">,</span> <span class="n">trace_cs_h</span><span class="p">],</span>
+       <span class="n">model_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;n_h&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">],</span>
+       <span class="n">var_names</span><span class="o">=</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">combined</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;cycle&#39;</span><span class="p">)</span>
 <span class="n">y_lims</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">trace_cs_h</span><span class="p">[</span><span class="s1">&#39;μ_μ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="o">*</span><span class="n">y_lims</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>好的，那么我们在下图中看到了什么呢？我们有一个 40 个估计平均值的曲线图，每个氨基酸 (20) 一个乘以两个，因为我们有两个模型。我们也有他们 94%的可信区间和分位数范围（分布的中心 50%)。垂直（黑色）线是根据分层模型的全局平均值。这个值接近于零，正如复制实验值的理论值所预期的那样。</p>
+<p>好的，那么我们在下图中看到了什么呢？我们有一个 40 个估计平均值的曲线图，每个氨基酸 (20) 一个乘以两个，因为我们有两个模型。我们也有他们 94% 的可信区间和分位数范围（分布的中心 50% )。垂直（黑色）线是根据分层模型的全局平均值。这个值接近于零，正如复制实验值的理论值所预期的那样。</p>
 <p>此图最相关的部分是，分层模型中的估计值被拉向部分汇集的平均值，或者等同地，它们相对于未汇集的估计值被缩小。您还会注意到，这种影响对于那些远离平均值（例如 13) 的组来说更加臭名昭著，并且不确定性与非分层模型相同或更小。这些估计是部分汇集的，因为我们对每组都有一个估计，但单个组的估计通过超先验相互制约。</p>
 <p>因此，我们得到了一种中间情况，一种是只有一个基团，所有的化学位移都在一起，另一个是 20 个独立基团，每个氨基酸一个。这就是，层次分明的模型之美：</p>
 <p><img alt="image-20210504224607251" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504224610_c3.webp" /></p>
-<p>套用 Python 的禅意，我们可以肯定地说，分层模型是一个非常棒的想法–让我们做更多这样的事情吧！在接下来的章节中，我们将继续构建分层模型，并学习如何使用它们构建更好的模型。在第 5 章，模型比较中，我们还将讨论分层模型与统计学和机器学习中普遍存在的过拟合/欠拟合问题是如何相关的。在第八章推理引擎中，我们将讨论从分层模型中采样时可能会发现的一些技术问题，以及如何诊断和修复这些问题。</p>
+<p>套用 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 的禅意，我们可以肯定地说，分层模型是一个非常棒的想法–让我们做更多这样的事情吧！在接下来的章节中，我们将继续构建分层模型，并学习如何使用它们构建更好的模型。在第 5 章，模型比较中，我们还将讨论分层模型与统计学和机器学习中普遍存在的过拟合/欠拟合问题是如何相关的。在第八章推理引擎中，我们将讨论从分层模型中采样时可能会发现的一些技术问题，以及如何诊断和修复这些问题。</p>
 </div>
 </div>
-<div class="section" id="id22">
-<h2>2.7 总结<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id21">
+<h2>2.6 总结<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
 <p>虽然贝叶斯统计在概念上很简单，但全概率公式经常导致难以解析的解。多年来，这是一个巨大的障碍，阻碍了贝叶斯方法的广泛采用。幸运的是，数学、统计学、物理学和计算机科学以数值方法的形式拯救了我们，这些方法至少在原则上能够解决任何推理问题。自动化推理过程的可能性导致了概率编程语言的发展，允许模型定义和推理之间的明确分离。</p>
-<p>PyMC3 是一个 Python 库，用于概率编程，具有非常简单、直观和易于阅读的语法，也非常接近用于描述概率模型的统计语法。我们通过回顾第 1 章中的抛硬币模型介绍了 PyMC3 库，我们以概率的方式思考，这一次没有解析地推导后验结果。PyMC3 模型在上下文管理器中定义。要将概率分布添加到模型中，我们只需编写一行代码。分布可以组合，可以用作先验（未观测变量）或可能性（观测变量）。如果我们将数据传递给一个分布，它就成为一种可能性。采样也可以用一条线来实现。PyMC3 允许我们从后验分布中获得样本。如果一切正常，这些样本将代表正确的后验分布，因此它们将代表我们的模型和数据的逻辑结果。</p>
-<p>我们可以使用 ArviZ 探索 PyMC3 生成的后验分布，ArviZ 是一个 Python 库，它与 PyMC3 协同工作，可以用来帮助我们解释和可视化后验分布。一种使用后验来帮助我们做出推断性决策的方法是将绳索与 HPD 间隔进行比较。我们还简要提到了损失函数的概念，这是一种在存在不确定性的情况下量化与决策相关的权衡和成本的正式方法。我们了解到损失函数和点估计是密切相关的。</p>
-<p>到目前为止，讨论仅限于一个简单的单参数模型。在 PyMC3 中，将参数推广到任意数量是微不足道的；我们举例说明了如何使用高斯模型和学生 <span class="math notranslate nohighlight">\( t \)</span> 模型来实现这一点。高斯分布是学生 <span class="math notranslate nohighlight">\( t \)</span> 分布的特例，我们向您展示了如何使用后者在存在异常值的情况下进行稳健的推断。在下一章中，我们将研究如何将这些模型用作线性回归模型的一部分。</p>
+<p><code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 是一个 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 库，用于概率编程，具有非常简单、直观和易于阅读的语法，也非常接近用于描述概率模型的统计语法。我们通过回顾第 1 章中的抛硬币模型介绍了 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 库，我们以概率的方式思考，这一次没有解析地推导后验结果。<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 模型在上下文管理器中定义。要将概率分布添加到模型中，我们只需编写一行代码。分布可以组合，可以用作先验（未观测变量）或可能性（观测变量）。如果我们将数据传递给一个分布，它就成为一种可能性。采样也可以用一条线来实现。<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 允许我们从后验分布中获得样本。如果一切正常，这些样本将代表正确的后验分布，因此它们将代表我们的模型和数据的逻辑结果。</p>
+<p>我们可以使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 探索 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 生成的后验分布，<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 是一个 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 库，它与 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 协同工作，可以用来帮助我们解释和可视化后验分布。一种使用后验来帮助我们做出推断性决策的方法是将绳索与 <code class="docutils literal notranslate"><span class="pre">HPD</span></code> 间隔进行比较。我们还简要提到了损失函数的概念，这是一种在存在不确定性的情况下量化与决策相关的权衡和成本的正式方法。我们了解到损失函数和点估计是密切相关的。</p>
+<p>到目前为止，讨论仅限于一个简单的单参数模型。在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中，将参数推广到任意数量是微不足道的；我们举例说明了如何使用高斯模型和学生 <span class="math notranslate nohighlight">\(t\)</span> 模型来实现这一点。高斯分布是学生 <span class="math notranslate nohighlight">\(t\)</span> 分布的特例，我们向您展示了如何使用后者在存在异常值的情况下进行稳健的推断。在下一章中，我们将研究如何将这些模型用作线性回归模型的一部分。</p>
 <p>我们使用高斯模型来比较组间常见的数据分析任务。虽然这有时会在假设检验的背景下被框定，但我们采取了另一种路线，将这一任务框定为推断效应大小的问题，这是一种我们通常认为更丰富、更有成效的方法。我们还探索了解释和报告效应大小的不同方式。</p>
 <p>我们把从本书中学到的最重要的概念之一–层次模型–留到了最后，就像我们通常对精美的甜点所做的那样。我们可以在每次识别数据中的子组时建立分层模型。在这种情况下，我们可以构建一个模型来在组之间部分地汇集信息，而不是将子组作为独立的实体来对待，或者忽略子组并将其作为单个组来对待。这种部分汇集的主要影响是，每个子组的估计值将受到其余子组估计值的偏差。这种效果被称为收缩，一般来说，这是一个非常有用的技巧，通过使推断更保守（因为每个子组通过拉向其他小组的估计来通知其他小组）和更多信息来帮助改进推断。我们得到了子组级别和组级别的估计。在接下来的章节中，我们将看到更多分层模型的示例。每个例子都将帮助我们从略有不同的角度更好地理解它们。</p>
 </div>
-<div class="section" id="id23">
-<h2>2.8 练习<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
-<p>（1）对于本章的第一个模型，将高斯分布的先验均值修改为一 个经验性均值，用几个对应的标准差多跑几遍，观察推断过程对这些变化的鲁棒性/敏感性如何。你觉得用一个没有限制上下界的高斯分布对有上下界的数据建模的效果怎样？记住我们说过数据不可能大于 100 或者小于 0。</p>
-<p>（2）利用第一个例子中的数据，分别在包含和不包含异常值情 况下，计算出经验均值和标准差。将结果与使用高斯分布和 t 分布的 贝叶斯估计进行比较，增加更多异常值并重复该过程。</p>
-<p>（3）修改小费例子中的模型，使其对于异常点更鲁棒。分别尝 试对所有组使用一个共享的* v <em>和单独为每个组设置一个</em> v*，最后对这 3 个模型进行后验预测检查。</p>
-<p>（4）直接从后验中计算出概率优势（先不要计算 Cohen’s d），你可以用 sample_ppc() 函数从每个组中获取一个采样值。对比这样做与基于正态假设的计算是否不同？并对结果做出解释。</p>
-<p>（5）重复水质对比的例子，不过不用多层模型，而是使用一个 均匀分布（比如 ）。比较两种模型的结果。</p>
-<p>（6）在小费的例子中，对一个星期中的不同天使用部分池化操 作，构建一个多层模型，将结果与不使用多层模型的结果进行对比。</p>
-<p>（7）重复本章中的所有例子，用 findMAP() 函数的返回值来初始化采样。看是否能得到相同的推断结果。同时看一下 find_MAP () 函数对退化过程的数量以及推断的速度有什么影响。</p>
-<p>（8）对所有模型进行诊断测试并采取相应措施，比如，如果有 必要，增加采样次数。</p>
-<p>（9）对本章中的至少一个模型使用你自己的数据并运行。牢记 第 1 章中提到的构建模型的 3 个步骤。</p>
-<p>89</p>
-<p>2.5 深入阅读</p>
-<p>PyMC3 的文档，一定要记得查看例子部分：https://pymc-
-<a class="reference external" href="http://devs.github.io/">devs.github.io/</a> PyMC3 /。
-《贝叶斯方法——概率编程与贝叶斯推断》（注：该书已出
-版），这本书最初是用 PyMC2 写的，目前已经转成 PyMC3 了：
-<a class="reference external" href="https://github.com/quantopian/Probabilistic-Programming-and-">https://github.com/quantopian/Probabilistic-Programming-and-</a>
-Bayesian-Methods-for-Hackers。
-《WhileMyMCMCGentlySamples》， PyMC3 核心开发者之
-一，ThomasWiecki 的博客。
-《StatisticalRethinking》，RichardMcElreath 写的一本关于贝叶
-斯分析的入门书。书中的例子是用 R/Stan 写的，我将这本书中的例子转成了 Python / PyMC3 ，相关代码可以查看
-<a class="reference external" href="https://github.com/aloctavodia/Statistical-Rethinking-with-">https://github.com/aloctavodia/Statistical-Rethinking-with-</a> Python -
-and- PyMC3 。
-《DoingBayesianDataAnalysis》，JohnK.Kruschke 写的另一本关于贝叶斯分析的入门书，也有跟前面一本书类似的问题，该书第 1 版中的大部分例子也都转成了 Python / PyMC3 ，相关代码可以查看
-<a class="reference external" href="https://github.com/aloctavodia/Doing_bayesian_data_analysis%E3%80%82%5B5%5D">https://github.com/aloctavodia/Doing_bayesian_data_analysis。[5]</a></p>
-<p>90</p>
-<p>2.6 练习</p>
-<p>（1）用其他先验尝试网格算法。例如，尝试将代码改成 prior
-=(grid&lt;=0.5).astype(int) 或者 prior=abs(grid-
-0.5)，或者你可以将其定义成你所想的任意形式。换一些其他数据
-重复实验，例如增加总的样本数或者将样本数根据你看到的正面朝上的次数适当调整。</p>
-<p>（2）在我们估计 p 值的代码中，将 N 固定，重复多次实验。注意由于我们使用了随机数，每次的结果都会不一样，不过检查一下可以
-发现误差应该差不多。尝试把 N 调大然后再重跑，你能猜出 N 与误差
-之间的关系吗？你可能需要修改下代码，将 N 作为一个参数传给计算误差的函数，这样方便估计 N 与误差之间的关系。对于相同的 N 值，
-可以重复跑多次后计算误差的平均值和这些误差的标准差，然后使用
-matplotlib 中的 errobar() 函数将它们画出来。可以尝试一些类似
-100、1000、10000 的数作为 N 的值（每次提高一个数量级）。</p>
-<p>（3）修改传给 metropolis 函数的参数。尝试使用第 1 章中用到
-的先验。将这段代码与网格计算进行比较，看一下哪部分需要修改后才能用于解决贝叶斯推断问题。</p>
-<p>（4）将前一题的答案与下面链接中 ThomasWiechi 的代码进行比较：<a class="reference external" href="http://twiecki.github.io/blog/2015/11/10/mcmc-sampling/%E3%80%82">http://twiecki.github.io/blog/2015/11/10/mcmc-sampling/。</a></p>
-<p>（5）修改 beta 先验分布的参数以匹配前 1 章中的分布，试比较 2 者的结果。将贝塔分布替换成区间为 [0,1] 的均匀分布，其结果是否与 beta(a=1,b=1) 相等？采样速度相比是更快？还是更慢？或者是相等？如果换成更大的区间，比如 [-1,2] 呢？模型是否能正常运行？你</p>
-<p>91</p>
-<p>得到的错误是什么意思？如果你不调用 find_MAP () 函数的话呢？（记得将 sample 函数的第 1 个参数也去掉，如果你是在
-Jupyter/I Python 记事本中运行代码，尤其需要注意这点。）</p>
-<p>（6）修改退化的数量。尝试将退化的数量修改为 0 或者 500，还
-可以尝试不用 find_MAP () 函数，结果的差别有多大？提示：这里采
-样的模型非常简单，记住该练习，后面在其他章节中我们还会在更复杂的模型上进行尝试。</p>
-<p>（7）使用自己的数据。用你自己感兴趣的数据重新跑一边本章的内容，该练习适用于本书剩余的所有章节。</p>
-<p>（8）阅读 PyMC3 文档中的煤矿灾变模型：http://pymc-
-<a class="reference external" href="http://devs.github.io/">devs.github.io/</a> PyMC3 /notebooks/getting_started.html#Case-study-2:-Coal-mining-disasters，试着自己实现并运行该模型。</p>
-<p>除了每章最后的练习之外，你还可以将已经学到的内容应用到你感兴趣的问题上。也许，你需要重新定义你的问题，或者需要扩展或者修改你已经学到的模型。试着修改模型，如果你觉得该任务已经超出了你实际掌握的部分，那么先将问题记下来，等读完本书其余章节后再回过头来重新思考这些问题。如果最后本书仍然无法解决你的问题，那么你可以查看下 PyMC3 的例子（http://pymc-
-<a class="reference external" href="http://devs.github.io/">devs.github.io/</a> PyMC3 /examples.html），或者在 PyMC3 的论坛
-（<a class="reference external" href="https://discourse.pymc.io">https://discourse.pymc.io</a>）上提问。</p>
-<p>[1] 可阅读 <a class="reference external" href="https://zh.wikipedia.org/wiki/%E7%BB%B4%E6%95%B0%E7%81%BE%E9%9A%BE%EF%BC%8C%E4%BA%86%E8%A7%A3%E6%9B%B4%E5%A4%9A%E4%BF%A1%E6%81%AF%E3%80%82%E2%80%94%E2%80%94%E8%AF%91%E8%80%85%E6%B3%A8">https://zh.wikipedia.org/wiki/维数灾难，了解更多信息。——译者注</a></p>
-<p>[2] 该文章 notebook 形式的翻译见</p>
-<p>92</p>
-<p><a class="reference external" href="https://github.com/findmyway/Bayesian-Analysis-with-">https://github.com/findmyway/Bayesian-Analysis-with-</a>
-Python /blob/master/MCMC-sampling-for-dummies.ipynb。——译者注</p>
-<p>[3] “球状奶牛”起源于一个物理学家的笑话，具体含义可自行搜索维基百科。——译者注</p>
-<p>[4] 此处已根据原书的勘误更正。——译者注</p>
-<p>[5] 第 2 版也有人转成了 Python ，
-<a class="reference external" href="https://github.com/JWarmenhoven/DBDA-">https://github.com/JWarmenhoven/DBDA-</a> Python 。——译者注</p>
+<div class="section" id="id22">
+<h2>2.7 练习<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+<p>（1）对于本章的第一个模型，将高斯分布的先验均值修改为一个经验性均值，用几个对应的标准差多跑几遍，观察推断过程对这些变化的鲁棒性/敏感性如何。你觉得用一个没有限制上下界的高斯分布对有上下界的数据建模的效果怎样？记住我们说过数据不可能大于 100 或者小于 0。</p>
+<p>（2）利用第一个例子中的数据，分别在包含和不包含异常值情况下，计算出经验均值和标准差。将结果与使用高斯分布和 <span class="math notranslate nohighlight">\(t\)</span> 分布的贝叶斯估计进行比较，增加更多异常值并重复该过程。</p>
+<p>（3）修改小费例子中的模型，使其对于异常点更鲁棒。分别尝 试对所有组使用一个共享的 <span class="math notranslate nohighlight">\(\nu\)</span> 和单独为每个组设置一个 <span class="math notranslate nohighlight">\(\nu\)</span> ，最后对这 3 个模型进行后验预测检查。</p>
+<p>（4）直接从后验中计算出概率优势（先不要计算 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code>），你可以用 <code class="docutils literal notranslate"><span class="pre">sample_ppc()</span></code> 函数从每个组中获取一个采样值。对比这样做与基于正态假设的计算是否不同？并对结果做出解释。</p>
+<p>（5）重复水质对比的例子，不过不用多层模型，而是使用一个均匀分布（比如 ）。比较两种模型的结果。</p>
+<p>（6）在小费的例子中，对一个星期中的不同天使用部分池化操作，构建一个多层模型，将结果与不使用多层模型的结果进行对比。</p>
+<p>（7）重复本章中的所有例子，用 <code class="docutils literal notranslate"><span class="pre">findMAP()</span></code> 函数的返回值来初始化采样。看是否能得到相同的推断结果。同时看一下 <code class="docutils literal notranslate"><span class="pre">find_MAP</span> <span class="pre">()</span></code> 函数对退化过程的数量以及推断的速度有什么影响。
+（8）对所有模型进行诊断测试并采取相应措施，比如，如果有 必要，增加采样次数。</p>
+<p>（9）对本章中的至少一个模型使用你自己的数据并运行。牢记第 1 章中提到的构建模型的 3 个步骤。</p>
 </div>
 </div>
 
