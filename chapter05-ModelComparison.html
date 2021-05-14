@@ -53,7 +53,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="第6章 混合模型" href="chapter06-MixtureModels.html" />
+    <link rel="next" title="第 6 章 混合模型" href="chapter06-MixtureModels.html" />
     <link rel="prev" title="第 4 章 广义线性回归模型与分类任务" href="chapter04-GeneralizedLinearRegression.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -94,7 +94,7 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="chapter01-ThinkingProbabilistically.html">
-   第1章 概率思维
+   第 1 章 概率思维
   </a>
  </li>
  <li class="toctree-l1">
@@ -119,7 +119,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter06-MixtureModels.html">
-   第6章 混合模型
+   第 6 章 混合模型
   </a>
  </li>
  <li class="toctree-l1">
@@ -474,19 +474,19 @@
 </ul>
 <div class="section" id="cross-validation">
 <h4>（1） 交叉验证（Cross-validation）<a class="headerlink" href="#cross-validation" title="Permalink to this headline">¶</a></h4>
-<p>交叉验证是一种简单且在大多数情况下有效的解决方案，可以在不遗漏数据的情况下评估模型。此过程汇总在下图中。我们把数据分成大致相等的 <span class="math notranslate nohighlight">\(K\)</span> 个部分，用其中 <span class="math notranslate nohighlight">\(K-1\)</span> 部分来训练模型 <span class="math notranslate nohighlight">\(A_1\)</span>，剩下的一部分用来测试模型；然后，从训练集中重新选择不同的 <span class="math notranslate nohighlight">\(K-1\)</span> 部分用于训练模型 <span class="math notranslate nohighlight">\(A_2\)</span>，并用剩余部分测试模型；如此直到完成所有 <span class="math notranslate nohighlight">\(K\)</span> 轮，得到模型 <span class="math notranslate nohighlight">\(A_K\)</span>；然后将结果 <span class="math notranslate nohighlight">\(A\)</span> 求平均。这就是所谓的 <code class="docutils literal notranslate"><span class="pre">K-折交叉验证</span></code> 。当 <span class="math notranslate nohighlight">\(K\)</span> 等于数据点的数量时，就是所谓的 <code class="docutils literal notranslate"><span class="pre">留一法交叉验证(LOOCV)</span></code>。有时，在执行 <code class="docutils literal notranslate"><span class="pre">LOOCV</span></code> 时，如果数据点数量太大，则轮数可能会少于数据点总数：</p>
+<p>交叉验证是一种简单且在大多数情况下有效的解决方案，可以在不遗漏数据的情况下评估模型。此过程汇总在下图中。我们把数据分成大致相等的 <span class="math notranslate nohighlight">\(K\)</span> 个部分，用其中 <span class="math notranslate nohighlight">\(K-1\)</span> 部分来训练模型 <span class="math notranslate nohighlight">\(A_1\)</span>，剩下的一部分用来测试模型；然后，从训练集中重新选择不同的 <span class="math notranslate nohighlight">\(K-1\)</span> 部分用于训练模型 <span class="math notranslate nohighlight">\(A_2\)</span>，并用剩余部分测试模型；如此直到完成所有 <span class="math notranslate nohighlight">\(K\)</span> 轮，得到模型 <span class="math notranslate nohighlight">\(A_K\)</span>；然后将结果 <span class="math notranslate nohighlight">\(A\)</span> 求平均。这就是所谓的 <code class="docutils literal notranslate"><span class="pre">K-折交叉验证</span></code> 。当 <span class="math notranslate nohighlight">\(K\)</span> 等于数据点的数量时，就是所谓的 <code class="docutils literal notranslate"><span class="pre">留一法交叉验证</span> <span class="pre">(LOOCV)</span></code>。有时，在执行 <code class="docutils literal notranslate"><span class="pre">LOOCV</span></code> 时，如果数据点数量太大，则轮数可能会少于数据点总数：</p>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210512112629_82.webp" />
 图 5.7</p>
 </center>
-<p>交叉验证是机器学习从业者的谋生之本，有关更多细节，可以阅读Sebastian Raschka的《Python Machine Learning》一书，或Jack Vanderplas的《Python Data Science Handbook》。</p>
+<p>交叉验证是机器学习从业者的谋生之本，有关更多细节，可以阅读 Sebastian Raschka 的《Python Machine Learning》一书，或 Jack Vanderplas 的《Python Data Science Handbook》。</p>
 <p>交叉验证是一个非常简单而且强大的思想，不过对于某些模型或者某些量很大的数据而言，交叉验证的计算量可能超出能接受的范围。许多人尝试提出了一些其他更容易计算的量，来得到近似交叉验证的结果，或者应用到不能直接使用交叉验证的情况，如信息量准则。</p>
 </div>
 <div class="section" id="id8">
 <h4>（2） 信息量准则<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
 <p>信息量准则是一系列用来比较模型对数据拟合程度的方法，这类方法引入了一个惩罚项来平衡模型的复杂度。换句话说，信息量准则形式化地表示了我们在本章开头建立的一些直觉，用一种合适的方式平衡模型对数据的解释能力和模型的复杂程度。这些衡量方式的推导过程与信息论相关，不过这超出了本书的范围，我们只从实用的角度去理解这些概念。</p>
-<p><strong>公式1：Log 似然与偏差</strong></p>
-<p>一种衡量模型对数据的拟合程度的方法是计算模型预测结果与真实数据之间的均方差:</p>
+<p><strong>公式 1：Log 似然与偏差</strong></p>
+<p>一种衡量模型对数据的拟合程度的方法是计算模型预测结果与真实数据之间的均方差：</p>
 <div class="math notranslate nohighlight">
 \[
 \frac{1}{n} \sum_{i=1}^{n}\left(y_{i}-\mathrm{E}\left(y_{i} \mid \theta\right)\right)^{2} 
@@ -508,16 +508,16 @@
 <li><p>偏差平方和衡量的是样本内的模型准确率，因而复杂模型通常会比简单模型的偏差平方和小，此时需要给复杂模型加入惩罚项。</p></li>
 </ul>
 <p>下面我们将学习几个不同的信息量准则方法，它们的共同点是都使用了偏差平方和及正则项，区别在于偏差平方和和惩罚项的计算方式不同。</p>
-<p><strong>公式2：AIC 信息量准则</strong></p>
+<p><strong>公式 2：AIC 信息量准则</strong></p>
 <p>AIC 信息量准则（Akaike Information Criterion）是一个广泛应用的信息量准则，其定义如下：</p>
 <div class="math notranslate nohighlight">
 \[
 A I C=-2 \sum_{i=1}^{n} \log p\left(y_{i} \mid \hat{\theta}_{m l e}\right)+2 p A I C 
 \]</div>
-<p>其中, <span class="math notranslate nohighlight">\(pAIC\)</span> 表示参数的个数， <span class="math notranslate nohighlight">\(\hat{\theta}_{m l e}\)</span> 时 <span class="math notranslate nohighlight">\(\theta\)</span> 的最大似然估计。最大似然估计在非贝叶斯方法中经常用到，等价于使用贝叶斯方法中的均匀先验的最大后验估计。注意这里 <span class="math notranslate nohighlight">\(\hat{\theta}_{mle}\)</span> 是点估计而不是分布。</p>
+<p>其中，<span class="math notranslate nohighlight">\(pAIC\)</span> 表示参数的个数， <span class="math notranslate nohighlight">\(\hat{\theta}_{m l e}\)</span> 时 <span class="math notranslate nohighlight">\(\theta\)</span> 的最大似然估计。最大似然估计在非贝叶斯方法中经常用到，等价于使用贝叶斯方法中的均匀先验的最大后验估计。注意这里 <span class="math notranslate nohighlight">\(\hat{\theta}_{mle}\)</span> 是点估计而不是分布。</p>
 <p>同样，这里的 −2 是出于历史原因。从实用角度来看，上式中的第 1 项考虑的是模型对数据的拟合效果，第 2 项衡量的是模型复杂度。因此，如果两个模型对数据的解释能力相同，但是其中一个比另一个的参数更多的话，AIC 会告诉我们应该选择参数更少的那个。</p>
 <p>AIC 对于非贝叶斯方法来说很有用，但是对于贝叶斯方法可能会有些问题。原因之一是 AIC 没有使用后验，因而将估计中的不确定信息丢失了，此外假设用到的是均匀先验，因而该准则对于使用非均匀先验的模型来说不太合适。在使用非均匀先验时，不能简单地计算模型中参数的个数。合理使用非均匀先验相当于对模型使用了正则，因而会降低过拟合的可能，也就是说带正则模型的有效参数个数比真实参数个数要少。类似的情况在多层模型中同样会出现，毕竟多层模型可以看作是从数据中学习先验的有效方式。</p>
-<p><strong>公式3：WAIC 通用信息量准则</strong>
+<p><strong>公式 3：WAIC 通用信息量准则</strong>
 通用信息量准则（WidelyAvailableInformationCriterion，WAIC）是 <code class="docutils literal notranslate"><span class="pre">AIC</span></code> 的完全贝叶斯版本。与 <code class="docutils literal notranslate"><span class="pre">AIC</span></code> 一样，<code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 有两个项：一项衡量模型对数据的拟合效果；另外一项衡量模型的复杂程度。</p>
 <div class="math notranslate nohighlight">
 \[
@@ -740,7 +740,7 @@ sd=np.array([10,0.1,0.1,0.1,0.1]) 呢？</p>
         <div class='prev-next-bottom'>
             
     <a class='left-prev' id="prev-link" href="chapter04-GeneralizedLinearRegression.html" title="previous page">第 4 章 广义线性回归模型与分类任务</a>
-    <a class='right-next' id="next-link" href="chapter06-MixtureModels.html" title="next page">第6章 混合模型</a>
+    <a class='right-next' id="next-link" href="chapter06-MixtureModels.html" title="next page">第 6 章 混合模型</a>
 
         </div>
         

@@ -54,7 +54,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="第 3 章 线性回归模型的贝叶斯视角" href="chapter03-ModellingwithLinearRegression.html" />
-    <link rel="prev" title="第1章 概率思维" href="chapter01-ThinkingProbabilistically.html" />
+    <link rel="prev" title="第 1 章 概率思维" href="chapter01-ThinkingProbabilistically.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -94,7 +94,7 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="chapter01-ThinkingProbabilistically.html">
-   第1章 概率思维
+   第 1 章 概率思维
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -119,7 +119,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter06-MixtureModels.html">
-   第6章 混合模型
+   第 6 章 混合模型
   </a>
  </li>
  <li class="toctree-l1">
@@ -363,15 +363,68 @@
 <p>上一章对贝叶斯统计有了基本了解，本章将学习如何使用计算工具构建概率模型。我们将学习使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 进行概率编程。其基本思想是使用代码指定模型，然后以或多或少自动的方式求解它们。选择编程的背后原因是：许多模型无法得到闭合的解析解，因此只能使用数值方法来求解。学习概率编程的另一个原因是，现代贝叶斯统计主要是通过编写代码来完成的，既然已经了解 <code class="docutils literal notranslate"><span class="pre">Python</span></code> ，为什么还要用另一种方式呢？概率编程提供了一种构建和求解复杂模型的有效方法，使我们可以更多地关注模型设计、评估和解释，而更少地关注数学或计算细节。在本章以及本书的其余部分中，我们将使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 和 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> ， <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 是一个非常灵活的概率编程 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 库，<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 是一个新的 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 库，它将帮助我们解释概率模型的结果。了解 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 和 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 还将帮助我们以更实际的方式学习先进的贝叶斯概念。</p>
 <p>本章涵盖以下主题：</p>
 <ul class="simple">
-<li><p>概率编程；</p></li>
-<li><p>推断引擎；</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 指南；</p></li>
-<li><p>重温抛硬币问题；</p></li>
-<li><p>模型检查和诊断；</p></li>
-<li><p>高斯模型和学生 <span class="math notranslate nohighlight">\(t\)</span> 模型；</p></li>
-<li><p>分组比较和有效容量；</p></li>
-<li><p>分层模型和收缩。</p></li>
+<li><p>概率编程</p></li>
+<li><p>推断引擎</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 指南</p></li>
+<li><p>重温抛硬币问题</p></li>
+<li><p>模型检查和诊断</p></li>
+<li><p>高斯模型和学生 <span class="math notranslate nohighlight">\(t\)</span> 模型</p></li>
+<li><p>分组比较和有效容量</p></li>
+<li><p>分层模型和收缩</p></li>
 </ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><a class="reference external" href="#%E7%AC%AC-2-%E7%AB%A0-%E6%A6%82%E7%8E%87%E7%BC%96%E7%A8%8B">第 2 章 概率编程</a></p>
+<ul>
+<li><p><a class="reference external" href="#--27-%E7%BB%83%E4%B9%A0">- 2.7 练习</a></p></li>
+<li><p><a class="reference external" href="#21-%E6%A6%82%E7%8E%87%E7%BC%96%E7%A8%8B">2.1 概率编程</a></p></li>
+<li><p><a class="reference external" href="#22-%E7%94%A8-pymc3-%E5%81%9A%E5%90%8E%E9%AA%8C%E6%8E%A8%E6%96%AD">2.2 用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 做后验推断</a></p>
+<ul>
+<li><p><a class="reference external" href="#221-%E5%BB%BA%E7%AB%8B%E6%A8%A1%E5%9E%8B">2.2.1 建立模型</a></p></li>
+<li><p><a class="reference external" href="#222-%E6%89%A7%E8%A1%8C%E6%8E%A8%E6%96%AD">2.2.2 执行推断</a></p></li>
+<li><p><a class="reference external" href="#223-%E8%AF%8A%E6%96%AD%E6%8E%A8%E6%96%AD%E7%BB%93%E6%9E%9C">2.2.3 诊断推断结果</a></p>
+<ul>
+<li><p><a class="reference external" href="#2231-%E8%AF%8A%E6%96%AD%E5%B7%A5%E5%85%B7%E5%92%8C%E6%96%B9%E6%B3%95">2.2.3.1 诊断工具和方法</a></p></li>
+<li><p><a class="reference external" href="#2232-%E5%B8%B8%E7%94%A8%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95">2.2.3.2 常用解决办法</a></p></li>
+<li><p><a class="reference external" href="#2233-%E6%94%B6%E6%95%9B%E6%80%A7%E9%97%AE%E9%A2%98">2.2.3.3 收敛性问题</a></p></li>
+<li><p><a class="reference external" href="#2234-%E8%87%AA%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98">2.2.3.4 自相关问题</a></p></li>
+<li><p><a class="reference external" href="#2235-%E6%9C%89%E6%95%88%E5%90%8E%E9%AA%8C%E9%87%87%E6%A0%B7%E6%AC%A1%E6%95%B0">2.2.3.5 有效后验采样次数</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#224-%E5%9F%BA%E4%BA%8E%E5%90%8E%E9%AA%8C%E6%8E%A8%E6%96%AD%E7%9A%84%E5%86%B3%E7%AD%96">2.2.4 基于后验推断的决策</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#23-%E9%9A%8F%E5%A4%84%E5%8F%AF%E8%A7%81%E7%9A%84%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83">2.3 随处可见的高斯分布</a></p>
+<ul>
+<li><p><a class="reference external" href="#231-%E9%AB%98%E6%96%AF%E6%8E%A8%E6%96%AD">2.3.1 高斯推断</a></p></li>
+<li><p><a class="reference external" href="#232-%E6%9B%B4%E7%A8%B3%E5%81%A5%E7%9A%84%E6%8E%A8%E6%96%AD">2.3.2 更稳健的推断</a></p>
+<ul>
+<li><p><a class="reference external" href="#1%E5%89%94%E9%99%A4%E5%BC%82%E5%B8%B8%E5%80%BC">（1）剔除异常值</a></p></li>
+<li><p><a class="reference external" href="#2%E8%B0%83%E6%95%B4%E6%A8%A1%E5%9E%8B">（2）调整模型</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#24-%E7%BB%84%E9%97%B4%E6%AF%94%E8%BE%83%E4%B8%8E%E5%81%87%E8%AE%BE%E6%A3%80%E9%AA%8C">2.4 组间比较与假设检验</a></p>
+<ul>
+<li><p><a class="reference external" href="#241-cohens-d">2.4.1 Cohen’s d</a></p></li>
+<li><p><a class="reference external" href="#242-%E4%BC%98%E5%8A%BF%E6%A6%82%E7%8E%87">2.4.2 优势概率</a></p></li>
+<li><p><a class="reference external" href="#243-%E5%B0%8F%E8%B4%B9%E6%95%B0%E6%8D%AE%E9%9B%86">2.4.3 小费数据集</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#25-%E5%88%86%E5%B1%82%E6%A8%A1%E5%9E%8B">2.5 分层模型</a></p>
+<ul>
+<li><p><a class="reference external" href="#251-%E4%BB%80%E4%B9%88%E6%98%AF%E5%88%86%E5%B1%82%E6%A8%A1%E5%9E%8B">2.5.1 什么是分层模型？</a></p></li>
+<li><p><a class="reference external" href="#252-%E6%94%B6%E7%BC%A9">2.5.2 收缩</a></p></li>
+<li><p><a class="reference external" href="#253-%E5%8F%A6%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90">2.5.3 另一个例子</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#26-%E6%80%BB%E7%BB%93">2.6 总结</a></p></li>
+<li><p><a class="reference external" href="#27-%E7%BB%83%E4%B9%A0">2.7 练习</a></p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
 <div class="section" id="id2">
 <h2>2.1 概率编程<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>贝叶斯统计在概念上非常简单：我们有已知和未知的量；我们使用贝叶斯定理将后者以前者为条件。如果我们幸运的话，该过程将减少未知量的不确定性。通常，我们把已知量称为<strong>数据</strong>并将其视为常数，将未知量称为参数并将其视为概率分布。在更正式的术语中，我们给未知量分配先验概率分布；然后利用贝叶斯定理将其先验概率分布转化为后验分布。尽管概念简单，但全概率公式常常导致难以解析的表达式。多年来，该问题是阻碍贝叶斯方法广泛采用的主要原因之一。</p>
@@ -403,7 +456,7 @@
 \]</div>
 <div class="math notranslate nohighlight">
 \[
-y \sim \operatorname{Bern}(p=\theta) \tag{2.1}
+y \sim \operatorname{Bern}(p=\theta) \tag{式2.1}
 \]</div>
 <p>该统计模型与 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的语法几乎一一对应。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">our_first_model</span><span class="p">:</span>
@@ -454,7 +507,7 @@ NUTS: [θ]
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504200055_94.webp" /></p>
 <p>通过上图所示的摘要数据，可以得到均值、标准差和 <code class="docutils literal notranslate"> <span class="pre">94%</span> <span class="pre">HPD</span></code> 区间（<code class="docutils literal notranslate"><span class="pre">HPD</span> <span class="pre">3%</span></code>和 <code class="docutils literal notranslate"><span class="pre">HPD</span> <span class="pre">97%</span></code> )。正如在第一章“概率思维”中所讨论，可以使用这些数字来解释和报告贝叶斯推断的结果。后两个指标与诊断样本相关。详细信息请参阅第 8 章-推断引擎。</p>
-<p>另一种直观总结后验的方法是使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 附带的 <code class="docutils literal notranslate"><span class="pre">plot_posterior</span></code> 函数。默认情况下，<code class="docutils literal notranslate"><span class="pre">plot_posterior</span></code> 为离散变量显示直方图，为连续变量显示 <code class="docutils literal notranslate"><span class="pre">KDE</span></code> 。我们还获得了分布的均值（可以使用 <code class="docutils literal notranslate"><span class="pre">point_estimate</span></code> 参数指定中位数或其他模式），<code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">HPD</span></code> 作为图底部的一条黑线。可以使用 <code class="docutils literal notranslate"><span class="pre">credible_interval</span></code> 参数为 <code class="docutils literal notranslate"><span class="pre">HPD</span></code> 设置不同的间隔值。此类型的图由 John K.Kruschke 在其著作《Doing Bayesian Data Analysis》中引入。</p>
+<p>另一种直观总结后验的方法是使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 附带的 <code class="docutils literal notranslate"><span class="pre">plot_posterior</span></code> 函数。默认情况下，<code class="docutils literal notranslate"><span class="pre">plot_posterior</span></code> 为离散变量显示直方图，为连续变量显示 <code class="docutils literal notranslate"><span class="pre">KDE</span></code> 。我们还获得了分布的均值（可以使用 <code class="docutils literal notranslate"><span class="pre">point_estimate</span></code> 参数指定中位数或其他模式），<code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">HPD</span></code> 作为图底部的一条黑线。可以使用 <code class="docutils literal notranslate"><span class="pre">credible_interval</span></code> 参数为 <code class="docutils literal notranslate"><span class="pre">HPD</span></code> 设置不同的间隔值。此类型的图由 <code class="docutils literal notranslate"><span class="pre">John</span> <span class="pre">K.Kruschke</span></code> 在其著作《 <code class="docutils literal notranslate"><span class="pre">Doing</span> <span class="pre">Bayesian</span> <span class="pre">Data</span> <span class="pre">Analysis</span></code> 》中引入。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -594,7 +647,7 @@ NUTS: [θ]
 \begin{align}
 \mu &amp;\sim U(l, h) \notag \\\\
 \sigma &amp;\sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \notag \\\\
-y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{2.2}
+y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{式2.2}
 \end{align}
 \end{split}\]</div>
 <p>其中， <span class="math notranslate nohighlight">\(\mu\)</span> 来自上下界分别为 <span class="math notranslate nohighlight">\(l\)</span> 和 <span class="math notranslate nohighlight">\(h\)</span> 的均匀分布， <span class="math notranslate nohighlight">\(\sigma\)</span> 来自标准差为 <span class="math notranslate nohighlight">\(\sigma_\sigma\)</span> 的半正态分布。半正态分布和普通正态分布很像，不过只包含正数，看起来就好像将普通的正态分布沿着均值对折了。通过从正态分布中采样，然后取绝对值，可以获取半正态分布的样本。最后，在我们的模型中，数据 <span class="math notranslate nohighlight">\(y\)</span> 来自参数分别为 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 的正态分布，可以用 Kruschke 风格的图将其画出来：</p>
@@ -696,7 +749,7 @@ y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{2.2}
 \mu &amp;\sim U(l, h) \notag\\\\
 \sigma &amp;\sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \notag\\\\
 \nu &amp;\sim \operatorname{Exp}(\lambda) \notag\\\\
- y &amp;\sim \mathcal{T}(\mu, \sigma, \nu) \tag{2.3}
+ y &amp;\sim \mathcal{T}(\mu, \sigma, \nu) \tag{式2.3}
  \end{align}
 \end{split}\]</div>
 <p>此模型与高斯模型的主要区别是：似然调整为 <span class="math notranslate nohighlight">\(t\)</span> 分布，由于 <span class="math notranslate nohighlight">\(t\)</span> 分布多了一个新的参数 <span class="math notranslate nohighlight">\(\nu\)</span>，需要为其增加一个先验。这里计划采用均值为 30 的指数分布。通过上图可以看出，当 <span class="math notranslate nohighlight">\(\nu = 30\)</span> 时， <span class="math notranslate nohighlight">\(t\)</span> 分布看起来与高斯分布很相似。 从图中也可以看出， <span class="math notranslate nohighlight">\(\nu\)</span> 在 30 附近是一个比较适中的值，既可以调大也可以调小，因此属于弱信息先验。我们的模型可以表示如下：</p>
@@ -761,7 +814,7 @@ y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{2.2}
 <p><code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 是一种用来描述效应值的常见方式：</p>
 <div class="math notranslate nohighlight">
 \[
-\frac{\mu_{2}-\mu_{1}}{\sqrt{\frac{\sigma_{2}^{2}+\sigma_{1}^{2}}{2}}} \tag{2.4}
+\frac{\mu_{2}-\mu_{1}}{\sqrt{\frac{\sigma_{2}^{2}+\sigma_{1}^{2}}{2}}} \tag{式2.4}
 \]</div>
 <p>根据该表达式，效应大小是在合并两组标准差的情况下，各组均值相对于合并标准差的差异。因为可以得到均值和标准差的后验分布，所以可以计算 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 的后验分布，而不是某个具体值。当然，如果只需要或只想要一个值，可以计算  <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code>  后验的平均值，得到一个  <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 值。通常在计算合并标准差时，会显式考虑每组的样本量，但前面的公式省略样本量，主要是因为从后验得到标准偏差值中，已经体现了其不确定性。</p>
 <div class="admonition note">
@@ -776,7 +829,7 @@ y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{2.2}
 <p>优势概率是表示效应值的另一种方式，描述的是从一组数据中取出的一个点大于从另外一组中取出的点的概率。假设两个组中数据的分布都是正态分布，我们可以通过以下表达式从 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 中得到优势概率：</p>
 <div class="math notranslate nohighlight">
 \[
-ps=\Phi\left(\frac{\delta}{\sqrt{2}}\right)\tag{2.5}
+ps=\Phi\left(\frac{\delta}{\sqrt{2}}\right)\tag{式2.5}
 \]</div>
 <p>这里， <span class="math notranslate nohighlight">\(\Phi \)</span> 是累积正态分布， <span class="math notranslate nohighlight">\(\delta \)</span> 是 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code>。我们可以计算优势概率的点估计，也可以计算值的整个后验分布。如果同意正态假设，可以使用该公式从 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 中计算得到优势概率。否则，当有后验样本时，可通过后验样本计算它。这是马尔可夫链蒙特卡罗 (<code class="docutils literal notranslate"><span class="pre">MCMC</span></code>) 方法的一个优点：一旦从后验获得样本，就可以从它计算出很多量。</p>
 </div>
@@ -879,7 +932,7 @@ ps=\Phi\left(\frac{\delta}{\sqrt{2}}\right)\tag{2.5}
 \alpha &amp;=\mu * \kappa \\\\
 \beta &amp;=(1-\mu) * \kappa \\\\
 \theta_{i} &amp; \sim \operatorname{Beta}\left(\alpha_{i}, \beta_{i}\right) \\\\
-y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right) \tag{2.6}
+y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right) \tag{式2.6}
 \end{align}
 \end{split}\]</div>
 <p>注意，使用子索引 <span class="math notranslate nohighlight">\(i\)</span> 来指示模型中某些组的参数具有不同的值。也就是说，并非所有参数都在组间共享值。使用 Kruschke 图，很明显新模型有一个额外的级别。</p>
@@ -903,7 +956,10 @@ y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right) \tag{2.6}
 <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_h</span><span class="p">)</span>
 </pre></div>
 </div>
+<center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504181604_78.webp" style="zoom:67%;" />
+<p>图 2.20</p>
+</center>
 </div>
 <div class="section" id="id22">
 <h3>2.5.2 收缩<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
@@ -1044,7 +1100,7 @@ y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right) \tag{2.6}
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="chapter01-ThinkingProbabilistically.html" title="previous page">第1章 概率思维</a>
+    <a class='left-prev' id="prev-link" href="chapter01-ThinkingProbabilistically.html" title="previous page">第 1 章 概率思维</a>
     <a class='right-next' id="next-link" href="chapter03-ModellingwithLinearRegression.html" title="next page">第 3 章 线性回归模型的贝叶斯视角</a>
 
         </div>

@@ -6,14 +6,46 @@
 
 本章涵盖以下主题：
 
-- 概率编程；
-- 推断引擎；
-- `PyMC3` 指南；
-- 重温抛硬币问题；
-- 模型检查和诊断；
-- 高斯模型和学生 $t$ 模型；
-- 分组比较和有效容量；
-- 分层模型和收缩。
+- 概率编程
+- 推断引擎
+- `PyMC3` 指南
+- 重温抛硬币问题
+- 模型检查和诊断
+- 高斯模型和学生 $t$ 模型
+- 分组比较和有效容量
+- 分层模型和收缩
+  
+---
+- [第 2 章 概率编程](#第-2-章-概率编程)
+  - [- 2.7 练习](#--27-练习)
+  - [2.1 概率编程](#21-概率编程)
+  - [2.2 用 `PyMC3` 做后验推断](#22-用-pymc3-做后验推断)
+    - [2.2.1 建立模型](#221-建立模型)
+    - [2.2.2 执行推断](#222-执行推断)
+    - [2.2.3 诊断推断结果](#223-诊断推断结果)
+      - [2.2.3.1 诊断工具和方法](#2231-诊断工具和方法)
+      - [2.2.3.2 常用解决办法](#2232-常用解决办法)
+      - [2.2.3.3 收敛性问题](#2233-收敛性问题)
+      - [2.2.3.4 自相关问题](#2234-自相关问题)
+      - [2.2.3.5 有效后验采样次数](#2235-有效后验采样次数)
+    - [2.2.4 基于后验推断的决策](#224-基于后验推断的决策)
+  - [2.3 随处可见的高斯分布](#23-随处可见的高斯分布)
+    - [2.3.1 高斯推断](#231-高斯推断)
+    - [2.3.2 更稳健的推断](#232-更稳健的推断)
+      - [（1）剔除异常值](#1剔除异常值)
+      - [（2）调整模型](#2调整模型)
+  - [2.4 组间比较与假设检验](#24-组间比较与假设检验)
+    - [2.4.1 Cohen's d](#241-cohens-d)
+    - [2.4.2 优势概率](#242-优势概率)
+    - [2.4.3 小费数据集](#243-小费数据集)
+  - [2.5 分层模型](#25-分层模型)
+    - [2.5.1 什么是分层模型？](#251-什么是分层模型)
+    - [2.5.2 收缩](#252-收缩)
+    - [2.5.3 另一个例子](#253-另一个例子)
+  - [2.6 总结](#26-总结)
+  - [2.7 练习](#27-练习)
+---
+
 
 ## 2.1 概率编程
 
@@ -52,7 +84,7 @@ $$
 \theta \sim \operatorname{Beta}(\alpha, \beta) 
 $$
 $$
-y \sim \operatorname{Bern}(p=\theta) \tag{2.1}
+y \sim \operatorname{Bern}(p=\theta) \tag{式2.1}
 $$
 
 该统计模型与 `PyMC3` 的语法几乎一一对应。
@@ -120,7 +152,7 @@ az.summary(trace)
 
 通过上图所示的摘要数据，可以得到均值、标准差和 ` 94% HPD` 区间（`HPD 3%`和 `HPD 97%` )。正如在第一章“概率思维”中所讨论，可以使用这些数字来解释和报告贝叶斯推断的结果。后两个指标与诊断样本相关。详细信息请参阅第 8 章-推断引擎。
 
-另一种直观总结后验的方法是使用 `ArviZ` 附带的 `plot_posterior` 函数。默认情况下，`plot_posterior` 为离散变量显示直方图，为连续变量显示 `KDE` 。我们还获得了分布的均值（可以使用 `point_estimate` 参数指定中位数或其他模式），`94% HPD` 作为图底部的一条黑线。可以使用 `credible_interval` 参数为 `HPD` 设置不同的间隔值。此类型的图由 John K.Kruschke 在其著作《Doing Bayesian Data Analysis》中引入。
+另一种直观总结后验的方法是使用 `ArviZ` 附带的 `plot_posterior` 函数。默认情况下，`plot_posterior` 为离散变量显示直方图，为连续变量显示 `KDE` 。我们还获得了分布的均值（可以使用 `point_estimate` 参数指定中位数或其他模式），`94% HPD` 作为图底部的一条黑线。可以使用 `credible_interval` 参数为 `HPD` 设置不同的间隔值。此类型的图由 `John K.Kruschke` 在其著作《 `Doing Bayesian Data Analysis` 》中引入。
 
 ```python
 az.plot_posterior(trace)
@@ -302,7 +334,7 @@ $$
 \begin{align}
 \mu &\sim U(l, h) \notag \\\\
 \sigma &\sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \notag \\\\
-y &\sim \mathcal{N}(\mu, \sigma) \tag{2.2}
+y &\sim \mathcal{N}(\mu, \sigma) \tag{式2.2}
 \end{align}
 $$
 
@@ -416,7 +448,7 @@ $$
 \mu &\sim U(l, h) \notag\\\\
 \sigma &\sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \notag\\\\
 \nu &\sim \operatorname{Exp}(\lambda) \notag\\\\
- y &\sim \mathcal{T}(\mu, \sigma, \nu) \tag{2.3}
+ y &\sim \mathcal{T}(\mu, \sigma, \nu) \tag{式2.3}
  \end{align}
 $$
 
@@ -504,7 +536,7 @@ plt.xlim(40, 70)
 `Cohen's d` 是一种用来描述效应值的常见方式：
 
 $$
-\frac{\mu_{2}-\mu_{1}}{\sqrt{\frac{\sigma_{2}^{2}+\sigma_{1}^{2}}{2}}} \tag{2.4}
+\frac{\mu_{2}-\mu_{1}}{\sqrt{\frac{\sigma_{2}^{2}+\sigma_{1}^{2}}{2}}} \tag{式2.4}
 $$
 根据该表达式，效应大小是在合并两组标准差的情况下，各组均值相对于合并标准差的差异。因为可以得到均值和标准差的后验分布，所以可以计算 `Cohen's d` 的后验分布，而不是某个具体值。当然，如果只需要或只想要一个值，可以计算  `Cohen's d`  后验的平均值，得到一个  `Cohen's d` 值。通常在计算合并标准差时，会显式考虑每组的样本量，但前面的公式省略样本量，主要是因为从后验得到标准偏差值中，已经体现了其不确定性。
 
@@ -524,7 +556,7 @@ Cohen‘s d是一种测量效应大小的方法，其中均值的差异是通过
 优势概率是表示效应值的另一种方式，描述的是从一组数据中取出的一个点大于从另外一组中取出的点的概率。假设两个组中数据的分布都是正态分布，我们可以通过以下表达式从 `Cohen's d` 中得到优势概率：
 
 $$
-ps=\Phi\left(\frac{\delta}{\sqrt{2}}\right)\tag{2.5}
+ps=\Phi\left(\frac{\delta}{\sqrt{2}}\right)\tag{式2.5}
 $$
 
 这里， $\Phi $ 是累积正态分布， $\delta $ 是 `Cohen's d`。我们可以计算优势概率的点估计，也可以计算值的整个后验分布。如果同意正态假设，可以使用该公式从 `Cohen's d` 中计算得到优势概率。否则，当有后验样本时，可通过后验样本计算它。这是马尔可夫链蒙特卡罗 (`MCMC`) 方法的一个优点：一旦从后验获得样本，就可以从它计算出很多量。
@@ -652,7 +684,7 @@ $$
 \alpha &=\mu * \kappa \\\\
 \beta &=(1-\mu) * \kappa \\\\
 \theta_{i} & \sim \operatorname{Beta}\left(\alpha_{i}, \beta_{i}\right) \\\\
-y_{i} & \sim \operatorname{Bern}\left(\theta_{i}\right) \tag{2.6}
+y_{i} & \sim \operatorname{Bern}\left(\theta_{i}\right) \tag{式2.6}
 \end{align}
 $$
 
@@ -683,8 +715,12 @@ with pm.Model() as model_h:
  trace_h = pm.sample(2000)
 az.plot_trace(trace_h)
 ```
+<center>
 
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504181604_78.webp" style="zoom:67%;" />
+
+图 2.20
+</center>
 
 ### 2.5.2 收缩
 

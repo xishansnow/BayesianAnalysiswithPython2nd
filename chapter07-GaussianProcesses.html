@@ -53,7 +53,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="第6章 混合模型" href="chapter06-MixtureModels.html" />
+    <link rel="prev" title="第 6 章 混合模型" href="chapter06-MixtureModels.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -93,7 +93,7 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="chapter01-ThinkingProbabilistically.html">
-   第1章 概率思维
+   第 1 章 概率思维
   </a>
  </li>
  <li class="toctree-l1">
@@ -118,7 +118,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter06-MixtureModels.html">
-   第6章 混合模型
+   第 6 章 混合模型
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -289,30 +289,6 @@
 <li><p>具有非高斯似然的高斯过程</p></li>
 </ul>
 <hr class="docutils" />
-<p><a class="reference external" href="#%E7%AC%AC-7-%E7%AB%A0-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B">第 7 章 高斯过程</a></p>
-<ul class="simple">
-<li><p><a class="reference external" href="#--78-%E7%BB%83%E4%B9%A0">- 7.8 练习</a></p></li>
-<li><p><a class="reference external" href="#71-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B%E5%92%8C%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%95%B0%E6%8D%AE">7.1 线性模型和非线性数据</a></p></li>
-<li><p><a class="reference external" href="#72-%E5%AF%B9%E5%87%BD%E6%95%B0%E5%BB%BA%E6%A8%A1">7.2 对函数建模</a></p>
-<ul>
-<li><p><a class="reference external" href="#721-%E5%A4%9A%E7%BB%B4%E9%AB%98%E6%96%AF%E4%B8%8E%E5%87%BD%E6%95%B0">7.2.1 多维高斯与函数</a></p></li>
-<li><p><a class="reference external" href="#722-%E5%8D%8F%E6%96%B9%E5%B7%AE%E5%87%BD%E6%95%B0%E4%B8%8E%E6%A0%B8">7.2.2 协方差函数与核</a></p></li>
-<li><p><a class="reference external" href="#723-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B">7.2.3 高斯过程</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference external" href="#73-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B%E5%9B%9E%E5%BD%92">7.3 高斯过程回归</a></p></li>
-<li><p><a class="reference external" href="#74-%E7%A9%BA%E9%97%B4%E8%87%AA%E7%9B%B8%E5%85%B3%E5%9B%9E%E5%BD%92">7.4 空间自相关回归</a></p></li>
-<li><p><a class="reference external" href="#75-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B%E5%88%86%E7%B1%BB">7.5 高斯过程分类</a></p></li>
-<li><p><a class="reference external" href="#76-%E8%80%83%E5%85%8B%E6%96%AF-cox-%E8%BF%87%E7%A8%8B">7.6 考克斯 （Cox） 过程</a></p>
-<ul>
-<li><p><a class="reference external" href="#761-%E7%85%A4%E7%9F%BF%E7%81%BE%E5%AE%B3">7.6.1 煤矿灾害</a></p></li>
-<li><p><a class="reference external" href="#762-%E7%BA%A2%E6%9D%89%E6%95%B0%E6%8D%AE%E9%9B%86">7.6.2 红杉数据集</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference external" href="#77-%E6%80%BB%E7%BB%93">7.7 总结</a></p></li>
-<li><p><a class="reference external" href="#78-%E7%BB%83%E4%B9%A0">7.8 练习</a></p></li>
-</ul>
-<hr class="docutils" />
 <div class="section" id="id2">
 <h2>7.1 线性模型和非线性数据<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>在第3章 “线性回归建模” 和 第4章 “广义线性回归模型” 中，介绍了如何构建一般形式的模型：</p>
@@ -479,23 +455,19 @@ f(x) \sim \mathcal{G} \mathcal{P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\righ
 \]</div>
 <p>这里，<span class="math notranslate nohighlight">\(\mathcal{GP}\)</span> 表示高斯过程分布， <span class="math notranslate nohighlight">\(\mu_x\)</span> 为均值函数， <span class="math notranslate nohighlight">\(K(x,x')\)</span> 为核（或协方差）函数。我们用 <code class="docutils literal notranslate"><span class="pre">函数</span></code> 这个词来表示，在数学上是指均值和协方差都是无限的对象，尽管实践中总是作为有限对象处理。</p>
 <p>如果先验分布是高斯过程分布，且似然是正态分布，那么后验分布也是高斯过程分布，我们可以解析地计算它：</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align}
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
 p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \Sigma) \tag{式7.7}\\
 \mu&amp;=K_{*}^{T} K^{-1} y \tag{式7.8}\\
 \Sigma &amp;=K_{* *}-K_{*}^{T} K^{-1} K_{*} \notag
-\end{align}
-\end{split}\]</div>
+\end{align*}\]</div>
 <p>这里：</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align}
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
 &amp;\text { - } K=K(X, X) \\
 &amp;\text { - } K_{*}=K\left(X_{*}, X\right) \\
 &amp;\text { - } K_{* *}=K\left(X_{*}, X_{*}\right)
-\end{align}
-\end{split}\]</div>
+\end{align*}\]</div>
 <p><span class="math notranslate nohighlight">\(X\)</span> 是观察到的数据点，<span class="math notranslate nohighlight">\(X_*\)</span> 表示测试点；也就是我们希望知道推断函数值的新点。</p>
 <p>像往常一样，PyMC3 自动完成整个推断过程，高斯过程也不例外。因此，让我们继续创建一些数据，然后创建一个 PyMC3 模型：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -635,14 +607,12 @@ p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) df \tag
 </pre></div>
 </div>
 <p>我们要构建的模型是：</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align}
-f &amp;\sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \tag{式7.10}\\\\
-\mu &amp;\sim \exp (\alpha+\beta x+f) \tag{式7.11}\\\\
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+f &amp;\sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \tag{式7.10}\\
+\mu &amp;\sim \exp (\alpha+\beta x+f) \tag{式7.11}\\
 y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12}
-\end{align}
-\end{split}\]</div>
+\end{align*}\]</div>
 <p>这里，我们省略了 <span class="math notranslate nohighlight">\(\alpha\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span> 的前缀，以及核的超先验。 <span class="math notranslate nohighlight">\(x\)</span> 是对数人口， <span class="math notranslate nohighlight">\(y\)</span> 是工具总数。</p>
 <p>与第四章“广义线性模型”中的模型相比，本模型基本上是一个泊松回归模型，此外，线性模型中的 <span class="math notranslate nohighlight">\(f\)</span> 项来自高斯过程。为了计算高斯过程的核，我们将使用距离矩阵 <code class="docutils literal notranslate"><span class="pre">islands_dist</span></code>。通过这种方式，将基于距离矩阵有效地纳入相似性度量。由此，将每个岛屿社会的工具数量建模为其地理相似性的函数，而不是假设仅仅是人口规模的结果，而且岛屿社会间没有接触。</p>
 <p>此模型（包括之前的模型）类似于 PyMC3 中的以下代码：</p>
@@ -678,7 +648,7 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12}
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205145_a6.webp" /></p>
 <p>图 7.9</p>
 </center>
-图 7.9 中的粗线是成对岛屿社会间协方差作为距离函数的后验中位数。我们使用中位数是因为 $\ell$ 和 $η$ 的分布非常不对称。可以看到，平均下来协方差没有那么高，在大约 2000 公里处降到了几乎为 0。细线代表不确定性，可以看到有很大的不确定性。
+<p>图 7.9 中的粗线是成对岛屿社会间协方差作为距离函数的后验中位数。我们使用中位数是因为 <span class="math notranslate nohighlight">\(\ell\)</span> 和 <span class="math notranslate nohighlight">\(η\)</span> 的分布非常不对称。可以看到，平均下来协方差没有那么高，在大约 2000 公里处降到了几乎为 0。细线代表不确定性，可以看到有很大的不确定性。</p>
 <p>您可能会发现，将 <code class="docutils literal notranslate"><span class="pre">model_islands</span></code> 及其计算出的后验与<a class="reference external" href="https:///%E2%80%8B/%E2%80%8Bgithub.%E2%80%8Bcom/%E2%80%8Bpymc-%E2%80%8Bdevs/%E2%80%8Bresources">参考资料</a>中的模型 <code class="docutils literal notranslate"><span class="pre">m_10_10</span></code> 进行比较会很有趣。您可能希望使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 函数，例如 <code class="docutils literal notranslate"><span class="pre">az.summary</span></code> 或 <code class="docutils literal notranslate"><span class="pre">az.plot_forest</span></code>。 模型 <code class="docutils literal notranslate"><span class="pre">m_10_10</span></code> 类似于 <code class="docutils literal notranslate"><span class="pre">model_islands</span></code>，但不包含高斯过程项。</p>
 <p>根据我们的模型，现在继续探索岛屿之间的社会联系有多强。为此，必须将协方差矩阵转换为相关矩阵：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute posterior median covariance among societies</span>
@@ -923,13 +893,11 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12}
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210251_00.webp" /></p>
 </center>
 <p>我们用来拟合上表 <code class="docutils literal notranslate"><span class="pre">coal_df</span></code> 中数据的模型是：</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{align}
-f(x)  &amp;\sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.13}\\\\
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+f(x)  &amp;\sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.13} \\
 y  &amp;\sim \operatorname{Poisson}(f(x)) \tag{式7.14}
-\end{align}
-\end{split}\]</div>
+\end{align*}\]</div>
 <p>公式 <span class="math notranslate nohighlight">\((7.13)\)</span> 、<span class="math notranslate nohighlight">\((7.14)\)</span> 是一个泊松回归问题。你可能会想，如果只有灾难发生日期这一列，将如何执行回归？答案是将数据离散化，就像正在构建直方图一样。我们使用抽屉的中心值作为自变量 <span class="math notranslate nohighlight">\(x\)</span> , 每个抽屉内的计数作为因变量 <span class="math notranslate nohighlight">\(y\)</span>：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># discretize data</span>
 <span class="n">years</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">coal_df</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">coal_df</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
@@ -1071,7 +1039,7 @@ y  &amp;\sim \operatorname{Poisson}(f(x)) \tag{式7.14}
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="chapter06-MixtureModels.html" title="previous page">第6章 混合模型</a>
+    <a class='left-prev' id="prev-link" href="chapter06-MixtureModels.html" title="previous page">第 6 章 混合模型</a>
 
         </div>
         
