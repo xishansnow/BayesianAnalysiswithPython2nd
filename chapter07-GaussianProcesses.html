@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 7 章 高斯过程 &#8212; My Jupyter Book</title>
+    <title>第 7 章 高斯过程 &#8212; Python贝叶斯分析(中文)</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -72,8 +72,10 @@
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
+      <img src="_static/logo.png" class="logo" alt="logo">
       
-      <h1 class="site-logo" id="site-title">My Jupyter Book</h1>
+      
+      <h1 class="site-logo" id="site-title">Python贝叶斯分析(中文)</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -287,25 +289,48 @@
 <li><p>具有非高斯似然的高斯过程</p></li>
 </ul>
 <hr class="docutils" />
+<p><a class="reference external" href="#%E7%AC%AC-7-%E7%AB%A0-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B">第 7 章 高斯过程</a></p>
+<ul class="simple">
+<li><p><a class="reference external" href="#--78-%E7%BB%83%E4%B9%A0">- 7.8 练习</a></p></li>
+<li><p><a class="reference external" href="#71-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B%E5%92%8C%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%95%B0%E6%8D%AE">7.1 线性模型和非线性数据</a></p></li>
+<li><p><a class="reference external" href="#72-%E5%AF%B9%E5%87%BD%E6%95%B0%E5%BB%BA%E6%A8%A1">7.2 对函数建模</a></p>
+<ul>
+<li><p><a class="reference external" href="#721-%E5%A4%9A%E7%BB%B4%E9%AB%98%E6%96%AF%E4%B8%8E%E5%87%BD%E6%95%B0">7.2.1 多维高斯与函数</a></p></li>
+<li><p><a class="reference external" href="#722-%E5%8D%8F%E6%96%B9%E5%B7%AE%E5%87%BD%E6%95%B0%E4%B8%8E%E6%A0%B8">7.2.2 协方差函数与核</a></p></li>
+<li><p><a class="reference external" href="#723-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B">7.2.3 高斯过程</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#73-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B%E5%9B%9E%E5%BD%92">7.3 高斯过程回归</a></p></li>
+<li><p><a class="reference external" href="#74-%E7%A9%BA%E9%97%B4%E8%87%AA%E7%9B%B8%E5%85%B3%E5%9B%9E%E5%BD%92">7.4 空间自相关回归</a></p></li>
+<li><p><a class="reference external" href="#75-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B%E5%88%86%E7%B1%BB">7.5 高斯过程分类</a></p></li>
+<li><p><a class="reference external" href="#76-%E8%80%83%E5%85%8B%E6%96%AF-cox-%E8%BF%87%E7%A8%8B">7.6 考克斯 （Cox） 过程</a></p>
+<ul>
+<li><p><a class="reference external" href="#761-%E7%85%A4%E7%9F%BF%E7%81%BE%E5%AE%B3">7.6.1 煤矿灾害</a></p></li>
+<li><p><a class="reference external" href="#762-%E7%BA%A2%E6%9D%89%E6%95%B0%E6%8D%AE%E9%9B%86">7.6.2 红杉数据集</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#77-%E6%80%BB%E7%BB%93">7.7 总结</a></p></li>
+<li><p><a class="reference external" href="#78-%E7%BB%83%E4%B9%A0">7.8 练习</a></p></li>
+</ul>
+<hr class="docutils" />
 <div class="section" id="id2">
 <h2>7.1 线性模型和非线性数据<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>在第3章 “线性回归建模” 和 第4章 “广义线性回归模型” 中，介绍了如何构建一般形式的模型：</p>
 <div class="math notranslate nohighlight">
 \[
-\theta=\psi(\phi(X) \beta) \tag{7.1}
+\theta=\psi(\phi(X) \beta) \tag{式7.1}
 \]</div>
-<p>这里，<span class="math notranslate nohighlight">\(\theta\)</span> 是因变量概率分布的某个参数，如高斯分布的平均值 <span class="math notranslate nohighlight">\(\mu\)</span> 、二项式的参数 <span class="math notranslate nohighlight">\(p\)</span>、泊松分布的比率 <span class="math notranslate nohighlight">\(\lambda\)</span> 等。<span class="math notranslate nohighlight">\(\psi\)</span> 为逆连接函数，<span class="math notranslate nohighlight">\(\phi\)</span> 是平方根或多项式函数，<span class="math notranslate nohighlight">\(\beta\)</span> 为线性回归的权重参数。对于最简单的一元线性回归情况，<span class="math notranslate nohighlight">\(\psi\)</span> 为恒等函数。</p>
-<p>对上述贝叶斯模型的拟合可以视为推断获得权重参数 <span class="math notranslate nohighlight">\(\beta\)</span> 的后验分布，因此，被称为估计的
-<code class="docutils literal notranslate"><span class="pre">权值视角</span></code>。正如所看到的，以多项式回归为例，通过设为非线性函数，可以将输入映射到特征空间，然后在特征空间中拟合一个在实际空间中非线性的线性关系。理论上通过使用适当阶次的多项式，可以完美拟合任何函数。但除非应用某种形式的正则化（如使用强先验分布），否则容易导致过拟合，模型泛化能力非常差。</p>
-<p><code class="docutils literal notranslate"><span class="pre">高斯过程</span></code> 通过让数据决定函数复杂度的方法，在避免（或最小化）过拟合问题同时，为任意函数的建模提供了原则性解决方案，为复杂问题建模提供了一种 <code class="docutils literal notranslate"><span class="pre">函数视角</span></code> 。</p>
-<p>以下各节从实用角度解释了高斯过程，几乎避免了所有数学知识。有关更正式的解释，请查看第9章“下一步去哪里？”中列出的资源。</p>
+<p>式 7.1 中， <span class="math notranslate nohighlight">\(\theta\)</span> 是因变量概率分布的某个参数，如高斯分布的平均值 <span class="math notranslate nohighlight">\(\mu\)</span> 、二项式的参数 <span class="math notranslate nohighlight">\(p\)</span>、泊松分布的比率 <span class="math notranslate nohighlight">\(\lambda\)</span> 等。<span class="math notranslate nohighlight">\(\psi\)</span> 为逆连接函数，<span class="math notranslate nohighlight">\(\phi\)</span> 是平方根或多项式函数，<span class="math notranslate nohighlight">\(\beta\)</span> 为线性回归的权重参数。对于最简单的一元线性回归情况，<span class="math notranslate nohighlight">\(\psi\)</span> 为恒等函数。</p>
+<p>对上述贝叶斯模型的拟合可以视为通过推断得到权重参数 <span class="math notranslate nohighlight">\(\beta\)</span> 的后验分布，因此，被称为估计的<code class="docutils literal notranslate"><span class="pre">权重视角（Weight</span> <span class="pre">View）</span></code>。以多项式回归为例，通过设计非线性函数 <span class="math notranslate nohighlight">\(\phi\)</span> ，可将输入映射到特征空间，然后在特征空间中拟合一个在实际空间中非线性的线性关系。理论上通过使用适当阶次的多项式，总是可以完美拟合任何函数。但除非应用一定形式的正则化（如使用强先验），否则多项式回归很容易导致过拟合，进而模型泛化能力变差。</p>
+<p><code class="docutils literal notranslate"><span class="pre">高斯过程</span></code> 让数据决定函数的复杂度，在避免（或最小化）过拟合问题同时，为任意函数的建模提供了理论解决方案，为复杂问题建模提供了一种 <code class="docutils literal notranslate"><span class="pre">函数视角</span> <span class="pre">（Function</span> <span class="pre">View）</span></code> 。</p>
+<p>以下各节从实用角度解释了高斯过程，几乎避免了所有数学知识。有关更正式的解释，请查看第 9 章“下一步去哪里？”中列出的资源。</p>
 </div>
 <div class="section" id="id3">
 <h2>7.2 对函数建模<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>我们将首先描述一种将函数表示为概率对象的方法，以开始对高斯过程的讨论。可以把函数 <span class="math notranslate nohighlight">\(f\)</span> 看作是从一组输入 <span class="math notranslate nohighlight">\(x\)</span> 到一组输出 <span class="math notranslate nohighlight">\(y\)</span> 的映射。因此，可以这样写：</p>
 <div class="math notranslate nohighlight">
 \[
-y=f(x) \tag{7.2}
+y=f(x) \tag{式7.2}
 \]</div>
 <p>表示函数的一种方式是为每个值 <span class="math notranslate nohighlight">\(x_i\)</span> 列出其相应值 <span class="math notranslate nohighlight">\(y_i\)</span> 。事实上，你可能还记得小时候这种函数的表示方式：</p>
 <center>
@@ -351,12 +376,12 @@ y=f(x) \tag{7.2}
 <p>在众多可用的核中，指数族二次核是比较常用的一种：</p>
 <div class="math notranslate nohighlight">
 \[
-K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left\|x-x^{\prime}\right\|^{2}}{2 \ell^{2}}\right)
+K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left\|x-x^{\prime}\right\|^{2}}{2 \ell^{2}}\right) \tag{式7.3}
 \]</div>
 <p>此处， <span class="math notranslate nohighlight">\(x,x'\)</span>是随机变量的值， <span class="math notranslate nohighlight">\(\left\|x-x^{\prime}\right\|^{2}\)</span> 为平方欧氏距离：</p>
 <div class="math notranslate nohighlight">
 \[
-\left\|x-x^{\prime}\right\|^{2}=\left(x_{1}-x_{1}^{\prime}\right)^{2}+\left(x_{2}-x_{2}^{\prime}\right)^{2}+\cdots+\left(x_{n}-x_{n}^{\prime}\right)^{2}
+\left\|x-x^{\prime}\right\|^{2}=\left(x_{1}-x_{1}^{\prime}\right)^{2}+\left(x_{2}-x_{2}^{\prime}\right)^{2}+\cdots+\left(x_{n}-x_{n}^{\prime}\right)^{2} \tag{式7.4}
 \]</div>
 <p>乍一看可能不明显，但指数族二次核具有与高斯分布类似的公式（见表达式 1.3)。因此，您可能会发现有人将此核称为高斯核。 <span class="math notranslate nohighlight">\(\ell\)</span> 为长度尺度（或带宽、方差），用于控制核的宽度。</p>
 <p>为更好地理解核的作用，定义一个 Python 函数来计算指数族二次核：</p>
@@ -444,22 +469,22 @@ K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left\|x-x^{\prime}\right\|^{2}}{2
 <p>假设可以将 <span class="math notranslate nohighlight">\(y\)</span> 值建模为一个有关于 <span class="math notranslate nohighlight">\(x\)</span> 的函数 <span class="math notranslate nohighlight">\(f（x）\)</span> 和加性噪声的高斯分布：</p>
 <div class="math notranslate nohighlight">
 \[
-y \sim \mathcal{N}(\mu=f(x), \sigma=\epsilon) \tag{7.5}
+y \sim \mathcal{N}(\mu=f(x), \sigma=\epsilon) \tag{式7.5}
 \]</div>
 <p>此处 <span class="math notranslate nohighlight">\(\epsilon \sim \mathcal{N}\left(0, \sigma_{\epsilon}\right)\)</span></p>
 <p>这类似于我们在第 3 章“线性回归模型”中所做的假设。主要区别在于，现在将在 <span class="math notranslate nohighlight">\(f\)</span> 上配置高斯先验：</p>
 <div class="math notranslate nohighlight">
 \[
-f(x) \sim \mathcal{G} \mathcal{P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{7.6}
+f(x) \sim \mathcal{G} \mathcal{P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.6}
 \]</div>
 <p>这里，<span class="math notranslate nohighlight">\(\mathcal{GP}\)</span> 表示高斯过程分布， <span class="math notranslate nohighlight">\(\mu_x\)</span> 为均值函数， <span class="math notranslate nohighlight">\(K(x,x')\)</span> 为核（或协方差）函数。我们用 <code class="docutils literal notranslate"><span class="pre">函数</span></code> 这个词来表示，在数学上是指均值和协方差都是无限的对象，尽管实践中总是作为有限对象处理。</p>
 <p>如果先验分布是高斯过程分布，且似然是正态分布，那么后验分布也是高斯过程分布，我们可以解析地计算它：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align}
-p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \Sigma) \tag{7.7}\\
-\mu&amp;=K_{*}^{T} K^{-1} y \tag{7.8}\\
-\Sigma &amp;=K_{* *}-K_{*}^{T} K^{-1} K_{*}
+p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \Sigma) \tag{式7.7}\\
+\mu&amp;=K_{*}^{T} K^{-1} y \tag{式7.8}\\
+\Sigma &amp;=K_{* *}-K_{*}^{T} K^{-1} K_{*} \notag
 \end{align}
 \end{split}\]</div>
 <p>这里：</p>
@@ -508,7 +533,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 <p>请注意，我们使用的不是表达式 7.7 中预期的正态似然，而是 <code class="docutils literal notranslate"><span class="pre">gp.marginal_likelihood</span></code> 方法。在第一章“概率思维”（公式 1.1) 和第五章“模型比较”（公式 5.13) 中，边际似然是似然和先验的积分：</p>
 <div class="math notranslate nohighlight">
 \[
-p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) d f \tag{7.9}
+p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) df \tag{式7.9}
 \]</div>
 <p>与往常一样，<span class="math notranslate nohighlight">\(\theta\)</span> 表示所有未知参数，<span class="math notranslate nohighlight">\(X\)</span> 是自变量，<span class="math notranslate nohighlight">\(y\)</span> 是因变量。请注意，我们正在对函数 <span class="math notranslate nohighlight">\(f\)</span> 的值进行边际化。对于高斯过程先验和正态似然，可以解析地执行边际化。</p>
 <p>根据 PyMC3 的核心开发者、GP 模块的主要贡献者 Bill Engels 的说法，对于核宽度参数，避免采用零先验通常效果更好。<span class="math notranslate nohighlight">\(\ell\)</span> 的一个有用默认设置是 <code class="docutils literal notranslate"><span class="pre">pm.Gamma(2，0.5)</span></code>。你可以从 <a class="reference external" href="https://github.com/stan-dev/stan/wiki/Prior-ChoiceRecommendations">Stan team</a> 阅读更多关于默认有用先验的建议。</p>
@@ -613,10 +638,10 @@ p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) d f \ta
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align}
-f &amp;\sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \tag{7.10}\\
- \mu &amp;\sim \exp (\alpha+\beta x+f) \tag{7.11}\\
- y &amp;\sim \operatorname{Poisson}(\mu)\tag{7.12}
- \end{align}
+f &amp;\sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \tag{式7.10}\\\\
+\mu &amp;\sim \exp (\alpha+\beta x+f) \tag{式7.11}\\\\
+y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12}
+\end{align}
 \end{split}\]</div>
 <p>这里，我们省略了 <span class="math notranslate nohighlight">\(\alpha\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span> 的前缀，以及核的超先验。 <span class="math notranslate nohighlight">\(x\)</span> 是对数人口， <span class="math notranslate nohighlight">\(y\)</span> 是工具总数。</p>
 <p>与第四章“广义线性模型”中的模型相比，本模型基本上是一个泊松回归模型，此外，线性模型中的 <span class="math notranslate nohighlight">\(f\)</span> 项来自高斯过程。为了计算高斯过程的核，我们将使用距离矩阵 <code class="docutils literal notranslate"><span class="pre">islands_dist</span></code>。通过这种方式，将基于距离矩阵有效地纳入相似性度量。由此，将每个岛屿社会的工具数量建模为其地理相似性的函数，而不是假设仅仅是人口规模的结果，而且岛屿社会间没有接触。</p>
@@ -900,10 +925,12 @@ f &amp;\sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right
 <p>我们用来拟合上表 <code class="docutils literal notranslate"><span class="pre">coal_df</span></code> 中数据的模型是：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\begin{aligned} f(x) &amp; \sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \\ 
-y &amp; \sim \operatorname{Poisson}(f(x)) \end{aligned}
+\begin{align}
+f(x)  &amp;\sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.13}\\\\
+y  &amp;\sim \operatorname{Poisson}(f(x)) \tag{式7.14}
+\end{align}
 \end{split}\]</div>
-<p>这是一个泊松回归问题。你可能会想，如果只有灾难发生日期这一列，将如何执行回归？答案是将数据离散化，就像正在构建直方图一样。我们使用抽屉的中心值作为自变量 <span class="math notranslate nohighlight">\(x\)</span> , 每个抽屉内的计数作为因变量 <span class="math notranslate nohighlight">\(y\)</span>：</p>
+<p>公式 <span class="math notranslate nohighlight">\((7.13)\)</span> 、<span class="math notranslate nohighlight">\((7.14)\)</span> 是一个泊松回归问题。你可能会想，如果只有灾难发生日期这一列，将如何执行回归？答案是将数据离散化，就像正在构建直方图一样。我们使用抽屉的中心值作为自变量 <span class="math notranslate nohighlight">\(x\)</span> , 每个抽屉内的计数作为因变量 <span class="math notranslate nohighlight">\(y\)</span>：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># discretize data</span>
 <span class="n">years</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">coal_df</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">coal_df</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 <span class="n">bins</span> <span class="o">=</span> <span class="n">years</span> <span class="o">//</span> <span class="mi">4</span>
@@ -1054,7 +1081,7 @@ y &amp; \sim \operatorname{Poisson}(f(x)) \end{aligned}
     <div class="container">
       <p>
         
-          By The Jupyter Book community<br/>
+          By Osvaldo Martin<br/>
         
             &copy; Copyright 2021.<br/>
       </p>
