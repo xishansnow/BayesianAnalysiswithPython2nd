@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>chapter07-GaussianProcesses.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%E7%AC%AC-7-%E7%AB%A0-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B">第 7 章 高斯过程</h1>
+<style>p{text-indent:2em;2}</style>
+<p>在上一章中，我们学习了狄利克雷过程，它是狄利克雷分布的无限维推广，可用于设置未知连续分布的先验。在本章中，我们将学习高斯过程，这是高斯分布的无限维推广，可用于设置未知函数的先验。在贝叶斯统计中，狄利克雷过程和高斯过程都被用来建立灵活的模型，其中允许参数的数量随着数据的大小而增加。</p>
+<p>本章我们将学习：</p>
+<ul>
+<li>函数作为概率对象</li>
+<li>核</li>
+<li>具有高斯似然的高斯过程</li>
+<li>具有非高斯似然的高斯过程</li>
+</ul>
+<hr>
+<ul>
+<li><a href="#%E7%AC%AC-7-%E7%AB%A0-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B">第 7 章 高斯过程</a>
+<ul>
+<li><a href="#--78-%E7%BB%83%E4%B9%A0">- 7.8 练习</a></li>
+<li><a href="#71-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B%E5%92%8C%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%95%B0%E6%8D%AE">7.1 线性模型和非线性数据</a></li>
+<li><a href="#72-%E5%AF%B9%E5%87%BD%E6%95%B0%E5%BB%BA%E6%A8%A1">7.2 对函数建模</a>
+<ul>
+<li><a href="#721-%E5%A4%9A%E7%BB%B4%E9%AB%98%E6%96%AF%E4%B8%8E%E5%87%BD%E6%95%B0">7.2.1 多维高斯与函数</a></li>
+<li><a href="#722-%E5%8D%8F%E6%96%B9%E5%B7%AE%E5%87%BD%E6%95%B0%E4%B8%8E%E6%A0%B8">7.2.2 协方差函数与核</a></li>
+<li><a href="#723-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B">7.2.3 高斯过程</a></li>
+</ul>
+</li>
+<li><a href="#73-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B%E5%9B%9E%E5%BD%92">7.3 高斯过程回归</a></li>
+<li><a href="#74-%E7%A9%BA%E9%97%B4%E8%87%AA%E7%9B%B8%E5%85%B3%E5%9B%9E%E5%BD%92">7.4 空间自相关回归</a></li>
+<li><a href="#75-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B%E5%88%86%E7%B1%BB">7.5 高斯过程分类</a></li>
+<li><a href="#76-%E8%80%83%E5%85%8B%E6%96%AF-cox-%E8%BF%87%E7%A8%8B">7.6 考克斯 （Cox） 过程</a>
+<ul>
+<li><a href="#761-%E7%85%A4%E7%9F%BF%E7%81%BE%E5%AE%B3">7.6.1 煤矿灾害</a></li>
+<li><a href="#762-%E7%BA%A2%E6%9D%89%E6%95%B0%E6%8D%AE%E9%9B%86">7.6.2 红杉数据集</a></li>
+</ul>
+</li>
+<li><a href="#77-%E6%80%BB%E7%BB%93">7.7 总结</a></li>
+<li><a href="#78-%E7%BB%83%E4%B9%A0">7.8 练习</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="71-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B%E5%92%8C%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%95%B0%E6%8D%AE">7.1 线性模型和非线性数据</h2>
+<p>在第3章 “线性回归建模” 和 第4章 “广义线性回归模型” 中，介绍了如何构建一般形式的模型：</p>
+<p>$$
+\theta=\psi(\phi(X) \beta) \tag{式7.1}
+$$</p>
+<p>式 7.1 中， $\theta$ 是因变量概率分布的某个参数，如高斯分布的平均值 $\mu$ 、二项式的参数 $p$、泊松分布的比率 $\lambda$ 等。$\psi$ 为逆连接函数，$\phi$ 是平方根或多项式函数，$\beta$ 为线性回归的权重参数。对于最简单的一元线性回归情况，$\psi$ 为恒等函数。</p>
+<p>对上述贝叶斯模型的拟合可以视为通过推断得到权重参数 $\beta$ 的后验分布，因此，被称为估计的<code>权重视角（Weight View）</code>。以多项式回归为例，通过设计非线性函数 $\phi$ ，可将输入映射到特征空间，然后在特征空间中拟合一个在实际空间中非线性的线性关系。理论上通过使用适当阶次的多项式，总是可以完美拟合任何函数。但除非应用一定形式的正则化（如使用强先验），否则多项式回归很容易导致过拟合，进而模型泛化能力变差。</p>
+<p><code>高斯过程</code> 让数据决定函数的复杂度，在避免（或最小化）过拟合问题同时，为任意函数的建模提供了理论解决方案，为复杂问题建模提供了一种 <code>函数视角 （Function View）</code> 。</p>
+<p>以下各节从实用角度解释了高斯过程，几乎避免了所有数学知识。有关更正式的解释，请查看第 9 章“下一步去哪里？”中列出的资源。</p>
+<h2 id="72-%E5%AF%B9%E5%87%BD%E6%95%B0%E5%BB%BA%E6%A8%A1">7.2 对函数建模</h2>
+<p>我们将首先描述一种将函数表示为概率对象的方法，以开始对高斯过程的讨论。可以把函数 $f$ 看作是从一组输入 $x$ 到一组输出 $y$ 的映射。因此，可以这样写：</p>
+<p>$$
+y=f(x) \tag{式7.2}
+$$</p>
+<p>表示函数的一种方式是为每个值 $x_i$ 列出其相应值 $y_i$ 。事实上，你可能还记得小时候这种函数的表示方式：</p>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505201816_b3.webp" alt=""></p>
+</center>
+<p>一般情况下，$x$ 和 $y$ 的值将位于实数行上；因此，可将函数视为成对$( x_i,y_i)$ 值的（可能）无限有序列表。这里顺序非常重要，打乱顺序将代表不同函数。</p>
+<p>函数也可以表示为一个由 $x$ 值索引的（可能）无限数组，但重要区别在于，$x$ 值不限于整数，可以取实数。</p>
+<p>采用这种描述方式，可以表示任何想要的函数。但如果想要表示函数的概率呢（例如：混合模型中的多个组分分别对应一个概率分布函数，通过描述函数的概率分布似乎可以对混合模型建模）？我们可以通过让映射具有概率性质来实现。让每个 $y_i$ 的值都是一个随机变量，该随机变量服从给定均值和方差的高斯分布。通过该方式，不再是对单个特定函数的描述，而形成对一系列分布族的描述。</p>
+<p>为了使讨论具体化，让我们使用一些 Python 代码来构建和绘制这类函数的两个示例：</p>
+<pre class="hljs"><code><div>np.random.seed(<span class="hljs-number">42</span>)
+<span class="hljs-comment"># 曲线1：10个自变量，10个高斯采样的因变量</span>
+x = np.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">10</span>)
+y = np.random.normal(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, len(x))
+plt.plot(x, y, <span class="hljs-string">'o-'</span>, label=<span class="hljs-string">'the first one'</span>)
+
+<span class="hljs-comment"># 曲线2：相同的10个自变量，10个采用了不同均值高斯采样的因变量</span>
+y = np.zeros_like(x)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(x)):
+    y[i] = np.random.normal(y[i<span class="hljs-number">-1</span>], <span class="hljs-number">1</span>)
+plt.plot(x, y, <span class="hljs-string">'o-'</span>, label=<span class="hljs-string">'the second one'</span>)
+plt.legend()
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505202243_46.webp" alt=""></p>
+<p>图 7.1</p>
+</center>
+<p>图 7.1 显示，使用高斯分布的样本对函数进行编码并不复杂。但用于生成图 7.1 的方法有限且不够灵活。我们期望实函数具有某种结构或模式，但第一种函数表达方式无法编码数据点之间的关系。事实上，由于实验是从一维高斯分布中获得了 10 个独立样本，所以数据点之间完全独立。对于第二个函数，实验引入了一些依赖关系，将点 $y_{i+1}$ 的均值设置为 $y_i$ 的值，使得数据点之间有了某种依赖关系，进而为编码预期的函数提供了思路。而本章后续内容，将介绍一种更通用的方法来捕获这种依赖，而且不仅限于相邻点之间。</p>
+<p>此处使用高斯分布的主要原因是它具备指定任何形状函数的灵活性，因为每个点都有自己的均值和方差；其次从数学角度看，高斯分布具有一些非常好的特性。</p>
+<h3 id="721-%E5%A4%9A%E7%BB%B4%E9%AB%98%E6%96%AF%E4%B8%8E%E5%87%BD%E6%95%B0">7.2.1 多维高斯与函数</h3>
+<p>在图 7.1 中，我们使用一维高斯的 $n$ 个样本来表示一个函数。其实，还可以换一种方式思考：既然每个数据点均被视为来自特定高斯分布的一个采样，是否可以将连续 $n$ 个数据点视为一个来自于 $n$ 维高斯分布的采样呢？ 更进一步的，如果样本数量无限大，是否可以用一个无限维高斯分布来对其建模呢？</p>
+<p>答案是肯定的。 在每个数据点均为独立的高斯分布样本假设下，可以使用 $n$ 维高斯分布来对连续 $n$ 个数据点进行建模，而此样本则可以视为 $n$ 维高斯分布的一个向量形式（长度为 $n$ ）的抽样。如果自变量 $x$ 代表时间，则该模型就表示了一个基于高斯的随机过程，即高斯过程。</p>
+<p>通过上述分析，大家会发现高斯过程本质上是一个无限维高斯分布（虽然实践种中通常是有限维的），它的每一维的边缘概率密度都是高斯分布，也代表着每个数据点都是来自某个一维高斯分布的抽样。</p>
+<p>在 PyMC3 中，通过使用 <code>np.random.multivariate_normal(np.zeros_like(x), np.eye(len(x)))</code> 替换 <code>np.random.normal(0, 1, len(x))</code> ，即可生成与图 7.1 相同的图形。也证明了上述分析。</p>
+<p>将模型视为多维高斯分布有一个比较大的优势，即可以利用协方差矩阵来编码数据点之间的相关性信息，进而打破观测独立性假设，为数据点间的依赖关系建模。例如，PyMC3 允许协方差矩阵为单位矩阵 <code>np.eye(len(X))</code>，表示图中 10 个数据点的方差为 1，而协方差为 0（因为观测独立性假设）。如果用其他正数替换单位矩阵中的零，则可能反映了另外一个完全不同的故事。</p>
+<p>该也意味着，要以概率方式对函数建模，可能需要打破观测独立性假设，通过选择合适的协方差矩阵，来构造一个能够反映函数特征的多维高斯分布（或高斯过程）。</p>
+<h3 id="722-%E5%8D%8F%E6%96%B9%E5%B7%AE%E5%87%BD%E6%95%B0%E4%B8%8E%E6%A0%B8">7.2.2 协方差函数与核</h3>
+<p>书接上文，与其他无限维高斯分布不同，高斯过程的维度间是有序的。某个维度与其相邻维度之间可能会存在某种关系，在此我们成这种关系为相关性。从数学上，反映不同变量之间相关性的主要工具是协方差矩阵（此处不展开，请参阅相关文献）。设想一下，如果通过某种方式，结合样本数据，量化了某个高斯过程中相邻维度间的特殊依赖关系，是否就完成了对该高斯过程的建模？</p>
+<p>在实际工作中，协方差矩阵是用 <code>核函数</code> 指定的。也就是说，对高斯过程的建模转变为了对核函数的建模。出于讨论目的，此处简化地定义核函数为一个对称函数，它接受两个输入，当两个输入相同时返回 1 否则返回一个 [0,1) 间的正值。如果该条件满足，可将核函数的输出解释为两个输入之间的相似性度量，并用于构造协方差矩阵。</p>
+<p>在众多可用的核中，指数族二次核是比较常用的一种：</p>
+<p>$$
+K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left|x-x^{\prime}\right|^{2}}{2 \ell^{2}}\right) \tag{式7.3}
+$$</p>
+<p>此处， $x,x'$是随机变量的值， $\left|x-x^{\prime}\right|^{2}$ 为平方欧氏距离：</p>
+<p>$$
+\left|x-x^{\prime}\right|^{2}=\left(x_{1}-x_{1}^{\prime}\right)^{2}+\left(x_{2}-x_{2}^{\prime}\right)^{2}+\cdots+\left(x_{n}-x_{n}^{\prime}\right)^{2} \tag{式7.4}
+$$</p>
+<p>乍一看可能不明显，但指数族二次核具有与高斯分布类似的公式（见表达式 1.3)。因此，您可能会发现有人将此核称为高斯核。 $\ell$ 为长度尺度（或带宽、方差），用于控制核的宽度。</p>
+<p>为更好地理解核的作用，定义一个 Python 函数来计算指数族二次核：</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">exp_quad_kernel</span><span class="hljs-params">(x, knots, ℓ=<span class="hljs-number">1</span>)</span>:</span>
+    <span class="hljs-string">"""exponentiated quadratic kernel"""</span>
+    <span class="hljs-keyword">return</span> np.array([np.exp(-(x-k)**<span class="hljs-number">2</span> / (<span class="hljs-number">2</span>*ℓ**<span class="hljs-number">2</span>)) <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> knots])
+</div></code></pre>
+<p>以下代码和图 7.2 旨在展示了一个 $4 \times 4$ 协方差矩阵。此处选择的输入相当简单，由值 [-1，0，1，2] 组成。</p>
+<pre class="hljs"><code><div>data = np.array([<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>])
+cov = exp_quad_kernel(data, data, <span class="hljs-number">1</span>)
+_, ax = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, figsize=(<span class="hljs-number">12</span>, <span class="hljs-number">5</span>))
+ax = np.ravel(ax)
+ax[<span class="hljs-number">0</span>].plot(data, np.zeros_like(data), <span class="hljs-string">'ko'</span>)
+ax[<span class="hljs-number">0</span>].set_yticks([])
+<span class="hljs-keyword">for</span> idx, i <span class="hljs-keyword">in</span> enumerate(data):
+    ax[<span class="hljs-number">0</span>].text(i, <span class="hljs-number">0</span>+<span class="hljs-number">0.005</span>, idx)
+ax[<span class="hljs-number">0</span>].set_xticks(data)
+ax[<span class="hljs-number">0</span>].set_xticklabels(np.round(data, <span class="hljs-number">2</span>))
+<span class="hljs-comment">#ax[0].set_xticklabels(np.round(data, 2), rotation=70)</span>
+ax[<span class="hljs-number">1</span>].grid(<span class="hljs-literal">False</span>)
+im = ax[<span class="hljs-number">1</span>].imshow(cov)
+colors = [<span class="hljs-string">'w'</span>, <span class="hljs-string">'k'</span>]
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(cov)):
+    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(len(cov)):
+        ax[<span class="hljs-number">1</span>].text(j, i, round(cov[i, j], <span class="hljs-number">2</span>),
+                   color=colors[int(im.norm(cov[i, j]) &gt; <span class="hljs-number">0.5</span>)],
+                   ha=<span class="hljs-string">'center'</span>, va=<span class="hljs-string">'center'</span>, fontdict={<span class="hljs-string">'size'</span>: <span class="hljs-number">16</span>})
+ax[<span class="hljs-number">1</span>].set_xticks(range(len(data)))
+ax[<span class="hljs-number">1</span>].set_yticks(range(len(data)))
+ax[<span class="hljs-number">1</span>].xaxis.tick_top()
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505203138_6f.webp" alt=""></p>
+<p>图 7.2</p>
+</center>
+<p>图 7.2 左侧显示了输入，x 轴上的值表示每个数据点的值，文本注释显示数据点的顺序（从零开始）。右侧有一个热图，表示使用指数族二次核获得的协方差矩阵。颜色越浅协方差越大。热图是对称的，对角线取值较大。协方差矩阵中每个元素的值与两点间距离成反比，而对角线为每个数据点自身比较的结果。</p>
+<pre class="hljs"><code><div>该核将数据点沿 x 轴的距离转换为预期函数值的协方差值。因此，x 轴上的两个点越近，预计它们在 y 轴上的值就越相似。
+</div></code></pre>
+<p>总之，我们可以使用具有给定协方差的多维高斯分布对函数建模，而使用核对协方差建模，如下例中，使用 <code>exp_quad_kernel</code> 函数来定义了一个多维高斯分布的协方差矩阵，然后使用该分布中的样本来表示函数：</p>
+<pre class="hljs"><code><div>np.random.seed(<span class="hljs-number">24</span>)
+test_points = np.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>, <span class="hljs-number">200</span>)
+fig, ax = plt.subplots(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>, figsize=(<span class="hljs-number">12</span>, <span class="hljs-number">6</span>), sharex=<span class="hljs-literal">True</span>,
+                       sharey=<span class="hljs-literal">True</span>, constrained_layout=<span class="hljs-literal">True</span>)
+ax = np.ravel(ax)
+<span class="hljs-comment"># 四种核宽度</span>
+<span class="hljs-keyword">for</span> idx, ℓ <span class="hljs-keyword">in</span> enumerate((<span class="hljs-number">0.2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">10</span>)):
+    <span class="hljs-comment"># 四种核函数生成的协方差矩阵</span>
+    cov = exp_quad_kernel(test_points, test_points, ℓ)
+    
+    <span class="hljs-comment"># 基于协方差矩阵从多维高斯分布中抽样</span>
+    ax[idx].plot(test_points, stats.multivariate_normal.rvs(cov=cov,
+size=<span class="hljs-number">2</span>).T)
+    ax[idx].set_title(<span class="hljs-string">f'ℓ =<span class="hljs-subst">{ℓ}</span>'</span>)
+fig.text(<span class="hljs-number">0.51</span>, <span class="hljs-number">-0.03</span>, <span class="hljs-string">'x'</span>, fontsize=<span class="hljs-number">16</span>)
+fig.text(<span class="hljs-number">-0.03</span>, <span class="hljs-number">0.5</span>, <span class="hljs-string">'f(x)'</span>, fontsize=<span class="hljs-number">16</span>)
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505203247_f6.webp" alt=""></p>
+<p>图7.3</p>
+</center>
+<p>如图 7.3 所示，高斯核蕴含了多个函数，通过超参数 $\ell$ 控制函数的平滑度。$\ell$ 的值越大，函数越平滑。</p>
+<h3 id="723-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B">7.2.3 高斯过程</h3>
+<p>了解对函数建模的原理后，就可以进一步理解什么是高斯过程以及其应用了。从维基百科摘取的对高斯过程的一个比较正式的定义如下：</p>
+<pre class="hljs"><code><div>按时间或空间索引的随机变量集合，这些随机变量的每个有限集合都服从多维高斯分布，亦即这些随机变量的每个有限的线性组合服从正态分布。
+</div></code></pre>
+<p>理解高斯过程的诀窍是理解 高斯过程的概念仅仅是一个数学定义，在实践中实际不需要处理无限数学对象。相反，我们只对有数据的地方使用高斯过程。即将所有数据点视为来自多维高斯分布中的某一维的抽样，从而将无限维高斯过程压缩成一个有限维的多维高斯分布。从数学上讲，这种压缩是由无限不可观测维度上的边际化造成的，并且在理论上得到了证明（此处略）。该方法还保证将始终能够得到一个多维高斯分布。因此，可以将图 7.3 解释为来自高斯过程的真实样本！</p>
+<p>注意：此处将多维高斯函数的平均值设置为零（即零均值假设），并通过指数族二次核构建了协方差矩阵，进而对函数进行建模。在使用高斯过程时，做出零均值假设是较为常见的做法。</p>
+<pre class="hljs"><code><div>高斯过程对于构建贝叶斯非参数模型非常有用，因为可以将它们用作函数的先验分布。
+</div></code></pre>
+<h2 id="73-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B%E5%9B%9E%E5%BD%92">7.3 高斯过程回归</h2>
+<p>假设可以将 $y$ 值建模为一个有关于 $x$ 的函数 $f（x）$ 和加性噪声的高斯分布：</p>
+<p>$$
+y \sim \mathcal{N}(\mu=f(x), \sigma=\epsilon) \tag{式7.5}
+$$</p>
+<p>此处 $\epsilon \sim \mathcal{N}\left(0, \sigma_{\epsilon}\right)$</p>
+<p>这类似于我们在第 3 章“线性回归模型”中所做的假设。主要区别在于，现在将在 $f$ 上配置高斯先验：</p>
+<p>$$
+f(x) \sim \mathcal{G} \mathcal{P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.6}
+$$</p>
+<p>这里，$\mathcal{GP}$ 表示高斯过程分布， $\mu_x$ 为均值函数， $K(x,x')$ 为核（或协方差）函数。我们用 <code>函数</code> 这个词来表示，在数学上是指均值和协方差都是无限的对象，尽管实践中总是作为有限对象处理。</p>
+<p>如果先验分布是高斯过程分布，且似然是正态分布，那么后验分布也是高斯过程分布，我们可以解析地计算它：</p>
+<p>$$
+\begin{align}
+p\left(f\left(X_{<em>}\right) \mid X_{</em>}, X, y\right) &amp;\sim \mathcal{N}(\mu, \Sigma) \tag{式7.7}\
+\mu&amp;=K_{<em>}^{T} K^{-1} y \tag{式7.8}\
+\Sigma &amp;=K_{</em> <em>}-K_{</em>}^{T} K^{-1} K_{*} \notag
+\end{align}
+$$</p>
+<p>这里：</p>
+<p>$$
+\begin{align}
+&amp;\text { - } K=K(X, X) \
+&amp;\text { - } K_{<em>}=K\left(X_{</em>}, X\right) \
+&amp;\text { - } K_{* <em>}=K\left(X_{</em>}, X_{*}\right)
+\end{align}
+$$</p>
+<p>$X$ 是观察到的数据点，$X_*$ 表示测试点；也就是我们希望知道推断函数值的新点。</p>
+<p>像往常一样，PyMC3 自动完成整个推断过程，高斯过程也不例外。因此，让我们继续创建一些数据，然后创建一个 PyMC3 模型：</p>
+<pre class="hljs"><code><div>np.random.seed(<span class="hljs-number">42</span>)
+x = np.random.uniform(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>, size=<span class="hljs-number">15</span>)
+y = np.random.normal(np.sin(x), <span class="hljs-number">0.1</span>)
+plt.plot(x, y, <span class="hljs-string">'o'</span>)
+true_x = np.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>, <span class="hljs-number">200</span>)
+plt.plot(true_x, np.sin(true_x), <span class="hljs-string">'k--'</span>)
+plt.xlabel(<span class="hljs-string">'x'</span>)
+plt.ylabel(<span class="hljs-string">'f(x)'</span>, rotation=<span class="hljs-number">0</span>)
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204212_c1.webp" alt=""></p>
+<p>图7.4</p>
+</center>
+<p>在图 7.4 中，我们看到真正的未知函数是一条黑虚线，而点表示未知函数的样本（带有噪声）。</p>
+<p>请注意，为了将公式 7.7 和 7.8 编码到 PyMC3 模型中，我们需要设置指数族二次核的 $\epsilon$ 参数、核宽 $\ell$ 和正态似然方差。</p>
+<p>高斯过程在 PyMC3 中实现为一系列 Python 类，与以前的模型略有不同；然而，代码仍然非常 <code>PyMC3onic</code>。我在以下代码中添加了一些注释，以指导您完成使用 PyMC3 定义高斯过程的关键步骤：</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># A one dimensional column vector of inputs.</span>
+X = x[:, <span class="hljs-literal">None</span>]
+<span class="hljs-keyword">with</span> pm.Model() <span class="hljs-keyword">as</span> model_reg:
+    <span class="hljs-comment"># hyperprior for lengthscale kernel parameter</span>
+    ℓ = pm.Gamma(<span class="hljs-string">'ℓ'</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0.5</span>)
+    <span class="hljs-comment"># instantiate a covariance function</span>
+    cov = pm.gp.cov.ExpQuad(<span class="hljs-number">1</span>, ls=ℓ)
+    <span class="hljs-comment"># instantiate a GP prior</span>
+    y = pm.gp.Marginal(cov_func=cov)
+    <span class="hljs-comment"># prior</span>
+    ϵ = pm.HalfNormal(<span class="hljs-string">'ϵ'</span>, <span class="hljs-number">25</span>)
+    <span class="hljs-comment"># likelihood</span>
+    y_pred = gp.marginal_likelihood(<span class="hljs-string">'y_pred'</span>, X=X, y=y, noise=ϵ)
+</div></code></pre>
+<p>请注意，我们使用的不是表达式 7.7 中预期的正态似然，而是 <code>gp.marginal_likelihood</code> 方法。在第一章“概率思维”（公式 1.1) 和第五章“模型比较”（公式 5.13) 中，边际似然是似然和先验的积分：</p>
+<p>$$
+p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) df \tag{式7.9}
+$$</p>
+<p>与往常一样，$\theta$ 表示所有未知参数，$X$ 是自变量，$y$ 是因变量。请注意，我们正在对函数 $f$ 的值进行边际化。对于高斯过程先验和正态似然，可以解析地执行边际化。</p>
+<p>根据 PyMC3 的核心开发者、GP 模块的主要贡献者 Bill Engels 的说法，对于核宽度参数，避免采用零先验通常效果更好。$\ell$ 的一个有用默认设置是 <code>pm.Gamma(2，0.5)</code>。你可以从 <a href="https://github.com/stan-dev/stan/wiki/Prior-ChoiceRecommendations">Stan team</a> 阅读更多关于默认有用先验的建议。</p>
+<pre class="hljs"><code><div>az.plot_trace(trace_reg)
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204431_42.webp" alt=""></p>
+<p>图 7.5</p>
+</center>
+<p>现在已经找到 $\ell$ 和 $\epsilon$ 的值，我们可能想要从高斯过程分布的后验中获取样本；即已与数据拟合的函数的样本。通过使用 <code>gp.conditional</code> 条件函数计算新输入位置的条件分布来实现这一点：</p>
+<pre class="hljs"><code><div>X_new = np.linspace(np.floor(x.min()), np.ceil(x.max()), <span class="hljs-number">100</span>)[:,<span class="hljs-literal">None</span>]
+<span class="hljs-keyword">with</span> model_reg:
+    f_pred = gp.conditional(<span class="hljs-string">'f_pred'</span>, X_new)
+</div></code></pre>
+<p>结果得到了一个新的 PyMC3 随机变量 f_pred，我们可以使用它从后验预测分布中获取样本（基于 X_new 值计算）：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">with</span> model_reg:
+    pred_samples = pm.sample_posterior_predictive(trace_reg, vars=[f_pred],samples=<span class="hljs-number">82</span>)
+</div></code></pre>
+<p>现在可以在原始数据上绘制拟合函数图，以直观检查它们与数据的拟合程度以及预测中的相关不确定性：</p>
+<pre class="hljs"><code><div>_, ax = plt.subplots(figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">5</span>))
+ax.plot(X_new, pred_samples[<span class="hljs-string">'f_pred'</span>].T, <span class="hljs-string">'C1-'</span>, alpha=<span class="hljs-number">0.3</span>)
+ax.plot(X, y, <span class="hljs-string">'ko'</span>)
+ax.set_xlabel(<span class="hljs-string">'X'</span>)
+</div></code></pre>
+<center>
+<img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204540_3f.webp" style="zoom:67%;" />
+<p>图 7.6</p>
+</center>
+<p>或者，我们可以使用 <code>pm.gp.util.plot_gp_dist</code> 函数来获得一些不错的绘图。每个绘图代表一个百分位数，范围从 51（浅色）到 99（深色）：</p>
+<pre class="hljs"><code><div>_, ax = plt.subplots(figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">5</span>))
+pm.gp.util.plot_gp_dist(ax, pred_samples[<span class="hljs-string">'f_pred'</span>], X_new,
+palette=<span class="hljs-string">'viridis'</span>, plot_samples=<span class="hljs-literal">False</span>);
+ax.plot(X, y, <span class="hljs-string">'ko'</span>)
+ax.set_xlabel(<span class="hljs-string">'x'</span>)
+ax.set_ylabel(<span class="hljs-string">'f(x)'</span>, rotation=<span class="hljs-number">0</span>, labelpad=<span class="hljs-number">15</span>)
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204617_c7.webp" alt=""></p>
+<p>图 7.7</p>
+</center>
+<p>另一种选择是计算在参数空间中给定点评估的条件分布的平均向量和标准差。在下面的示例中，我们使用 $\ell$ 和 $\epsilon$ 的平均值（在迹的样本上）。我们可以使用 <code>gp.predict</code> 函数计算平均值和方差。我们之所以能做到这一点，是因为 PyMC3 已经解析地计算了后验结果：</p>
+<pre class="hljs"><code><div>_, ax = plt.subplots(figsize=(<span class="hljs-number">12</span>,<span class="hljs-number">5</span>))
+point = {<span class="hljs-string">'ℓ'</span>: trace_reg[<span class="hljs-string">'ℓ'</span>].mean(), <span class="hljs-string">'ϵ'</span>: trace_reg[<span class="hljs-string">'ϵ'</span>].mean()}
+mu, var = gp.predict(X_new, point=point, diag=<span class="hljs-literal">True</span>)
+sd = var**<span class="hljs-number">0.5</span>
+ax.plot(X_new, mu, <span class="hljs-string">'C1'</span>)
+ax.fill_between(X_new.flatten(),
+                 mu - sd, mu + sd,
+                 color=<span class="hljs-string">"C1"</span>,
+                 alpha=<span class="hljs-number">0.3</span>)
+ax.fill_between(X_new.flatten(),
+                 mu - <span class="hljs-number">2</span>*sd, mu + <span class="hljs-number">2</span>*sd,
+                 color=<span class="hljs-string">"C1"</span>,
+                 alpha=<span class="hljs-number">0.3</span>)
+ax.plot(X, y, <span class="hljs-string">'ko'</span>)
+ax.set_xlabel(<span class="hljs-string">'X'</span>)
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204701_d1.webp" alt=""></p>
+<p>图 7.8</p>
+</center>
+<p>正如第四章“广义线性模型”中看到的，可以使用具有非高斯似然的线性模型和适当的逆连接函数来扩展线性模型的范围。我们可以为高斯过程做同样的事情。例如，可以使用具有指数逆连接函数的泊松似然。对于这样的模型，后验不再是可分析的，但可以用数值方法来逼近它。</p>
+<h2 id="74-%E7%A9%BA%E9%97%B4%E8%87%AA%E7%9B%B8%E5%85%B3%E5%9B%9E%E5%BD%92">7.4 空间自相关回归</h2>
+<p>下面的例子取自理查德·麦克雷思 (Richard McElreath) 的“统计反思”(Statistics Reink) 一书。我强烈推荐你读他的书，因为你会发现很多像这样的好例子和非常好的解释。唯一需要注意的是，书中的示例是 R/stan 格式的，但请不要担心；您可以在 https://github.com/pymc-devs/Resources 中找到这些示例的 Python/PyMC3 版本。</p>
+<p>现在回到例子，我们有 10 个不同的岛屿社会；每一个都有其使用的工具数量。一些理论预测，较大人口需要开发和维护更多工具；另一个重要因素是人群间的接触率。</p>
+<p>当将工具数量作为因变量时，可以使用泊松回归并将人口数量作为自变量。事实上，可以使用人口的对数，因为根据理论真正重要的是人口比例，而不是绝对大小。将接触率包括在模型中的一种方法是收集有关这些岛屿社会在历史上的接触频率，可以考虑创建一个分类变量，如低/高接触率（请下表中的 Contact 列）。另一种方式是使用不同岛屿社会间的距离作为接触率的代理，可以假设距离近的社会会更频繁地接触。</p>
+<p>我们通过读取本书附带的 <code>island_dist.csv</code> 文件来访问以千公里为单位表示的距离矩阵：</p>
+<pre class="hljs"><code><div>islands_dist = pd.read_csv(<span class="hljs-string">'../data/islands_dist.csv'</span>,
+                           sep=<span class="hljs-string">','</span>, index_col=<span class="hljs-number">0</span>)
+islands_dist.round(<span class="hljs-number">1</span>)
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204845_7c.webp" alt=""></p>
+</center>
+<p>主对角线上填满了零,因为岛屿社会自身距离为零。矩阵是对称的，表示从 A 点到 B 点的距离。工具数量和人口规模存储在另一个文件 <code>islands.csv</code> 中，该文件也随书一起分发：</p>
+<pre class="hljs"><code><div>islands = pd.read_csv(<span class="hljs-string">'../data/islands.csv'</span>, sep=<span class="hljs-string">','</span>)
+islands.head().round(<span class="hljs-number">1</span>)
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204920_fd.webp" alt=""></p>
+</center>
+<p>在表中，只列出和使用 culture, total_tools, lat, lon2 和 logpop 列:</p>
+<pre class="hljs"><code><div>islands_dist_sqr = islands_dist.values**<span class="hljs-number">2</span>
+culture_labels = islands.culture.values
+index = islands.index.values
+log_pop = islands.logpop
+total_tools = islands.total_tools
+x_data = [islands.lat.values[:, <span class="hljs-literal">None</span>], islands.lon.values[:, <span class="hljs-literal">None</span>]]
+</div></code></pre>
+<p>我们要构建的模型是：</p>
+<p>$$
+\begin{align}
+f &amp;\sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \tag{式7.10}\\
+\mu &amp;\sim \exp (\alpha+\beta x+f) \tag{式7.11}\\
+y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12}
+\end{align}
+$$</p>
+<p>这里，我们省略了 $\alpha$ 和 $\beta$ 的前缀，以及核的超先验。 $x$ 是对数人口， $y$ 是工具总数。</p>
+<p>与第四章“广义线性模型”中的模型相比，本模型基本上是一个泊松回归模型，此外，线性模型中的 $f$ 项来自高斯过程。为了计算高斯过程的核，我们将使用距离矩阵 <code>islands_dist</code>。通过这种方式，将基于距离矩阵有效地纳入相似性度量。由此，将每个岛屿社会的工具数量建模为其地理相似性的函数，而不是假设仅仅是人口规模的结果，而且岛屿社会间没有接触。</p>
+<p>此模型（包括之前的模型）类似于 PyMC3 中的以下代码：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">with</span> pm.Model() <span class="hljs-keyword">as</span> model_islands:
+    η = pm.HalfCauchy(<span class="hljs-string">'η'</span>, <span class="hljs-number">1</span>)
+    ℓ = pm.HalfCauchy(<span class="hljs-string">'ℓ'</span>, <span class="hljs-number">1</span>)
+    cov = η * pm.gp.cov.ExpQuad(<span class="hljs-number">1</span>, ls=ℓ)
+    高斯过程= pm.gp.Latent(cov_func=cov)
+    f = gp.prior(<span class="hljs-string">'f'</span>, X=islands_dist_sqr)
+    α = pm.Normal(<span class="hljs-string">'α'</span>, <span class="hljs-number">0</span>, <span class="hljs-number">10</span>)
+    β = pm.Normal(<span class="hljs-string">'β'</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>)
+    μ = pm.math.exp(α + f[index] + β * log_pop)
+    tt_pred = pm.Poisson(<span class="hljs-string">'tt_pred'</span>, μ, observed=total_tools)
+    trace_islands = pm.sample(<span class="hljs-number">1000</span>, tune=<span class="hljs-number">1000</span>)
+</div></code></pre>
+<p>为理解协方差函数的后验分布，可以根据后验分布绘制一些样本：</p>
+<pre class="hljs"><code><div>trace_η = trace_islands[<span class="hljs-string">'η'</span>]
+trace_ℓ = trace_islands[<span class="hljs-string">'ℓ'</span>]
+_, ax = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, figsize=(<span class="hljs-number">8</span>, <span class="hljs-number">5</span>))
+xrange = np.linspace(<span class="hljs-number">0</span>, islands_dist.values.max(), <span class="hljs-number">100</span>)
+ax.plot(xrange, np.median(trace_η) *
+        np.exp(-np.median(trace_ℓ) * xrange**<span class="hljs-number">2</span>), lw=<span class="hljs-number">3</span>)
+ax.plot(xrange, (trace_η[::<span class="hljs-number">20</span>][:, <span class="hljs-literal">None</span>] * np.exp(- trace_ℓ[::<span class="hljs-number">20</span>][:, <span class="hljs-literal">None</span>] *
+xrange**<span class="hljs-number">2</span>)).T,
+        <span class="hljs-string">'C0'</span>, alpha=<span class="hljs-number">.1</span>)
+ax.set_ylim(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)
+ax.set_xlabel(<span class="hljs-string">'distance (thousand kilometers)'</span>)
+ax.set_ylabel(<span class="hljs-string">'covariance'</span>)
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205145_a6.webp" alt=""></p>
+<p>图 7.9</p>
+</center>
+图 7.9 中的粗线是成对岛屿社会间协方差作为距离函数的后验中位数。我们使用中位数是因为 $\ell$ 和 $η$ 的分布非常不对称。可以看到，平均下来协方差没有那么高，在大约 2000 公里处降到了几乎为 0。细线代表不确定性，可以看到有很大的不确定性。
+<p>您可能会发现，将 <code>model_islands</code> 及其计算出的后验与<a href="https:/%E2%80%8B/%E2%80%8Bgithub.%E2%80%8Bcom/%E2%80%8Bpymc-%E2%80%8Bdevs/%E2%80%8Bresources">参考资料</a>中的模型 <code>m_10_10</code> 进行比较会很有趣。您可能希望使用 <code>ArviZ</code> 函数，例如 <code>az.summary</code> 或 <code>az.plot_forest</code>。 模型 <code>m_10_10</code> 类似于 <code>model_islands</code>，但不包含高斯过程项。</p>
+<p>根据我们的模型，现在继续探索岛屿之间的社会联系有多强。为此，必须将协方差矩阵转换为相关矩阵：</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># compute posterior median covariance among societies</span>
+Σ = np.median(trace_η) * (np.exp(-np.median(trace_ℓ) * islands_dist_sqr))
+<span class="hljs-comment"># convert to correlation matrix</span>
+Σ_post = np.diag(np.diag(Σ)**<span class="hljs-number">-0.5</span>)
+ρ = Σ_post @  Σ @ Σ_post
+ρ = pd.DataFrame(ρ, index=islands_dist.columns,
+columns=islands_dist.columns)
+ρ.round(<span class="hljs-number">2</span>)
+</div></code></pre>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205246_9e.webp" alt=""></p>
+<p>比较明显的是，夏威夷非常独立，因为夏威夷离其他岛屿社会很远。此外，还可以看到 <code>Malekula(Ml)</code>、<code>Tikopia(Ti)</code> 和 <code>Santa Cruz(Sc)</code> 之间高度相关，因为这些社会非常接近，而且有类似数量的工具。</p>
+<p>现在我们使用纬度和经度信息来绘制 <code>岛屿-社会</code> 的相对位置：</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># scale point size to logpop</span>
+logpop = np.copy(log_pop)
+logpop /= logpop.max()
+psize = np.exp(logpop*<span class="hljs-number">5.5</span>)
+log_pop_seq = np.linspace(<span class="hljs-number">6</span>, <span class="hljs-number">14</span>, <span class="hljs-number">100</span>)
+lambda_post = np.exp(trace_islands[<span class="hljs-string">'α'</span>][:, <span class="hljs-literal">None</span>] +
+                     trace_islands[<span class="hljs-string">'β'</span>][:, <span class="hljs-literal">None</span>] * log_pop_seq)
+_, ax = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, figsize=(<span class="hljs-number">12</span>, <span class="hljs-number">6</span>))
+ax[<span class="hljs-number">0</span>].scatter(islands.lon2, islands.lat, psize, zorder=<span class="hljs-number">3</span>)
+ax[<span class="hljs-number">1</span>].scatter(islands.logpop, islands.total_tools, psize, zorder=<span class="hljs-number">3</span>)
+<span class="hljs-keyword">for</span> i, itext <span class="hljs-keyword">in</span> enumerate(culture_labels):
+    ax[<span class="hljs-number">0</span>].text(islands.lon2[i]+<span class="hljs-number">1</span>, islands.lat[i]+<span class="hljs-number">1</span>, itext)
+    ax[<span class="hljs-number">1</span>].text(islands.logpop[i]+<span class="hljs-number">.1</span>, islands.total_tools[i]<span class="hljs-number">-2.5</span>, itext)
+ax[<span class="hljs-number">1</span>].plot(log_pop_seq, np.median(lambda_post, axis=<span class="hljs-number">0</span>), <span class="hljs-string">'k--'</span>)
+az.plot_hpd(log_pop_seq, lambda_post, fill_kwargs={<span class="hljs-string">'alpha'</span>:<span class="hljs-number">0</span>},
+plot_kwargs={<span class="hljs-string">'color'</span>:<span class="hljs-string">'k'</span>, <span class="hljs-string">'ls'</span>:<span class="hljs-string">'--'</span>, <span class="hljs-string">'alpha'</span>:<span class="hljs-number">1</span>})
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">10</span>):
+    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> np.arange(i+<span class="hljs-number">1</span>, <span class="hljs-number">10</span>):
+        ax[<span class="hljs-number">0</span>].plot((islands.lon2[i], islands.lon2[j]),
+                   (islands.lat[i], islands.lat[j]), <span class="hljs-string">'C1-'</span>,
+                   alpha=ρ.iloc[i, j]**<span class="hljs-number">2</span>, lw=<span class="hljs-number">4</span>)
+        ax[<span class="hljs-number">1</span>].plot((islands.logpop[i], islands.logpop[j]),
+                   (islands.total_tools[i], islands.total_tools[j]), <span class="hljs-string">'C1-'</span>,
+                   alpha=ρ.iloc[i, j]**<span class="hljs-number">2</span>, lw=<span class="hljs-number">4</span>)
+ax[<span class="hljs-number">0</span>].set_xlabel(<span class="hljs-string">'longitude'</span>)
+ax[<span class="hljs-number">0</span>].set_ylabel(<span class="hljs-string">'latitude'</span>)
+ax[<span class="hljs-number">1</span>].set_xlabel(<span class="hljs-string">'log-population'</span>)
+ax[<span class="hljs-number">1</span>].set_ylabel(<span class="hljs-string">'total tools'</span>)
+ax[<span class="hljs-number">1</span>].set_xlim(<span class="hljs-number">6.8</span>, <span class="hljs-number">12.8</span>)
+ax[<span class="hljs-number">1</span>].set_ylim(<span class="hljs-number">10</span>, <span class="hljs-number">73</span>)
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205338_5f.webp" alt=""></p>
+<p>图7.10</p>
+</center>
+<p>图 7.10 的左侧显示了之前在相对地理位置上下文中计算的岛屿社会间的后验中值相关性线条。有些线条是不可见的，因为使用相关性来设置了线条的不透明度。在右侧，再次显示了后验中值相关性，但此次是根据对数人口与工具数量绘制的。虚线表示工具的中位数和 94%HPD 间隔作为对数填充的函数。两幅图中，圆点大小与每个岛屿社会的人口成正比。</p>
+<p>请注意 <code>Malekula</code>、<code>Tikopia</code> 和 <code>Santa Cruz</code> 之间的相关性如何描述这样一个事实，即它们拥有的工具数量相当少，接近或低于其人口的预期工具数量。类似的事情正发生在<code>Trobriands</code>和 <code>Manus</code>；它们地理位置相近，拥有的工具比预期人口规模要少。<code>Tonga</code> 为其人口提供的工具比预期要多得多，而且与 <code>Fiji</code> 的相关性较高。在某种程度上，该模型告诉我们，<code>Tonga</code>对 <code>Lua Fiji</code>有积极的影响，增加了工具总数，抵消了 <code>Malekula</code>、<code>Tikopia</code> 和 <code>Santa Cruz</code>等近邻对 <code>Fiji</code> 的影响。</p>
+<h2 id="75-%E9%AB%98%E6%96%AF%E8%BF%87%E7%A8%8B%E5%88%86%E7%B1%BB">7.5 高斯过程分类</h2>
+<p>高斯过程不限于回归，也可以用于分类。正如第 4 章“广义线性模型”中所述，通过使用 Logistic 逆连接函数的伯努利似然，将线性模型转化为适合分类的模型。对于iris数据集，本节将尝试重述第 4 章“广义线性模型”中的 model_0，不过这次使用高斯过程而不是线性模型。</p>
+<pre class="hljs"><code><div>iris = pd.read_csv(<span class="hljs-string">'../data/iris.csv'</span>)
+iris.head()
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205541_6c.webp" alt="image-20210505205534881"></p>
+</center>
+<p>我们从最简单的分类问题开始：类别只有两类：山鸢尾和变色鸢尾；自变量只有一个：萼片长度。使用数字 0 和 1 对分类变量山鸢尾和变色鸢尾进行编码：</p>
+<pre class="hljs"><code><div>df = iris.query(<span class="hljs-string">"species == ('setosa', 'versicolor')"</span>)
+y = pd.Categorical(df[<span class="hljs-string">'species'</span>]).codes
+x_1 = df[<span class="hljs-string">'sepal_length'</span>].values
+X_1 = x_1[:, <span class="hljs-literal">None</span>]
+</div></code></pre>
+<p>对于此模型，我们不使用 <code>pm.gp.Marginal</code> 类实例化高斯过程先验，而是使用 <code>pm.gp.Latent</code> 类。前者仅限于高斯似然，不过通过高斯过程先验与高斯似然具有更高效率，而后者更通用些，可与任何似然一起使用：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">with</span> pm.Model() <span class="hljs-keyword">as</span> model_iris:
+    ℓ = pm.Gamma(<span class="hljs-string">'ℓ'</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0.5</span>)
+    cov = pm.gp.cov.ExpQuad(<span class="hljs-number">1</span>, ℓ)
+    高斯过程= pm.gp.Latent(cov_func=cov)
+    f = gp.prior(<span class="hljs-string">"f"</span>, X=X_1)
+    <span class="hljs-comment"># logistic inverse link function and Bernoulli likelihood</span>
+    y_ = pm.Bernoulli(<span class="hljs-string">"y"</span>, p=pm.math.sigmoid(f), observed=y)
+    trace_iris = pm.sample(<span class="hljs-number">1000</span>, chains=<span class="hljs-number">1</span>,
+compute_convergence_checks=<span class="hljs-literal">False</span>)
+</div></code></pre>
+<p>现在我们已经找到了 $\ell$ 的值 ，想要从高斯过程后验获取样本。与 <code>marginal_gp_model</code> 的操作一样，可以借助 <code>gp.conditional</code> 函数计算一组新输入位置上的条件分布，如以下代码所示：</p>
+<pre class="hljs"><code><div>X_new = np.linspace(np.floor(x_1.min()), np.ceil(x_1.max()), <span class="hljs-number">200</span>)[:, <span class="hljs-literal">None</span>]
+<span class="hljs-keyword">with</span> model_iris:
+    f_pred = gp.conditional(<span class="hljs-string">'f_pred'</span>, X_new)
+    pred_samples = pm.sample_posterior_predictive(
+        trace_iris, vars=[f_pred], samples=<span class="hljs-number">1000</span>)
+</div></code></pre>
+<p>为显示此模型结果，创建一个类似于图 4.4 的图。我们将使用以下函数直接从 <code>f_pred</code> 计算决策边界，而不是解析地获得决策边界：</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">find_midpoint</span><span class="hljs-params">(array1, array2, value)</span>:</span>
+    <span class="hljs-string">"""
+    This should be a proper docstring :-)
+    """</span>
+    array1 = np.asarray(array1)
+    idx0 = np.argsort(np.abs(array1 - value))[<span class="hljs-number">0</span>]
+    idx1 = idx0 - <span class="hljs-number">1</span> <span class="hljs-keyword">if</span> array1[idx0] &gt; value <span class="hljs-keyword">else</span> idx0 + <span class="hljs-number">1</span>
+    <span class="hljs-keyword">if</span> idx1 == len(array1):
+        idx1 -= <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> (array2[idx0] + array2[idx1]) / <span class="hljs-number">2</span>
+</div></code></pre>
+<p>以下代码与第 4 章“广义线性模型”中用于生成图 4.4 的代码非常相似：</p>
+<pre class="hljs"><code><div>_, ax = plt.subplots(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">6</span>))
+fp = logistic(pred_samples[<span class="hljs-string">'f_pred'</span>])
+fp_mean = np.mean(fp, <span class="hljs-number">0</span>)
+ax.plot(X_new[:, <span class="hljs-number">0</span>], fp_mean)
+<span class="hljs-comment"># plot the data (with some jitter) and the true latent function</span>
+ax.scatter(x_1, np.random.normal(y, <span class="hljs-number">0.02</span>),
+           marker=<span class="hljs-string">'.'</span>, color=[<span class="hljs-string">f'C<span class="hljs-subst">{x}</span>'</span> <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> y])
+az.plot_hpd(X_new[:, <span class="hljs-number">0</span>], fp, color=<span class="hljs-string">'C2'</span>)
+db = np.array([find_midpoint(f, X_new[:, <span class="hljs-number">0</span>], <span class="hljs-number">0.5</span>) <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> fp])
+db_mean = db.mean()
+db_hpd = az.hpd(db)
+ax.vlines(db_mean, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, color=<span class="hljs-string">'k'</span>)
+ax.fill_betweenx([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], db_hpd[<span class="hljs-number">0</span>], db_hpd[<span class="hljs-number">1</span>], color=<span class="hljs-string">'k'</span>, alpha=<span class="hljs-number">0.5</span>)
+ax.set_xlabel(<span class="hljs-string">'sepal_length'</span>)
+ax.set_ylabel(<span class="hljs-string">'θ'</span>, rotation=<span class="hljs-number">0</span>)
+plt.savefig(<span class="hljs-string">'B11197_07_11.png'</span>)
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205739_e4.webp" alt=""></p>
+<p>图 7.11</p>
+</center>
+<p>图 7.11 与图 4.4 非常相似， <code>f_pred</code> 曲线看起来像是一条 S 型曲线，除尾部在较低的 x_1 值时上升，在较高的 x_1 值下降。这是没有数据时预测函数向前移动的结果。如果只关心决策边界，这应该不是真正的问题，但如果想要为不同萼片长度值建立属于山鸢尾或变色鸢尾的概率模型，那么应该改进模型，并做一些事情来获得更好的尾部模型。实现此目标的方法是给高斯过程增加更多的构造。获得更好的高斯过程模型的一般方法是组合协方差函数，以便更好地捕捉函数细节。</p>
+<p>以下模型 (<code>model_iris2</code>) 与 <code>model_iris</code> 相同，不同之处在于协方差矩阵，为三个核的组合：</p>
+<pre class="hljs"><code><div>cov = K_{ExpQuad} + K_{Linear} + K_{whitenoise}(<span class="hljs-number">1E-5</span>)
+</div></code></pre>
+<p>通过添加线性核修复了尾部问题，如图 7.12 所示。白噪声核只是一个稳定协方差矩阵计算的技巧。对高斯过程的核进行限制，确保得到的协方差矩阵为正定的。但数字误差可能会导致违反此条件，其表现是在计算拟合函数的后验预测样本时会出现无效值（NaN）。通过添加一点噪声来稳定计算能够减轻此问题。其实 PyMC3 已经在幕后做到了这一点，但有时需要更多噪声，如以下代码所示：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">with</span> pm.Model() <span class="hljs-keyword">as</span> model_iris2:
+    ℓ = pm.Gamma(<span class="hljs-string">'ℓ'</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0.5</span>)
+    c = pm.Normal(<span class="hljs-string">'c'</span>, x_1.min())
+    τ = pm.HalfNormal(<span class="hljs-string">'τ'</span>, <span class="hljs-number">5</span>)
+    cov = (pm.gp.cov.ExpQuad(<span class="hljs-number">1</span>, ℓ) +
+           τ * pm.gp.cov.Linear(<span class="hljs-number">1</span>, c) +
+           pm.gp.cov.WhiteNoise(<span class="hljs-number">1E-5</span>))
+    高斯过程= pm.gp.Latent(cov_func=cov)
+    f = gp.prior(<span class="hljs-string">"f"</span>, X=X_1)
+    <span class="hljs-comment"># logistic inverse link function and Bernoulli likelihood</span>
+    y_ = pm.Bernoulli(<span class="hljs-string">"y"</span>, p=pm.math.sigmoid(f), observed=y)
+    trace_iris2 = pm.sample(<span class="hljs-number">1000</span>, chains=<span class="hljs-number">1</span>,
+compute_convergence_checks=<span class="hljs-literal">False</span>)
+</div></code></pre>
+<p>现在为先前生成的 <code>X_new</code> 值生成 <code>model_iris2</code> 的后验预测样本：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">with</span> model_iris2:
+    f_pred = gp.conditional(<span class="hljs-string">'f_pred'</span>, X_new)
+    pred_samples = pm.sample_posterior_predictive(trace_iris2,
+                                                  vars=[f_pred],
+                                                  samples=<span class="hljs-number">1000</span>)
+_, ax = plt.subplots(figsize=(<span class="hljs-number">10</span>,<span class="hljs-number">6</span>))
+fp = logistic(pred_samples[<span class="hljs-string">'f_pred'</span>])
+fp_mean = np.mean(fp, <span class="hljs-number">0</span>)
+ax.scatter(x_1, np.random.normal(y, <span class="hljs-number">0.02</span>), marker=<span class="hljs-string">'.'</span>,
+           color=[<span class="hljs-string">f'C<span class="hljs-subst">{ci}</span>'</span> <span class="hljs-keyword">for</span> ci <span class="hljs-keyword">in</span> y])
+db = np.array([find_midpoint(f, X_new[:,<span class="hljs-number">0</span>], <span class="hljs-number">0.5</span>) <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> fp])
+db_mean = db.mean()
+db_hpd = az.hpd(db)
+ax.vlines(db_mean, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, color=<span class="hljs-string">'k'</span>)
+ax.fill_betweenx([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>], db_hpd[<span class="hljs-number">0</span>], db_hpd[<span class="hljs-number">1</span>], color=<span class="hljs-string">'k'</span>, alpha=<span class="hljs-number">0.5</span>)
+ax.plot(X_new[:,<span class="hljs-number">0</span>], fp_mean, <span class="hljs-string">'C2'</span>, lw=<span class="hljs-number">3</span>)
+az.plot_hpd(X_new[:,<span class="hljs-number">0</span>], fp, color=<span class="hljs-string">'C2'</span>)
+ax.set_xlabel(<span class="hljs-string">'sepal_length'</span>)
+ax.set_ylabel(<span class="hljs-string">'θ'</span>, rotation=<span class="hljs-number">0</span>)
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205912_68.webp" alt=""></p>
+<p>图 7.12</p>
+</center>
+<p>图 7.12 看起来更类似于图 4.4，而不是图 7.11。此示例有两个主要目的：</p>
+<ul>
+<li>展示如何轻松组合核以获得更具表现力的模型</li>
+<li>展示了如何使用高斯过程实现 Logistic 回归</li>
+</ul>
+<p>尤其是第二点，Logistic 回归确实是高斯过程的特例，因为一元线性回归是高斯过程的特例。事实上，许多已知的模型都可以被视为高斯过程的特例，或者至少以某种方式与高斯过程联系在一起。你可以阅读凯文·墨菲 (Kevin Murphy) 的《 Machine Learning: A Probabilistic Perspective 》中的第 15 章。</p>
+<p>实践中，使用高斯过程对只能用 Logistic 回归来解决的问题进行建模没有太大意义。相反，我们希望使用高斯过程来建模更复杂的数据，而这些数据使用灵活性较低的模型无法很好地捕获。例如，假设想要将患病概率建模为年龄的函数。事实证明，非常年轻和非常年长的人比中年人有更高风险。数据集 <code>space_flu.csv</code> 是受前面描述启发的假数据集。</p>
+<pre class="hljs"><code><div>df_sf = pd.read_csv(<span class="hljs-string">'../data/space_flu.csv'</span>)
+age = df_sf.age.values[:, <span class="hljs-literal">None</span>]
+space_flu = df_sf.space_flu
+ax = df_sf.plot.scatter(<span class="hljs-string">'age'</span>, <span class="hljs-string">'space_flu'</span>, figsize=(<span class="hljs-number">8</span>, <span class="hljs-number">5</span>))
+ax.set_yticks([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>])
+ax.set_yticklabels([<span class="hljs-string">'healthy'</span>, <span class="hljs-string">'sick'</span>])
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210018_ba.webp" alt=""></p>
+<p>图7.13</p>
+</center>
+<p>以下模型与 <code>model_iris</code> 基本相同：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">with</span> pm.Model() <span class="hljs-keyword">as</span> model_space_flu:
+    ℓ = pm.HalfCauchy(<span class="hljs-string">'ℓ'</span>, <span class="hljs-number">1</span>)
+    cov = pm.gp.cov.ExpQuad(<span class="hljs-number">1</span>, ℓ) + pm.gp.cov.WhiteNoise(<span class="hljs-number">1E-5</span>)
+    高斯过程= pm.gp.Latent(cov_func=cov)
+    f = gp.prior(<span class="hljs-string">'f'</span>, X=age)
+    y_ = pm.Bernoulli(<span class="hljs-string">'y'</span>, p=pm.math.sigmoid(f), observed=space_flu)
+    trace_space_flu = pm.sample(
+        <span class="hljs-number">1000</span>, chains=<span class="hljs-number">1</span>, compute_convergence_checks=<span class="hljs-literal">False</span>)
+</div></code></pre>
+<p>现在，为 <code>model_space_flu</code> 生成后验预测样本，然后绘制结果：</p>
+<pre class="hljs"><code><div>X_new = np.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">80</span>, <span class="hljs-number">200</span>)[:, <span class="hljs-literal">None</span>]
+<span class="hljs-keyword">with</span> model_space_flu:
+    f_pred = gp.conditional(<span class="hljs-string">'f_pred'</span>, X_new)
+    pred_samples = pm.sample_posterior_predictive(trace_space_flu,
+                                                  vars=[f_pred],
+                                                  samples=<span class="hljs-number">1000</span>)
+_, ax = plt.subplots(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">6</span>))
+fp = logistic(pred_samples[<span class="hljs-string">'f_pred'</span>])
+fp_mean = np.nanmean(fp, <span class="hljs-number">0</span>)
+ax.scatter(age, np.random.normal(space_flu, <span class="hljs-number">0.02</span>),
+           marker=<span class="hljs-string">'.'</span>, color=[<span class="hljs-string">f'C<span class="hljs-subst">{ci}</span>'</span> <span class="hljs-keyword">for</span> ci <span class="hljs-keyword">in</span> space_flu])
+ax.plot(X_new[:, <span class="hljs-number">0</span>], fp_mean, <span class="hljs-string">'C2'</span>, lw=<span class="hljs-number">3</span>)
+az.plot_hpd(X_new[:, <span class="hljs-number">0</span>], fp, color=<span class="hljs-string">'C2'</span>)
+ax.set_yticks([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>])
+ax.set_yticklabels([<span class="hljs-string">'healthy'</span>, <span class="hljs-string">'sick'</span>])
+ax.set_xlabel(<span class="hljs-string">'age'</span>)
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210109_bb.webp" alt="image-20210505210106544"></p>
+<p>图 7.14</p>
+</center>
+<p>图 7.14 中，高斯过程能够很好地适应此数据集，即使数据要求函数比逻辑函数更复杂。对于一元逻辑回归来说，很好地拟合该数据是不可能的，除非引入一些特殊的修改来帮助它。</p>
+<h2 id="76-%E8%80%83%E5%85%8B%E6%96%AF-cox-%E8%BF%87%E7%A8%8B">7.6 考克斯 （Cox） 过程</h2>
+<p>现在考虑计数类数据的建模问题。在此将看到两个示例；一个具有时变计数，另一个具有 2D 空间计数。为做到这点，使用泊松分布对似然建模（每个数据点来自于一个泊松分布的抽样），使用高斯过程对计数函数建模（所有数据点计数的集合来自一个高斯过程的抽样）。因泊松分布的计数被限制为正值，所以我们将使用指数函数作为逆连接函数，类似第 4 章 “广义线性模型” 中的零膨胀泊松回归。</p>
+<p>在很多资料中，可变计数也以强度名称出现，此类型问题统称为强度估计问题，此类型的模型则被称为考克斯（Cox）模型。考克斯模型是泊松过程的一种，其计数本身就是一个随机过程。正如高斯过程是随机变量的集合，而且这些随机变量的每个有限集合都具有多维高斯分布一样，泊松过程也是随机变量集合，其中这些随机变量的每个有限集合都具有泊松分布。当泊松过程的计数本身是一个随机过程（如高斯过程）时，称之为考克斯（Cox）过程。</p>
+<h3 id="761-%E7%85%A4%E7%9F%BF%E7%81%BE%E5%AE%B3">7.6.1 煤矿灾害</h3>
+<p>第一个例子是煤矿灾难。该案例包括英国从 1851 年到 1962 年的煤矿灾难记录。灾难数量被认为受到安全法规变化的影响。我们希望将灾害率建模为时间的函数，数据集只有一列，每个条目都对应灾难发生的时间。让我们加载数据并查看它的一些值：</p>
+<pre class="hljs"><code><div>coal_df = pd.read_csv(<span class="hljs-string">'../data/coal.csv'</span>, header=<span class="hljs-literal">None</span>)
+coal_df.head()
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210251_00.webp" alt=""></p>
+</center>
+<p>我们用来拟合上表 <code>coal_df</code> 中数据的模型是：</p>
+<p>$$
+\begin{align}
+f(x)  &amp;\sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.13}\\
+y  &amp;\sim \operatorname{Poisson}(f(x)) \tag{式7.14}
+\end{align}
+$$</p>
+<p>公式 $(7.13)$ 、$(7.14)$ 是一个泊松回归问题。你可能会想，如果只有灾难发生日期这一列，将如何执行回归？答案是将数据离散化，就像正在构建直方图一样。我们使用抽屉的中心值作为自变量 $x$ , 每个抽屉内的计数作为因变量 $y$：</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># discretize data</span>
+years = int(coal_df.max().values - coal_df.min().values)
+bins = years // <span class="hljs-number">4</span>
+hist, x_edges = np.histogram(coal_df, bins=bins)
+<span class="hljs-comment"># compute the location of the centers of the discretized data</span>
+x_centers = x_edges[:<span class="hljs-number">-1</span>] + (x_edges[<span class="hljs-number">1</span>] - x_edges[<span class="hljs-number">0</span>]) / <span class="hljs-number">2</span>
+<span class="hljs-comment"># arrange xdata into proper shape for GP</span>
+x_data = x_centers[:, <span class="hljs-literal">None</span>]
+<span class="hljs-comment"># express data as the rate number of disaster per year</span>
+y_data = hist / <span class="hljs-number">4</span>
+</div></code></pre>
+<p>现在用 PyMC3 定义并求解该模型：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">with</span> pm.Model() <span class="hljs-keyword">as</span> model_coal:
+    ℓ = pm.HalfNormal(<span class="hljs-string">'ℓ'</span>, x_data.std())
+    cov = pm.gp.cov.ExpQuad(<span class="hljs-number">1</span>, ls=ℓ) + pm.gp.cov.WhiteNoise(<span class="hljs-number">1E-5</span>)
+    高斯过程= pm.gp.Latent(cov_func=cov)
+    f = gp.prior(<span class="hljs-string">'f'</span>, X=x_data)
+    y_pred = pm.Poisson(<span class="hljs-string">'y_pred'</span>, mu=pm.math.exp(f), observed=y_data)
+    trace_coal = pm.sample(<span class="hljs-number">1000</span>, chains=<span class="hljs-number">1</span>)
+</div></code></pre>
+<p>绘制结果图：</p>
+<pre class="hljs"><code><div>_, ax = plt.subplots(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">6</span>))
+f_trace = np.exp(trace_coal[<span class="hljs-string">'f'</span>])
+rate_median = np.median(f_trace, axis=<span class="hljs-number">0</span>)
+ax.plot(x_centers, rate_median, <span class="hljs-string">'w'</span>, lw=<span class="hljs-number">3</span>)
+az.plot_hpd(x_centers, f_trace)
+az.plot_hpd(x_centers, f_trace, credible_interval=<span class="hljs-number">0.5</span>,
+            plot_kwargs={<span class="hljs-string">'alpha'</span>: <span class="hljs-number">0</span>})
+ax.plot(coal_df, np.zeros_like(coal_df)<span class="hljs-number">-0.5</span>, <span class="hljs-string">'k|'</span>)
+ax.set_xlabel(<span class="hljs-string">'years'</span>)
+ax.set_ylabel(<span class="hljs-string">'rate'</span>)
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210433_70.webp" alt=""></p>
+<p>图 7.15</p>
+</center>
+<p>图 7.15 用白线显示了灾害计数的中位数与时间的关系。这些条带表示 50%HPD 区间（较深）和 94%HPD 区间（较浅）。在底部，用黑色记号笔标出了每一场灾难（这被称为地毯图）。如图所示，除最初的短暂上升外，事故计数随时间的推移而下降。PyMC3 的文档中包括煤矿灾难这个案例，但从不同角度建的模。建议您检查下该示例，因为其本身非常有用，而且将其与刚刚使用 <code>model_coal</code> 模型实现的方法进行比较也很有用。</p>
+<p>请注意，将数据装入了抽屉后，会得到一条平滑的曲线。从该意义上说，可将 <code>model_coal</code>看作是构建了一个直方图，并对其做了平滑。</p>
+<h3 id="762-%E7%BA%A2%E6%9D%89%E6%95%B0%E6%8D%AE%E9%9B%86">7.6.2 红杉数据集</h3>
+<p>第二个案例是面向二维空间的红杉木数据。该数据集来自 <code>GPStuff</code> 包（一个用于 Matlab、Octave 和 R 的高斯过程包）。该数据集由给定区域上红杉树的位置组成。推断目的是找出该地区树木计数是如何分布的。</p>
+<p>像往常一样，我们加载数据并绘制它：</p>
+<pre class="hljs"><code><div>rw_df = pd.read_csv(<span class="hljs-string">'../data/redwood.csv'</span>, header=<span class="hljs-literal">None</span>)
+_, ax = plt.subplots(figsize=(<span class="hljs-number">8</span>, <span class="hljs-number">8</span>))
+ax.plot(rw_df[<span class="hljs-number">0</span>], rw_df[<span class="hljs-number">1</span>], <span class="hljs-string">'C0.'</span>)
+ax.set_xlabel(<span class="hljs-string">'x1 coordinate'</span>)
+ax.set_ylabel(<span class="hljs-string">'x2 coordinate'</span>)
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210601_88.webp" alt=""></p>
+<p>图 7.16</p>
+</center>
+<p>同煤矿灾难示例类似，需要对数据进行离散化：</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># discretize spatial data</span>
+bins = <span class="hljs-number">20</span>
+hist, x1_edges, x2_edges = np.histogram2d(
+    rw_df[<span class="hljs-number">1</span>].values, rw_df[<span class="hljs-number">0</span>].values, bins=bins)
+<span class="hljs-comment"># compute the location of the centers of the discretized data</span>
+x1_centers = x1_edges[:<span class="hljs-number">-1</span>] + (x1_edges[<span class="hljs-number">1</span>] - x1_edges[<span class="hljs-number">0</span>]) / <span class="hljs-number">2</span>
+x2_centers = x2_edges[:<span class="hljs-number">-1</span>] + (x2_edges[<span class="hljs-number">1</span>] - x2_edges[<span class="hljs-number">0</span>]) / <span class="hljs-number">2</span>
+<span class="hljs-comment"># arrange xdata into proper shape for GP</span>
+x_data = [x1_centers[:, <span class="hljs-literal">None</span>], x2_centers[:, <span class="hljs-literal">None</span>]]
+<span class="hljs-comment"># arrange ydata into proper shape for GP</span>
+y_data = hist.flatten()
+</div></code></pre>
+<p>请注意，我们将 x1 和 x2 数据视为分开的数据，而不是mesh网格。这允许我们为每个坐标构建协方差矩阵，从而减小计算高斯过程所需矩阵的大小。在使用 <code>LatentKron</code> 类定义高斯过程时，需要注意，这不是一个数字技巧，而是这类矩阵结构的数学属性，因此我们不会在模型中引入任何近似或误差，而只是用一种更快的计算方式来表达它：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">with</span> pm.Model() <span class="hljs-keyword">as</span> model_rw:
+    ℓ = pm.HalfNormal(<span class="hljs-string">'ℓ'</span>,  rw_df.std().values, shape=<span class="hljs-number">2</span>)
+    cov_func1 = pm.gp.cov.ExpQuad(<span class="hljs-number">1</span>, ls=ℓ[<span class="hljs-number">0</span>])
+    cov_func2 = pm.gp.cov.ExpQuad(<span class="hljs-number">1</span>, ls=ℓ[<span class="hljs-number">1</span>])
+    高斯过程= pm.gp.LatentKron(cov_funcs=[cov_func1, cov_func2])
+    f = gp.prior(<span class="hljs-string">'f'</span>, Xs=x_data)
+    y = pm.Poisson(<span class="hljs-string">'y'</span>, mu=pm.math.exp(f), observed=y_data)
+    trace_rw = pm.sample(<span class="hljs-number">1000</span>)
+</div></code></pre>
+<p>最后，绘制结果图：</p>
+<pre class="hljs"><code><div>rate = np.exp(np.mean(trace_rw[<span class="hljs-string">'f'</span>], axis=<span class="hljs-number">0</span>).reshape((bins, <span class="hljs-number">-1</span>)))
+fig, ax = plt.subplots(figsize=(<span class="hljs-number">6</span>, <span class="hljs-number">6</span>))
+ims = ax.imshow(rate, origin=<span class="hljs-string">'lower'</span>)
+ax.grid(<span class="hljs-literal">False</span>)
+ticks_loc = np.linspace(<span class="hljs-number">0</span>, bins<span class="hljs-number">-1</span>, <span class="hljs-number">6</span>)
+ticks_lab = np.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">6</span>).round(<span class="hljs-number">1</span>)
+ax.set_xticks(ticks_loc)
+ax.set_yticks(ticks_loc)
+ax.set_xticklabels(ticks_lab)
+ax.set_yticklabels(ticks_lab)
+cbar = fig.colorbar(ims, fraction=<span class="hljs-number">0.046</span>, pad=<span class="hljs-number">0.04</span>)
+</div></code></pre>
+<center>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210705_b5.webp" alt=""></p>
+<p>图 7.17</p>
+</center>
+<p>图 7.17 中，较浅的颜色意味着比较深颜色有更高的树木比率。可以想象，我们对寻找高增长率地区很感兴趣，因为可能对森林是如何从火灾中恢复的感兴趣，或者我们对土壤性质感兴趣，也可以把树木当作代理。</p>
+<h2 id="77-%E6%80%BB%E7%BB%93">7.7 总结</h2>
+<p>高斯过程是多维高斯分布向无限维的推广，并且由均值函数和协方差函数完全指定。由于可以在概念上把函数看作无限长的向量，所以可使用高斯过程作为函数的先验。在实践中，通常处理的不是无限大的对象，而是维数与数据点一样多的多维高斯分布。为定义相应的协方差函数，我们使用了适当的参数化核；通过学习这些超参数，最终来描述任意复杂的函数。</p>
+<p>本章中，我们简要介绍了高斯过程，还有很多与之相关的主题需要进一步学习（比如构建一个半参数化模型，将线性模型作为均值函数），或是将两个或者多个核函数组合在一起来描述未知函数，或将高斯过程用于分类任务，或是如何将高斯过程与统计学或者机器学习中的其他模型联系起来。不管怎么说，希望本章对高斯过程的介绍以及本书中一些其他主题的介绍能够激励你阅读、使用和进一步学习贝叶斯统计。</p>
+<h2 id="78-%E7%BB%83%E4%B9%A0">7.8 练习</h2>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210819_20.webp" alt=""></p>
+<p><img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210830_d3.webp" alt=""></p>
+
+</body>
+</html>
