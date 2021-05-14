@@ -11,28 +11,10 @@
 - 具有高斯似然的高斯过程
 - 具有非高斯似然的高斯过程
 
-
----
-[第 7 章 高斯过程](#第-7-章-高斯过程)
-
-- [- 7.8 练习](#--78-练习)
-- [7.1 线性模型和非线性数据](#71-线性模型和非线性数据)
-- [7.2 对函数建模](#72-对函数建模)
-  - [7.2.1 多维高斯与函数](#721-多维高斯与函数)
-  - [7.2.2 协方差函数与核](#722-协方差函数与核)
-  - [7.2.3 高斯过程](#723-高斯过程)
-- [7.3 高斯过程回归](#73-高斯过程回归)
-- [7.4 空间自相关回归](#74-空间自相关回归)
-- [7.5 高斯过程分类](#75-高斯过程分类)
-- [7.6 考克斯 （Cox） 过程](#76-考克斯-cox-过程)
-  - [7.6.1 煤矿灾害](#761-煤矿灾害)
-  - [7.6.2 红杉数据集](#762-红杉数据集)
-- [7.7 总结](#77-总结)
-- [7.8 练习](#78-练习)
-
 ---
 
 ## 7.1 线性模型和非线性数据
+
 在第3章 “线性回归建模” 和 第4章 “广义线性回归模型” 中，介绍了如何构建一般形式的模型：
 
 $$
@@ -96,8 +78,6 @@ plt.legend()
 图 7.1 显示，使用高斯分布的样本对函数进行编码并不复杂。但用于生成图 7.1 的方法有限且不够灵活。我们期望实函数具有某种结构或模式，但第一种函数表达方式无法编码数据点之间的关系。事实上，由于实验是从一维高斯分布中获得了 10 个独立样本，所以数据点之间完全独立。对于第二个函数，实验引入了一些依赖关系，将点 $y_{i+1}$ 的均值设置为 $y_i$ 的值，使得数据点之间有了某种依赖关系，进而为编码预期的函数提供了思路。而本章后续内容，将介绍一种更通用的方法来捕获这种依赖，而且不仅限于相邻点之间。
 
 此处使用高斯分布的主要原因是它具备指定任何形状函数的灵活性，因为每个点都有自己的均值和方差；其次从数学角度看，高斯分布具有一些非常好的特性。
-
- 
 
 ### 7.2.1 多维高斯与函数
 
@@ -247,23 +227,19 @@ $$
 
 如果先验分布是高斯过程分布，且似然是正态分布，那么后验分布也是高斯过程分布，我们可以解析地计算它：
 
-$$
-\begin{align}
+\begin{align*} 
 p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &\sim \mathcal{N}(\mu, \Sigma) \tag{式7.7}\\
 \mu&=K_{*}^{T} K^{-1} y \tag{式7.8}\\
 \Sigma &=K_{* *}-K_{*}^{T} K^{-1} K_{*} \notag
-\end{align}
-$$
+\end{align*}
 
 这里：
 
-$$
-\begin{align}
+\begin{align*}
 &\text { - } K=K(X, X) \\
 &\text { - } K_{*}=K\left(X_{*}, X\right) \\
 &\text { - } K_{* *}=K\left(X_{*}, X_{*}\right)
-\end{align}
-$$
+\end{align*}
 
 $X$ 是观察到的数据点，$X_*$ 表示测试点；也就是我们希望知道推断函数值的新点。
 
@@ -407,7 +383,6 @@ ax.set_xlabel('X')
 
 正如第四章“广义线性模型”中看到的，可以使用具有非高斯似然的线性模型和适当的逆连接函数来扩展线性模型的范围。我们可以为高斯过程做同样的事情。例如，可以使用具有指数逆连接函数的泊松似然。对于这样的模型，后验不再是可分析的，但可以用数值方法来逼近它。
 
-
 ## 7.4 空间自相关回归
 
 下面的例子取自理查德·麦克雷思 (Richard McElreath) 的“统计反思”(Statistics Reink) 一书。我强烈推荐你读他的书，因为你会发现很多像这样的好例子和非常好的解释。唯一需要注意的是，书中的示例是 R/stan 格式的，但请不要担心；您可以在 https://github.com/pymc-devs/Resources 中找到这些示例的 Python/PyMC3 版本。
@@ -423,6 +398,7 @@ islands_dist = pd.read_csv('../data/islands_dist.csv',
                            sep=',', index_col=0)
 islands_dist.round(1)
 ```
+
 <center>
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204845_7c.webp)
@@ -455,13 +431,11 @@ x_data = [islands.lat.values[:, None], islands.lon.values[:, None]]
 
 我们要构建的模型是：
 
-$$
-\begin{align}
-f &\sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \tag{式7.10}\\\\
-\mu &\sim \exp (\alpha+\beta x+f) \tag{式7.11}\\\\
+\begin{align*} 
+f &\sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \tag{式7.10}\\
+\mu &\sim \exp (\alpha+\beta x+f) \tag{式7.11}\\
 y &\sim \operatorname{Poisson}(\mu)\tag{式7.12}
-\end{align}
-$$
+\end{align*}
 
 这里，我们省略了 $\alpha$ 和 $\beta$ 的前缀，以及核的超先验。 $x$ 是对数人口， $y$ 是工具总数。
 
@@ -499,12 +473,14 @@ ax.set_ylim(0, 1)
 ax.set_xlabel('distance (thousand kilometers)')
 ax.set_ylabel('covariance')
 ```
+
 <center>
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205145_a6.webp)
 
 图 7.9
 </center>
+
 图 7.9 中的粗线是成对岛屿社会间协方差作为距离函数的后验中位数。我们使用中位数是因为 $\ell$ 和 $η$ 的分布非常不对称。可以看到，平均下来协方差没有那么高，在大约 2000 公里处降到了几乎为 0。细线代表不确定性，可以看到有很大的不确定性。
 
 您可能会发现，将 `model_islands` 及其计算出的后验与[参考资料](https:/​/​github.​com/​pymc-​devs/​resources)中的模型 `m_10_10` 进行比较会很有趣。您可能希望使用 `ArviZ` 函数，例如 `az.summary` 或 `az.plot_forest`。 模型 `m_10_10` 类似于 `model_islands`，但不包含高斯过程项。
@@ -560,6 +536,7 @@ ax[1].set_ylabel('total tools')
 ax[1].set_xlim(6.8, 12.8)
 ax[1].set_ylim(10, 73)
 ```
+
 <center>
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205338_5f.webp)
@@ -571,6 +548,7 @@ ax[1].set_ylim(10, 73)
 
 请注意 `Malekula`、`Tikopia` 和 `Santa Cruz` 之间的相关性如何描述这样一个事实，即它们拥有的工具数量相当少，接近或低于其人口的预期工具数量。类似的事情正发生在`Trobriands`和 `Manus`；它们地理位置相近，拥有的工具比预期人口规模要少。`Tonga` 为其人口提供的工具比预期要多得多，而且与 `Fiji` 的相关性较高。在某种程度上，该模型告诉我们，`Tonga`对 `Lua Fiji`有积极的影响，增加了工具总数，抵消了 `Malekula`、`Tikopia` 和 `Santa Cruz`等近邻对 `Fiji` 的影响。
 
+
 ## 7.5 高斯过程分类
 
 高斯过程不限于回归，也可以用于分类。正如第 4 章“广义线性模型”中所述，通过使用 Logistic 逆连接函数的伯努利似然，将线性模型转化为适合分类的模型。对于iris数据集，本节将尝试重述第 4 章“广义线性模型”中的 model_0，不过这次使用高斯过程而不是线性模型。
@@ -579,6 +557,7 @@ ax[1].set_ylim(10, 73)
 iris = pd.read_csv('../data/iris.csv')
 iris.head()
 ```
+
 <center>
 
 ![image-20210505205534881](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205541_6c.webp)
@@ -710,6 +689,7 @@ az.plot_hpd(X_new[:,0], fp, color='C2')
 ax.set_xlabel('sepal_length')
 ax.set_ylabel('θ', rotation=0)
 ```
+
 <center>
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205912_68.webp)
@@ -799,6 +779,7 @@ ax.set_xlabel('age')
 coal_df = pd.read_csv('../data/coal.csv', header=None)
 coal_df.head()
 ```
+
 <center>
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210251_00.webp)
@@ -807,12 +788,11 @@ coal_df.head()
 
 我们用来拟合上表 `coal_df` 中数据的模型是：
 
-$$
-\begin{align}
-f(x)  &\sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.13}\\\\
+\begin{align*}
+f(x)  &\sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.13} \\
 y  &\sim \operatorname{Poisson}(f(x)) \tag{式7.14}
-\end{align}
-$$
+\end{align*}
+
 
 公式 $(7.13)$ 、$(7.14)$ 是一个泊松回归问题。你可能会想，如果只有灾难发生日期这一列，将如何执行回归？答案是将数据离散化，就像正在构建直方图一样。我们使用抽屉的中心值作为自变量 $x$ , 每个抽屉内的计数作为因变量 $y$：
 
@@ -948,7 +928,6 @@ cbar = fig.colorbar(ims, fraction=0.046, pad=0.04)
 
  本章中，我们简要介绍了高斯过程，还有很多与之相关的主题需要进一步学习（比如构建一个半参数化模型，将线性模型作为均值函数），或是将两个或者多个核函数组合在一起来描述未知函数，或将高斯过程用于分类任务，或是如何将高斯过程与统计学或者机器学习中的其他模型联系起来。不管怎么说，希望本章对高斯过程的介绍以及本书中一些其他主题的介绍能够激励你阅读、使用和进一步学习贝叶斯统计。
 
- 
 
 ##  7.8 练习
 
