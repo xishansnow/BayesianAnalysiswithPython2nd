@@ -6,13 +6,15 @@
 
 本章将会讨论以下内容：
 
-- 广义线性模型；
--  `Logistic 回归`  和逆连接函数；
-- 一元  `Logistic 回归`  ；
-- 多元  `Logistic 回归`  ；
-- `Softmax` 函数和多项  `Logistic 回归`  ；
+- 广义线性模型
+-  `Logistic 回归`  和逆连接函数
+- 一元  `Logistic 回归` 
+- 多元  `Logistic 回归`  
+- `Softmax 函数`和 `多元 Logistic 回归`  
 - 泊松回归
 - 零膨胀泊松回归
+
+---
 
 ## 4.1 广义线性回归
 
