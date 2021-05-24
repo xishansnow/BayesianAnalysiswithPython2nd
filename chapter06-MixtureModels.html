@@ -365,7 +365,7 @@ p(y \mid \theta)=\sum_{i=1}^{K} w_{i} p_{i}\left(y \mid \theta_{i}\right) \tag{�
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505175717_a9.webp" /></p>
 <p>图 6.4</p>
 </center>
-<p>现在对狄利克雷分布有了了解，就可以进一步掌握学习混合模型的知识。构建混合模型的一种可视化方法是将其看作是基于高斯估计模型的 <span class="math notranslate nohighlight">\(K\)</span> 面抛硬币问题，或 <span class="math notranslate nohighlight">\(K\)</span> 面掷骰子问题。用 <code class="docutils literal notranslate"><span class="pre">Kruschke</span> <span class="pre">图</span></code>可以将模型画成如下形式：</p>
+<p>现在对狄利克雷分布有了了解，就可以进一步掌握学习混合模型的知识。构建混合模型的一种可视化方法是将其看作是基于高斯估计模型的 <span class="math notranslate nohighlight">\(K\)</span> 面抛硬币问题，或 <span class="math notranslate nohighlight">\(K\)</span> 面掷骰子问题。用 <code class="docutils literal notranslate"><span class="pre">Kruschke</span> <span class="pre">图</span></code>可以将模型画成如下形式。</p>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505175913_df.webp" style="zoom:67%;" />
 <p>图 6.5</p>
@@ -373,11 +373,18 @@ p(y \mid \theta)=\sum_{i=1}^{K} w_{i} p_{i}\left(y \mid \theta_{i}\right) \tag{�
 <p>途中圆角矩形框表示我们有 <span class="math notranslate nohighlight">\(K\)</span> 个高斯似然（以及对应的先验），类别变量决定具体使用哪个类别来描述数据。 记住，假设已知这些高斯分布的均值和标准差；只需将每个点赋给一个高斯分布即可。</p>
 <p>该模型（假设 <code class="docutils literal notranslate"><span class="pre">clusters=2</span></code> ）可以用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 实现为：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_kg</span><span class="p">:</span>
+    <span class="c1"># 先验p： 服从狄拉克雷分布</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Dirichlet</span> <span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">clusters</span><span class="p">))</span>
+    <span class="c1"># 隐变量z： 是来自 p 的一次多类别抽样</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">cs_exp</span><span class="p">))</span>
+    <span class="c1"># 各组分分别服从各自（均值，标准差为10）的高斯分布</span>
     <span class="n">means</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;means&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">cs_exp</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">clusters</span><span class="p">)</span>
+    <span class="c1"># 均值服从半正态分布</span>
     <span class="n">sd</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;sd&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="c1"># y 服从（多组分加权的平均值，sd=10）的高斯分布</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">means</span><span class="p">[</span><span class="n">z</span><span class="p">],</span> <span class="n">sd</span><span class="o">=</span><span class="n">sd</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">cs_exp</span><span class="p">)</span>
+
     <span class="n">trace_kg</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
 </pre></div>
 </div>

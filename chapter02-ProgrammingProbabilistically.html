@@ -384,11 +384,11 @@
 <h2>2.2 用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 做后验推断<a class="headerlink" href="#pymc3" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 是一个 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 库，用于概率编程。撰写本文时的最后一个版本是 3.6 。 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 提供了非常简单直观的语法，易于阅读，与统计文献中用于描述概率模型的语法非常接近。 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的基本代码是用 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 编写的，计算要求高的部分是用 <code class="docutils literal notranslate"><span class="pre">Numpy</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 编写的。</p>
 <p><code class="docutils literal notranslate"><span class="pre">Theano</span></code> 是为深度学习而开发的一个 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 库，允许我们高效地定义、优化和计算涉及多维数组的数学表达式。 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 使用 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 的主要原因是，有些采样方法需要计算梯度，而 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 知道如何使用自动微分来计算梯度。此外，<code class="docutils literal notranslate"><span class="pre">Theano</span></code> 将 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 代码编译成 C 代码，因此 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 非常快。这是关于 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 的所有信息，我们必须使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 。</p>
-<p>如果您还想了解更多，请开始阅读<a class="reference external" href="http://deeplearning.net/software/theano/tutorial/index.html#tutorial">官方 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 教程</a>。</p>
+<p>如果您还想了解更多，请阅读<a class="reference external" href="http://deeplearning.net/software/theano/tutorial/index.html#tutorial">官方 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 教程</a>。</p>
 <blockquote>
 <div><p>你可能听说过 Theano 已经不再开发了，但这没什么好担心的。PyMC 开发人员将接管 Theano 维护，确保 Theano 在未来几年内继续为 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 服务。与此同时，PyMC 开发人员正在迅速行动，以创建 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的继任者。这可能会基于 TensorFlow 作为后端，尽管其他选项也在分析中。有关这方面的更多信息，请访问<a class="reference external" href="https://medium.com/&#64;pymc_devs/theano-tensorflow-and-the-future-of-pymc-6c9987bb19d5">博客</a> 。</p>
 </div></blockquote>
-<p>让我们重新回顾下抛硬币问题，这次我们使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 。首先需要获取数据，这里使用手动构造的数据。由于数据是我们自己生成的，所以知道真实参数，以下代码中用 <code class="docutils literal notranslate"><span class="pre">theta_real</span></code> 变量表示。显然，在真实数据中，我们并不知道参数的真实值，而是要将其估计出来。</p>
+<p>重新回顾抛硬币问题，这次使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 。首先获取数据，此处使用手动构造的数据。由于数据是我们通过代码生成的，所以知道真实参数值，以下代码中用 <code class="docutils literal notranslate"><span class="pre">theta_real</span></code> 变量表示。显然，在实际数据中，通常并不知道参数的真实值，而是要将其估计出来。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
 <span class="n">trials</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">theta_real</span> <span class="o">=</span> <span class="mf">0.35</span> <span class="c1"># unknown value in a real experiment</span>
@@ -397,15 +397,12 @@
 </div>
 <div class="section" id="id3">
 <h3>2.2.1 建立模型<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>现在有了数据，需要再指定模型。回想一下，模型可以通过指定似然函数和先验的概率分布完成。对于似然，可以用参数分别为 <span class="math notranslate nohighlight">\(n=1\)</span> 和 <span class="math notranslate nohighlight">\(p=\theta\)</span> 的二项分布来描述，对于先验，用参数为 <span class="math notranslate nohighlight">\(\alpha=\beta=1\)</span> 的贝塔分布描述，该贝塔分布与 [0,1] 区间内的均匀分布等价。我们可以用数学表达式描述如下：</p>
-<div class="math notranslate nohighlight">
-\[
-\theta \sim \operatorname{Beta}(\alpha, \beta) 
-\]</div>
-<div class="math notranslate nohighlight">
-\[
-y \sim \operatorname{Bern}(p=\theta) \tag{式2.1}
-\]</div>
+<p>现在有了数据，需要进一步指定模型。回想一下，模型可通过指定似然函数和先验分布完成。对于似然，可用参数为 <span class="math notranslate nohighlight">\(n=1\)</span> 和 <span class="math notranslate nohighlight">\(p=\theta\)</span> 的二项分布来描述，对于先验，用参数为 <span class="math notranslate nohighlight">\(\alpha=\beta=1\)</span> 的贝塔分布描述，该贝塔分布与 [0,1] 区间内的均匀分布等价。用数学表达式描述如下：</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\theta &amp;\sim \operatorname{Beta}(\alpha, \beta) \notag\\
+y &amp;\sim \operatorname{Bern}(p=\theta) \tag{式2.1}
+\end{align*}\]</div>
 <p>该统计模型与 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的语法几乎一一对应。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">our_first_model</span><span class="p">:</span>
  <span class="n">θ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
@@ -413,11 +410,11 @@ y \sim \operatorname{Bern}(p=\theta) \tag{式2.1}
  <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>第 1 行代码构建了一个模型的容器， <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 使用 <code class="docutils literal notranslate"><span class="pre">with</span></code> 语法将所有位于该语法块内的代码都指向同一个模型，你可以把它看作是简化模型描述的“语法糖”，这里将模型命名为 <code class="docutils literal notranslate"><span class="pre">our_first_model</span></code> 。</p>
+<p>第 1 行代码构建了一个模型的容器， <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 使用 <code class="docutils literal notranslate"><span class="pre">with</span></code> 语法将所有位于该语法块内的代码都指向同一个模型，你可以把它看作是简化模型描述的“语法糖”，此处将模型命名为 <code class="docutils literal notranslate"><span class="pre">our_first_model</span></code> 。</p>
 <p>第 2 行代码指定了先验，可以看到语法与数学表示很接近。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>需要注意的是，我们把随机变量命名为 θ ，这里变量名与贝塔函数的第 1 个参数名一样；保持相同的名字是个好习惯，这样能避免混淆。然后，我们通过变量名从后验采样中提取信息。这里变量是一个随机变量，我们可以将该变量看做是从某个分布（在这里是贝塔分布）中生成数值的方法而不是某个具体的值。</p>
+<p>需要注意的是，我们把随机变量命名为 θ ，此处变量名与贝塔函数的第 1 个参数名一样；保持相同的名字是个好习惯，这样能避免混淆。然后，我们通过变量名从后验采样中提取信息。此处变量是一个随机变量，我们可以将该变量看做是从某个分布（在此处是贝塔分布）中生成数值的方法而不是某个具体的值。</p>
 </div>
 <p>第 3 行代码用跟先验相同的语法描述了似然，唯一不同的是我们用 <code class="docutils literal notranslate"><span class="pre">observed</span></code> 变量传递了观测到的数据，这样就告诉了 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 似然。其中，<code class="docutils literal notranslate"><span class="pre">data</span></code> 可以是一个 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 列表或者 <code class="docutils literal notranslate"><span class="pre">Numpy</span></code> 数组或者 <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> 的 <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> 。</p>
 </div>
@@ -433,7 +430,7 @@ NUTS: [θ]
 </div>
 <p>第一行和第二行告诉我们，<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 已经自动分配了 NUTS 采样器（一个非常适用于连续变量的推断引擎），并使用了一种方法来初始化该采样器。第三行说明 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 将并行运行两个链，因此我们从后端可以同时获得两个独立样本。链的确切数量是根据计算机中处理器数量计算的，您可以使用 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 函数的 <code class="docutils literal notranslate"><span class="pre">chains</span></code> 参数来更改它。</p>
 <p>下一行告诉我们哪些变量是由哪个采样器采样的。对于此特定情况，此行不会添加新信息。因为 <code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 是用来对我们拥有的唯一变量 <span class="math notranslate nohighlight">\(θ\)</span> 进行采样的。但情况并不总是如此，因为 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 可以将不同采样器分配给不同变量。这是由 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 根据变量属性自动完成的，以确保为每个变量使用尽可能好的采样器。用户可以使用 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 函数的 <code class="docutils literal notranslate"><span class="pre">step</span></code> 参数手动分配采样器。</p>
-<p>最后一行是进度条，其中有几个相关度量指示采样器的工作速度，包括每秒迭代的次数。如果运行代码，您将看到进度条更新得非常快。在这里，我们看到的是采样器完成其工作的最后一个阶段。数字是 <code class="docutils literal notranslate"><span class="pre">3000/3000</span></code>，其中第一个数字是运行采样器编号（从 1 开始），最后一个数字是样本总数。您会注意到，我们要求了 1,000 个样本，但 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 正在计算 3,000 个样本。我们每条链有 500 个样本来自动调整采样算法（本例中为 NUTS）。默认情况下，此示例将被丢弃。我们每条链也有 1,000 个生产图纸，因此总共生成了 3,000 个样本。调谐阶段帮助 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 从后端提供可靠样本。我们可以使用 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 函数的 <code class="docutils literal notranslate"><span class="pre">tune</span></code> 参数更改调优步骤数。</p>
+<p>最后一行是进度条，其中有几个相关度量指示采样器的工作速度，包括每秒迭代的次数。如果运行代码，您将看到进度条更新得非常快。在此处，我们看到的是采样器完成其工作的最后一个阶段。数字是 <code class="docutils literal notranslate"><span class="pre">3000/3000</span></code>，其中第一个数字是运行采样器编号（从 1 开始），最后一个数字是样本总数。您会注意到，我们要求了 1,000 个样本，但 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 正在计算 3,000 个样本。我们每条链有 500 个样本来自动调整采样算法（本例中为 NUTS）。默认情况下，此示例将被丢弃。我们每条链也有 1,000 个生产图纸，因此总共生成了 3,000 个样本。调谐阶段帮助 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 从后端提供可靠样本。我们可以使用 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 函数的 <code class="docutils literal notranslate"><span class="pre">tune</span></code> 参数更改调优步骤数。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>注意：本书第一版中稍有不同，有人工定义起点和采样方法的设置。</p>
@@ -503,7 +500,7 @@ NUTS: [θ]
 </div>
 <div class="section" id="id11">
 <h3>2.2.4 基于后验推断的决策<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-<p>有时候，仅描述后验还不够，还需要根据推断结果做决策。也就是说，我们不得不将一个连续的估计（后验分布）简化为一个二分法，如：是还是否、健康还是生病、污染还是安全等。回到抛硬币问题上，我们需要回答硬币是否公平。一枚公平的硬币 <span class="math notranslate nohighlight">\(\theta\)</span> 值应当恰好是 0.5，严格来说，出现这种情况的概率为 0，因而实际中会对定义稍稍放松，即假如一枚硬币的 <span class="math notranslate nohighlight">\(\theta\)</span> 值在 0.5 左右，就可以认为判定该硬币是公平的。这里“左右”的具体含义依赖于具体问题，并没有一个满足所有问题的普适准则。因此决策是偏主观的，我们的任务就是根据目标做出最可能的决策。</p>
+<p>有时候，仅描述后验还不够，还需要根据推断结果做决策。也就是说，我们不得不将一个连续的估计（后验分布）简化为一个二分法，如：是还是否、健康还是生病、污染还是安全等。回到抛硬币问题上，我们需要回答硬币是否公平。一枚公平的硬币 <span class="math notranslate nohighlight">\(\theta\)</span> 值应当恰好是 0.5，严格来说，出现这种情况的概率为 0，因而实际中会对定义稍稍放松，即假如一枚硬币的 <span class="math notranslate nohighlight">\(\theta\)</span> 值在 0.5 左右，就可以认为判定该硬币是公平的。此处“左右”的具体含义依赖于具体问题，并没有一个满足所有问题的普适准则。因此决策是偏主观的，我们的任务就是根据目标做出最可能的决策。</p>
 <p>直观上，一个明智的做法是将 <code class="docutils literal notranslate"><span class="pre">HPD</span></code> 区间与我们感兴趣的值进行比较，在抛硬币的例子中，该值是 0.5。前面的图中可以看出 <code class="docutils literal notranslate"><span class="pre">HPD</span></code> 的范围是 0.02～0.71 ，包含 0.5 ，根据后验分布来看，硬币似乎倾向于反面朝上，但我们并不能完全排除这枚硬币的公平的。如果想要一个更清晰的决定，将需要收集更多数据来减少后验数据的扩散，或者需要找出如何定义一个更有信息量的先验。</p>
 <p><strong>（1）<code class="docutils literal notranslate"><span class="pre">ROPE</span></code></strong></p>
 <p>严格地说，恰好观察到 0.5 的机会为零。此外，实践中我们通常不关心确切结果，而是在一定范围内的结果。因此，可以放宽公平的定义，例如我们可以说区间 [0.45，0.55] 中的任何值实际上等于 0.5。我们称这个区间为实际等效区间（<code class="docutils literal notranslate"><span class="pre">ROPE</span></code>）。一旦定义了 <code class="docutils literal notranslate"><span class="pre">ROPE</span></code>，将其与最高后验密度（<code class="docutils literal notranslate"><span class="pre">HPD</span></code>）比较，至少可以得到三个场景：</p>
@@ -578,7 +575,7 @@ NUTS: [θ]
 </div>
 <div class="section" id="id12">
 <h2>2.3 随处可见的高斯分布<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
-<p>前面我们用贝塔–二项分布模型介绍了贝叶斯思想，该模型很简单。另外一个非常简单的模型是高斯分布或者叫正态分布。从数学的角度来看，高斯分布非常受欢迎的原因是它处理起来非常简单，例如，高斯分布的均值，其共轭先验还是高斯分布。此外，许多现象都可以用高斯分布来近似；本质上来说，每当测量某种均值时，只要采样样本量足够大，观测值的分布就会呈现高斯分布。至于这种近似什么时候是对的，什么时候是错的，可以了解下中心极限定理。这里举一个例子，身高（以及其他描述人的特征）是受到基因和许多环境因素影响的，因而我们观测到的成年人的身高符合高斯分布。不过事实上，我们得到的其实是一个双峰分布，男人和女人的身高分布重叠在了一起。总的来说，高斯分布用起来很简单，而且自然界中随处可见，这也是为什么你了解或者听说过的许多统计方法都基于高斯分布。学习如何构建这类模型非常重要，此外，学会如何放宽正态分布的假设也同等重要，该点在贝叶斯框架中利用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 之类的现代计算工具很容易处理。</p>
+<p>前面我们用贝塔–二项分布模型介绍了贝叶斯思想，该模型很简单。另外一个非常简单的模型是高斯分布或者叫正态分布。从数学的角度来看，高斯分布非常受欢迎的原因是它处理起来非常简单，例如，高斯分布的均值，其共轭先验还是高斯分布。此外，许多现象都可以用高斯分布来近似；本质上来说，每当测量某种均值时，只要采样样本量足够大，观测值的分布就会呈现高斯分布。至于这种近似什么时候是对的，什么时候是错的，可以了解下中心极限定理。此处举一个例子，身高（以及其他描述人的特征）是受到基因和许多环境因素影响的，因而我们观测到的成年人的身高符合高斯分布。不过事实上，我们得到的其实是一个双峰分布，男人和女人的身高分布重叠在了一起。总的来说，高斯分布用起来很简单，而且自然界中随处可见，这也是为什么你了解或者听说过的许多统计方法都基于高斯分布。学习如何构建这类模型非常重要，此外，学会如何放宽正态分布的假设也同等重要，该点在贝叶斯框架中利用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 之类的现代计算工具很容易处理。</p>
 <div class="section" id="id13">
 <h3>2.3.1 高斯推断<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>下面的例子与核磁共振实验有关，核磁共振是一种研究分子和生物的技术。下面这组数据，可能来自一群人身高的测量值、回家的平均时间、从超市买回来橙子的重量、大壁虎的伴侣个数或者任何可以用高斯分布近似的测量值。在这个例子中，我们有 48 个测量值：</p>
@@ -700,7 +697,7 @@ y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{式2.2}
  y &amp;\sim \mathcal{T}(\mu, \sigma, \nu) \tag{式2.3}
  \end{align}
 \end{split}\]</div>
-<p>此模型与高斯模型的主要区别是：似然调整为 <span class="math notranslate nohighlight">\(t\)</span> 分布，由于 <span class="math notranslate nohighlight">\(t\)</span> 分布多了一个新的参数 <span class="math notranslate nohighlight">\(\nu\)</span>，需要为其增加一个先验。这里计划采用均值为 30 的指数分布。通过上图可以看出，当 <span class="math notranslate nohighlight">\(\nu = 30\)</span> 时， <span class="math notranslate nohighlight">\(t\)</span> 分布看起来与高斯分布很相似。 从图中也可以看出， <span class="math notranslate nohighlight">\(\nu\)</span> 在 30 附近是一个比较适中的值，既可以调大也可以调小，因此属于弱信息先验。我们的模型可以表示如下：</p>
+<p>此模型与高斯模型的主要区别是：似然调整为 <span class="math notranslate nohighlight">\(t\)</span> 分布，由于 <span class="math notranslate nohighlight">\(t\)</span> 分布多了一个新的参数 <span class="math notranslate nohighlight">\(\nu\)</span>，需要为其增加一个先验。此处计划采用均值为 30 的指数分布。通过上图可以看出，当 <span class="math notranslate nohighlight">\(\nu = 30\)</span> 时， <span class="math notranslate nohighlight">\(t\)</span> 分布看起来与高斯分布很相似。 从图中也可以看出， <span class="math notranslate nohighlight">\(\nu\)</span> 在 30 附近是一个比较适中的值，既可以调大也可以调小，因此属于弱信息先验。我们的模型可以表示如下：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210513182721ce.webp" /></p>
 <p>同样， <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 让我们只需要几行代码便可修改模型。唯一需要 注意的是， <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中指数分布的参数用的是分布均值的倒数。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_t</span><span class="p">:</span>
@@ -779,7 +776,7 @@ y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{式2.2}
 \[
 ps=\Phi\left(\frac{\delta}{\sqrt{2}}\right)\tag{式2.5}
 \]</div>
-<p>这里， <span class="math notranslate nohighlight">\(\Phi \)</span> 是累积正态分布， <span class="math notranslate nohighlight">\(\delta \)</span> 是 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code>。我们可以计算优势概率的点估计，也可以计算值的整个后验分布。如果同意正态假设，可以使用该公式从 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 中计算得到优势概率。否则，当有后验样本时，可通过后验样本计算它。这是马尔可夫链蒙特卡罗 (<code class="docutils literal notranslate"><span class="pre">MCMC</span></code>) 方法的一个优点：一旦从后验获得样本，就可以从它计算出很多量。</p>
+<p>此处， <span class="math notranslate nohighlight">\(\Phi \)</span> 是累积正态分布， <span class="math notranslate nohighlight">\(\delta \)</span> 是 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code>。我们可以计算优势概率的点估计，也可以计算值的整个后验分布。如果同意正态假设，可以使用该公式从 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 中计算得到优势概率。否则，当有后验样本时，可通过后验样本计算它。这是马尔可夫链蒙特卡罗 (<code class="docutils literal notranslate"><span class="pre">MCMC</span></code>) 方法的一个优点：一旦从后验获得样本，就可以从它计算出很多量。</p>
 </div>
 <div class="section" id="id19">
 <h3>2.4.3 小费数据集<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
@@ -983,7 +980,7 @@ y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right) \tag{式2.6}
  <span class="n">trace_cs_h</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>我们使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的 <code class="docutils literal notranslate"><span class="pre">plot_forest</span></code> 函数比较结果。当想要比较不同模型（如本例）的参数值时，该函数很有用。注意，这里将几个参数传递给 <code class="docutils literal notranslate"><span class="pre">plot_forest</span></code> 以获得想要的图，例如：设置 <code class="docutils literal notranslate"><span class="pre">combined=True</span></code> 以合并所有链的结果。</p>
+<p>我们使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的 <code class="docutils literal notranslate"><span class="pre">plot_forest</span></code> 函数比较结果。当想要比较不同模型（如本例）的参数值时，该函数很有用。注意，此处将几个参数传递给 <code class="docutils literal notranslate"><span class="pre">plot_forest</span></code> 以获得想要的图，例如：设置 <code class="docutils literal notranslate"><span class="pre">combined=True</span></code> 以合并所有链的结果。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">plot_forest</span><span class="p">([</span><span class="n">trace_cs_nh</span><span class="p">,</span> <span class="n">trace_cs_h</span><span class="p">],</span>
        <span class="n">model_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;n_h&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">],</span>
        <span class="n">var_names</span><span class="o">=</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">combined</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;cycle&#39;</span><span class="p">)</span>

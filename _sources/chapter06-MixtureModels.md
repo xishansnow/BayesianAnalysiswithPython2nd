@@ -93,7 +93,7 @@ plt.yticks([])
 图 6.4
 </center>
 
-现在对狄利克雷分布有了了解，就可以进一步掌握学习混合模型的知识。构建混合模型的一种可视化方法是将其看作是基于高斯估计模型的 $K$ 面抛硬币问题，或 $K$ 面掷骰子问题。用 `Kruschke 图`可以将模型画成如下形式：
+现在对狄利克雷分布有了了解，就可以进一步掌握学习混合模型的知识。构建混合模型的一种可视化方法是将其看作是基于高斯估计模型的 $K$ 面抛硬币问题，或 $K$ 面掷骰子问题。用 `Kruschke 图`可以将模型画成如下形式。
 
 <center>
 
@@ -108,11 +108,18 @@ plt.yticks([])
 
 ```python
 with pm.Model() as model_kg:
+    # 先验p： 服从狄拉克雷分布
     p = pm.Dirichlet ('p', a=np.ones(clusters))
+    # 隐变量z： 是来自 p 的一次多类别抽样
     z = pm.Categorical('z', p=p, shape=len(cs_exp))
+    # 各组分分别服从各自（均值，标准差为10）的高斯分布
     means = pm.Normal('means', mu=cs_exp.mean(), sd=10, shape=clusters)
+    # 均值服从半正态分布
     sd = pm.HalfNormal('sd', sd=10)
+
+    # y 服从（多组分加权的平均值，sd=10）的高斯分布
     y = pm.Normal('y', mu=means[z], sd=sd, observed=cs_exp)
+
     trace_kg = pm.sample()
 ```
 
