@@ -317,12 +317,12 @@ y=f(x) \tag{式7.2}
 <p>采用这种描述方式，可以表示任何想要的函数。但如果想要表示函数的概率呢（例如：混合模型中的多个组分分别对应一个概率分布函数，通过描述函数的概率分布似乎可以对混合模型建模）？我们可以通过让映射具有概率性质来实现。让每个 <span class="math notranslate nohighlight">\(y_i\)</span> 的值都是一个随机变量，该随机变量服从给定均值和方差的高斯分布。通过该方式，不再是对单个特定函数的描述，而形成对一系列分布族的描述。</p>
 <p>为了使讨论具体化，让我们使用一些 Python 代码来构建和绘制这类函数的两个示例：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="c1"># 曲线1：10个自变量，10个高斯采样的因变量</span>
+<span class="c1"># 曲线1：10个预测变量，10个高斯采样的结果变量</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;o-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;the first one&#39;</span><span class="p">)</span>
 
-<span class="c1"># 曲线2：相同的10个自变量，10个采用了不同均值高斯采样的因变量</span>
+<span class="c1"># 曲线2：相同的10个预测变量，10个采用了不同均值高斯采样的结果变量</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
     <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
@@ -339,7 +339,7 @@ y=f(x) \tag{式7.2}
 <div class="section" id="id4">
 <h3>7.2.1 多维高斯与函数<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>在图 7.1 中，我们使用一维高斯的 <span class="math notranslate nohighlight">\(n\)</span> 个样本来表示一个函数。其实，还可以换一种方式思考：既然每个数据点均被视为来自特定高斯分布的一个采样，是否可以将连续 <span class="math notranslate nohighlight">\(n\)</span> 个数据点视为一个来自于 <span class="math notranslate nohighlight">\(n\)</span> 维高斯分布的采样呢？ 更进一步的，如果样本数量无限大，是否可以用一个无限维高斯分布来对其建模呢？</p>
-<p>答案是肯定的。 在每个数据点均为独立的高斯分布样本假设下，可以使用 <span class="math notranslate nohighlight">\(n\)</span> 维高斯分布来对连续 <span class="math notranslate nohighlight">\(n\)</span> 个数据点进行建模，而此样本则可以视为 <span class="math notranslate nohighlight">\(n\)</span> 维高斯分布的一个向量形式（长度为 <span class="math notranslate nohighlight">\(n\)</span> ）的抽样。如果自变量 <span class="math notranslate nohighlight">\(x\)</span> 代表时间，则该模型就表示了一个基于高斯的随机过程，即高斯过程。</p>
+<p>答案是肯定的。 在每个数据点均为独立的高斯分布样本假设下，可以使用 <span class="math notranslate nohighlight">\(n\)</span> 维高斯分布来对连续 <span class="math notranslate nohighlight">\(n\)</span> 个数据点进行建模，而此样本则可以视为 <span class="math notranslate nohighlight">\(n\)</span> 维高斯分布的一个向量形式（长度为 <span class="math notranslate nohighlight">\(n\)</span> ）的抽样。如果预测变量 <span class="math notranslate nohighlight">\(x\)</span> 代表时间，则该模型就表示了一个基于高斯的随机过程，即高斯过程。</p>
 <p>通过上述分析，大家会发现高斯过程本质上是一个无限维高斯分布（虽然实践种中通常是有限维的），它的每一维的边缘概率密度都是高斯分布，也代表着每个数据点都是来自某个一维高斯分布的抽样。</p>
 <p>在 PyMC3 中，通过使用 <code class="docutils literal notranslate"><span class="pre">np.random.multivariate_normal(np.zeros_like(x),</span> <span class="pre">np.eye(len(x)))</span></code> 替换 <code class="docutils literal notranslate"><span class="pre">np.random.normal(0,</span> <span class="pre">1,</span> <span class="pre">len(x))</span></code> ，即可生成与图 7.1 相同的图形。也证明了上述分析。</p>
 <p>将模型视为多维高斯分布有一个比较大的优势，即可以利用协方差矩阵来编码数据点之间的相关性信息，进而打破观测独立性假设，为数据点间的依赖关系建模。例如，PyMC3 允许协方差矩阵为单位矩阵 <code class="docutils literal notranslate"><span class="pre">np.eye(len(X))</span></code>，表示图中 10 个数据点的方差为 1，而协方差为 0（因为观测独立性假设）。如果用其他正数替换单位矩阵中的零，则可能反映了另外一个完全不同的故事。</p>
@@ -507,7 +507,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 \[
 p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) df \tag{式7.9}
 \]</div>
-<p>与往常一样，<span class="math notranslate nohighlight">\(\theta\)</span> 表示所有未知参数，<span class="math notranslate nohighlight">\(X\)</span> 是自变量，<span class="math notranslate nohighlight">\(y\)</span> 是因变量。请注意，我们正在对函数 <span class="math notranslate nohighlight">\(f\)</span> 的值进行边际化。对于高斯过程先验和正态似然，可以解析地执行边际化。</p>
+<p>与往常一样，<span class="math notranslate nohighlight">\(\theta\)</span> 表示所有未知参数，<span class="math notranslate nohighlight">\(X\)</span> 是预测变量，<span class="math notranslate nohighlight">\(y\)</span> 是结果变量。请注意，我们正在对函数 <span class="math notranslate nohighlight">\(f\)</span> 的值进行边际化。对于高斯过程先验和正态似然，可以解析地执行边际化。</p>
 <p>根据 PyMC3 的核心开发者、GP 模块的主要贡献者 Bill Engels 的说法，对于核宽度参数，避免采用零先验通常效果更好。<span class="math notranslate nohighlight">\(\ell\)</span> 的一个有用默认设置是 <code class="docutils literal notranslate"><span class="pre">pm.Gamma(2，0.5)</span></code>。你可以从 <a class="reference external" href="https://github.com/stan-dev/stan/wiki/Prior-ChoiceRecommendations">Stan team</a> 阅读更多关于默认有用先验的建议。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_reg</span><span class="p">)</span>
 </pre></div>
@@ -579,7 +579,7 @@ p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) df \tag
 <h2>7.4 空间自相关回归<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>下面的例子取自理查德·麦克雷思 (Richard McElreath) 的“统计反思”(Statistics Reink) 一书。我强烈推荐你读他的书，因为你会发现很多像这样的好例子和非常好的解释。唯一需要注意的是，书中的示例是 R/stan 格式的，但请不要担心；您可以在 <a class="reference external" href="https://github.com/pymc-devs/Resources">https://github.com/pymc-devs/Resources</a> 中找到这些示例的 Python/PyMC3 版本。</p>
 <p>现在回到例子，我们有 10 个不同的岛屿社会；每一个都有其使用的工具数量。一些理论预测，较大人口需要开发和维护更多工具；另一个重要因素是人群间的接触率。</p>
-<p>当将工具数量作为因变量时，可以使用泊松回归并将人口数量作为自变量。事实上，可以使用人口的对数，因为根据理论真正重要的是人口比例，而不是绝对大小。将接触率包括在模型中的一种方法是收集有关这些岛屿社会在历史上的接触频率，可以考虑创建一个分类变量，如低/高接触率（请下表中的 Contact 列）。另一种方式是使用不同岛屿社会间的距离作为接触率的代理，可以假设距离近的社会会更频繁地接触。</p>
+<p>当将工具数量作为结果变量时，可以使用泊松回归并将人口数量作为预测变量。事实上，可以使用人口的对数，因为根据理论真正重要的是人口比例，而不是绝对大小。将接触率包括在模型中的一种方法是收集有关这些岛屿社会在历史上的接触频率，可以考虑创建一个分类变量，如低/高接触率（请下表中的 Contact 列）。另一种方式是使用不同岛屿社会间的距离作为接触率的代理，可以假设距离近的社会会更频繁地接触。</p>
 <p>我们通过读取本书附带的 <code class="docutils literal notranslate"><span class="pre">island_dist.csv</span></code> 文件来访问以千公里为单位表示的距离矩阵：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">islands_dist</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/islands_dist.csv&#39;</span><span class="p">,</span>
                            <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -713,7 +713,7 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12}
 <center>
 <p><img alt="image-20210505205534881" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205541_6c.webp" /></p>
 </center>
-<p>我们从最简单的分类问题开始：类别只有两类：山鸢尾和变色鸢尾；自变量只有一个：萼片长度。使用数字 0 和 1 对分类变量山鸢尾和变色鸢尾进行编码：</p>
+<p>我们从最简单的分类问题开始：类别只有两类：山鸢尾和变色鸢尾；预测变量只有一个：萼片长度。使用数字 0 和 1 对分类变量山鸢尾和变色鸢尾进行编码：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;species == (&#39;setosa&#39;, &#39;versicolor&#39;)&quot;</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">codes</span>
 <span class="n">x_1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sepal_length&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
