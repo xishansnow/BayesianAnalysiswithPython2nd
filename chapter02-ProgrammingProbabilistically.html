@@ -767,6 +767,10 @@ y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{式2.2}
 <p>Cohen‘s d是一种测量效应大小的方法，其中均值的差异是通过考虑两组的合并标准差来标准化的。</p>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">Cohen‘s</span> <span class="pre">d</span></code> 通过使用各组标准差来引入每组的差异性。这点很重要，因为在相同的绝对差情况下，标准差为 0.1的组显然应当比标准差为10的组效应变化更明显。一组数据相比另一组数据变化了 <span class="math notranslate nohighlight">\(x\)</span> 个单位，可能是每个点都整体变化了 <span class="math notranslate nohighlight">\(x\)</span> 个单位，也可能是其中一半的数据没有变化而另外一半数据变化了 <span class="math notranslate nohighlight">\(2x\)</span> ，还可能是其他组合方法。因此，将组内方差包含在公式中，将有助于将绝对差放在合理上下文中做比较。这种类似对绝对差做标准化的方法，有助于我们正确理解不同组之间差异的重要性。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>根据 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 得到的效应值可以看做是 <code class="docutils literal notranslate"><span class="pre">Z-score</span></code>，因而 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 为 0.5 可以解释为一组数据相比另一组数据的差别是 0.5 倍的标准差。</p>
+</div>
 <p>即使将均值的差异做了标准化，我们可能仍然需要基于给定问题的上下文来校准自己，以便能够判断给定值是大、中、小等等。还好，这种校准可以通过足够的练习获得。举例来说，如果我们对相同类型的问题执行多个分析，如果 <code class="docutils literal notranslate"><span class="pre">Cohen‘s</span> <span class="pre">d</span> <span class="pre">=1</span></code> 是个经验值，那么当分析遇到 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span> <span class="pre">=2</span> </code> 时，意味着有重要的事情发生。如果您还没有这样的经验，可以向<a class="reference external" href="http://rpsychologist.com/d3/cohend">领域专家</a>咨询。该网页可以用于了解 不同 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 值都长什么样，此外，还可以看到描述效应值的其他方式。</p>
 </div>
 <div class="section" id="id18">
@@ -787,7 +791,7 @@ ps=\Phi\left(\frac{\delta}{\sqrt{2}}\right)\tag{式2.5}
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504182713_db.webp" /></p>
 <p>对于该数据集，我们只关心 <code class="docutils literal notranslate"><span class="pre">day</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tip</span></code> 列，利用 <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">violinplot</span></code> 函数可以将其画出来：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;day&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;tip&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;day&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;tip&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span><span class="n">t</span>
 </pre></div>
 </div>
 <center>
