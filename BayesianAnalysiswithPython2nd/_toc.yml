@@ -8,4 +8,9 @@
 - file: chapter07-GaussianProcesses
 - file: chapter08-InterefenceEngine
 - file: chapter09-WheretoGoNext
+# 变分推断的参考文献
+- file: Ref-chapter08-VI-VIforDummies
+- file: Ref-chapter08-VI-ADVI
+- file: Ref-chapter08-MC-Integration
+- file: Ref-chapter08-MC-MCMCforDummies
      
