@@ -1,4 +1,6 @@
-- file: preface
+format: jb-article
+root: preface
+sections:
 - file: chapter01-ThinkingProbabilistically
 - file: chapter02-ProgrammingProbabilistically
 - file: chapter03-ModellingwithLinearRegression
@@ -8,9 +10,7 @@
 - file: chapter07-GaussianProcesses
 - file: chapter08-InterefenceEngine
 - file: chapter09-WheretoGoNext
-# 变分推断的参考文献
 - file: Ref-chapter08-VI-VIforDummies
 - file: Ref-chapter08-VI-ADVI
 - file: Ref-chapter08-MC-Integration
 - file: Ref-chapter08-MC-MCMCforDummies
-     
