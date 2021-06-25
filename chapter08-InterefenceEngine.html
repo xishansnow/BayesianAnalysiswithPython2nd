@@ -568,13 +568,13 @@ q(\theta)=\prod_{j} q_{j}\left(\theta_{j}\right) \tag{8.8}
 <p>蒙特卡洛部分可以用随机数来解释。蒙特卡洛方法是一个非常广泛的算法家族，它使用随机抽样来计算或模拟给定过程。蒙特卡洛是摩纳哥的一个区，那里有一家非常著名的赌场。蒙特卡洛方法的开发者之一 <code class="docutils literal notranslate"><span class="pre">Stanislaw</span> <span class="pre">Ulam</span></code> 有一个叔叔曾在那里赌博。<code class="docutils literal notranslate"><span class="pre">Stan</span></code> 的关键思想是，虽然许多问题很难解决，甚至很难用确切方式表达出来，但可以通过从这些问题中抽取样本来有效地研究它们。事实上，蒙特卡洛方法的最早动机是回答有关在纸牌游戏中拿到一张特定牌的可能性问题。解决该问题的常见方法是组合数学分析法。但 <code class="docutils literal notranslate"><span class="pre">Stan</span></code> 认为存在另一种方法，进行多次单轮游戏，最后计算其中有多少次是我们感兴趣的。</p>
 <p>蒙特卡洛方法的第一个应用是解决核物理问题，这是当时用工具很难解决的问题。如今，即使是个人计算机也足以使用蒙特卡洛方法解决许多有趣的问题；因此，蒙特卡洛方法被应用于科学、工程、工业和艺术中的各种问题。</p>
 <p>在使用蒙特卡洛方法计算数值的例子中，教科书上的经典案例是估计 <span class="math notranslate nohighlight">\(π\)</span> 。实际中有更好的方法来计算 <span class="math notranslate nohighlight">\(π\)</span> ，不过该例仍然具有教学意义。我们可以通过以下蒙特卡洛过程估计 <span class="math notranslate nohighlight">\(π\)</span> ：</p>
-<p>（1）在边长为 <span class="math notranslate nohighlight">\(2R\)</span> 的正方形内随机撒 <span class="math notranslate nohighlight">\(N\)</span> 个点。
-（2）在正方形内画一个半径为 <span class="math notranslate nohighlight">\(R\)</span> 的圆，计算在圆内点的个数。
-（3）利用比例估计 <span class="math notranslate nohighlight">\(\bar \pi = 4\frac{inside}{N}\)</span> 。</p>
+<p>（1）在边长为 <span class="math notranslate nohighlight">\(2R\)</span> 的正方形内随机撒 <span class="math notranslate nohighlight">\(N\)</span> 个点。</p>
+<p>（2）在正方形内画一个半径为 <span class="math notranslate nohighlight">\(R\)</span> 的圆，计算在圆内点的个数。</p>
+<p>（3）利用比例估计 <span class="math notranslate nohighlight">\(\bar \pi = 4\frac{inside}{N}\)</span> 。</p>
 <p>以下是一些注意事项：</p>
-<p>（1）圆和正方形的面积分别与圆内的点数和总点数成正比。
-（2）如果关系 <span class="math notranslate nohighlight">\(\sqrt{\left(x^{2}+y^{2}\right)} \leq R\)</span> 成立，则认为该点在圆内。
-（3）正方形的面积是 <span class="math notranslate nohighlight">\((2R)^2\)</span> ，圆的面积是 <span class="math notranslate nohighlight">\(πR^2\)</span> ，因此二者面积之比是 <span class="math notranslate nohighlight">\(4/π\)</span></p>
+<p>（1）圆和正方形的面积分别与圆内的点数和总点数成正比。</p>
+<p>（2）如果关系 <span class="math notranslate nohighlight">\(\sqrt{\left(x^{2}+y^{2}\right)} \leq R\)</span> 成立，则认为该点在圆内。</p>
+<p>（3）正方形的面积是 <span class="math notranslate nohighlight">\((2R)^2\)</span> ，圆的面积是 <span class="math notranslate nohighlight">\(πR^2\)</span> ，因此二者面积之比是 <span class="math notranslate nohighlight">\(4/π\)</span></p>
 <p>圆和正方形的面积分别正比于圆内点数和总点数 <span class="math notranslate nohighlight">\(N\)</span>。我们可以通过几行简单的代码来模拟该蒙特卡洛过程计算 <span class="math notranslate nohighlight">\(π\)</span> 值，同时计算出估计值与实际值之间的相对误差：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">10000</span>
 <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
@@ -639,13 +639,10 @@ q(\theta)=\prod_{j} q_{j}\left(\theta_{j}\right) \tag{8.8}
 </ol>
 <p>有几点需要注意：</p>
 <ol class="simple">
-<li><p>如果选择的提议分布 <span class="math notranslate nohighlight">\(q(x_{i+1}|x_i)\)</span> 是对称的，那么可以得到式 8.12，通常称为 <code class="docutils literal notranslate"><span class="pre">Metropolis</span> <span class="pre">准则</span></code> 。</p></li>
-</ol>
-<div class="math notranslate nohighlight">
-\[
+<li><p>如果选择的提议分布 <span class="math notranslate nohighlight">\(q(x_{i+1}|x_i)\)</span> 是对称的，那么可以得到式 8.12，通常称为 <code class="docutils literal notranslate"><span class="pre">Metropolis</span> <span class="pre">准则</span></code> 。
+$<span class="math notranslate nohighlight">\(
 p_{a}\left(x_{i+1} \mid x_{i}\right)=\min \left(1, \frac{p\left(x_{i+1}\right)}{p\left(x_{i}\right)}\right) \tag{8.12}
-\]</div>
-<ol class="simple">
+\)</span>$</p></li>
 <li><p>步骤（3）和步骤（4）表明：我们总是会转移到一个比当前状态（或参数）概率更大的状态（或参数），对于概率更小的，则会以 <span class="math notranslate nohighlight">\(x_{i+1}\)</span> 与 <span class="math notranslate nohighlight">\(x_i\)</span> 之比的概率接受。该准则中的接受步骤使得采样过程相比网格法更高效，同时保证了采样的准确性。</p></li>
 <li><p>目标分布（贝叶斯统计中的后验分布）是通过记录下来的采样值来近似的。如果我们接受转移到新的状态 <span class="math notranslate nohighlight">\(x_{i+1}\)</span>，那么我们就记录该采样值 <span class="math notranslate nohighlight">\(x_{i+1}\)</span>。如果拒绝转移到 <span class="math notranslate nohighlight">\(x_{i+1}\)</span>，那么我们就记录 <span class="math notranslate nohighlight">\(x_i\)</span>。</p></li>
 </ol>
