@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -250,7 +250,7 @@
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id6">
-       （1）解决方法 1：运行之前做中心化或标准化处理
+       （1）解决方法 1：运行之前做中心化或归一化处理
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
@@ -272,7 +272,7 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id10">
-     3.1.6 多元高斯分布的皮尔逊系数
+     3.1.6 多元高斯分布的皮尔逊相关系数
     </a>
    </li>
   </ul>
@@ -390,47 +390,49 @@
 </ul>
 <div class="section" id="id3">
 <h3>3.1.1 与机器学习的联系<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>按照 <code class="docutils literal notranslate"><span class="pre">Kevin</span> <span class="pre">P.</span> <span class="pre">Murphy</span></code> 的说法，机器学习是一个总称，指一系列从数据中自动学习隐藏规律，并用来预测未知数据，或在不确定状态中做决策的方法。机器学习与统计学相互交织，不过正如 <code class="docutils literal notranslate"><span class="pre">Kevin</span> <span class="pre">P.</span> <span class="pre">Murphy</span></code> 在《 <code class="docutils literal notranslate"><span class="pre">Machine</span> <span class="pre">learning:</span> <span class="pre">A</span> <span class="pre">probabilistic</span> <span class="pre">perspective</span></code> 》中所说：“如果从概率视角来看，二者间的关系就比较清晰了”。尽管两个领域在概念和数学上紧密联系，但二者间不同的术语让这种联系显得不那么清晰了。因此，本文会介绍一些机器学习中的术语。</p>
-<p>用机器学习的行话来说，回归问题属于典型的<code class="docutils literal notranslate"><span class="pre">监督学习</span></code>。在机器学习框架中，如果学习从 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 到 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的一个映射，这就是<code class="docutils literal notranslate"><span class="pre">回归</span></code>问题。其中 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 是连续变量。在机器学习中通常用 <code class="docutils literal notranslate"><span class="pre">特征</span></code> 这个名词取代统计中的 <code class="docutils literal notranslate"><span class="pre">变量</span></code>。而 <code class="docutils literal notranslate"><span class="pre">监督</span></code> 的意思指，已经知道 <span class="math notranslate nohighlight">\(\{X,Y\}\)</span> 对的观测值，如何从这些观测值（或者数据集）中抽象出一种映射关系来处理未来的观测（即只知道 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 而不知道 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的情形）。</p>
+<p>（1）机器学习与统计学</p>
+<p>按照 <code class="docutils literal notranslate"><span class="pre">Kevin</span> <span class="pre">P.</span> <span class="pre">Murphy</span></code> 的说法，机器学习指一系列从数据中自动学习隐藏的规律、并用于预测未知数据，或在不确定状态中做出决策的方法的总称。机器学习与统计学相互交织，不过正如 <code class="docutils literal notranslate"><span class="pre">Kevin</span> <span class="pre">P.</span> <span class="pre">Murphy</span></code> 所说：“如果从概率视角来看，二者间的关系就比较清晰了”。尽管两个领域在概念和数学上紧密联系，但二者间不同的术语让这种联系显得不那么清晰了。因此，本文会介绍一些机器学习中的术语。</p>
+<p>（2）回归是一种监督学习方法</p>
+<p>用机器学习的术语来说，回归属于典型的<code class="docutils literal notranslate"><span class="pre">监督学习</span></code>。在机器学习框架中，学习从 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 到 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的一个映射就是<code class="docutils literal notranslate"><span class="pre">回归</span></code>问题，其中 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 是连续变量。不过，机器学习术语中通常用 <code class="docutils literal notranslate"><span class="pre">特征</span></code> 取代统计学中的 <code class="docutils literal notranslate"><span class="pre">变量</span></code>。而 <code class="docutils literal notranslate"><span class="pre">监督</span></code> 指，已经知道 <span class="math notranslate nohighlight">\(\{X,Y\}\)</span> 变量对的观测值，如何从这些观测值中抽象出一种 <code class="docutils literal notranslate"><span class="pre">映射关系</span></code> 来处理未来的观测（即只知道 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 而不知道 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的情形）。</p>
 </div>
 <div class="section" id="id4">
 <h3>3.1.2 线性回归模型的核心<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>让我们开始学习如何构建线性模型。看下面该公式：</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbb{y} = \alpha + \mathbb{x} \beta \tag{式3.1}
+\mathbb{y} = \alpha + \mathbb{x} \beta \tag{式3.1} \label{eqn:3.1}
 \]</div>
 <p>该等式描述了变量 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 与变量 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 之间的线性关系。其中，参数 <span class="math notranslate nohighlight">\(β\)</span> 控制直线的斜率，可以理解为变量 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 的单位变化量所对应 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的变化量。另外一个参数 <span class="math notranslate nohighlight">\(α\)</span> 为截距，可以解释为当 <span class="math notranslate nohighlight">\(x_i=0\)</span> 时, <span class="math notranslate nohighlight">\(y_i\)</span> 的值，在图形上表示， <span class="math notranslate nohighlight">\(α\)</span> 就是直线与 <span class="math notranslate nohighlight">\(y\)</span> 轴交点的坐标。</p>
-<p>计算线性模型参数的方法很多，最小二乘法是其中之一。每次使用软件去拟合直线时，底层可能用的就是该方法。最小二乘法返回的 <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 能够让观测到的 <span class="math notranslate nohighlight">\(y\)</span> 与预测的 <span class="math notranslate nohighlight">\(\hat y\)</span> 之间误差平方的均值最小。这样估计 <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 就变成了一个最优化问题，最优化问题的目标一般是寻找目标函数的最小值（或最大值）。</p>
-<p>最优化并非求解线性模型的唯一方法，同样的问题可以从概率（贝叶斯）角度描述。用概率方式思考带来的优势是：在得到最优的参数 <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 同时，还知道这些参数的不确定程度，而最优化方法则需要一些其他工作来提供不确定性信息。此外，贝叶斯方法还具备很大灵活性，尤其在使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 等工具时，可将模型应用到本章后面所介绍的各种特定问题中。</p>
+<p>计算线性模型参数的方法很多，最小二乘法是其中之一。每次使用软件去拟合直线时，底层可能用的就是最小二乘法。最小二乘法返回的 <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 能够让观测到的 <span class="math notranslate nohighlight">\(y\)</span> 与预测的 <span class="math notranslate nohighlight">\(\hat y\)</span> 之间均方误差最小。因此，估计 <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 是一个最优化问题，其目标是寻找目标函数的最值（最小值或最大值）。</p>
+<p>最优化并非求解线性模型的唯一方法，同样的问题可以从概率（贝叶斯）角度描述。<code class="docutils literal notranslate"><span class="pre">用概率方式思考的优势是：在得到最优的参数值</span> <span class="pre">$α$</span> <span class="pre">和</span> <span class="pre">$β$</span> <span class="pre">同时，还能够知道其不确定性程度。与此相对的，最优化方法需要一些其他工作来提供不确定性信息</span></code>。此外，贝叶斯方法还具备很大灵活性，尤其在使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 等工具时，可将模型应用到本章后面所介绍的各种特定问题中。</p>
 <p>从概率角度，线性回归模型可以表示成如下形式：</p>
 <div class="math notranslate nohighlight">
 \[
-\mathbb{y} \sim \mathcal{N} ( \mu = \alpha + \mathbb{x} \beta , \epsilon ) \tag{式3.2}
+\mathbb{y} \sim \mathcal{N} ( \mu = \alpha + \mathbb{x} \beta , \epsilon ) \tag{式3.2} \label{eqn:3.2}
 \]</div>
-<p>也就是说，这里假设向量 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 是服从均值为 <span class="math notranslate nohighlight">\(α+\mathbb{x}β\)</span> 、标准差为 <span class="math notranslate nohighlight">\(\epsilon\)</span> 的正态分布。其中 <span class="math notranslate nohighlight">\(α\)</span> 、 <span class="math notranslate nohighlight">\(β\)</span> 、 <span class="math notranslate nohighlight">\(\epsilon\)</span> 为未知的模型参数（贝叶斯角度视为随机变量），需设置先验，下面是一组假设参数服从正态分布的先验设置：</p>
+<p>也就是说，假设 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 是一个服从均值为 <span class="math notranslate nohighlight">\(α + \mathbb{x} β\)</span> 、标准差为 <span class="math notranslate nohighlight">\(\epsilon\)</span> 的正态分布的随机变量。其中 <span class="math notranslate nohighlight">\(α\)</span> 、 <span class="math notranslate nohighlight">\(β\)</span> 、 <span class="math notranslate nohighlight">\(\epsilon\)</span> 为未知的模型参数（贝叶斯角度视为随机变量），需设置先验，下面是一组假设参数服从正态分布的先验设置：</p>
 <div class="amsmath math notranslate nohighlight">
-\[\begin{align*} \tag{式3.3}
+\[\begin{align*} \tag{式3.3} \label{eqn:3.3}
 \alpha &amp;\sim \mathcal{N}\left(\mu_{\alpha}, \sigma_{\alpha}\right) \\ 
 \beta &amp;\sim \mathcal{N}\left(\mu_{\beta}, \sigma_{\beta}\right) \\ 
 \epsilon &amp;\sim\left|N\left(0, \sigma_{\epsilon}\right)\right|  
 \end{align*}\]</div>
-<p>对于 <span class="math notranslate nohighlight">\(α\)</span> 的先验，由于截距值根据问题不同会有很大变化，因此可使用一个分布平坦的高斯分布（即 <span class="math notranslate nohighlight">\(\sigma_\alpha\)</span> 相对于数据的值域大很多）。根据以往经验，通常截距都是以 0 为中心，并且不大于 10，但这仅限于作者处理的问题域范畴，不能转移到其他问题上。</p>
-<p>关于斜率 <span class="math notranslate nohighlight">\(\beta\)</span> ，可能比截距更容易获得预期。许多问题中至少可以先验地知道斜率的正负符号；例如，期望可变权重 <span class="math notranslate nohighlight">\(\beta\)</span> 平均随着高度变化而增加。</p>
-<p>对于 <span class="math notranslate nohighlight">\(\epsilon\)</span> ，由于其值大于 0，采用半高斯分布，可以将 <span class="math notranslate nohighlight">\(\sigma_\epsilon\)</span> 设置为相对 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 较大的值，如设置为 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 标准差的 10 倍，以保留足够的空间通过数据似然来驱动不确定性的收缩。</p>
-<p>上述模糊的先验可保证先验对后验影响较小，并很容易被数据所克服。</p>
+<p>对于 <span class="math notranslate nohighlight">\(α\)</span> 的先验，由于截距值根据问题不同会有很大变化，因此可使用一个平坦的高斯分布（即 <span class="math notranslate nohighlight">\(\sigma_\alpha\)</span> 相对于数据的值域大很多）。</p>
+<p>关于斜率 <span class="math notranslate nohighlight">\(\beta\)</span> ，可能比截距更容易获得先验，因为许多问题中至少可以预先知道斜率的正负符号；例如，预期权重值 <span class="math notranslate nohighlight">\(\beta\)</span> 平均会随着高度变化而增加。</p>
+<p>对于 <span class="math notranslate nohighlight">\(\epsilon\)</span> ，由于其值大于 0，采用半高斯分布，可以将 <span class="math notranslate nohighlight">\(\sigma_\epsilon\)</span> 设置为相对 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 较大的值，如设置为 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 标准差的 10 倍，以保留足够空间通过数据似然来驱动不确定性的收缩。</p>
+<p>上述模糊的先验设置可保证先验对后验影响不至于过大，并较容易被数据克服，使最终结果更倾向于数据证据。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>使用最小二乘法得到的点估计与采用了平坦先验的贝叶斯一元线性回归的最大后验估计（MAP）一致。</p>
+<p>使用最小二乘法得到的点估计与采用了平坦高斯先验的贝叶斯最大后验估计（MAP）结果一致。</p>
 </div>
-<p>半高斯分布可以采用均匀分布或半柯西分布来代替。半柯西分布是一个很好的正则化先验，而均匀分布通常不是一个非常好的选择，除非知道参数确实受到了硬边界的限制。</p>
+<p>半高斯分布可以采用均匀分布或半柯西分布来代替。半柯西分布是一个很好的正则化先验，而均匀分布通常不是一个最好的选择，除非知道参数确实受到了硬边界的限制。</p>
 <p>如果想在标准差的某个特定值周围使用强先验，可以使用伽马分布。许多软件包中伽马分布的默认参数化可能有点混乱，但幸运的是，<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 允许使用形状和速率、或者平均值和标准差来定义它。要查看伽马和其他分布的形状，可以查看 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 文档：<a class="reference external" href="https://docs.pymc.io/api/distributions/continuous.html%E3%80%82">https://docs.pymc.io/api/distributions/continuous.html。</a></p>
-<p>回过头来再看线性回归模型，借助  <code class="docutils literal notranslate"><span class="pre">Kruschke</span> <span class="pre">图</span></code> ，我们有下面这张图。在上一章的  <code class="docutils literal notranslate"><span class="pre">Kruschke</span> <span class="pre">图</span></code> 中，我们使用符号 = 来定义确定性变量（如 <span class="math notranslate nohighlight">\(\mu\)</span> )，使用 ∼ 来定义随机变量，如 <span class="math notranslate nohighlight">\(\alpha\)</span> 、 <span class="math notranslate nohighlight">\(\beta\)</span> 和 <span class="math notranslate nohighlight">\(\epsilon\)</span> ：</p>
+<p>回过头再看线性回归模型，借助 Kruschke 图有 <code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">3.1</span></code> 。在上一章的  <code class="docutils literal notranslate"><span class="pre">Kruschke</span> <span class="pre">图</span></code> 中，我们规定使用符号 <code class="docutils literal notranslate"><span class="pre">=</span></code> 来定义确定性变量（如 <span class="math notranslate nohighlight">\(\mu\)</span> ），使用 <code class="docutils literal notranslate"><span class="pre">∼</span></code> 来定义随机变量，如 <span class="math notranslate nohighlight">\(\alpha\)</span> 、 <span class="math notranslate nohighlight">\(\beta\)</span> 和 <span class="math notranslate nohighlight">\(\epsilon\)</span> ：</p>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505092353_aa.webp" style="zoom:50%;" />
 <p>图3.1</p>
 </center>
-<p>定义好模型后，需要为其提供数据。这里继续采用合成数据集（合成数据集的优点是，我们知道参数的正确值，进而很方便检查是否能够使用模型恢复它们）：</p>
+<p>定义好该模型，需要为其提供数据。这里采用人工合成的数据集（合成数据集的优点是：可事前知道参数的真值，进而方便检查是否能够使用模型恢复它们）：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">N</span><span class="o">=</span><span class="mi">100</span>
 <span class="n">alpha_real</span><span class="o">=</span><span class="mf">2.5</span>
@@ -454,105 +456,118 @@
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505092831_15.webp" style="zoom:67%;"/>
 <p>图3.2</p>
 </center>
-<p>现在使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 来构建和拟合模型。注意这里 <span class="math notranslate nohighlight">\(\mu\)</span> 在模型中通过 <code class="docutils literal notranslate"><span class="pre">pm.deterministic</span></code> 来定义，表示它是<code class="docutils literal notranslate"><span class="pre">确定性变量</span></code>，反映了数学表达式和   <code class="docutils literal notranslate"><span class="pre">Kruschke</span> <span class="pre">图</span></code> 的内容。如果显式定义了一个确定性变量，<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 会计算该变量并保存它的迹：</p>
+<p>现在使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 来构建和拟合模型。注意这里 <span class="math notranslate nohighlight">\(\mu\)</span> 在模型中通过 <code class="docutils literal notranslate"><span class="pre">pm.deterministic</span></code> 来定义，表示它是<code class="docutils literal notranslate"><span class="pre">确定性变量</span></code>，反映了数学表达式和 Kruschke 图的内容。在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中，如果显式定义了一个确定性变量，则会计算该变量并保存其迹（ Trace ）：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">withpm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span><span class="n">asmodel_g</span><span class="p">:</span>
-<span class="n">α</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α&#39;</span><span class="p">,</span><span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">β</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β&#39;</span><span class="p">,</span><span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">ϵ</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;ϵ&#39;</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">μ</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span><span class="n">α</span><span class="o">+</span><span class="n">β</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
-<span class="n">y_pred</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span><span class="n">mu</span><span class="o">=</span><span class="n">μ</span><span class="p">,</span><span class="n">sd</span><span class="o">=</span><span class="n">ϵ</span><span class="p">,</span><span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
-<span class="n">trace_g</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span><span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="c1"># 定义随机变量</span>
+<span class="n">α</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">β</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ϵ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;ϵ&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># 定义映射 (y = α + β * x) 和似然 P(y|theta）</span>
+<span class="n">μ</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">α</span> <span class="o">+</span> <span class="n">β</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">y_pred</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span><span class="n">mu</span> <span class="o">=</span> <span class="n">μ</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="n">ϵ</span><span class="p">,</span> <span class="n">observed</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># 随机采样生成模型中所有随机变量和显式确定性变量的迹</span>
+<span class="n">trace_g</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">tune</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>你也可以不在模型中显式地定义它。此时 PCMC3 仍会计算该变量，但不会将其保存在迹中。例如，可编写以下代码：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span><span class="n">mu</span><span class="o">=</span><span class="n">α</span><span class="o">+</span><span class="n">β</span><span class="o">*</span><span class="n">x</span><span class="p">,</span><span class="n">sd</span><span class="o">=</span><span class="n">ϵ</span><span class="p">,</span><span class="n">observed</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+<p>如果不在模型中显式地定义确定性变量。则 <code class="docutils literal notranslate"><span class="pre">PCMC3</span></code> 仍会计算该变量，但不会将保存其迹。例如，可编写以下代码：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="n">α</span> <span class="o">+</span> <span class="n">β</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="n">ϵ</span><span class="p">,</span> <span class="n">observed</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>为探索推断的结果，可以生成未知变量的迹图，此处省略了确定性变量 <span class="math notranslate nohighlight">\(\mu\)</span> 。可以通过将希望包含在绘图中的变量名称以列表形式传递给 <code class="docutils literal notranslate"><span class="pre">var_names</span></code> 参数来实现多变量绘制。许多 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 函数都有一个 <code class="docutils literal notranslate"><span class="pre">var_names</span></code> 参数，你可以随意尝试其他 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的绘图来探索后验。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span><span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span><span class="s1">&#39;β&#39;</span><span class="p">,</span><span class="s1">&#39;ϵ&#39;</span><span class="p">])</span>
+<p>为探索推断结果，可以绘制未知变量的迹图（<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">3.3</span></code>），此处省略了确定性变量 <span class="math notranslate nohighlight">\(\mu\)</span> 。你可以将希望包含在绘图中的变量名称（随机变量或显式确定性变量）以列表形式传递给参数 <code class="docutils literal notranslate"><span class="pre">var_names</span></code> 来实现多变量迹图的绘制。许多 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 函数都有一个 <code class="docutils literal notranslate"><span class="pre">var_names</span></code> 参数，你可以尝试其他 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的绘图函数来探索后验。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">var_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span><span class="s1">&#39;β&#39;</span><span class="p">,</span><span class="s1">&#39;ϵ&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505093554_e3.webp" /></p>
 <p>图3.3</p>
 </center>
-<p>下一节将讨论线性模型性质，以及它如何影响采样过程和模型解释，并将介绍几种解释和可视化后验的方法。</p>
+<p>下一节将讨论线性模型的性质，以及其如何影响采样过程和模型的解释，并介绍几种解释和可视化后验的方法。</p>
 </div>
 <div class="section" id="id5">
 <h3>3.1.3 线性模型与高自相关性问题<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p>前面模型中， <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 有很严重的自相关性，这意味着采样结果会很差，而且相比实际采样数，有效的采样很少。为什么呢？其实我们是被自己的假设误导了。</p>
-<p>事实上，不论用哪条直线去拟合数据，该直线都会穿过 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 均值和 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 均值的点。因此，拟合直线的过程相当于将直线固定在数据中心上旋转，造成斜率越大截距越小的相关性。如果将后验画出来的话可以很清楚地看到这点（这里暂时忽略 <span class="math notranslate nohighlight">\(ε\)</span> ）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_pair</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="s1">&#39;β&#39;</span><span class="p">],</span> <span class="n">plot_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
+<p>前面模型中， <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 间实际上存在比较严重的相关性问题。这意味着采样结果会很差，有效采样很少。为什么呢？</p>
+<p>其实我们被自己的假设误导了。</p>
+<p>事实上，上述模型中，不论用哪条直线去拟合数据，该直线都会穿过 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 和 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的均值点。拟合直线的过程相当于将直线固定在均值点上做旋转，其结果是呈现出<code class="docutils literal notranslate"><span class="pre">斜率越大截距越小</span></code>的相关性。如果将后验画出来的话可以很清楚地看到这点（见<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">3.4</span></code> , 暂时忽略 <span class="math notranslate nohighlight">\(ε\)</span> ）。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_pair</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">var_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="s1">&#39;β&#39;</span><span class="p">],</span> <span class="n">plot_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
 </pre></div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210510120946ab.webp" /></p>
-<p>图3.4</p>
+<p>图 3.4</p>
 </center>
-<p>可以看到，后验（忽略 <span class="math notranslate nohighlight">\(ε\)</span> 后）呈斜对角形状，这对于类似 <code class="docutils literal notranslate"><span class="pre">Metropolis</span></code>-Hastings 的采样器会有问题（详细解释见第 8 章），而且参数维度越高，这种情况越严重。</p>
-<p>在继续深入前，需澄清一点：前面提到的拟合直线会穿过均值点的现象只在最小二乘算法假设下成立。使用贝叶斯方法后，该限制会被放松。后面的例子中可以看到，通常直线会在 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 和 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 均值附近而不是正好穿过均值。不过没关系，自相关性与直线固定在某一点附近的假设仍然成立。接下来从两个方面理解和解决高自相关性问题。</p>
+<p>可以看到，后验呈斜对角形状，这对于类似 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span></code> 的采样器会产生问题（详细解释见<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">8</span> <span class="pre">章</span></code>），而且参数维度越高，这种情况越严重。</p>
+<p>在继续深入前，需澄清一点：前面提到的<code class="docutils literal notranslate"><span class="pre">拟合直线穿过均值点的现象</span></code>只在最小二乘法假设下成立。使用贝叶斯方法后，这个限制会被放松。后面的例子中可以看到，贝叶斯方法中，拟合直线会在均值点附近而不是正好穿过均值。但总体上，随机变量之间的自相关性与直线固定在某一点附近的假设仍然成立。</p>
+<p>接下来从两个方面理解和解决高自相关性问题：</p>
 <div class="section" id="id6">
-<h4>（1）解决方法 1：运行之前做中心化或标准化处理<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
-<p>解决问题的一个简单办法是先将 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 中心化，也就是说，对于每个点 <span class="math notranslate nohighlight">\(x_i\)</span> ，减去 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 的均值。这样做的结果是 <span class="math notranslate nohighlight">\(x'\)</span> 的中心在 0 附近，从而在修改斜率时，旋转点与截距点重合，参数空间也会变得不那么自相关。</p>
+<h4>（1）解决方法 1：运行之前做中心化或归一化处理<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>解决问题的一个简单办法是先将 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 中心化，也就是说，对于每个点 <span class="math notranslate nohighlight">\(x_i\)</span> ，减去 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 的均值。这样做的结果是 <span class="math notranslate nohighlight">\(x'\)</span> 的中心在 0 附近，从而在修改斜率时，旋转点与截距点重合，参数空间也会变得不那么自相关。该方法在机器学习以及深度学习中经常被使用。</p>
 <div class="math notranslate nohighlight">
 \[
-x'=x-\bar x \tag{式3.4}
+x'=x-\bar x \tag{式3.4}  \label{eqn:3.4}
 \]</div>
-<p>中心化不仅是一种计算技巧，同时有利于解释数据。截距是指当 <span class="math notranslate nohighlight">\(x_i=0\)</span> 时 <span class="math notranslate nohighlight">\(y_i\)</span> 的值，不过对许多问题而言，截距并没有什么实际意义。例如，对于身高或者体重的关系模型，当值为 0 时没有实际意义，因而截距对理解数据也就没有帮助；对于另外一些问题，估计出截距可能很有用，因为在实验中可能无法测量出 <span class="math notranslate nohighlight">\(x_i=0\)</span> 的情况，此时截距的估计值能够提供有价值的信息。不管怎么说，外推都有其局限性，应当谨慎使用！</p>
-<p>根据问题和受众不同，我们可能需要汇报中心化之前或者之后估计到的参数值。如果我们需要汇报的是中心化之前的参数，那么可以像下面这样将参数转换成原来的尺度：</p>
+<p>中心化不仅是一种计算技巧，同时有利于解释数据。截距是指当 <span class="math notranslate nohighlight">\(x_i=0\)</span> 时 <span class="math notranslate nohighlight">\(y_i\)</span> 的值，对许多问题而言，截距并没有什么实际意义。例如，对于身高或者体重的关系模型，当值为 0 时没有实际意义，因而截距对理解数据就没有帮助；对于另外一些问题，估计出截距可能很有用，因为在实验中可能无法测量出 <span class="math notranslate nohighlight">\(x_i = 0\)</span> 的情况，此时截距的估计值能够提供有价值的信息。但不管怎么说，外推都有其局限性，应当谨慎使用！</p>
+<p>根据问题和受众不同，可能需要汇报中心化之前和之后的参数估计值。如果需要汇报的是中心化之前的参数，那么可以像下面这样将参数转换成原来的尺度：</p>
 <div class="math notranslate nohighlight">
 \[
-\alpha=\alpha^{\prime}-\beta^{\prime} \bar{x} \tag{式3.5}
+\alpha=\alpha^{\prime}-\beta^{\prime} \bar{x} \tag{式3.5}  \label{eqn:3.5}
 \]</div>
 <p>上面的公式可以通过以下公式推导出来：</p>
 <div class="amsmath math notranslate nohighlight">
-\[\begin{align*} \tag{式3.6}
-y&amp;=\alpha^{\prime}+\beta^{\prime} x^{\prime}+\epsilon  \\
-y&amp;=\alpha^{\prime}+\beta^{\prime}(x-\bar{x})+\epsilon  \\
-y&amp;=\alpha^{\prime}-\beta^{\prime} \bar{x}+\beta^{\prime} x+\epsilon 
+\[\begin{align*} \tag{式3.6}  \label{eqn:3.6}
+y &amp;= \alpha^{\prime}+\beta^{\prime} x^{\prime}+\epsilon  \\
+y &amp;= \alpha^{\prime}+\beta^{\prime}(x-\bar{x})+\epsilon  \\
+y &amp;= \alpha^{\prime}-\beta^{\prime} \bar{x}+\beta^{\prime} x+\epsilon 
 \end{align*}\]</div>
 <p>然后可以得出：</p>
 <div class="math notranslate nohighlight">
 \[
-\beta = \beta' \tag{式3.7}
+\beta = \beta' \tag{式3.7}  \label{eqn:3.7}
 \]</div>
-<p>进一步，在运行模型之前可以对数据进行<code class="docutils literal notranslate"><span class="pre">标准化处理</span></code>。标准化在统计学和机器学习中是常见的数据处理手段，因为许多算法对标准化后的数据效果更好。标准化过程是在中心化后再除以标准差，其数学形式如下：</p>
+<p>进一步，在运行模型之前可以对数据进行<code class="docutils literal notranslate"><span class="pre">归一化处理</span></code>。归一化在统计学和机器学习中是常见的数据处理手段，许多算法对归一化后的数据效果更好。归一化过程在中心化基础上再除以标准差，其数学形式如下：</p>
 <div class="amsmath math notranslate nohighlight">
-\[\begin{align*} \tag{式3.8}
-x^{\prime} &amp;=\frac{x-\bar{x}}{x_{s d}} \\
-y^{\prime} &amp;=\frac{y-\bar{y}}{y_{s d}} 
+\[\begin{align*} \tag{式3.8}  \label{eqn:3.8}
+x^{\prime} &amp;= \frac{x-\bar{x}}{x_{s d}} \\
+y^{\prime} &amp;= \frac{y-\bar{y}}{y_{s d}} 
 \end{align*}\]</div>
-<p>标准化的好处之一是可以对数据使用相同的弱先验，而不必关心数据具体值域有多大，因为我们已经对数据做了尺度变换。对于标准化后的数据，截距通常在 0 附近，斜率在-1～1 附近。标准化后的数据可以使用 <code class="docutils literal notranslate"><span class="pre">标准分数（z-score）</span></code> 来描述参数。如果某人声称一个参数的 <code class="docutils literal notranslate"><span class="pre">z-score</span></code> 为 1.3，那么我们就知道该值在标准化前位于均值附近 1.3 倍标准差处。<code class="docutils literal notranslate"><span class="pre">z-score</span></code> 每变化一个单位，对应原始数据中变化 1 倍标准差。这点在分析多变量时很有用，因为所有参数都在同一个尺度上，进而简化了对数据的解释。</p>
+<p>归一化的好处是能够对数据使用相同的弱先验，而不必关心数据值域大小（因为已经对数据做了尺度变换）。归一化后的数据，截距通常在 0 附近，斜率在 <span class="math notranslate nohighlight">\(-1～1\)</span> 附近。</p>
+<p>归一化后的数据可以使用 <code class="docutils literal notranslate"><span class="pre">标准分（z-score）</span></code> 来描述参数。如果某人称一个参数的 <code class="docutils literal notranslate"><span class="pre">z-score</span></code> 为 1.3，那么我们就知道该值在归一化前位于均值附近 1.3 倍标准差处。<code class="docutils literal notranslate"><span class="pre">z-score</span></code> 每变化一个单位，对应原始数据中变化 1 倍标准差。这点在分析多变量时很有用，因为所有参数都在同一个尺度上，进而简化了对数据的解释。</p>
 </div>
 <div class="section" id="id7">
 <h4>（2）解决办法 2：更换采样方法<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
-<p>另外一种解决高自相关性的办法是使用不同采样方法。<code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 算法与 <code class="docutils literal notranslate"><span class="pre">Metropolis</span></code> 算法相比，在类似受限的对角空间中遇到的困难小一些。原因是 <code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 是根据后验曲率来移动的，因而更容易沿着对角空间移动。<code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 算法每走一步都要比 <code class="docutils literal notranslate"><span class="pre">Metropolis</span></code> 算法更慢，但得到一个合理后验近似值所需步数更少（相关解释见第 8 章）。</p>
+<p>另外一种解决高自相关性的办法是使用不同采样方法。<code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 算法与 <code class="docutils literal notranslate"><span class="pre">Metropolis</span></code> 算法相比，在类似受限的对角空间中遇到的困难小一些。原因是 <code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 是根据后验曲率来移动的，因而更容易沿着对角空间移动。<code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 算法每走一步都要比 <code class="docutils literal notranslate"><span class="pre">Metropolis</span></code> 算法更慢，但得到一个合理后验近似值所需步数更少（相关解释见<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">8</span> <span class="pre">章</span></code>）。</p>
 </div>
 </div>
 <div class="section" id="id8">
 <h3>3.1.4 对后验进行解释和可视化<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
-<p>正如已经看到的，我们可以使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 函数（如 <code class="docutils literal notranslate"><span class="pre">plot_trace</span></code> 和 <code class="docutils literal notranslate"><span class="pre">summary</span></code> ) 探索后验，也可以使用自己的函数。对于线性回归，绘制出符合数据均值的直线，并标示参数 <span class="math notranslate nohighlight">\(\alpha\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span> 的均值可能很有用。为反映后验的不确定性，可以从后验中采样并以半透明线条形式绘制。</p>
+<p>正如已经看到的，可以使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 函数（如 <code class="docutils literal notranslate"><span class="pre">plot_trace</span></code> 和 <code class="docutils literal notranslate"><span class="pre">summary</span></code> ）探索后验，也可以使用自己的函数。对于线性回归，绘制出符合数据均值的直线，并标示参数 <span class="math notranslate nohighlight">\(\alpha\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span> 的均值可能很有用。对于感兴趣的不确定性程度，则可以从后验中采样并以半透明线条形式绘制在均值直线周边（<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">3.5</span></code>）。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;C0.&#39;</span><span class="p">)</span>
 <span class="n">alpha_m</span> <span class="o">=</span> <span class="n">trace_g</span><span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">beta_m</span> <span class="o">=</span> <span class="n">trace_g</span><span class="p">[</span><span class="s1">&#39;β&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">draws</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">trace_g</span><span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">]),</span> <span class="mi">10</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">trace_g</span><span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">][</span><span class="n">draws</span><span class="p">]</span> <span class="o">+</span> <span class="n">trace_g</span><span class="p">[</span><span class="s1">&#39;β&#39;</span><span class="p">][</span><span class="n">draws</span><span class="p">]</span>
-         <span class="o">*</span> <span class="n">x</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">alpha_m</span> <span class="o">+</span> <span class="n">beta_m</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
-         <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;y = </span><span class="si">{</span><span class="n">alpha_m</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> + </span><span class="si">{</span><span class="n">beta_m</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> * x&#39;</span><span class="p">)</span>
+
+<span class="c1"># 绘制不确定性集合</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">trace_g</span><span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">][</span><span class="n">draws</span><span class="p">]</span> <span class="o">+</span> <span class="n">trace_g</span><span class="p">[</span><span class="s1">&#39;β&#39;</span><span class="p">][</span><span class="n">draws</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="c1"># 绘制均值直线</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">alpha_m</span> <span class="o">+</span> <span class="n">beta_m</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;y = </span><span class="si">{</span><span class="n">alpha_m</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> + </span><span class="si">{</span><span class="n">beta_m</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> * x&#39;</span><span class="p">)</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 </div>
 <center>
-<img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021051012334888.webp" style="zoom: 67%;" />
+<img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021051012370861.webp" />
 <p>图3.5</p>
 </center>
-<p>可以看到，上图中间部分的不确定性较低，不过直线并没有都相交于一个点（后验并不强制所有直线都穿过均值点）。</p>
-<p>半透明的直线看起来不错，不过我们可能想给该图增加点更酷的东西：用半透明的区间来描述 <span class="math notranslate nohighlight">\(μ\)</span> 的最大后验密度（ <code class="docutils literal notranslate"><span class="pre">HPD</span></code> ）区间。注意这也是在模型中将变量 <span class="math notranslate nohighlight">\(μ\)</span> 定义为确定性变量的原因，简化以下代码：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">alpha_m</span> <span class="o">+</span> <span class="n">beta_m</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
-         <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;y = </span><span class="si">{</span><span class="n">alpha_m</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> + </span><span class="si">{</span><span class="n">beta_m</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> * x&#39;</span><span class="p">)</span>
+<p>可以看到，上图中间部分比较确定（即不确定性程度低），不过直线并没有都相交于一点（贝叶斯方法并不强制所有直线都穿过均值点）。</p>
+<p>半透明直线是一种比较直观的表示方法，不过还可以给该图增加更酷的东西：用半透明区间来描述 <span class="math notranslate nohighlight">\(μ\)</span> 的最大后验密度（ <code class="docutils literal notranslate"><span class="pre">HPD</span></code> ）区间（<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">3.6</span> </code>）。注意这也是在模型中将变量 <span class="math notranslate nohighlight">\(μ\)</span> 显式定义为确定性变量的主要原因，简化以下代码：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 绘制均值直线</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">alpha_m</span> <span class="o">+</span> <span class="n">beta_m</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> 
+        <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;y = </span><span class="si">{</span><span class="n">alpha_m</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> + </span><span class="si">{</span><span class="n">beta_m</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> * x&#39;</span><span class="p">)</span>
+
+<span class="c1"># 绘制参数的不确定性程度区间（0.98）</span>
 <span class="n">sig</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">plot_hpd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">trace_g</span><span class="p">[</span><span class="s1">&#39;μ&#39;</span><span class="p">],</span> <span class="n">credible_interval</span><span class="o">=</span><span class="mf">0.98</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -560,22 +575,24 @@ y^{\prime} &amp;=\frac{y-\bar{y}}{y_{s d}}
 </pre></div>
 </div>
 <center>
-<img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021051012370861.webp" style="zoom:67%;" />
+<img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021051012334888.webp" />
 <p>图3.6</p>
 </center>
-<p>另外一种方式是画预测值 <span class="math notranslate nohighlight">\(\hat y\)</span> 的 <code class="docutils literal notranslate"><span class="pre">HPD</span></code>（例如 94%和 50%）区间。也就是说，我们想要根据模型看到未来 94%和 50%的数据的分布范围。我们在图中将 <code class="docutils literal notranslate"><span class="pre">50%</span> <span class="pre">HPD</span> <span class="pre">区间</span></code> 用深灰色区域表示，将 <code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">HPD</span></code> 区间用浅灰色表示。</p>
+<p>另外一种方式是绘制被预测变量值 <span class="math notranslate nohighlight">\(\hat y\)</span> 的 <code class="docutils literal notranslate"><span class="pre">HPD</span></code>（例如 94%和 50%）区间（见<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">3.7</span></code>），用于显示模型预测中 94% 和 50%的数据分布范围。在图中将 <code class="docutils literal notranslate"><span class="pre">50%</span> <span class="pre">HPD</span> <span class="pre">区间</span></code> 用深灰色区域表示，将 <code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">HPD</span></code> 区间用浅灰色表示。</p>
 <p>利用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">sample_posterior_predictive</span></code> 函数可以很容易得到预测值的采样。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ppc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span>
-                                     <span class="n">samples</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>
-                                     <span class="n">model</span><span class="o">=</span><span class="n">model_g</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ppc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">samples</span> <span class="o">=</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model_g</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>然后我们可以画出结果：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;b.&#39;</span><span class="p">)</span>
+
+<span class="c1"># 绘制均值直线</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">alpha_m</span> <span class="o">+</span> <span class="n">beta_m</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
          <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;y = </span><span class="si">{</span><span class="n">alpha_m</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> + </span><span class="si">{</span><span class="n">beta_m</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> * x&#39;</span><span class="p">)</span>
+
+<span class="c1"># 绘制被预测变量的不确定性区间（指定的 0.5 和默认的 0.94）         </span>
 <span class="n">az</span><span class="o">.</span><span class="n">plot_hpd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ppc</span><span class="p">[</span><span class="s1">&#39;y_pred&#39;</span><span class="p">],</span> <span class="n">credible_interval</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
-<span class="n">az</span><span class="o">.</span><span class="n">plot_hpd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ppc</span><span class="p">[</span><span class="s1">&#39;y_pred&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">az</span><span class="o">.</span><span class="n">plot_hpd</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ppc</span><span class="p">[</span><span class="s1">&#39;y_pred&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightgray&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
@@ -588,38 +605,44 @@ y^{\prime} &amp;=\frac{y-\bar{y}}{y_{s d}}
 </div>
 <div class="section" id="id9">
 <h3>3.1.5 皮尔逊相关系数<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p>有时我们希望衡量两个变量之间的（线性）依赖关系。度量两个变量间线性相关性最常见的指标是<code class="docutils literal notranslate"><span class="pre">皮尔逊相关系数（Pearson</span> <span class="pre">correlation</span> <span class="pre">coefficient）</span></code> ，通常用小写的 <span class="math notranslate nohighlight">\(r\)</span> 表示。如果 <span class="math notranslate nohighlight">\(r\)</span> 值为 <span class="math notranslate nohighlight">\(+1\)</span> ，我们称两个变量完全正相关，即一个变量随另一个变量的增加而增加；如果 <span class="math notranslate nohighlight">\(r\)</span> 值为 <span class="math notranslate nohighlight">\(-1\)</span> ，则称完全负相关，即一个变量随另一变量的增加而减少；当 <span class="math notranslate nohighlight">\(r\)</span> 为 0 时，称两个变量间没有线性相关性。皮尔逊相关系数并不涉及非线性相关性。人们很容易将皮尔逊相关系数与线性回归中的斜率弄混淆，但查看 <a class="reference external" href="https://en.wikipedia.org/wiki/Correlation_and_dependence#/media/File:Correlation_examples2.svg">此链接</a> 就可以明白，二者本质上是两个完全不同的量。</p>
+<p>有时我们希望衡量两个变量之间的（线性）依赖关系。度量两个变量间线性相关性最常见的指标是<code class="docutils literal notranslate"><span class="pre">皮尔逊相关系数（Pearson</span> <span class="pre">correlation</span> <span class="pre">coefficient）</span></code> ，通常用小写的 <span class="math notranslate nohighlight">\(r\)</span> 表示。如果 <span class="math notranslate nohighlight">\(r\)</span> 值为 <span class="math notranslate nohighlight">\(+1\)</span> ，我们称两个变量完全正相关，即一个变量随另一个变量的增加而增加；如果 <span class="math notranslate nohighlight">\(r\)</span> 值为 <span class="math notranslate nohighlight">\(-1\)</span> ，则称完全负相关，即一个变量随另一变量的增加而减少；当 <span class="math notranslate nohighlight">\(r\)</span> 为 0 时，称两个变量间没有线性相关性。</p>
+<p>皮尔逊相关系数并不涉及非线性相关性。人们很容易将皮尔逊相关系数与线性回归中的斜率弄混淆，但查看 <a class="reference external" href="https://en.wikipedia.org/wiki/Correlation_and_dependence#/media/File:Correlation_examples2.svg">此链接</a> 就可以明白，二者本质上是两个完全不同的量。</p>
 <p>下面的公式可以在某种程度上减轻你的疑惑：</p>
 <div class="math notranslate nohighlight">
 \[
-r=\beta \frac{\sigma_{x}}{\sigma_{y}} \tag{式3.9}
+r=\beta \frac{\sigma_{x}}{\sigma_{y}} \tag{式3.9} \label{eqn:3.9}
 \]</div>
-<p>只有在 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 和 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的标准差相等时，皮尔逊相关系数才与斜率相等。也就是说，当我们对数据标准化后，两者之间确实可以等价。需要注意：</p>
+<p>只有在 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 和 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的标准差相等时，皮尔逊相关系数才与斜率相等。也就是说，皮尔逊相关系数和斜率的主要区别在于是否受数据尺度影响。在对数据做归一化处理消除尺度影响后，两者之间确实等价，但在未做归一化处理前，两者并不等价。需要注意：</p>
 <ul class="simple">
-<li><p>皮尔逊相关系数衡量的是两个变量之间的相关性程度，其值位于 [-1,1] 区间内，与数据尺度无关；</p></li>
+<li><p>皮尔逊相关系数衡量的是两个变量之间的相关性程度，其值位于 [-1,1] 区间内，<code class="docutils literal notranslate"><span class="pre">皮尔逊相关系数与数据尺度无关</span></code>；</p></li>
 <li><p>斜率 <span class="math notranslate nohighlight">\(\beta\)</span> 表示 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 变化一个单位时 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的变化量，可以取任意实数。</p></li>
 </ul>
-<p>皮尔逊系数与一个被称为 <code class="docutils literal notranslate"><span class="pre">确定系数</span></code> 的量有关。对于线性回归模型，确定系数就是皮尔逊系数的平方，即 <span class="math notranslate nohighlight">\(r^2\)</span> （有时写为 <span class="math notranslate nohighlight">\(R^2\)</span> ），发音为 <span class="math notranslate nohighlight">\(r\)</span> 平方。确定系数可以定义为预测值的方差除以测量数据的方差。因此，可以解释为从自变量预测的因变量中方差（变异部分）所占的比例。对于贝叶斯线性回归，预测值的方差可以大于数据的方差，这将导致 <span class="math notranslate nohighlight">\(R^2\)</span> 大于 1。一个解决方案是定义 <span class="math notranslate nohighlight">\(R^2\)</span> 如下：</p>
+<p>根据统计学知识，皮尔逊相关系数与一个被称为 <code class="docutils literal notranslate"><span class="pre">决定系数（或可决系数）</span></code> 的量有关。决定系数记为 <span class="math notranslate nohighlight">\(r^2\)</span> 或 <span class="math notranslate nohighlight">\(R^2\)</span> ，发音为 “ <span class="math notranslate nohighlight">\(r\)</span> 平方”。决定系数反映了<code class="docutils literal notranslate"><span class="pre">因变量的全部变异中，能够通过回归关系被自变量解释的比例（即认为测量值反映的变异中，有一部分可以用模型来解释，而剩下的部分模型无法解释）</span></code>，数学上被定义为因变量 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的预测值方差除以测量值方差。该系数越大，表明 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 与  <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 间的回归关系确定性越高。如果回归关系被建模为线性回归关系，则该系数越大，就表明 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 与  <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 间存在强线性相关性。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>注： 皮尔逊相关系数反映了两个变量之间的线性相关程度，而决定系数则反映了模型的确定性程度或可解释程度。因此，如果一个线性回归模型的决定系数非常高，则表明因变量和自变量之间的线性关系能够比较好地解释数据，两者之间的皮尔逊相关系数也应该越大。但对于非线性回归模型，决定系数和皮尔逊相关系数之间不一定存在这种映射关系。</p>
+</div>
+<p>需要注意的是：在贝叶斯线性回归模型中，预测值方差可能大于测量值方差，进而导致 <span class="math notranslate nohighlight">\(R^2\)</span> 大于 1，不利于解释。因此，通常对 <span class="math notranslate nohighlight">\(R^2\)</span> 做如下定义：</p>
 <div class="math notranslate nohighlight">
 \[
-R^{2}=\frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]+\mathbf{V}_{n=1}^{S}\left(\hat{y}^{s}-y\right)} \tag{式3.10}
+R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]+\mathbf{V}_{n=1}^{S}\left(\hat{y}^{s}-y\right)} \tag{式3.10} \label{eqn:3.10}
 \]</div>
-<p>上式中，<span class="math notranslate nohighlight">\(E[\hat y^2]\)</span> 是后验样本 <span class="math notranslate nohighlight">\(S\)</span> 上，预测值 <span class="math notranslate nohighlight">\(\hat y\)</span> 的期望（或平均值）。</p>
-<p>上式为“预测值的方差”除以“预测值的方差加误差（或残差）”。该定义的优点是确保 <span class="math notranslate nohighlight">\(R^2\)</span> 被限制在区间 [0，1] 内。</p>
-<p>计算 <span class="math notranslate nohighlight">\(R^2\)</span> 最简单的方法是使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的 <code class="docutils literal notranslate"><span class="pre">r2_core()</span></code> 函数。我们需要观测值 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 和预测值 <span class="math notranslate nohighlight">\(\hat y\)</span> 。其中， <span class="math notranslate nohighlight">\(\hat y\)</span> 可利用 <code class="docutils literal notranslate"><span class="pre">sample_posterior_predictive</span></code> 函数轻松获得：</p>
+<p>上式中，<span class="math notranslate nohighlight">\(E[\hat y^S]\)</span> 是后验样本 <span class="math notranslate nohighlight">\(S\)</span> 上，预测值 <span class="math notranslate nohighlight">\(\hat y\)</span> 的平均值。</p>
+<p>上式用 <code class="docutils literal notranslate"><span class="pre">预测值的方差</span></code> 除以 <code class="docutils literal notranslate"><span class="pre">预测值的方差加残差（预测值与真实值之间的残差）</span></code> 来确保 <span class="math notranslate nohighlight">\(R^2\)</span> 被限制在区间 [0，1] 内。</p>
+<p>在 <code class="docutils literal notranslate"><span class="pre">PYMC3</span></code> 中计算 <span class="math notranslate nohighlight">\(R^2\)</span> 最简单的方法是使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的 <code class="docutils literal notranslate"><span class="pre">r2_core()</span></code> 函数。其输入为观测值 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 和预测值 <span class="math notranslate nohighlight">\(\hat y\)</span> 。其中， <span class="math notranslate nohighlight">\(\hat y\)</span> 可利用 <code class="docutils literal notranslate"><span class="pre">sample_posterior_predictive</span></code> 函数轻松获得：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">ppc</span><span class="p">[</span><span class="s1">&#39;y_pred&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>默认情况下，此函数将返回 <span class="math notranslate nohighlight">\(R^2\)</span> （本例为 0.8) 和标准差 (0.03)。</p>
+<p>默认情况下，此函数将返回 <span class="math notranslate nohighlight">\(R^2\)</span> （本例为 0.8） 和标准差 （0.03）。</p>
 </div>
 <div class="section" id="id10">
-<h3>3.1.6 多元高斯分布的皮尔逊系数<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
-<p>计算皮尔逊系数的另一种方法是估计多变量高斯分布的协方差矩阵。多元高斯分布是高斯分布在一维以上的推广。以二维为例，要完全描述一个二元高斯分布，需要两个均值（或一个具有两个元素的向量），每个高斯一个。我们还需要一个 2x2 的协方差矩阵，如下所示：</p>
+<h3>3.1.6 多元高斯分布的皮尔逊相关系数<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>计算皮尔逊相关系数的另一种方法是估计多变量高斯分布的协方差矩阵。多元高斯分布是高斯分布在一维以上的推广。以二维为例，要完全描述一个二元高斯分布，需要两个均值（或一个具有两个元素的向量），每个高斯一个。我们还需要一个 2x2 的协方差矩阵，如下所示：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \Sigma=\left[\begin{array}{cc}\sigma_{\mathbb{x}_{1}}^{2} &amp; \rho \sigma_{\mathbb{x}_{1}} \sigma_{\mathbb{x}_{2}} \\ \rho \sigma_{\mathbb{x}_{1}} \sigma_{\mathbb{x}_{2}} &amp; \sigma_{\mathbb{x}_{2}}^{2}\end{array}\right]  
 \end{split}\]</div>
-<p>这里 <span class="math notranslate nohighlight">\(\Sigma\)</span> 为希腊大写的 sigma 字母，通常使用它表示协方差矩阵。在主对角线上，有每个变量的方差，用其标准差 <span class="math notranslate nohighlight">\(\sigma_{\mathbb{x}_1}、\sigma_{\mathbb{x}_2}\)</span>  的平方来表示。矩阵中其余元素是协方差（变量之间的方差），用单个标准差和变量间的皮尔逊相关系数 <span class="math notranslate nohighlight">\(\rho\)</span> 表示。请注意，我们只有一个 <span class="math notranslate nohighlight">\(\rho\)</span> ，因为只有两个维度。对于三个变量，我们会有三个皮尔逊系数。</p>
+<p>这里 <span class="math notranslate nohighlight">\(\Sigma\)</span> 为希腊大写的 sigma 字母，通常使用它表示协方差矩阵。在主对角线上，有每个变量的方差，用其标准差 <span class="math notranslate nohighlight">\(\sigma_{\mathbb{x}_1}、\sigma_{\mathbb{x}_2}\)</span>  的平方来表示。矩阵中其余元素是协方差（变量之间的方差），用单个标准差和变量间的皮尔逊相关系数 <span class="math notranslate nohighlight">\(\rho\)</span> 表示。请注意，我们只有一个 <span class="math notranslate nohighlight">\(\rho\)</span> ，因为只有两个维度。对于三个变量，我们会有三个皮尔逊相关系数。</p>
 <p>下面的代码为双变量高斯分布生成等高线图，两个均值都固定在 (0，0) 。其中一个标准差是固定的，而另一个标准差采用值 1 或 2 以及皮尔逊相关系数 <span class="math notranslate nohighlight">\(\rho\)</span> 的不同值：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sigma_x1</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">sigmas_x2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
@@ -1061,7 +1084,7 @@ X \beta=\sum_{i=1}^{n} \beta_{i} x_{i}=\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\b
 
 </pre></div>
 </div>
-<p>根据生成数据的方式，可以看出这些变量已经是中心化了。因此，不需要再进一步对数据进行中心化处理来加速推断过程了。事实上该例子中的数据已经是标准化的了。</p>
+<p>根据生成数据的方式，可以看出这些变量已经是中心化了。因此，不需要再进一步对数据进行中心化处理来加速推断过程了。事实上该例子中的数据已经是归一化的了。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scatter_plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
