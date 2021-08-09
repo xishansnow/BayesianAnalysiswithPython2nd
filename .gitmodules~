@@ -1,0 +1,6 @@
+[submodule "aloctavodia"]
+	path = aloctavodia
+	url = https://github.com/aloctavodia/BAP.git
+[submodule "office"]
+	path = office
+	url = https://github.com/PacktPublishing/Bayesian-Analysis-with-Python-Second-Edition.git
