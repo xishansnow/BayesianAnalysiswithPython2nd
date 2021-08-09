@@ -46,6 +46,65 @@ theta_real = 0.35 # unknown value in a real experiment
 data = stats.bernoulli.rvs(p=theta_real, size=trials)
 ```
 
+---
+
+$$
+\begin{align*}
+\alpha &\sim \mathcal{N}(\mu_{\alpha},\sigma_{\alpha})\\
+\beta &\sim \mathcal{N}(\mu_{\beta},\sigma_{\beta})\\
+\epsilon &\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\
+\nu &\sim \text{Exp}(\lambda)\\\\
+y &\sim \mathcal{T}(\alpha + x \beta, \epsilon,\nu)
+\end{align*}
+$$
+
+
+$$
+\begin{align*}
+\beta_0 &\sim \mathcal{N}(\mu_{\beta_0},\sigma_{\beta_0})\\
+\beta_1 &\sim \mathcal{N}(\mu_{\beta_1},\sigma_{\beta_1})\\
+&\text{...}\\
+\beta_n &\sim \mathcal{N}(\mu_{\beta_n},\sigma_{\beta_n})\\
+\epsilon &\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\\\
+y &\sim \mathcal{N}(\beta_0 + \beta_1x^1 + \beta_2x^2 + ...  + \beta_nx^n,\epsilon)
+\end{align*}
+$$
+---
+
+$$
+\begin{align*}
+\beta_0 &\sim \mathcal{N}(\mu_{\beta_0},\sigma_{\beta_0})\\
+\beta_1 &\sim \mathcal{N}(\mu_{\beta_1},\sigma_{\beta_1})\\
+&\text{...}\\
+\beta_n &\sim \mathcal{N}(\mu_{\beta_n},\sigma_{\beta_n})\\
+\epsilon &\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\\\
+y &\sim \mathcal{N}(\beta_0 + \beta_1x_1 + \beta_2x_2 + ...  + \beta_nx_n,\epsilon)
+\end{align*}
+$$
+
+---
+
+$$
+\begin{align*}
+\mu_{\alpha} &\sim \mathcal{N}(\mu_{\mu_{\alpha}},\sigma_{\mu_{\alpha}})\\
+\sigma_{\alpha} &\sim |\mathcal{N}(0,\sigma_{\sigma_{\alpha}})|\\
+\end{align*}
+$$
+
+---
+
+$$
+\begin{align*}
+\mu_{\beta} &\sim \mathcal{N}(\mu_{\mu_{\beta}},\sigma_{\mu_{\beta}})\\
+\sigma_{\beta} &\sim |\mathcal{N}(0,\sigma_{\sigma_{\beta}})|\\
+\alpha &\sim \mathcal{N}(\mu_{\alpha},\sigma_{\alpha})\\
+\beta &\sim \mathcal{N}(\mu_{\beta},\sigma_{\beta})\\
+\epsilon &\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\
+\nu &\sim \text{Exp}(\lambda)\\
+y &\sim \mathcal{T}(\alpha + x \beta,\epsilon,\nu)
+\end{align*}
+$$
+
 ### 2.2.1 建立模型
 
 现在有了数据，需要进一步指定模型。回想一下，模型可通过指定似然函数和先验分布完成。对于似然，可用参数为 $n=1$ 和 $p=\theta$ 的二项分布来描述，对于先验，用参数为 $\alpha=\beta=1$ 的贝塔分布描述，该贝塔分布与 [0,1] 区间内的均匀分布等价。用数学表达式描述如下： 

@@ -109,7 +109,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter04-GeneralizedLinearRegression.html">
-   第 4 章 广义线性回归模型与分类任务
+   第 4 章 广义线性回归模型
   </a>
  </li>
  <li class="toctree-l1">
@@ -247,7 +247,7 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id5">
-   1.2 概率与不确定性
+   1.2 概率论
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -272,7 +272,7 @@
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id10">
-       （3）贝叶斯定理与统计推断
+       （3）贝叶斯定理
       </a>
      </li>
     </ul>
@@ -323,12 +323,12 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id19">
-   1.4 报告贝叶斯分析结果
+   1.4 贝叶斯分析方法的沟通交流
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id20">
-     1.4.1 模型注释和可视化
+     1.4.1 模型的概念表示和图形化表示
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -379,7 +379,7 @@
 <li><p>贝叶斯理论与统计推断</p></li>
 <li><p>单参数推断以及经典抛硬币问题</p></li>
 <li><p>如何选择先验</p></li>
-<li><p>如何报告贝叶斯分析的结果</p></li>
+<li><p>如何沟通贝叶斯分析的结果</p></li>
 </ul>
 <hr class="docutils" />
 <div class="section" id="id2">
@@ -428,7 +428,7 @@
 </div>
 </div>
 <div class="section" id="id5">
-<h2>1.2 概率与不确定性<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2>1.2 概率论<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>本节不想总结概率论知识体系，只介绍几个对理解贝叶斯方法非常重要的一般性概念。在本书后面部分，将根据需要适度扩展或引入与概率相关的一些概念。要详细学习概率论，建议阅读专门的书籍。推荐 <code class="docutils literal notranslate"><span class="pre">约瑟夫·K·布利茨坦（Joseph</span> <span class="pre">K</span> <span class="pre">Blitzstein）</span></code> 和 <code class="docutils literal notranslate"><span class="pre">杰西卡·黄</span> <span class="pre">（Jessica</span> <span class="pre">Hwang）</span></code> 写的《<code class="docutils literal notranslate"><span class="pre">Introduction</span> <span class="pre">to</span> <span class="pre">Probability</span></code>》。另一本是 <code class="docutils literal notranslate"><span class="pre">渡部住夫</span></code> 的《<code class="docutils literal notranslate"><span class="pre">Mathematical</span> <span class="pre">Theory</span> <span class="pre">of</span> <span class="pre">Bayesian</span> <span class="pre">Statistics</span></code>》，后者比前者更注重贝叶斯，数学方面也更重。</p>
 <div class="section" id="id6">
 <h3>1.2.1 解释概率<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
@@ -544,7 +544,7 @@ p(x \mid \mu, \sigma)=\frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{(x-\mu)^{2}}{2 \si
 <p>图中每个数据点为一个变量，对应当月测得的大气二氧化碳水平，可以很容易看出每个月的测量数据之间并不独立，数据点之间存在时间依赖性。事实上，图中呈现有两种趋势：一是季节性趋势(与植被的生长和衰退周期有关)，另一种是全球趋势，表明大气中的二氧化碳浓度越来越高。</p>
 </div>
 <div class="section" id="id10">
-<h4>（3）贝叶斯定理与统计推断<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<h4>（3）贝叶斯定理<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
 <p>到目前为止，我们已经学习了一些统计学中的基本概念和词汇，接下来看看神奇的贝叶斯定理：</p>
 <div class="math notranslate nohighlight">
 \[
@@ -773,33 +773,37 @@ p(\theta \mid y) \propto \operatorname{Beta}\left(\alpha_{\text {prior }}+y, \be
 </div>
 </div>
 <div class="section" id="id19">
-<h2>1.4 报告贝叶斯分析结果<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
-<p>创建报告和交流结果是统计和数据科学实践的核心。本节将简要讨论使用贝叶斯模型时的一些特点。在接下来章节中，我们将继续看有关这一重要问题的例子。</p>
+<h2>1.4 贝叶斯分析方法的沟通交流<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
+<p>创建摘要和交流结果是统计和数据科学实践的核心。本节将简要讨论使用贝叶斯模型时的一些特点。在接下来章节中，我们将继续看有关这一重要问题的例子。</p>
 <div class="section" id="id20">
-<h3>1.4.1 模型注释和可视化<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<h3>1.4.1 模型的概念表示和图形化表示<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p><strong>（1）概念表示</strong></p>
 <p>根据受众不同，你可能在交流分析结果同时还需要交流模型。以下是一种简单表示概率模型的常见方式：</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
 \theta &amp;\sim \operatorname{Beta}(\alpha, \beta) \notag \\
 y &amp;\sim \operatorname{Bin}(n=1, p=\theta) \tag{式1.16}
 \end{align*}\]</div>
-<p>这是抛硬币例子用到的模型。符号～表示左边随机变量服从右边的分布形式，也就是说，这里 <span class="math notranslate nohighlight">\(θ\)</span> 服从于参数为 <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 的贝塔分布，而 <span class="math notranslate nohighlight">\(y\)</span> 服从于参数为 <span class="math notranslate nohighlight">\(n=1\)</span> 和 <span class="math notranslate nohighlight">\(p=θ\)</span> 的二项分布。该模型还可以用类似 Kruschke 书中的图表示成如下形式：</p>
+<p>这是抛硬币例子用到的模型。符号 <code class="docutils literal notranslate"><span class="pre">～</span></code> 表示左边随机变量服从右边的分布形式，也就是说，这里 <span class="math notranslate nohighlight">\(θ\)</span> 服从于参数为 <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 的贝塔分布，而 <span class="math notranslate nohighlight">\(y\)</span> 服从于参数为 <span class="math notranslate nohighlight">\(n=1\)</span> 和 <span class="math notranslate nohighlight">\(p=θ\)</span> 的二项分布。</p>
+<p><strong>（2）图形化表示</strong></p>
+<p>该模型还可以表示成 Kruschke 图的形式：</p>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505155942_31.webp" style="zoom:67%;" />
 <p>图1.5</p>
 </center>
-<p>第一层根据先验生成了 <span class="math notranslate nohighlight">\(θ\)</span> ，然后通过似然生成最下面的数据 <span class="math notranslate nohighlight">\(y\)</span> 。图中箭头表示变量间的依赖关系，符号～表示变量的随机性。</p>
+<p>图中第一层为先验，中间层为似然，第三层为数据。该图可以反映数据生成的过程：首先根据第一层的先验生成中间层的 <span class="math notranslate nohighlight">\(θ\)</span> 和似然，然后根据 <span class="math notranslate nohighlight">\(θ\)</span> 和似然生成第三层的数据 <span class="math notranslate nohighlight">\(y\)</span> 。图中箭头表示变量间的依赖关系，符号 <code class="docutils literal notranslate"><span class="pre">～</span></code> 表示变量的随机性。本书中所有 Kruschke 图都是使用 Rasmus Bååth 提供的<a class="reference external" href="http://www.sumsar.net/blog/2013/10/diy-kruschke-style-diagrams/">模板</a>制作的。</p>
 </div>
 <div class="section" id="id21">
 <h3>1.4.2 总结后验<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
-<p>贝叶斯分析的结果是后验分布，该分布包含了有关参数在给定数据和模型下的所有信息。如果可能的话，只需要将后验分布展示给观众即可。但通常还有一个不错的做法：同时给出后验分布的一些统计量。例如：给出后验的均值（或者众数、中位数）统计量，以让大家了解后验分布的中心位置；或给出其他描述分布特点的衡量指标，如标准差，以让大家对后验的离散程度和不确定性有大致了解。</p>
-<p>不过用标准差衡量类似正态分布的后验比较合适，但对一些其他类型的分布（如偏态分布）可能会得出误导性结论，因此，还可以采用 <code class="docutils literal notranslate"><span class="pre">最大后验密度（Highest</span> <span class="pre">Posterior</span> <span class="pre">Density，HPD）区间</span></code> 做衡量。</p>
-<p>一个 HPD 区间是指包含一定比例概率密度的最小区间，常见的比例包括 <code class="docutils literal notranslate"><span class="pre">95%HPD</span></code> 或 <code class="docutils literal notranslate"><span class="pre">50%HPD</span></code> 等。如果说某个分析的 <code class="docutils literal notranslate"><span class="pre">95%HPD区间</span></code> 是 [2,5]，其含义一般是指：根据模型和数据，模型参数位于 2～5 的概率是 0.95。</p>
+<p>贝叶斯分析的结果是后验分布，它包含了在给定数据和模型时有关参数的所有信息。从最基础的角度看，将最终的后验分布展示给观众似乎就已经可以了，但通常会同时给出后验分布的一些统计量。例如：给出后验的均值（或者众数、中位数）以让大家了解后验分布的中心位置、或给出标准差以让大家对后验的离散程度和不确定性有大致了解。</p>
+<p><strong>（1）最高后验密度</strong></p>
+<p>不过用标准差衡量类似正态分布的后验比较合适，但对一些其他类型的分布（如偏态分布）可能会得出误导性结论，因此，还可以采用 <code class="docutils literal notranslate"><span class="pre">最高后验密度（Highest</span> <span class="pre">Posterior</span> <span class="pre">Density，HPD）区间</span></code> 做衡量。</p>
+<p>一个 HPD 区间是指包含一定比例概率密度的最小区间，常见的比例包括 <code class="docutils literal notranslate"><span class="pre">95%</span> <span class="pre">HPD</span></code> 或 <code class="docutils literal notranslate"><span class="pre">50%</span> <span class="pre">HPD</span></code> 等。如果说某个分析的 <code class="docutils literal notranslate"><span class="pre">95%</span> <span class="pre">HPD</span> <span class="pre">区间</span></code> 是 [2,5]，其含义一般是指：根据模型和数据，模型参数位于 2～5 的概率是 0.95。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>这是一个非常直观的解释，以至于人们经常会将频率学派中的置信区间与贝叶斯方法中的可信区间弄混淆。如果你对频率学派比较熟悉，请注意这两种区间的区别。贝叶斯学派告诉我们的是 “参数取值区间的概率” ，这在频率学派的框架中是不可能的，因为频率学派中的参数是确切值，频率学派的置信区间只包含参数的确切取值。在继续深入前需要注意：选择 <code class="docutils literal notranslate"><span class="pre">95%</span></code> 还是 <code class="docutils literal notranslate"><span class="pre">50%</span></code> 作为 <code class="docutils literal notranslate"><span class="pre">HPD区间</span></code> 的概率密度比例没有什么特殊的地方，只不过是经常使用或约定俗成的值罢了。 其实完全可以选用比例为 <code class="docutils literal notranslate"><span class="pre">91.37%</span></code> 的 <code class="docutils literal notranslate"><span class="pre">HPD区间</span></code>。如果你选的是 <code class="docutils literal notranslate"><span class="pre">95%</span></code> 也完全没问题，究竟选择多大比例需要具体问题具体分析。</p>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 是一个 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 包，用于贝叶斯模型的探索性数据分析。<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 有许多函数可以帮助我们总结后验结果，例如，az.plot_posterior 可以用来生成具有分布平均值和 HPD 的曲线图。在下例中，我们从贝塔分布生成随机样本，而不是真实分析的后验结果。注意图中报告的 <code class="docutils literal notranslate"><span class="pre">HPD区间</span></code> 为 <code class="docutils literal notranslate"><span class="pre">94%</span></code> 。<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 每次计算和报告 HPD 时，默认情况下使用 0.94（对应于 <code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">HPD区间</span></code> )。可通过向 trusted_interval 参数传递值来更改此设置。</p>
+<p><code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 是一个 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 包，用于贝叶斯模型的探索性数据分析。<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 有许多函数可以帮助我们总结后验结果，例如，az.plot_posterior 可以用来生成具有分布平均值和 HPD 的曲线图。在下例中，我们从贝塔分布生成随机样本，而不是真实分析的后验结果。注意图中摘要的 <code class="docutils literal notranslate"><span class="pre">HPD区间</span></code> 为 <code class="docutils literal notranslate"><span class="pre">94%</span></code> 。<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 每次计算和报告 HPD 时，默认情况下使用 0.94（对应于 <code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">HPD区间</span></code> )。可通过向 trusted_interval 参数传递值来更改此设置。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">({</span><span class="s1">&#39;θ&#39;</span><span class="p">:</span><span class="n">stats</span><span class="o">.</span><span class="n">beta</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)})</span>
 </pre></div>

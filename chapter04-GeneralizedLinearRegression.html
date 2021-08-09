@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>第 4 章 广义线性回归模型与分类任务 &#8212; Python贝叶斯分析(中文)</title>
+    <title>第 4 章 广义线性回归模型 &#8212; Python贝叶斯分析(中文)</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -109,7 +109,7 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   第 4 章 广义线性回归模型与分类任务
+   第 4 章 广义线性回归模型
   </a>
  </li>
  <li class="toctree-l1">
@@ -235,7 +235,7 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#logistic">
-   4.2 面向二分类问题的一元 Logistic 回归
+   4.2 面向二分类的一元 Logistic 回归
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -257,7 +257,7 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id4">
-   4.3 面向二分类问题的多元 Logistic 回归
+   4.3 面向二分类的多元 Logistic 回归
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -294,7 +294,7 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#softmax">
-   4.4 面向多分类问题的 Softmax 回归
+   4.4 面向多分类的 Softmax 回归
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -351,7 +351,7 @@
               <div>
                 
   <div class="section" id="id1">
-<h1>第 4 章 广义线性回归模型与分类任务<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1>第 4 章 广义线性回归模型<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <style>p{text-indent:2em;2}</style>
 <p>在上一章中，使用自变量的线性组合来预测因变量的平均值，其中假设因变量为高斯分布。在许多情况下都可以使用高斯分布，但对于其他许多情况，选择其他分布可能更明智。例如：使用学生 <span class="math notranslate nohighlight">\(t\)</span> 分布替换高斯分布时，可有效解决异常值问题，使推断更为稳健。本章将介绍更多使其他分布的例子。此外，正如即将介绍的，存在一个通用的模式，可将线性模型推广到许多问题中。</p>
 <p>本章将会讨论以下内容：</p>
@@ -380,7 +380,7 @@
 </div>
 </div>
 <div class="section" id="logistic">
-<h2>4.2 面向二分类问题的一元 Logistic 回归<a class="headerlink" href="#logistic" title="Permalink to this headline">¶</a></h2>
+<h2>4.2 面向二分类的一元 Logistic 回归<a class="headerlink" href="#logistic" title="Permalink to this headline">¶</a></h2>
 <p>回归任务在给定一个或多个自变量的值的情况下，预测因变量的连续值。与此不同，分类任务在给定一些自变量的值时，将某些离散值赋给因变量。两种情况的核心任务都是<code class="docutils literal notranslate"><span class="pre">获得一个能够正确模拟因变量与自变量间映射的模型</span></code>。为此需要具有正确的 『因变量–自变量』 样本集。从机器学习视角看，回归任务和分类任务都属于监督学习。</p>
 <p>Logistic 回归虽然名字中带有 『回归』 字眼，但其实际解决的是分类问题。 Logistic 回归模型是线性回归模型的扩展。其模型是将 <code class="docutils literal notranslate"><span class="pre">式</span> <span class="pre">4.1</span></code> 中的逆连接函数设定为 Logistic 函数而形成， Logistic 函数形式以下：</p>
 <div class="math notranslate nohighlight">
@@ -519,7 +519,7 @@ x_{i}=-\frac{\alpha}{\beta}\tag{4.6}
 </div>
 </div>
 <div class="section" id="id4">
-<h2>4.3 面向二分类问题的多元 Logistic 回归<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2>4.3 面向二分类的多元 Logistic 回归<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>与多元线性回归类似，<code class="docutils literal notranslate"><span class="pre">多元</span> <span class="pre">Logistic</span> <span class="pre">回归</span></code> 使用多个自变量。这里举例将花萼长度与花萼宽度结合在一起，注意需要对数据做一些预处理。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;species == (&#39;setosa&#39;, &#39;versicolor&#39;)&quot;</span><span class="p">)</span>
 <span class="n">y_1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">codes</span>
@@ -775,7 +775,7 @@ x_{2}=-\frac{\alpha}{\beta_{2}}+\left(-\frac{\beta_{1}}{\beta_{2}} x_{1}\right)\
 </div>
 </div>
 <div class="section" id="softmax">
-<h2>4.4 面向多分类问题的 Softmax 回归<a class="headerlink" href="#softmax" title="Permalink to this headline">¶</a></h2>
+<h2>4.4 面向多分类的 Softmax 回归<a class="headerlink" href="#softmax" title="Permalink to this headline">¶</a></h2>
 <p>现在知道了如何处理二分类问题，接下来的内容推广到多分类问题。一种做法是使用多项 Logistic 回归，该模型也被称作 <code class="docutils literal notranslate"><span class="pre">Softmax</span> <span class="pre">回归</span></code> ，原因是这里使用的是 <code class="docutils literal notranslate"><span class="pre">Softmax</span> <span class="pre">函数</span></code> 而非 Logistic 函数，Softmax 函数的形式如下：</p>
 <div class="math notranslate nohighlight">
 \[

@@ -109,7 +109,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter04-GeneralizedLinearRegression.html">
-   第 4 章 广义线性回归模型与分类任务
+   第 4 章 广义线性回归模型
   </a>
  </li>
  <li class="toctree-l1">
@@ -425,6 +425,61 @@
 <span class="n">data</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">bernoulli</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="n">theta_real</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">trials</span><span class="p">)</span>
 </pre></div>
 </div>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\alpha &amp;\sim \mathcal{N}(\mu_{\alpha},\sigma_{\alpha})\\
+\beta &amp;\sim \mathcal{N}(\mu_{\beta},\sigma_{\beta})\\
+\epsilon &amp;\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\
+\nu &amp;\sim \text{Exp}(\lambda)\\\\
+y &amp;\sim \mathcal{T}(\alpha + x \beta, \epsilon,\nu)
+\end{align*}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\beta_0 &amp;\sim \mathcal{N}(\mu_{\beta_0},\sigma_{\beta_0})\\
+\beta_1 &amp;\sim \mathcal{N}(\mu_{\beta_1},\sigma_{\beta_1})\\
+&amp;\text{...}\\
+\beta_n &amp;\sim \mathcal{N}(\mu_{\beta_n},\sigma_{\beta_n})\\
+\epsilon &amp;\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\\\
+y &amp;\sim \mathcal{N}(\beta_0 + \beta_1x^1 + \beta_2x^2 + ...  + \beta_nx^n,\epsilon)
+\end{align*}
+\end{split}\]</div>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\beta_0 &amp;\sim \mathcal{N}(\mu_{\beta_0},\sigma_{\beta_0})\\
+\beta_1 &amp;\sim \mathcal{N}(\mu_{\beta_1},\sigma_{\beta_1})\\
+&amp;\text{...}\\
+\beta_n &amp;\sim \mathcal{N}(\mu_{\beta_n},\sigma_{\beta_n})\\
+\epsilon &amp;\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\\\
+y &amp;\sim \mathcal{N}(\beta_0 + \beta_1x_1 + \beta_2x_2 + ...  + \beta_nx_n,\epsilon)
+\end{align*}
+\end{split}\]</div>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\mu_{\alpha} &amp;\sim \mathcal{N}(\mu_{\mu_{\alpha}},\sigma_{\mu_{\alpha}})\\
+\sigma_{\alpha} &amp;\sim |\mathcal{N}(0,\sigma_{\sigma_{\alpha}})|\\
+\end{align*}
+\end{split}\]</div>
+<hr class="docutils" />
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align*}
+\mu_{\beta} &amp;\sim \mathcal{N}(\mu_{\mu_{\beta}},\sigma_{\mu_{\beta}})\\
+\sigma_{\beta} &amp;\sim |\mathcal{N}(0,\sigma_{\sigma_{\beta}})|\\
+\alpha &amp;\sim \mathcal{N}(\mu_{\alpha},\sigma_{\alpha})\\
+\beta &amp;\sim \mathcal{N}(\mu_{\beta},\sigma_{\beta})\\
+\epsilon &amp;\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\
+\nu &amp;\sim \text{Exp}(\lambda)\\
+y &amp;\sim \mathcal{T}(\alpha + x \beta,\epsilon,\nu)
+\end{align*}
+\end{split}\]</div>
 <div class="section" id="id3">
 <h3>2.2.1 建立模型<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>现在有了数据，需要进一步指定模型。回想一下，模型可通过指定似然函数和先验分布完成。对于似然，可用参数为 <span class="math notranslate nohighlight">\(n=1\)</span> 和 <span class="math notranslate nohighlight">\(p=\theta\)</span> 的二项分布来描述，对于先验，用参数为 <span class="math notranslate nohighlight">\(\alpha=\beta=1\)</span> 的贝塔分布描述，该贝塔分布与 [0,1] 区间内的均匀分布等价。用数学表达式描述如下：</p>
