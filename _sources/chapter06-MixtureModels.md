@@ -43,7 +43,7 @@
 建立混合模型的一种方法是考虑两个（含两个）以上有限分布的加权混合。这就是 `有限混合模型（Finite mixture models）` 。此时，观测数据的概率密度是所有子群组概率密度的加权和：
 
 $$
-p(y \mid \theta)=\sum_{i=1}^{K} w_{i} p_{i}\left(y \mid \theta_{i}\right) \tag{式6.1}
+p(y \mid \theta)=\sum_{i=1}^{K} w_{i} p_{i}\left(y \mid \theta_{i}\right) \tag{式6.1} \label{式6.1}
 $$
 
 此处 $w_i$ 是每个组分（或类）的权重，可以将 $w_i$ 解释为组分 $i$ 的概率，因此 $w_i$ 的值域为区间 [0，1] ，并且 $\sum_{i}^{K} w_{i}=1$ 。
@@ -491,7 +491,7 @@ plt.yticks([])
 希望您在这一点上能对狄利克雷过程有一个很好的直觉。目前，唯一缺少的细节是对函数 `stick_break_truncated`的理解。数学上狄利克雷过程的折棍过程视图可用以下公式表示：
 
 $$
- \sum_{k=1}^{\infty} w_{k} \cdot \delta_{\theta_{k}}(\theta)=f(\theta) \sim D P(\alpha, H) \tag{式6.2}
+ \sum_{k=1}^{\infty} w_{k} \cdot \delta_{\theta_{k}}(\theta)=f(\theta) \sim D P(\alpha, H) \tag{式6.2} \label{式6.2}
 $$
 
 其中：
@@ -501,7 +501,7 @@ $ \delta_{\theta_{k}}(\theta) $ 是指示函数，它只在 $\theta=\theta_{k}$ 
 概率 $w_{k}$ 定义为：
 
 $$
-w_{k}=\beta_{k}^{\prime} \cdot \prod_{i=1}^{k-1}\left(1-\beta_{i}^{\prime}\right) \tag{式6.3}
+w_{k}=\beta_{k}^{\prime} \cdot \prod_{i=1}^{k-1}\left(1-\beta_{i}^{\prime}\right) \tag{式6.3}  \label{式6.3}
 $$
 
 其中：
@@ -600,7 +600,7 @@ plt.yticks([])
 贝塔-二项分布是一个离散分布，通常用来描述 $n$ 次伯努利实验中成功的次数 $y$ ，其中每次实验成功的概率 $p$ 未知，并且假设其服从参数为 $α$ 和 $β$ 的贝塔分布，对应的数学形式如下：
 
 $$
-\operatorname{BetaBinonial}(y \mid n, \alpha, \beta)=\int_{0}^{1} \operatorname{Bin}(y \mid p, n) \operatorname{Beta}(p \mid \alpha, \beta) d p \tag{式6.4}
+\operatorname{BetaBinonial}(y \mid n, \alpha, \beta)=\int_{0}^{1} \operatorname{Bin}(y \mid p, n) \operatorname{Beta}(p \mid \alpha, \beta) d p \tag{式6.4}  \label{式6.4}
 $$
 
  也就是说，为了找到观测到结果 $y$ 的概率，我们遍历所有可能的（连续的）$p$ 值然后求平均。因此，贝塔-二项分布也可以看作是连续混合模型。如果你觉得贝塔-二项分布听起来很熟悉，那一定是因为你对本书前两章学得很认真！在抛硬币的问题中，我们用到了该模型，尽管当时显式地使用了一个贝塔分布和一个二项分布，你也可以直接使用贝塔-二项分布。
@@ -616,7 +616,7 @@ $$
  前面我们介绍了 $t$ 分布是一种更鲁棍的高斯分布。从下面的数学表达式可以看到，$t$ 分布同样可以被看作是连续混合模型：
 
 $$
-t_{\nu}(y \mid \mu, \sigma)=\int_{0}^{\infty} N(y \mid \mu, \sigma) \operatorname{Inv} \chi^{2}(\sigma \mid \nu) d \nu \tag{式6.5}
+t_{\nu}(y \mid \mu, \sigma)=\int_{0}^{\infty} N(y \mid \mu, \sigma) \operatorname{Inv} \chi^{2}(\sigma \mid \nu) d \nu \tag{式6.5} \label{式6.5}
 $$
 
 注意，这个表达式与前面的负二项分布的表达式很像，不过这里是参数为 $\mu$ 和 $σ$ 的正态分布以及从参数为 $v$ 的 $Invχ^2$ 分布中采样得到的 $σ$，也就是自由度，通常更倾向于称之为正态参数。这里参数 $v$ 和贝塔-二项分布里的参数 $p$ 概念上相似，等价于有限混合模型中的隐变量 $z$ 。 对于有限混合模型来说，很多时候我们可以在推断之前先对隐变量 $z$  做边缘化处理，从而得到一个更简单的模型，正如前面边缘混合模型中的例子一样。

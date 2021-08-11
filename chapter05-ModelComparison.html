@@ -566,7 +566,7 @@
 <p>贝叶斯 <code class="docutils literal notranslate"><span class="pre">p-value</span></code> 与频率派的 <code class="docutils literal notranslate"><span class="pre">p-value</span></code> 名字相似，定义基本上也相同：</p>
 <div class="math notranslate nohighlight">
 \[
-\text{Bayesian p-value}\triangleq p\left(T_{s i m} \geq T_{o b s} \mid y \right)
+\text{Bayesian p-value}\triangleq p\left(T_{s i m} \geq T_{o b s} \mid y \right) \tag{式5.1}  \label{式5.1}
 \]</div>
 <p>可以解释为：从模拟数据中获得与观测数据相同或更高统计量值的概率。<span class="math notranslate nohighlight">\(T\)</span> 几乎可以是数据的任意统计量。在图 5.4 中，统计量是左侧的平均值和右侧的四分位数范围。通常 <span class="math notranslate nohighlight">\(T\)</span> 应该在最初定义推断任务时就选择好。</p>
 <p>这些 <code class="docutils literal notranslate"><span class="pre">p-value</span></code> 是贝叶斯的，因为其采样自后验预测性分布。需要注意的是：贝叶斯的 <code class="docutils literal notranslate"><span class="pre">p-value</span></code> 不需要频率主义的任何零假设作为条件；事实上，我们拥有基于观测数据的整个后验分布。此外，贝叶斯也没有使用类似置信度的任何预定义阈值来声明统计显著性，当然也没有执行假设检验。这里只是试图计算一个数字来评估后验预测性分布与数据集的拟合度。</p>
@@ -675,19 +675,19 @@
 <p>一种衡量模型对数据的拟合程度的方法是计算模型预测结果与真实数据之间的均方差：</p>
 <div class="math notranslate nohighlight">
 \[
-\frac{1}{N} \sum_{i=1}^{N}\left(y_{i}-\mathrm{E}\left(y_{i} \mid \theta\right)\right)^{2} 
+\frac{1}{N} \sum_{i=1}^{N}\left(y_{i}-\mathrm{E}\left(y_{i} \mid \theta\right)\right)^{2}  \tag{式5.2}  \label{式5.2}
 \]</div>
 <p>其中，<span class="math notranslate nohighlight">\(E(y_i|\theta)\)</span> 是根据估计的参数值计算得到的预测值。</p>
 <p>可以看到基本上就是观察值和预测值之间平均差值，求平方是为保证误差为正，不会相互抵消。相比其他的度量指标（比如绝对值误差），平方度量更强调较大的误差。</p>
 <p>一种更通用的方法是计算 log 似然：</p>
 <div class="math notranslate nohighlight">
 \[
-\sum_{i=1}^{N} \log p\left(y_{i} \mid \theta\right) 
+\sum_{i=1}^{N} \log p\left(y_{i} \mid \theta\right)  \tag{式5.3}  \label{式5.3}
 \]</div>
 <p>当似然服从正态分布时，已经证明 log 似然与二次均方误差成正比。由于历史原因，实践中人们通常不直接使用 log 似然，而是使用一个称作 <code class="docutils literal notranslate"><span class="pre">离差（deviance）</span></code> 的量：</p>
 <div class="math notranslate nohighlight">
 \[
--2 \sum_{i=1}^{N} \log p\left(y_{i} \mid \theta\right) 
+-2 \sum_{i=1}^{N} \log p\left(y_{i} \mid \theta\right)  \tag{式5.4}  \label{式5.4}
 \]</div>
 <p>离差在贝叶斯方法和非贝叶斯方法中类似，区别在于：贝叶斯框架中 <span class="math notranslate nohighlight">\(θ\)</span> 来自后验的采样。而在非贝叶斯方法中，<span class="math notranslate nohighlight">\(θ\)</span> 是一个点估计。在使用离差时，需注意以下两点：</p>
 <ul class="simple">
@@ -701,7 +701,7 @@
 <p>AIC 信息准则（Akaike Information Criterion）是一个广泛应用的信息准则，其定义如下：</p>
 <div class="math notranslate nohighlight">
 \[
-\text{AIC} = -2\sum_{i=1}^{n} \log p\left(y_{i} \mid \hat{\theta}_{m l e}\right)+2 \text{pAIC}  \tag{式5.5}
+\text{AIC} = -2\sum_{i=1}^{n} \log p\left(y_{i} \mid \hat{\theta}_{m l e}\right)+2 \text{pAIC}  \tag{式5.5}  \label{式5.5}
 \]</div>
 <p>其中，<span class="math notranslate nohighlight">\(pAIC\)</span> 表示参数的个数， <span class="math notranslate nohighlight">\(\hat{\theta}_{m l e}\)</span> 为 <span class="math notranslate nohighlight">\(\theta\)</span> 的最大似然估计。最大似然估计在非贝叶斯方法中经常用到，等价于贝叶斯方法中基于均匀先验的最大后验估计。注意这里 <span class="math notranslate nohighlight">\(\hat{\theta}_{mle}\)</span> 是点估计而不是分布。</p>
 <p>同样，此处 −2 也是出于历史原因。从实用角度来看，上式中的第 1 项考虑的是模型对数据的拟合效果，第 2 项衡量的是模型复杂度。因此，如果两个模型对数据的解释能力相同，但是其中一个比另一个的参数更多的话，AIC 会告诉我们应该选择参数更少的那个。</p>
@@ -788,7 +788,7 @@
 <p>本方法使用每个模型的加权平均值来生成 <code class="docutils literal notranslate"><span class="pre">元模型（meta-model）</span></code> 和 <code class="docutils literal notranslate"><span class="pre">元预测（meta-predictions）</span></code> 。不同模型的权重计算基于某些信息准则值（如 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code>），公式如下：</p>
 <div class="math notranslate nohighlight">
 \[
-w_{i}=\frac{e^{\frac{1}{2} d E_{i}}}{\sum_{j}^{M} e^{-\frac{1}{2} d E_{j}}} \tag{式5.7}
+w_{i}=\frac{e^{\frac{1}{2} d E_{i}}}{\sum_{j}^{M} e^{-\frac{1}{2} d E_{j}}} \tag{式5.7}  \label{式5.7}
 \]</div>
 <p>这里 <span class="math notranslate nohighlight">\(dE_i\)</span> 是第 <span class="math notranslate nohighlight">\(i\)</span> 个模型相对于最佳模型（<code class="docutils literal notranslate"><span class="pre">WAIC</span></code>值最小的模型）的 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 相对差值。除 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 外，此处也可以使用其他信息准则值，如 <code class="docutils literal notranslate"><span class="pre">AIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 等。此公式是根据 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 值计算各模型相对概率的启发式方法。分母为归一化因子，<code class="docutils literal notranslate"><span class="pre">第4章</span> <span class="pre">广义线性模型</span></code>中有过类似的表达式。</p>
 <p>采用式 5.7 的权重对模型进行加权平均称为 <code class="docutils literal notranslate"><span class="pre">伪贝叶斯模型平均</span></code> 。真正的贝叶斯模型平均应当使用边缘似然，而非 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 。不过尽管边缘似然在理论上很有吸引力，但在模型比较和模型平均中使用很少。大多还是选择 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 而非边缘似然。在后续 <code class="docutils literal notranslate"><span class="pre">贝叶斯因子</span></code> 一节中，会有更多此方面的讨论。</p>
@@ -799,7 +799,7 @@ w_{i}=\frac{e^{\frac{1}{2} d E_{i}}}{\sum_{j}^{M} e^{-\frac{1}{2} d E_{j}}} \tag
 <p>另一种计算平均模型权重的方法被称为 <code class="docutils literal notranslate"><span class="pre">预测性分布堆叠（stacking</span> <span class="pre">of</span> <span class="pre">predictive</span> <span class="pre">distributions）</span></code> 。这在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中通过将 <code class="docutils literal notranslate"><span class="pre">method=‘stacking’</span></code> 传递给 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 实现。其基本思想是通过最小化元模型和真实生成模型之间的差异，将多个模型组合到一个元模型中。当使用对数打分规则时，这等价于：</p>
 <div class="math notranslate nohighlight">
 \[
-\max _{n} \frac{1}{n} \sum_{i=1}^{n} \log \sum_{k=1}^{K} w_{k} p\left(y_{i} \mid y_{-i}, M_{k}\right) \tag{式5.8}
+\max _{n} \frac{1}{n} \sum_{i=1}^{n} \log \sum_{k=1}^{K} w_{k} p\left(y_{i} \mid y_{-i}, M_{k}\right) \tag{式5.8}  \label{式5.8}
 \]</div>
 <p>这里，<span class="math notranslate nohighlight">\(n\)</span> 是数据点的数量，<span class="math notranslate nohighlight">\(k\)</span> 是模型的数量。为了强制实施方案，我们将 <span class="math notranslate nohighlight">\(w\)</span> 约束为 <span class="math notranslate nohighlight">\(w_k \geq 0\)</span> 并且 <span class="math notranslate nohighlight">\(\sum w_k =1\)</span>。量 <span class="math notranslate nohighlight">\(p(y_i|y_{-i},M_k)\)</span> 是模型 <span class="math notranslate nohighlight">\(M_k\)</span> 的留一预测性分布。根据留一法，计算需要拟合每个模型 <span class="math notranslate nohighlight">\(n\)</span> 次，每次遗留一个数据点。幸运的是，<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 可以使用 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 来近似留一预测性分布。</p>
 </div>
@@ -847,17 +847,17 @@ w_{i}=\frac{e^{\frac{1}{2} d E_{i}}}{\sum_{j}^{M} e^{-\frac{1}{2} d E_{j}}} \tag
 <p>在贝叶斯世界中，评估和比较模型的一种常见选择是 <code class="docutils literal notranslate"><span class="pre">贝叶斯因子（Bayes</span> <span class="pre">factor,</span> <span class="pre">BF）</span></code> 。 为理解什么是贝叶斯因子，让我们重温一遍贝叶斯定理：</p>
 <div class="math notranslate nohighlight">
 \[
-p(\theta \mid y)=\frac{p(y \mid \theta) p(\theta)}{p(y)} \tag{式5.9}
+p(\theta \mid y)=\frac{p(y \mid \theta) p(\theta)}{p(y)} \tag{式5.9}  \label{式5.9}
 \]</div>
 <p>这里，<span class="math notranslate nohighlight">\(y\)</span> 表示数据。我们可以显式地基于给定模型 <span class="math notranslate nohighlight">\(M\)</span> 计算依赖关系：</p>
 <div class="math notranslate nohighlight">
 \[
-p\left(\theta \mid y, M_{k}\right)=\frac{p\left(y \mid \theta, M_{k}\right) p\left(\theta \mid M_{k}\right)}{p\left(y \mid M_{k}\right)}\tag{式5.10} 
+p\left(\theta \mid y, M_{k}\right)=\frac{p\left(y \mid \theta, M_{k}\right) p\left(\theta \mid M_{k}\right)}{p\left(y \mid M_{k}\right)}\tag{式5.10}   \label{式5.10}
 \]</div>
 <p>第一章中曾经介绍过，分母中的术语称为边缘似然（或证据），可视为一个归一化常数。在进行单模型推断时，通常不需要真实地计算它，而是基于一个常数因子来计算后验。但对于模型比较和模型平均，边缘似然却是一个重要的量。如果主要目标是从一组 <span class="math notranslate nohighlight">\(k\)</span> 个模型中选择一种最好的模型，我们可以只选择 <span class="math notranslate nohighlight">\(p(y|M_k)\)</span> 最大的那个。一般来说， <span class="math notranslate nohighlight">\(p(y|M_k)\)</span> 值的大小本身并不能告诉我们太多信息，重要的是相对值。因此，实践中经常计算两个边缘似然的比率，这个比率被称为贝叶斯因子：</p>
 <div class="math notranslate nohighlight">
 \[
-B F=\frac{p\left(y \mid M_{0}\right)}{p\left(y \mid M_{1}\right)} \tag{式5.11}
+B F=\frac{p\left(y \mid M_{0}\right)}{p\left(y \mid M_{1}\right)} \tag{式5.11}  \label{式5.11}
 \]</div>
 <p>当 <span class="math notranslate nohighlight">\(BF（M_0,M_1） &gt; 1\)</span> 时，模型 0 比模型 1 更好地解释了数据。</p>
 <p>一些作者提出了带有范围的表格，以便于离散化和简化 <span class="math notranslate nohighlight">\(BF\)</span> 的解释。例如，下列符号列表显示了 ”支持模式 0 而不支持模式 1“ 的证据强度：</p>
@@ -872,14 +872,14 @@ B F=\frac{p\left(y \mid M_{0}\right)}{p\left(y \mid M_{1}\right)} \tag{式5.11}
 <p>如果假设所有模型都具有相同先验概率，则使用 <span class="math notranslate nohighlight">\(p(y|M_k)\)</span> 来比较模型完全没有问题。否则，必须计算后验赔率：</p>
 <div class="math notranslate nohighlight">
 \[
-\underbrace{\frac{p\left(M_{0} \mid y\right)}{p\left(M_{1} \mid y\right)}}_{\text {posterior odds }}=\underbrace{\frac{p\left(y \mid M_{0}\right)}{p\left(y \mid M_{1}\right)}}_{\text {Bayes factors}} \underbrace{\frac{p\left(M_{0}\right)}{p\left(M_{1}\right)}}_{\text{prior odds} } \tag{式5.12}
+\underbrace{\frac{p\left(M_{0} \mid y\right)}{p\left(M_{1} \mid y\right)}}_{\text {posterior odds }}=\underbrace{\frac{p\left(y \mid M_{0}\right)}{p\left(y \mid M_{1}\right)}}_{\text {Bayes factors}} \underbrace{\frac{p\left(M_{0}\right)}{p\left(M_{1}\right)}}_{\text{prior odds} } \tag{式5.12}  \label{式5.12}
 \]</div>
 <div class="section" id="id14">
 <h3>5.6.1 一些讨论<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>现在简要讨论有关边缘似然的一些关键事实。通过仔细检查定义，可以理解边缘似然的性质和应用效果：</p>
 <div class="math notranslate nohighlight">
 \[
-p\left(y \mid M_{k}\right)=\int_{\theta_{k}} p\left(y \mid \theta_{k}, M_{k}\right) p\left(\theta_{k}, M_{k}\right) d \theta_{k} \tag{式5.13}
+p\left(y \mid M_{k}\right)=\int_{\theta_{k}} p\left(y \mid \theta_{k}, M_{k}\right) p\left(\theta_{k}, M_{k}\right) d \theta_{k} \tag{式5.13}  \label{式5.13}
 \]</div>
 <ul class="simple">
 <li><p><strong>好处</strong>：参数多的模型比参数少的模型具有更大惩罚。贝叶斯因子内置奥卡姆剃刀，因为参数数量越多，先验分布相对于似然就越广。结合贝叶斯因子公式，越宽广的先验（参数更多）积分越大，而越聚集的先验（参数更少）积分越小，从而间接实现了对参数数量的惩罚。</p></li>
@@ -1018,7 +1018,7 @@ p\left(y \mid M_{k}\right)=\int_{\theta_{k}} p\left(y \mid \theta_{k}, M_{k}\rig
 <p>如果展开公式 5.6，会得到以下结果：</p>
 <div class="math notranslate nohighlight">
 \[
-\text{WAIC}=-2 \sum_{i}^{n} \log \left(\frac{1}{S} \sum_{s=1}^{S} p\left(y_{i} \mid \theta^{s}\right)\right)+2 \sum_{i}^{n}\left(\text{V}_{s=1}^{S}\left(\log p\left(y_{i} \mid \theta^{s}\right)\right)\right. \tag{式5.14}
+\text{WAIC}=-2 \sum_{i}^{n} \log \left(\frac{1}{S} \sum_{s=1}^{S} p\left(y_{i} \mid \theta^{s}\right)\right)+2 \sum_{i}^{n}\left(\text{V}_{s=1}^{S}\left(\log p\left(y_{i} \mid \theta^{s}\right)\right)\right. \tag{式5.14}  \label{式5.14}
 \]</div>
 <p>该表达式中的两项看起来非常相似。第一项是式 5.6 中的<code class="docutils literal notranslate"><span class="pre">对数点预测密度（lppd）</span></code>，计算的是后验样本集 <span class="math notranslate nohighlight">\(S\)</span> 的平均似然。我们对每个数据点都先求平均似然，然后取对数，最后对所有数据点求和。请将这一项与公式 5.3 和 5.4 进行比较。其实该项就是考虑了后验的样本内离差（deviance）。因此，如果我们认为计算对数似然是衡量模型适合性的好方法，那么在贝叶斯方法中，从后验计算对数似然就顺理成章。观测数据的 lddp 是对未来数据 lppd 的高估（此处意指样本内离差通常小于样本外离差），因此引入第二项来修正这种过高的估计。第二项计算后验样本的对数似然方差，我们对每个数据点执行此方差计算，然后对所有数据点进行汇总。为什么方差会给出惩罚条件？这与贝叶斯因子内置奥卡姆剃须刀的原理相似。有效参数越多，后验分布越大。当向模型添加结构时（如具有信息性/正则化的先验或分层依赖），与非正则化的模型相比，我们约束了后验，进而减少了有效参数的数量。</p>
 </div>
@@ -1029,7 +1029,7 @@ p\left(y \mid M_{k}\right)=\int_{\theta_{k}} p\left(y \mid \theta_{k}, M_{k}\rig
 <p>从数学上讲，熵定义为：</p>
 <div class="math notranslate nohighlight">
 \[
-H(p)=-\sum_{i} p_i\text{log} (p_i) \tag{式5.15}
+H(p)=-\sum_{i} p_i\text{log} (p_i) \tag{式5.15}  \label{式5.15}
 \]</div>
 <p>直观地说，分布越分散，其熵越大。通过运行以下代码并查看图 5.15，可以看到这一点：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">912</span><span class="p">)</span>
@@ -1075,13 +1075,13 @@ H(p)=-\sum_{i} p_i\text{log} (p_i) \tag{式5.15}
 <p>现在简单谈谈 <code class="docutils literal notranslate"><span class="pre">Kullback-Leibler(KL)散度</span></code>，或简称 <code class="docutils literal notranslate"><span class="pre">KL散度</span></code>。这是在阅读统计学、机器学习、信息论或统计力学文献时经常遇到的概念。你或许会说，<code class="docutils literal notranslate"><span class="pre">KL散度</span></code>、<code class="docutils literal notranslate"><span class="pre">熵</span></code>、<code class="docutils literal notranslate"><span class="pre">边缘似然</span></code>等概念反复出现的原因很简单，因为所有这些学科都在讨论同一组问题，只是观点略有不同。<code class="docutils literal notranslate"><span class="pre">KL散度</span></code> 非常有用，因为<strong>它是衡量两个分布接近程度的一种方法</strong>，其定义如下：</p>
 <div class="math notranslate nohighlight">
 \[
-D_{K L}(p \| q)=\sum_{i} p_{i} \log \frac{p_{i}}{q_{i}} \tag{式5.16}
+D_{K L}(p \| q)=\sum_{i} p_{i} \log \frac{p_{i}}{q_{i}} \tag{式5.16}  \label{式5.16}
 \]</div>
 <p>上式可读为 <span class="math notranslate nohighlight">\(q\)</span> 到 <span class="math notranslate nohighlight">\(p\)</span> 的 <code class="docutils literal notranslate"><span class="pre">Kullback-Leibler散度</span></code>（两者顺序不能相反，因为 <code class="docutils literal notranslate"><span class="pre">KL散度</span></code> 不符合交换率），其中 <span class="math notranslate nohighlight">\(p\)</span> 和 <span class="math notranslate nohighlight">\(q\)</span> 是两个概率分布。对于连续变量应该计算积分而非求和，但主要思想相同。</p>
 <p>可以将 <span class="math notranslate nohighlight">\(D_{KL}({p||q})\)</span> 散度解释为 <strong>”通过使用概率分布 <span class="math notranslate nohighlight">\(q\)</span> 来近似真实分布 <span class="math notranslate nohighlight">\(p\)</span> 而引入的额外熵或不确定性“</strong>。事实上，<code class="docutils literal notranslate"><span class="pre">KL散度</span></code> 是两个熵之间的差值：</p>
 <div class="math notranslate nohighlight">
 \[
-D_{K L}(p \| q)=\underbrace{\sum_{i} p_{i} \log p_{i}}_{\text {entropy of p }}-\underbrace{\sum_{i} p_{i} \log q_{i}}_{\text {crossentropy of p,q }}=\sum_{i} p_{i}\left(\log p_{i}-\log q_{i}\right) \tag{式5.17}
+D_{K L}(p \| q)=\underbrace{\sum_{i} p_{i} \log p_{i}}_{\text {entropy of p }}-\underbrace{\sum_{i} p_{i} \log q_{i}}_{\text {crossentropy of p,q }}=\sum_{i} p_{i}\left(\log p_{i}-\log q_{i}\right) \tag{式5.17}  \label{式5.17}
 \]</div>
 <p>利用对数性质，可以重新排列式 5.17 以恢复式 5.16。从式 5.17 的角度来看，也可以将 <span class="math notranslate nohighlight">\(D_{KL}({p||q})\)</span> 理解为 <span class="math notranslate nohighlight">\(p\)</span> 相对于 <span class="math notranslate nohighlight">\(q\)</span> 的相对熵(这一次顺着念)。</p>
 <p>作为一个简单例子，我们可以使用 KL 散度来评估哪个分布（ <span class="math notranslate nohighlight">\(q\)</span> 或 <span class="math notranslate nohighlight">\(r\)</span> ）更接近真实分布。使用Scipy，可以计算 <span class="math notranslate nohighlight">\(D_{KL}({真实分布||q})\)</span>  和 <span class="math notranslate nohighlight">\(D_{KL}({真实分布||r})\)</span> ：</p>
@@ -1096,7 +1096,7 @@ D_{K L}(p \| q)=\underbrace{\sum_{i} p_{i} \log p_{i}}_{\text {entropy of p }}-\
 <p><span class="math notranslate nohighlight">\(D_{KL}({p||q})\)</span> 表示 <span class="math notranslate nohighlight">\(q\)</span> 有多像 <span class="math notranslate nohighlight">\(p\)</span> 。也可从惊喜的角度来考虑，如果在预期 <span class="math notranslate nohighlight">\(p\)</span> 的时候突然看到了 <span class="math notranslate nohighlight">\(q\)</span> ，我们会有多惊讶。对一个事件的惊讶程度取决于用于判断该事件的信息。我在一个非常干旱的城市长大，每年可能会有一两场真正的暴风雨。然后。我搬到另一省份去上大学，我真的很震惊，至少在雨季，平均每周有一场真正的暴风雨！我的一些同学来自布宜诺斯艾利斯，这是阿根廷最潮湿多雨的省份之一。但对他们来说，降雨频率或多或少是意料之中的。更重要的是，他们可能因为空气不够潮湿，而认为天气可能会下多一点雨。</p>
 <p>我们也可以使用 KL 散度来比较模型，因为它将给出哪个模型更接近真实分布的后验。但问题是我们并不知道真实分布。因此，KL 散度不能直接适用，但可用它作为论据来修正离差（式5.3）。如果假设真实分布存在（如下式所示），则其应当独立于任何模型和常数，并以同样方式影响 KL 散度，而与用于近似真实分布的后验分布无关。因此，可以使用离差（依赖于每个模型的部分）来估计我们离真实分布相对有多近，即使我们不知道它。对于公式 5.17 ，通过使用一些代数，可以得到：</p>
 <p>\begin{aligned}
-D_{K L}(p | q)-D_{K L}(p | r) &amp;=\left(\sum_{i} p_{i} \log p_{i}-\sum_{i} p_{i} \log q_{i}\right)-\left(\sum_{i} p_{i} \log p_{i}-\sum_{i} p_{i} \log r_{i}\right) \tag{式5.18}\
+D_{K L}(p | q)-D_{K L}(p | r) &amp;=\left(\sum_{i} p_{i} \log p_{i}-\sum_{i} p_{i} \log q_{i}\right)-\left(\sum_{i} p_{i} \log p_{i}-\sum_{i} p_{i} \log r_{i}\right) \tag{式5.18}  \label{式5.18}\
 &amp;=\sum_{i} p_{i} \log q_{i}-\sum_{i} p_{i} \log r_{i} \notag
 end{aligned}</p>
 <p>即使不知道 <span class="math notranslate nohighlight">\(p\)</span>，我们也可以得出结论，具有更大对数似然（或离差）的分布就是在 KL 散度中更接近真实分布的分布。实践中对数似然（或离差）是从有限样本拟合的模型中获得的。因此，还必须增加一个惩罚项，以纠正对离差的高估，这就引出了 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 等信息准则。</p>

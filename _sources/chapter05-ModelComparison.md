@@ -156,7 +156,7 @@ for idx, func in enumerate([np.mean, iqr]):
 贝叶斯 `p-value` 与频率派的 `p-value` 名字相似，定义基本上也相同：
 
 $$
-\text{Bayesian p-value}\triangleq p\left(T_{s i m} \geq T_{o b s} \mid y \right)
+\text{Bayesian p-value}\triangleq p\left(T_{s i m} \geq T_{o b s} \mid y \right) \tag{式5.1}  \label{式5.1}
 $$
 
 可以解释为：从模拟数据中获得与观测数据相同或更高统计量值的概率。$T$ 几乎可以是数据的任意统计量。在图 5.4 中，统计量是左侧的平均值和右侧的四分位数范围。通常 $T$ 应该在最初定义推断任务时就选择好。
@@ -291,7 +291,7 @@ plt.ylabel('y', rotation=0)
 一种衡量模型对数据的拟合程度的方法是计算模型预测结果与真实数据之间的均方差：
 
 $$
-\frac{1}{N} \sum_{i=1}^{N}\left(y_{i}-\mathrm{E}\left(y_{i} \mid \theta\right)\right)^{2} 
+\frac{1}{N} \sum_{i=1}^{N}\left(y_{i}-\mathrm{E}\left(y_{i} \mid \theta\right)\right)^{2}  \tag{式5.2}  \label{式5.2}
 $$
 
 其中，$E(y_i|\theta)$ 是根据估计的参数值计算得到的预测值。
@@ -301,13 +301,13 @@ $$
 一种更通用的方法是计算 log 似然：
 
 $$
-\sum_{i=1}^{N} \log p\left(y_{i} \mid \theta\right) 
+\sum_{i=1}^{N} \log p\left(y_{i} \mid \theta\right)  \tag{式5.3}  \label{式5.3}
 $$
 
 当似然服从正态分布时，已经证明 log 似然与二次均方误差成正比。由于历史原因，实践中人们通常不直接使用 log 似然，而是使用一个称作 `离差（deviance）` 的量：
 
 $$
--2 \sum_{i=1}^{N} \log p\left(y_{i} \mid \theta\right) 
+-2 \sum_{i=1}^{N} \log p\left(y_{i} \mid \theta\right)  \tag{式5.4}  \label{式5.4}
 $$
 
 离差在贝叶斯方法和非贝叶斯方法中类似，区别在于：贝叶斯框架中 $θ$ 来自后验的采样。而在非贝叶斯方法中，$θ$ 是一个点估计。在使用离差时，需注意以下两点：
@@ -322,7 +322,7 @@ $$
 AIC 信息准则（Akaike Information Criterion）是一个广泛应用的信息准则，其定义如下：
 
 $$
-\text{AIC} = -2\sum_{i=1}^{n} \log p\left(y_{i} \mid \hat{\theta}_{m l e}\right)+2 \text{pAIC}  \tag{式5.5}
+\text{AIC} = -2\sum_{i=1}^{n} \log p\left(y_{i} \mid \hat{\theta}_{m l e}\right)+2 \text{pAIC}  \tag{式5.5}  \label{式5.5}
 $$
 
 其中，$pAIC$ 表示参数的个数， $\hat{\theta}_{m l e}$ 为 $\theta$ 的最大似然估计。最大似然估计在非贝叶斯方法中经常用到，等价于贝叶斯方法中基于均匀先验的最大后验估计。注意这里 $\hat{\theta}_{mle}$ 是点估计而不是分布。
@@ -430,7 +430,7 @@ az.plot_compare(cmp_df)
 本方法使用每个模型的加权平均值来生成 `元模型（meta-model）` 和 `元预测（meta-predictions）` 。不同模型的权重计算基于某些信息准则值（如 `WAIC`），公式如下：
 
 $$
-w_{i}=\frac{e^{\frac{1}{2} d E_{i}}}{\sum_{j}^{M} e^{-\frac{1}{2} d E_{j}}} \tag{式5.7}
+w_{i}=\frac{e^{\frac{1}{2} d E_{i}}}{\sum_{j}^{M} e^{-\frac{1}{2} d E_{j}}} \tag{式5.7}  \label{式5.7}
 $$
 
 这里 $dE_i$ 是第 $i$ 个模型相对于最佳模型（`WAIC`值最小的模型）的 `WAIC` 相对差值。除 `WAIC` 外，此处也可以使用其他信息准则值，如 `AIC` 或 `LOO` 等。此公式是根据 `WAIC` 值计算各模型相对概率的启发式方法。分母为归一化因子，`第4章 广义线性模型`中有过类似的表达式。
@@ -444,7 +444,7 @@ $$
 另一种计算平均模型权重的方法被称为 `预测性分布堆叠（stacking of predictive distributions）` 。这在 `PyMC3` 中通过将 `method=‘stacking’` 传递给 `az.compare` 实现。其基本思想是通过最小化元模型和真实生成模型之间的差异，将多个模型组合到一个元模型中。当使用对数打分规则时，这等价于：
 
 $$
-\max _{n} \frac{1}{n} \sum_{i=1}^{n} \log \sum_{k=1}^{K} w_{k} p\left(y_{i} \mid y_{-i}, M_{k}\right) \tag{式5.8}
+\max _{n} \frac{1}{n} \sum_{i=1}^{n} \log \sum_{k=1}^{K} w_{k} p\left(y_{i} \mid y_{-i}, M_{k}\right) \tag{式5.8}  \label{式5.8}
 $$
 
 这里，$n$ 是数据点的数量，$k$ 是模型的数量。为了强制实施方案，我们将 $w$ 约束为 $w_k \geq 0$ 并且 $\sum w_k =1$。量 $p(y_i|y_{-i},M_k)$ 是模型 $M_k$ 的留一预测性分布。根据留一法，计算需要拟合每个模型 $n$ 次，每次遗留一个数据点。幸运的是，`PyMC3` 可以使用 `WAIC` 或 `LOO` 来近似留一预测性分布。
@@ -505,19 +505,19 @@ plt.legend()
 在贝叶斯世界中，评估和比较模型的一种常见选择是 `贝叶斯因子（Bayes factor, BF）` 。 为理解什么是贝叶斯因子，让我们重温一遍贝叶斯定理：
 
 $$
-p(\theta \mid y)=\frac{p(y \mid \theta) p(\theta)}{p(y)} \tag{式5.9}
+p(\theta \mid y)=\frac{p(y \mid \theta) p(\theta)}{p(y)} \tag{式5.9}  \label{式5.9}
 $$
 
 这里，$y$ 表示数据。我们可以显式地基于给定模型 $M$ 计算依赖关系：
 
 $$
-p\left(\theta \mid y, M_{k}\right)=\frac{p\left(y \mid \theta, M_{k}\right) p\left(\theta \mid M_{k}\right)}{p\left(y \mid M_{k}\right)}\tag{式5.10} 
+p\left(\theta \mid y, M_{k}\right)=\frac{p\left(y \mid \theta, M_{k}\right) p\left(\theta \mid M_{k}\right)}{p\left(y \mid M_{k}\right)}\tag{式5.10}   \label{式5.10}
 $$
 
 第一章中曾经介绍过，分母中的术语称为边缘似然（或证据），可视为一个归一化常数。在进行单模型推断时，通常不需要真实地计算它，而是基于一个常数因子来计算后验。但对于模型比较和模型平均，边缘似然却是一个重要的量。如果主要目标是从一组 $k$ 个模型中选择一种最好的模型，我们可以只选择 $p(y|M_k)$ 最大的那个。一般来说， $p(y|M_k)$ 值的大小本身并不能告诉我们太多信息，重要的是相对值。因此，实践中经常计算两个边缘似然的比率，这个比率被称为贝叶斯因子：
 
 $$
-B F=\frac{p\left(y \mid M_{0}\right)}{p\left(y \mid M_{1}\right)} \tag{式5.11}
+B F=\frac{p\left(y \mid M_{0}\right)}{p\left(y \mid M_{1}\right)} \tag{式5.11}  \label{式5.11}
 $$
 
 当 $BF（M_0,M_1） > 1$ 时，模型 0 比模型 1 更好地解释了数据。
@@ -535,7 +535,7 @@ $$
 如果假设所有模型都具有相同先验概率，则使用 $p(y|M_k)$ 来比较模型完全没有问题。否则，必须计算后验赔率：
 
 $$
-\underbrace{\frac{p\left(M_{0} \mid y\right)}{p\left(M_{1} \mid y\right)}}_{\text {posterior odds }}=\underbrace{\frac{p\left(y \mid M_{0}\right)}{p\left(y \mid M_{1}\right)}}_{\text {Bayes factors}} \underbrace{\frac{p\left(M_{0}\right)}{p\left(M_{1}\right)}}_{\text{prior odds} } \tag{式5.12}
+\underbrace{\frac{p\left(M_{0} \mid y\right)}{p\left(M_{1} \mid y\right)}}_{\text {posterior odds }}=\underbrace{\frac{p\left(y \mid M_{0}\right)}{p\left(y \mid M_{1}\right)}}_{\text {Bayes factors}} \underbrace{\frac{p\left(M_{0}\right)}{p\left(M_{1}\right)}}_{\text{prior odds} } \tag{式5.12}  \label{式5.12}
 $$
 
 
@@ -544,7 +544,7 @@ $$
 现在简要讨论有关边缘似然的一些关键事实。通过仔细检查定义，可以理解边缘似然的性质和应用效果：
 
 $$
-p\left(y \mid M_{k}\right)=\int_{\theta_{k}} p\left(y \mid \theta_{k}, M_{k}\right) p\left(\theta_{k}, M_{k}\right) d \theta_{k} \tag{式5.13}
+p\left(y \mid M_{k}\right)=\int_{\theta_{k}} p\left(y \mid \theta_{k}, M_{k}\right) p\left(\theta_{k}, M_{k}\right) d \theta_{k} \tag{式5.13}  \label{式5.13}
 $$
 
 - **好处**：参数多的模型比参数少的模型具有更大惩罚。贝叶斯因子内置奥卡姆剃刀，因为参数数量越多，先验分布相对于似然就越广。结合贝叶斯因子公式，越宽广的先验（参数更多）积分越大，而越聚集的先验（参数更少）积分越小，从而间接实现了对参数数量的惩罚。
@@ -723,7 +723,7 @@ fig.text(0.5, 0, 'Deviance', ha='center', fontsize=14)
 如果展开公式 5.6，会得到以下结果：
 
 $$
-\text{WAIC}=-2 \sum_{i}^{n} \log \left(\frac{1}{S} \sum_{s=1}^{S} p\left(y_{i} \mid \theta^{s}\right)\right)+2 \sum_{i}^{n}\left(\text{V}_{s=1}^{S}\left(\log p\left(y_{i} \mid \theta^{s}\right)\right)\right. \tag{式5.14}
+\text{WAIC}=-2 \sum_{i}^{n} \log \left(\frac{1}{S} \sum_{s=1}^{S} p\left(y_{i} \mid \theta^{s}\right)\right)+2 \sum_{i}^{n}\left(\text{V}_{s=1}^{S}\left(\log p\left(y_{i} \mid \theta^{s}\right)\right)\right. \tag{式5.14}  \label{式5.14}
 $$
 
 该表达式中的两项看起来非常相似。第一项是式 5.6 中的`对数点预测密度（lppd）`，计算的是后验样本集 $S$ 的平均似然。我们对每个数据点都先求平均似然，然后取对数，最后对所有数据点求和。请将这一项与公式 5.3 和 5.4 进行比较。其实该项就是考虑了后验的样本内离差（deviance）。因此，如果我们认为计算对数似然是衡量模型适合性的好方法，那么在贝叶斯方法中，从后验计算对数似然就顺理成章。观测数据的 lddp 是对未来数据 lppd 的高估（此处意指样本内离差通常小于样本外离差），因此引入第二项来修正这种过高的估计。第二项计算后验样本的对数似然方差，我们对每个数据点执行此方差计算，然后对所有数据点进行汇总。为什么方差会给出惩罚条件？这与贝叶斯因子内置奥卡姆剃须刀的原理相似。有效参数越多，后验分布越大。当向模型添加结构时（如具有信息性/正则化的先验或分层依赖），与非正则化的模型相比，我们约束了后验，进而减少了有效参数的数量。
@@ -735,7 +735,7 @@ $$
 从数学上讲，熵定义为：
 
 $$
-H(p)=-\sum_{i} p_i\text{log} (p_i) \tag{式5.15}
+H(p)=-\sum_{i} p_i\text{log} (p_i) \tag{式5.15}  \label{式5.15}
 $$
 
 直观地说，分布越分散，其熵越大。通过运行以下代码并查看图 5.15，可以看到这一点：
@@ -786,7 +786,7 @@ for idx, (dist, label) in enumerate(zip([true_distribution, q_pmf, r_pmf], ['tru
 现在简单谈谈 `Kullback-Leibler(KL)散度`，或简称 `KL散度`。这是在阅读统计学、机器学习、信息论或统计力学文献时经常遇到的概念。你或许会说，`KL散度`、`熵`、`边缘似然`等概念反复出现的原因很简单，因为所有这些学科都在讨论同一组问题，只是观点略有不同。`KL散度` 非常有用，因为**它是衡量两个分布接近程度的一种方法**，其定义如下：
 
 $$
-D_{K L}(p \| q)=\sum_{i} p_{i} \log \frac{p_{i}}{q_{i}} \tag{式5.16}
+D_{K L}(p \| q)=\sum_{i} p_{i} \log \frac{p_{i}}{q_{i}} \tag{式5.16}  \label{式5.16}
 $$
 
 上式可读为 $q$ 到 $p$ 的 `Kullback-Leibler散度`（两者顺序不能相反，因为 `KL散度` 不符合交换率），其中 $p$ 和 $q$ 是两个概率分布。对于连续变量应该计算积分而非求和，但主要思想相同。
@@ -794,7 +794,7 @@ $$
 可以将 $D_{KL}({p||q})$ 散度解释为 **”通过使用概率分布 $q$ 来近似真实分布 $p$ 而引入的额外熵或不确定性“**。事实上，`KL散度` 是两个熵之间的差值：
 
 $$
-D_{K L}(p \| q)=\underbrace{\sum_{i} p_{i} \log p_{i}}_{\text {entropy of p }}-\underbrace{\sum_{i} p_{i} \log q_{i}}_{\text {crossentropy of p,q }}=\sum_{i} p_{i}\left(\log p_{i}-\log q_{i}\right) \tag{式5.17}
+D_{K L}(p \| q)=\underbrace{\sum_{i} p_{i} \log p_{i}}_{\text {entropy of p }}-\underbrace{\sum_{i} p_{i} \log q_{i}}_{\text {crossentropy of p,q }}=\sum_{i} p_{i}\left(\log p_{i}-\log q_{i}\right) \tag{式5.17}  \label{式5.17}
 $$
 
 利用对数性质，可以重新排列式 5.17 以恢复式 5.16。从式 5.17 的角度来看，也可以将 $D_{KL}({p||q})$ 理解为 $p$ 相对于 $q$ 的相对熵(这一次顺着念)。
@@ -818,7 +818,7 @@ stats.entropy(r_pmf, q_pmf), stats.entropy(q_pmf, r_pmf)
 我们也可以使用 KL 散度来比较模型，因为它将给出哪个模型更接近真实分布的后验。但问题是我们并不知道真实分布。因此，KL 散度不能直接适用，但可用它作为论据来修正离差（式5.3）。如果假设真实分布存在（如下式所示），则其应当独立于任何模型和常数，并以同样方式影响 KL 散度，而与用于近似真实分布的后验分布无关。因此，可以使用离差（依赖于每个模型的部分）来估计我们离真实分布相对有多近，即使我们不知道它。对于公式 5.17 ，通过使用一些代数，可以得到：
 
 \begin{aligned} 
-D_{K L}(p \| q)-D_{K L}(p \| r) &=\left(\sum_{i} p_{i} \log p_{i}-\sum_{i} p_{i} \log q_{i}\right)-\left(\sum_{i} p_{i} \log p_{i}-\sum_{i} p_{i} \log r_{i}\right) \tag{式5.18}\\
+D_{K L}(p \| q)-D_{K L}(p \| r) &=\left(\sum_{i} p_{i} \log p_{i}-\sum_{i} p_{i} \log q_{i}\right)-\left(\sum_{i} p_{i} \log p_{i}-\sum_{i} p_{i} \log r_{i}\right) \tag{式5.18}  \label{式5.18}\\
  &=\sum_{i} p_{i} \log q_{i}-\sum_{i} p_{i} \log r_{i} \notag
 end{aligned} 
 

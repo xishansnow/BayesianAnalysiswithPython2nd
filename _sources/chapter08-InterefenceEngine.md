@@ -156,7 +156,7 @@ plt.yticks([]);
 变分法的基本思想是用一种更简单的分布来近似后验分布，这类似于拉普拉斯方法，但采用更精细的方式。可以通过解决一个最优化问题来找到这个更简单的分布，这个最优化问题包括在某种度量相似程度的方法下找到与后验最接近的可能分布。衡量分布之间相似程度的常用方法是使用 `Kullback-Leibler(KL) 散度`（第 5 章中讨论过）。使用 `KL 散度` 可得：
 
 $$
-D_{K L}(q(\theta) \| p(\theta \mid y))=\int q(\theta) \log \frac{q(\theta)}{p(\theta \mid y)} d(\theta)  \tag{8.1}
+D_{K L}(q(\theta) \| p(\theta \mid y))=\int q(\theta) \log \frac{q(\theta)}{p(\theta \mid y)} d(\theta)  \tag{8.1} \label{式8.1}
 $$
 
 其中 $q(\theta)$ 是较简单的分布，用于近似后验分布 $p(\theta)$， $q(\theta)$ 通常被称为变分分布。通过使用最优化方法，我们试图找出分布 $q$ 的参数（通常称为变分参数），使其在 `KL 散度` 的度量上尽可能接近后验分布。注意，我们写了$D_{K L}(q(\theta) \| p(\theta \mid y))$，没有写 $\left.D_{K L}(p(\theta \mid y)) \| q(\theta)\right)$，因为这让问题表达更方便，此外两者之间不能交换。不过，在另一个方向上写 `KL 散度` 也是有用的，实际上导致了另一组本书不讨论的方法。
@@ -166,37 +166,37 @@ $$
 首先，用条件分布的定义做替换：
 
 $$
-D_{K L}(q(\theta) \| p(\theta \mid y))=\int q(\theta) \log \frac{q(\theta)}{\underline{p(\theta, y)}} d(\theta) \tag{8.2}
+D_{K L}(q(\theta) \| p(\theta \mid y))=\int q(\theta) \log \frac{q(\theta)}{\underline{p(\theta, y)}} d(\theta) \tag{8.2} \label{式8.2}
 $$
 
 然后重排公式 8.2：
 
 $$
-=\int q(\theta) \log \frac{q(\theta)}{p(\theta, y)} p(y) d(\theta) \tag{8.3}
+=\int q(\theta) \log \frac{q(\theta)}{p(\theta, y)} p(y) d(\theta) \tag{8.3} \label{式8.3}
 $$
 
 根据对数性质，得到方程：
 
 $$
-=\int q(\theta)\left(\log \frac{q(\theta)}{p(\theta, y)}+\log p(y)\right) d(\theta) \tag{8.4}
+=\int q(\theta)\left(\log \frac{q(\theta)}{p(\theta, y)}+\log p(y)\right) d(\theta) \tag{8.4} \label{式8.4}
 $$
 
 重新排列：
 
 $$
-=\int q(\theta) \log \frac{q(\theta)}{p(\theta, y)} d(\theta)+\int q(\theta) \log p(y) d(\theta) \tag{8.5}
+=\int q(\theta) \log \frac{q(\theta)}{p(\theta, y)} d(\theta)+\int q(\theta) \log p(y) d(\theta) \tag{8.5} \label{式8.5}
 $$
 
 $q(\theta) 的积分是 1，可以将 $\text{log} p(\theta)$ 移出积分，然后得到：
 
 $$
-=\int q(\theta) \log \frac{q(\theta)}{p(\theta, y)} d(\theta)+\log p(y) \tag{8.6}
+=\int q(\theta) \log \frac{q(\theta)}{p(\theta, y)} d(\theta)+\log p(y) \tag{8.6} \label{式8.6}
 $$
 
 利用对数性质：
 
 $$
-D_{K L}(q(\theta)|| p(\theta \mid y))=\underbrace{-\int q(\theta) \log \frac{p(\theta, y)}{q(\theta)} d(\theta)}_{\text {evidence lower bound (ELBO) }}+\log p(y)) \tag{8.7}
+D_{K L}(q(\theta)|| p(\theta \mid y))=\underbrace{-\int q(\theta) \log \frac{p(\theta, y)}{q(\theta)} d(\theta)}_{\text {evidence lower bound (ELBO) }}+\log p(y)) \tag{8.7} \label{式8.7}
 $$
 
 因为 $D_{K L} \geq 0$ ，然后 $D_{KL} \geq 0$ ，或者换句话说，证据（或边缘似然）总是等于或大于 `ELBO`，这就是其命名的原因。既然证据是一个常量，我们可以只关注 `ELBO` 。最大化 `ELBO` 的值相当于最小化 `KL 散度`。因此，使 `ELBO 最大化` 是一种使其尽可能接近后验的方法。
@@ -204,7 +204,7 @@ $$
 注意此时还没有引入任何近似，只是做了一些代数。实际上在选择 $q(.)$ 时才开始引入近似。原则上， $q(.)$ 可以是任何想要的分布形式，但实践中应选择易于处理的分布。一种解决方案是假设高维后验可以用若干独立的一维分布来描述；在数学上，可以表示如下：
 
 $$
-q(\theta)=\prod_{j} q_{j}\left(\theta_{j}\right) \tag{8.8}
+q(\theta)=\prod_{j} q_{j}\left(\theta_{j}\right) \tag{8.8} \label{式8.8}
 $$
 
 这种近似方式被称为`平均场近似（Mean-Field Approximation）`。平均场近似在物理学常被用来将（具有许多相互作用的）复杂系统建模为（无相互作用的）子系统的集合，或只有在做平均时才考虑相互作用。
@@ -234,7 +234,7 @@ $$
 我们在统计模型中关心的几乎所有事物，基本都与某些关于 $\theta$ 的函数 $f(\theta)$ 的期望值有关，比如：
 
 $$
-\mathbb{E}[f]=\int_{\theta} p(\theta) f(\theta) \mathrm{d} \theta \tag{8.9}
+\mathbb{E}[f]=\int_{\theta} p(\theta) f(\theta) \mathrm{d} \theta \tag{8.9} \label{式8.9}
 $$
 
 下面是该表达式的一些特例：
@@ -245,7 +245,7 @@ $$
 使用 `MCMC 方法`，在采样密度符合相对概率的条件下，可以用有限样本近似公式 8.9：
 
 $$
-\lim _{N \rightarrow \infty} \mathbb{E}_{\pi}[f]=\frac{1}{N} \sum_{n=1}^{N} f\left(\theta_{n}\right) \tag{8.10}
+\lim _{N \rightarrow \infty} \mathbb{E}_{\pi}[f]=\frac{1}{N} \sum_{n=1}^{N} f\left(\theta_{n}\right) \tag{8.10} \label{式8.10}
 $$
 
 式 8.10 的问题是：等式仅渐近成立。也就是说，需要无限数量的样本才成立！但实践中仅有有限数量样本，因此我们希望 `MCMC 方法` 能够尽可能快地收敛到正确答案，即用尽可能少的样本得到正确答案，这也是 `MCMC 方法` 的难点问题。
@@ -331,7 +331,7 @@ plt.legend(loc=1, frameon=True, framealpha=0.9);
 3. 根据 `Metropolis-Hastings 准则` 计算新参数值的接受概率：
    
    $$
-   p_{a}\left(x_{i+1} \mid x_{i}\right)=\min \left(1, \frac{p\left(x_{i+1}\right) q\left(x_{i} \mid x_{i+1}\right)}{p\left(x_{i}\right) q\left(x_{i+1} \mid x_{i}\right)}\right) \tag{8.11}
+   p_{a}\left(x_{i+1} \mid x_{i}\right)=\min \left(1, \frac{p\left(x_{i+1}\right) q\left(x_{i} \mid x_{i+1}\right)}{p\left(x_{i}\right) q\left(x_{i+1} \mid x_{i}\right)}\right) \tag{8.11} \label{式8.11}
    $$
 
 4. 从位于区间 [0,1] 内的均匀分布中随机抽取一个值，如果第（3）步中得到的接受概率比该值大，那么就接受新参数值，否则仍保持原值。
@@ -342,7 +342,7 @@ plt.legend(loc=1, frameon=True, framealpha=0.9);
 1. 如果选择的提议分布 $q(x_{i+1}|x_i)$ 是对称的，那么可以得到式 8.12，通常称为 `Metropolis 准则` 。
    
 $$
-p_{a}\left(x_{i+1} \mid x_{i}\right)=\min \left(1, \frac{p\left(x_{i+1}\right)}{p\left(x_{i}\right)}\right) \tag{8.12}
+p_{a}\left(x_{i+1} \mid x_{i}\right)=\min \left(1, \frac{p\left(x_{i+1}\right)}{p\left(x_{i}\right)}\right) \tag{8.12} \label{式8.12}
 $$
 
 2. 步骤（3）和步骤（4）表明：我们总是会转移到一个比当前状态（或参数）概率更大的状态（或参数），对于概率更小的，则会以 $x_{i+1}$ 与 $x_i$ 之比的概率接受。该准则中的接受步骤使得采样过程相比网格法更高效，同时保证了采样的准确性。
@@ -421,7 +421,7 @@ plt.legend();
 对于贝叶斯模型，有一种直观方式来适应这种调温的想法，那就是用以下方式写出贝叶斯定理：
 
 $$
-p(\theta \mid y)_{\beta}=p(y \mid \theta)^{\beta} p(\theta) \tag{8.13}
+p(\theta \mid y)_{\beta}=p(y \mid \theta)^{\beta} p(\theta) \tag{8.13} \label{式8.13}
 $$
 
 公式 1.4 和 8.13 之间的唯一区别是参数 $\beta$ ，此处被称为 `逆温` 或 `回火参数` 。请注意，对于 $\beta=0$ 我们得到 $p(y \mid \theta)^{\beta}=1$ ，因此调温后的后验 $p(\theta \mid y)_{\beta}$ 就是先验 $p(\theta)$； 并且当 $\beta=1$ 时，调温后的后验是真实的完整后验。由于从先验采样通常比从后验采样容易（通过增加 $\beta$ 的值），因此我们可以从更容易的分布开始采样，然后慢慢地将其变形为真正关心的更复杂的分布。
@@ -530,7 +530,7 @@ summaries
 数字摘要返回的数值之一是 `mc_error`，这是对采样引入误差的估计。该估计考虑到样本并不是真正彼此独立的。`mc_error` 是 $n$ 个数据块的平均值 $x$ 的标准误差，每个数据块只是迹的一部分：
 
 $$
-\mathrm{mc}_{\mathrm{error}}=\frac{\sigma(x)}{\sqrt{n}} \tag{8.14}
+\mathrm{mc}_{\mathrm{error}}=\frac{\sigma(x)}{\sqrt{n}} \tag{8.14} \label{式8.14}
 $$
 
 此误差应低于我们希望在结果中看到的精度。

@@ -17,25 +17,26 @@
 
 在第3章 “线性回归建模” 和 第4章 “广义线性回归模型” 中，介绍了如何构建一般形式的模型：
 
-$$
-\theta=\psi(\phi(X) \beta) \tag{式7.1}
-$$
 
- 式 7.1 中， $\theta$ 是因变量概率分布的某个参数，如高斯分布的平均值 $\mu$ 、二项式的参数 $p$、泊松分布的比率 $\lambda$ 等。$\psi$ 为逆连接函数，$\phi$ 是平方根或多项式函数，$\beta$ 为线性回归的权重参数。对于最简单的一元线性回归情况，$\psi$ 为恒等函数。
+```{math}
+\theta=\psi(\phi(X) \beta) \tag{式7.1} \label{式7.1}
+```
+
+ $\eqref{式7.1}$ 中， $\theta$ 是因变量概率分布的某个参数，如高斯分布的平均值 $\mu$ 、二项式的参数 $p$、泊松分布的比率 $\lambda$ 等。$\psi$ 为逆连接函数，$\phi$ 是平方根或多项式函数，$\beta$ 为线性回归的权重参数。对于最简单的一元线性回归情况，$\psi$ 为恒等函数。
 
 对上述贝叶斯模型的拟合可以视为通过推断得到权重参数 $\beta$ 的后验分布，因此，被称为估计的`权重视角（Weight View）`。以多项式回归为例，通过设计非线性函数 $\phi$ ，可将输入映射到特征空间，然后在特征空间中拟合一个在实际空间中非线性的线性关系。理论上通过使用适当阶次的多项式，总是可以完美拟合任何函数。但除非应用一定形式的正则化（如使用强先验），否则多项式回归很容易导致过拟合，进而模型泛化能力变差。
 
 `高斯过程` 让数据决定函数的复杂度，在避免（或最小化）过拟合问题同时，为任意函数的建模提供了理论解决方案，为复杂问题建模提供了一种 `函数视角 （Function View）` 。
 
-以下各节从实用角度解释了高斯过程，几乎避免了所有数学知识。有关更正式的解释，请查看第 9 章“下一步去哪里？”中列出的资源。
+以下各节从实用角度解释了高斯过程，几乎避免了所有数学知识。有关更正式的解释，请查看`第 9 章 『下一步去哪里？』`中列出的资源。
 
 ## 7.2 对函数建模
 
  我们将首先描述一种将函数表示为概率对象的方法，以开始对高斯过程的讨论。可以把函数 $f$ 看作是从一组输入 $x$ 到一组输出 $y$ 的映射。因此，可以这样写：
 
-$$
-y=f(x) \tag{式7.2}
-$$
+```{math}
+y=f(x) \tag{式7.2} \label{式7.2}
+```
 
 表示函数的一种方式是为每个值 $x_i$ 列出其相应值 $y_i$ 。事实上，你可能还记得小时候这种函数的表示方式：
 
@@ -101,15 +102,15 @@ plt.legend()
 
 在众多可用的核中，指数族二次核是比较常用的一种：
 
-$$
-K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left\|x-x^{\prime}\right\|^{2}}{2 \ell^{2}}\right) \tag{式7.3}
-$$
+```{math}
+K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left\|x-x^{\prime}\right\|^{2}}{2 \ell^{2}}\right) \tag{式7.3} \label{式7.3}
+```
 
 此处， $x,x'$是随机变量的值， $\left\|x-x^{\prime}\right\|^{2}$ 为平方欧氏距离：
 
-$$
-\left\|x-x^{\prime}\right\|^{2}=\left(x_{1}-x_{1}^{\prime}\right)^{2}+\left(x_{2}-x_{2}^{\prime}\right)^{2}+\cdots+\left(x_{n}-x_{n}^{\prime}\right)^{2} \tag{式7.4}
-$$
+```{math}
+\left\|x-x^{\prime}\right\|^{2}=\left(x_{1}-x_{1}^{\prime}\right)^{2}+\left(x_{2}-x_{2}^{\prime}\right)^{2}+\cdots+\left(x_{n}-x_{n}^{\prime}\right)^{2} \tag{式7.4} \label{式7.4}
+```
 
 乍一看可能不明显，但指数族二次核具有与高斯分布类似的公式（见表达式 1.3)。因此，您可能会发现有人将此核称为高斯核。 $\ell$ 为长度尺度（或带宽、方差），用于控制核的宽度。
 
@@ -211,25 +212,25 @@ fig.text(-0.03, 0.5, 'f(x)', fontsize=16)
 
 假设可以将 $y$ 值建模为一个有关于 $x$ 的函数 $f（x）$ 和加性噪声的高斯分布：
 
-$$
-y \sim \mathcal{N}(\mu=f(x), \sigma=\epsilon) \tag{式7.5}
-$$
+```{math}
+y \sim \mathcal{N}(\mu=f(x), \sigma=\epsilon) \tag{式7.5} \label{式7.5}
+```
 
 此处 $\epsilon \sim \mathcal{N}\left(0, \sigma_{\epsilon}\right)$
 
 这类似于我们在第 3 章“线性回归模型”中所做的假设。主要区别在于，现在将在 $f$ 上配置高斯先验：
 
-$$
-f(x) \sim \mathcal{G} \mathcal{P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.6}
-$$
+```{math}
+f(x) \sim \mathcal{G} \mathcal{P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.6} \label{式7.6}
+```
 
 这里，$\mathcal{GP}$ 表示高斯过程分布， $\mu_x$ 为均值函数， $K(x,x')$ 为核（或协方差）函数。我们用 `函数` 这个词来表示，在数学上是指均值和协方差都是无限的对象，尽管实践中总是作为有限对象处理。
 
 如果先验分布是高斯过程分布，且似然是正态分布，那么后验分布也是高斯过程分布，我们可以解析地计算它：
 
 \begin{align*} 
-p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &\sim \mathcal{N}(\mu, \Sigma) \tag{式7.7}\\
-\mu&=K_{*}^{T} K^{-1} y \tag{式7.8}\\
+p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &\sim \mathcal{N}(\mu, \Sigma) \tag{式7.7}  \label{式7.7}\\
+\mu&=K_{*}^{T} K^{-1} y \tag{式7.8} \label{式7.8}\\
 \Sigma &=K_{* *}-K_{*}^{T} K^{-1} K_{*} \notag
 \end{align*}
 
@@ -287,9 +288,9 @@ with pm.Model() as model_reg:
 
 请注意，我们使用的不是表达式 7.7 中预期的正态似然，而是 `gp.marginal_likelihood` 方法。在第一章“概率思维”（公式 1.1) 和第五章“模型比较”（公式 5.13) 中，边际似然是似然和先验的积分：
 
-$$
-p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) df \tag{式7.9}
-$$
+```{math}
+p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) df \tag{式7.9} \label{式7.9}
+```
 
 与往常一样，$\theta$ 表示所有未知参数，$X$ 是预测变量，$y$ 是结果变量。请注意，我们正在对函数 $f$ 的值进行边际化。对于高斯过程先验和正态似然，可以解析地执行边际化。
 
@@ -432,9 +433,9 @@ x_data = [islands.lat.values[:, None], islands.lon.values[:, None]]
 我们要构建的模型是：
 
 \begin{align*} 
-f &\sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \tag{式7.10}\\
-\mu &\sim \exp (\alpha+\beta x+f) \tag{式7.11}\\
-y &\sim \operatorname{Poisson}(\mu)\tag{式7.12}
+f &\sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \tag{式7.10} \label{式7.10}\\
+\mu &\sim \exp (\alpha+\beta x+f) \tag{式7.11} \label{式7.11}\\
+y &\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 \end{align*}
 
 这里，我们省略了 $\alpha$ 和 $\beta$ 的前缀，以及核的超先验。 $x$ 是对数人口， $y$ 是工具总数。
@@ -789,8 +790,8 @@ coal_df.head()
 我们用来拟合上表 `coal_df` 中数据的模型是：
 
 \begin{align*}
-f(x)  &\sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.13} \\
-y  &\sim \operatorname{Poisson}(f(x)) \tag{式7.14}
+f(x)  &\sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.13} \label{式7.13} \\
+y  &\sim \operatorname{Poisson}(f(x)) \tag{式7.14} \label{式7.14}
 \end{align*}
 
 

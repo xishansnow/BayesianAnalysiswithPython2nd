@@ -101,9 +101,9 @@
 
 概率值介于 [0,1] 之间，其计算遵循一些法则，其中之一是乘法法则： 
 
-$$
-p(A, B)=p(A \mid B) p(B) \tag{式1.1}
-$$
+```{math}
+p(A, B)=p(A \mid B) p(B) \tag{式1.1} \label{式1.1}
+```
 
 上式的读法是：$A$ 和 $B$ 同时发生的概率等于 $B$ 发生的概率乘以在 $B$ 发生条件下 $A$ 也发生的概率。其中，$p(A,B)$ 表示 $A$ 和 $B$ 的联合概率，指 $A$ 和 $B$ 同时发生的概率； $p(A|B)$ 表示条件概率 ，指在知识（或证据、事件） $B$ 支持下，$A$ 发生的概率。二者的现实意义不同，例如：“路面是湿的” 与 “下雨时路面是湿的” 两个事件的概率截然不同，后者是典型的条件概率。
 
@@ -147,9 +147,9 @@ x = X.rvs(3)
 
 统计学中表示变量随参数 $\mu,\sigma$ 呈正态分布的形式为：
 
-$$
-x \sim \mathcal{N}(\mu,\sigma) \tag{式1.2}
-$$
+```{math}
+x \sim \mathcal{N}(\mu,\sigma) \tag{式1.2} \label{式1.2}
+```
 
 在本书中，当看到波浪号“ $\sim$ ”符号时，读为：$x$ 服从 ... 分布。
 
@@ -157,9 +157,9 @@ $$
 
 在本书后面将遇到很多概率分布；每次出现一个概率分布，都会花一些时间来介绍它。首先从正态分布开始，因为它类似于概率分布中的宙斯。如果变量值由以下表达式规定，则变量服从高斯分布：
 
-$$
-p(x \mid \mu, \sigma)=\frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{(x-\mu)^{2}}{2 \sigma^{2}}}\tag{式1.3}
-$$
+```{math}
+p(x \mid \mu, \sigma)=\frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{(x-\mu)^{2}}{2 \sigma^{2}}}\tag{式1.3} \label{式1.3}
+```
 
 这是正态分布的概率密度函数。不需要记住公式 1.3，此处只想展示给大家看，这样就能知道数字是从哪里来的。正如已经提到的，$\mu$ 和 $\sigma$ 是该分布的参数，通过指定这些参数值，完全可以定义分布；可以从表达式 1.3 中看到这一点，因为其他项都是常量。$\mu$ 可以取任何实值，即 $\mu \in \mathbf{R}$ ，并指定分布的平均值 （以及中位数或众数）。$\sigma$ 是标准差，它只能是正数，表示概率分布的散布情况，值越大分布越分散。因为 $\mu$ 和 $\sigma$ 有无限多个可能组合，所以存在无限多个高斯分布的实例，并且所有实例都属于相同的高斯族。
 
@@ -231,29 +231,29 @@ plt.savefig('B11197_01_02.png', dpi=300)
 
 到目前为止，我们已经学习了一些统计学中的基本概念和词汇，接下来看看神奇的贝叶斯定理：
 
-$$
-p(\theta \mid y)=\frac{p(y \mid \theta) p(\theta)}{p(y)}\tag{式1.4}
-$$
+```{math}
+p(\theta \mid y)=\frac{p(y \mid \theta) p(\theta)}{p(y)}\tag{式1.4} \label{式1.4}
+```
 
 看起来稀松平常，跟小学课本里的公式差不多，不过这就是关于贝叶斯统计的全部。首先看看贝叶斯定理是怎么来的。
 
 根据前面提到的概率论中的乘法准则，有以下式子：
 
-$$
-p(\theta, y)=p(\theta \mid y) p(y)\tag{式1.5}
-$$
+```{math}
+p(\theta, y)=p(\theta \mid y) p(y)\tag{式1.5} \label{式1.5}
+```
 
 也可以写为：
 
-$$
-p(\theta, y)=p(y \mid \theta) p(\theta)\tag{式1.6}
-$$
+```{math}
+p(\theta, y)=p(y \mid \theta) p(\theta)\tag{式1.6} \label{式1.6}
+```
 
 由于以上式子的左边相等，于是可以得到：
 
-$$
-p ( \theta | y ) p ( y ) = p ( y | \theta ) p ( \theta )\tag{式1.7}
-$$
+```{math}
+p ( \theta | y ) p ( y ) = p ( y | \theta ) p ( \theta )\tag{式1.7} \label{式1.7}
+```
 
 对上式调整下顺序，便得到了公式 1.4 的贝叶斯定理。
 
@@ -280,9 +280,9 @@ $$
 
 最后一个概念是证据，也称作边缘似然。证据是在模型参数取遍所有可能值的条件下得到指定观测值的概率平均。不过，本书大部分内容不关心该概念，可以简单地视其为归一化系数。我们更关心参数的相对值而非绝对值。把证据这一项忽略掉之后，贝叶斯定理可以表示成如下正比形式：
 
-$$
-p(\theta \mid y) \propto p(y \mid \theta) p(\theta) \tag{式1.8}
-$$
+```{math}
+p(\theta \mid y) \propto p(y \mid \theta) p(\theta) \tag{式1.8} \label{式1.8}
+```
 
 理解其中每个概念可能需要时间和更多例子，本书也将围绕这些内容展开。
 
@@ -309,9 +309,9 @@ $$
 
 假设多次抛硬币的结果之间相互没有影响，也就是说每次抛硬币都是独立的实验，同时假设结果只有两种可能：正面朝上或反面朝上。基于该假设可以看出，二项分布是不错的似然候选： 
 
-$$
-p(y \mid \theta, N)=\frac{N !}{y !(N-y) !} \theta^{y}(1-\theta)^{N-y} \tag{式1.9}
-$$
+```{math}
+p(y \mid \theta, N)=\frac{N !}{y !(N-y) !} \theta^{y}(1-\theta)^{N-y} \tag{式1.9} \label{式1.9}
+```
 
 二项分布是一个离散分布，表示给定某个参数值 $\theta$ ， $N$ 次抛硬币实验中 $y$ 次正面朝上的概率（或者更通俗地描述是，$N$ 次实验中，$y$ 次成功的概率）。
 
@@ -352,9 +352,9 @@ for i in range(len(n_params)):
 
 此处选用贝叶斯统计中最常见的贝塔分布作为先验，其数学形式如下：
 
-$$
-p(\theta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \Gamma(\beta)} \theta^{\alpha-1}(1-\theta)^{\beta-1} \tag{式1.10}
-$$
+```{math}
+p(\theta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \Gamma(\beta)} \theta^{\alpha-1}(1-\theta)^{\beta-1} \tag{式1.10} \label{式1.10}
+```
 
 仔细观察上式可看出，除 $\Gamma$ 部分之外，贝塔分布和二项分布看起来很像。 $\Gamma$ 表示伽马函数。现在只需知道，用分数表示的第一项是一个标准化常量，用来保证该分布的积分为 1，此外，$\alpha$ 和 $\beta$ 两个参数用来控制分布形态。贝塔分布是到目前为止的第 3 个分布，利用下面的代码，可以深入了解其形态：
 
@@ -400,26 +400,26 @@ f.text(0.07, 0.5, 'p(θ)', va='center', rotation=0)
 
 首先回忆贝叶斯定理：后验正比于似然乘以先验。对于抛硬币问题，须将二项分布和贝塔分布相乘：
 
-$$
-p(\theta \mid y) \propto \frac{N !}{y !(N-y) !} \theta^{y}(1-\theta)^{N-y} \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \Gamma(\beta)} \theta^{\alpha-1}(1-\theta)^{\beta-1}\tag{式1.11}
-$$
+```{math}
+p(\theta \mid y) \propto \frac{N !}{y !(N-y) !} \theta^{y}(1-\theta)^{N-y} \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \Gamma(\beta)} \theta^{\alpha-1}(1-\theta)^{\beta-1}\tag{式1.11} \label{式1.11}
+```
 
 可以简化该表达式。为了实际考虑，可以去掉所有不依赖的元素，结果仍然有效。相应地，可以写为：
 
-$$
-p(\theta \mid y) \propto \theta^{y}(1-\theta)^{N-y} \theta^{\alpha-1}(1-\theta)^{\beta-1}\tag{式1.12}
-$$
+```{math}
+p(\theta \mid y) \propto \theta^{y}(1-\theta)^{N-y} \theta^{\alpha-1}(1-\theta)^{\beta-1}\tag{式1.12} \label{式1.12}
+```
 重新整理之后得到：
 
-$$
-p(\theta \mid y) \propto \theta^{y+\alpha-1}(1-\theta)^{N-y+\beta-1}\tag{式1.13}
-$$
+```{math}
+p(\theta \mid y) \propto \theta^{y+\alpha-1}(1-\theta)^{N-y+\beta-1}\tag{式1.13} \label{式1.13}
+```
 
 如果注意会发现，上述表达式与贝塔分布具有相同的函数形式（除了归一化项），其中参数 $\alpha_{\text {posterior }}=\alpha_{\text {prior }}+y$  ， 参数 $\beta_{\text {posterior}}=\beta_{\text {prior }}+N-y$ 。事实上，问题的后验分布依然是贝塔分布：
 
-$$
-p(\theta \mid y) \propto \operatorname{Beta}\left(\alpha_{\text {prior }}+y, \beta_{\text {prior }}+N-y\right)\tag{式1.14}
-$$
+```{math}
+p(\theta \mid y) \propto \operatorname{Beta}\left(\alpha_{\text {prior }}+y, \beta_{\text {prior }}+N-y\right)\tag{式1.14} \label{式1.14}
+```
 
 ### （6）后验诊断
 
@@ -486,9 +486,9 @@ plt.tight_layout()
 
 现在知道了先验有许多种，但缓解不了我们选择先验时的焦虑。或许，最好是没有先验，这样事情就简单了。但不论是否基于贝叶斯，模型都在某种程度上拥有先验，即使先验并没有明确表示出来。事实上，许多频率统计学方面的结果可以看做是贝叶斯模型在一定条件下的特例（常见如均匀先验）。仔细看看前面那幅图，可以看到蓝色后验分布的峰值与频率学派分析中 $θ$ 的期望值是一致的（此处暗示最大后验估计和最大似然估计在某种先验假设下，得到等价的结果）：
 
-$$
-\hat \theta = \frac { y } { N }\tag{式1.15}
-$$
+```{math}
+\hat \theta = \frac { y } { N }\tag{式1.15} \label{式1.15}
+```
 
 注意，此处 $\hat \theta$是点估计而非后验分布。由此看出，很难完全避免先验，但明确在分析中引入先验，会得到概率分布而不只是最可能的单个值。
 
@@ -511,7 +511,7 @@ $$
 
 \begin{align*}
 \theta &\sim \operatorname{Beta}(\alpha, \beta) \notag \\
-y &\sim \operatorname{Bin}(n=1, p=\theta) \tag{式1.16}
+y &\sim \operatorname{Bin}(n=1, p=\theta) \tag{式1.16} \label{式1.16}
 \end{align*}
 
 
@@ -562,13 +562,13 @@ az.plot_posterior({'θ':stats.beta.rvs(5, 11, size=1000)})
 
 获取特定模型的后验分布后，可以用来模拟生成基于该分布的新数据。这有助于评估模型是否提供了有效预测，以对未来事件进行推断。这些模拟可用于多种目的，其中之一就是：通过对比观测数据和模拟数据的核密度估计值，来检验模拟数据是否类似于观测数据。在评估模型是否与数据生成机制有较好拟合时，需要更正式的后验预测检验方法。任何依赖于参数的统计或差异都可用于后验预测检验。这与先验预测检验的使用方式类似，但在对比观测数据和模拟数据时要更加严苛。
 
-###（1） 后验预测性分布
+### （1） 后验预测性分布
 
 贝叶斯方法的一个优势是：一旦得到了后验分布 $p(\theta|y)$ ，就可根据该后验生成未来的数据 $\hat y$ ，即用来做预测。而后验预测性分布是条件预测相对于后验分布的平均值。
 
-$$
-p(\hat{y} \mid y)=\int p(\hat{y} \mid \theta) p(\theta \mid y) d \theta \tag{式1.17}
-$$
+```{math}
+p(\hat{y} \mid y)=\int p(\hat{y} \mid \theta) p(\theta \mid y) d \theta \tag{式1.17} \label{式1.17}
+```
 
 从概念和计算上，我们将此积分 1.17 近似为迭代的两步过程：
 
@@ -577,7 +577,7 @@ $$
 
 请注意该过程如何组合两个不确定性来源：参数不确定性（由后验捕获）；以及采样不确定性（由似然捕获）。
 
-###（2）后验预测检验
+### （2）后验预测检验
 
 当需要进行预测时，可以根据上面两个过程获得预测。当然，也可以用其来比较观测数据和预测数据，进而对模型做出评判，以找出两组数据间的差异，此即为后验预测检验，检验的主要目标是两者的一致性。
 

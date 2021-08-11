@@ -21,7 +21,7 @@
 本章的核心思想相当简单：`为预测因变量的平均值，可以对自变量的线性组合应用任意函数`。
 
 $$
-\mu = f ( \alpha + X \beta ) \tag{4.1} \label{eqn:4.1}
+\mu = f ( \alpha + X \beta ) \tag{式4.1} \label{式4.1}
 $$
 
 其中， $f$ 称作`逆连接函数`。为什么这里把 $f$ 称作 『逆连接函数』 而不是 『连接函数』 ？ 原因是传统上人们认为 『连接函数』 是用来连结因变量和线性模型的。而在构建贝叶斯模型时，反过来思考（即连接线性模型和因变量）可能更容易理解一些。因此，为避免疑惑本文统称 『逆连接函数』。前一章中所有线性模型其实都包含一个逆连接函数，不过书写时省略了，因为它其实是一个恒等函数（函数的返回值和输入值相同）。恒等函数在此没什么用，但有助于让我们用更一般的形式思考模型。
@@ -39,7 +39,7 @@ $$
 Logistic 回归虽然名字中带有 『回归』 字眼，但其实际解决的是分类问题。 Logistic 回归模型是线性回归模型的扩展。其模型是将 `式 4.1` 中的逆连接函数设定为 Logistic 函数而形成， Logistic 函数形式以下：
 
 $$
-\operatorname{logistic}(z)=\frac{1} { 1 + e ^ { - z } } \tag{4.2}
+\operatorname{logistic}(z)=\frac{1} { 1 + e ^ { - z } } \tag{式4.2} \label{式4.2}
 $$
 
 从分类角度看， Logistic 函数最重要的特点是不论输入参数 $z$ 值为多少，其输出总是介于 0 到 1 之间。因此，该函数可以将整个实轴压缩到了区间 $[ 0,1 ]$ 内。 Logistic 函数也称作 `S 型函数（sigmoid function）`，因为其形状看起来像 S 。
@@ -68,7 +68,7 @@ plt.ylabel('logistic(z)')
 
 由于简单线性模型能够返回实轴上任意值，而伯努利分布的输入值限定在 $[ 0,1 ]$ 区间内。因此，可以使用 Logistic 函数作为逆连接函数，将线性模型的返回值映射到适合伯努利分布的区间内，从而将线性回归模型转换成分类模型：
 
-\begin{align*} \tag{式 4.3} \label{equ:4.3}
+\begin{align*} \tag{式 4.3} \\label{式4.3}
 \theta &=\operatorname{logistic}(\alpha+x \beta) \\
  y &= \operatorname{Bern}(\theta) 
 \end{align*} 
@@ -196,19 +196,19 @@ plt.xticks(locs, np.round(locs + x_0.mean(), 1))
 根据模型的定义，有如下关系：
 
 $$
-\theta=\operatorname{logistic}(\alpha+x \beta)\tag{4.4}
+\theta=\operatorname{logistic}(\alpha+x \beta) \tag{式4.4} \label{式4.4}
 $$
 
 根据 Logistic 函数的定义，当 $\theta=0.5$ 时，对应的输入为 0 点，因此有：
 
 $$
-0.5=\operatorname{logistic}\left(\alpha+x_{i} \beta\right) \Leftrightarrow 0=\alpha+x_{i} \beta\tag{4.5}
+0.5=\operatorname{logistic}\left(\alpha+x_{i} \beta\right) \Leftrightarrow 0=\alpha+x_{i} \beta \tag{式4.5} \label{式4.5}
 $$
 
 移项后可以得出，当 $\theta=0.5$ 时，决策边界对应为：
 
 $$
-x_{i}=-\frac{\alpha}{\beta}\tag{4.6}
+x_{i}=-\frac{\alpha}{\beta} \tag{式4.6} \label{式4.6}
 $$
 
 值得一提的是：
@@ -235,19 +235,19 @@ x_1 = df[x_n].values
 如果你对如何推导决策边界不感兴趣的话，可以略过这个部分直接跳到模型实现部分。 根据模型，我们有：
 
 $$
-\theta=\operatorname{logistic}\left(\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}\right)\tag{4.7}
+\theta=\operatorname{logistic}\left(\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}\right) \tag{式4.7} \label{式4.7}
 $$
 
 从 Logistic 函数的定义出发，当 Logistic 回归的自变量为零时，有 $\theta=0.5$ 。对应：
 
 $$
-0.5=\operatorname{logistic}\left(\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}\right) \Leftrightarrow 0=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}\tag{4.8}
+0.5=\operatorname{logistic}\left(\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}\right) \Leftrightarrow 0=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \tag{式4.8} \label{式4.8}
 $$
 
 通过移项，我们找到 $\theta=0.5$ 时 $x_2$ 的值：
 
 $$
-x_{2}=-\frac{\alpha}{\beta_{2}}+\left(-\frac{\beta_{1}}{\beta_{2}} x_{1}\right)\tag{4.9}
+x_{2}=-\frac{\alpha}{\beta_{2}}+\left(-\frac{\beta_{1}}{\beta_{2}} x_{1}\right) \tag{式4.9} \label{式4.9}
 $$
 
 这个决策边界的表达式与直线的表达式在数学形式上是一样的，其中第 1 项表示截距，第 2 项表示斜率，这里的括号只是为了表达上更清晰，如果你愿意的话完全可以去掉。
@@ -300,31 +300,31 @@ plt.ylabel(x_n[1]
 在解释 Logistic 回归的 $\beta$ 系数时，必须非常小心。因为解释并不像`第 3 章『线性回归模型』`中讨论线性模型时那样简单。此处使用 Logistic 逆连接函数引入了非线性。如果 $\beta$ 为正，则增加 $x$ 会增加一些 $p(y=1)$ 的量，但该量值不是 $x$ 的线性函数，而是非线性地依赖于 $x$ 值。可以在上面一系列图中直观地看到这一事实；我们看到的不是具有恒定斜率的直线，而是随 $x$ 值变化而不断调整斜率的 $S$ 形曲线。代数知识可以让我们更深入地了解 $p(y=1)$ 如何随 $\beta$ 变化。基础模型是：
 
 $$
-\theta=\operatorname{logistic}(\alpha+X \beta) \tag{4.11} \label{eqn:4.11}
+\theta=\operatorname{logistic}(\alpha+X \beta) \tag{式4.10} \label{式4.10}
 $$
 
 Logistic 函数的逆函数是 `logit 函数`，它是：
 
 $$
-\operatorname{logit}(z)=\log \left(\frac{z}{1-z}\right)\tag{4.12} \label{eqn:4.12}
+\operatorname{logit}(z)=\log \left(\frac{z}{1-z}\right) \tag{式4.11} \label{式4.11}
 $$
 
 因此，如果在`式 4.11 `两边同时取`logit 函数` ，会得到：
 
 $$
-\operatorname{logit}(\theta)=\alpha+X \beta\tag{4.13} \label{eqn:4.13}
+\operatorname{logit}(\theta)=\alpha+X \beta \tag{式4.12} \label{式4.12}
 $$
 
 或等价的：
 
 $$
-\log \left(\frac{\theta}{1-\theta}\right)=\alpha+X \beta\tag{4.14}
+\log \left(\frac{\theta}{1-\theta}\right)=\alpha+X \beta \tag{式4.13}  \label{式4.13}
 $$
 
 记住模型中的 $\theta$ 定义为 $y=1$ 的概率 $p(y=1)$ ：
 
 $$
-\log \left(\frac{p(y=1)}{1-p(y=1)}\right)=\alpha+X \beta\tag{4.15}
+\log \left(\frac{p(y=1)}{1-p(y=1)}\right)=\alpha+X \beta \tag{式4.14} \label{式4.14}
 $$
 
  $\frac{p(y=1)}{1-p(y=1)}$ 的量值被称为赔率。
@@ -422,7 +422,7 @@ sns.heatmap(corr.abs(), mask=mask, annot=True, cmap='viridis')
 - 三是只有弱信息先验时，[Andrew Gelman 和 Stan 的开发团队](https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations) 建议将所有非二值变量都尺度变换至均值为 0，而后使用学生 $t$ 分布作为先验：
 
  $$
- \beta \sim \operatorname{Student} T(0, \nu, s d) \tag{4.10} \label{eqn:4.10}
+ \beta \sim \operatorname{Student} T(0, \nu, s d) \tag{式4.15} \label{式4.15}
  $$ 
 
 这里 $sd$ 的取值可以根据期望的尺度引入弱信息，正态参数 $\nu$ 的值为 3 到 7 附近。该先验的含义是：我们期望参数比较小，并且具有重尾，从而得到一个比高斯分布更稳健的模型（参见前两章中有关稳健模型的部分）。
@@ -551,7 +551,7 @@ LDA 和 QDA 的决策边界是封闭式的，对于两个类别和一个特征�
 现在知道了如何处理二分类问题，接下来的内容推广到多分类问题。一种做法是使用多项 Logistic 回归，该模型也被称作 `Softmax 回归` ，原因是这里使用的是 `Softmax 函数` 而非 Logistic 函数，Softmax 函数的形式如下：
 
 $$
-\operatorname{Softmax}_{i}(\mu)=\frac{\exp \left(\mu_{i}\right)}{\sum \exp \left(\mu_{k}\right)}\tag{4.16}
+\operatorname{Softmax}_{i}(\mu)=\frac{\exp \left(\mu_{i}\right)}{\sum \exp \left(\mu_{k}\right)} \tag{式4.16} \label{式4.16}
 $$
 
 要计算向量 $\mu$ 中第 $i$ 个元素对应的 Softmax 输出，需要将该元素的指数除以向量 $\mu$ 中每个元素的指数之和。Softmax 函数保证了输出值为正数而且和为 1。当 $k=2$ 时，Softmax 函数就变成了 Logistic 函数。
@@ -627,7 +627,7 @@ with pm.Model() as model_sf:
 泊松分布的概率质量函数如下：
 
 $$
-f(x \mid \mu)=\frac{e^{-\mu} \mu^{x}}{x !}\tag{4.17} \label{eqn:4.17}
+f(x \mid \mu)=\frac{e^{-\mu} \mu^{x}}{x !} \tag{式4.17} \label{式4.17}
 $$
 
 方程式描述如下：
@@ -661,37 +661,37 @@ plt.ylabel('f(x)')
 泊松分布可以看作是当试验次数 $n$ 很多、但成功概率 $p$ 很低时的二项分布。在不涉及太多数学细节的情况下，让我们试着澄清这一说法。以某条街道上单位时间内通过的红色汽车数量为例，我们可以确认要么看到了红色汽车，要么没有看到，因此可以使用二项分布。在这种情况下，有：
 
 $$
-x \sim \operatorname{Bin}(n, p) \tag{4.18} \label{eqn:4.18}
+x \sim \operatorname{Bin}(n, p) \tag{式4.18} \label{式4.18}
 $$
 
 根据二项分布的性质，其平均值是：
 
 $$
-\mathbf{E}[x]=n p\tag{4.19} \label{eqn:4.19}
+\mathbf{E}[x]=n p \tag{式4.19} \label{式4.19}
 $$
 
 方差为：
 
 $$
-\mathbf{V}[x]=n p(1-p)\tag{4.20}  \label{eqn:4.20}
+\mathbf{V}[x]=n p(1-p) \tag{式4.20}  \label{式4.20}
 $$
 
 但即便在一条非常繁忙的大道上，看到红色汽车的机会与城市中的汽车总数相比也是非常小的，由此：
 
 $$
-n>>p \Rightarrow n p \simeq n p(1-p)\tag{4.21}  \label{eqn:4.21}
+n>>p \Rightarrow n p \simeq n p(1-p) \tag{式4.21}  \label{式4.21}
 $$
 
 因此，可以做如下近似：
 
 $$
-\mathbf{V}[x]=np \tag{4.22}  \label{eqn:4.22}
+\mathbf{V}[x]=np \tag{式4.22}  \label{式4.22}
 $$
 
 现在，均值和方差由相同的数字表示，可以很有把握地认为，变量服从泊松分布：
 
 $$
-x \sim \operatorname{Poisson}(\mu=n p) \tag{4.23}
+x \sim \operatorname{Poisson}(\mu=n p) \tag{式4.23} \label{式4.23}
 $$
 
 ### 4.5.2 零膨胀泊松分布
@@ -706,11 +706,11 @@ $$
 零膨胀泊松分布的基本形式是：
 
 $$
-p\left(y_{j}=0\right)=1-\psi+(\psi) e^{-\mu} \tag{4.24} \label{eqn:4.24}
+p\left(y_{j}=0\right)=1-\psi+(\psi) e^{-\mu} \tag{式4.24} \label{式4.24}
 $$
 
 $$
-p\left(y_{j}=k_{i}\right)=\psi \frac{\mu^{x_{i}} e^{-\mu}}{x_{i} !} \tag{4.25} \label{eqn:4.25s}
+p\left(y_{j}=k_{i}\right)=\psi \frac{\mu^{x_{i}} e^{-\mu}}{x_{i} !} \tag{式4.25} \label{式4.25}
 $$
 
 其中 $1-\psi$ 是产生额外零的概率。
@@ -748,7 +748,7 @@ with pm.Model() as ZIP:
 零膨胀泊松模型可能看起来有点乏味，但有时需要估计类似的简单分布（泊松分布、零膨胀泊松分布、高斯分布等）。无论如何，可以将泊松分布或零膨胀泊松分布作为线性模型的一部分。就像 Logistic 回归和 Softmax 回归一样，可以使用一个逆连接函数将线性模型结果转换为另外一个满足值域区间要求的变量，并作为参数输入到泊松分布或零膨胀泊松分布中，生成因变量的计数值。使用指数函数作为逆连接函数是一种常见选择，以确保线性模型返回的值始终为正值：
 
 $$
-\theta=e^{(\alpha+X \beta)} \tag{4.26}
+\theta=e^{(\alpha+X \beta)} \tag{式4.26} \label{式4.26}
 $$
 
 为举例说明零膨胀泊松回归模型，将使用来自数字研究和教育研究所的 [数据集](http://www.ats.ucla.edu/stat/data)。该数据集包含 250 组游客参观公园的数据。以下是每组的部分数据：
@@ -832,7 +832,7 @@ plt.plot(x_c, y_0, 'o', color='k');
 在这里，有一些萼片长度非常短的 `Versicolor(1s)`。我们可以用混合模型来解决这个问题。我们会说，因变量来自随机猜测的概率为 $\pi$ ，或者来自 Logistic 回归模型的概率为 $1-\pi$ 。从数学上讲，我们有：
 
 $$
-p=\pi 0.5+(1-\pi) \operatorname{logistic}(\alpha+X \beta) \tag{4.26}
+p=\pi 0.5+(1-\pi) \operatorname{logistic}(\alpha+X \beta) \tag{式4.27}  \label{式4.27}
 $$
 
 当 $\pi=1$ 时，我们得到 $p=0.5$ ，并且对于 $\pi=0$ ，我们恢复了 Logistic 回归的表达式。实施此模型是对本章第一个模型的直接修改：
