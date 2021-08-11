@@ -42,7 +42,7 @@
 让我们开始学习如何构建线性模型。看下面该公式：
 
 $$
-\mathbb{y} = \alpha + \mathbb{x} \beta \tag{式3.1} \label{eqn:3.1}
+\mathbb{y} = \alpha + \mathbb{x} \beta \tag{式3.1} \label{式3.1}
 $$
 
 该等式描述了变量 $\mathbb{x}$ 与变量 $\mathbb{y}$ 之间的线性关系。其中，参数 $β$ 控制直线的斜率，可以理解为变量 $\mathbb{x}$ 的单位变化量所对应 $\mathbb{y}$ 的变化量。另外一个参数 $α$ 为截距，可以解释为当 $x_i=0$ 时, $y_i$ 的值，在图形上表示， $α$ 就是直线与 $y$ 轴交点的坐标。
@@ -54,12 +54,12 @@ $$
 从概率角度，线性回归模型可以表示成如下形式：
 
 $$
-\mathbb{y} \sim \mathcal{N} ( \mu = \alpha + \mathbb{x} \beta , \epsilon ) \tag{式3.2} \label{eqn:3.2}
+\mathbb{y} \sim \mathcal{N} ( \mu = \alpha + \mathbb{x} \beta , \epsilon ) \tag{式3.2} \label{式3.2}
 $$
 
 也就是说，假设 $\mathbb{y}$ 是一个服从均值为 $α + \mathbb{x} β$ 、标准差为 $\epsilon$ 的正态分布的随机变量。其中 $α$ 、 $β$ 、 $\epsilon$ 为未知的模型参数（贝叶斯角度视为随机变量），需设置先验，下面是一组假设参数服从正态分布的先验设置：
 
-\begin{align*} \tag{式3.3} \label{eqn:3.3}
+\begin{align*} \tag{式3.3} \label{式3.3}
 \alpha &\sim \mathcal{N}\left(\mu_{\alpha}, \sigma_{\alpha}\right) \\ 
 \beta &\sim \mathcal{N}\left(\mu_{\beta}, \sigma_{\beta}\right) \\ 
 \epsilon &\sim\left|N\left(0, \sigma_{\epsilon}\right)\right|  
@@ -185,7 +185,7 @@ az.plot_pair(trace_g, var_names = ['α', 'β'], plot_kwargs = {'alpha': 0.1})
 解决问题的一个简单办法是先将 $\mathbb{x}$ 中心化，也就是说，对于每个点 $x_i$ ，减去 $\mathbb{x}$ 的均值。这样做的结果是 $x'$ 的中心在 0 附近，从而在修改斜率时，旋转点与截距点重合，参数空间也会变得不那么自相关。该方法在机器学习以及深度学习中经常被使用。
 
 $$
-x'=x-\bar x \tag{式3.4}  \label{eqn:3.4}
+x'=x-\bar x \tag{式3.4}  \label{式3.4}
 $$
 
 中心化不仅是一种计算技巧，同时有利于解释数据。截距是指当 $x_i=0$ 时 $y_i$ 的值，对许多问题而言，截距并没有什么实际意义。例如，对于身高或者体重的关系模型，当值为 0 时没有实际意义，因而截距对理解数据就没有帮助；对于另外一些问题，估计出截距可能很有用，因为在实验中可能无法测量出 $x_i = 0$ 的情况，此时截距的估计值能够提供有价值的信息。但不管怎么说，外推都有其局限性，应当谨慎使用！
@@ -193,12 +193,12 @@ $$
 根据问题和受众不同，可能需要汇报中心化之前和之后的参数估计值。如果需要汇报的是中心化之前的参数，那么可以像下面这样将参数转换成原来的尺度：
 
 $$
-\alpha=\alpha^{\prime}-\beta^{\prime} \bar{x} \tag{式3.5}  \label{eqn:3.5}
+\alpha=\alpha^{\prime}-\beta^{\prime} \bar{x} \tag{式3.5}  \label{式3.5}
 $$
 
 上面的公式可以通过以下公式推导出来：
 
-\begin{align*} \tag{式3.6}  \label{eqn:3.6}
+\begin{align*} \tag{式3.6}  \label{式3.6}
 y &= \alpha^{\prime}+\beta^{\prime} x^{\prime}+\epsilon  \\
 y &= \alpha^{\prime}+\beta^{\prime}(x-\bar{x})+\epsilon  \\
 y &= \alpha^{\prime}-\beta^{\prime} \bar{x}+\beta^{\prime} x+\epsilon 
@@ -208,12 +208,12 @@ y &= \alpha^{\prime}-\beta^{\prime} \bar{x}+\beta^{\prime} x+\epsilon
 然后可以得出：
 
 $$
-\beta = \beta' \tag{式3.7}  \label{eqn:3.7}
+\beta = \beta' \tag{式3.7}  \label{式3.7}
 $$
 
 进一步，在运行模型之前可以对数据进行`归一化处理`。归一化在统计学和机器学习中是常见的数据处理手段，许多算法对归一化后的数据效果更好。归一化过程在中心化基础上再除以标准差，其数学形式如下：
 
-\begin{align*} \tag{式3.8}  \label{eqn:3.8}
+\begin{align*} \tag{式3.8}  \label{式3.8}
 x^{\prime} &= \frac{x-\bar{x}}{x_{s d}} \\
 y^{\prime} &= \frac{y-\bar{y}}{y_{s d}} 
 \end{align*}  
@@ -318,7 +318,7 @@ plt.ylabel('y', rotation=0)
 下面的公式可以在某种程度上减轻你的疑惑：
 
 $$
-r=\beta \frac{\sigma_{x}}{\sigma_{y}} \tag{式3.9} \label{eqn:3.9}
+r=\beta \frac{\sigma_{x}}{\sigma_{y}} \tag{式3.9} \label{式3.9}
 $$
 
 只有在 $\mathbb{x}$ 和 $\mathbb{y}$ 的标准差相等时，皮尔逊相关系数才与斜率相等。也就是说，皮尔逊相关系数和斜率的主要区别在于是否受数据尺度影响。在对数据做归一化处理消除尺度影响后，两者之间确实等价，但在未做归一化处理前，两者并不等价。需要注意：
@@ -334,7 +334,7 @@ $$
 需要注意的是：在贝叶斯线性回归模型中，预测值方差可能大于测量值方差，进而导致 $R^2$ 大于 1，不利于解释。因此，通常对 $R^2$ 做如下定义：
 
 $$
-R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]+\mathbf{V}_{n=1}^{S}\left(\hat{y}^{s}-y\right)} \tag{式3.10} \label{eqn:3.10}
+R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]+\mathbf{V}_{n=1}^{S}\left(\hat{y}^{s}-y\right)} \tag{式3.10} \label{式3.10}
 $$
 
 上式中，$E[\hat y^S]$ 是后验样本 $S$ 上，预测值 $\hat y$ 的平均值。
@@ -728,19 +728,19 @@ for i in range(M):
 接下来，将学习如何用线性回归拟合曲线。使用线性回归模型去拟合曲线的一种做法是构建如下多项式：
 
 $$
-\mu=\beta_{0} x^{0}+\beta_{1} x^{1} \cdots+\beta_{m} x^{m} \tag{式3.12} \label{eqn:3.12}
+\mu=\beta_{0} x^{0}+\beta_{1} x^{1} \cdots+\beta_{m} x^{m} \tag{式3.12} \label{式3.12}
 $$
 
 可以看到多项式中其实包含了一元线性回归模型，只需将上式中 $ n>1$ 的系数 $β_n$ 设为 0 即可得到下式：
 
 $$
-\mu=\beta_{0}+\beta_{1} x^{1} \tag{式3.13} \label{eqn:3.13}
+\mu=\beta_{0}+\beta_{1} x^{1} \tag{式3.13} \label{式3.13}
 $$
 
 多项式回归仍然是线性回归，此处“线性”的意思是`指模型中的参数是线性组合的，而不是指变量是线性变化的`。现从一个简单的抛物线开始构建多项式回归模型：
 
 $$
-\mu=\beta_{0}+\beta_{1} x^{1}+\beta_{2} x^{2}  \tag{式3.14} \label{eqn:3.14}
+\mu=\beta_{0}+\beta_{1} x^{1}+\beta_{2} x^{2}  \tag{式3.14} \label{式3.14}
 $$
 
 其中第 3 项控制曲率。数据选用 `Anscombe quartet` 的第 2 组数据集
@@ -814,19 +814,19 @@ plt.plot(x_p, y_p, c='C1')
 这种情况下，因变量可以这样建模：
 
 $$
-\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.15} \label{eqn:3.15}
+\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.15} \label{式3.15}
 $$
 
 注意该式与多项式回归的式子不一样，现在有了多个变量而不再是一个变量的多次方。用线性代数方法可以表示为更简洁的形式：
 
 $$
-\mu=\alpha+ \mathbb{X} \beta \tag{式3.16} \label{eqn:3.16}
+\mu=\alpha+ \mathbb{X} \beta \tag{式3.16} \label{式3.16}
 $$
 
 其中， $β$ 是一个长度为 $m$ 的系数向量，也就是说，自变量的个数为 $m$ 。变量 $\mathbb{X}$ 是一个维度为 $n×m$ 的矩阵，其中， $n$ 表示观测的样本数， $m$ 表示自变量个数。有关线性代数，可参阅相关书籍。本书中，您需要知道的只是使用了一种更短、更方便的方式来编写我们的模型：
 
 $$
-\mathbb{X} \beta=\sum_{i=1}^{n} \beta_{i} x_{i}=\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.17} \label{eqn:3.17}
+\mathbb{X} \beta=\sum_{i=1}^{n} \beta_{i} x_{i}=\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.17} \label{式3.17}
 $$
 
 在一元线性回归模型中，我们希望找到一条直线来解释数据，而在多元线性回归模型中，我们希望找到一个维度为 $m$ 的超平面来解释数据。因此，多元线性回归模型本质上与一元线性回归模型是一样的，唯一区别是：现在 $β$ 是一个向量而 $\mathbb{X}$ 是一个矩阵。
@@ -1059,13 +1059,13 @@ az.plot_pair(trace_red, var_names=['β'])
 哇！参数 $\beta$ 的边缘后验是一条非常窄的对角线。当一个系数上升时，另一个系数必然下降。两者实际上是相关的。这只是模型和数据的结果。根据我们的模型，平均值 $\mu$ 是：
 
 $$
-\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \tag{式3.19}
+\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \tag{式3.19} \label{式3.19}
 $$
 
 假设  $x_1$ 和  $x_2$ 不只是近似相同，而是完全一样的，那么可以将模型改写成如下形式：
 
 $$
-\mu=\alpha+（\beta_{1} +\beta_{2}） x \tag{式3.20}
+\mu=\alpha+（\beta_{1} +\beta_{2}） x \tag{式3.20} \label{式3.20}
 $$
 
 可以看到，对 $μ$ 有影响的是  $\beta_1$ 与 $\beta_2$ 的和而不是二者单独的值，因而模型是不确定的（或者说，数据并不能决定  $\beta_1$ 和 $\beta_2$ 的值）。在我们的例子中，$\beta$ 并不能在区间 [-∞,∞] 内自由移动，原因有两个：其一，两个变量几乎是相同的，不过并非完全一样；其二，更重要的是 $\beta$ 系数的可能取值受到先验的限制。
@@ -1143,14 +1143,14 @@ az.plot_forest([trace_x1x2, trace_x1, trace_x2],
 目前见过的所有例子中，因变量对于自变量的作用都是加性的。我们只是增加变量并乘以一个系）。如果希望捕捉到前述药物变量间的交互效应，需要给模型增加一项非加性的量，例如：变量间的乘积：
 
 $$
-\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}+\beta_{3} x_{1} x_{2} \tag{式3.21}
+\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}+\beta_{3} x_{1} x_{2} \tag{式3.21} \label{式3.21}
 $$
 
 注意这里系数 $ β_3$  乘的是  $x_1$ 和  $x_2$ 的乘积，该非加性项只是用来说明统计学中的变量间相互作用的一个例子，因为它衡量了变量之间的相关性。事实上对相关性建模的表达式有很多种，相乘只是其中一个比较常用的。
 
 解释有交互作用的线性模型并不像解释没有交互作用的线性模型那么容易。让我们重写表达式 3.21：
 
-\begin{align*} \tag{式3.22} \label{eqn:3.22}
+\begin{align*} \tag{式3.22} \label{式3.22}
 \mu &=\alpha+\underbrace{\left(\beta_{1}+\beta_{3} x_{2}\right)}_{\text {slope of } x_{1}} x_{1}+\beta_{2} x_{2} \\
 \mu &=\alpha+\beta_{1} x_{1}+\underbrace{\left(\beta_{2}+\beta_{3} x_{1}\right)}_{\text {slope of } x_{2}} x_{2} 
 \end{align*}
