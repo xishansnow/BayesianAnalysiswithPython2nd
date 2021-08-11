@@ -20,9 +20,9 @@
 
 本章的核心思想相当简单：`为预测因变量的平均值，可以对自变量的线性组合应用任意函数`。
 
-$$
+```{math}
 \mu = f ( \alpha + X \beta ) \tag{式4.1} \label{式4.1}
-$$
+```
 
 其中， $f$ 称作`逆连接函数`。为什么这里把 $f$ 称作 『逆连接函数』 而不是 『连接函数』 ？ 原因是传统上人们认为 『连接函数』 是用来连结因变量和线性模型的。而在构建贝叶斯模型时，反过来思考（即连接线性模型和因变量）可能更容易理解一些。因此，为避免疑惑本文统称 『逆连接函数』。前一章中所有线性模型其实都包含一个逆连接函数，不过书写时省略了，因为它其实是一个恒等函数（函数的返回值和输入值相同）。恒等函数在此没什么用，但有助于让我们用更一般的形式思考模型。
 
@@ -38,15 +38,15 @@ $$
 
 Logistic 回归虽然名字中带有 『回归』 字眼，但其实际解决的是分类问题。 Logistic 回归模型是线性回归模型的扩展。其模型是将 `式 4.1` 中的逆连接函数设定为 Logistic 函数而形成， Logistic 函数形式以下：
 
-$$
+```{math}
 \operatorname{logistic}(z)=\frac{1} { 1 + e ^ { - z } } \tag{式4.2} \label{式4.2}
-$$
+```
 
 从分类角度看， Logistic 函数最重要的特点是不论输入参数 $z$ 值为多少，其输出总是介于 0 到 1 之间。因此，该函数可以将整个实轴压缩到了区间 $[ 0,1 ]$ 内。 Logistic 函数也称作 `S 型函数（sigmoid function）`，因为其形状看起来像 S 。
 
 下面代码绘制了 S 型函数的图形：
 
-```python
+```{code-block} ipython3
 z = np.linspace(-8, 8)
 plt.plot(z, 1 / (1 + np.exp(-z)))
 plt.xlabel('z')
@@ -68,10 +68,12 @@ plt.ylabel('logistic(z)')
 
 由于简单线性模型能够返回实轴上任意值，而伯努利分布的输入值限定在 $[ 0,1 ]$ 区间内。因此，可以使用 Logistic 函数作为逆连接函数，将线性模型的返回值映射到适合伯努利分布的区间内，从而将线性回归模型转换成分类模型：
 
+```{math}
 \begin{align*} \tag{式 4.3} \\label{式4.3}
 \theta &=\operatorname{logistic}(\alpha+x \beta) \\
  y &= \operatorname{Bern}(\theta) 
 \end{align*} 
+```
 
 下面的 Kruschke 图显示了 Logistic 回归模型。注意与简单线性回归模型的区别是：
 
@@ -93,7 +95,7 @@ Iris 数据集是经典数据集，包含有 `Setosa` 、 `Versicolour` 和 `Vir
 
 seaborn 软件包中包含 Iris 数据集，可以用如下代码将其导入成 `Pandas` 的 `DataFrame`：
 
-```python
+```{code-block} ipython3
 iris = pd.read_csv('../data/iris.csv')
 iris.head()
 ```
@@ -106,7 +108,7 @@ iris.head()
 
 现在，可以使用 seaborn 软件包中的 `stripplot` 函数绘制这三个物种与 `stepal_length` 的关系图：
 
-```python
+```{code-block} ipython3
 sns.stripplot(x="species", y="sepal_length", data=iris, jitter=True)
 ```
 
@@ -121,7 +123,7 @@ sns.stripplot(x="species", y="sepal_length", data=iris, jitter=True)
 
 此外可以使用 `pairplot` 函数画出散点图矩阵，用该函数可以得到一个 4×4 网格（因为有 4 种特征）。网格是对称的，上三角和下三角表示同样的信息。由于对角线上的散点图其实是变量本身，因此用一个特征的 KDE 图代替了散点图。可以看到，每个子图中分别用 3 种颜色表示 3 种不同的类别标签，与前面图中的表示方法一致。
 
-```python
+```{code-block} ipython3
 sns.pairplot(iris, hue='species', diag_kind='kde')
 ```
 
@@ -140,7 +142,7 @@ sns.pairplot(iris, hue='species', diag_kind='kde')
 
 和前面一样，这里用 0 和 1 对因变量 $\mathbf{y}$ 进行编码，利用 `Pandas` 可以这么做：
 
-```python
+```{code-block} ipython3
 df = iris.query(species == (' `Setosa` ', 'Versicolour '))
 y_0 = pd.Categorical(df['species']).codes
 x_n = 'sepal_length'
@@ -152,7 +154,7 @@ x_c = x_0 - x_0.mean()
 
 此外，除了像下面写出 Logistic 函数的完整形式外，还可以使用 `PyMC3` 中现成的 `pm.math.sigmoid` 函数，该函数是 `Theano` 中 `sigmoid` 函数的别名。
 
-```python
+```{code-block} ipython3
 with pm.Model() as model_0:
  α = pm.Normal('α', mu=0, sd=10)
  β = pm.Normal('β', mu=0, sd=10)
@@ -165,7 +167,7 @@ with pm.Model() as model_0:
 
 为节省页数，同时避免对同一类型图件反复出现感到厌烦，将省略迹图和其他类似的摘要图，但鼓励您制作自己的迹图和摘要，以进一步探索本书中的例子。我们将直接跳到如何生成下图，这是一个数据曲线图，以及拟合的 `sigmoid` 曲线和决策边界：
 
-```python
+```{code-block} ipython3
 theta = trace_0['θ'].mean(axis=0)
 idx = np.argsort(x_c)
 plt.plot(x_c[idx], theta[idx], color='C2', lw=3)
@@ -195,21 +197,21 @@ plt.xticks(locs, np.round(locs + x_0.mean(), 1))
 
 根据模型的定义，有如下关系：
 
-$$
+```{math}
 \theta=\operatorname{logistic}(\alpha+x \beta) \tag{式4.4} \label{式4.4}
-$$
+```
 
 根据 Logistic 函数的定义，当 $\theta=0.5$ 时，对应的输入为 0 点，因此有：
 
-$$
+```{math}
 0.5=\operatorname{logistic}\left(\alpha+x_{i} \beta\right) \Leftrightarrow 0=\alpha+x_{i} \beta \tag{式4.5} \label{式4.5}
-$$
+```
 
 移项后可以得出，当 $\theta=0.5$ 时，决策边界对应为：
 
-$$
+```{math}
 x_{i}=-\frac{\alpha}{\beta} \tag{式4.6} \label{式4.6}
-$$
+```
 
 值得一提的是：
 
@@ -223,7 +225,7 @@ $$
 
 与多元线性回归类似，`多元 Logistic 回归` 使用多个自变量。这里举例将花萼长度与花萼宽度结合在一起，注意需要对数据做一些预处理。
 
-```python
+```{code-block} ipython3
 df = iris.query("species == ('setosa', 'versicolor')")
 y_1 = pd.Categorical(df['species']).codes
 x_n = ['sepal_length', 'sepal_width']
@@ -234,21 +236,21 @@ x_1 = df[x_n].values
 
 如果你对如何推导决策边界不感兴趣的话，可以略过这个部分直接跳到模型实现部分。 根据模型，我们有：
 
-$$
+```{math}
 \theta=\operatorname{logistic}\left(\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}\right) \tag{式4.7} \label{式4.7}
-$$
+```
 
 从 Logistic 函数的定义出发，当 Logistic 回归的自变量为零时，有 $\theta=0.5$ 。对应：
 
-$$
+```{math}
 0.5=\operatorname{logistic}\left(\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}\right) \Leftrightarrow 0=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \tag{式4.8} \label{式4.8}
-$$
+```
 
 通过移项，我们找到 $\theta=0.5$ 时 $x_2$ 的值：
 
-$$
+```{math}
 x_{2}=-\frac{\alpha}{\beta_{2}}+\left(-\frac{\beta_{1}}{\beta_{2}} x_{1}\right) \tag{式4.9} \label{式4.9}
-$$
+```
 
 这个决策边界的表达式与直线的表达式在数学形式上是一样的，其中第 1 项表示截距，第 2 项表示斜率，这里的括号只是为了表达上更清晰，如果你愿意的话完全可以去掉。
 
@@ -260,7 +262,7 @@ $$
 
 如果要用 `PyMC3` 写出多元 Logistic 回归模型，可以借助其向量化表示的优势，只需对单参数 Logistic 回归模型做一些简单修改即可。
 
-```python
+```{code-block} ipython3
 with pm.Model() as model_1:
     α = pm.Normal('α', mu=0, sd=10)
     β = pm.Normal('β', mu=0, sd=2, shape=len(x_n))
@@ -274,7 +276,7 @@ with pm.Model() as model_1:
 
 绘制数据和决策边界：
 
-```python
+```{code-block} ipython3
 idx = np.argsort(x_1[:,0])
 bd = trace_1['bd'].mean(0)[idx]
 plt.scatter(x_1[:,0], x_1[:,1], c=[f'C{x}' for x in y_0])
@@ -299,33 +301,33 @@ plt.ylabel(x_n[1]
 
 在解释 Logistic 回归的 $\beta$ 系数时，必须非常小心。因为解释并不像`第 3 章『线性回归模型』`中讨论线性模型时那样简单。此处使用 Logistic 逆连接函数引入了非线性。如果 $\beta$ 为正，则增加 $x$ 会增加一些 $p(y=1)$ 的量，但该量值不是 $x$ 的线性函数，而是非线性地依赖于 $x$ 值。可以在上面一系列图中直观地看到这一事实；我们看到的不是具有恒定斜率的直线，而是随 $x$ 值变化而不断调整斜率的 $S$ 形曲线。代数知识可以让我们更深入地了解 $p(y=1)$ 如何随 $\beta$ 变化。基础模型是：
 
-$$
+```{math}
 \theta=\operatorname{logistic}(\alpha+X \beta) \tag{式4.10} \label{式4.10}
-$$
+```
 
 Logistic 函数的逆函数是 `logit 函数`，它是：
 
-$$
+```{math}
 \operatorname{logit}(z)=\log \left(\frac{z}{1-z}\right) \tag{式4.11} \label{式4.11}
-$$
+```
 
 因此，如果在`式 4.11 `两边同时取`logit 函数` ，会得到：
 
-$$
+```{math}
 \operatorname{logit}(\theta)=\alpha+X \beta \tag{式4.12} \label{式4.12}
-$$
+```
 
 或等价的：
 
-$$
+```{math}
 \log \left(\frac{\theta}{1-\theta}\right)=\alpha+X \beta \tag{式4.13}  \label{式4.13}
-$$
+```
 
 记住模型中的 $\theta$ 定义为 $y=1$ 的概率 $p(y=1)$ ：
 
-$$
+```{math}
 \log \left(\frac{p(y=1)}{1-p(y=1)}\right)=\alpha+X \beta \tag{式4.14} \label{式4.14}
-$$
+```
 
  $\frac{p(y=1)}{1-p(y=1)}$ 的量值被称为赔率。
 
@@ -344,7 +346,7 @@ $$
 图 4.6
 </center>
 
-```python
+```{code-block} ipython3
 probability = np.linspace(0.01, 1, 100)
 odds = probability / (1 - probability)
 _, ax1 = plt.subplots()
@@ -360,7 +362,7 @@ ax2.grid(False)
 
 因此，摘要数据提供的系数值是按照赔率对数进行标记和度量的：
 
-```python
+```{code-block} ipython3
 df = az.summary(trace_1, var_names=varnames)
 ```
 <center>
@@ -373,7 +375,7 @@ df = az.summary(trace_1, var_names=varnames)
 
 在下面的代码块中，首先计算支持杂色的赔率对数 $\text{log_odds_versicolor_i}=\alpha+\beta_1x_1+\beta_2x_2$ ，然后用 Logistic 函数计算杂色的概率。然后，固定 $x_2$ 同时让 $x_1$ 加 1 重复做一次计算：
 
-```python
+```{code-block} ipython3
 x_1 = 4.5 # sepal_length
 x_2 = 3 # sepal_width
 
@@ -398,7 +400,7 @@ probability_versicolor_i
 
 使用 Iris 数据集，可以尝试运行 `model_1`，但这一次使用 `petal_width` 和 `petal_length` 变量。您会发现 $\beta$ 系数比以前更宽了，而且图中 `94% HPD区间` 也更宽了：
 
-```python
+```{code-block} ipython3
 corr = iris[iris['species'] != 'virginica'].corr()
 mask = np.tri(*corr.shape).T
 sns.heatmap(corr.abs(), mask=mask, annot=True, cmap='viridis')
@@ -421,9 +423,9 @@ sns.heatmap(corr.abs(), mask=mask, annot=True, cmap='viridis')
 - 二是设置强信息先验。当掌握了一些有用信息时，可以使用强信息性的先验。
 - 三是只有弱信息先验时，[Andrew Gelman 和 Stan 的开发团队](https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations) 建议将所有非二值变量都尺度变换至均值为 0，而后使用学生 $t$ 分布作为先验：
 
- $$
+ ```{math}
  \beta \sim \operatorname{Student} T(0, \nu, s d) \tag{式4.15} \label{式4.15}
- $$ 
+ ``` 
 
 这里 $sd$ 的取值可以根据期望的尺度引入弱信息，正态参数 $\nu$ 的值为 3 到 7 附近。该先验的含义是：我们期望参数比较小，并且具有重尾，从而得到一个比高斯分布更稳健的模型（参见前两章中有关稳健模型的部分）。
 
@@ -433,7 +435,7 @@ sns.heatmap(corr.abs(), mask=mask, annot=True, cmap='viridis')
 
 现在看个实际例子，我们随机从 `Setosa` 类别中去掉一些数据点：
 
-```python
+```{code-block} ipython3
 df = iris.query("species == ('setosa', 'versicolor')")
 df = df[45:]
 y_3 = pd.Categorical(df['species']).codes
@@ -443,7 +445,7 @@ x_3 = df[x_n].values
 
 运行多元 Logistic 回归模型：
 
-```python
+```{code-block} ipython3
 with pm.Model() as model_3:
  α = pm.Normal('α', mu=0, sd=10)
  β = pm.Normal('β', mu=0, sd=2, shape=len(x_n))
@@ -456,7 +458,7 @@ with pm.Model() as model_3:
 
 如`图 4.8 `所示，决策边界向样本量更少的类别偏移了，而且不确定性也比以前更大了。这是 Logistic 回归在处理不均衡数据时的常见表现。在一些数据中，类别之间的间隔可能不像这个例子中这么完美，此时用 Logistic 回归分类得到的结果中类别重叠的现象更严重。不过，你很有可能会觉得不确定性变大是数据总量变少造成的，而不是因为 `Setosa` 类别的数据比 `Versicolour` 更少。当然存在这样的可能，你可以通过习题部分的第 2 题，体验一下为什么不确定性变大是数据不平衡造成的。
 
-```python
+```{code-block} ipython3
 idx = np.argsort(x_3[:,0])
 bd = trace_3['bd'].mean(0)[idx]
 plt.scatter(x_3[:,0], x_3[:,1], c= [f'C{x}' for x in y_3])
@@ -496,7 +498,7 @@ plt.ylabel(x_n[1])
 
 示例只使用两个类别和一个特征。下面的代码用 `PyMC3` 实现了一个生成式分类器，从代码中可以看出，现在决策边界被定义为估计的两个类别的高斯均值之间的平均值。当分布为正态分布且标准差相同时，此决策边界是正确的。非常著名的`线性判别分析（Linear Discriminant Analysis，LDA）`模型就是一种做出了该假设的模型。尽管该模型名字中包含『判别式（Discriminant）』字眼，但实际上是一个生成式模型。
 
-```python
+```{code-block} ipython3
 with pm.Model() as lda:
  μ = pm.Normal('μ', mu=0, sd=10, shape=2)
  σ = pm.HalfNormal('σ', 10)
@@ -509,7 +511,7 @@ with pm.Model() as lda:
 
 下面再将 `setosa=0` 和 `versicolor=1` 两个类别与花萼长度的关系画出来，一同画出来的还有一条红色的决策边界以及对应的 `94% HPD 区间`。
 
-```python
+```{code-block} ipython3
 plt.axvline(trace_lda['bd'].mean(), ymax=1, color='C1')
 bd_hpd = az.hpd(trace_lda['bd'])
 plt.fill_betweenx([0, 1], bd_hpd[0], bd_hpd[1], color='C1', alpha=0.5)
@@ -527,7 +529,7 @@ plt.xlabel('sepal_length')
 
 输出该模型的摘要，对决策边界进行检查。
 
-```python
+```{code-block} ipython3
 az.summary(trace_lda)
 ```
 
@@ -550,9 +552,9 @@ LDA 和 QDA 的决策边界是封闭式的，对于两个类别和一个特征�
 
 现在知道了如何处理二分类问题，接下来的内容推广到多分类问题。一种做法是使用多项 Logistic 回归，该模型也被称作 `Softmax 回归` ，原因是这里使用的是 `Softmax 函数` 而非 Logistic 函数，Softmax 函数的形式如下：
 
-$$
+```{math}
 \operatorname{Softmax}_{i}(\mu)=\frac{\exp \left(\mu_{i}\right)}{\sum \exp \left(\mu_{k}\right)} \tag{式4.16} \label{式4.16}
-$$
+```
 
 要计算向量 $\mu$ 中第 $i$ 个元素对应的 Softmax 输出，需要将该元素的指数除以向量 $\mu$ 中每个元素的指数之和。Softmax 函数保证了输出值为正数而且和为 1。当 $k=2$ 时，Softmax 函数就变成了 Logistic 函数。
 
@@ -564,7 +566,7 @@ Softmax 回归模型与 Logistic 回归模型的另一个区别是：伯努利�
 
 为验证 Softmax 多分类模型，继续使用 Iris 数据集，不过使用了全部 3 个类别标签（ `Setosa` 、`Versicolour` 及 `Virginica` ）和 4 个特征（花萼长度、花萼宽度、花瓣长度及花瓣宽度）。示例同时对数据进行归一化处理，以获得更高的采样效率。
 
-```python
+```{code-block} ipython3
 iris = sns.load_dataset('iris')
 y_s = pd.Categorical(iris['species']).codes
 x_n = iris.columns[:-1]
@@ -574,7 +576,7 @@ x_s = (x_s - x_s.mean(axis=0)) / x_s.std(axis=0)
 
 从 `PyMC3` 的代码可以看出， Logistic 回归模型与 Softmax 回归模型之间的变化很小，留意 $\alpha$ 系数和 $\beta$ 系数的形状。这段代码中用到了 `Theano` 中的 Softmax 函数 ，根据 `PyMC3` 开发者的惯例，按 `import theano.tensor as tt` 方式导入 `Theano`。
 
-```python
+```{code-block} ipython3
 with pm.Model() as model_s:
  α = pm.Normal('α', mu=0, sd=5, shape=3)
  β = pm.Normal('β', mu=0, sd=5, shape=(4,3))
@@ -586,7 +588,7 @@ with pm.Model() as model_s:
 
 那么模型表现如何呢？可以根据准确预测的样本个数来判断。下面代码使用了参数的均值来计算每个点分别属于 3 个类别的概率值，然后使用 argmax 函数求出概率最大的类别作为结果，最后将结果与观测值进行比较。
 
-```python
+```{code-block} ipython3
 data_pred = trace_s['μ'].mean(0)
 y_pred = [np.exp(point)/np.sum(np.exp(point), axis=0)
  for point in data_pred]
@@ -601,7 +603,7 @@ f'{np.sum(y_s == np.argmax(y_pred, axis=1)) / len(y_s):.2f}'
 
 解决该问题的办法是将额外的参数固定为某个值（比如 0）。下面的代码展示了如何用 `PyMC3` 来实现。
 
-```python
+```{code-block} ipython3
 with pm.Model() as model_sf:
  α = pm.Normal('α', mu=0, sd=2, shape=2)
  β = pm.Normal('β', mu=0, sd=2, shape=(4,2))
@@ -626,9 +628,9 @@ with pm.Model() as model_sf:
 
 泊松分布的概率质量函数如下：
 
-$$
+```{math}
 f(x \mid \mu)=\frac{e^{-\mu} \mu^{x}}{x !} \tag{式4.17} \label{式4.17}
-$$
+```
 
 方程式描述如下：
 
@@ -638,7 +640,7 @@ $$
 
 下图中可以看到不同 $\mu$ 值的泊松分布示例：
 
-```python
+```{code-block} ipython3
 mu_params = [0.5, 1.5, 3, 8]
 x = np.arange(0, max(mu_params) * 3)
 for mu in mu_params:
@@ -660,39 +662,39 @@ plt.ylabel('f(x)')
 
 泊松分布可以看作是当试验次数 $n$ 很多、但成功概率 $p$ 很低时的二项分布。在不涉及太多数学细节的情况下，让我们试着澄清这一说法。以某条街道上单位时间内通过的红色汽车数量为例，我们可以确认要么看到了红色汽车，要么没有看到，因此可以使用二项分布。在这种情况下，有：
 
-$$
+```{math}
 x \sim \operatorname{Bin}(n, p) \tag{式4.18} \label{式4.18}
-$$
+```
 
 根据二项分布的性质，其平均值是：
 
-$$
+```{math}
 \mathbf{E}[x]=n p \tag{式4.19} \label{式4.19}
-$$
+```
 
 方差为：
 
-$$
+```{math}
 \mathbf{V}[x]=n p(1-p) \tag{式4.20}  \label{式4.20}
-$$
+```
 
 但即便在一条非常繁忙的大道上，看到红色汽车的机会与城市中的汽车总数相比也是非常小的，由此：
 
-$$
+```{math}
 n>>p \Rightarrow n p \simeq n p(1-p) \tag{式4.21}  \label{式4.21}
-$$
+```
 
 因此，可以做如下近似：
 
-$$
+```{math}
 \mathbf{V}[x]=np \tag{式4.22}  \label{式4.22}
-$$
+```
 
 现在，均值和方差由相同的数字表示，可以很有把握地认为，变量服从泊松分布：
 
-$$
+```{math}
 x \sim \operatorname{Poisson}(\mu=n p) \tag{式4.23} \label{式4.23}
-$$
+```
 
 ### 4.5.2 零膨胀泊松分布
 
@@ -705,19 +707,19 @@ $$
 
 零膨胀泊松分布的基本形式是：
 
-$$
+```{math}
 p\left(y_{j}=0\right)=1-\psi+(\psi) e^{-\mu} \tag{式4.24} \label{式4.24}
-$$
+```
 
-$$
+```{math}
 p\left(y_{j}=k_{i}\right)=\psi \frac{\mu^{x_{i}} e^{-\mu}}{x_{i} !} \tag{式4.25} \label{式4.25}
-$$
+```
 
 其中 $1-\psi$ 是产生额外零的概率。
 
 为举例说明零膨胀泊松分布，可以创建一些人工合成的数据：
 
-```python
+```{code-block} ipython3
 n = 100
 θ_real = 2.5
 ψ = 0.1
@@ -728,7 +730,7 @@ counts = np.array([(np.random.random() > (1-ψ)) *
 
 可以很容易在 `PyMC3` 中实现`式 4.24` 和 `式4.25` 的模型。也可以直接使用 `PyMC3` 的内置零膨胀泊松分布：
 
-```python
+```{code-block} ipython3
 with pm.Model() as ZIP:
  ψ = pm.Beta('ψ', 1, 1)
  θ = pm.Gamma('θ', 2, 0.1)
@@ -747,9 +749,9 @@ with pm.Model() as ZIP:
 
 零膨胀泊松模型可能看起来有点乏味，但有时需要估计类似的简单分布（泊松分布、零膨胀泊松分布、高斯分布等）。无论如何，可以将泊松分布或零膨胀泊松分布作为线性模型的一部分。就像 Logistic 回归和 Softmax 回归一样，可以使用一个逆连接函数将线性模型结果转换为另外一个满足值域区间要求的变量，并作为参数输入到泊松分布或零膨胀泊松分布中，生成因变量的计数值。使用指数函数作为逆连接函数是一种常见选择，以确保线性模型返回的值始终为正值：
 
-$$
+```{math}
 \theta=e^{(\alpha+X \beta)} \tag{式4.26} \label{式4.26}
-$$
+```
 
 为举例说明零膨胀泊松回归模型，将使用来自数字研究和教育研究所的 [数据集](http://www.ats.ucla.edu/stat/data)。该数据集包含 250 组游客参观公园的数据。以下是每组的部分数据：
 
@@ -759,13 +761,13 @@ $$
 
 使用这些数据，我们将建立一个模型，根据 child 和 camper 变量来预测 count 变量。可以使用 `Pandas` 来加载数据：
 
-```python
+```{code-block} ipython3
 fish_data = pd.read_csv('../data/fish.csv')
 ```
 
 目前，继续采用 `PyMC3` 的内置零膨胀泊松回归：
 
-```python
+```{code-block} ipython3
 with pm.Model() as ZIP_reg:
  ψ = pm.Beta('ψ', 1, 1)
  α = pm.Normal('α', 0, 10)
@@ -779,7 +781,7 @@ with pm.Model() as ZIP_reg:
 
 为了更好地理解推断结果，让我们做一个图：
 
-```python
+```{code-block} ipython3
 children = [0, 1, 2, 3, 4]
 fish_count_pred_0 = []
 fish_count_pred_1 = []
@@ -817,7 +819,7 @@ plt.legend()
 
 我们刚刚了解了如何修复多余的零，而无需直接对生成它们的因素进行建模。Kruschke 建议的类似方法可以用于执行更健壮版本的 Logistic 回归。请记住，在 Logistic 回归中，我们将数据建模为二项式，即 0 和 1 。因此，可能会发现具有不寻常的 0 和/或 1 的数据集。以我们已经看到的 iris 数据集为例，但添加了一些入侵者：
 
-```python
+```{code-block} ipython3
 iris = sns.load_dataset("iris")
 df = iris.query("species == ('setosa', 'versicolor')")
 y_0 = pd.Categorical(df['species']).codes
@@ -831,13 +833,13 @@ plt.plot(x_c, y_0, 'o', color='k');
 
 在这里，有一些萼片长度非常短的 `Versicolor(1s)`。我们可以用混合模型来解决这个问题。我们会说，因变量来自随机猜测的概率为 $\pi$ ，或者来自 Logistic 回归模型的概率为 $1-\pi$ 。从数学上讲，我们有：
 
-$$
+```{math}
 p=\pi 0.5+(1-\pi) \operatorname{logistic}(\alpha+X \beta) \tag{式4.27}  \label{式4.27}
-$$
+```
 
 当 $\pi=1$ 时，我们得到 $p=0.5$ ，并且对于 $\pi=0$ ，我们恢复了 Logistic 回归的表达式。实施此模型是对本章第一个模型的直接修改：
 
-```python
+```{code-block} ipython3
 with pm.Model() as model_rlg:
  α = pm.Normal('α', mu=0, sd=10)
  β = pm.Normal('β', mu=0, sd=10)
@@ -865,7 +867,7 @@ with pm.Model() as model_rlg:
 
 线性模型是非常有用的统计工具。因此，`PyMC3` 包含一个方便创建线性模型的 GLM 模块。使用该模块，简单的线性回归将如下所示：
 
-```python
+```{code-block} ipython3
 with pm.Model() as model:
  glm.glm('y ~ x', data)
  trace = sample(2000)

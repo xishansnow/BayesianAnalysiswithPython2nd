@@ -614,3 +614,8 @@ p(\hat{y} \mid y)=\int p(\hat{y} \mid \theta) p(\theta \mid y) d \theta \tag{式
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505165408_07.webp)
 
 </center>
+
+
+
++++ some text
+
