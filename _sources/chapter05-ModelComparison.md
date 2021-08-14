@@ -22,7 +22,7 @@
 
 让我们读取并绘制一个简单的数据集：
 
-```python
+```{code-block} ipython3
 dummy_data = np.loadtxt('../data/dummy.csv')
 x_1 = dummy_data[:, 0]
 y_1 = dummy_data[:, 1]
@@ -44,7 +44,7 @@ plt.ylabel('y')
 
 现在，用两个略有不同的模型来拟合数据，第一个是线性模型，第二个是二阶多项式模型：
 
-```python
+```{code-block} ipython3
 with pm.Model() as model_l:
     α = pm.Normal('α', mu=0, sd=1)
     β = pm.Normal('β', mu=0, sd=10)
@@ -64,7 +64,7 @@ with pm.Model() as model_p:
 
 现在绘制这两个模型的平均拟合曲线：
 
-```python
+```{code-block} ipython3
 x_new = np.linspace(x_1s[0].min(), x_1s[0].max(), 100)
 α_l_post = trace_l['α'].mean()
 β_l_post = trace_l['β'].mean(axis=0)
@@ -94,14 +94,14 @@ plt.legend()
 
 图中二阶模型似乎做得更好，但线性模型也并没有那么糟糕。此时可以使用 PyMC3 来获得两个模型的后验预测样本，并执行检查：
 
-```python
+```{code-block} ipython3
 y_l = pm.sample_posterior_predictive(trace_l, 2000, model=model_l)['y_pred']
 y_p = pm.sample_posterior_predictive(trace_p, 2000, model=model_p)['y_pred']
 ```
 
 正如已经看到的，后验预测性检查通常使用可视化方式来执行，如下例所示：
 
-```python
+```{code-block} ipython3
 plt.figure(figsize=(8, 3))
 data = [y_1s, y_l, y_p]
 labels = ['data', 'linear model', 'order 2']
@@ -123,7 +123,7 @@ for i, d in enumerate(data):
 
 图 5.3 显示了数据、线性模型和二次多项式模型的均值和四分位数范围。该图对各模型的后验预测样本做了平均，而且两个模型的均值都复现得很好，分位数范围也不是很差。不过在实际问题中，一些小差异可能是值得注意的。可以尝试做更多不同曲线图来探索后验预测性分布。例如，绘制均值和四分位数间相对于数据真实值的离散度。下图就是一个例子：
 
-```python
+```{code-block} ipython3
 fig, ax = plt.subplots(1, 2, figsize=(10, 3), constrained_layout=True)
 def iqr(x, a=0):
 return np.subtract(*np.percentile(x, [75, 25], axis=a))
@@ -155,9 +155,9 @@ for idx, func in enumerate([np.mean, iqr]):
 
 贝叶斯 `p-value` 与频率派的 `p-value` 名字相似，定义基本上也相同：
 
-$$
+```{math}
 \text{Bayesian p-value}\triangleq p\left(T_{s i m} \geq T_{o b s} \mid y \right) \tag{式5.1}  \label{式5.1}
-$$
+```{math}
 
 可以解释为：从模拟数据中获得与观测数据相同或更高统计量值的概率。$T$ 几乎可以是数据的任意统计量。在图 5.4 中，统计量是左侧的平均值和右侧的四分位数范围。通常 $T$ 应该在最初定义推断任务时就选择好。
 
@@ -176,7 +176,7 @@ $$
 
 直觉上，似乎最好选择准确度高且简单的模型。但如果简单模型准确度最差，该怎么办？如何才能平衡这两种要素呢？为简化问题，此处引入一个例子来帮助理解如何平衡准确性与简约性。为了更形象些，该例使用一系列逐渐复杂的多项式来拟合同一个简单数据集，并且未采用贝叶斯方法，而是采用最小二乘估计来建模。当然，最小二乘估计其实可转化成带均匀先验的贝叶斯模型，因此，将其理解成贝叶斯方法也没问题。
 
-```python
+```{code-block} ipython3
 x = np.array([4., 5., 6., 9., 12, 14.])
 y = np.array([4.2, 6., 6., 9., 10, 10.])
 plt.figure(figsize=(10, 5))
@@ -290,9 +290,9 @@ plt.ylabel('y', rotation=0)
 
 一种衡量模型对数据的拟合程度的方法是计算模型预测结果与真实数据之间的均方差：
 
-$$
+```{math}
 \frac{1}{N} \sum_{i=1}^{N}\left(y_{i}-\mathrm{E}\left(y_{i} \mid \theta\right)\right)^{2}  \tag{式5.2}  \label{式5.2}
-$$
+```
 
 其中，$E(y_i|\theta)$ 是根据估计的参数值计算得到的预测值。
 
@@ -300,15 +300,15 @@ $$
 
 一种更通用的方法是计算 log 似然：
 
-$$
+```{math}
 \sum_{i=1}^{N} \log p\left(y_{i} \mid \theta\right)  \tag{式5.3}  \label{式5.3}
-$$
+```
 
 当似然服从正态分布时，已经证明 log 似然与二次均方误差成正比。由于历史原因，实践中人们通常不直接使用 log 似然，而是使用一个称作 `离差（deviance）` 的量：
 
-$$
+```{math}
 -2 \sum_{i=1}^{N} \log p\left(y_{i} \mid \theta\right)  \tag{式5.4}  \label{式5.4}
-$$
+```
 
 离差在贝叶斯方法和非贝叶斯方法中类似，区别在于：贝叶斯框架中 $θ$ 来自后验的采样。而在非贝叶斯方法中，$θ$ 是一个点估计。在使用离差时，需注意以下两点：
 
@@ -321,9 +321,9 @@ $$
 
 AIC 信息准则（Akaike Information Criterion）是一个广泛应用的信息准则，其定义如下：
 
-$$
+```{math}
 \text{AIC} = -2\sum_{i=1}^{n} \log p\left(y_{i} \mid \hat{\theta}_{m l e}\right)+2 \text{pAIC}  \tag{式5.5}  \label{式5.5}
-$$
+```
 
 其中，$pAIC$ 表示参数的个数， $\hat{\theta}_{m l e}$ 为 $\theta$ 的最大似然估计。最大似然估计在非贝叶斯方法中经常用到，等价于贝叶斯方法中基于均匀先验的最大后验估计。注意这里 $\hat{\theta}_{mle}$ 是点估计而不是分布。
 
@@ -335,9 +335,9 @@ AIC 对非贝叶斯方法来说很有用，但对贝叶斯方法可能会有些�
 
 `通用信息准则（Widely Available Information Criterion， WAIC）` 是 `AIC` 的完全贝叶斯版本。与 `AIC` 一样， `WAIC` 有两个项：一项衡量模型对数据的拟合效果；另外一项衡量模型的复杂程度。
 
-$$
+```{math}
 \text{ `WAIC` }=-2 \times lppd + 2 \times p_{WAIC} \tag{5.6}
-$$
+```
 
 如果您想更好地理解这两个术语是什么，请阅读后面的 `深入 WAIC` 部分。从应用角度看，只需要知道我们更喜欢较低的值。
 
@@ -357,7 +357,7 @@ $$
 
 采用 `ArviZ` 进行模型比较想像起来容易得多！
 
-```python
+```{code-block} ipython3
 waic_l = az.waic(trace_l)
 waic_l
 ```
@@ -379,7 +379,7 @@ waic_l
 
 由于 `WAIC` 和 `LOO` 总是以相对的方式进行解释，`ArviZ` 提供了两个辅助函数来简化比较。第一个是 `az.compare` ：
 
-```python
+```{code-block} ipython3
 cmp_df = az.compare({'model_l':trace_l, 'model_p':trace_p}, method='BB-pseudo-BMA')
 cmp_df
 ```
@@ -398,7 +398,7 @@ cmp_df
 
 我们还可以通过使用 `az.plot_compare` 函数可视化上述信息。该函数接受 `az.compare` 的输出，并以 `Richard McElreath` 的《统计反思》一书中使用的样式生成汇总图：
 
-```python
+```{code-block} ipython3
 az.plot_compare(cmp_df)
 ```
 
@@ -429,9 +429,9 @@ az.plot_compare(cmp_df)
 
 本方法使用每个模型的加权平均值来生成 `元模型（meta-model）` 和 `元预测（meta-predictions）` 。不同模型的权重计算基于某些信息准则值（如 `WAIC`），公式如下：
 
-$$
+```{math}
 w_{i}=\frac{e^{\frac{1}{2} d E_{i}}}{\sum_{j}^{M} e^{-\frac{1}{2} d E_{j}}} \tag{式5.7}  \label{式5.7}
-$$
+```
 
 这里 $dE_i$ 是第 $i$ 个模型相对于最佳模型（`WAIC`值最小的模型）的 `WAIC` 相对差值。除 `WAIC` 外，此处也可以使用其他信息准则值，如 `AIC` 或 `LOO` 等。此公式是根据 `WAIC` 值计算各模型相对概率的启发式方法。分母为归一化因子，`第4章 广义线性模型`中有过类似的表达式。
 
@@ -443,9 +443,9 @@ $$
 
 另一种计算平均模型权重的方法被称为 `预测性分布堆叠（stacking of predictive distributions）` 。这在 `PyMC3` 中通过将 `method=‘stacking’` 传递给 `az.compare` 实现。其基本思想是通过最小化元模型和真实生成模型之间的差异，将多个模型组合到一个元模型中。当使用对数打分规则时，这等价于：
 
-$$
+```{math}
 \max _{n} \frac{1}{n} \sum_{i=1}^{n} \log \sum_{k=1}^{K} w_{k} p\left(y_{i} \mid y_{-i}, M_{k}\right) \tag{式5.8}  \label{式5.8}
-$$
+```
 
 这里，$n$ 是数据点的数量，$k$ 是模型的数量。为了强制实施方案，我们将 $w$ 约束为 $w_k \geq 0$ 并且 $\sum w_k =1$。量 $p(y_i|y_{-i},M_k)$ 是模型 $M_k$ 的留一预测性分布。根据留一法，计算需要拟合每个模型 $n$ 次，每次遗留一个数据点。幸运的是，`PyMC3` 可以使用 `WAIC` 或 `LOO` 来近似留一预测性分布。
 
@@ -464,7 +464,7 @@ $$
 
 以下只是如何从 `PyMC3` 获得加权后验预测样本的一个虚拟示例。在这里，我们使用的是 `pm.sample_posterior_predictive_w` 函数（注意函数名称末尾的 `w` ）。`pm.sample_posterior_predictive` 和`pm.sample_posterior_predictive_w` 之间的区别在于，后者接受多个迹和模型，以及权重列表（默认值为所有模型的权重相同）。您可以通过 `az.compare` 或其他来源获取这些权重：
 
-```python
+```{code-block} ipython3
 w = 0.5
 y_lp = pm.sample_posterior_predictive_w([trace_l, trace_p],
                                         samples=1000,
@@ -504,21 +504,21 @@ plt.legend()
 
 在贝叶斯世界中，评估和比较模型的一种常见选择是 `贝叶斯因子（Bayes factor, BF）` 。 为理解什么是贝叶斯因子，让我们重温一遍贝叶斯定理：
 
-$$
+```{math}
 p(\theta \mid y)=\frac{p(y \mid \theta) p(\theta)}{p(y)} \tag{式5.9}  \label{式5.9}
-$$
+```
 
 这里，$y$ 表示数据。我们可以显式地基于给定模型 $M$ 计算依赖关系：
 
-$$
+```{math}
 p\left(\theta \mid y, M_{k}\right)=\frac{p\left(y \mid \theta, M_{k}\right) p\left(\theta \mid M_{k}\right)}{p\left(y \mid M_{k}\right)}\tag{式5.10}   \label{式5.10}
-$$
+```
 
 第一章中曾经介绍过，分母中的术语称为边缘似然（或证据），可视为一个归一化常数。在进行单模型推断时，通常不需要真实地计算它，而是基于一个常数因子来计算后验。但对于模型比较和模型平均，边缘似然却是一个重要的量。如果主要目标是从一组 $k$ 个模型中选择一种最好的模型，我们可以只选择 $p(y|M_k)$ 最大的那个。一般来说， $p(y|M_k)$ 值的大小本身并不能告诉我们太多信息，重要的是相对值。因此，实践中经常计算两个边缘似然的比率，这个比率被称为贝叶斯因子：
 
-$$
+```{math}
 B F=\frac{p\left(y \mid M_{0}\right)}{p\left(y \mid M_{1}\right)} \tag{式5.11}  \label{式5.11}
-$$
+```
 
 当 $BF（M_0,M_1） > 1$ 时，模型 0 比模型 1 更好地解释了数据。
 
@@ -534,18 +534,18 @@ $$
 
 如果假设所有模型都具有相同先验概率，则使用 $p(y|M_k)$ 来比较模型完全没有问题。否则，必须计算后验赔率：
 
-$$
+```{math}
 \underbrace{\frac{p\left(M_{0} \mid y\right)}{p\left(M_{1} \mid y\right)}}_{\text {posterior odds }}=\underbrace{\frac{p\left(y \mid M_{0}\right)}{p\left(y \mid M_{1}\right)}}_{\text {Bayes factors}} \underbrace{\frac{p\left(M_{0}\right)}{p\left(M_{1}\right)}}_{\text{prior odds} } \tag{式5.12}  \label{式5.12}
-$$
+```
 
 
 ### 5.6.1 一些讨论
 
 现在简要讨论有关边缘似然的一些关键事实。通过仔细检查定义，可以理解边缘似然的性质和应用效果：
 
-$$
+```{math}
 p\left(y \mid M_{k}\right)=\int_{\theta_{k}} p\left(y \mid \theta_{k}, M_{k}\right) p\left(\theta_{k}, M_{k}\right) d \theta_{k} \tag{式5.13}  \label{式5.13}
-$$
+```
 
 - **好处**：参数多的模型比参数少的模型具有更大惩罚。贝叶斯因子内置奥卡姆剃刀，因为参数数量越多，先验分布相对于似然就越广。结合贝叶斯因子公式，越宽广的先验（参数更多）积分越大，而越聚集的先验（参数更少）积分越小，从而间接实现了对参数数量的惩罚。
 - **缺点**：计算边缘似然是一项艰巨的任务，因为要计算高维参数空间上的多变量函数积分，需要使用复杂方法进行数值求解。
@@ -571,7 +571,7 @@ $$
 
 让我们创建一些数据，以便在示例中使用：
 
-```python
+```{code-block} ipython3
 coins = 30
 heads = 9
 y_d = np.repeat([0, 1], [coins-heads, heads])
@@ -579,7 +579,7 @@ y_d = np.repeat([0, 1], [coins-heads, heads])
 
 现在，来看一下 `PyMC3` 模型。为在之前的代码之间切换，我们使用了 `pm.math.switch` 函数。如果此函数的第一个参数的计算结果为 `true`，则返回第二个参数，否则返回第三个参数。请注意，还使用 `pm.math.eq` 函数来检查 `model_index` 变量是否等于 0 ：
 
-```python
+```{code-block} ipython3
 with pm.Model() as model_BF:
     p = np.array([0.5, 0.5])
     model_index = pm.Categorical('model_index', p=p)
@@ -604,7 +604,7 @@ az.plot_trace(trace_BF)
 
 现在，需要通过计算 `model_index` 变量来计算贝叶斯因子。请注意，我们已经包括了每个模型的先验值：
 
-```python
+```{code-block} ipython3
 pM1 = trace_BF['model_index'].mean()
 pM0 = 1 - pM1
 BF = (pM0 / pM1) * (p[1] / p[0])
@@ -625,7 +625,7 @@ BF = (pM0 / pM1) * (p[1] / p[0])
 
 另一种计算贝叶斯因子的方法是使用 `序贯蒙特卡罗(SMC)采样方法`。我们将在 `第8章-推理引擎` 中学习此方法的详细信息。现在只需要知道这个采样器计算的边缘似然估计是一个副产品，可以直接使用它来计算贝叶斯因子。要在 `PyMC3` 中使用 `SMC`，需将 `pm.SMC()` 传递给 `sample` 的 `step` 参数：
 
-```python
+```{code-block} ipython3
 with pm.Model() as model_BF_0:
     θ = pm.Beta('θ', 4, 8)
     y = pm.Bernoulli('y', θ, observed=y_d)
@@ -646,7 +646,7 @@ model_BF_0.marginal_likelihood / model_BF_1.marginal_likelihood
 
 此前说过，贝叶斯因子对先验过于敏感。这在执行推断时会导致本来不相关的差异，在计算贝叶斯因子时被证明为非常重要。现在我们来看一个例子，它将有助于阐明贝叶斯因子在做什么，信息准则在做什么，以及它们如何在相似的情况下专注于两个不同的方面。回到抛硬币例子的数据定义，现在设置 300 枚硬币和 90 个正面；这与以前的比例相同，但数据多了 10 倍。然后，分别运行每个模型：
 
-```python
+```{code-block} ipython3
 traces = []
 waics = []
 for coins, heads in [(30, 9), (300, 90)]:
@@ -674,7 +674,7 @@ for coins, heads in [(30, 9), (300, 90)]:
 
 现在，比较一下 `WAIC` 告诉我们的内容（参见图5.13）。模型 0 的 `WAIC` 是 368.4，模型 1 的是 368.6，直觉上差别不大。比实际差异更重要的是，如果重新计算数据的信息准则，也就是 30 枚硬币和 9 个正面，你会得到模型 0 的 38.1 和模型 1 的 39.4 。也就是说，在增加数据时，相对差异变得越小，$\theta$ 的估计值越相近，与信息准则估计出的预测准确度的值就越相似。如果你用 `LOO` 代替 `WAIC` ，会发现本质上是一样的：
 
-```python
+```{code-block} ipython3
 fig, ax = plt.subplots(1, 2, sharey=True)
 labels = model_names
 indices = [0, 0, 1, 1]
@@ -722,9 +722,9 @@ fig.text(0.5, 0, 'Deviance', ha='center', fontsize=14)
 
 如果展开公式 5.6，会得到以下结果：
 
-$$
+```{math}
 \text{WAIC}=-2 \sum_{i}^{n} \log \left(\frac{1}{S} \sum_{s=1}^{S} p\left(y_{i} \mid \theta^{s}\right)\right)+2 \sum_{i}^{n}\left(\text{V}_{s=1}^{S}\left(\log p\left(y_{i} \mid \theta^{s}\right)\right)\right. \tag{式5.14}  \label{式5.14}
-$$
+```
 
 该表达式中的两项看起来非常相似。第一项是式 5.6 中的`对数点预测密度（lppd）`，计算的是后验样本集 $S$ 的平均似然。我们对每个数据点都先求平均似然，然后取对数，最后对所有数据点求和。请将这一项与公式 5.3 和 5.4 进行比较。其实该项就是考虑了后验的样本内离差（deviance）。因此，如果我们认为计算对数似然是衡量模型适合性的好方法，那么在贝叶斯方法中，从后验计算对数似然就顺理成章。观测数据的 lddp 是对未来数据 lppd 的高估（此处意指样本内离差通常小于样本外离差），因此引入第二项来修正这种过高的估计。第二项计算后验样本的对数似然方差，我们对每个数据点执行此方差计算，然后对所有数据点进行汇总。为什么方差会给出惩罚条件？这与贝叶斯因子内置奥卡姆剃须刀的原理相似。有效参数越多，后验分布越大。当向模型添加结构时（如具有信息性/正则化的先验或分层依赖），与非正则化的模型相比，我们约束了后验，进而减少了有效参数的数量。
 
@@ -734,13 +734,13 @@ $$
 
 从数学上讲，熵定义为：
 
-$$
+```{math}
 H(p)=-\sum_{i} p_i\text{log} (p_i) \tag{式5.15}  \label{式5.15}
-$$
+```
 
 直观地说，分布越分散，其熵越大。通过运行以下代码并查看图 5.15，可以看到这一点：
 
-```python
+```{code-block} ipython3
 np.random.seed(912)
 x = range(0, 10)
 q = stats.binom(10, 0.75)
@@ -785,23 +785,23 @@ for idx, (dist, label) in enumerate(zip([true_distribution, q_pmf, r_pmf], ['tru
 
 现在简单谈谈 `Kullback-Leibler(KL)散度`，或简称 `KL散度`。这是在阅读统计学、机器学习、信息论或统计力学文献时经常遇到的概念。你或许会说，`KL散度`、`熵`、`边缘似然`等概念反复出现的原因很简单，因为所有这些学科都在讨论同一组问题，只是观点略有不同。`KL散度` 非常有用，因为**它是衡量两个分布接近程度的一种方法**，其定义如下：
 
-$$
+```{math}
 D_{K L}(p \| q)=\sum_{i} p_{i} \log \frac{p_{i}}{q_{i}} \tag{式5.16}  \label{式5.16}
-$$
+```
 
 上式可读为 $q$ 到 $p$ 的 `Kullback-Leibler散度`（两者顺序不能相反，因为 `KL散度` 不符合交换率），其中 $p$ 和 $q$ 是两个概率分布。对于连续变量应该计算积分而非求和，但主要思想相同。
 
 可以将 $D_{KL}({p||q})$ 散度解释为 **”通过使用概率分布 $q$ 来近似真实分布 $p$ 而引入的额外熵或不确定性“**。事实上，`KL散度` 是两个熵之间的差值：
 
-$$
+```{math}
 D_{K L}(p \| q)=\underbrace{\sum_{i} p_{i} \log p_{i}}_{\text {entropy of p }}-\underbrace{\sum_{i} p_{i} \log q_{i}}_{\text {crossentropy of p,q }}=\sum_{i} p_{i}\left(\log p_{i}-\log q_{i}\right) \tag{式5.17}  \label{式5.17}
-$$
+```
 
 利用对数性质，可以重新排列式 5.17 以恢复式 5.16。从式 5.17 的角度来看，也可以将 $D_{KL}({p||q})$ 理解为 $p$ 相对于 $q$ 的相对熵(这一次顺着念)。
 
 作为一个简单例子，我们可以使用 KL 散度来评估哪个分布（ $q$ 或 $r$ ）更接近真实分布。使用Scipy，可以计算 $D_{KL}({真实分布||q})$  和 $D_{KL}({真实分布||r})$ ：
 
-```python
+```{code-block} ipython3
 stats.entropy(true_distribution, q_pmf), stats.entropy(true_distribution,r_pmf)
 ```
 
@@ -809,7 +809,7 @@ stats.entropy(true_distribution, q_pmf), stats.entropy(true_distribution,r_pmf)
 
 您可能很想将 KL 散度描述为距离，但它是不对称的，因此不是真实距离。如果运行下面代码，将获得 $\approx 2.7,\approx 0.7$ 。由此可见，结果数字是不同的。在此例中，可以看到 $r$ 是 $q$ 的更好近似，但反之可能不成立：
 
-```python
+```{code-block} ipython3
 stats.entropy(r_pmf, q_pmf), stats.entropy(q_pmf, r_pmf)
 ```
 

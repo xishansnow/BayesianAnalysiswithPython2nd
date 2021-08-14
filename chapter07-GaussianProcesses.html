@@ -343,7 +343,7 @@
 <p>函数也可以表示为一个由 <span class="math notranslate nohighlight">\(x\)</span> 值索引的（可能）无限数组，但重要区别在于，<span class="math notranslate nohighlight">\(x\)</span> 值不限于整数，可以取实数。</p>
 <p>采用这种描述方式，可以表示任何想要的函数。但如果想要表示函数的概率呢（例如：混合模型中的多个组分分别对应一个概率分布函数，通过描述函数的概率分布似乎可以对混合模型建模）？我们可以通过让映射具有概率性质来实现。让每个 <span class="math notranslate nohighlight">\(y_i\)</span> 的值都是一个随机变量，该随机变量服从给定均值和方差的高斯分布。通过该方式，不再是对单个特定函数的描述，而形成对一系列分布族的描述。</p>
 <p>为了使讨论具体化，让我们使用一些 Python 代码来构建和绘制这类函数的两个示例：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="c1"># 曲线1：10个预测变量，10个高斯采样的结果变量</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
@@ -384,13 +384,13 @@
 \[\left\|x-x^{\prime}\right\|^{2}=\left(x_{1}-x_{1}^{\prime}\right)^{2}+\left(x_{2}-x_{2}^{\prime}\right)^{2}+\cdots+\left(x_{n}-x_{n}^{\prime}\right)^{2} \tag{式7.4} \label{式7.4}\]</div>
 <p>乍一看可能不明显，但指数族二次核具有与高斯分布类似的公式（见表达式 1.3)。因此，您可能会发现有人将此核称为高斯核。 <span class="math notranslate nohighlight">\(\ell\)</span> 为长度尺度（或带宽、方差），用于控制核的宽度。</p>
 <p>为更好地理解核的作用，定义一个 Python 函数来计算指数族二次核：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">exp_quad_kernel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">ℓ</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">exp_quad_kernel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">knots</span><span class="p">,</span> <span class="n">ℓ</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;exponentiated quadratic kernel&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">k</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">ℓ</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">knots</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>以下代码和图 7.2 旨在展示了一个 <span class="math notranslate nohighlight">\(4 \times 4\)</span> 协方差矩阵。此处选择的输入相当简单，由值 [-1，0，1，2] 组成。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
 <span class="n">cov</span> <span class="o">=</span> <span class="n">exp_quad_kernel</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
@@ -424,7 +424,7 @@
 <p>该核将数据点沿 x 轴的距离转换为预期函数值的协方差值。因此，x 轴上的两个点越近，预计它们在 y 轴上的值就越相似。</p>
 </div>
 <p>总之，我们可以使用具有给定协方差的多维高斯分布对函数建模，而使用核对协方差建模，如下例中，使用 <code class="docutils literal notranslate"><span class="pre">exp_quad_kernel</span></code> 函数来定义了一个多维高斯分布的协方差矩阵，然后使用该分布中的样本来表示函数：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
 <span class="n">test_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                        <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -474,22 +474,22 @@
 \[f(x) \sim \mathcal{G} \mathcal{P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.6} \label{式7.6}\]</div>
 <p>这里，<span class="math notranslate nohighlight">\(\mathcal{GP}\)</span> 表示高斯过程分布， <span class="math notranslate nohighlight">\(\mu_x\)</span> 为均值函数， <span class="math notranslate nohighlight">\(K(x,x')\)</span> 为核（或协方差）函数。我们用 <code class="docutils literal notranslate"><span class="pre">函数</span></code> 这个词来表示，在数学上是指均值和协方差都是无限的对象，尽管实践中总是作为有限对象处理。</p>
 <p>如果先验分布是高斯过程分布，且似然是正态分布，那么后验分布也是高斯过程分布，我们可以解析地计算它：</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*} 
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*} 
 p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \Sigma) \tag{式7.7}  \label{式7.7}\\
 \mu&amp;=K_{*}^{T} K^{-1} y \tag{式7.8} \label{式7.8}\\
 \Sigma &amp;=K_{* *}-K_{*}^{T} K^{-1} K_{*} \notag
-\end{align*}\]</div>
+\end{align*}\end{split}\]</div>
 <p>这里：</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
 &amp;\text { - } K=K(X, X) \\
 &amp;\text { - } K_{*}=K\left(X_{*}, X\right) \\
 &amp;\text { - } K_{* *}=K\left(X_{*}, X_{*}\right)
-\end{align*}\]</div>
+\end{align*}\end{split}\]</div>
 <p><span class="math notranslate nohighlight">\(X\)</span> 是观察到的数据点，<span class="math notranslate nohighlight">\(X_*\)</span> 表示测试点；也就是我们希望知道推断函数值的新点。</p>
 <p>像往常一样，PyMC3 自动完成整个推断过程，高斯过程也不例外。因此，让我们继续创建一些数据，然后创建一个 PyMC3 模型：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="mf">0.1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
@@ -506,7 +506,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 <p>在图 7.4 中，我们看到真正的未知函数是一条黑虚线，而点表示未知函数的样本（带有噪声）。</p>
 <p>请注意，为了将公式 7.7 和 7.8 编码到 PyMC3 模型中，我们需要设置指数族二次核的 <span class="math notranslate nohighlight">\(\epsilon\)</span> 参数、核宽 <span class="math notranslate nohighlight">\(\ell\)</span> 和正态似然方差。</p>
 <p>高斯过程在 PyMC3 中实现为一系列 Python 类，与以前的模型略有不同；然而，代码仍然非常 <code class="docutils literal notranslate"><span class="pre">PyMC3onic</span></code>。我在以下代码中添加了一些注释，以指导您完成使用 PyMC3 定义高斯过程的关键步骤：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># A one dimensional column vector of inputs.</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># A one dimensional column vector of inputs.</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
 <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_reg</span><span class="p">:</span>
     <span class="c1"># hyperprior for lengthscale kernel parameter</span>
@@ -526,7 +526,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 \[p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) df \tag{式7.9} \label{式7.9}\]</div>
 <p>与往常一样，<span class="math notranslate nohighlight">\(\theta\)</span> 表示所有未知参数，<span class="math notranslate nohighlight">\(X\)</span> 是预测变量，<span class="math notranslate nohighlight">\(y\)</span> 是结果变量。请注意，我们正在对函数 <span class="math notranslate nohighlight">\(f\)</span> 的值进行边际化。对于高斯过程先验和正态似然，可以解析地执行边际化。</p>
 <p>根据 PyMC3 的核心开发者、GP 模块的主要贡献者 Bill Engels 的说法，对于核宽度参数，避免采用零先验通常效果更好。<span class="math notranslate nohighlight">\(\ell\)</span> 的一个有用默认设置是 <code class="docutils literal notranslate"><span class="pre">pm.Gamma(2，0.5)</span></code>。你可以从 <a class="reference external" href="https://github.com/stan-dev/stan/wiki/Prior-ChoiceRecommendations">Stan team</a> 阅读更多关于默认有用先验的建议。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_reg</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_reg</span><span class="p">)</span>
 </pre></div>
 </div>
 <center>
@@ -534,18 +534,18 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 <p>图 7.5</p>
 </center>
 <p>现在已经找到 <span class="math notranslate nohighlight">\(\ell\)</span> 和 <span class="math notranslate nohighlight">\(\epsilon\)</span> 的值，我们可能想要从高斯过程分布的后验中获取样本；即已与数据拟合的函数的样本。通过使用 <code class="docutils literal notranslate"><span class="pre">gp.conditional</span></code> 条件函数计算新输入位置的条件分布来实现这一点：</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="mi">100</span><span class="p">)[:,</span><span class="kc">None</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="mi">100</span><span class="p">)[:,</span><span class="kc">None</span><span class="p">]</span>
 <span class="k">with</span> <span class="n">model_reg</span><span class="p">:</span>
     <span class="n">f_pred</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">conditional</span><span class="p">(</span><span class="s1">&#39;f_pred&#39;</span><span class="p">,</span> <span class="n">X_new</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>结果得到了一个新的 PyMC3 随机变量 f_pred，我们可以使用它从后验预测分布中获取样本（基于 X_new 值计算）：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model_reg</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model_reg</span><span class="p">:</span>
     <span class="n">pred_samples</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_reg</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="n">f_pred</span><span class="p">],</span><span class="n">samples</span><span class="o">=</span><span class="mi">82</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>现在可以在原始数据上绘制拟合函数图，以直观检查它们与数据的拟合程度以及预测中的相关不确定性：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_new</span><span class="p">,</span> <span class="n">pred_samples</span><span class="p">[</span><span class="s1">&#39;f_pred&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="s1">&#39;C1-&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;ko&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
@@ -556,7 +556,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 <p>图 7.6</p>
 </center>
 <p>或者，我们可以使用 <code class="docutils literal notranslate"><span class="pre">pm.gp.util.plot_gp_dist</span></code> 函数来获得一些不错的绘图。每个绘图代表一个百分位数，范围从 51（浅色）到 99（深色）：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">plot_gp_dist</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">pred_samples</span><span class="p">[</span><span class="s1">&#39;f_pred&#39;</span><span class="p">],</span> <span class="n">X_new</span><span class="p">,</span>
 <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">plot_samples</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;ko&#39;</span><span class="p">)</span>
@@ -569,7 +569,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 <p>图 7.7</p>
 </center>
 <p>另一种选择是计算在参数空间中给定点评估的条件分布的平均向量和标准差。在下面的示例中，我们使用 <span class="math notranslate nohighlight">\(\ell\)</span> 和 <span class="math notranslate nohighlight">\(\epsilon\)</span> 的平均值（在迹的样本上）。我们可以使用 <code class="docutils literal notranslate"><span class="pre">gp.predict</span></code> 函数计算平均值和方差。我们之所以能做到这一点，是因为 PyMC3 已经解析地计算了后验结果：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">point</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ℓ&#39;</span><span class="p">:</span> <span class="n">trace_reg</span><span class="p">[</span><span class="s1">&#39;ℓ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="s1">&#39;ϵ&#39;</span><span class="p">:</span> <span class="n">trace_reg</span><span class="p">[</span><span class="s1">&#39;ϵ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()}</span>
 <span class="n">mu</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_new</span><span class="p">,</span> <span class="n">point</span><span class="o">=</span><span class="n">point</span><span class="p">,</span> <span class="n">diag</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">sd</span> <span class="o">=</span> <span class="n">var</span><span class="o">**</span><span class="mf">0.5</span>
@@ -598,7 +598,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 <p>现在回到例子，我们有 10 个不同的岛屿社会；每一个都有其使用的工具数量。一些理论预测，较大人口需要开发和维护更多工具；另一个重要因素是人群间的接触率。</p>
 <p>当将工具数量作为结果变量时，可以使用泊松回归并将人口数量作为预测变量。事实上，可以使用人口的对数，因为根据理论真正重要的是人口比例，而不是绝对大小。将接触率包括在模型中的一种方法是收集有关这些岛屿社会在历史上的接触频率，可以考虑创建一个分类变量，如低/高接触率（请下表中的 Contact 列）。另一种方式是使用不同岛屿社会间的距离作为接触率的代理，可以假设距离近的社会会更频繁地接触。</p>
 <p>我们通过读取本书附带的 <code class="docutils literal notranslate"><span class="pre">island_dist.csv</span></code> 文件来访问以千公里为单位表示的距离矩阵：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">islands_dist</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/islands_dist.csv&#39;</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">islands_dist</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/islands_dist.csv&#39;</span><span class="p">,</span>
                            <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">islands_dist</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
@@ -607,7 +607,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204845_7c.webp" /></p>
 </center>
 <p>主对角线上填满了零,因为岛屿社会自身距离为零。矩阵是对称的，表示从 A 点到 B 点的距离。工具数量和人口规模存储在另一个文件 <code class="docutils literal notranslate"><span class="pre">islands.csv</span></code> 中，该文件也随书一起分发：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">islands</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/islands.csv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">islands</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/islands.csv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
 <span class="n">islands</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -615,7 +615,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204920_fd.webp" /></p>
 </center>
 <p>在表中，只列出和使用 culture, total_tools, lat, lon2 和 logpop 列:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">islands_dist_sqr</span> <span class="o">=</span> <span class="n">islands_dist</span><span class="o">.</span><span class="n">values</span><span class="o">**</span><span class="mi">2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">islands_dist_sqr</span> <span class="o">=</span> <span class="n">islands_dist</span><span class="o">.</span><span class="n">values</span><span class="o">**</span><span class="mi">2</span>
 <span class="n">culture_labels</span> <span class="o">=</span> <span class="n">islands</span><span class="o">.</span><span class="n">culture</span><span class="o">.</span><span class="n">values</span>
 <span class="n">index</span> <span class="o">=</span> <span class="n">islands</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
 <span class="n">log_pop</span> <span class="o">=</span> <span class="n">islands</span><span class="o">.</span><span class="n">logpop</span>
@@ -624,16 +624,16 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 </pre></div>
 </div>
 <p>我们要构建的模型是：</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*} 
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*} 
 f &amp;\sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \tag{式7.10} \label{式7.10}\\
 \mu &amp;\sim \exp (\alpha+\beta x+f) \tag{式7.11} \label{式7.11}\\
 y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
-\end{align*}\]</div>
+\end{align*}\end{split}\]</div>
 <p>这里，我们省略了 <span class="math notranslate nohighlight">\(\alpha\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span> 的前缀，以及核的超先验。 <span class="math notranslate nohighlight">\(x\)</span> 是对数人口， <span class="math notranslate nohighlight">\(y\)</span> 是工具总数。</p>
 <p>与第四章“广义线性模型”中的模型相比，本模型基本上是一个泊松回归模型，此外，线性模型中的 <span class="math notranslate nohighlight">\(f\)</span> 项来自高斯过程。为了计算高斯过程的核，我们将使用距离矩阵 <code class="docutils literal notranslate"><span class="pre">islands_dist</span></code>。通过这种方式，将基于距离矩阵有效地纳入相似性度量。由此，将每个岛屿社会的工具数量建模为其地理相似性的函数，而不是假设仅仅是人口规模的结果，而且岛屿社会间没有接触。</p>
 <p>此模型（包括之前的模型）类似于 PyMC3 中的以下代码：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_islands</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_islands</span><span class="p">:</span>
     <span class="n">η</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;η&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">ℓ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;ℓ&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">cov</span> <span class="o">=</span> <span class="n">η</span> <span class="o">*</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ExpQuad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="n">ℓ</span><span class="p">)</span>
@@ -647,7 +647,7 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 </pre></div>
 </div>
 <p>为理解协方差函数的后验分布，可以根据后验分布绘制一些样本：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">trace_η</span> <span class="o">=</span> <span class="n">trace_islands</span><span class="p">[</span><span class="s1">&#39;η&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trace_η</span> <span class="o">=</span> <span class="n">trace_islands</span><span class="p">[</span><span class="s1">&#39;η&#39;</span><span class="p">]</span>
 <span class="n">trace_ℓ</span> <span class="o">=</span> <span class="n">trace_islands</span><span class="p">[</span><span class="s1">&#39;ℓ&#39;</span><span class="p">]</span>
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">xrange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">islands_dist</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
@@ -668,7 +668,7 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 <p>图 7.9 中的粗线是成对岛屿社会间协方差作为距离函数的后验中位数。我们使用中位数是因为 <span class="math notranslate nohighlight">\(\ell\)</span> 和 <span class="math notranslate nohighlight">\(η\)</span> 的分布非常不对称。可以看到，平均下来协方差没有那么高，在大约 2000 公里处降到了几乎为 0。细线代表不确定性，可以看到有很大的不确定性。</p>
 <p>您可能会发现，将 <code class="docutils literal notranslate"><span class="pre">model_islands</span></code> 及其计算出的后验与<a class="reference external" href="https:///%E2%80%8B/%E2%80%8Bgithub.%E2%80%8Bcom/%E2%80%8Bpymc-%E2%80%8Bdevs/%E2%80%8Bresources">参考资料</a>中的模型 <code class="docutils literal notranslate"><span class="pre">m_10_10</span></code> 进行比较会很有趣。您可能希望使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 函数，例如 <code class="docutils literal notranslate"><span class="pre">az.summary</span></code> 或 <code class="docutils literal notranslate"><span class="pre">az.plot_forest</span></code>。 模型 <code class="docutils literal notranslate"><span class="pre">m_10_10</span></code> 类似于 <code class="docutils literal notranslate"><span class="pre">model_islands</span></code>，但不包含高斯过程项。</p>
 <p>根据我们的模型，现在继续探索岛屿之间的社会联系有多强。为此，必须将协方差矩阵转换为相关矩阵：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute posterior median covariance among societies</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute posterior median covariance among societies</span>
 <span class="n">Σ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">trace_η</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">trace_ℓ</span><span class="p">)</span> <span class="o">*</span> <span class="n">islands_dist_sqr</span><span class="p">))</span>
 <span class="c1"># convert to correlation matrix</span>
 <span class="n">Σ_post</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">Σ</span><span class="p">)</span><span class="o">**-</span><span class="mf">0.5</span><span class="p">)</span>
@@ -681,7 +681,7 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205246_9e.webp" /></p>
 <p>比较明显的是，夏威夷非常独立，因为夏威夷离其他岛屿社会很远。此外，还可以看到 <code class="docutils literal notranslate"><span class="pre">Malekula(Ml)</span></code>、<code class="docutils literal notranslate"><span class="pre">Tikopia(Ti)</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Santa</span> <span class="pre">Cruz(Sc)</span></code> 之间高度相关，因为这些社会非常接近，而且有类似数量的工具。</p>
 <p>现在我们使用纬度和经度信息来绘制 <code class="docutils literal notranslate"><span class="pre">岛屿-社会</span></code> 的相对位置：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># scale point size to logpop</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># scale point size to logpop</span>
 <span class="n">logpop</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">log_pop</span><span class="p">)</span>
 <span class="n">logpop</span> <span class="o">/=</span> <span class="n">logpop</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 <span class="n">psize</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">logpop</span><span class="o">*</span><span class="mf">5.5</span><span class="p">)</span>
@@ -723,7 +723,7 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 <div class="section" id="id9">
 <h2>7.5 高斯过程分类<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>高斯过程不限于回归，也可以用于分类。正如第 4 章“广义线性模型”中所述，通过使用 Logistic 逆连接函数的伯努利似然，将线性模型转化为适合分类的模型。对于iris数据集，本节将尝试重述第 4 章“广义线性模型”中的 model_0，不过这次使用高斯过程而不是线性模型。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/iris.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/iris.csv&#39;</span><span class="p">)</span>
 <span class="n">iris</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -731,14 +731,14 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 <p><img alt="image-20210505205534881" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205541_6c.webp" /></p>
 </center>
 <p>我们从最简单的分类问题开始：类别只有两类：山鸢尾和变色鸢尾；预测变量只有一个：萼片长度。使用数字 0 和 1 对分类变量山鸢尾和变色鸢尾进行编码：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;species == (&#39;setosa&#39;, &#39;versicolor&#39;)&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;species == (&#39;setosa&#39;, &#39;versicolor&#39;)&quot;</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">codes</span>
 <span class="n">x_1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sepal_length&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">X_1</span> <span class="o">=</span> <span class="n">x_1</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>对于此模型，我们不使用 <code class="docutils literal notranslate"><span class="pre">pm.gp.Marginal</span></code> 类实例化高斯过程先验，而是使用 <code class="docutils literal notranslate"><span class="pre">pm.gp.Latent</span></code> 类。前者仅限于高斯似然，不过通过高斯过程先验与高斯似然具有更高效率，而后者更通用些，可与任何似然一起使用：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_iris</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_iris</span><span class="p">:</span>
     <span class="n">ℓ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;ℓ&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
     <span class="n">cov</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ExpQuad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ℓ</span><span class="p">)</span>
     <span class="n">高斯过程</span><span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">Latent</span><span class="p">(</span><span class="n">cov_func</span><span class="o">=</span><span class="n">cov</span><span class="p">)</span>
@@ -750,7 +750,7 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 </pre></div>
 </div>
 <p>现在我们已经找到了 <span class="math notranslate nohighlight">\(\ell\)</span> 的值 ，想要从高斯过程后验获取样本。与 <code class="docutils literal notranslate"><span class="pre">marginal_gp_model</span></code> 的操作一样，可以借助 <code class="docutils literal notranslate"><span class="pre">gp.conditional</span></code> 函数计算一组新输入位置上的条件分布，如以下代码所示：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x_1</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">x_1</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="mi">200</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">x_1</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">x_1</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="mi">200</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
 <span class="k">with</span> <span class="n">model_iris</span><span class="p">:</span>
     <span class="n">f_pred</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">conditional</span><span class="p">(</span><span class="s1">&#39;f_pred&#39;</span><span class="p">,</span> <span class="n">X_new</span><span class="p">)</span>
     <span class="n">pred_samples</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span>
@@ -758,7 +758,7 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 </pre></div>
 </div>
 <p>为显示此模型结果，创建一个类似于图 4.4 的图。我们将使用以下函数直接从 <code class="docutils literal notranslate"><span class="pre">f_pred</span></code> 计算决策边界，而不是解析地获得决策边界：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_midpoint</span><span class="p">(</span><span class="n">array1</span><span class="p">,</span> <span class="n">array2</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">find_midpoint</span><span class="p">(</span><span class="n">array1</span><span class="p">,</span> <span class="n">array2</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This should be a proper docstring :-)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -771,7 +771,7 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 </pre></div>
 </div>
 <p>以下代码与第 4 章“广义线性模型”中用于生成图 4.4 的代码非常相似：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">fp</span> <span class="o">=</span> <span class="n">logistic</span><span class="p">(</span><span class="n">pred_samples</span><span class="p">[</span><span class="s1">&#39;f_pred&#39;</span><span class="p">])</span>
 <span class="n">fp_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">fp</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_new</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">fp_mean</span><span class="p">)</span>
@@ -795,11 +795,11 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 </center>
 <p>图 7.11 与图 4.4 非常相似， <code class="docutils literal notranslate"><span class="pre">f_pred</span></code> 曲线看起来像是一条 S 型曲线，除尾部在较低的 x_1 值时上升，在较高的 x_1 值下降。这是没有数据时预测函数向前移动的结果。如果只关心决策边界，这应该不是真正的问题，但如果想要为不同萼片长度值建立属于山鸢尾或变色鸢尾的概率模型，那么应该改进模型，并做一些事情来获得更好的尾部模型。实现此目标的方法是给高斯过程增加更多的构造。获得更好的高斯过程模型的一般方法是组合协方差函数，以便更好地捕捉函数细节。</p>
 <p>以下模型 (<code class="docutils literal notranslate"><span class="pre">model_iris2</span></code>) 与 <code class="docutils literal notranslate"><span class="pre">model_iris</span></code> 相同，不同之处在于协方差矩阵，为三个核的组合：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cov</span> <span class="o">=</span> <span class="n">K_</span><span class="p">{</span><span class="n">ExpQuad</span><span class="p">}</span> <span class="o">+</span> <span class="n">K_</span><span class="p">{</span><span class="n">Linear</span><span class="p">}</span> <span class="o">+</span> <span class="n">K_</span><span class="p">{</span><span class="n">whitenoise</span><span class="p">}(</span><span class="mf">1E-5</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cov</span> <span class="o">=</span> <span class="n">K_</span><span class="p">{</span><span class="n">ExpQuad</span><span class="p">}</span> <span class="o">+</span> <span class="n">K_</span><span class="p">{</span><span class="n">Linear</span><span class="p">}</span> <span class="o">+</span> <span class="n">K_</span><span class="p">{</span><span class="n">whitenoise</span><span class="p">}(</span><span class="mf">1E-5</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>通过添加线性核修复了尾部问题，如图 7.12 所示。白噪声核只是一个稳定协方差矩阵计算的技巧。对高斯过程的核进行限制，确保得到的协方差矩阵为正定的。但数字误差可能会导致违反此条件，其表现是在计算拟合函数的后验预测样本时会出现无效值（NaN）。通过添加一点噪声来稳定计算能够减轻此问题。其实 PyMC3 已经在幕后做到了这一点，但有时需要更多噪声，如以下代码所示：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_iris2</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_iris2</span><span class="p">:</span>
     <span class="n">ℓ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;ℓ&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">x_1</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
     <span class="n">τ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;τ&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
@@ -815,7 +815,7 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 </pre></div>
 </div>
 <p>现在为先前生成的 <code class="docutils literal notranslate"><span class="pre">X_new</span></code> 值生成 <code class="docutils literal notranslate"><span class="pre">model_iris2</span></code> 的后验预测样本：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model_iris2</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model_iris2</span><span class="p">:</span>
     <span class="n">f_pred</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">conditional</span><span class="p">(</span><span class="s1">&#39;f_pred&#39;</span><span class="p">,</span> <span class="n">X_new</span><span class="p">)</span>
     <span class="n">pred_samples</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_iris2</span><span class="p">,</span>
                                                   <span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="n">f_pred</span><span class="p">],</span>
@@ -847,7 +847,7 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 </ul>
 <p>尤其是第二点，Logistic 回归确实是高斯过程的特例，因为一元线性回归是高斯过程的特例。事实上，许多已知的模型都可以被视为高斯过程的特例，或者至少以某种方式与高斯过程联系在一起。你可以阅读凯文·墨菲 (Kevin Murphy) 的《 Machine Learning: A Probabilistic Perspective 》中的第 15 章。</p>
 <p>实践中，使用高斯过程对只能用 Logistic 回归来解决的问题进行建模没有太大意义。相反，我们希望使用高斯过程来建模更复杂的数据，而这些数据使用灵活性较低的模型无法很好地捕获。例如，假设想要将患病概率建模为年龄的函数。事实证明，非常年轻和非常年长的人比中年人有更高风险。数据集 <code class="docutils literal notranslate"><span class="pre">space_flu.csv</span></code> 是受前面描述启发的假数据集。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df_sf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/space_flu.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/space_flu.csv&#39;</span><span class="p">)</span>
 <span class="n">age</span> <span class="o">=</span> <span class="n">df_sf</span><span class="o">.</span><span class="n">age</span><span class="o">.</span><span class="n">values</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
 <span class="n">space_flu</span> <span class="o">=</span> <span class="n">df_sf</span><span class="o">.</span><span class="n">space_flu</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">df_sf</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;space_flu&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -860,7 +860,7 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 <p>图7.13</p>
 </center>
 <p>以下模型与 <code class="docutils literal notranslate"><span class="pre">model_iris</span></code> 基本相同：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_space_flu</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_space_flu</span><span class="p">:</span>
     <span class="n">ℓ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;ℓ&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">cov</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ExpQuad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ℓ</span><span class="p">)</span> <span class="o">+</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">WhiteNoise</span><span class="p">(</span><span class="mf">1E-5</span><span class="p">)</span>
     <span class="n">高斯过程</span><span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">Latent</span><span class="p">(</span><span class="n">cov_func</span><span class="o">=</span><span class="n">cov</span><span class="p">)</span>
@@ -871,7 +871,7 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 </pre></div>
 </div>
 <p>现在，为 <code class="docutils literal notranslate"><span class="pre">model_space_flu</span></code> 生成后验预测样本，然后绘制结果：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">200</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">200</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span>
 <span class="k">with</span> <span class="n">model_space_flu</span><span class="p">:</span>
     <span class="n">f_pred</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">conditional</span><span class="p">(</span><span class="s1">&#39;f_pred&#39;</span><span class="p">,</span> <span class="n">X_new</span><span class="p">)</span>
     <span class="n">pred_samples</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_space_flu</span><span class="p">,</span>
@@ -902,7 +902,7 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 <div class="section" id="id10">
 <h3>7.6.1 煤矿灾害<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>第一个例子是煤矿灾难。该案例包括英国从 1851 年到 1962 年的煤矿灾难记录。灾难数量被认为受到安全法规变化的影响。我们希望将灾害率建模为时间的函数，数据集只有一列，每个条目都对应灾难发生的时间。让我们加载数据并查看它的一些值：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">coal_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/coal.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coal_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/coal.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">coal_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -910,13 +910,13 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210251_00.webp" /></p>
 </center>
 <p>我们用来拟合上表 <code class="docutils literal notranslate"><span class="pre">coal_df</span></code> 中数据的模型是：</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
 f(x)  &amp;\sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.13} \label{式7.13} \\
 y  &amp;\sim \operatorname{Poisson}(f(x)) \tag{式7.14} \label{式7.14}
-\end{align*}\]</div>
+\end{align*}\end{split}\]</div>
 <p>公式 <span class="math notranslate nohighlight">\((7.13)\)</span> 、<span class="math notranslate nohighlight">\((7.14)\)</span> 是一个泊松回归问题。你可能会想，如果只有灾难发生日期这一列，将如何执行回归？答案是将数据离散化，就像正在构建直方图一样。我们使用抽屉的中心值作为自变量 <span class="math notranslate nohighlight">\(x\)</span> , 每个抽屉内的计数作为因变量 <span class="math notranslate nohighlight">\(y\)</span>：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># discretize data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># discretize data</span>
 <span class="n">years</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">coal_df</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">coal_df</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 <span class="n">bins</span> <span class="o">=</span> <span class="n">years</span> <span class="o">//</span> <span class="mi">4</span>
 <span class="n">hist</span><span class="p">,</span> <span class="n">x_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">coal_df</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
@@ -929,7 +929,7 @@ y  &amp;\sim \operatorname{Poisson}(f(x)) \tag{式7.14} \label{式7.14}
 </pre></div>
 </div>
 <p>现在用 PyMC3 定义并求解该模型：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_coal</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_coal</span><span class="p">:</span>
     <span class="n">ℓ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;ℓ&#39;</span><span class="p">,</span> <span class="n">x_data</span><span class="o">.</span><span class="n">std</span><span class="p">())</span>
     <span class="n">cov</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ExpQuad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="n">ℓ</span><span class="p">)</span> <span class="o">+</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">WhiteNoise</span><span class="p">(</span><span class="mf">1E-5</span><span class="p">)</span>
     <span class="n">高斯过程</span><span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">Latent</span><span class="p">(</span><span class="n">cov_func</span><span class="o">=</span><span class="n">cov</span><span class="p">)</span>
@@ -939,7 +939,7 @@ y  &amp;\sim \operatorname{Poisson}(f(x)) \tag{式7.14} \label{式7.14}
 </pre></div>
 </div>
 <p>绘制结果图：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">f_trace</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">trace_coal</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">])</span>
 <span class="n">rate_median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">f_trace</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_centers</span><span class="p">,</span> <span class="n">rate_median</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -962,7 +962,7 @@ y  &amp;\sim \operatorname{Poisson}(f(x)) \tag{式7.14} \label{式7.14}
 <h3>7.6.2 红杉数据集<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>第二个案例是面向二维空间的红杉木数据。该数据集来自 <code class="docutils literal notranslate"><span class="pre">GPStuff</span></code> 包（一个用于 Matlab、Octave 和 R 的高斯过程包）。该数据集由给定区域上红杉树的位置组成。推断目的是找出该地区树木计数是如何分布的。</p>
 <p>像往常一样，我们加载数据并绘制它：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rw_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/redwood.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rw_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/redwood.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">rw_df</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rw_df</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;C0.&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x1 coordinate&#39;</span><span class="p">)</span>
@@ -974,7 +974,7 @@ y  &amp;\sim \operatorname{Poisson}(f(x)) \tag{式7.14} \label{式7.14}
 <p>图 7.16</p>
 </center>
 <p>同煤矿灾难示例类似，需要对数据进行离散化：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># discretize spatial data</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># discretize spatial data</span>
 <span class="n">bins</span> <span class="o">=</span> <span class="mi">20</span>
 <span class="n">hist</span><span class="p">,</span> <span class="n">x1_edges</span><span class="p">,</span> <span class="n">x2_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram2d</span><span class="p">(</span>
     <span class="n">rw_df</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">rw_df</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">)</span>
@@ -988,7 +988,7 @@ y  &amp;\sim \operatorname{Poisson}(f(x)) \tag{式7.14} \label{式7.14}
 </pre></div>
 </div>
 <p>请注意，我们将 x1 和 x2 数据视为分开的数据，而不是mesh网格。这允许我们为每个坐标构建协方差矩阵，从而减小计算高斯过程所需矩阵的大小。在使用 <code class="docutils literal notranslate"><span class="pre">LatentKron</span></code> 类定义高斯过程时，需要注意，这不是一个数字技巧，而是这类矩阵结构的数学属性，因此我们不会在模型中引入任何近似或误差，而只是用一种更快的计算方式来表达它：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_rw</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_rw</span><span class="p">:</span>
     <span class="n">ℓ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;ℓ&#39;</span><span class="p">,</span>  <span class="n">rw_df</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">cov_func1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ExpQuad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="n">ℓ</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">cov_func2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">gp</span><span class="o">.</span><span class="n">cov</span><span class="o">.</span><span class="n">ExpQuad</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="n">ℓ</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -999,7 +999,7 @@ y  &amp;\sim \operatorname{Poisson}(f(x)) \tag{式7.14} \label{式7.14}
 </pre></div>
 </div>
 <p>最后，绘制结果图：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">trace_rw</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">bins</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">trace_rw</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">bins</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">ims</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rate</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>

@@ -399,24 +399,20 @@
 <h3>3.1.2 线性回归模型的核心<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>让我们开始学习如何构建线性模型。看下面该公式：</p>
 <div class="math notranslate nohighlight">
-\[
-\mathbb{y} = \alpha + \mathbb{x} \beta \tag{式3.1} \label{式3.1}
-\]</div>
+\[\mathbb{y} = \alpha + \mathbb{x} \beta \tag{式3.1} \label{式3.1}\]</div>
 <p>该等式描述了变量 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 与变量 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 之间的线性关系。其中，参数 <span class="math notranslate nohighlight">\(β\)</span> 控制直线的斜率，可以理解为变量 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 的单位变化量所对应 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的变化量。另外一个参数 <span class="math notranslate nohighlight">\(α\)</span> 为截距，可以解释为当 <span class="math notranslate nohighlight">\(x_i=0\)</span> 时, <span class="math notranslate nohighlight">\(y_i\)</span> 的值，在图形上表示， <span class="math notranslate nohighlight">\(α\)</span> 就是直线与 <span class="math notranslate nohighlight">\(y\)</span> 轴交点的坐标。</p>
 <p>计算线性模型参数的方法很多，最小二乘法是其中之一。每次使用软件去拟合直线时，底层可能用的就是最小二乘法。最小二乘法返回的 <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 能够让观测到的 <span class="math notranslate nohighlight">\(y\)</span> 与预测的 <span class="math notranslate nohighlight">\(\hat y\)</span> 之间均方误差最小。因此，估计 <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 是一个最优化问题，其目标是寻找目标函数的最值（最小值或最大值）。</p>
 <p>最优化并非求解线性模型的唯一方法，同样的问题可以从概率（贝叶斯）角度描述。<code class="docutils literal notranslate"><span class="pre">用概率方式思考的优势是：在得到最优的参数值</span> <span class="pre">$α$</span> <span class="pre">和</span> <span class="pre">$β$</span> <span class="pre">同时，还能够知道其不确定性程度。与此相对的，最优化方法需要一些其他工作来提供不确定性信息</span></code>。此外，贝叶斯方法还具备很大灵活性，尤其在使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 等工具时，可将模型应用到本章后面所介绍的各种特定问题中。</p>
 <p>从概率角度，线性回归模型可以表示成如下形式：</p>
 <div class="math notranslate nohighlight">
-\[
-\mathbb{y} \sim \mathcal{N} ( \mu = \alpha + \mathbb{x} \beta , \epsilon ) \tag{式3.2} \label{式3.2}
-\]</div>
+\[\mathbb{y} \sim \mathcal{N} ( \mu = \alpha + \mathbb{x} \beta , \epsilon ) \tag{式3.2} \label{式3.2}\]</div>
 <p>也就是说，假设 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 是一个服从均值为 <span class="math notranslate nohighlight">\(α + \mathbb{x} β\)</span> 、标准差为 <span class="math notranslate nohighlight">\(\epsilon\)</span> 的正态分布的随机变量。其中 <span class="math notranslate nohighlight">\(α\)</span> 、 <span class="math notranslate nohighlight">\(β\)</span> 、 <span class="math notranslate nohighlight">\(\epsilon\)</span> 为未知的模型参数（贝叶斯角度视为随机变量），需设置先验，下面是一组假设参数服从正态分布的先验设置：</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*} \tag{式3.3} \label{式3.3}
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*} \tag{式3.3} \label{式3.3}
 \alpha &amp;\sim \mathcal{N}\left(\mu_{\alpha}, \sigma_{\alpha}\right) \\ 
 \beta &amp;\sim \mathcal{N}\left(\mu_{\beta}, \sigma_{\beta}\right) \\ 
 \epsilon &amp;\sim\left|N\left(0, \sigma_{\epsilon}\right)\right|  
-\end{align*}\]</div>
+\end{align*}\end{split}\]</div>
 <p>对于 <span class="math notranslate nohighlight">\(α\)</span> 的先验，由于截距值根据问题不同会有很大变化，因此可使用一个平坦的高斯分布（即 <span class="math notranslate nohighlight">\(\sigma_\alpha\)</span> 相对于数据的值域大很多）。</p>
 <p>关于斜率 <span class="math notranslate nohighlight">\(\beta\)</span> ，可能比截距更容易获得先验，因为许多问题中至少可以预先知道斜率的正负符号；例如，预期权重值 <span class="math notranslate nohighlight">\(\beta\)</span> 平均会随着高度变化而增加。</p>
 <p>对于 <span class="math notranslate nohighlight">\(\epsilon\)</span> ，由于其值大于 0，采用半高斯分布，可以将 <span class="math notranslate nohighlight">\(\sigma_\epsilon\)</span> 设置为相对 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 较大的值，如设置为 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 标准差的 10 倍，以保留足够空间通过数据似然来驱动不确定性的收缩。</p>
@@ -433,7 +429,7 @@
 <p>图3.1</p>
 </center>
 <p>定义好该模型，需要为其提供数据。这里采用人工合成的数据集（合成数据集的优点是：可事前知道参数的真值，进而方便检查是否能够使用模型恢复它们）：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">N</span><span class="o">=</span><span class="mi">100</span>
 <span class="n">alpha_real</span><span class="o">=</span><span class="mf">2.5</span>
 <span class="n">beta_real</span><span class="o">=</span><span class="mf">0.9</span>
@@ -457,7 +453,7 @@
 <p>图3.2</p>
 </center>
 <p>现在使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 来构建和拟合模型。注意这里 <span class="math notranslate nohighlight">\(\mu\)</span> 在模型中通过 <code class="docutils literal notranslate"><span class="pre">pm.deterministic</span></code> 来定义，表示它是<code class="docutils literal notranslate"><span class="pre">确定性变量</span></code>，反映了数学表达式和 Kruschke 图的内容。在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中，如果显式定义了一个确定性变量，则会计算该变量并保存其迹（ Trace ）：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">withpm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span><span class="n">asmodel_g</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">withpm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span><span class="n">asmodel_g</span><span class="p">:</span>
 <span class="c1"># 定义随机变量</span>
 <span class="n">α</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">β</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
@@ -472,11 +468,11 @@
 </pre></div>
 </div>
 <p>如果不在模型中显式地定义确定性变量。则 <code class="docutils literal notranslate"><span class="pre">PCMC3</span></code> 仍会计算该变量，但不会将保存其迹。例如，可编写以下代码：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="n">α</span> <span class="o">+</span> <span class="n">β</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="n">ϵ</span><span class="p">,</span> <span class="n">observed</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="n">α</span> <span class="o">+</span> <span class="n">β</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="n">ϵ</span><span class="p">,</span> <span class="n">observed</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>为探索推断结果，可以绘制未知变量的迹图（<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">3.3</span></code>），此处省略了确定性变量 <span class="math notranslate nohighlight">\(\mu\)</span> 。你可以将希望包含在绘图中的变量名称（随机变量或显式确定性变量）以列表形式传递给参数 <code class="docutils literal notranslate"><span class="pre">var_names</span></code> 来实现多变量迹图的绘制。许多 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 函数都有一个 <code class="docutils literal notranslate"><span class="pre">var_names</span></code> 参数，你可以尝试其他 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的绘图函数来探索后验。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">var_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span><span class="s1">&#39;β&#39;</span><span class="p">,</span><span class="s1">&#39;ϵ&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">var_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span><span class="s1">&#39;β&#39;</span><span class="p">,</span><span class="s1">&#39;ϵ&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 <center>
@@ -490,7 +486,7 @@
 <p>前面模型中， <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 间实际上存在比较严重的相关性问题。这意味着采样结果会很差，有效采样很少。为什么呢？</p>
 <p>其实我们被自己的假设误导了。</p>
 <p>事实上，上述模型中，不论用哪条直线去拟合数据，该直线都会穿过 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 和 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的均值点。拟合直线的过程相当于将直线固定在均值点上做旋转，其结果是呈现出<code class="docutils literal notranslate"><span class="pre">斜率越大截距越小</span></code>的相关性。如果将后验画出来的话可以很清楚地看到这点（见<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">3.4</span></code> , 暂时忽略 <span class="math notranslate nohighlight">\(ε\)</span> ）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_pair</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">var_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="s1">&#39;β&#39;</span><span class="p">],</span> <span class="n">plot_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_pair</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">var_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="s1">&#39;β&#39;</span><span class="p">],</span> <span class="n">plot_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
 </pre></div>
 </div>
 <center>
@@ -504,33 +500,27 @@
 <h4>（1）解决方法 1：运行之前做中心化或归一化处理<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <p>解决问题的一个简单办法是先将 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 中心化，也就是说，对于每个点 <span class="math notranslate nohighlight">\(x_i\)</span> ，减去 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 的均值。这样做的结果是 <span class="math notranslate nohighlight">\(x'\)</span> 的中心在 0 附近，从而在修改斜率时，旋转点与截距点重合，参数空间也会变得不那么自相关。该方法在机器学习以及深度学习中经常被使用。</p>
 <div class="math notranslate nohighlight">
-\[
-x'=x-\bar x \tag{式3.4}  \label{式3.4}
-\]</div>
+\[x'=x-\bar x \tag{式3.4}  \label{式3.4}\]</div>
 <p>中心化不仅是一种计算技巧，同时有利于解释数据。截距是指当 <span class="math notranslate nohighlight">\(x_i=0\)</span> 时 <span class="math notranslate nohighlight">\(y_i\)</span> 的值，对许多问题而言，截距并没有什么实际意义。例如，对于身高或者体重的关系模型，当值为 0 时没有实际意义，因而截距对理解数据就没有帮助；对于另外一些问题，估计出截距可能很有用，因为在实验中可能无法测量出 <span class="math notranslate nohighlight">\(x_i = 0\)</span> 的情况，此时截距的估计值能够提供有价值的信息。但不管怎么说，外推都有其局限性，应当谨慎使用！</p>
 <p>根据问题和受众不同，可能需要汇报中心化之前和之后的参数估计值。如果需要汇报的是中心化之前的参数，那么可以像下面这样将参数转换成原来的尺度：</p>
 <div class="math notranslate nohighlight">
-\[
-\alpha=\alpha^{\prime}-\beta^{\prime} \bar{x} \tag{式3.5}  \label{式3.5}
-\]</div>
+\[\alpha=\alpha^{\prime}-\beta^{\prime} \bar{x} \tag{式3.5}  \label{式3.5}\]</div>
 <p>上面的公式可以通过以下公式推导出来：</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*} \tag{式3.6}  \label{式3.6}
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*} \tag{式3.6}  \label{式3.6}
 y &amp;= \alpha^{\prime}+\beta^{\prime} x^{\prime}+\epsilon  \\
 y &amp;= \alpha^{\prime}+\beta^{\prime}(x-\bar{x})+\epsilon  \\
 y &amp;= \alpha^{\prime}-\beta^{\prime} \bar{x}+\beta^{\prime} x+\epsilon 
-\end{align*}\]</div>
+\end{align*}  \end{split}\]</div>
 <p>然后可以得出：</p>
 <div class="math notranslate nohighlight">
-\[
-\beta = \beta' \tag{式3.7}  \label{式3.7}
-\]</div>
+\[\beta = \beta' \tag{式3.7}  \label{式3.7}\]</div>
 <p>进一步，在运行模型之前可以对数据进行<code class="docutils literal notranslate"><span class="pre">归一化处理</span></code>。归一化在统计学和机器学习中是常见的数据处理手段，许多算法对归一化后的数据效果更好。归一化过程在中心化基础上再除以标准差，其数学形式如下：</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*} \tag{式3.8}  \label{式3.8}
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*} \tag{式3.8}  \label{式3.8}
 x^{\prime} &amp;= \frac{x-\bar{x}}{x_{s d}} \\
 y^{\prime} &amp;= \frac{y-\bar{y}}{y_{s d}} 
-\end{align*}\]</div>
+\end{align*}  \end{split}\]</div>
 <p>归一化的好处是能够对数据使用相同的弱先验，而不必关心数据值域大小（因为已经对数据做了尺度变换）。归一化后的数据，截距通常在 0 附近，斜率在 <span class="math notranslate nohighlight">\(-1～1\)</span> 附近。</p>
 <p>归一化后的数据可以使用 <code class="docutils literal notranslate"><span class="pre">标准分（z-score）</span></code> 来描述参数。如果某人称一个参数的 <code class="docutils literal notranslate"><span class="pre">z-score</span></code> 为 1.3，那么我们就知道该值在归一化前位于均值附近 1.3 倍标准差处。<code class="docutils literal notranslate"><span class="pre">z-score</span></code> 每变化一个单位，对应原始数据中变化 1 倍标准差。这点在分析多变量时很有用，因为所有参数都在同一个尺度上，进而简化了对数据的解释。</p>
 </div>
@@ -542,7 +532,7 @@ y^{\prime} &amp;= \frac{y-\bar{y}}{y_{s d}}
 <div class="section" id="id8">
 <h3>3.1.4 对后验进行解释和可视化<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>正如已经看到的，可以使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 函数（如 <code class="docutils literal notranslate"><span class="pre">plot_trace</span></code> 和 <code class="docutils literal notranslate"><span class="pre">summary</span></code> ）探索后验，也可以使用自己的函数。对于线性回归，绘制出符合数据均值的直线，并标示参数 <span class="math notranslate nohighlight">\(\alpha\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span> 的均值可能很有用。对于感兴趣的不确定性程度，则可以从后验中采样并以半透明线条形式绘制在均值直线周边（<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">3.5</span></code>）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;C0.&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;C0.&#39;</span><span class="p">)</span>
 <span class="n">alpha_m</span> <span class="o">=</span> <span class="n">trace_g</span><span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">beta_m</span> <span class="o">=</span> <span class="n">trace_g</span><span class="p">[</span><span class="s1">&#39;β&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">draws</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">trace_g</span><span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">]),</span> <span class="mi">10</span><span class="p">)</span>
@@ -563,7 +553,7 @@ y^{\prime} &amp;= \frac{y-\bar{y}}{y_{s d}}
 </center>
 <p>可以看到，上图中间部分比较确定（即不确定性程度低），不过直线并没有都相交于一点（贝叶斯方法并不强制所有直线都穿过均值点）。</p>
 <p>半透明直线是一种比较直观的表示方法，不过还可以给该图增加更酷的东西：用半透明区间来描述 <span class="math notranslate nohighlight">\(μ\)</span> 的最大后验密度（ <code class="docutils literal notranslate"><span class="pre">HPD</span></code> ）区间（<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">3.6</span> </code>）。注意这也是在模型中将变量 <span class="math notranslate nohighlight">\(μ\)</span> 显式定义为确定性变量的主要原因，简化以下代码：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 绘制均值直线</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 绘制均值直线</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">alpha_m</span> <span class="o">+</span> <span class="n">beta_m</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> 
         <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;y = </span><span class="si">{</span><span class="n">alpha_m</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> + </span><span class="si">{</span><span class="n">beta_m</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> * x&#39;</span><span class="p">)</span>
 
@@ -580,11 +570,11 @@ y^{\prime} &amp;= \frac{y-\bar{y}}{y_{s d}}
 </center>
 <p>另外一种方式是绘制因变量值 <span class="math notranslate nohighlight">\(\hat y\)</span> 的 <code class="docutils literal notranslate"><span class="pre">HPD</span></code>（例如 94%和 50%）区间（见<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">3.7</span></code>），用于显示模型预测中 94% 和 50%的数据分布范围。在图中将 <code class="docutils literal notranslate"><span class="pre">50%</span> <span class="pre">HPD</span> <span class="pre">区间</span></code> 用深灰色区域表示，将 <code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">HPD</span></code> 区间用浅灰色表示。</p>
 <p>利用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">sample_posterior_predictive</span></code> 函数可以很容易得到预测值的采样。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ppc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">samples</span> <span class="o">=</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model_g</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ppc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">samples</span> <span class="o">=</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model_g</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>然后我们可以画出结果：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;b.&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;b.&#39;</span><span class="p">)</span>
 
 <span class="c1"># 绘制均值直线</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">alpha_m</span> <span class="o">+</span> <span class="n">beta_m</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
@@ -609,9 +599,7 @@ y^{\prime} &amp;= \frac{y-\bar{y}}{y_{s d}}
 <p>皮尔逊相关系数并不涉及非线性相关性。人们很容易将皮尔逊相关系数与线性回归中的斜率弄混淆，但查看 <a class="reference external" href="https://en.wikipedia.org/wiki/Correlation_and_dependence#/media/File:Correlation_examples2.svg">此链接</a> 就可以明白，二者本质上是两个完全不同的量。</p>
 <p>下面的公式可以在某种程度上减轻你的疑惑：</p>
 <div class="math notranslate nohighlight">
-\[
-r=\beta \frac{\sigma_{x}}{\sigma_{y}} \tag{式3.9} \label{式3.9}
-\]</div>
+\[r=\beta \frac{\sigma_{x}}{\sigma_{y}} \tag{式3.9} \label{式3.9}\]</div>
 <p>只有在 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 和 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的标准差相等时，皮尔逊相关系数才与斜率相等。也就是说，皮尔逊相关系数和斜率的主要区别在于是否受数据尺度影响。在对数据做归一化处理消除尺度影响后，两者之间确实等价，但在未做归一化处理前，两者并不等价。需要注意：</p>
 <ul class="simple">
 <li><p>皮尔逊相关系数衡量的是两个变量之间的相关性程度，其值位于 [-1,1] 区间内，<code class="docutils literal notranslate"><span class="pre">皮尔逊相关系数与数据尺度无关</span></code>；</p></li>
@@ -624,13 +612,11 @@ r=\beta \frac{\sigma_{x}}{\sigma_{y}} \tag{式3.9} \label{式3.9}
 </div>
 <p>需要注意的是：在贝叶斯线性回归模型中，预测值方差可能大于测量值方差，进而导致 <span class="math notranslate nohighlight">\(R^2\)</span> 大于 1，不利于解释。因此，通常对 <span class="math notranslate nohighlight">\(R^2\)</span> 做如下定义：</p>
 <div class="math notranslate nohighlight">
-\[
-R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]+\mathbf{V}_{n=1}^{S}\left(\hat{y}^{s}-y\right)} \tag{式3.10} \label{式3.10}
-\]</div>
+\[R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]+\mathbf{V}_{n=1}^{S}\left(\hat{y}^{s}-y\right)} \tag{式3.10} \label{式3.10}\]</div>
 <p>上式中，<span class="math notranslate nohighlight">\(E[\hat y^S]\)</span> 是后验样本 <span class="math notranslate nohighlight">\(S\)</span> 上，预测值 <span class="math notranslate nohighlight">\(\hat y\)</span> 的平均值。</p>
 <p>上式用 <code class="docutils literal notranslate"><span class="pre">预测值的方差</span></code> 除以 <code class="docutils literal notranslate"><span class="pre">预测值的方差加残差（预测值与真实值之间的残差）</span></code> 来确保 <span class="math notranslate nohighlight">\(R^2\)</span> 被限制在区间 [0，1] 内。</p>
 <p>在 <code class="docutils literal notranslate"><span class="pre">PYMC3</span></code> 中计算 <span class="math notranslate nohighlight">\(R^2\)</span> 最简单的方法是使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的 <code class="docutils literal notranslate"><span class="pre">r2_core()</span></code> 函数。其输入为观测值 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 和预测值 <span class="math notranslate nohighlight">\(\hat y\)</span> 。其中， <span class="math notranslate nohighlight">\(\hat y\)</span> 可利用 <code class="docutils literal notranslate"><span class="pre">sample_posterior_predictive</span></code> 函数轻松获得：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">ppc</span><span class="p">[</span><span class="s1">&#39;y_pred&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">ppc</span><span class="p">[</span><span class="s1">&#39;y_pred&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>默认情况下，此函数将返回 <span class="math notranslate nohighlight">\(R^2\)</span> （本例为 0.8） 和标准差 （0.03）。</p>
@@ -639,12 +625,10 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <h3>3.1.6 多元高斯分布的皮尔逊相关系数<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>计算皮尔逊相关系数的另一种方法是估计多变量高斯分布的协方差矩阵。多元高斯分布是高斯分布在一维以上的推广。以二维为例，要完全描述一个二元高斯分布，需要两个均值（或一个具有两个元素的向量），每个高斯分布对应一个，还需要一个 <span class="math notranslate nohighlight">\(2 x 2\)</span> 的协方差矩阵，如下所示：</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}
-\Sigma=\left[\begin{array}{cc}\sigma_{\mathbb{x}_{1}}^{2} &amp; \rho \sigma_{\mathbb{x}_{1}} \sigma_{\mathbb{x}_{2}} \\ \rho \sigma_{\mathbb{x}_{1}} \sigma_{\mathbb{x}_{2}} &amp; \sigma_{\mathbb{x}_{2}}^{2}\end{array}\right]  
-\end{split}\]</div>
+\[\begin{split}\Sigma=\left[\begin{array}{cc}\sigma_{\mathbb{x}_{1}}^{2} &amp; \rho \sigma_{\mathbb{x}_{1}} \sigma_{\mathbb{x}_{2}} \\ \rho \sigma_{\mathbb{x}_{1}} \sigma_{\mathbb{x}_{2}} &amp; \sigma_{\mathbb{x}_{2}}^{2}\end{array}\right]  \end{split}\]</div>
 <p>这里 <span class="math notranslate nohighlight">\(\Sigma\)</span> 为希腊大写的希格玛字母，表示协方差矩阵。主对角线上为每个变量的自方差，用该变量的标准差的平方 <span class="math notranslate nohighlight">\(\sigma_{\mathbb{x}_1}、\sigma_{\mathbb{x}_2}\)</span> 来表示。矩阵中其余元素是变量之间的协方差，用单个标准差和变量间的皮尔逊相关系数 <span class="math notranslate nohighlight">\(\rho\)</span> 表示。请注意，这里只有一个 <span class="math notranslate nohighlight">\(\rho\)</span> ，因为只有两个维度。对于三个变量，则应有三个皮尔逊相关系数。</p>
 <p>下面的代码为双变量高斯分布生成等值线图，均值固定在 <span class="math notranslate nohighlight">\((0，0)\)</span> 点。其中一个标准差是固定的，另一个标准差采用值 1 或 2 以及皮尔逊相关系数 <span class="math notranslate nohighlight">\(\rho\)</span> 的不同值：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sigma_x1</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sigma_x1</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">sigmas_x2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
 <span class="n">rhos</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.90</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.90</span><span class="p">]</span>
 <span class="n">k</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">:</span><span class="mi">5</span><span class="p">:</span><span class="mf">.1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">:</span><span class="mi">5</span><span class="p">:</span><span class="mf">.1</span><span class="p">]</span>
@@ -683,7 +667,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <li><p>三是为协方差矩阵中的模型参数 <span class="math notranslate nohighlight">\(\sigma_{\mathbb{x}_1}\)</span> 、<span class="math notranslate nohighlight">\(\sigma_{\mathbb{x}_2}\)</span> 和 <span class="math notranslate nohighlight">\(\rho\)</span> 分别设置先验。</p></li>
 </ul>
 <p>此处探索第三种方法，然后使用这些参数手动构建协方差矩阵：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
 <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">pearson_model</span><span class="p">:</span>
     <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">σ_1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ_1&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
@@ -698,7 +682,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </pre></div>
 </div>
 <p>此处仅绘制 <span class="math notranslate nohighlight">\(R^2\)</span> 的迹图：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_p</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_p</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 <center>
@@ -706,7 +690,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <p>图3.9</p>
 </center>
 <p>可以看到，<span class="math notranslate nohighlight">\(r^2\)</span> 值的分布与上一个示例中使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的 <code class="docutils literal notranslate"><span class="pre">r2_core</span></code> 函数获得的值基本相同。通过摘要可以更简单地进行比较。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_p</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_p</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 <center>
@@ -718,14 +702,14 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <h2>3.2 更稳健的线性回归<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
 <p>在许多情况下，假设数据服从高斯分布是合理的。但需要注意的是：假设数据符合高斯特性，并不是说数据真的就符合高斯分布，而是说高斯分布对于问题而言是一个合理的、可接受的近似。有时高斯假设并不成立，例如当数据中存在异常值时，利用学生 <span class="math notranslate nohighlight">\(t\)</span> 分布可以更有效地解决该问题，从而得到更稳健的推断。类似思想同样可以用于线性回归问题。</p>
 <p>为了验证学生 <span class="math notranslate nohighlight">\(t\)</span> 分布确实能增加线性回归的稳健性，这里使用<a class="reference external" href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet"><code class="docutils literal notranslate"><span class="pre">Anscombe</span> <span class="pre">quartet</span></code></a>数据集中的第 3 组数据。下面代码用 <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> 读取数据，并对数据做中心化处理，以使采样器更容易收敛。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ans</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/anscombe.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ans</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/anscombe.csv&#39;</span><span class="p">)</span>
 <span class="n">x_3</span> <span class="o">=</span> <span class="n">ans</span><span class="p">[</span><span class="n">ans</span><span class="o">.</span><span class="n">group</span> <span class="o">==</span> <span class="s1">&#39;III&#39;</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">y_3</span> <span class="o">=</span> <span class="n">ans</span><span class="p">[</span><span class="n">ans</span><span class="o">.</span><span class="n">group</span> <span class="o">==</span> <span class="s1">&#39;III&#39;</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">x_3</span> <span class="o">=</span> <span class="n">x_3</span> <span class="o">-</span> <span class="n">x_3</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>先来看看该数据集长什么样：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">beta_c</span><span class="p">,</span> <span class="n">alpha_c</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x_3</span><span class="p">,</span> <span class="n">y_3</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_3</span><span class="p">,</span> <span class="p">(</span><span class="n">alpha_c</span> <span class="o">+</span> <span class="n">beta_c</span> <span class="o">*</span> <span class="n">x_3</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span>
            <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;y =</span><span class="si">{</span><span class="n">alpha_c</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> + </span><span class="si">{</span><span class="n">beta_c</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> * x&#39;</span><span class="p">)</span>
@@ -745,7 +729,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </center>
 <p>现在用 <span class="math notranslate nohighlight">\(t\)</span> 分布替换模型中的高斯分布，该改变需要引入正态参数 <span class="math notranslate nohighlight">\(\nu\)</span> ，有关该参数的含义，可参照<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">2</span> <span class="pre">章</span></code>的内容。</p>
 <p>在下面的模型中，使用平移的指数分布来避免接近零的 <span class="math notranslate nohighlight">\(\nu\)</span> 值。非平移的指数分布给接近零的值赋予过高权重。这对没有异常值的数据来说很好，但对有极端异常值的数据（比如 <code class="docutils literal notranslate"><span class="pre">Anscombe</span></code> 的第三个数据集）最好避免这么低的值。当然，默认设置是很好的起点，但没必要拘泥于它。其他常见的先验还包括 <span class="math notranslate nohighlight">\(\Gamma(2，0.1)\)</span> 或 <span class="math notranslate nohighlight">\(\Gamma(\mu=20，SD=15)\)</span> 等。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_t</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_t</span><span class="p">:</span>
     <span class="n">α</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">y_3</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">β</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">ϵ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;ϵ&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
@@ -757,7 +741,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </pre></div>
 </div>
 <p>在下图中，可以看到根据 <code class="docutils literal notranslate"><span class="pre">model_t</span></code> 的稳健拟合和根据 <code class="docutils literal notranslate"><span class="pre">SciPy</span></code> 线性回归的非稳健拟合（采用最小二乘回归）。作为额外练习，你可以尝试添加使用 <code class="docutils literal notranslate"><span class="pre">model_g</span></code> 获得的最佳直线：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">beta_c</span><span class="p">,</span> <span class="n">alpha_c</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x_3</span><span class="p">,</span> <span class="n">y_3</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">beta_c</span><span class="p">,</span> <span class="n">alpha_c</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x_3</span><span class="p">,</span> <span class="n">y_3</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_3</span><span class="p">,</span> <span class="p">(</span><span class="n">alpha_c</span> <span class="o">+</span> <span class="n">beta_c</span> <span class="o">*</span> <span class="n">x_3</span><span class="p">),</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;non-robust&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_3</span><span class="p">,</span> <span class="n">y_3</span><span class="p">,</span> <span class="s1">&#39;C0o&#39;</span><span class="p">)</span>
 <span class="n">alpha_m</span> <span class="o">=</span> <span class="n">trace_t</span><span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
@@ -775,7 +759,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </center>
 <p>当非稳健拟合试图折衷并包含所有点时，稳健的贝叶斯模型 <code class="docutils literal notranslate"><span class="pre">model_t</span></code> 会自动丢弃一个点，并拟合一条恰好通过所有剩余点的直线。这是一个非常奇特的数据集，但该信息仍然适用于更真实、更复杂的其他数据集。由于学生 <span class="math notranslate nohighlight">\(t\)</span> 分布是重尾分布，所以可以给远离大量数据的点以较小权重。</p>
 <p>在继续前，花一点时间来考虑模型参数的值：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_t</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="n">varnames</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_t</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="n">varnames</span><span class="p">)</span>
 </pre></div>
 </div>
 <center>
@@ -783,7 +767,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </center>
 <p>如表所示，<span class="math notranslate nohighlight">\(\alpha\)</span> 、 <span class="math notranslate nohighlight">\(\beta\)</span> 和 <span class="math notranslate nohighlight">\(\epsilon\)</span> 的值定义非常狭窄，其中对于基本上为 0 的 <span class="math notranslate nohighlight">\(\epsilon\)</span> 值更是如此。这是完全合理的，因为我们正在将一条线拟合到一组完全对齐的点上（如果忽略异常值）。</p>
 <p>运行后验预测性检查，以探索模型捕获数据的能力：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ppc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_t</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model_t</span><span class="p">,</span><span class="n">random_seed</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ppc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_t</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model_t</span><span class="p">,</span><span class="n">random_seed</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">data_ppc</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">from_PyMC3</span><span class="p">(</span><span class="n">trace</span><span class="o">=</span><span class="n">trace_t</span><span class="p">,</span> <span class="n">posterior_predictive</span><span class="o">=</span><span class="n">ppc</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">plot_ppc</span><span class="p">(</span><span class="n">data_ppc</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">mean</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
@@ -799,7 +783,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <h2>3.3 分层线性回归<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
 <p>上一章学习了分层模型的基础知识，现在可以将其应用到线性回归，在分组层次和高于分组的层次建模并估计。与之前相同，这里引入 <code class="docutils literal notranslate"><span class="pre">超先验</span></code>。</p>
 <p>首先创建 8 个相关的数据组，其中有一组仅包含一个数据点。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">20</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">20</span>
 <span class="n">M</span> <span class="o">=</span> <span class="mi">8</span>
 <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">N</span><span class="p">)</span>
 <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
@@ -829,11 +813,11 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <p>图3.13</p>
 </center>
 <p>在将数据提供给模型前先对其做中心化处理：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_centered</span> <span class="o">=</span> <span class="n">x_m</span> <span class="o">-</span> <span class="n">x_m</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_centered</span> <span class="o">=</span> <span class="n">x_m</span> <span class="o">-</span> <span class="n">x_m</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>首先，和前面做法一样，先用非多层的模型拟合，唯一区别是需要增加部分代码将 <span class="math notranslate nohighlight">\(α\)</span> 转换到原始尺度。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">unpooled_model</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">unpooled_model</span><span class="p">:</span>
     <span class="n">α_tmp</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α_tmp&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">M</span><span class="p">)</span>
     <span class="n">β</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">M</span><span class="p">)</span>
     <span class="n">ϵ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;ϵ&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
@@ -845,7 +829,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </pre></div>
 </div>
 <p>从结果中可以看到，除了其中一组参数（ <span class="math notranslate nohighlight">\(α7\)</span> 和 <span class="math notranslate nohighlight">\(β7\)</span> ），大多数情况下结果都很正常。根据它们的迹来看，似乎这一组参数一直在自由移动而没有收敛。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_forest</span><span class="p">(</span><span class="n">trace_up</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="s1">&#39;β&#39;</span><span class="p">],</span> <span class="n">combined</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_forest</span><span class="p">(</span><span class="n">trace_up</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="s1">&#39;β&#39;</span><span class="p">],</span> <span class="n">combined</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <center>
@@ -864,7 +848,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <li><p>增加了超先验。</p></li>
 <li><p>增加了几行代码将参数转换到中心化前的尺度。记住这并非强制的，我们完全可以将参数保留在转换后的尺度上，只是对结果进行解释的时候需要小心。</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">hierarchical_model</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">hierarchical_model</span><span class="p">:</span>
     <span class="c1"># hyper-priors</span>
     <span class="n">α_μ_tmp</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α_μ_tmp&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
     <span class="n">α_σ_tmp</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;α_σ_tmp&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
@@ -890,7 +874,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <p>图3.16</p>
 </center>
 <p>使用 <code class="docutils literal notranslate"><span class="pre">az.plot_forest()</span></code> 比较模型的一个好方法是在同一绘图中同时显示两个模型 ( <code class="docutils literal notranslate"><span class="pre">unpooled_model</span></code>、<code class="docutils literal notranslate"><span class="pre">hierarhical_model</span></code>) 的参数。要做到这一点，您只需传递一个迹的列表。为了更好地理解模型捕获的有关数据的内容，为八组中的每一组绘制拟合线：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                      <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">N</span>
@@ -929,21 +913,15 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <h2>3.4 多项式回归<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
 <p>接下来，将学习如何用线性回归拟合曲线。使用线性回归模型去拟合曲线的一种做法是构建如下多项式：</p>
 <div class="math notranslate nohighlight">
-\[
-\mu=\beta_{0} x^{0}+\beta_{1} x^{1} \cdots+\beta_{m} x^{m} \tag{式3.12} \label{式3.12}
-\]</div>
+\[\mu=\beta_{0} x^{0}+\beta_{1} x^{1} \cdots+\beta_{m} x^{m} \tag{式3.12} \label{式3.12}\]</div>
 <p>可以看到多项式中其实包含了一元线性回归模型，只需将上式中 <span class="math notranslate nohighlight">\( n&gt;1\)</span> 的系数 <span class="math notranslate nohighlight">\(β_n\)</span> 设为 0 即可得到下式：</p>
 <div class="math notranslate nohighlight">
-\[
-\mu=\beta_{0}+\beta_{1} x^{1} \tag{式3.13} \label{式3.13}
-\]</div>
+\[\mu=\beta_{0}+\beta_{1} x^{1} \tag{式3.13} \label{式3.13}\]</div>
 <p>多项式回归仍然是线性回归，此处“线性”的意思是<code class="docutils literal notranslate"><span class="pre">指模型中的参数是线性组合的，而不是指变量是线性变化的</span></code>。现从一个简单的抛物线开始构建多项式回归模型：</p>
 <div class="math notranslate nohighlight">
-\[
-\mu=\beta_{0}+\beta_{1} x^{1}+\beta_{2} x^{2}  \tag{式3.14} \label{式3.14}
-\]</div>
+\[\mu=\beta_{0}+\beta_{1} x^{1}+\beta_{2} x^{2}  \tag{式3.14} \label{式3.14}\]</div>
 <p>其中第 3 项控制曲率。数据选用 <code class="docutils literal notranslate"><span class="pre">Anscombe</span> <span class="pre">quartet</span></code> 的第 2 组数据集</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_2</span> <span class="o">=</span> <span class="n">ans</span><span class="p">[</span><span class="n">ans</span><span class="o">.</span><span class="n">group</span> <span class="o">==</span> <span class="s1">&#39;II&#39;</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_2</span> <span class="o">=</span> <span class="n">ans</span><span class="p">[</span><span class="n">ans</span><span class="o">.</span><span class="n">group</span> <span class="o">==</span> <span class="s1">&#39;II&#39;</span><span class="p">][</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">y_2</span> <span class="o">=</span> <span class="n">ans</span><span class="p">[</span><span class="n">ans</span><span class="o">.</span><span class="n">group</span> <span class="o">==</span> <span class="s1">&#39;II&#39;</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">x_2</span> <span class="o">=</span> <span class="n">x_2</span> <span class="o">-</span> <span class="n">x_2</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_2</span><span class="p">,</span> <span class="n">y_2</span><span class="p">)</span>
@@ -956,7 +934,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <p>图3.18</p>
 </center>
 <p>现在建立 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 模型如下：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_poly</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_poly</span><span class="p">:</span>
     <span class="n">α</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">y_2</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">β1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β1&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">β2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β2&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -967,7 +945,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </pre></div>
 </div>
 <p>此处省略一些检查和汇总，直接绘制结果，这将是一条很好的曲线，几乎没有错误地拟合了数据。考虑到数据集的极简主义性质：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
 <span class="n">y_p</span> <span class="o">=</span> <span class="n">trace_poly</span><span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="n">trace_poly</span><span class="p">[</span><span class="s1">&#39;β1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> \
     <span class="n">x_p</span> <span class="o">+</span> <span class="n">trace_poly</span><span class="p">[</span><span class="s1">&#39;β2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="n">x_p</span><span class="o">**</span><span class="mi">2</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_2</span><span class="p">,</span> <span class="n">y_2</span><span class="p">)</span>
@@ -999,22 +977,16 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </ul>
 <p>这种情况下，因变量可以这样建模：</p>
 <div class="math notranslate nohighlight">
-\[
-\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.15} \label{式3.15}
-\]</div>
+\[\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.15} \label{式3.15}\]</div>
 <p>注意该式与多项式回归的式子不一样，现在有了多个变量而不再是一个变量的多次方。用线性代数方法可以表示为更简洁的形式：</p>
 <div class="math notranslate nohighlight">
-\[
-\mu=\alpha+ \mathbb{X} \beta \tag{式3.16} \label{式3.16}
-\]</div>
+\[\mu=\alpha+ \mathbb{X} \beta \tag{式3.16} \label{式3.16}\]</div>
 <p>其中， <span class="math notranslate nohighlight">\(β\)</span> 是一个长度为 <span class="math notranslate nohighlight">\(m\)</span> 的系数向量，也就是说，自变量的个数为 <span class="math notranslate nohighlight">\(m\)</span> 。变量 <span class="math notranslate nohighlight">\(\mathbb{X}\)</span> 是一个维度为 <span class="math notranslate nohighlight">\(n×m\)</span> 的矩阵，其中， <span class="math notranslate nohighlight">\(n\)</span> 表示观测的样本数， <span class="math notranslate nohighlight">\(m\)</span> 表示自变量个数。有关线性代数，可参阅相关书籍。本书中，您需要知道的只是使用了一种更短、更方便的方式来编写我们的模型：</p>
 <div class="math notranslate nohighlight">
-\[
-\mathbb{X} \beta=\sum_{i=1}^{n} \beta_{i} x_{i}=\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.17} \label{式3.17}
-\]</div>
+\[\mathbb{X} \beta=\sum_{i=1}^{n} \beta_{i} x_{i}=\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.17} \label{式3.17}\]</div>
 <p>在一元线性回归模型中，我们希望找到一条直线来解释数据，而在多元线性回归模型中，我们希望找到一个维度为 <span class="math notranslate nohighlight">\(m\)</span> 的超平面来解释数据。因此，多元线性回归模型本质上与一元线性回归模型是一样的，唯一区别是：现在 <span class="math notranslate nohighlight">\(β\)</span> 是一个向量而 <span class="math notranslate nohighlight">\(\mathbb{X}\)</span> 是一个矩阵。</p>
 <p>现在定义如下数据：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">314</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">314</span><span class="p">)</span>
 <span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">alpha_real</span> <span class="o">=</span> <span class="mf">2.5</span>
 <span class="n">beta_real</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]</span>
@@ -1027,7 +999,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </pre></div>
 </div>
 <p>然后定义一个函数去画 3 个散点图，前两个表示的是自变量与因变量的关系，最后一个表示的是两个自变量之间的关系。这只是个普通的绘图函数，本章后面将会反复用到。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">scatter_plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">scatter_plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">x_i</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">T</span><span class="p">):</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
@@ -1041,7 +1013,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </pre></div>
 </div>
 <p>用前面刚刚定义的 scatter_plot 可以将我们的合成数据可视化地表示出来。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scatter_plot</span><span class="p">(</span><span class="n">X_centered</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scatter_plot</span><span class="p">(</span><span class="n">X_centered</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
 <center>
@@ -1054,7 +1026,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <li><p>使用 <code class="docutils literal notranslate"><span class="pre">pm.math.dot()</span></code> 来定义变量 <span class="math notranslate nohighlight">\(\mu\)</span> ，也就是前面提到的线性代数中的点乘（或者矩阵相乘）。</p></li>
 </ul>
 <p>如果你对 <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> 比较熟悉，那么应该知道 <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> 包含一个点乘函数，而且 <code class="docutils literal notranslate"><span class="pre">Python3.5</span></code>（以及 <code class="docutils literal notranslate"><span class="pre">NumPy1.10</span></code>）之后增加了一个新的操作符&#64;。不过这里我们使用的是 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中的点乘函数（其实是 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 中矩阵相乘的一个别名），因为变量 <span class="math notranslate nohighlight">\(\beta\)</span> 在这里是一个 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 中的张量而不是 <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> 数组。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_mlr</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_mlr</span><span class="p">:</span>
     <span class="n">α_tmp</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α_tmp&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
     <span class="n">β</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">ϵ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;ϵ&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
@@ -1065,7 +1037,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </pre></div>
 </div>
 <p>现在看一下推断出来的参数的总结，这样分析结果会更容易一些。我们的模型表现如何呢？</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">varnames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="s1">&#39;ϵ&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">varnames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="s1">&#39;ϵ&#39;</span><span class="p">]</span>
 <span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_mlr</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="n">varnames</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1080,7 +1052,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <p>前面已经讨论了相关性并不意味着因果关系，原因可能是在分析过程中忽略了变量 <span class="math notranslate nohighlight">\(z\)</span> 。在这种情况下， <span class="math notranslate nohighlight">\(z\)</span> 称作混淆变量（或混淆因素）。现实中最大的问题是 <span class="math notranslate nohighlight">\(z\)</span> 很容易被忽视。有可能是因为压根没有测量 <span class="math notranslate nohighlight">\(z\)</span> ，或者是因为数据集中没有包含 <span class="math notranslate nohighlight">\(z\)</span>，又或是因为压根没想到它可能与我们关心的问题有联系而没有测量它。</p>
 <p>没有考虑到混淆变量可能会导致分析得出奇怪的相关性，在解释数据和做预测的时候，这是一个问题。理解底层数据生成机制有利于将学到的东西迁移到新场景中，相反，盲目的预测很难迁移。例如，帆布鞋产量可以作为一个国家经济实力的易测指标，不过对于生产链不同或者文化背景不同的国家而言，用其作为指标可能导致错误的结果。</p>
 <p>下面使用人工合成数据来探讨混淆变量的问题。下面的代码中模拟了一个混淆变量 <span class="math notranslate nohighlight">\(x_1\)</span>，注意该变量是如何影响 <span class="math notranslate nohighlight">\(x_2\)</span>和 <span class="math notranslate nohighlight">\(y\)</span> 的。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">x_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
 <span class="n">x_2</span> <span class="o">=</span> <span class="n">x_1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -1090,7 +1062,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </pre></div>
 </div>
 <p>根据生成数据的方式，可以看出变量已经中心化了。因此，不需要再对数据进行中心化处理来加速推断过程了。事实上该例中的数据已经是归一化的了。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scatter_plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scatter_plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
 <center>
@@ -1103,7 +1075,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <li><p>第二个模型 <code class="docutils literal notranslate"><span class="pre">m_x1</span></code>， 是 <span class="math notranslate nohighlight">\(x_1\)</span> 的简单线性回归模型。</p></li>
 <li><p>第三个模型 <code class="docutils literal notranslate"><span class="pre">m_x2</span></code>， 是 <span class="math notranslate nohighlight">\(x_2\)</span> 的简单线性回归模型。</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">m_x1x2</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">m_x1x2</span><span class="p">:</span>
     <span class="n">α</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
     <span class="n">β1</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β1&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
     <span class="n">β2</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β2&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -1128,7 +1100,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </pre></div>
 </div>
 <p>使用森林图，可以在一个图中对这些模型的参数 <span class="math notranslate nohighlight">\(\beta\)</span>进行比较：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_forest</span><span class="p">([</span><span class="n">trace_x1x2</span><span class="p">,</span> <span class="n">trace_x1</span><span class="p">,</span> <span class="n">trace_x2</span><span class="p">],</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_forest</span><span class="p">([</span><span class="n">trace_x1x2</span><span class="p">,</span> <span class="n">trace_x1</span><span class="p">,</span> <span class="n">trace_x2</span><span class="p">],</span>
                <span class="n">model_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;m_x1x2&#39;</span><span class="p">,</span> <span class="s1">&#39;m_x1&#39;</span><span class="p">,</span> <span class="s1">&#39;m_x2&#39;</span><span class="p">],</span>
                <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;β1&#39;</span><span class="p">,</span> <span class="s1">&#39;β2&#39;</span><span class="p">],</span>
                <span class="n">combined</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;cycle&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
@@ -1143,7 +1115,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <div class="section" id="id19">
 <h3>3.5.2 多重共线性或相关性太高有影响吗？<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <p>前面的例子中，可以看到多元线性回归模型中的冗余变量问题，同时还了解了混淆变量的重要性。接下来沿着前面例子继续深入学习：当两个变量高度相关时会发生什么。为了研究该问题及其对推断的影响，我们使用和前面一样的合成数据和模型，不过通过减小根据 <span class="math notranslate nohighlight">\(x_1\)</span> 生成 <span class="math notranslate nohighlight">\(x_2\)</span> 时的随机噪声，增加了  <span class="math notranslate nohighlight">\(x_1\)</span> 和  <span class="math notranslate nohighlight">\(x_2\)</span> 之间的相关性：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">x_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
 <span class="n">x_2</span> <span class="o">=</span> <span class="n">x_1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
@@ -1152,7 +1124,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </pre></div>
 </div>
 <p>数据生成代码中的这种变化实际上等同于将零加到 <span class="math notranslate nohighlight">\(x_1\)</span> ，因此，在所有实际目的中，这两个变量都是相等的。然后，您可以尝试改变尺度值并使用不太极端的值，但现在我们想让事情简单些。生成新数据后，检查散点图的外观：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">scatter_plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scatter_plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
 <center>
@@ -1160,7 +1132,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <p>图3.22</p>
 </center>
 <p>您应该看到上图中，<span class="math notranslate nohighlight">\(x_1\)</span> 和 <span class="math notranslate nohighlight">\(x_2\)</span> 的散点图实际上是一条斜率约为 1 的直线。然后，运行多元线性回归：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_red</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_red</span><span class="p">:</span>
     <span class="n">α</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
     <span class="n">β</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">ϵ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;ϵ&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
@@ -1170,7 +1142,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </pre></div>
 </div>
 <p>用森林图检查参数 <span class="math notranslate nohighlight">\(\beta\)</span> 的结果：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_forest</span><span class="p">(</span><span class="n">trace_red</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;β&#39;</span><span class="p">],</span> <span class="n">combined</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_forest</span><span class="p">(</span><span class="n">trace_red</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;β&#39;</span><span class="p">],</span> <span class="n">combined</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 </pre></div>
 </div>
 <center>
@@ -1178,7 +1150,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <p>图3.23</p>
 </center>
 <p><span class="math notranslate nohighlight">\(\beta\)</span> 参数的 <code class="docutils literal notranslate"><span class="pre">HPD</span> <span class="pre">区间</span></code> 相当广，与先验几乎一样。可以从系数的散点图中得到一些线索：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_pair</span><span class="p">(</span><span class="n">trace_red</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;β&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_pair</span><span class="p">(</span><span class="n">trace_red</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;β&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 <center>
@@ -1187,14 +1159,10 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </center>
 <p>哇！参数 <span class="math notranslate nohighlight">\(\beta\)</span> 的边缘后验是一条非常窄的对角线。当一个系数上升时，另一个系数必然下降。两者实际上是相关的。这只是模型和数据的结果。根据我们的模型，平均值 <span class="math notranslate nohighlight">\(\mu\)</span> 是：</p>
 <div class="math notranslate nohighlight">
-\[
-\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \tag{式3.19} \label{式3.19}
-\]</div>
+\[\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \tag{式3.19} \label{式3.19}\]</div>
 <p>假设  <span class="math notranslate nohighlight">\(x_1\)</span> 和  <span class="math notranslate nohighlight">\(x_2\)</span> 不只是近似相同，而是完全一样的，那么可以将模型改写成如下形式：</p>
 <div class="math notranslate nohighlight">
-\[
-\mu=\alpha+（\beta_{1} +\beta_{2}） x \tag{式3.20} \label{式3.20}
-\]</div>
+\[\mu=\alpha+（\beta_{1} +\beta_{2}） x \tag{式3.20} \label{式3.20}\]</div>
 <p>可以看到，对 <span class="math notranslate nohighlight">\(μ\)</span> 有影响的是  <span class="math notranslate nohighlight">\(\beta_1\)</span> 与 <span class="math notranslate nohighlight">\(\beta_2\)</span> 的和而不是二者单独的值，因而模型是不确定的（或者说，数据并不能决定  <span class="math notranslate nohighlight">\(\beta_1\)</span> 和 <span class="math notranslate nohighlight">\(\beta_2\)</span> 的值）。在我们的例子中，<span class="math notranslate nohighlight">\(\beta\)</span> 并不能在区间 [-∞,∞] 内自由移动，原因有两个：其一，两个变量几乎是相同的，不过并非完全一样；其二，更重要的是 <span class="math notranslate nohighlight">\(\beta\)</span> 系数的可能取值受到先验的限制。</p>
 <p>该例子中有几点需要注意。</p>
 <ul class="simple">
@@ -1215,7 +1183,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <div class="section" id="id20">
 <h3>3.5.3 通过多元线性回归防止掩蔽效应<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
 <p>有一种情况与前面见过的类似，其中某个变量与因变量正相关而另外一个与因变量负相关。这里人工合成一些数据来说明。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
 <span class="n">N</span> <span class="o">=</span> <span class="mi">126</span>
 <span class="n">r</span> <span class="o">=</span> <span class="mf">0.8</span>
 <span class="n">x_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
@@ -1236,7 +1204,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <li><p>第三个模型 <code class="docutils literal notranslate"><span class="pre">m_x2</span></code>，它是一个对 <span class="math notranslate nohighlight">\(x_2\)</span> 的简单线性回归。</p></li>
 </ul>
 <p>从这些模型采样后，使用森林图查看参数进行比较：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_forest</span><span class="p">([</span><span class="n">trace_x1x2</span><span class="p">,</span> <span class="n">trace_x1</span><span class="p">,</span> <span class="n">trace_x2</span><span class="p">],</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_forest</span><span class="p">([</span><span class="n">trace_x1x2</span><span class="p">,</span> <span class="n">trace_x1</span><span class="p">,</span> <span class="n">trace_x2</span><span class="p">],</span>
                <span class="n">model_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;m_x1x2&#39;</span><span class="p">,</span> <span class="s1">&#39;m_x1&#39;</span><span class="p">,</span> <span class="s1">&#39;m_x2&#39;</span><span class="p">],</span>
                <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;β1&#39;</span><span class="p">,</span> <span class="s1">&#39;β2&#39;</span><span class="p">],</span>
                <span class="n">combined</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;cycle&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
@@ -1254,16 +1222,14 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <p>目前为止，所有多元回归模型的定义中，在其他自变量固定的条件下，  <span class="math notranslate nohighlight">\(x_1\)</span> 的变化都会隐式地带来 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的稳定变化。不过这显然并非一定的，有可能改变  <span class="math notranslate nohighlight">\(x_2\)</span> 之后，原来 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 与 <span class="math notranslate nohighlight">\(x_1\)</span> 之间的关系发生了改变。一个经典例子是药物之间的相互作用，例如，在没有使用药物 B 时，增加药物 A 的剂量有正向影响，而当增加药物 B 的剂量时，药物 A 反而有负向影响。</p>
 <p>目前见过的所有例子中，因变量对于自变量的作用都是加性的。我们只是增加变量并乘以一个系）。如果希望捕捉到前述药物变量间的交互效应，需要给模型增加一项非加性的量，例如：变量间的乘积：</p>
 <div class="math notranslate nohighlight">
-\[
-\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}+\beta_{3} x_{1} x_{2} \tag{式3.21} \label{式3.21}
-\]</div>
+\[\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}+\beta_{3} x_{1} x_{2} \tag{式3.21} \label{式3.21}\]</div>
 <p>注意这里系数 <span class="math notranslate nohighlight">\( β_3\)</span>  乘的是  <span class="math notranslate nohighlight">\(x_1\)</span> 和  <span class="math notranslate nohighlight">\(x_2\)</span> 的乘积，该非加性项只是用来说明统计学中的变量间相互作用的一个例子，因为它衡量了变量之间的相关性。事实上对相关性建模的表达式有很多种，相乘只是其中一个比较常用的。</p>
 <p>解释有交互作用的线性模型并不像解释没有交互作用的线性模型那么容易。让我们重写表达式 3.21：</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*} \tag{式3.22} \label{式3.22}
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*} \tag{式3.22} \label{式3.22}
 \mu &amp;=\alpha+\underbrace{\left(\beta_{1}+\beta_{3} x_{2}\right)}_{\text {slope of } x_{1}} x_{1}+\beta_{2} x_{2} \\
 \mu &amp;=\alpha+\beta_{1} x_{1}+\underbrace{\left(\beta_{2}+\beta_{3} x_{1}\right)}_{\text {slope of } x_{2}} x_{2} 
-\end{align*}\]</div>
+\end{align*}\end{split}\]</div>
 <p>上式表明以下内容：</p>
 <ul class="simple">
 <li><p>相互作用项可以理解为线性模型。因此，平均值 <span class="math notranslate nohighlight">\(\mu\)</span> 的表达式是一个线性模型，其中包含另一个线性模型！</p></li>
@@ -1277,7 +1243,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <h2>3.6 变方差的线性回归模型<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
 <p>前述章节一直使用线性模型来建模概率分布的平均值 <span class="math notranslate nohighlight">\(\mu\)</span> ，上一节甚至使用它来建模了交互作用。但是，上述模型均建立在同方差假设（即假设变量的方差相等）基础之上，当同方差假设不成立（或没意义）时，可以用线性模型对方差（或标准差）建模，此时可能希望将方差视为自变量的函数。当该函数是线性函数时，被称为变方差的线性回归模型。</p>
 <p>世界卫生组织和世界各地其他卫生机构收集新生儿和学步儿童的数据，并设计了标准的生长图表。这些图表是儿童工具包的重要组成部分，也是衡量人口总体幸福感的指标（ <a class="reference external" href="http://www.Who.int/ChildGrowth/en/">链接</a>）。这些数据的一个例子是新生女孩的身高随年龄（以月为单位）的变化：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/babies.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/babies.csv&#39;</span><span class="p">)</span>
 <span class="n">data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s1">&#39;Month&#39;</span><span class="p">,</span> <span class="s1">&#39;Lenght&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1291,7 +1257,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 <li><p>均值 <span class="math notranslate nohighlight">\(\mu\)</span> 的线性模型是 <span class="math notranslate nohighlight">\(\sqrt{x}\)</span> 的函数，将线性模型拟合到曲线上，仅用于说明案例，无物理解释。</p></li>
 <li><p>定义了一个共享变量 <code class="docutils literal notranslate"><span class="pre">x_shared</span></code> 。在模型拟合之后，用它来更改变量（在本例中为 Month) 的值，而无需重新调整模型。</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_vv</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_vv</span><span class="p">:</span>
     <span class="n">α</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
     <span class="n">β</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
     <span class="n">γ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;γ&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -1304,7 +1270,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </pre></div>
 </div>
 <p>下图显示了我们模型的结果。均值用一条黑色曲线表示，两个半透明的橙色带分别表示 1 个和 2 个标准差：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Month</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">Lenght</span><span class="p">,</span> <span class="s1">&#39;C0.&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Month</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">Lenght</span><span class="p">,</span> <span class="s1">&#39;C0.&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="n">μ_m</span> <span class="o">=</span> <span class="n">trace_vv</span><span class="p">[</span><span class="s1">&#39;μ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">ϵ_m</span> <span class="o">=</span> <span class="n">trace_vv</span><span class="p">[</span><span class="s1">&#39;ϵ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Month</span><span class="p">,</span> <span class="n">μ_m</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
@@ -1322,13 +1288,13 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 </center>
 <p>在写此书时，我女儿只有两周大，所以我想知道她的身高与刚绘制的生长图表相比如何。回答此问题的方法是询问半个月大婴儿身高的分布模型。使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> ，可以通过 <code class="docutils literal notranslate"><span class="pre">sample_posterior_predictive</span></code> 函数回答这个问题。</p>
 <p>该函数的输出基于观测数据和所估计参数分布（包括不确定性）的样本。唯一问题是：根据定义，此函数返回对观测值的预测，但数据集中所有度量都是以整月报告的，没有 0.5 个月的情况（我关心的值）。要获得非观测值的预测，更简单的方法是定义一个共享变量（作为模型的一部分），然后在对后验预测分布采样之前更新共享变量的值：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_shared</span><span class="o">.</span><span class="n">set_value</span><span class="p">([</span><span class="mf">0.5</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_shared</span><span class="o">.</span><span class="n">set_value</span><span class="p">([</span><span class="mf">0.5</span><span class="p">])</span>
 <span class="n">ppc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_vv</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model_vv</span><span class="p">)</span>
 <span class="n">y_ppc</span> <span class="o">=</span> <span class="n">ppc</span><span class="p">[</span><span class="s1">&#39;y_pred&#39;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>现在，可以画出两周大婴儿的预期身高分布，并计算额外数据。例如，给定孩子的身高，她所处的百分位数。在下面的代码块和图中查看该示例。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ref</span> <span class="o">=</span> <span class="mf">47.5</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ref</span> <span class="o">=</span> <span class="mf">47.5</span>
 <span class="n">density</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">_fast_kde</span><span class="p">(</span><span class="n">y_ppc</span><span class="p">)</span>
 <span class="n">x_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="n">density</span><span class="p">)</span>
