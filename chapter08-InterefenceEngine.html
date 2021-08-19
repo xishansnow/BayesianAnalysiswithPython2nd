@@ -275,7 +275,7 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#advi">
-     8.2.4 自动微分变分推断法 （ADVI）
+     8.2.4  一种通用的自动变分方法 – ADVI
     </a>
    </li>
   </ul>
@@ -525,7 +525,7 @@
 <h3>8.2.3 变分方法<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>大多数现代贝叶斯统计都是使用马尔可夫方法做推断（见下一节），但对于大数据集而言，马尔可夫方法太慢了，而变分方法此时是一个更好的选择。</p>
 <p>变分法与拉普拉斯方法有些相似，其基本思想都是 “用一种更简单的分布来近似后验分布”，但变分法没有将近似分布限定为高斯分布，而是推广到任意可参数化的分布，并且通过最优化方法求得近似分布的参数，进而获得一个和真实分布最相似的精细分布。</p>
-<p><strong>(1) 近似分布最优解的目标函数设置</strong></p>
+<p><strong>(1) 目标函数设置 – 证据下界（ ELBO ）</strong></p>
 <p>衡量分布之间相似程度的常用方法是使用 <code class="docutils literal notranslate"><span class="pre">Kullback-Leibler(KL)</span> <span class="pre">散度</span></code>（第 5 章中讨论过）。使用 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 可得：</p>
 <div class="math notranslate nohighlight">
 \[D_{K L}(q(\theta) \| p(\theta \mid y))=\int q(\theta) \log \frac{q(\theta)}{p(\theta \mid y)} d(\theta)  \tag{8.1} \label{式8.1}\]</div>
@@ -551,7 +551,7 @@
 <div class="math notranslate nohighlight">
 \[D_{K L}(q(\theta)|| p(\theta \mid y))=-\underbrace{ \int q(\theta) \log \frac{p(\theta, y)}{q(\theta)} d(\theta)}_{\text {evidence lower bound (ELBO) }}+\log p(y) \tag{8.7} \label{式8.7}\]</div>
 <p>因为 <span class="math notranslate nohighlight">\(D_{K L} \geq 0\)</span> ，然后 <span class="math notranslate nohighlight">\(\text{log} p(y) \geq ELBO\)</span> ，即证据对数 <span class="math notranslate nohighlight">\(\text{log} p(y)\)</span> 总是大于等于证据下界 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code>。在固定数据集的情况下，证据可视为常量，因此只需关注 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 。（式8.7）表明：<strong>最大化 ELBO 相当于最小化 KL 散度</strong>。因此，最优化的目标函数转换为 “使 ELBO 最大化”。</p>
-<p><strong>（2）近似分布的设定–平均场近似</strong></p>
+<p><strong>（2）设定近似分布 – 平均场近似法</strong></p>
 <p>上述过程尚未引入对后验的任何近似，只是提供了一个求取（近似分布的参数）最优解的框架。实际上，近似是在选择 <span class="math notranslate nohighlight">\(q(.)\)</span> 时才开始发生的。原则上， <span class="math notranslate nohighlight">\(q(.)\)</span> 可以是任何想要的分布形式，但实际上应选择易于处理的分布。</p>
 <p>一种设置近似分布的方案是： <strong>假设高维后验可以用若干独立的一维分布来描述</strong>。 该方案在数学上可以表示如下：</p>
 <div class="math notranslate nohighlight">
@@ -561,7 +561,7 @@
 <p>有了上述要素，就可以将推断问题转化为最优化问题，通过最大化 ELBO 来求解近似分布的参数。原理似乎比较简单，不过在实践中可能会稍微复杂一些。</p>
 </div>
 <div class="section" id="advi">
-<h3>8.2.4 自动微分变分推断法 （ADVI）<a class="headerlink" href="#advi" title="Permalink to this headline">¶</a></h3>
+<h3>8.2.4  一种通用的自动变分方法 – ADVI<a class="headerlink" href="#advi" title="Permalink to this headline">¶</a></h3>
 <p>平均场变分法的主要缺点是：<strong>必须为根据模型的近似分布设定，提出一个特定算法</strong>。也就是说，很难形成一个适用所有模型的通用推断引擎，这显然严重影响了变分推断引擎的设计和推广使用。因此，很多人关注了该问题，希望能够提出变分法的自动化方案。</p>
 <p>最近提出的一种被称为 <code class="docutils literal notranslate"><span class="pre">自动微分变分推断</span> <span class="pre">(ADVI)</span></code> 的方法，因为对大数据集具有较好的通用性而得到推广，参见<a class="reference external" href="http://arxiv.org/abs/1603.00788">相关论文</a> 。在概念层面，<code class="docutils literal notranslate"><span class="pre">ADVI</span></code> 的主要步骤包括：</p>
 <ul class="simple">
@@ -574,12 +574,13 @@
 </div>
 <div class="section" id="id7">
 <h2>8.3 马尔科夫方法<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<p>有一系列与随机数相关的方法被统称为 <strong>MCMC 方法</strong>。对于贝叶斯统计，只要能够逐点计算出似然（人工建模与似然假设）和先验值（人工设置先验），MCMC 方法就能从真实后验分布中获得样本。这与前面提到的网格法相同，但与网格法在参数空间平均间隔采样不同，MCMC 方法依据概率密度的大小从不同的分布区域采集不同数量的样本，其性能远优于网格法。也就是说，MCMC 方法根据参数空间中每个区域的相对概率来确定从该区域抽取样本的次数。例如：如果 A 区域的概率值是 B 区域的两倍，那么从 A 区域抽取的样本数量也将是 B 区域的两倍。因此，即使无法解析计算得到整个后验，也可以使用 MCMC 方法从后验中获取足够有效的样本。</p>
+<p>有一系列与随机数相关的方法被统称为 <strong>MCMC 方法</strong>。对于贝叶斯统计，只要能够逐点计算出似然（人工建模与似然假设）和先验值（人工设置先验），MCMC 方法就能从真实后验分布中获得样本。这与前面提到的网格法相同，但与网格法在参数空间平均间隔采样不同，MCMC 方法依据概率密度的大小从不同的分布区域采集不同数量的样本，其性能远优于网格法。</p>
+<p>也就是说，MCMC 方法根据参数空间中每个区域的相对概率来确定从该区域抽取样本的次数。例如：如果 A 区域的概率值是 B 区域的两倍，那么从 A 区域抽取的样本数量也将是 B 区域的两倍。因此，即使无法解析计算得到整个后验，也可以使用 MCMC 方法从后验中获取足够有效的样本。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>注：后验计算公式中分母的边缘似然项很难计算，进而导致很难获得后验的绝对概率值，但 MCMC 方法依据相对概率来确定采样数量的多少，有效规避了该问题。</p>
+<p>注：后验计算公式中分母的边缘似然项很难计算，进而导致很难获得后验的绝对概率值，但 MCMC 方法并不依据绝对概率值来确定采样数量的多少，而是依据相对概率，有效规避了该问题。</p>
 </div>
-<p>在统计模型中，人们关心的所有事物，几乎都与某些关于参数 <span class="math notranslate nohighlight">\(\theta\)</span> 的函数 <span class="math notranslate nohighlight">\(f(\theta)\)</span> 的期望值有关，比如：</p>
+<p>在统计模型中，人们关心的所有事物，几乎都与某些函数 <span class="math notranslate nohighlight">\(f(\theta)\)</span> 的期望值有关，其本质上是与参数 <span class="math notranslate nohighlight">\(\theta\)</span> 的分布有关：</p>
 <div class="math notranslate nohighlight">
 \[\mathbb{E}[f]=\int_{\theta} p(\theta) f(\theta) \mathrm{d} \theta \tag{8.9} \label{式8.9}\]</div>
 <p>下面是该表达式的一些特例：</p>
@@ -588,25 +589,26 @@
 <li><p>求后验预测性分布（公式 1.17）</p></li>
 <li><p>求给定模型的边缘似然（公式 5.13）</p></li>
 </ul>
-<p>使用 MCMC 方法，在采样密度符合相对概率的条件下，可以用有限样本近似公式 8.9：</p>
+<p>（式8.9）基于 <span class="math notranslate nohighlight">\(\theta\)</span> 的连续分布，如果能够从该连续分布中抽取合理的样本集，则可以用有限样本近似式 8.9 的结果，如式8.10 所示。这就是 MCMC 方法的基本出发点，当然前提是 “采样密度符合相对概率”。</p>
 <div class="math notranslate nohighlight">
 \[\lim _{N \rightarrow \infty} \mathbb{E}_{\pi}[f]=\frac{1}{N} \sum_{n=1}^{N} f\left(\theta_{n}\right) \tag{8.10} \label{式8.10}\]</div>
-<p>式 8.10 的问题是：等式只能渐近成立。也就是说，需要无限数量的采样才成立！但实践中采样数量越多，推断效率越低，因此我们希望 MCMC 方法能够尽可能快地收敛到正确答案，即用尽可能少的样本得到正确答案，这是 MCMC 方法的难点问题。</p>
-<p>一般来说，要确定 MCMC 样本已经收敛并非易事。因此，实践中必须依靠实证检验来确保有一个可靠的 <code class="docutils literal notranslate"><span class="pre">MCMC</span> <span class="pre">近似</span></code> 。我们将在 8.4 节“诊断样本”部分讨论该问题。当然，其他近似（包括非马尔可夫方法）也需要实证检验，但本书不会过多讨论它们。</p>
-<p>对 MCMC 方法有一个概念性了解有助于从这些方法中诊断样本。为了理解什么是 <code class="docutils literal notranslate"><span class="pre">MCMC</span> <span class="pre">方法</span></code>，后文把该方法分成两个部分：<code class="docutils literal notranslate"><span class="pre">蒙特卡洛部分</span></code> 和 <code class="docutils literal notranslate"><span class="pre">马尔可夫链部分</span></code> 。</p>
+<p>（式 8.10）的问题是：等式只能渐近成立。也就是说，需要无限数量的采样才成立！但实践中采样数量越多，则推断所需时间越长、效率越低，因此 MCMC 方法必须寻找到能够尽可能快地收敛到正确答案的采样方法，用尽可能少的样本得到正确答案，这是 MCMC 方法的核心问题，也是本节（<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">8.3</span> <span class="pre">节</span> <span class="pre">“马尔可夫方法”</span></code>）的主要内容。</p>
+<p>一般来说，要确定 MCMC 样本已经收敛并非易事。因此，实践中必须依靠实证检验来确保有一个可靠的 MCMC 近似 。本书将在<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">8.4</span> <span class="pre">节</span> <span class="pre">“诊断样本”</span> </code>部分讨论该问题。当然，其他近似（包括非马尔可夫方法）也需要实证检验，但本书不会过多讨论。</p>
+<p>为了理解什么是 MCMC 方法，后文把该方法分成两个部分：『蒙特卡洛部分』 和 『马尔可夫链部分』 。</p>
 <div class="section" id="id8">
 <h3>8.3.1 蒙特卡洛<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
-<p>蒙特卡洛部分可以用随机数来解释。蒙特卡洛方法是一个非常广泛的算法家族，它使用随机抽样来计算或模拟给定过程。蒙特卡洛是摩纳哥的一个区，那里有一家非常著名的赌场。蒙特卡洛方法的开发者之一 <code class="docutils literal notranslate"><span class="pre">Stanislaw</span> <span class="pre">Ulam</span></code> 有一个叔叔曾在那里赌博。<code class="docutils literal notranslate"><span class="pre">Stan</span></code> 的关键思想是，虽然许多问题很难解决，甚至很难用确切方式表达出来，但可以通过从这些问题中抽取样本来有效地研究它们。事实上，蒙特卡洛方法的最早动机是回答有关在纸牌游戏中拿到一张特定牌的可能性问题。解决该问题的常见方法是组合数学分析法。但 <code class="docutils literal notranslate"><span class="pre">Stan</span></code> 认为存在另一种方法，进行多次单轮游戏，最后计算其中有多少次是我们感兴趣的。</p>
-<p>蒙特卡洛方法的第一个应用是解决核物理问题，这是当时用工具很难解决的问题。如今，即使是个人计算机也足以使用蒙特卡洛方法解决许多有趣的问题；因此，蒙特卡洛方法被应用于科学、工程、工业和艺术中的各种问题。</p>
-<p>在使用蒙特卡洛方法计算数值的例子中，教科书上的经典案例是估计 <span class="math notranslate nohighlight">\(π\)</span> 。实际中有更好的方法来计算 <span class="math notranslate nohighlight">\(π\)</span> ，不过该例仍然具有教学意义。我们可以通过以下蒙特卡洛过程估计 <span class="math notranslate nohighlight">\(π\)</span> ：</p>
-<p>（1）在边长为 <span class="math notranslate nohighlight">\(2R\)</span> 的正方形内随机撒 <span class="math notranslate nohighlight">\(N\)</span> 个点。
-（2）在正方形内画一个半径为 <span class="math notranslate nohighlight">\(R\)</span> 的圆，计算在圆内点的个数。
-（3）利用比例估计 <span class="math notranslate nohighlight">\(\bar \pi = 4\frac{inside}{N}\)</span> 。</p>
+<p>蒙特卡洛部分可以用随机数来解释。蒙特卡洛方法是一个非常广泛的算法家族，它使用随机抽样来计算或模拟给定过程。蒙特卡洛是摩纳哥的一个区，那里有一家非常著名的赌场。蒙特卡洛方法的提出者之一 <code class="docutils literal notranslate"><span class="pre">Stan</span></code>，有一个叔叔曾在那儿赌博。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Stan</span></code> 的关键思想是：<strong>虽然许多问题比较难解决，甚至无法用确切的方式表达出来，但可以通过从问题中抽取样本来有效地研究它们</strong>。事实上，蒙特卡洛方法的最早动机是找到纸牌游戏中拿到某张特定牌的可能性。解决该问题的常见方法是利用组合数学，但 <code class="docutils literal notranslate"><span class="pre">Stan</span></code> 认为存在另一种更容易的方法：“进行多次单轮游戏，最后计算其中多少次是我们感兴趣的”。</p>
+<p>蒙特卡洛方法的第一个应用解决的是核物理问题，不过该问题在当时的工具手段下很难实现。发展到如今，即使个人计算机也足以利用蒙特卡洛方法解决许多问题，因此，蒙特卡洛方法被广泛应用于科学、工程、工业和艺术领域中。</p>
+<p>教科书上有关蒙特卡洛方法的经典案例是估计 <span class="math notranslate nohighlight">\(π\)</span> ，可以通过以下蒙特卡洛过程估计：</p>
+<p>（1）在边长为 <span class="math notranslate nohighlight">\(2R\)</span> 的正方形内随机撒 <span class="math notranslate nohighlight">\(N\)</span> 个点。</p>
+<p>（2）在正方形内画一个半径为 <span class="math notranslate nohighlight">\(R\)</span> 的圆，计算在圆内点的个数 <span class="math notranslate nohighlight">\(inside\)</span> 。</p>
+<p>（3）利用比例估计 <span class="math notranslate nohighlight">\(\bar \pi = 4\frac{inside}{N}\)</span> 。</p>
 <p>以下是一些注意事项：</p>
-<p>（1）圆和正方形的面积分别与圆内的点数和总点数成正比。
-（2）如果关系 <span class="math notranslate nohighlight">\(\sqrt{\left(x^{2}+y^{2}\right)} \leq R\)</span> 成立，则认为该点在圆内。
-（3）正方形的面积是 <span class="math notranslate nohighlight">\((2R)^2\)</span> ，圆的面积是 <span class="math notranslate nohighlight">\(πR^2\)</span> ，因此二者面积之比是 <span class="math notranslate nohighlight">\(4/π\)</span></p>
-<p>圆和正方形的面积分别正比于圆内点数和总点数 <span class="math notranslate nohighlight">\(N\)</span>。我们可以通过几行简单的代码来模拟该蒙特卡洛过程计算 <span class="math notranslate nohighlight">\(π\)</span> 值，同时计算出估计值与实际值之间的相对误差：</p>
+<p>（1）圆和正方形的面积，应当分别与圆内点数和总点数成正比，即是一种均匀的随机分布。</p>
+<p>（2）认为该点在圆内的判据是： <span class="math notranslate nohighlight">\(\sqrt{\left(x^{2}+y^{2}\right)} \leq R\)</span> 。</p>
+<p>（3）正方形的面积是 <span class="math notranslate nohighlight">\((2R)^2\)</span> ，圆的面积是 <span class="math notranslate nohighlight">\(πR^2\)</span> ，因此二者面积之比是 <span class="math notranslate nohighlight">\(4/π\)</span></p>
+<p>圆和正方形的面积分别正比于圆内点数 <span class="math notranslate nohighlight">\(inside\)</span> 和总点数 <span class="math notranslate nohighlight">\(N\)</span>，可以通过几行代码来模拟该蒙特卡洛过程，同时计算出估计值与实际值之间的相对误差：</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">10000</span>
 <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
 <span class="n">inside</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span>
@@ -631,7 +633,8 @@
 </div>
 <div class="section" id="id9">
 <h3>8.3.2 马尔科夫链<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p>马尔科夫链是一个数学对象，包含一系列状态以及状态之间的转移概率，如果每个状态转移到其他状态的概率只与当前状态相关，那么这个状态链就称为马尔科夫链。有这样一个马尔科夫链之后，我们可以任取一个初始点，然后根据状态转移概率进行随机游走。假设能够找到这样一个马尔科夫链，其状态转移概率正比于我们想要采样的分布（如贝叶斯分析中的后验分布），采样过程就变成了简单地在该状态链上移动的过程。</p>
+<p>马尔科夫链是一个数学对象，包含一系列状态以及状态之间的转移概率，如果每个状态转移到其他状态的概率只与当前状态相关，那么这个状态链就称为马尔科夫链。有了马尔科夫链，就可以任取一个初始点，然后根据状态转移概率进行随机游走。</p>
+<p>如果能够找到一个马尔科夫链，其状态转移概率正比于待采样的分布（如后验），那么采样过程就变成了简单地在该链上移动。</p>
 <p>那么，如何在不知道后验分布的情况下找到这样的状态链呢？有一个概念叫做<code class="docutils literal notranslate"><span class="pre">细节平衡条件（Detailed</span> <span class="pre">Balance</span> <span class="pre">Condition）</span></code> ，直观上讲，该条件是说，我们需要采用一种可逆的方式移动。也就是说，从状态 <span class="math notranslate nohighlight">\(i\)</span> 转移到状态 <span class="math notranslate nohighlight">\(j\)</span> 的概率必须和状态 <span class="math notranslate nohighlight">\(j\)</span> 转移到状态 <span class="math notranslate nohighlight">\(i\)</span> 的概率相等。该条件是充分条件而不一定是必要条件，且比较容易证明，所以被用于大多数 <code class="docutils literal notranslate"><span class="pre">MCMC方法</span></code> 。</p>
 <p>总的来说就是，如果我们能够找到满足细节平衡条件的马尔科夫链，就可以保证从中采样得到的样本来自正确的分布。保证细节平衡的最流行的算法是 Metropolis-Hasting 算法。</p>
 </div>
@@ -726,7 +729,7 @@
 </div>
 <div class="section" id="id10">
 <h3>8.3.4 汉密尔顿蒙特卡洛方法/不掉向采样<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">MCMC</span> <span class="pre">方法</span></code>（包括 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span></code>）都在理论上保证如果采样次数足够多，最终会得到后验分布的准确近似。不过，实际中想要采样足够多次可能需要相当长的时间，因此，人们提出了一些 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span> <span class="pre">算法</span></code>的替代方案。这些替代方案最初都是用来解决统计力学的问题。<code class="docutils literal notranslate"><span class="pre">汉密尔顿蒙特卡洛方法</span></code>，又称 <code class="docutils literal notranslate"><span class="pre">混合蒙特卡洛（Hybrid</span> <span class="pre">Monte</span> <span class="pre">Carlo，HMC）</span></code>，是此类改进方案之一。简单来说，汉密尔顿这个词描述的是物理系统的总能量，而另外一个名称中的“混合”是指将 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span> <span class="pre">算法</span></code> 与 <code class="docutils literal notranslate"><span class="pre">分子力学</span></code> 相结合。<code class="docutils literal notranslate"><span class="pre">HMC</span> <span class="pre">方法</span></code> 本质上和 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span></code> 是一样的，改进的地方在于：原来是随机放置小船，现在有了一个更聪明的办法，将小船沿着湖底方向放置。为什么这个做法更聪明？因为这样做避免了 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span> <span class="pre">算法</span></code> 的一个主要问题：探索得太慢而且采样结果存在自相关（因为大多数采样结果都被拒绝了）。</p>
+<p>MCMC 方法（包括 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span></code>）都在理论上保证如果采样次数足够多，最终会得到后验分布的准确近似。不过，实际中想要采样足够多次可能需要相当长的时间，因此，人们提出了一些 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span> <span class="pre">算法</span></code>的替代方案。这些替代方案最初都是用来解决统计力学的问题。<code class="docutils literal notranslate"><span class="pre">汉密尔顿蒙特卡洛方法</span></code>，又称 <code class="docutils literal notranslate"><span class="pre">混合蒙特卡洛（Hybrid</span> <span class="pre">Monte</span> <span class="pre">Carlo，HMC）</span></code>，是此类改进方案之一。简单来说，汉密尔顿这个词描述的是物理系统的总能量，而另外一个名称中的“混合”是指将 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span> <span class="pre">算法</span></code> 与 <code class="docutils literal notranslate"><span class="pre">分子力学</span></code> 相结合。<code class="docutils literal notranslate"><span class="pre">HMC</span> <span class="pre">方法</span></code> 本质上和 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span></code> 是一样的，改进的地方在于：原来是随机放置小船，现在有了一个更聪明的办法，将小船沿着湖底方向放置。为什么这个做法更聪明？因为这样做避免了 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span> <span class="pre">算法</span></code> 的一个主要问题：探索得太慢而且采样结果存在自相关（因为大多数采样结果都被拒绝了）。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>统计力学是物理学的一个分支，主要研究原子和分子系统的特性。</p>
@@ -905,7 +908,7 @@
 <div class="section" id="id18">
 <h3>8.4.6 非居中参数化<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <p>从图 8.13 中，可以看到 <span class="math notranslate nohighlight">\(a\)</span> 和 <span class="math notranslate nohighlight">\(b\)</span> 参数是相关的。因为 <span class="math notranslate nohighlight">\(b\)</span> 是形状 10 的向量，所以我们选择绘制 <span class="math notranslate nohighlight">\(b(0)\)</span> ，但是 <span class="math notranslate nohighlight">\(b\)</span> 的任何其他元素都应该显示相同的模式，事实上，这在图 8.14 中表现得非常清楚。这种相关性和这种特殊的漏斗形状是模型定义和模型部分汇集数据的能力的结果。当 <span class="math notranslate nohighlight">\(a\)</span> 的值减小时，<span class="math notranslate nohighlight">\(b\)</span> 的单个值变得越来越接近全局平均值。换句话说，收缩级别会越来越高，因此数据会越来越集中（直到完全集中）。允许部分池化的相同结构还引入了影响采样器方法性能的相关性。</p>
-<p>在第 3 章“线性回归模型”中，我们看到线性模型也会导致相关性（性质不同）；对于这些模型，一个简单的解决办法是将数据居中。我们可能想在这里做同样的事情，但不幸的是，这不会摆脱漏斗形状带来的采样问题。漏斗形状的微妙特征是相关性随参数空间中的位置而变化，因此将数据居中无助于降低这种相关性。<code class="docutils literal notranslate"><span class="pre">MCMC</span> <span class="pre">方法</span></code>，如 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span></code>，在探索高度相关的空间时遇到了问题；这些方法找到合适样本的唯一途径是在前一步的邻域中提出一个新的步骤。结果，探索变得高度自相关且缓慢得令人痛苦。缓慢的 Burn 可能会非常剧烈，以至于简单地增加样本（绘制）的数量并不是一个合理或可行的解决方案。</p>
+<p>在第 3 章“线性回归模型”中，我们看到线性模型也会导致相关性（性质不同）；对于这些模型，一个简单的解决办法是将数据居中。我们可能想在这里做同样的事情，但不幸的是，这不会摆脱漏斗形状带来的采样问题。漏斗形状的微妙特征是相关性随参数空间中的位置而变化，因此将数据居中无助于降低这种相关性。MCMC 方法，如 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span></code>，在探索高度相关的空间时遇到了问题；这些方法找到合适样本的唯一途径是在前一步的邻域中提出一个新的步骤。结果，探索变得高度自相关且缓慢得令人痛苦。缓慢的 Burn 可能会非常剧烈，以至于简单地增加样本（绘制）的数量并不是一个合理或可行的解决方案。</p>
 <p><code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 等采样器更适合这项工作，因为它们根据参数空间的曲率提出步骤，但正如我们已经讨论过的，采样过程的效率高度依赖于调优阶段。对于后验的一些几何形状，例如那些由分层模型诱导的几何形状，调整阶段过度调整到链开始的局部邻域，使得对其他区域的探索效率低下，因为新的建议更具随机性，类似于 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span></code> 的行为。</p>
 </div>
 </div>
