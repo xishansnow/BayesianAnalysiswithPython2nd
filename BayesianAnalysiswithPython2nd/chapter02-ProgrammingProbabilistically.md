@@ -1,3 +1,15 @@
+---
+jupytext:
+  formats: md:myst,ipynb
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
+
 # 第 2 章 概率编程
 
 <style>p{text-indent:2em;2}</style>

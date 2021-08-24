@@ -1,4 +1,16 @@
- #  第 9 章 下一步去哪儿？
+---
+jupytext:
+  formats: md:myst,ipynb
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
+
+#  第 9 章 下一步去哪儿？
 
 <style>p{text-indent:2em;2}</style>
 
