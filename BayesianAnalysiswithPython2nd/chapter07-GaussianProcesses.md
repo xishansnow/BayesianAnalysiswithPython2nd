@@ -70,6 +70,18 @@ y=f(x) \tag{式7.2} \label{式7.2}
 为了使讨论具体化，让我们使用一些 Python 代码来构建和绘制这类函数的两个示例：
 
 ```{code-cell} ipython3
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import pymc3 as pm
+import arviz as az
+
+az.style.use('arviz-darkgrid')
+```
+
+```{code-cell} ipython3
 np.random.seed(42)
 # 曲线1：10个预测变量，10个高斯采样的结果变量
 x = np.linspace(0, 1, 10)

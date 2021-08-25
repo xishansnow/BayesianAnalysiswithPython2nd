@@ -144,6 +144,18 @@ p(A, B)=p(A \mid B) p(B) \tag{式1.1} \label{式1.1}
 让我们看一个使用 `Python` 的示例：真实概率分布是均值 $\mu=0$ 和方差 $\sigma=1$ 的正态（或高斯）分布；这两个参数完全明确地定义了正态分布。使用 SciPy，可以通过编写 `stats.Norm(μ，σ)` 来定义随机变量，并且使用 `rvs` （random variates 的缩写）方法生成一个实例 $x$ 。而下面示例中，代码要求提供三个值：
 
 ```{code-cell} ipython3
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import pymc3 as pm
+import arviz as az
+
+az.style.use('arviz-darkgrid')
+```
+
+```{code-cell} ipython3
 μ = 0.
 σ = 1.
 X = stats.norm(μ, σ)

@@ -62,6 +62,19 @@ Logistic 回归虽然名字中带有 『回归』 字眼，但其实际解决的
 下面代码绘制了 S 型函数的图形：
 
 ```{code-cell} ipython3
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import pymc3 as pm
+import arviz as az
+
+az.style.use('arviz-darkgrid')
+```
+
+
+```{code-cell} ipython3
 z = np.linspace(-8, 8)
 plt.plot(z, 1 / (1 + np.exp(-z)))
 plt.xlabel('z')

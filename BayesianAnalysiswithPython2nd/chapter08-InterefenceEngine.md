@@ -75,6 +75,18 @@ kernelspec:
 下面的代码用网格计算法解决了第一章中的抛硬币问题：
 
 ```{code-cell} ipython3
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import pymc3 as pm
+import arviz as az
+
+az.style.use('arviz-darkgrid')
+```
+
+```{code-cell} ipython3
 def posterior_grid(grid_points=50, heads=6, tails=9):
     """
     A grid implementation for the coin-flipping problem

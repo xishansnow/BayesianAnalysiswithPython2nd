@@ -37,6 +37,18 @@ kernelspec:
 让我们读取并绘制一个简单的数据集：
 
 ```{code-cell} ipython3
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import pymc3 as pm
+import arviz as az
+
+az.style.use('arviz-darkgrid')
+```
+
+```{code-cell} ipython3
 dummy_data = np.loadtxt('../data/dummy.csv')
 x_1 = dummy_data[:, 0]
 y_1 = dummy_data[:, 1]
