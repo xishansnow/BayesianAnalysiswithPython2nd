@@ -1,17 +1,15 @@
 ---
-layout:     post
-title:      "   变分推断的傻瓜书  "
-description:   "  变分推断的傻瓜书 "
-date:       2021-06-02 10:00:00
-author:     "西山晴雪"
-mathjax:    true
-categories: 
-    - [贝叶斯统计, 概率图模型]
-tags:
-    - 贝叶斯统计
-    - 概率图模型
-    - 变分推断
+jupytext:
+  formats: ipynb,.myst.md:myst,md
+  text_representation:
+    extension: '.md'
+    format_name: myst
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
 ---
+
 
 
 # 变分推断傻瓜书

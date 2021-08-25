@@ -1,9 +1,11 @@
 ---
 jupytext:
-  formats: md:myst,ipynb
+  formats: ipynb,.myst.md:myst,md
   text_representation:
     extension: .md
     format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.10.3
 kernelspec:
   display_name: Python 3
   language: python
@@ -169,7 +171,7 @@ for idx, func in enumerate([np.mean, iqr]):
 
 ```{math}
 \text{Bayesian p-value}\triangleq p\left(T_{s i m} \geq T_{o b s} \mid y \right) \tag{式5.1}  \label{式5.1}
-```{math}
+```
 
 可以解释为：从模拟数据中获得与观测数据相同或更高统计量值的概率。$T$ 几乎可以是数据的任意统计量。在图 5.4 中，统计量是左侧的平均值和右侧的四分位数范围。通常 $T$ 应该在最初定义推断任务时就选择好。
 
