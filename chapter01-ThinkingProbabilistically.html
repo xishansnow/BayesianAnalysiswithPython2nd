@@ -516,23 +516,39 @@
 <p>让我们看一个使用 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 的示例：真实概率分布是均值 <span class="math notranslate nohighlight">\(\mu=0\)</span> 和方差 <span class="math notranslate nohighlight">\(\sigma=1\)</span> 的正态（或高斯）分布；这两个参数完全明确地定义了正态分布。使用 SciPy，可以通过编写 <code class="docutils literal notranslate"><span class="pre">stats.Norm(μ，σ)</span></code> 来定义随机变量，并且使用 <code class="docutils literal notranslate"><span class="pre">rvs</span></code> （random variates 的缩写）方法生成一个实例 <span class="math notranslate nohighlight">\(x\)</span> 。而下面示例中，代码要求提供三个值：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">μ</span> <span class="o">=</span> <span class="mf">0.</span>
-<span class="n">σ</span> <span class="o">=</span> <span class="mf">1.</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">μ</span><span class="p">,</span> <span class="n">σ</span><span class="p">)</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
+
+<span class="n">az</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;arviz-darkgrid&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1941</span><span class="o">/</span><span class="mf">3485363202.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">μ</span> <span class="o">=</span> <span class="mf">0.</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">σ</span> <span class="o">=</span> <span class="mf">1.</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">X</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">μ</span><span class="p">,</span> <span class="n">σ</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">x</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1943</span><span class="o">/</span><span class="mf">3373398946.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 
-<span class="ne">NameError</span>: name &#39;stats&#39; is not defined
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;scipy&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">μ</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="n">σ</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">μ</span><span class="p">,</span> <span class="n">σ</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

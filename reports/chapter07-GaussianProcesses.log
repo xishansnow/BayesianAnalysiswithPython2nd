@@ -17,29 +17,26 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-np.random.seed(42)
-# 曲线1：10个预测变量，10个高斯采样的结果变量
-x = np.linspace(0, 1, 10)
-y = np.random.normal(0, 1, len(x))
-plt.plot(x, y, 'o-', label='the first one')
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import pymc3 as pm
+import arviz as az
 
-# 曲线2：相同的10个预测变量，10个采用了不同均值高斯采样的结果变量
-y = np.zeros_like(x)
-for i in range(len(x)):
-    y[i] = np.random.normal(y[i-1], 1)
-plt.plot(x, y, 'o-', label='the second one')
-plt.legend()
+az.style.use('arviz-darkgrid')
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-[0;32m/tmp/ipykernel_2058/1814814927.py[0m in [0;36m<module>[0;34m[0m
-[0;32m----> 1[0;31m [0mnp[0m[0;34m.[0m[0mrandom[0m[0;34m.[0m[0mseed[0m[0;34m([0m[0;36m42[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      2[0m [0;31m# 曲线1：10个预测变量，10个高斯采样的结果变量[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      3[0m [0mx[0m [0;34m=[0m [0mnp[0m[0;34m.[0m[0mlinspace[0m[0;34m([0m[0;36m0[0m[0;34m,[0m [0;36m1[0m[0;34m,[0m [0;36m10[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      4[0m [0my[0m [0;34m=[0m [0mnp[0m[0;34m.[0m[0mrandom[0m[0;34m.[0m[0mnormal[0m[0;34m([0m[0;36m0[0m[0;34m,[0m [0;36m1[0m[0;34m,[0m [0mlen[0m[0;34m([0m[0mx[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      5[0m [0mplt[0m[0;34m.[0m[0mplot[0m[0;34m([0m[0mx[0m[0;34m,[0m [0my[0m[0;34m,[0m [0;34m'o-'[0m[0;34m,[0m [0mlabel[0m[0;34m=[0m[0;34m'the first one'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+[0;32m/tmp/ipykernel_2065/3373398946.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [0;32mimport[0m [0mmatplotlib[0m[0;34m.[0m[0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 2[0;31m [0;32mimport[0m [0mscipy[0m[0;34m.[0m[0mstats[0m [0;32mas[0m [0mstats[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      3[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0;32mimport[0m [0mseaborn[0m [0;32mas[0m [0msns[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mNameError[0m: name 'np' is not defined
-NameError: name 'np' is not defined
+[0;31mModuleNotFoundError[0m: No module named 'scipy'
+ModuleNotFoundError: No module named 'scipy'
 

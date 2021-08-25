@@ -55,6 +55,19 @@ kernelspec:
 重新回顾抛硬币问题，这次使用 `PyMC3` 。首先获取数据，此处使用手动构造的数据。由于数据是我们通过代码生成的，所以知道真实参数值，以下代码中用 `theta_real` 变量表示。显然，在实际数据中，通常并不知道参数的真实值，而是要将其估计出来。
 
 ```{code-cell} ipython3
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import pymc3 as pm
+import arviz as az
+
+az.style.use('arviz-darkgrid')
+```
+
+
+```{code-cell} ipython3
 np.random.seed(123)
 trials = 4
 theta_real = 0.35 # unknown value in a real experiment

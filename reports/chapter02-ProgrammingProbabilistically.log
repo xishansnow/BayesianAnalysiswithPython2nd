@@ -17,20 +17,26 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-np.random.seed(123)
-trials = 4
-theta_real = 0.35 # unknown value in a real experiment
-data = stats.bernoulli.rvs(p=theta_real, size=trials)
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import pymc3 as pm
+import arviz as az
+
+az.style.use('arviz-darkgrid')
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mNameError[0m                                 Traceback (most recent call last)
-[0;32m/tmp/ipykernel_1960/567436309.py[0m in [0;36m<module>[0;34m[0m
-[0;32m----> 1[0;31m [0mnp[0m[0;34m.[0m[0mrandom[0m[0;34m.[0m[0mseed[0m[0;34m([0m[0;36m123[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      2[0m [0mtrials[0m [0;34m=[0m [0;36m4[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      3[0m [0mtheta_real[0m [0;34m=[0m [0;36m0.35[0m [0;31m# unknown value in a real experiment[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      4[0m [0mdata[0m [0;34m=[0m [0mstats[0m[0;34m.[0m[0mbernoulli[0m[0;34m.[0m[0mrvs[0m[0;34m([0m[0mp[0m[0;34m=[0m[0mtheta_real[0m[0;34m,[0m [0msize[0m[0;34m=[0m[0mtrials[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+[0;32m/tmp/ipykernel_1963/3373398946.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [0;32mimport[0m [0mmatplotlib[0m[0;34m.[0m[0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 2[0;31m [0;32mimport[0m [0mscipy[0m[0;34m.[0m[0mstats[0m [0;32mas[0m [0mstats[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      3[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0;32mimport[0m [0mseaborn[0m [0;32mas[0m [0msns[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mNameError[0m: name 'np' is not defined
-NameError: name 'np' is not defined
+[0;31mModuleNotFoundError[0m: No module named 'scipy'
+ModuleNotFoundError: No module named 'scipy'
 

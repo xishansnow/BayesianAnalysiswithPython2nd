@@ -72,6 +72,18 @@ p(y \mid \theta)=\sum_{i=1}^{K} w_{i} p_{i}\left(y \mid \theta_{i}\right) \tag{�
 现在使用`第 2 章『概率编程』`中的化学漂移数据集来构建有限混合模型：
 
 ```{code-cell} ipython3
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import pymc3 as pm
+import arviz as az
+
+az.style.use('arviz-darkgrid')
+```
+
+```{code-cell} ipython3
 cs = pd.read_csv('../data/chemical_shifts_theo_exp.csv')
 cs_exp = cs['exp']
 az.plot_kde(cs_exp)

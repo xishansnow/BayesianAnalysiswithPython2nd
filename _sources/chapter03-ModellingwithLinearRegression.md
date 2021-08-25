@@ -115,6 +115,18 @@ y_i= \alpha + x_i \beta  \tag{式3.1} \label{式3.1}
 定义好该模型，需要为其提供数据。这里采用人工合成的数据集（合成数据集的优点是：可事前知道参数的真值，进而方便检查是否能够使用模型恢复它们）：
 
 ```{code-cell} ipython3
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import pymc3 as pm
+import arviz as az
+
+az.style.use('arviz-darkgrid')
+```
+
+```{code-cell} ipython3
 # 生成实验数据
 np.random.seed(1)
 N=100
