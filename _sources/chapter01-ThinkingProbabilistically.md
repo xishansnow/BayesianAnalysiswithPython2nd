@@ -1,3 +1,17 @@
+---
+jupytext:
+  formats: ipynb,.myst.md:myst,md
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.10.3
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
+
 # 第 1 章 概率思维
 
 <style>p{text-indent:2em;2}</style>
@@ -615,7 +629,4 @@ p(\hat{y} \mid y)=\int p(\hat{y} \mid \theta) p(\theta \mid y) d \theta \tag{式
 
 </center>
 
-
-
-+++ some text
 

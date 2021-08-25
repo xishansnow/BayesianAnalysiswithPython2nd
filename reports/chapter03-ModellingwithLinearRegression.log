@@ -1,0 +1,51 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/nbclient/client.py", line 1117, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/nbclient/util.py", line 78, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/nbclient/util.py", line 57, in just_run
+    return loop.run_until_complete(coro)
+  File "/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/nbclient/client.py", line 558, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/nbclient/client.py", line 862, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/nbclient/client.py", line 765, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# 生成实验数据
+np.random.seed(1)
+N=100
+alpha_real=2.5
+beta_real=0.9
+eps_real=np.random.normal(0,0.5,size=N)
+x=np.random.normal(10,1,N)
+y_real=alpha_real+beta_real*x
+y=y_real+eps_real
+
+_,ax=plt.subplots(1,2,figsize=(8,4))
+ax[0].plot(x,y,'C0.')
+ax[0].set_xlabel('x')
+ax[0].set_ylabel('y',rotation=0)
+ax[0].plot(x,y_real,'k')
+az.plot_kde(y,ax=ax[1])
+ax[1].set_xlabel('y')
+plt.tight_layout()
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+[0;32m/tmp/ipykernel_2026/4172630698.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [0;31m# 生成实验数据[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 2[0;31m [0mnp[0m[0;34m.[0m[0mrandom[0m[0;34m.[0m[0mseed[0m[0;34m([0m[0;36m1[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      3[0m [0mN[0m[0;34m=[0m[0;36m100[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0malpha_real[0m[0;34m=[0m[0;36m2.5[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0mbeta_real[0m[0;34m=[0m[0;36m0.9[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mNameError[0m: name 'np' is not defined
+NameError: name 'np' is not defined
+

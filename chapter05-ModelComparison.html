@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.5f77b4aec8189eecf79907ce328c390d.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -42,15 +42,15 @@
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="第 6 章 混合模型" href="chapter06-MixtureModels.html" />
@@ -82,7 +82,7 @@
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
@@ -148,11 +148,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Ref-chapter08-MC-Integration.html">
-   蒙特卡洛积分
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="Ref-chapter08-MC-MCMCforDummies.html">
    MCMC采样的傻瓜书
   </a>
@@ -196,7 +191,10 @@
 
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
-        
+        <a class="dropdown-buttons"
+            href="_sources/chapter05-ModelComparison.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
         <!-- Download raw file -->
         <a class="dropdown-buttons" href="_sources/chapter05-ModelComparison.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
@@ -209,6 +207,22 @@
 
             <!-- Source interaction buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd/issues/new?title=Issue%20on%20page%20%2Fchapter05-ModelComparison.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -218,6 +232,29 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=lab/tree/chapter05-ModelComparison.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=lab/tree/BayesianAnalysiswithPython2nd/chapter05-ModelComparison.md&branch=master"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
+                data-placement="left"><img class="jupyterhub-button-logo"
+                    src="_static/images/logo_jupyterhub.svg"
+                    alt="Interact on JupyterHub">JupyterHub</button></a>
+        
+        
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
@@ -226,32 +263,37 @@
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
             </div>
-            <nav id="bd-toc-nav">
+            <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
    5.1 后验预测性检查
   </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   5.2 奥卡姆剃刀 — 简约性与准确性
+  </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
+    <a class="reference internal nav-link" href="#id4">
      5.2.1 参数太多导致过拟合
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
+    <a class="reference internal nav-link" href="#id5">
      5.2.2 参数太少导致欠拟合
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id5">
+    <a class="reference internal nav-link" href="#id6">
      5.2.3 简约性与准确性之间的平衡
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id6">
+  <a class="reference internal nav-link" href="#id7">
    5.3 如何对预测准确度进行度量？
   </a>
   <ul class="nav section-nav flex-column">
@@ -261,7 +303,7 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id7">
+    <a class="reference internal nav-link" href="#id8">
      5.3.2 信息准则
     </a>
     <ul class="nav section-nav flex-column">
@@ -310,71 +352,71 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id8">
+  <a class="reference internal nav-link" href="#id9">
    5.5 模型平均
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id9">
+    <a class="reference internal nav-link" href="#id10">
      5.5.1 基于信息准则值的加权平均
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
+    <a class="reference internal nav-link" href="#id11">
      5.5.2 基于预测分布堆叠的加权平均
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
+    <a class="reference internal nav-link" href="#id12">
      5.5.3 其他模型平均方法
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id12">
+  <a class="reference internal nav-link" href="#id13">
    5.6 贝叶斯因子
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id13">
+    <a class="reference internal nav-link" href="#id14">
      5.6.1 一些讨论
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
+    <a class="reference internal nav-link" href="#id15">
      5.6.2 贝叶斯因子的计算
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id15">
+    <a class="reference internal nav-link" href="#id16">
      5.6.3 计算贝叶斯因子时的常见问题
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id16">
+    <a class="reference internal nav-link" href="#id17">
      5.6.4 用序贯蒙特卡罗方法计算贝叶斯因子
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id17">
+    <a class="reference internal nav-link" href="#id18">
      5.6.5 贝叶斯因子与信息准则
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id18">
+  <a class="reference internal nav-link" href="#id19">
    5.7 其他
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id19">
+    <a class="reference internal nav-link" href="#id20">
      5.7.1 正则先验
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id20">
+    <a class="reference internal nav-link" href="#id21">
      5.7.2 深入
      <code class="docutils literal notranslate">
       <span class="pre">
@@ -384,22 +426,22 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id21">
+    <a class="reference internal nav-link" href="#id22">
      5.7.3 熵
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id22">
+      <a class="reference internal nav-link" href="#id23">
        （1）熵的定义
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id23">
+      <a class="reference internal nav-link" href="#id24">
        （2） 熵与方差
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id24">
+      <a class="reference internal nav-link" href="#id25">
        （3） 最大熵原理
       </a>
      </li>
@@ -413,12 +455,12 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id25">
+  <a class="reference internal nav-link" href="#id26">
    5.8 总结
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id26">
+  <a class="reference internal nav-link" href="#id27">
    5.9 习题
   </a>
  </li>
@@ -560,34 +602,44 @@
 </div>
 <p>贝叶斯 <code class="docutils literal notranslate"><span class="pre">p-value</span></code> 与频率派的 <code class="docutils literal notranslate"><span class="pre">p-value</span></code> 名字相似，定义基本上也相同：</p>
 <div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}\text{Bayesian p-value}\triangleq p\left(T_{s i m} \geq T_{o b s} \mid y \right) \tag{式5.1}  \label{式5.1}
-```{math}\\可以解释为：从模拟数据中获得与观测数据相同或更高统计量值的概率。$T$ 几乎可以是数据的任意统计量。在图 5.4 中，统计量是左侧的平均值和右侧的四分位数范围。通常 $T$ 应该在最初定义推断任务时就选择好。\\这些 `p-value` 是贝叶斯的，因为其采样自后验预测性分布。需要注意的是：贝叶斯的 `p-value` 不需要频率主义的任何零假设作为条件；事实上，我们拥有基于观测数据的整个后验分布。此外，贝叶斯也没有使用类似置信度的任何预定义阈值来声明统计显著性，当然也没有执行假设检验。这里只是试图计算一个数字来评估后验预测性分布与数据集的拟合度。\\无论使用曲线图还是数据摘要（如贝叶斯 `p-value` ），或是两者组合，后验预测性检查都是非常灵活的。该概念可让分析师思考不同方法来探索后验预测性分布，并使用合适的方法来讲述一个数据驱动的故事，包括但不限于模型比较。\\在接下来几节中，我们探索一些其他模型比较的方法。\\
-## 5.2 奥卡姆剃刀 --- 简约性与准确性\\假如对同一个问题（或数据）有两个模型，二者对数据解释得同样好，应该选哪个模型呢？有一个基本准则叫做**奥卡姆剃刀**，如果对同一现象有两种不同假说，应选用比较简单的那一种。关于奥卡姆剃刀的论证很多，其中一种说法与波普尔的可证伪性有关，还有一种说法是从实用角度提出的，因为简单模型相比复杂模型更容易理解，此外还有一种论证是基于贝叶斯统计的。这里不深入讨论该准则的论证细节，只将该准则当做一个有用而合理的常识。\\在比较模型时，既要考虑简约型，也需要同时考虑**模型准确性**，即模型对数据拟合得怎么样。之前章节已出现过一些度量准确性的指标，如： $R^2$ 系数可视为线性回归中可解释方差的比例。但如果有两个模型，其中一个对数据的解释比另一个更准确，是否应该选更准确率的模型呢？\\直觉上，似乎最好选择准确度高且简单的模型。但如果简单模型准确度最差，该怎么办？如何才能平衡这两种要素呢？为简化问题，此处引入一个例子来帮助理解如何平衡准确性与简约性。为了更形象些，该例使用一系列逐渐复杂的多项式来拟合同一个简单数据集，并且未采用贝叶斯方法，而是采用最小二乘估计来建模。当然，最小二乘估计其实可转化成带均匀先验的贝叶斯模型，因此，将其理解成贝叶斯方法也没问题。\\```{code-block} ipython3
-x = np.array([4., 5., 6., 9., 12, 14.])
-y = np.array([4.2, 6., 6., 9., 10, 10.])
-plt.figure(figsize=(10, 5))
-order = [0, 1, 2, 5]
-plt.plot(x, y, 'o')
-for i in order:
-    x_n = np.linspace(x.min(), x.max(), 100)
-    coeffs = np.polyfit(x, y, deg=i)
-    ffit = np.polyval(coeffs, x_n)
-    p = np.poly1d(coeffs)
-    yhat = p(x)
-    ybar = np.mean(y)
-    ssreg = np.sum((yhat-ybar)**2)
-    sstot = np.sum((y - ybar)**2)
-    r2 = ssreg / sstot
-    plt.plot(x_n, ffit, label=f'order {i}, $R^2$= {r2:.2f}')
-plt.legend(loc=2)
-plt.xlabel('x')
-plt.ylabel('y', rotation=0)\end{aligned}\end{align} \]</div>
+\[\text{Bayesian p-value}\triangleq p\left(T_{s i m} \geq T_{o b s} \mid y \right) \tag{式5.1}  \label{式5.1}\]</div>
+<p>可以解释为：从模拟数据中获得与观测数据相同或更高统计量值的概率。<span class="math notranslate nohighlight">\(T\)</span> 几乎可以是数据的任意统计量。在图 5.4 中，统计量是左侧的平均值和右侧的四分位数范围。通常 <span class="math notranslate nohighlight">\(T\)</span> 应该在最初定义推断任务时就选择好。</p>
+<p>这些 <code class="docutils literal notranslate"><span class="pre">p-value</span></code> 是贝叶斯的，因为其采样自后验预测性分布。需要注意的是：贝叶斯的 <code class="docutils literal notranslate"><span class="pre">p-value</span></code> 不需要频率主义的任何零假设作为条件；事实上，我们拥有基于观测数据的整个后验分布。此外，贝叶斯也没有使用类似置信度的任何预定义阈值来声明统计显著性，当然也没有执行假设检验。这里只是试图计算一个数字来评估后验预测性分布与数据集的拟合度。</p>
+<p>无论使用曲线图还是数据摘要（如贝叶斯 <code class="docutils literal notranslate"><span class="pre">p-value</span></code> ），或是两者组合，后验预测性检查都是非常灵活的。该概念可让分析师思考不同方法来探索后验预测性分布，并使用合适的方法来讲述一个数据驱动的故事，包括但不限于模型比较。</p>
+<p>在接下来几节中，我们探索一些其他模型比较的方法。</p>
+</div>
+<div class="section" id="id3">
+<h2>5.2 奥卡姆剃刀 — 简约性与准确性<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>假如对同一个问题（或数据）有两个模型，二者对数据解释得同样好，应该选哪个模型呢？有一个基本准则叫做<strong>奥卡姆剃刀</strong>，如果对同一现象有两种不同假说，应选用比较简单的那一种。关于奥卡姆剃刀的论证很多，其中一种说法与波普尔的可证伪性有关，还有一种说法是从实用角度提出的，因为简单模型相比复杂模型更容易理解，此外还有一种论证是基于贝叶斯统计的。这里不深入讨论该准则的论证细节，只将该准则当做一个有用而合理的常识。</p>
+<p>在比较模型时，既要考虑简约型，也需要同时考虑<strong>模型准确性</strong>，即模型对数据拟合得怎么样。之前章节已出现过一些度量准确性的指标，如： <span class="math notranslate nohighlight">\(R^2\)</span> 系数可视为线性回归中可解释方差的比例。但如果有两个模型，其中一个对数据的解释比另一个更准确，是否应该选更准确率的模型呢？</p>
+<p>直觉上，似乎最好选择准确度高且简单的模型。但如果简单模型准确度最差，该怎么办？如何才能平衡这两种要素呢？为简化问题，此处引入一个例子来帮助理解如何平衡准确性与简约性。为了更形象些，该例使用一系列逐渐复杂的多项式来拟合同一个简单数据集，并且未采用贝叶斯方法，而是采用最小二乘估计来建模。当然，最小二乘估计其实可转化成带均匀先验的贝叶斯模型，因此，将其理解成贝叶斯方法也没问题。</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">4.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">,</span> <span class="mf">9.</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mf">14.</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">4.2</span><span class="p">,</span> <span class="mf">6.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">,</span> <span class="mf">9.</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">10.</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">order</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">order</span><span class="p">:</span>
+    <span class="n">x_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">deg</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">ffit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyval</span><span class="p">(</span><span class="n">coeffs</span><span class="p">,</span> <span class="n">x_n</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">coeffs</span><span class="p">)</span>
+    <span class="n">yhat</span> <span class="o">=</span> <span class="n">p</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">ybar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">ssreg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">yhat</span><span class="o">-</span><span class="n">ybar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">sstot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">ybar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">ssreg</span> <span class="o">/</span> <span class="n">sstot</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_n</span><span class="p">,</span> <span class="n">ffit</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;order </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">, $R^2$= </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210512104113_44.webp" /></p>
 <p>图 5.5</p>
 </center>
-<div class="section" id="id3">
-<h3>5.2.1 参数太多导致过拟合<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>5.2.1 参数太多导致过拟合<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>从图 5.5 可看出，模型复杂度增加时，对应的 <span class="math notranslate nohighlight">\(R^2\)</span> 系数在上升。当多项式为 5 阶时，模型完美拟合了数据（ <span class="math notranslate nohighlight">\(R\)</span>^2$ 趋近于 1 表示更好地拟合了数据）。前面章节中讨论过，用多项式去解决实际问题并非特别好的办法。为什么 5 阶多项式能完美拟合所有数据呢？原因是模型中参数数量与样本数量相同，都是 6。也就是说，模型只是用另一种方式对数据进行了编码，并没有从数据中学到任何内容，只是记住了全部数据而已。此外，如果使用这几种模型做预测，5 阶多项式模型对数据的预测看起来也会非常奇怪。</p>
 <p>假设收集了更多数据点。例如，收集到点 [(10，9)，(7，7)] （参见图 5.6）。与 1 阶或 2 阶模型相比，5 阶模型对这些点的解释效果如何？不是很好，对吧？5 阶模型没有在数据中学习任何有趣的模式，反而只是记住了一些东西，因此它在泛化到未来数据方面做得非常糟糕：</p>
 <center>
@@ -596,12 +648,12 @@ plt.ylabel('y', rotation=0)\end{aligned}\end{align} \]</div>
 </center>
 <p>当一个模型与最初用于学习其参数的数据集非常吻合，但在拟合其他数据集却非常差时，被称为 <code class="docutils literal notranslate"><span class="pre">过拟合</span></code> 。过拟合是统计学和机器学习中一个普遍问题。描述过拟合问题的一个有效方法是将数据集视为由 <code class="docutils literal notranslate"><span class="pre">信号</span></code> 和 <code class="docutils literal notranslate"><span class="pre">噪声</span></code> 两部分组成。信号是想要从数据中了解到的东西，如果使用某个数据集，那是必然是因为我们认为该数据集中有一个信号，否则训练毫无意义；而噪声是数据中无用的部分，往往是测量误差、数据生成方式、数据损坏等因素带来的产物。当某个模型过于灵活，甚至能够学到噪声而隐藏信号时，该模型就会变得过拟合。避免过拟合是奥卡姆剃刀的确切理由之一。上例表明，如果仅关注模型对数据的解释能力，很容易被过拟合误导，因为理论上通过增加模型参数数量总是能够提高数据拟合的准确率。</p>
 </div>
-<div class="section" id="id4">
-<h3>5.2.2 参数太少导致欠拟合<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>5.2.2 参数太少导致欠拟合<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>继续关注该例，不过重点放在 0 阶模型上。在 0 阶模型中，所有 <span class="math notranslate nohighlight">\(\beta\)</span> 参数都为 0，因而变量 <span class="math notranslate nohighlight">\(x\)</span> 和 <span class="math notranslate nohighlight">\(y\)</span> 间的线性关系变成了只描述结果变量的一个高斯模型。对于 0 阶模型来说，预测变量对模型不再有任何影响，模型只捕捉到结果变量的均值。换句话说，模型认为数据能够通过结果变量的均值以及一些高斯噪声来解释。我们称这种模型是欠拟合的，因为它实在太简单了，以至于不能从数据中获取有意义的模式。通常，一个参数很少的模型容易出现欠拟合。</p>
 </div>
-<div class="section" id="id5">
-<h3>5.2.3 简约性与准确性之间的平衡<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3>5.2.3 简约性与准确性之间的平衡<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>经常与奥卡姆剃刀准则一起提到的是爱因斯坦的一句名言“事情应该尽可能简单，但不必过于简单”。我们在建模时需要保持某种平衡。理想状态下，模型既不过拟合也不欠拟合，因此，通常需要优化或者调整模型来权衡二者。</p>
 <p>机器学习领域中，通常从<code class="docutils literal notranslate"><span class="pre">方差（variance）</span></code>和 <code class="docutils literal notranslate"><span class="pre">偏差（bias）</span></code> 两个角度来讨论和权衡二者：</p>
 <ul class="simple">
@@ -627,8 +679,8 @@ plt.ylabel('y', rotation=0)\end{aligned}\end{align} \]</div>
 </ul>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>5.3 如何对预测准确度进行度量？<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2>5.3 如何对预测准确度进行度量？<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>在上例中，很容易看出 0 阶模型非常简单，而 5 阶模型相对数据过于复杂，但其他两个模型呢？要回答该问题，需要一种原则性的方式，在考虑准确性同时，兼顾考虑简约性。要做到这一点，需要引入几个新概念：</p>
 <ul class="simple">
 <li><p><strong>样本内精度</strong>：基于拟合模型的样本数据测量得到的模型精度。</p></li>
@@ -650,8 +702,8 @@ plt.ylabel('y', rotation=0)\end{aligned}\end{align} \]</div>
 <p>交叉验证是机器学习从业者的谋生之本，有关更多细节，可以阅读 <code class="docutils literal notranslate"><span class="pre">Sebastian</span> <span class="pre">Raschka</span></code> 的《<code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">Machine</span> <span class="pre">Learning</span></code>》一书，或 <code class="docutils literal notranslate"><span class="pre">Jack</span> <span class="pre">Vanderplas</span></code> 的《<code class="docutils literal notranslate"><span class="pre">Python</span> <span class="pre">Data</span> <span class="pre">Science</span> <span class="pre">Handbook</span></code>》。</p>
 <p>交叉验证简单而强大，不过对某些模型或者量很大的数据而言，交叉验证的计算量可能超出可接受范围。因此，许多人尝试提出了一些更容易计算的量，来得到近似交叉验证的效果，或者应用到不能直接使用交叉验证的情况，其中比较出名的是<strong>信息准则</strong>。</p>
 </div>
-<div class="section" id="id7">
-<h3>5.3.2 信息准则<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h3>5.3.2 信息准则<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>信息准则是一系列用来比较模型对数据拟合程度的方法，这类方法引入了一个惩罚项来平衡模型的复杂度。换句话说，信息准则形式化地表达了在本章开始建立的直觉，用一种合适的方式平衡模型的准确性和简约性。这些衡量方式的推导过程与信息论相关，超出了本书范围，我们只从实用的角度去理解这些概念。</p>
 <div class="section" id="log">
 <h4><strong>（1）Log 似然与离差</strong><a class="headerlink" href="#log" title="Permalink to this headline">¶</a></h4>
@@ -751,13 +803,13 @@ plt.ylabel('y', rotation=0)\end{aligned}\end{align} \]</div>
 </ul>
 <p>依据信息准则来选择模型，可能是一种最简单的决策方式。此时只需要选择信息准则值较低的模型，而忽略其他模型即可。如果遵循这种方式，前例中的二次多项式模型可能是最佳选择。请注意，标准差不重叠给做出此选择提供了信心。相反，如果标准差是重叠的，则应该提供一个更微妙的答案。</p>
 </div>
-<div class="section" id="id8">
-<h2>5.5 模型平均<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h2>5.5 模型平均<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>模型选择是一个比较简单的决策，但我们在选择模型时也正在抛弃有关模型中不确定性的信息。这类似于计算好完整的后验后，只保留了后验的平均值。这会造成造成我们对模型过于自信。</p>
 <p>一种变通的方案是执行模型选择同时，报告和讨论不同模型的信息准则值、标准差等统计量以及后验预测性检查情况。将所有这些数字和检查放在问题上下文中很重要，只有这样相关人士才能更好地感受到模型可能存在的局限性和缺点。在学术界中，可以使用该方法在论文、演示文稿等的讨论部分添加相关要素。</p>
 <p>除了上述对各模型均做出报告和讨论的方法外，还有一种做法是充分利用模型比较中的不确定性，执行模型平均。下面介绍其中几种比较常用的模型平均方法：</p>
-<div class="section" id="id9">
-<h3>5.5.1 基于信息准则值的加权平均<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h3>5.5.1 基于信息准则值的加权平均<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>本方法使用每个模型的加权平均值来生成 <code class="docutils literal notranslate"><span class="pre">元模型（meta-model）</span></code> 和 <code class="docutils literal notranslate"><span class="pre">元预测（meta-predictions）</span></code> 。不同模型的权重计算基于某些信息准则值（如 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code>），公式如下：</p>
 <div class="math notranslate nohighlight">
 \[w_{i}=\frac{e^{\frac{1}{2} d E_{i}}}{\sum_{j}^{M} e^{-\frac{1}{2} d E_{j}}} \tag{式5.7}  \label{式5.7}\]</div>
@@ -765,15 +817,15 @@ plt.ylabel('y', rotation=0)\end{aligned}\end{align} \]</div>
 <p>采用式 5.7 的权重对模型进行加权平均称为 <code class="docutils literal notranslate"><span class="pre">伪贝叶斯模型平均</span></code> 。真正的贝叶斯模型平均应当使用边缘似然，而非 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 。不过尽管边缘似然在理论上很有吸引力，但在模型比较和模型平均中使用很少。大多还是选择 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 而非边缘似然。在后续 <code class="docutils literal notranslate"><span class="pre">贝叶斯因子</span></code> 一节中，会有更多此方面的讨论。</p>
 <p>使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> ，可以通过将 <code class="docutils literal notranslate"><span class="pre">method=‘pseudo-BMA’</span></code> （伪贝叶斯模型平均）参数传递给 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 函数来计算式 5.7 的权重。其问题是未考虑计算 <span class="math notranslate nohighlight">\(E_i\)</span> 时的不确定性。通过高斯近似可以计算每一个 <span class="math notranslate nohighlight">\(E_i\)</span> 的标准差。这也是函数 <code class="docutils literal notranslate"><span class="pre">az.waic</span></code>、<code class="docutils literal notranslate"><span class="pre">az.loo</span></code> 和 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 在传递 <code class="docutils literal notranslate"><span class="pre">method=‘pseudo-BMA’</span></code> 参数时返回的误差值。此外，还可以使用 <code class="docutils literal notranslate"><span class="pre">贝叶斯自举（Bayesian</span> <span class="pre">bootstrapping）法</span></code> 来估计不确定性。这是一种比高斯近似更可靠的方法。通过将 <code class="docutils literal notranslate"><span class="pre">method=‘BB-pseudo-BMA’</span></code> 传递给 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 函数即可实现。</p>
 </div>
-<div class="section" id="id10">
-<h3>5.5.2 基于预测分布堆叠的加权平均<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3>5.5.2 基于预测分布堆叠的加权平均<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>另一种计算平均模型权重的方法被称为 <code class="docutils literal notranslate"><span class="pre">预测性分布堆叠（stacking</span> <span class="pre">of</span> <span class="pre">predictive</span> <span class="pre">distributions）</span></code> 。这在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中通过将 <code class="docutils literal notranslate"><span class="pre">method=‘stacking’</span></code> 传递给 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 实现。其基本思想是通过最小化元模型和真实生成模型之间的差异，将多个模型组合到一个元模型中。当使用对数打分规则时，这等价于：</p>
 <div class="math notranslate nohighlight">
 \[\max _{n} \frac{1}{n} \sum_{i=1}^{n} \log \sum_{k=1}^{K} w_{k} p\left(y_{i} \mid y_{-i}, M_{k}\right) \tag{式5.8}  \label{式5.8}\]</div>
 <p>这里，<span class="math notranslate nohighlight">\(n\)</span> 是数据点的数量，<span class="math notranslate nohighlight">\(k\)</span> 是模型的数量。为了强制实施方案，我们将 <span class="math notranslate nohighlight">\(w\)</span> 约束为 <span class="math notranslate nohighlight">\(w_k \geq 0\)</span> 并且 <span class="math notranslate nohighlight">\(\sum w_k =1\)</span>。量 <span class="math notranslate nohighlight">\(p(y_i|y_{-i},M_k)\)</span> 是模型 <span class="math notranslate nohighlight">\(M_k\)</span> 的留一预测性分布。根据留一法，计算需要拟合每个模型 <span class="math notranslate nohighlight">\(n\)</span> 次，每次遗留一个数据点。幸运的是，<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 可以使用 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 来近似留一预测性分布。</p>
 </div>
-<div class="section" id="id11">
-<h3>5.5.3 其他模型平均方法<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3>5.5.3 其他模型平均方法<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <p>还有其他方法来平均模型，例如，显式构建包括所有感兴趣模型作为子模型的元模型。可以构建这样一个模型：我们对每个子模型的参数进行推断，同时计算每个模型的相对概率（有关此方面的示例，请参阅 <code class="docutils literal notranslate"><span class="pre">贝叶斯因子</span></code> 一节）。</p>
 <p>除了平均离散模型之外，有时还可以考虑它们的连续版本。例如，假设有一个抛硬币问题，我们有两个不同的模型：一个偏向正面，另一个偏向反面。那么它的连续版本将是一个分层模型，其中先验分布直接从数据中估计出来。该层次模型包括离散模型作为特例。</p>
 <p>哪种方法更好取决于我们的具体问题：</p>
@@ -807,8 +859,8 @@ plt.ylabel('y', rotation=0)\end{aligned}\end{align} \]</div>
 <p>前面提到这是一个虚拟示例，因为与线性模型相比，二次多项式模型的 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 值非常低，第一个模型的权重基本上是 1 ，而后者权重基本上是 0 ，为生成图 5.9 ，我假设了这两个模型具有相同的权重。</p>
 </div>
 </div>
-<div class="section" id="id12">
-<h2>5.6 贝叶斯因子<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id13">
+<h2>5.6 贝叶斯因子<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>背景：零假设显著性检验（NHST）是频率主义进行数据分析的主要工具。但在统计学领域，NHST 受到了广泛批评。越来越多的统计学者提倡使用贝叶斯方法检验研究假设，在实证研究中也有越来越多的学者使用贝叶斯因子进行数据分析。</p>
@@ -835,8 +887,8 @@ plt.ylabel('y', rotation=0)\end{aligned}\end{align} \]</div>
 <p>如果假设所有模型都具有相同先验概率，则使用 <span class="math notranslate nohighlight">\(p(y|M_k)\)</span> 来比较模型完全没有问题。否则，必须计算后验赔率：</p>
 <div class="math notranslate nohighlight">
 \[\underbrace{\frac{p\left(M_{0} \mid y\right)}{p\left(M_{1} \mid y\right)}}_{\text {posterior odds }}=\underbrace{\frac{p\left(y \mid M_{0}\right)}{p\left(y \mid M_{1}\right)}}_{\text {Bayes factors}} \underbrace{\frac{p\left(M_{0}\right)}{p\left(M_{1}\right)}}_{\text{prior odds} } \tag{式5.12}  \label{式5.12}\]</div>
-<div class="section" id="id13">
-<h3>5.6.1 一些讨论<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3>5.6.1 一些讨论<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>现在简要讨论有关边缘似然的一些关键事实。通过仔细检查定义，可以理解边缘似然的性质和应用效果：</p>
 <div class="math notranslate nohighlight">
 \[p\left(y \mid M_{k}\right)=\int_{\theta_{k}} p\left(y \mid \theta_{k}, M_{k}\right) p\left(\theta_{k}, M_{k}\right) d \theta_{k} \tag{式5.13}  \label{式5.13}\]</div>
@@ -848,8 +900,8 @@ plt.ylabel('y', rotation=0)\end{aligned}\end{align} \]</div>
 <p>使用边缘似然来比较模型是一个好主意，因为复杂模型的惩罚已经包括在内。但同时先验信息的变化会影响边缘似然的计算，其中关键词是 ”敏感“ 。也就是说先验的微小变化，可能会对边缘似然的值产生很大影响。在前例中，标准差为 100 的正态先验与标准差为 1000 的正态先验变化很小，但相应的贝叶斯因子受这些变化却产生了较大变化。</p>
 <p>另一个相关的批评是，贝叶斯因子可以被用作进行假设检验的贝叶斯统计方法。这种批评本身没错，但许多文章指出，推断方法比假设检验方法（无论是否为贝叶斯方法）更适合于大多数问题。</p>
 </div>
-<div class="section" id="id14">
-<h3>5.6.2 贝叶斯因子的计算<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id15">
+<h3>5.6.2 贝叶斯因子的计算<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p>贝叶斯因子的计算可以被视为一个分层模型，其中超参数是分配给每个模型并从<code class="docutils literal notranslate"><span class="pre">类别分布</span></code>中采样的 <code class="docutils literal notranslate"><span class="pre">index</span></code> 。换句话说，我们同时对多个相互竞争的模型进行推断，并使用在模型间跳跃的离散变量。我们花在每个模型上的采样时间与 <span class="math notranslate nohighlight">\(p(M_k|y)\)</span> 成正比。然后，应用公式 5.10 求出贝叶斯因子。</p>
 <p>为举例说明贝叶斯因子的计算，我们再来一次抛硬币：</p>
 <center>
@@ -889,8 +941,8 @@ plt.ylabel('y', rotation=0)\end{aligned}\end{align} \]</div>
 </div>
 <p>结果，我们得到的值为≈11，这意味着模型 0 比模型 1 高出一个数量级。这非常有意义，因为数据的正面值比预期的 <span class="math notranslate nohighlight">\(\theta=0.5\)</span> 要少，两个模型之间的唯一区别是模型 0 的先验更兼容 <span class="math notranslate nohighlight">\(\theta&lt;0.5\)</span> (背面比正面多)，模型 1 更兼容 <span class="math notranslate nohighlight">\(\theta&gt;0.5\)</span> (正面比背面多)。</p>
 </div>
-<div class="section" id="id15">
-<h3>5.6.3 计算贝叶斯因子时的常见问题<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id16">
+<h3>5.6.3 计算贝叶斯因子时的常见问题<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <p>计算贝叶斯因子常见的问题是，如果一个模型比另一个模型更好，我们从它身上采样的时间也会比另一个模型时间更多。另一个问题是，即使参数没有被用来拟合模型，参数值也会更新。也就是说，当选择模型 0 时，模型 1 中的参数也会更新，但由于它们不用解释数据，因此只受先验信息的限制。如果先验条件太模糊，当我们选择模型 1 时，参数值可能离以前接受的值太远，因此该步骤被拒绝。最终导致采样遇到问题。</p>
 <p>如果遇到此类问题，可以对模型进行两个调整以改进采样：</p>
 <ul class="simple">
@@ -898,8 +950,8 @@ plt.ylabel('y', rotation=0)\end{aligned}\end{align} \]</div>
 <li><p>按照 <code class="docutils literal notranslate"><span class="pre">Kruschke</span></code>和其他人的建议，使用 <code class="docutils literal notranslate"><span class="pre">伪先验</span></code> 。想法很简单：如果问题是当所属的模型没有被选择时，参数会不受限制地漂移，那么一种解决方案是尝试人为地在不使用的时候限制它们。您可以找到一个在 <code class="docutils literal notranslate"><span class="pre">Kruschke</span></code> 书中使用的模型示例，我将该模型移植到了 <a class="reference external" href="https:///%E2%80%8B/%E2%80%8Bgithub.%E2%80%8Bcom/%E2%80%8Baloctavodia/%E2%80%8BDoing_%E2%80%8Bbayesian_%E2%80%8Bdata_%E2%80%8Banalysis"><code class="docutils literal notranslate"><span class="pre">PyMC3</span></code></a> 中。</p></li>
 </ul>
 </div>
-<div class="section" id="id16">
-<h3>5.6.4 用序贯蒙特卡罗方法计算贝叶斯因子<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id17">
+<h3>5.6.4 用序贯蒙特卡罗方法计算贝叶斯因子<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <p>另一种计算贝叶斯因子的方法是使用 <code class="docutils literal notranslate"><span class="pre">序贯蒙特卡罗(SMC)采样方法</span></code>。我们将在 <code class="docutils literal notranslate"><span class="pre">第8章-推理引擎</span></code> 中学习此方法的详细信息。现在只需要知道这个采样器计算的边缘似然估计是一个副产品，可以直接使用它来计算贝叶斯因子。要在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中使用 <code class="docutils literal notranslate"><span class="pre">SMC</span></code>，需将 <code class="docutils literal notranslate"><span class="pre">pm.SMC()</span></code> 传递给 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 的 <code class="docutils literal notranslate"><span class="pre">step</span></code> 参数：</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_BF_0</span><span class="p">:</span>
     <span class="n">θ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
@@ -914,8 +966,8 @@ plt.ylabel('y', rotation=0)\end{aligned}\end{align} \]</div>
 </div>
 <p>根据 <code class="docutils literal notranslate"><span class="pre">SMC</span> <span class="pre">方法</span></code>，贝叶斯因子也在 11 左右，如果你想用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 计算贝叶斯因子，我强烈推荐使用 SMC 方法。本书中提出的另一种方法在计算上更加繁琐，需要更多手动调整，主要是因为模型间的跳跃需要用户通过反复试验进行更多调整。从这点上来说，SMC 是一种自动化程度更高的方法。</p>
 </div>
-<div class="section" id="id17">
-<h3>5.6.5 贝叶斯因子与信息准则<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id18">
+<h3>5.6.5 贝叶斯因子与信息准则<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <p>如果对贝叶斯因子求对数，可以将两个边缘似然的比值转换成求差，这样比较边缘似然就与比较信息准则类似了。但是，衡量模型的数据拟合程度项以及惩罚项去哪儿了呢？前者包含在了似然部分，而后者包含在对先验取平均的部分。参数越多，先验空间相比似然就越大，平均之后似然就会较低，而参数越多，先验就会越分散，在计算证据时惩罚越大。这也是为什么人们说贝叶斯理论会很自然地惩罚更复杂的模型，或者称贝叶斯理论自带奥卡姆剃刀。</p>
 <p>此前说过，贝叶斯因子对先验过于敏感。这在执行推断时会导致本来不相关的差异，在计算贝叶斯因子时被证明为非常重要。现在我们来看一个例子，它将有助于阐明贝叶斯因子在做什么，信息准则在做什么，以及它们如何在相似的情况下专注于两个不同的方面。回到抛硬币例子的数据定义，现在设置 300 枚硬币和 90 个正面；这与以前的比例相同，但数据多了 10 倍。然后，分别运行每个模型：</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">traces</span> <span class="o">=</span> <span class="p">[]</span>
@@ -960,10 +1012,10 @@ plt.ylabel('y', rotation=0)\end{aligned}\end{align} \]</div>
 <p><strong>贝叶斯因子关注的是哪个模型更好，而 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> (和 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> ) 关注的是哪个模型能给出更好的预测。</strong> 如果检查公式 5.6 和 5.11，你就会看到这些不同。 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 和其他信息准则一样，以这样或那样的方式使用对数似然，先验并不直接作为计算的一部分。先验只间接参与，辅助我们估计。取而代之的是，贝叶斯因子直接使用先验，因为我们需要对先验值的整个范围内的似然进行平均。</p>
 </div>
 </div>
-<div class="section" id="id18">
-<h2>5.7 其他<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id19">
-<h3>5.7.1 正则先验<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<h2>5.7 其他<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id20">
+<h3>5.7.1 正则先验<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
 <p>使用强信息和弱信息先验是在模型中引入偏差的一种方式，如果操作得当，这可能是一个非常好的方法，因为偏差可以防止过拟合，从而有助于模型做出泛化性能更好的预测。在不影响模型建模能力的情况下，添加偏差以减少泛化误差的想法称为正则化。这种正则化通常采用对模型参数数量的较大值实施惩罚的形式。正则先验是一种减少模型所能表示信息的方法，从而降低了模型捕获噪声而不是信号的机会。</p>
 <p>正则化思想如此强大和有用，以至于本书中已经出现了很多次。在非贝叶斯统计中，正则化思想表现为对最小二乘法的两种修正： <code class="docutils literal notranslate"><span class="pre">岭回归</span></code> 和 <code class="docutils literal notranslate"><span class="pre">套索回归</span></code> 。从贝叶斯观点来看，岭回归可解释为 <code class="docutils literal notranslate"><span class="pre">对线性模型的贝塔系数采用标准差趋近于</span> <span class="pre">0</span> <span class="pre">的正态分布，使该系数趋向于零</span></code>。从该意义上说，我们一直在为本书中的每一个线性模型做类似岭回归的事情。另一方面，套索回归可以从贝叶斯的观点解释为 <code class="docutils literal notranslate"><span class="pre">从贝塔系数具有Laplace先验的模型计算出的后验分布图</span></code>。拉普拉斯分布看起来类似于高斯分布，但它的一阶导数在零处没有定义，因为它在零处有一个非常尖锐的峰值（参见图5.14）。与正态分布相比，拉普拉斯分布使其概率质量更接近于零。使用这种先验的出发点是提供 <code class="docutils literal notranslate"><span class="pre">正则化</span></code> 的同时实现 <code class="docutils literal notranslate"><span class="pre">变量选择</span></code>。其思路是，由于峰值为零，预计先验会导致稀疏性，也就是说，我们创建了一个具有许多参数的模型，先验将自动使大多数参数为零，只保留对模型输出有贡献的相关变量。不幸的是，贝叶斯套索不是这样工作的，基本上是为了有很多参数，拉普拉斯先验迫使非零参数变小。幸运的是，并不是所有东西都丢失了 – 有一些贝叶斯模型可以用来诱导稀疏性和执行变量选择。</p>
 <p>值得注意的是，经典版本的岭回归和套索回归对应于点估计，而贝叶斯版本则给出了完整的后验分布结果：</p>
@@ -972,17 +1024,17 @@ plt.ylabel('y', rotation=0)\end{aligned}\end{align} \]</div>
 <p>图 5.14</p>
 </center>
 </div>
-<div class="section" id="id20">
-<h3>5.7.2 深入 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id21">
+<h3>5.7.2 深入 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
 <p>如果展开公式 5.6，会得到以下结果：</p>
 <div class="math notranslate nohighlight">
 \[\text{WAIC}=-2 \sum_{i}^{n} \log \left(\frac{1}{S} \sum_{s=1}^{S} p\left(y_{i} \mid \theta^{s}\right)\right)+2 \sum_{i}^{n}\left(\text{V}_{s=1}^{S}\left(\log p\left(y_{i} \mid \theta^{s}\right)\right)\right. \tag{式5.14}  \label{式5.14}\]</div>
 <p>该表达式中的两项看起来非常相似。第一项是式 5.6 中的<code class="docutils literal notranslate"><span class="pre">对数点预测密度（lppd）</span></code>，计算的是后验样本集 <span class="math notranslate nohighlight">\(S\)</span> 的平均似然。我们对每个数据点都先求平均似然，然后取对数，最后对所有数据点求和。请将这一项与公式 5.3 和 5.4 进行比较。其实该项就是考虑了后验的样本内离差（deviance）。因此，如果我们认为计算对数似然是衡量模型适合性的好方法，那么在贝叶斯方法中，从后验计算对数似然就顺理成章。观测数据的 lddp 是对未来数据 lppd 的高估（此处意指样本内离差通常小于样本外离差），因此引入第二项来修正这种过高的估计。第二项计算后验样本的对数似然方差，我们对每个数据点执行此方差计算，然后对所有数据点进行汇总。为什么方差会给出惩罚条件？这与贝叶斯因子内置奥卡姆剃须刀的原理相似。有效参数越多，后验分布越大。当向模型添加结构时（如具有信息性/正则化的先验或分层依赖），与非正则化的模型相比，我们约束了后验，进而减少了有效参数的数量。</p>
 </div>
-<div class="section" id="id21">
-<h3>5.7.3 熵<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id22">
-<h4>（1）熵的定义<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<h3>5.7.3 熵<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id23">
+<h4>（1）熵的定义<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
 <p>从数学上讲，熵定义为：</p>
 <div class="math notranslate nohighlight">
 \[H(p)=-\sum_{i} p_i\text{log} (p_i) \tag{式5.15}  \label{式5.15}\]</div>
@@ -1009,12 +1061,12 @@ plt.ylabel('y', rotation=0)\end{aligned}\end{align} \]</div>
 </center>
 <p>如图所示，图中的分布 <span class="math notranslate nohighlight">\(r\)</span> 是三种分布中较广的一个，也是熵最大的一个。建议使用代码并探索熵是如何变化的（参见练习10）。</p>
 </div>
-<div class="section" id="id23">
-<h4>（2） 熵与方差<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id24">
+<h4>（2） 熵与方差<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
 <p>熵和方差概念上相关，以至于很多人将其声明为度量 ”数据分布的方差“ 的一种特殊形式。不过尽管两个概念相关，但本质上并不相同。在某些情况下，熵增加意味着方差增加，例如高斯分布。然而，也存在方差增加但熵不变的例子。例如混合了两个高斯分布的混合模型，当增加两个高斯分布的众数之间距离的时候，导致大部分点到平均值的距离增加了，即方差增大了。但此时，熵受到的影响极小，因为随着众数之间距离的增加，众数之间的点的概率越来越小，因此它们对总熵的贡献逐步可以忽略不计。从熵的角度来看，如果从两个重叠的高斯开始，将一个相对于另一个移动，则在某个点上，将有两个分离的高斯。</p>
 </div>
-<div class="section" id="id24">
-<h4>（3） 最大熵原理<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id25">
+<h4>（3） 最大熵原理<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
 <p>熵与信息及其不确定性也有关。事实上，更分散或更平坦的先验是弱信息先验。这不仅直观上是正确的，而且有熵的理论支撑。事实上，在贝叶斯学派中有一个群体，在用熵来证明弱信息先验或正则化先验是合理的。这就是<code class="docutils literal notranslate"><span class="pre">最大熵原理</span></code>：<strong>我们总是期望在问题定义的约束下找到具有最大可能熵的分布</strong>。这是一个可用数学方法解决的优化问题，但本书不讲解细节。下面仅列出一些常见约束条件下的最大熵分布：</p>
 <ul class="simple">
 <li><p>无约束：均匀分布（连续或离散，取决于变量类型）</p></li>
@@ -1053,15 +1105,15 @@ end{aligned}</p>
 <p>即使不知道 <span class="math notranslate nohighlight">\(p\)</span>，我们也可以得出结论，具有更大对数似然（或离差）的分布就是在 KL 散度中更接近真实分布的分布。实践中对数似然（或离差）是从有限样本拟合的模型中获得的。因此，还必须增加一个惩罚项，以纠正对离差的高估，这就引出了 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 等信息准则。</p>
 </div>
 </div>
-<div class="section" id="id25">
-<h2>5.8 总结<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id26">
+<h2>5.8 总结<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
 <p>后验预测性检查是一个通用概念和实践，它可以帮助我们了解模型捕获数据的能力，以及模型捕获我们感兴趣问题的各个方面的能力。我们可以只用一个模型进行后验预测性检查，也可以用多个模型进行后验预测性检查，因此也可以用它作为模型比较的一种方法。后验预测性检查大多是通过可视化完成的，但像 <code class="docutils literal notranslate"><span class="pre">贝叶斯p-value</span></code> 类似的数字摘要也很有帮助。</p>
 <p>好的模型在复杂性和预测准确性之间有很好的平衡。我们用多项式回归的经典例子来说明这一特征。我们讨论了两种在不留数据的情况下估计样本外准确度的方法：交叉验证法和信息准则法。我们集中讨论了后者。从实践角度来看，信息准则是一系列平衡两种贡献的方法：一种是衡量模型与数据的拟合程度，另一种是惩罚复杂的模型。在众多可用信息准则中， <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 是贝叶斯模型中最有用的。另一个有用的方法是 <code class="docutils literal notranslate"><span class="pre">PSIS-LOO-CV</span></code> （或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> ），它在实践中提供了与 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 非常相似的结果。 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 和 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 可用于模型选择，也可用于模型平均。模型平均不是选择单个最佳模型，而是通过对所有可用模型进行加权平均来组合所有可用模型。</p>
 <p>模型选择、比较和模型平均的另一种方法是贝叶斯因子，它是两个模型的边缘似然之比。贝叶斯因子的计算很有挑战性。本章介绍了使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 计算它们的两种方法：一种是直接尝试使用离散 index 估计每个模型的相对概率的分层模型，另一种是称为 <code class="docutils literal notranslate"><span class="pre">序贯蒙特卡罗（Sequential</span> <span class="pre">Monte</span> <span class="pre">Carlo，SMC）采样方法</span></code> ，我们建议使用后者。</p>
 <p>贝叶斯因子对先验非常敏感，除了在计算上具有挑战性之外，使用贝叶斯因子也是有问题的。我们比较了贝叶斯因子和信息准则，并通过一个示例介绍了它们解决两个相关但不同的问题：一个侧重于确定正确的模型，另一个侧重于实现最佳预测或更低的泛化损失。所有这些方法都或多或少存在问题，但 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 和 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 在实践中相对要健壮得多。</p>
 </div>
-<div class="section" id="id26">
-<h2>5.9 习题<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id27">
+<h2>5.9 习题<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h2>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210525214039_d1.webp" /></p>
 </div>
 </div>
@@ -1089,12 +1141,32 @@ end{aligned}</p>
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="chapter04-GeneralizedLinearRegression.html" title="previous page">第 4 章 广义线性回归模型</a>
-    <a class='right-next' id="next-link" href="chapter06-MixtureModels.html" title="next page">第 6 章 混合模型</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="chapter04-GeneralizedLinearRegression.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">第 4 章 广义线性回归模型</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="chapter06-MixtureModels.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">第 6 章 混合模型</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
         
         </div>
     </div>

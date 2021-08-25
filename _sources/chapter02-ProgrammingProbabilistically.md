@@ -1,3 +1,18 @@
+---
+jupytext:
+  formats: ipynb,.myst.md:myst,md
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.10.3
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
+
+
 # 第 2 章 概率编程
 
 <style>p{text-indent:2em;2}</style>
@@ -46,73 +61,16 @@ theta_real = 0.35 # unknown value in a real experiment
 data = stats.bernoulli.rvs(p=theta_real, size=trials)
 ```
 
----
-
-```{math}
-\begin{align*}
-\alpha &\sim \mathcal{N}(\mu_{\alpha},\sigma_{\alpha})\\
-\beta &\sim \mathcal{N}(\mu_{\beta},\sigma_{\beta})\\
-\epsilon &\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\
-\nu &\sim \text{Exp}(\lambda)\\\\
-y &\sim \mathcal{T}(\alpha + x \beta, \epsilon,\nu)
-\end{align*}
-```
-
-
-```{math}
-\begin{align*}
-\beta_0 &\sim \mathcal{N}(\mu_{\beta_0},\sigma_{\beta_0})\\
-\beta_1 &\sim \mathcal{N}(\mu_{\beta_1},\sigma_{\beta_1})\\
-&\text{...}\\
-\beta_n &\sim \mathcal{N}(\mu_{\beta_n},\sigma_{\beta_n})\\
-\epsilon &\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\\\
-y &\sim \mathcal{N}(\beta_0 + \beta_1x^1 + \beta_2x^2 + ...  + \beta_nx^n,\epsilon)
-\end{align*}
-```
----
-
-```{math}
-\begin{align*}
-\beta_0 &\sim \mathcal{N}(\mu_{\beta_0},\sigma_{\beta_0})\\
-\beta_1 &\sim \mathcal{N}(\mu_{\beta_1},\sigma_{\beta_1})\\
-&\text{...}\\
-\beta_n &\sim \mathcal{N}(\mu_{\beta_n},\sigma_{\beta_n})\\
-\epsilon &\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\\\
-y &\sim \mathcal{N}(\beta_0 + \beta_1x_1 + \beta_2x_2 + ...  + \beta_nx_n,\epsilon)
-\end{align*}
-```
-
----
-
-```{math}
-\begin{align*}
-\mu_{\alpha} &\sim \mathcal{N}(\mu_{\mu_{\alpha}},\sigma_{\mu_{\alpha}})\\
-\sigma_{\alpha} &\sim |\mathcal{N}(0,\sigma_{\sigma_{\alpha}})|\\
-\end{align*}
-```
-
----
-
-```{math}
-\begin{align*}
-\mu_{\beta} &\sim \mathcal{N}(\mu_{\mu_{\beta}},\sigma_{\mu_{\beta}})\\
-\sigma_{\beta} &\sim |\mathcal{N}(0,\sigma_{\sigma_{\beta}})|\\
-\alpha &\sim \mathcal{N}(\mu_{\alpha},\sigma_{\alpha})\\
-\beta &\sim \mathcal{N}(\mu_{\beta},\sigma_{\beta})\\
-\epsilon &\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\
-\nu &\sim \text{Exp}(\lambda)\\
-y &\sim \mathcal{T}(\alpha + x \beta,\epsilon,\nu)
-\end{align*}
-```
 
 ### 2.2.1 建立模型
 
 现在有了数据，需要进一步指定模型。回想一下，模型可通过指定似然函数和先验分布完成。对于似然，可用参数为 $n=1$ 和 $p=\theta$ 的二项分布来描述，对于先验，用参数为 $\alpha=\beta=1$ 的贝塔分布描述，该贝塔分布与 [0,1] 区间内的均匀分布等价。用数学表达式描述如下： 
 
-\begin{align*}
-\theta &\sim \operatorname{Beta}(\alpha, \beta) \notag\\
-y &\sim \operatorname{Bern}(p=\theta) \tag{式2.1} \label{式2.1}
+\begin{align*} \tag{式2.1} \label{式2.1} 
+\theta &\sim \operatorname{Beta}(\alpha, \beta) \\
+y &\sim \operatorname{Bern}(p=\theta) 
 \end{align*}
+
 
 该统计模型与 `PyMC3` 的语法几乎一一对应。
 
@@ -357,13 +315,11 @@ plt.yticks([0], alpha=0
 
 暂且先不考虑偏离均值的那两个点，假设以上分布就是高斯分布。由于我们不知道均值和方差，需要先对这两个变量设置先验。然后，顺理成章地得到如下模型：
 
-```{math}
-\begin{align}
-\mu &\sim U(l, h) \notag \\\\
-\sigma &\sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \notag \\\\
-y &\sim \mathcal{N}(\mu, \sigma) \tag{式2.2} \label{式2.2}
-\end{align}
-```
+\begin{align*} \tag{式2.2} \label{式2.2} 
+\mu &\sim U(l, h)  \\
+\sigma &\sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right|  \\
+y &\sim \mathcal{N}(\mu, \sigma) 
+\end{align*}
 
 
 其中， $\mu$ 来自上下界分别为 $l$ 和 $h$ 的均匀分布， $\sigma$ 来自标准差为 $\sigma_\sigma$ 的半正态分布。半正态分布和普通正态分布很像，不过只包含正数，看起来就好像将普通的正态分布沿着均值对折了。通过从正态分布中采样，然后取绝对值，可以获取半正态分布的样本。最后，在我们的模型中，数据 $y$ 来自参数分别为 $\mu$ 和 $\sigma$ 的正态分布，可以用 Kruschke 风格的图将其画出来：
@@ -470,14 +426,13 @@ plt.xlim(-7, 7)
 
 利用 $t$ 分布可以将模型调整为如下形式：
 
-```{math}
-\begin{align}
-\mu &\sim U(l, h) \notag\\\\
-\sigma &\sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \notag\\\\
-\nu &\sim \operatorname{Exp}(\lambda) \notag\\\\
- y &\sim \mathcal{T}(\mu, \sigma, \nu) \tag{式2.3} \label{式2.3}
- \end{align}
-```
+
+\begin{align*} \tag{式2.3} \label{式2.3} 
+\mu &\sim U(l, h) \\
+\sigma &\sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \\
+\nu &\sim \operatorname{Exp}(\lambda) \\
+ y &\sim \mathcal{T}(\mu, \sigma, \nu) 
+ \end{align*}
 
 此模型与高斯模型的主要区别是：似然调整为 $t$ 分布，由于 $t$ 分布多了一个新的参数 $\nu$，需要为其增加一个先验。此处计划采用均值为 30 的指数分布。通过上图可以看出，当 $\nu = 30$ 时， $t$ 分布看起来与高斯分布很相似。 从图中也可以看出， $\nu$ 在 30 附近是一个比较适中的值，既可以调大也可以调小，因此属于弱信息先验。我们的模型可以表示如下：
 
@@ -563,8 +518,9 @@ plt.xlim(40, 70)
 `Cohen's d` 是一种用来描述效应值的常见方式：
 
 ```{math}
-\frac{\mu_{2}-\mu_{1}}{\sqrt{\frac{\sigma_{2}^{2}+\sigma_{1}^{2}}{2}}} \tag{式2.4} \label{式2.4}
+\frac{\mu_{2}-\mu_{1}}{\sqrt{\frac{\sigma_{2}^{2}+\sigma_{1}^{2}}{2}}}  \tag{式2.4} \label{式2.4} 
 ```
+
 根据该表达式，效应大小是在合并两组标准差的情况下，各组均值相对于合并标准差的差异。因为可以得到均值和标准差的后验分布，所以可以计算 `Cohen's d` 的后验分布，而不是某个具体值。当然，如果只需要或只想要一个值，可以计算  `Cohen's d`  后验的平均值，得到一个  `Cohen's d` 值。通常在计算合并标准差时，会显式考虑每组的样本量，但前面的公式省略样本量，主要是因为从后验得到标准偏差值中，已经体现了其不确定性。
 
 ```{note}
@@ -583,7 +539,7 @@ Cohen‘s d是一种测量效应大小的方法，其中均值的差异是通过
 优势概率是表示效应值的另一种方式，描述的是从一组数据中取出的一个点大于从另外一组中取出的点的概率。假设两个组中数据的分布都是正态分布，我们可以通过以下表达式从 `Cohen's d` 中得到优势概率：
 
 ```{math}
-ps=\Phi\left(\frac{\delta}{\sqrt{2}}\right)\tag{式2.5} \label{式2.5}
+ps=\Phi\left(\frac{\delta}{\sqrt{2}}\right) \tag{式2.5} \label{式2.5} 
 ```
 
 此处， $\Phi $ 是累积正态分布， $\delta $ 是 `Cohen's d`。我们可以计算优势概率的点估计，也可以计算值的整个后验分布。如果同意正态假设，可以使用该公式从 `Cohen's d` 中计算得到优势概率。否则，当有后验样本时，可通过后验样本计算它。这是马尔可夫链蒙特卡罗 (`MCMC`) 方法的一个优点：一旦从后验获得样本，就可以从它计算出很多量。
@@ -704,16 +660,14 @@ for i in range(0, len(N_samples)):
 - 该模型定义了两个影响贝塔先验的超先验。
 - 模型没有把超先验定义在贝塔分布的参数 $\alpha$ 和 $\beta$ 上，而是间接地定义在贝塔分布的均值 $\mu$ 和 精度（ `precision` ） $\kappa$ 上（ 精度可以粗略地理解为标准差的倒数）， $\kappa$ 值越大，贝塔分布越集中。
 
-```{math}
-\begin{align}
-\mu &\sim \operatorname{Beta}\left(\alpha_{\mu}, \beta_{\mu}\right) \\\\
-\kappa &\sim\left|\operatorname{Normal}\left(0, \sigma_{\kappa}\right)\right| \\\\
-\alpha &=\mu * \kappa \\\\
-\beta &=(1-\mu) * \kappa \\\\
-\theta_{i} & \sim \operatorname{Beta}\left(\alpha_{i}, \beta_{i}\right) \\\\
-y_{i} & \sim \operatorname{Bern}\left(\theta_{i}\right) \tag{式2.6} \label{式2.6}
-\end{align}
-```
+\begin{align*} \tag{式2.6} \label{式2.6} 
+\mu &\sim \operatorname{Beta}\left(\alpha_{\mu}, \beta_{\mu}\right) \\
+\kappa &\sim\left|\operatorname{Normal}\left(0, \sigma_{\kappa}\right)\right| \\
+\alpha &=\mu * \kappa \\
+\beta &=(1-\mu) * \kappa \\
+\theta_{i} & \sim \operatorname{Beta}\left(\alpha_{i}, \beta_{i}\right) \\
+y_{i} & \sim \operatorname{Bern}\left(\theta_{i}\right) 
+\end{align*}
 
 注意，使用子索引 $i$ 来指示模型中某些组的参数具有不同的值。也就是说，并非所有参数都在组间共享值。使用 Kruschke 图，很明显新模型有一个额外的级别。
 
@@ -903,3 +857,51 @@ OK，在图 2.22 中能看到什么呢？ 我们有一个 40 个估计平均值�
 
 （9）对本章中的至少一个模型使用你自己的数据并运行。牢记第 1 章中提到的构建模型的 3 个步骤。
 
+\begin{align*} \tag{式2.7} \label{式2.7} 
+\alpha &\sim \mathcal{N}(\mu_{\alpha},\sigma_{\alpha})\\
+\beta &\sim \mathcal{N}(\mu_{\beta},\sigma_{\beta})\\
+\epsilon &\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\
+\nu &\sim \text{Exp}(\lambda)\\\\
+y &\sim \mathcal{T}(\alpha + x \beta, \epsilon,\nu)
+\end{align}
+
+
+\begin{align*} \tag{式2.8} \label{式2.8} 
+\beta_0 &\sim \mathcal{N}(\mu_{\beta_0},\sigma_{\beta_0})\\
+\beta_1 &\sim \mathcal{N}(\mu_{\beta_1},\sigma_{\beta_1})\\
+&\text{...}\\
+\beta_n &\sim \mathcal{N}(\mu_{\beta_n},\sigma_{\beta_n})\\
+\epsilon &\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\\\
+y &\sim \mathcal{N}(\beta_0 + \beta_1x^1 + \beta_2x^2 + ...  + \beta_nx^n,\epsilon)
+\end{align*}
+
+---
+
+\begin{align*} \tag{式2.9} \label{式2.9} 
+\beta_0 &\sim \mathcal{N}(\mu_{\beta_0},\sigma_{\beta_0})\\
+\beta_1 &\sim \mathcal{N}(\mu_{\beta_1},\sigma_{\beta_1})\\
+&\text{...}\\
+\beta_n &\sim \mathcal{N}(\mu_{\beta_n},\sigma_{\beta_n})\\
+\epsilon &\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\\\
+y &\sim \mathcal{N}(\beta_0 + \beta_1x_1 + \beta_2x_2 + ...  + \beta_nx_n,\epsilon)
+\end{align*}
+
+
+---
+
+\begin{align*} \tag{式2.10} \label{式2.10} 
+\mu_{\alpha} &\sim \mathcal{N}(\mu_{\mu_{\alpha}},\sigma_{\mu_{\alpha}})\\
+\sigma_{\alpha} &\sim |\mathcal{N}(0,\sigma_{\sigma_{\alpha}})|\\
+\end{align*}
+
+---
+
+\begin{align*} \tag{式2.11} \label{式2.11} 
+\mu_{\beta} &\sim \mathcal{N}(\mu_{\mu_{\beta}},\sigma_{\mu_{\beta}})\\
+\sigma_{\beta} &\sim |\mathcal{N}(0,\sigma_{\sigma_{\beta}})|\\
+\alpha &\sim \mathcal{N}(\mu_{\alpha},\sigma_{\alpha})\\
+\beta &\sim \mathcal{N}(\mu_{\beta},\sigma_{\beta})\\
+\epsilon &\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\
+\nu &\sim \text{Exp}(\lambda)\\
+y &\sim \mathcal{T}(\alpha + x \beta,\epsilon,\nu)
+\end{align*}

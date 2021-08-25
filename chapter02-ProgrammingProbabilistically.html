@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.5f77b4aec8189eecf79907ce328c390d.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -42,15 +42,15 @@
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="第 3 章 线性回归模型的贝叶斯视角" href="chapter03-ModellingwithLinearRegression.html" />
@@ -82,7 +82,7 @@
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
@@ -148,11 +148,6 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Ref-chapter08-MC-Integration.html">
-   蒙特卡洛积分
-  </a>
- </li>
- <li class="toctree-l1">
   <a class="reference internal" href="Ref-chapter08-MC-MCMCforDummies.html">
    MCMC采样的傻瓜书
   </a>
@@ -196,7 +191,10 @@
 
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
-        
+        <a class="dropdown-buttons"
+            href="_sources/chapter02-ProgrammingProbabilistically.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
         <!-- Download raw file -->
         <a class="dropdown-buttons" href="_sources/chapter02-ProgrammingProbabilistically.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
@@ -209,6 +207,22 @@
 
             <!-- Source interaction buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd/issues/new?title=Issue%20on%20page%20%2Fchapter02-ProgrammingProbabilistically.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
             <!-- Full screen (wrap in <a> to have style consistency -->
 
 <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
@@ -218,6 +232,29 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=lab/tree/chapter02-ProgrammingProbabilistically.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=lab/tree/BayesianAnalysiswithPython2nd/chapter02-ProgrammingProbabilistically.md&branch=master"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
+                data-placement="left"><img class="jupyterhub-button-logo"
+                    src="_static/images/logo_jupyterhub.svg"
+                    alt="Interact on JupyterHub">JupyterHub</button></a>
+        
+        
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
@@ -226,7 +263,7 @@
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
             </div>
-            <nav id="bd-toc-nav">
+            <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
@@ -425,58 +462,13 @@
 <span class="n">data</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">bernoulli</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="n">theta_real</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">trials</span><span class="p">)</span>
 </pre></div>
 </div>
-<hr class="docutils" />
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{align*}
-\alpha &amp;\sim \mathcal{N}(\mu_{\alpha},\sigma_{\alpha})\\
-\beta &amp;\sim \mathcal{N}(\mu_{\beta},\sigma_{\beta})\\
-\epsilon &amp;\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\
-\nu &amp;\sim \text{Exp}(\lambda)\\\\
-y &amp;\sim \mathcal{T}(\alpha + x \beta, \epsilon,\nu)
-\end{align*}\end{split}\]</div>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{align*}
-\beta_0 &amp;\sim \mathcal{N}(\mu_{\beta_0},\sigma_{\beta_0})\\
-\beta_1 &amp;\sim \mathcal{N}(\mu_{\beta_1},\sigma_{\beta_1})\\
-&amp;\text{...}\\
-\beta_n &amp;\sim \mathcal{N}(\mu_{\beta_n},\sigma_{\beta_n})\\
-\epsilon &amp;\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\\\
-y &amp;\sim \mathcal{N}(\beta_0 + \beta_1x^1 + \beta_2x^2 + ...  + \beta_nx^n,\epsilon)
-\end{align*}\end{split}\]</div>
-<hr class="docutils" />
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{align*}
-\beta_0 &amp;\sim \mathcal{N}(\mu_{\beta_0},\sigma_{\beta_0})\\
-\beta_1 &amp;\sim \mathcal{N}(\mu_{\beta_1},\sigma_{\beta_1})\\
-&amp;\text{...}\\
-\beta_n &amp;\sim \mathcal{N}(\mu_{\beta_n},\sigma_{\beta_n})\\
-\epsilon &amp;\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\\\
-y &amp;\sim \mathcal{N}(\beta_0 + \beta_1x_1 + \beta_2x_2 + ...  + \beta_nx_n,\epsilon)
-\end{align*}\end{split}\]</div>
-<hr class="docutils" />
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{align*}
-\mu_{\alpha} &amp;\sim \mathcal{N}(\mu_{\mu_{\alpha}},\sigma_{\mu_{\alpha}})\\
-\sigma_{\alpha} &amp;\sim |\mathcal{N}(0,\sigma_{\sigma_{\alpha}})|\\
-\end{align*}\end{split}\]</div>
-<hr class="docutils" />
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{align*}
-\mu_{\beta} &amp;\sim \mathcal{N}(\mu_{\mu_{\beta}},\sigma_{\mu_{\beta}})\\
-\sigma_{\beta} &amp;\sim |\mathcal{N}(0,\sigma_{\sigma_{\beta}})|\\
-\alpha &amp;\sim \mathcal{N}(\mu_{\alpha},\sigma_{\alpha})\\
-\beta &amp;\sim \mathcal{N}(\mu_{\beta},\sigma_{\beta})\\
-\epsilon &amp;\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\
-\nu &amp;\sim \text{Exp}(\lambda)\\
-y &amp;\sim \mathcal{T}(\alpha + x \beta,\epsilon,\nu)
-\end{align*}\end{split}\]</div>
 <div class="section" id="id3">
 <h3>2.2.1 建立模型<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>现在有了数据，需要进一步指定模型。回想一下，模型可通过指定似然函数和先验分布完成。对于似然，可用参数为 <span class="math notranslate nohighlight">\(n=1\)</span> 和 <span class="math notranslate nohighlight">\(p=\theta\)</span> 的二项分布来描述，对于先验，用参数为 <span class="math notranslate nohighlight">\(\alpha=\beta=1\)</span> 的贝塔分布描述，该贝塔分布与 [0,1] 区间内的均匀分布等价。用数学表达式描述如下：</p>
 <div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
-\theta &amp;\sim \operatorname{Beta}(\alpha, \beta) \notag\\
-y &amp;\sim \operatorname{Bern}(p=\theta) \tag{式2.1} \label{式2.1}
+\[\begin{align*} \tag{式2.1} \label{式2.1} 
+\theta &amp;\sim \operatorname{Beta}(\alpha, \beta) \\
+y &amp;\sim \operatorname{Bern}(p=\theta) 
 \end{align*}\]</div>
 <p>该统计模型与 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的语法几乎一一对应。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">our_first_model</span><span class="p">:</span>
@@ -662,12 +654,12 @@ NUTS: [θ]
 <p>除了两个远离平均值的数据点外，该数据集的 <code class="docutils literal notranslate"><span class="pre">KDE</span></code> 图显示出类似高斯的分布：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504212534_30.webp" /></p>
 <p>暂且先不考虑偏离均值的那两个点，假设以上分布就是高斯分布。由于我们不知道均值和方差，需要先对这两个变量设置先验。然后，顺理成章地得到如下模型：</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{align}
-\mu &amp;\sim U(l, h) \notag \\\\
-\sigma &amp;\sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \notag \\\\
-y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{式2.2} \label{式2.2}
-\end{align}\end{split}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} \tag{式2.2} \label{式2.2} 
+\mu &amp;\sim U(l, h)  \\
+\sigma &amp;\sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right|  \\
+y &amp;\sim \mathcal{N}(\mu, \sigma) 
+\end{align*}\]</div>
 <p>其中， <span class="math notranslate nohighlight">\(\mu\)</span> 来自上下界分别为 <span class="math notranslate nohighlight">\(l\)</span> 和 <span class="math notranslate nohighlight">\(h\)</span> 的均匀分布， <span class="math notranslate nohighlight">\(\sigma\)</span> 来自标准差为 <span class="math notranslate nohighlight">\(\sigma_\sigma\)</span> 的半正态分布。半正态分布和普通正态分布很像，不过只包含正数，看起来就好像将普通的正态分布沿着均值对折了。通过从正态分布中采样，然后取绝对值，可以获取半正态分布的样本。最后，在我们的模型中，数据 <span class="math notranslate nohighlight">\(y\)</span> 来自参数分别为 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 的正态分布，可以用 Kruschke 风格的图将其画出来：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504213129_7f.webp" /></p>
 <p>如果不知道 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 的值，可以通过先验来表示该未知信息。例如，可以将均匀分布的上下界分别设为（<span class="math notranslate nohighlight">\(l\)</span> = 40, <span class="math notranslate nohighlight">\(h\)</span> = 75），该范围要比数据本身的范围稍大一些。或者，可以根据先验知识设得更广一些，比如知道这类观测值不可能小于 0 或者大于 100 ，可以将均匀先验参数设为（<span class="math notranslate nohighlight">\(l\)</span> = 0, <span class="math notranslate nohighlight">\(h\)</span> = 100）。对于半正态分布而言，可以把 <span class="math notranslate nohighlight">\(\sigma_\sigma\)</span> 的值设为 10，该值相对于数据分布而言算是较大的。 利用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> ，我们可以将模型表示如下：</p>
@@ -761,13 +753,13 @@ y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{式2.2} \label{式2.2}
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210513181355ce.webp" /></p>
 <p>利用 <span class="math notranslate nohighlight">\(t\)</span> 分布可以将模型调整为如下形式：</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{align}
-\mu &amp;\sim U(l, h) \notag\\\\
-\sigma &amp;\sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \notag\\\\
-\nu &amp;\sim \operatorname{Exp}(\lambda) \notag\\\\
- y &amp;\sim \mathcal{T}(\mu, \sigma, \nu) \tag{式2.3} \label{式2.3}
- \end{align}\end{split}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} \tag{式2.3} \label{式2.3} 
+\mu &amp;\sim U(l, h) \\
+\sigma &amp;\sim\left|\mathcal{N}\left(0, \sigma_{\sigma}\right)\right| \\
+\nu &amp;\sim \operatorname{Exp}(\lambda) \\
+ y &amp;\sim \mathcal{T}(\mu, \sigma, \nu) 
+ \end{align*}\]</div>
 <p>此模型与高斯模型的主要区别是：似然调整为 <span class="math notranslate nohighlight">\(t\)</span> 分布，由于 <span class="math notranslate nohighlight">\(t\)</span> 分布多了一个新的参数 <span class="math notranslate nohighlight">\(\nu\)</span>，需要为其增加一个先验。此处计划采用均值为 30 的指数分布。通过上图可以看出，当 <span class="math notranslate nohighlight">\(\nu = 30\)</span> 时， <span class="math notranslate nohighlight">\(t\)</span> 分布看起来与高斯分布很相似。 从图中也可以看出， <span class="math notranslate nohighlight">\(\nu\)</span> 在 30 附近是一个比较适中的值，既可以调大也可以调小，因此属于弱信息先验。我们的模型可以表示如下：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210513182721ce.webp" /></p>
 <p>同样， <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 让我们只需要几行代码便可修改模型。唯一需要 注意的是， <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中指数分布的参数用的是分布均值的倒数。</p>
@@ -829,7 +821,7 @@ y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{式2.2} \label{式2.2}
 <h3>2.4.1 Cohen’s d<a class="headerlink" href="#cohen-s-d" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 是一种用来描述效应值的常见方式：</p>
 <div class="math notranslate nohighlight">
-\[\frac{\mu_{2}-\mu_{1}}{\sqrt{\frac{\sigma_{2}^{2}+\sigma_{1}^{2}}{2}}} \tag{式2.4} \label{式2.4}\]</div>
+\[\frac{\mu_{2}-\mu_{1}}{\sqrt{\frac{\sigma_{2}^{2}+\sigma_{1}^{2}}{2}}}  \tag{式2.4} \label{式2.4} \]</div>
 <p>根据该表达式，效应大小是在合并两组标准差的情况下，各组均值相对于合并标准差的差异。因为可以得到均值和标准差的后验分布，所以可以计算 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 的后验分布，而不是某个具体值。当然，如果只需要或只想要一个值，可以计算  <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code>  后验的平均值，得到一个  <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 值。通常在计算合并标准差时，会显式考虑每组的样本量，但前面的公式省略样本量，主要是因为从后验得到标准偏差值中，已经体现了其不确定性。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -846,7 +838,7 @@ y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{式2.2} \label{式2.2}
 <h3>2.4.2 优势概率<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <p>优势概率是表示效应值的另一种方式，描述的是从一组数据中取出的一个点大于从另外一组中取出的点的概率。假设两个组中数据的分布都是正态分布，我们可以通过以下表达式从 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 中得到优势概率：</p>
 <div class="math notranslate nohighlight">
-\[ps=\Phi\left(\frac{\delta}{\sqrt{2}}\right)\tag{式2.5} \label{式2.5}\]</div>
+\[ps=\Phi\left(\frac{\delta}{\sqrt{2}}\right) \tag{式2.5} \label{式2.5} \]</div>
 <p>此处， <span class="math notranslate nohighlight">\(\Phi \)</span> 是累积正态分布， <span class="math notranslate nohighlight">\(\delta \)</span> 是 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code>。我们可以计算优势概率的点估计，也可以计算值的整个后验分布。如果同意正态假设，可以使用该公式从 <code class="docutils literal notranslate"><span class="pre">Cohen's</span> <span class="pre">d</span></code> 中计算得到优势概率。否则，当有后验样本时，可通过后验样本计算它。这是马尔可夫链蒙特卡罗 (<code class="docutils literal notranslate"><span class="pre">MCMC</span></code>) 方法的一个优点：一旦从后验获得样本，就可以从它计算出很多量。</p>
 </div>
 <div class="section" id="id19">
@@ -940,15 +932,15 @@ y &amp;\sim \mathcal{N}(\mu, \sigma) \tag{式2.2} \label{式2.2}
 <li><p>该模型定义了两个影响贝塔先验的超先验。</p></li>
 <li><p>模型没有把超先验定义在贝塔分布的参数 <span class="math notranslate nohighlight">\(\alpha\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span> 上，而是间接地定义在贝塔分布的均值 <span class="math notranslate nohighlight">\(\mu\)</span> 和 精度（ <code class="docutils literal notranslate"><span class="pre">precision</span></code> ） <span class="math notranslate nohighlight">\(\kappa\)</span> 上（ 精度可以粗略地理解为标准差的倒数）， <span class="math notranslate nohighlight">\(\kappa\)</span> 值越大，贝塔分布越集中。</p></li>
 </ul>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{align}
-\mu &amp;\sim \operatorname{Beta}\left(\alpha_{\mu}, \beta_{\mu}\right) \\\\
-\kappa &amp;\sim\left|\operatorname{Normal}\left(0, \sigma_{\kappa}\right)\right| \\\\
-\alpha &amp;=\mu * \kappa \\\\
-\beta &amp;=(1-\mu) * \kappa \\\\
-\theta_{i} &amp; \sim \operatorname{Beta}\left(\alpha_{i}, \beta_{i}\right) \\\\
-y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right) \tag{式2.6} \label{式2.6}
-\end{align}\end{split}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} \tag{式2.6} \label{式2.6} 
+\mu &amp;\sim \operatorname{Beta}\left(\alpha_{\mu}, \beta_{\mu}\right) \\
+\kappa &amp;\sim\left|\operatorname{Normal}\left(0, \sigma_{\kappa}\right)\right| \\
+\alpha &amp;=\mu * \kappa \\
+\beta &amp;=(1-\mu) * \kappa \\
+\theta_{i} &amp; \sim \operatorname{Beta}\left(\alpha_{i}, \beta_{i}\right) \\
+y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right) 
+\end{align*}\]</div>
 <p>注意，使用子索引 <span class="math notranslate nohighlight">\(i\)</span> 来指示模型中某些组的参数具有不同的值。也就是说，并非所有参数都在组间共享值。使用 Kruschke 图，很明显新模型有一个额外的级别。</p>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504181501_31.webp" style="zoom:67%;" />
@@ -1086,6 +1078,51 @@ y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right) \tag{式2.6} \label{
 <p>（7）重复本章中的所有例子，用 <code class="docutils literal notranslate"><span class="pre">findMAP()</span></code> 函数的返回值来初始化采样。看是否能得到相同的推断结果。同时看一下 <code class="docutils literal notranslate"><span class="pre">find_MAP</span> <span class="pre">()</span></code> 函数对退化过程的数量以及推断的速度有什么影响。
 （8）对所有模型进行诊断测试并采取相应措施，比如，如果有 必要，增加采样次数。</p>
 <p>（9）对本章中的至少一个模型使用你自己的数据并运行。牢记第 1 章中提到的构建模型的 3 个步骤。</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} \tag{式2.7} \label{式2.7} 
+\alpha &amp;\sim \mathcal{N}(\mu_{\alpha},\sigma_{\alpha})\\
+\beta &amp;\sim \mathcal{N}(\mu_{\beta},\sigma_{\beta})\\
+\epsilon &amp;\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\
+\nu &amp;\sim \text{Exp}(\lambda)\\\\
+y &amp;\sim \mathcal{T}(\alpha + x \beta, \epsilon,\nu)
+\end{align}
+
+
+\begin{align*} \tag{式2.8} \label{式2.8} 
+\beta_0 &amp;\sim \mathcal{N}(\mu_{\beta_0},\sigma_{\beta_0})\\
+\beta_1 &amp;\sim \mathcal{N}(\mu_{\beta_1},\sigma_{\beta_1})\\
+&amp;\text{...}\\
+\beta_n &amp;\sim \mathcal{N}(\mu_{\beta_n},\sigma_{\beta_n})\\
+\epsilon &amp;\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\\\
+y &amp;\sim \mathcal{N}(\beta_0 + \beta_1x^1 + \beta_2x^2 + ...  + \beta_nx^n,\epsilon)
+\end{align*}\]</div>
+<hr class="docutils" />
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} \tag{式2.9} \label{式2.9} 
+\beta_0 &amp;\sim \mathcal{N}(\mu_{\beta_0},\sigma_{\beta_0})\\
+\beta_1 &amp;\sim \mathcal{N}(\mu_{\beta_1},\sigma_{\beta_1})\\
+&amp;\text{...}\\
+\beta_n &amp;\sim \mathcal{N}(\mu_{\beta_n},\sigma_{\beta_n})\\
+\epsilon &amp;\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\\\
+y &amp;\sim \mathcal{N}(\beta_0 + \beta_1x_1 + \beta_2x_2 + ...  + \beta_nx_n,\epsilon)
+\end{align*}\]</div>
+<hr class="docutils" />
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} \tag{式2.10} \label{式2.10} 
+\mu_{\alpha} &amp;\sim \mathcal{N}(\mu_{\mu_{\alpha}},\sigma_{\mu_{\alpha}})\\
+\sigma_{\alpha} &amp;\sim |\mathcal{N}(0,\sigma_{\sigma_{\alpha}})|\\
+\end{align*}\]</div>
+<hr class="docutils" />
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} \tag{式2.11} \label{式2.11} 
+\mu_{\beta} &amp;\sim \mathcal{N}(\mu_{\mu_{\beta}},\sigma_{\mu_{\beta}})\\
+\sigma_{\beta} &amp;\sim |\mathcal{N}(0,\sigma_{\sigma_{\beta}})|\\
+\alpha &amp;\sim \mathcal{N}(\mu_{\alpha},\sigma_{\alpha})\\
+\beta &amp;\sim \mathcal{N}(\mu_{\beta},\sigma_{\beta})\\
+\epsilon &amp;\sim |\mathcal{N}(0,\sigma_{\epsilon})|\\
+\nu &amp;\sim \text{Exp}(\lambda)\\
+y &amp;\sim \mathcal{T}(\alpha + x \beta,\epsilon,\nu)
+\end{align*}\]</div>
 </div>
 </div>
 
@@ -1112,12 +1149,32 @@ y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right) \tag{式2.6} \label{
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="chapter01-ThinkingProbabilistically.html" title="previous page">第 1 章 概率思维</a>
-    <a class='right-next' id="next-link" href="chapter03-ModellingwithLinearRegression.html" title="next page">第 3 章 线性回归模型的贝叶斯视角</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="chapter01-ThinkingProbabilistically.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">第 1 章 概率思维</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="chapter03-ModellingwithLinearRegression.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">第 3 章 线性回归模型的贝叶斯视角</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
         
         </div>
     </div>
