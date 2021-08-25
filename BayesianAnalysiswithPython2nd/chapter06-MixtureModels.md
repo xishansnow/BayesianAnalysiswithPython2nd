@@ -71,7 +71,7 @@ p(y \mid \theta)=\sum_{i=1}^{K} w_{i} p_{i}\left(y \mid \theta_{i}\right) \tag{�
 
 现在使用`第 2 章『概率编程』`中的化学漂移数据集来构建有限混合模型：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 cs = pd.read_csv('../data/chemical_shifts_theo_exp.csv')
 cs_exp = cs['exp']
 az.plot_kde(cs_exp)
@@ -96,13 +96,13 @@ plt.yticks([])
 
 高斯混合模型的概念表达式如下：
 
-```{math}
+\begin{align*}
 \theta &\sim \operatorname{Direchlet}(\alpha)\\
 z &\sim \operatorname{Categorical}(p=\theta)\\
 \mu_{i} &\sim \mathcal{N}(\mu_{\mu_i},\sigma_{\mu})\\
 \sigma &\sim \operatorname{Half-Cauchy}(\sigma_{\sigma})\\
 y &\sim \mathcal{N}(\mu_{z},\sigma)
-```
+\end{align*}
 
 注意：
 
@@ -156,7 +156,7 @@ y &\sim \mathcal{N}(\mu_{z},\sigma)
 
 该模型（假设 `clusters=2` ）可以用 `PyMC3` 实现为：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 with pm.Model() as model_kg:
     # 先验p： 服从狄拉克雷分布
     p = pm.Dirichlet ('p', a=np.ones(clusters))
@@ -177,7 +177,7 @@ with pm.Model() as model_kg:
 
 注意，在混合模型中，观测变量 $y$ 是在隐变量 $z$ 基础上的条件建模，也就是 $p(y|z,\theta)$ 。可以认为隐变量 $z$ 是一个可被边缘化的多余变量并获得 $p(y|\theta)$ 。`PyMC3` 包含一个 `NormalMixture` 分布，可用于编写高斯混合模型：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 clusters = 2
 with pm.Model() as model_mg:
     p = pm.Dirichlet('p', a=np.ones(clusters))
@@ -189,7 +189,7 @@ with pm.Model() as model_mg:
 
 使用 `ArviZ` 查看迹的效果，我们将在下一节中将其与使用 `model_mgp` 获得的迹进行比较：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 varnames = ['means', 'p']
 az.plot_trace(trace_mg, varnames)
 ```
@@ -203,7 +203,7 @@ az.plot_trace(trace_mg, varnames)
 
 同时计算此模型的摘要，我们将在下一节中将其与使用 `model_mgp` 获得的摘要进行比较：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 az.summary(trace_mg, varnames)
 ```
 
@@ -229,7 +229,7 @@ az.summary(trace_mg, varnames)
 
 方法一：利用势作强制排序。如果符合指定排序，则在似然上增加一个值为 0 的势；否则，增加一个值为 $-\infty$ 的势。最终结果是，模型认为违反指定排序约束的参数不可能出现。
 
-```{code-block} ipython3
+```{code-cell} ipython3
 clusters = 2
 with pm.Model() as model_mgp:
     p = pm.Dirichlet('p', a=np.ones(clusters))
@@ -253,7 +253,7 @@ with pm.Model() as model_mgp:
 
 计算此模型的摘要：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 az.summary(trace_mgp)
 ```
 
@@ -265,7 +265,7 @@ az.summary(trace_mgp)
 
 方法二：利用势保证所有组分的概率都不为零，或者换句话说，混合模型中的每个组分都至少有一个观测点。可以通过给自狄利克雷分布生成的概率 $p$ ，设置阈值 $min_p$（ $min_p$ 为某个任意的合理值，如 0.1 或 0.01）来实现：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 p_min = pm.Potential('p_min', tt.switch(tt.min(p) < min_p, -np.inf, 0))
 ```
 
@@ -279,7 +279,7 @@ p_min = pm.Potential('p_min', tt.switch(tt.min(p) < min_p, -np.inf, 0))
 
 在次比较 $K=\{3,4,5,6\}$ 四个模型，进行四次拟合，并保存每个迹和模型以供后面分析：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 clusters = [3, 4, 5, 6]
 models = []
 traces = []
@@ -300,7 +300,7 @@ for cluster in clusters:
 
 为更好展示 $K$ 对推断的影响，可以把模型拟合的结果与 `az.plot_kde` （内置 KDE 模型）进行比较，并且绘制混合模型的高斯组分图：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 _, ax = plt.subplots(2, 2, figsize=(11, 8), constrained_layout=True)
 ax = np.ravel(ax)
 x = np.linspace(cs_exp.min(), cs_exp.max(), 200)
@@ -338,7 +338,7 @@ for idx, trace_x in enumerate(traces):
 
 你也可以尝试使用直方图代替 KDE。如`第 5 章 『模型比较` 中讨论的，可尝试绘制感兴趣量的后验预测图，并计算贝叶斯 $p$ 值。下图显示了此类计算和可视化的示例：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 ppc_mm = [pm.sample_posterior_predictive(traces[i], 1000, models[i])
           for i in range(4)]
 fig, ax = plt.subplots(2, 2, figsize=(10, 6), sharex=True,
@@ -365,7 +365,7 @@ for idx, d_sim in enumerate(ppc_mm):
 
 从图 6.9 可以看出，$K=6$ 是一个很好的选择，其贝叶斯 $p$ 值非常接近 0.5。正如在下面表格和图 6.10 中看到的，`WAIC` 也将 $K=6$ 评为更好的模型：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 comp = az.compare(dict(zip(clusters, traces)), method='BB-pseudo-BMA')
 ```
 
@@ -377,7 +377,7 @@ comp = az.compare(dict(zip(clusters, traces)), method='BB-pseudo-BMA')
 
 大多数情况下看图比看表容易得多，所以让我们画一个对比图。如下图所示，虽然 6 组分模型的 `WAIC` 比其他模型低，但当考虑估计标准误差时存在相当大的重叠，特别是对 5 组分模型：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 az.plot_compare(comp)
 ```
 
@@ -429,7 +429,7 @@ az.plot_compare(comp)
 
 如何选择 y 轴上的值呢？我们遵循一个被称为折棍过程的 Gedanken 实验。假设有一根长度为 1 的棍子，我们把它一分为二（不一定相等）；把一部分放在一边，把另一部分一分为二；然后一直这样做，直到永远。由于实践中无法真正无限地重复这个过程，所以将其截断为某个预定义的值 $K$ ，但大体上是成立的。为控制折棍过程，我们使用了一个参数 $α$ 。随着 $α$ 值的增加，把棍子分的越来越小。也就是，在 $lim_{\alpha \to 0}$ 时，不会折断棍子；当 $lim_{\alpha \to \infty}$ 时，将棍子折断成无限个碎片。图 6.11 显示了狄利克雷过程的四次对应不同 $\alpha$ 值的抽样。稍后我将解释代码，现在先重点了解此示例有关狄利克雷过程的信息：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 def stick_breaking_truncated(α, H, K):
     """
     Truncated stick-breaking process view of a 狄利克雷过程
@@ -483,7 +483,7 @@ plt.tight_layout()
 
 图 6.1 表明，如果在每个数据点上放置一个高斯分布，然后将所有高斯分布相加，则可以近似计算数据的分布。我们可以使用狄利克雷过程做类似的事情，但不是将高斯放在每个数据点的顶部，我们可以在狄利克雷过程实现中的每个子棒位置上放置一个高斯，然后根据子棒长度对该高斯进行缩放或加权。此过程提供了无限高斯混合模型的一般方案。也可以用其他分布代替高斯分布，这样就有了一个无限混合模型的通用方案。图 6.12 显示了使用拉普拉斯分布实现混合模型的一个例子。作者随意选择拉普拉斯分布是为了强 化 “不局限于高斯混合模型” 这一思想：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 α = 10
 H = stats.norm
 K = 5
@@ -528,7 +528,7 @@ w_{k}=\beta_{k}^{\prime} \cdot \prod_{i=1}^{k-1}\left(1-\beta_{i}^{\prime}\right
 
 现在可以尝试在 `PyMC3` 中实现狄利克雷过程了。首先定义一个使用 `PyMC3` 的 `stick_breaking` 函数：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 N = cs_exp.shape[0]
 K = 20
 
@@ -541,7 +541,7 @@ def stick_breaking(α):
 
 必须为 $\alpha$ 定义一个先验。一种常见的选择是伽马分布：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 with pm.Model() as model:
     α = pm.Gamma('α', 1., 1.)
     w = pm.Deterministic('w', stick_breaking(α))
@@ -564,7 +564,7 @@ with pm.Model() as model:
 
 图 6.14 是一个例子。从图中可以看出，只有前面几个组分比较重要，因此可以确信所选上限值 $K=20$ 对于此模型和数据已经足够：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 plt.figure(figsize=(8, 6))
 plot_w = np.arange(K)
 plt.plot(plot_w, trace['w'].mean(0), 'o-')
@@ -582,7 +582,7 @@ plt.ylabel('Average weight')
 
 图 6.15 显示了使用狄利克雷过程模型估计的平均密度曲线（黑色）以及反映估计中不确定性的后验曲线样本（灰色）。与图 6.2 和图 6.8 中的 KDE 相比，该模型的密度也不那么平滑：
 
-```{code-block} ipython3
+```{code-cell} ipython3
 x_plot = np.linspace(cs.exp.min()-1, cs.exp.max()+1, 200)
 post_pdf_contribs = stats.norm.pdf(np.atleast_3d(x_plot),
                                    trace['means'][:, np.newaxis, :],
