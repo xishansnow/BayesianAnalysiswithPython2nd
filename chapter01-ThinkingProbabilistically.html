@@ -514,11 +514,28 @@
 </div>
 <p>如果一个变量 <span class="math notranslate nohighlight">\(X\)</span> 可以用概率分布来描述，即可以称之为随机变量 <span class="math notranslate nohighlight">\(X\)</span> 。一般来说，使用大写字母（如 <span class="math notranslate nohighlight">\(X\)</span>） 来表示一个随机变量，使用大写字母粗体（如 <span class="math notranslate nohighlight">\(mathbb{X}\)</span> ）来表示一个随机向量；并用小写 <span class="math notranslate nohighlight">\(x\)</span> 表示该随机变量的一个实例（取值），使用小写粗体 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 表示随机向量的一个实例（取值）。此外，统计学中通常用大写的 <span class="math notranslate nohighlight">\(N\)</span> 表示样本数量， 用小写的 <span class="math notranslate nohighlight">\(p\)</span> 表示随机向量的维度。</p>
 <p>让我们看一个使用 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 的示例：真实概率分布是均值 <span class="math notranslate nohighlight">\(\mu=0\)</span> 和方差 <span class="math notranslate nohighlight">\(\sigma=1\)</span> 的正态（或高斯）分布；这两个参数完全明确地定义了正态分布。使用 SciPy，可以通过编写 <code class="docutils literal notranslate"><span class="pre">stats.Norm(μ，σ)</span></code> 来定义随机变量，并且使用 <code class="docutils literal notranslate"><span class="pre">rvs</span></code> （random variates 的缩写）方法生成一个实例 <span class="math notranslate nohighlight">\(x\)</span> 。而下面示例中，代码要求提供三个值：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">μ</span> <span class="o">=</span> <span class="mf">0.</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">μ</span> <span class="o">=</span> <span class="mf">0.</span>
 <span class="n">σ</span> <span class="o">=</span> <span class="mf">1.</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">μ</span><span class="p">,</span> <span class="n">σ</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1941</span><span class="o">/</span><span class="mf">3485363202.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">μ</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">σ</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">X</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">μ</span><span class="p">,</span> <span class="n">σ</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">x</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;stats&#39; is not defined
+</pre></div>
+</div>
+</div>
 </div>
 <p>您会注意到，每次执行此代码（统计术语为：一次试验）时，将获得不同随机结果。同时还需注意，一旦知道了概率分布参数的值，则每个值的概率就是已知的，随机发生的是每次试验中获得的确切值。</p>
 <div class="admonition tip">
@@ -536,7 +553,9 @@
 \[p(x \mid \mu, \sigma)=\frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{(x-\mu)^{2}}{2 \sigma^{2}}}\tag{式1.3} \label{式1.3}\]</div>
 <p>这是正态分布的概率密度函数。不需要记住公式 1.3，此处只想展示给大家看，这样就能知道数字是从哪里来的。正如已经提到的，<span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 是该分布的参数，通过指定这些参数值，完全可以定义分布；可以从表达式 1.3 中看到这一点，因为其他项都是常量。<span class="math notranslate nohighlight">\(\mu\)</span> 可以取任何实值，即 <span class="math notranslate nohighlight">\(\mu \in \mathbf{R}\)</span> ，并指定分布的平均值 （以及中位数或众数）。<span class="math notranslate nohighlight">\(\sigma\)</span> 是标准差，它只能是正数，表示概率分布的散布情况，值越大分布越分散。因为 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 有无限多个可能组合，所以存在无限多个高斯分布的实例，并且所有实例都属于相同的高斯族。</p>
 <p>数学公式简明扼要而且不存在二义性。但必须承认，第一次遇到它会让人害怕，特别是对数学不太感兴趣的人；打破僵局的一个好方法是使用 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 来探索它们：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mu_params</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu_params</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 <span class="n">sd_params</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mu_params</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">sd_params</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -556,6 +575,8 @@
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>前面大部分代码用于绘图，概率部分由 <code class="docutils literal notranslate"><span class="pre">y=stats.norm(u，sd).pdf(X)</span></code> 执行。在给定一组 <span class="math notranslate nohighlight">\(x\)</span> 值的 <span class="math notranslate nohighlight">\(µ\)</span> 和 <span class="math notranslate nohighlight">\(sd\)</span> 参数的情况下，通过这条线，可以评估正态分布的概率密度函数。前面的代码生成图 1.1。在每个子图中，我们有一条蓝色（深灰色）曲线，表示具有特定参数的高斯分布，并且包含在每个子图的图例中：</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -572,13 +593,16 @@
 <h4>（2）独立同分布变量<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <p>许多模型假设不同随机变量的值来自于同一分布中的抽样，但这些随机变量的取值之间彼此独立。此情况通常其为独立同分布（简称iid）变量。 相互独立在数学记数法上可表示为 <span class="math notranslate nohighlight">\(p(x,y)=p(x)p(y)\)</span> ，即对于 <span class="math notranslate nohighlight">\(x\)</span> 和 <span class="math notranslate nohighlight">\(y\)</span> 的每个值，两个变量是独立的。</p>
 <p>非iid变量的常见案例是时间序列，其中随机变量间的时间依赖性是需要考虑的关键特征。例如，以下数据来自 <a class="reference external" href="http://cdiac.esd.ornl.gov">http://cdiac.esd.ornl.gov</a> 。该数据记录了从1959年到1997年的大气二氧化碳水平。加载数据并绘制它得到：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s1">&#39;../data/mauna_loa_CO2.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s1">&#39;../data/mauna_loa_CO2.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;year&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$CO_2$ (ppmv)&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;B11197_01_02.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210524144726a0.webp" /></p>
@@ -646,7 +670,9 @@
 <div class="math notranslate nohighlight">
 \[p(y \mid \theta, N)=\frac{N !}{y !(N-y) !} \theta^{y}(1-\theta)^{N-y} \tag{式1.9} \label{式1.9}\]</div>
 <p>二项分布是一个离散分布，表示给定某个参数值 <span class="math notranslate nohighlight">\(\theta\)</span> ， <span class="math notranslate nohighlight">\(N\)</span> 次抛硬币实验中 <span class="math notranslate nohighlight">\(y\)</span> 次正面朝上的概率（或者更通俗地描述是，<span class="math notranslate nohighlight">\(N\)</span> 次实验中，<span class="math notranslate nohighlight">\(y\)</span> 次成功的概率）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n_params</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>  <span class="c1"># Number of trials</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_params</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>  <span class="c1"># Number of trials</span>
 <span class="n">p_params</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">]</span>  <span class="c1"># Probability of success</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">n_params</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">n_params</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">p_params</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -667,6 +693,8 @@
         <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505153120_1a.webp" style="zoom:67%;" />
 <p>图1.2</p>
@@ -680,7 +708,9 @@
 <div class="math notranslate nohighlight">
 \[p(\theta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \Gamma(\beta)} \theta^{\alpha-1}(1-\theta)^{\beta-1} \tag{式1.10} \label{式1.10}\]</div>
 <p>仔细观察上式可看出，除 <span class="math notranslate nohighlight">\(\Gamma\)</span> 部分之外，贝塔分布和二项分布看起来很像。 <span class="math notranslate nohighlight">\(\Gamma\)</span> 表示伽马函数。现在只需知道，用分数表示的第一项是一个标准化常量，用来保证该分布的积分为 1，此外，<span class="math notranslate nohighlight">\(\alpha\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span> 两个参数用来控制分布形态。贝塔分布是到目前为止的第 3 个分布，利用下面的代码，可以深入了解其形态：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">f</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                      <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -700,6 +730,8 @@
 <span class="n">f</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="s1">&#39;θ&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
 <span class="n">f</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.07</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;p(θ)&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505153642_8f.webp" style="zoom:67%;" />
@@ -730,7 +762,9 @@
 <div class="section" id="id17">
 <h3>（6）后验诊断<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <p>现在有了后验表达式，可以用 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 对其计算并画出结果。下面代码中，其实只有一行是用来计算后验结果的，其余代码都是用来画图的：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">n_trials</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">150</span><span class="p">]</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">48</span><span class="p">]</span>
 <span class="n">theta_real</span> <span class="o">=</span> <span class="mf">0.35</span>
@@ -756,6 +790,8 @@
     <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505154649_0f.webp" /></p>
@@ -823,9 +859,13 @@ y &amp;\sim \operatorname{Bin}(n=1, p=\theta) \tag{式1.16} \label{式1.16}
 <p>这是一个非常直观的解释，以至于人们经常会将频率学派中的置信区间与贝叶斯方法中的可信区间弄混淆。如果你对频率学派比较熟悉，请注意这两种区间的区别。贝叶斯学派告诉我们的是 “参数取值区间的概率” ，这在频率学派的框架中是不可能的，因为频率学派中的参数是确切值，频率学派的置信区间只包含参数的确切取值。在继续深入前需要注意：选择 <code class="docutils literal notranslate"><span class="pre">95%</span></code> 还是 <code class="docutils literal notranslate"><span class="pre">50%</span></code> 作为 <code class="docutils literal notranslate"><span class="pre">HPD区间</span></code> 的概率密度比例没有什么特殊的地方，只不过是经常使用或约定俗成的值罢了。 其实完全可以选用比例为 <code class="docutils literal notranslate"><span class="pre">91.37%</span></code> 的 <code class="docutils literal notranslate"><span class="pre">HPD区间</span></code>。如果你选的是 <code class="docutils literal notranslate"><span class="pre">95%</span></code> 也完全没问题，究竟选择多大比例需要具体问题具体分析。</p>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 是一个 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 包，用于贝叶斯模型的探索性数据分析。<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 有许多函数可以帮助我们总结后验结果，例如，az.plot_posterior 可以用来生成具有分布平均值和 HPD 的曲线图。在下例中，我们从贝塔分布生成随机样本，而不是真实分析的后验结果。注意图中摘要的 <code class="docutils literal notranslate"><span class="pre">HPD区间</span></code> 为 <code class="docutils literal notranslate"><span class="pre">94%</span></code> 。<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 每次计算和报告 HPD 时，默认情况下使用 0.94（对应于 <code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">HPD区间</span></code> )。可通过向 trusted_interval 参数传递值来更改此设置。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">({</span><span class="s1">&#39;θ&#39;</span><span class="p">:</span><span class="n">stats</span><span class="o">.</span><span class="n">beta</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)})</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505160529_37.webp" style="zoom:67%;" />

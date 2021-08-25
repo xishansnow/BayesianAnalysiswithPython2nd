@@ -436,6 +436,8 @@
 <p>视情况可能会对计算结果进行归一化（把每个点的计算结果除以所有点的计算结果之和）。很容易看出，选的点越多（网格越密）近似的就越好。事实上，如果使用无限多点，可以得到准确的后验。</p>
 <p>网格计算法对于多参数场景不太适用，因为随着参数增加，采样空间相比后验空间会急剧增加，换言之，我们需要花费更多时间去计算后验值，但由于维度太大，采样空间呈指数级增长，造成所花费的时间并没有有效提升后验估计的效果，而且计算后验的时间比用后验做预测的时间还长，因而该方法对于大多数统计学和数据科学问题并不太实用。</p>
 <p>下面的代码用网格计算法解决了第一章中的抛硬币问题：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">posterior_grid</span><span class="p">(</span><span class="n">grid_points</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">heads</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">tails</span><span class="o">=</span><span class="mi">9</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A grid implementation for the coin-flipping problem</span>
@@ -448,7 +450,11 @@
     <span class="k">return</span> <span class="n">grid</span><span class="p">,</span> <span class="n">posterior</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>假设我们抛硬币 13 次，观察到 3 个头：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="n">points</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">h</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -459,6 +465,22 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">);</span>
 </pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2078</span><span class="o">/</span><span class="mf">617953900.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">points</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">h</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">t</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="n">h</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">grid</span><span class="p">,</span> <span class="n">posterior</span> <span class="o">=</span> <span class="n">posterior_grid</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;np&#39; is not defined
+</pre></div>
+</div>
+</div>
 </div>
 <div class="figure align-center" id="fig8-1">
 <img alt="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021060716063392.webp" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021060716063392.webp" />
@@ -496,6 +518,8 @@
 <p>第一步可以使用最优化方法进行数值计算，也就是找出函数的最大值或最小值，有许多现成的方法。对于高斯分布，众数和均值相等，所以可以使用众数作为近似分布 <span class="math notranslate nohighlight">\(q(x)\)</span> 的平均值。</p>
 <p>第二步稍微复杂些，通过计算众数/平均值处的曲率来近似计算 <span class="math notranslate nohighlight">\(q(x)\)</span> 的标准差。这可以通过计算海森矩阵的平方根的倒数来实现。海森矩阵是函数二阶导数的矩阵，其逆矩阵为协方差矩阵。</p>
 <p>使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>，可以执行以下操作：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">normal_approximation</span><span class="p">:</span>
      <span class="c1"># Beta先验</span>
      <span class="n">p</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
@@ -509,11 +533,15 @@
      <span class="n">mean_q</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">],</span> <span class="n">std_q</span>
 </pre></div>
 </div>
+</div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>如果您尝试在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中使用 <code class="docutils literal notranslate"><span class="pre">pm.find_map</span></code> 函数，您将收到一条警告消息。由于维数灾难，使用最大后验概率 (MAP) 来表示后验，甚至初始化采样方法通常不是一个好主意。</p>
 </div>
 <p>可以看下上述 “贝塔-二项模型” 的平方近似的曲线形态：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># analytic calculation</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">beta</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span> <span class="p">,</span> <span class="n">h</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span>
@@ -528,6 +556,8 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([]);</span>
 </pre></div>
+</div>
+</div>
 </div>
 <div class="figure align-center" id="fig8-3">
 <img alt="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021060716150097.webp" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021060716150097.webp" />
@@ -626,6 +656,8 @@
 <p>（2）认为该点在圆内的判据是： <span class="math notranslate nohighlight">\(\sqrt{\left(x^{2}+y^{2}\right)} \leq R\)</span> 。</p>
 <p>（3）正方形的面积是 <span class="math notranslate nohighlight">\((2R)^2\)</span> ，圆的面积是 <span class="math notranslate nohighlight">\(πR^2\)</span> ，因此二者面积之比是 <span class="math notranslate nohighlight">\(4/π\)</span></p>
 <p>圆和正方形的面积分别正比于圆内点数 <span class="math notranslate nohighlight">\(inside\)</span> 和总点数 <span class="math notranslate nohighlight">\(N\)</span>，可以通过几行代码来模拟该蒙特卡洛过程，同时计算出估计值与实际值之间的相对误差：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">10000</span>
 <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
 <span class="n">inside</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span>
@@ -641,6 +673,8 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">framealpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">);</span>
 </pre></div>
+</div>
+</div>
 </div>
 <div class="figure align-center" id="fig8-4">
 <img alt="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021060716361541.webp" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021060716361541.webp" />
@@ -701,6 +735,8 @@
 </ul>
 <p>最后，我们会得到一连串记录值，有时候也称采样链或者迹。如果一切都正常进行，那么这些采样值就是后验的近似。在采样链中出现次数最多的值对应后验中出现概率最大的值（最大后验概率点）。该过程的优点是：<code class="docutils literal notranslate"><span class="pre">后验分析很简单，可以把对后验求积分的过程转化成对采样链求和的过程</span></code> （式 8.10）。</p>
 <p>下面的代码展示了 <code class="docutils literal notranslate"><span class="pre">Metropolis</span> <span class="pre">算法</span></code>的一个基本实现。这段代码并不是为了解决什么实际问题，只是用来演示，如果我们知道怎么计算给定点的函数值，就能得到该函数的采样。需要注意代码不包含贝叶斯相关的部分，既没有先验也没有数据。要知道，<code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 是一类能够用于解决很多问题的通用方法。例如，在一个（非贝叶斯的）分子模型中，可能需要一个函数来计算在某个状态 <span class="math notranslate nohighlight">\(x\)</span> 下系统的能量而不是简单地调用 <code class="docutils literal notranslate"><span class="pre">func.pdf(x)</span></code> 函数。<code class="docutils literal notranslate"><span class="pre">metropolis</span></code> 函数的第一个参数是一个 <code class="docutils literal notranslate"><span class="pre">SciPy</span></code> 的分布，假设我们不知道如何从中直接采样。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">metropolis</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">draws</span><span class="o">=</span><span class="mi">10000</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A very simple Metropolis implementation&quot;&quot;&quot;</span>
     <span class="n">trace</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">draws</span><span class="p">)</span>
@@ -720,7 +756,11 @@
     <span class="k">return</span> <span class="n">trace</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>在下一个示例中，我们将 <code class="docutils literal notranslate"><span class="pre">func</span></code> 定义为 <code class="docutils literal notranslate"><span class="pre">beta函数</span></code>，原因很简单，因为很容易更改它们的参数获得不同形状。我们将<code class="docutils literal notranslate"><span class="pre">Metropolis</span></code> 获得的样本绘制为直方图，并将真实分布绘制为连续(橙色)线：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">func</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">beta</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 <span class="n">trace</span> <span class="o">=</span> <span class="n">metropolis</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="n">func</span><span class="p">)</span>
@@ -735,6 +775,8 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
 </pre></div>
+</div>
+</div>
 </div>
 <div class="figure align-center" id="fig8-5">
 <img alt="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210608114143f5.webp" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210608114143f5.webp" />
@@ -801,6 +843,8 @@
 <li><p>转换数据。我们已经看到了一个这样的例子，在第 4 章，推广线性模型和第 5 章，模型比较中，我们展示了将数据居中可以改进线性模型的采样。</p></li>
 </ul>
 <p>为了使解释更具体，我们将使用具有两个参数的极简分层模型：全局参数 <span class="math notranslate nohighlight">\(a\)</span> 和局部参数 <span class="math notranslate nohighlight">\(b\)</span>（每组参数）。仅此而已，我们在这个模型中甚至没有似然/数据！在这里省略数据是为了强调，我们将讨论的一些属性（特别是在散度一节中）与模型的结构相关，而不是与数据相关。我们将讨论同一模型的两种替代参数化：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">centered_model</span><span class="p">:</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -812,20 +856,30 @@
     <span class="n">trace_ncm</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>中心模型和非中心模型的不同之处在于，对于前者，我们直接拟合群组尺度的参数，而对于后者，我们将群组尺度的参数建模为平移和缩放的高斯模型。我们将使用几个曲线图和数字摘要来探索其中的差异。</p>
 <div class="section" id="id13">
 <h3>8.4.1 收敛性<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">MCMC</span> <span class="pre">采样</span></code>器（如 <code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 或 <code class="docutils literal notranslate"><span class="pre">Metropolis</span></code>) 需要一段时间才能收敛。正如之前解释过的，MCMC 方法在一般条件和无限数量样本下都有收敛的理论保证。不幸的是，在实践中只能获得有限样本，因此必须转而依赖经验的检验，这些检验充其量只能提供一些提示或警告，表明当其失败时，可能会发生糟糕的事情，但不能保证当其没有失败时，一切都是正常的。</p>
 <p>直观检查收敛性的一种方法是运行 <code class="docutils literal notranslate"><span class="pre">arviz.plot_trace</span></code> 函数并检查结果。为更好地理解我们在检查这些曲线图时应该查看什么，此处比较一下前面定义的两个模型（参见图 8.6 和 8.7)：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_cm</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">],</span> <span class="n">divergences</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <div class="figure align-center" id="fig8-7">
 <img alt="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021060717041601.webp" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021060717041601.webp" />
 <p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">中心模型的后验分布和迹图</span><a class="headerlink" href="#fig8-7" title="Permalink to this image">¶</a></p>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_ncm</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
 </pre></div>
+</div>
+</div>
 </div>
 <div class="figure align-center" id="fig8-8">
 <img alt="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210607170440ad.webp" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210607170440ad.webp" />
@@ -840,19 +894,27 @@
 <p>好 <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 样本的另一个特征是自相似的迹。例如，前 10%（大约）应该与迹中的其他部分相似，例如最后 50% 或 10%。再说一次，我们不希望迹中存在某些模式；相反，想要一些嘈杂的东西。使用 <code class="docutils literal notranslate"><span class="pre">az.plot_trace</span></code> 也可以看到这一点。如果迹的第一部分看起来与其他部分不同，这表明需要老化，或者需要更多的样本。如果我们发现其他部分缺乏自相似性，或者看到了某种模式，这可能意味着需要更多的诊断，但通常情况下，我们应该尝试使用不同的参数化。对于困难的模型，我们甚至可能需要应用所有这些策略的组合。</p>
 <p>默认情况下，<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 将尝试并行运行独立的链（确切数量取决于可用处理器的数量）。这是使用 <code class="docutils literal notranslate"><span class="pre">pm.sample</span></code> 函数中的 <code class="docutils literal notranslate"><span class="pre">chains</span></code> 参数指定的。我们可以使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的  <code class="docutils literal notranslate"><span class="pre">plot_trace</span></code> 或 <code class="docutils literal notranslate"><span class="pre">plot_forest</span></code> 函数直观地检查并行链是否彼此相似。然后，可以将并行链合并为一个单独链进行推断，因此请注意，并行运行链并不浪费资源。</p>
 <p>比较独立链的一种定量方法是使用统计量 <code class="docutils literal notranslate"><span class="pre">R</span> <span class="pre">帽</span></code> ，其思想是用链内方差计算链间方差。理想情况下，我们应该期望其值为 1。作为经验规则，值低于 1.1 也没问题；值越高越表示不收敛。我们可以使用 <code class="docutils literal notranslate"><span class="pre">az.r_hat</span></code> 函数计算它；我们只需要传递一个 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 迹对象。默认情况下，还会使用 <code class="docutils literal notranslate"><span class="pre">az.summary</span></code> 函数以及可选的 <code class="docutils literal notranslate"><span class="pre">az.plot_forest</span></code> 来计算 <code class="docutils literal notranslate"><span class="pre">r_hat</span> <span class="pre">诊断</span></code>，如我们在以下示例中所看到的：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_forest</span><span class="p">(</span><span class="n">trace_cm</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">],</span> <span class="n">r_hat</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">eff_n</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <div class="figure align-center" id="fig8-10">
 <img alt="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210607170617f5.webp" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210607170617f5.webp" />
 <p class="caption"><span class="caption-number">Fig. 10 </span><span class="caption-text">两种模型的森林图</span><a class="headerlink" href="#fig8-10" title="Permalink to this image">¶</a></p>
 </div>
 <p>对于 <code class="docutils literal notranslate"><span class="pre">az.summary</span></code> 也是如此：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summaries</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_cm</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]),</span>
                       <span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_ncm</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])])</span>
 <span class="n">summaries</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;centered&#39;</span><span class="p">,</span> <span class="s1">&#39;non_centered&#39;</span><span class="p">]</span>
 <span class="n">summaries</span>
 </pre></div>
+</div>
+</div>
 </div>
 <img alt="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210607170651ca.webp" class="align-center" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210607170651ca.webp" />
 </div>
@@ -866,16 +928,24 @@
 <div class="section" id="id15">
 <h3>8.4.3 自相关<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p>分布（包括后验分布）的理想样本应该具有等于 0 的自相关。当给定迭代的值不独立于其他迭代的采样值时，样本是自相关的。在实践中，MCMC 方法产生的样本是自相关的，特别是 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span></code>，在较小程度上是 <code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 和 <code class="docutils literal notranslate"><span class="pre">SMC</span></code> 。<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 提供了一个方便的函数来绘制自相关曲线：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_autocorr</span><span class="p">(</span><span class="n">trace_cm</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
 </pre></div>
+</div>
+</div>
 </div>
 <div class="figure align-center" id="fig8-11">
 <img alt="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_202106071708494c.webp" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_202106071708494c.webp" />
 <p class="caption"><span class="caption-number">Fig. 11 </span><span class="caption-text">中心模型中的相关性</span><a class="headerlink" href="#fig8-11" title="Permalink to this image">¶</a></p>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">az.plot_autocorr</span></code> 显示采样值与连续点(最多100个点)的平均相关性。理想情况下，应该看不到自相关。在实践中，我们希望样本迅速下降到较低的自相关值。让我们绘制非中心模型的自相关图：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_autocorr</span><span class="p">(</span><span class="n">trace_ncm</span><span class="p">,</span> <span class="n">var_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
 </pre></div>
+</div>
+</div>
 </div>
 <div class="figure align-center" id="fig8-12">
 <img alt="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210608130900c0.webp" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210608130900c0.webp" />
@@ -894,6 +964,8 @@
 <h3>8.4.5 发散性<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <p>我们现在将探索不包含 <code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 的检验，因为它们基于方法的内部工作，而不是生成的样本的属性。这些检验基于发散性，是诊断样本的一种强大而灵敏的方法。</p>
 <p>当我试图设置本书中的模型以避免散度时，您可能已经看到指示出现散度的 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 消息。散度可能表明 <code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 在后验遇到了无法正确探索的高曲率区域；这告诉我们采样器可能缺少参数空间的一个区域，因此结果将是有偏差的。散度通常比这里讨论的测试敏感得多，因此，即使其余测试通过，它们也可以发出问题的信号。散度的一个很好的特点是，它们往往看起来靠近有问题的参数空间区域，因此我们可以使用它们来识别问题所在。可视化散度的一种方法是使用带有 DISGENCES=True 参数的 az.plot_pair：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
 <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">tr</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">trace_cm</span><span class="p">,</span> <span class="n">trace_ncm</span><span class="p">]):</span>
@@ -905,6 +977,8 @@
     <span class="n">ax</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">([</span><span class="s1">&#39;centered&#39;</span><span class="p">,</span> <span class="s1">&#39;non-centered&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">])</span>
 </pre></div>
 </div>
+</div>
+</div>
 <div class="figure align-center" id="fig8-13">
 <img alt="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021060717112515.webp" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021060717112515.webp" />
 <p class="caption"><span class="caption-number">Fig. 13 </span><span class="caption-text">两种模型的散度情况</span><a class="headerlink" href="#fig8-13" title="Permalink to this image">¶</a></p>
@@ -912,8 +986,12 @@
 <p>在图 8.13 中，小（蓝色）点是规则样本，较大（黑色和橙色）点表示散度。我们可以看到，中心模型的散度主要集中在漏斗的尖端。我们还可以看到，非中心模型没有发散，尖端更尖锐。采样器通过分叉告诉我们，它很难从漏斗尖端附近的区域取样。我们确实可以在图 8.13 中检查到，居中的模型在尖端附近没有样本，靠近散度集中的地方。这真是太棒了！</p>
 <p>散度也用黑色、“|\”标记表示在 ArviZ 的轨迹图中，如图 8.7 所示。请注意，散度是如何集中在轨迹的病理平坦部分周围的。</p>
 <p>可视化散度的另一种有用的方法是用平行的曲线图：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_parallel</span><span class="p">(</span><span class="n">trace_cm</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <div class="figure align-center" id="fig8-14">
 <img alt="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210607171240da.webp" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210607171240da.webp" />

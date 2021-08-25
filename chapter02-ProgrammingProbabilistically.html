@@ -456,11 +456,28 @@
 <div><p>你可能听说过 Theano 已经不再开发了，但这没什么好担心的。PyMC 开发人员将接管 Theano 维护，确保 Theano 在未来几年内继续为 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 服务。与此同时，PyMC 开发人员正在迅速行动，以创建 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的继任者。这可能会基于 TensorFlow 作为后端，尽管其他选项也在分析中。有关这方面的更多信息，请访问<a class="reference external" href="https://medium.com/&#64;pymc_devs/theano-tensorflow-and-the-future-of-pymc-6c9987bb19d5">博客</a> 。</p>
 </div></blockquote>
 <p>重新回顾抛硬币问题，这次使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 。首先获取数据，此处使用手动构造的数据。由于数据是我们通过代码生成的，所以知道真实参数值，以下代码中用 <code class="docutils literal notranslate"><span class="pre">theta_real</span></code> 变量表示。显然，在实际数据中，通常并不知道参数的真实值，而是要将其估计出来。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
 <span class="n">trials</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">theta_real</span> <span class="o">=</span> <span class="mf">0.35</span> <span class="c1"># unknown value in a real experiment</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">bernoulli</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="n">theta_real</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">trials</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1960</span><span class="o">/</span><span class="mf">567436309.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">trials</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">theta_real</span> <span class="o">=</span> <span class="mf">0.35</span> <span class="c1"># unknown value in a real experiment</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">data</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">bernoulli</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="n">theta_real</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">trials</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;np&#39; is not defined
+</pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="id3">
 <h3>2.2.1 建立模型<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
@@ -471,11 +488,15 @@
 y &amp;\sim \operatorname{Bern}(p=\theta) 
 \end{align*}\]</div>
 <p>该统计模型与 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的语法几乎一一对应。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">our_first_model</span><span class="p">:</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">our_first_model</span><span class="p">:</span>
  <span class="n">θ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
  <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">θ</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
  <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p>第 1 行代码构建了一个模型的容器， <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 使用 <code class="docutils literal notranslate"><span class="pre">with</span></code> 语法将所有位于该语法块内的代码都指向同一个模型，你可以把它看作是简化模型描述的“语法糖”，此处将模型命名为 <code class="docutils literal notranslate"><span class="pre">our_first_model</span></code> 。</p>
 <p>第 2 行代码指定了先验，可以看到语法与数学表示很接近。</p>
@@ -508,20 +529,32 @@ NUTS: [θ]
 <div class="section" id="id6">
 <h4>2.2.3.1 诊断工具和方法<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <p>现在我们根据有限数量的样本对后验做出了（近似）推断，接下来要做的是检查推断是否合理。可以通过可视化的或者定量的手段做一些测试，从中尝试发现样本中的问题。诊断并不能证明得到的分布是正确的，但能够提供证据证明样本看起来是合理的。<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">plot_trace</span></code> 函数非常适合执行此任务：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504190255_62.webp" /></p>
 <p>通过使用 <code class="docutils literal notranslate"><span class="pre">az.plot_trace</span></code>，我们可以为每个非观测变量绘制两个子图。我们模型中唯一的非观测变量是 <span class="math notranslate nohighlight">\(\theta\)</span> 。请注意： <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 表示观测变量，因其值已知，不需采样。上图中，左边为核密度估计（ <code class="docutils literal notranslate"><span class="pre">KDE</span></code> ）图，该图类似于直方图的平滑版本；右图为采样过程中每一步的采样值，称为轨迹图。轨迹图中可以直观地查看从后端获得的采样结果。你可以尝试将 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的结果与上一章通过解析获得的结果进行比较。</p>
 <p><code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 还提供了其他几个绘图来帮助解释轨迹图，我们将在后面看到它们。此外 <code class="docutils literal notranslate"><span class="pre">az.summary</span></code> 可以提供 <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> 形式的摘要数据。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504200055_94.webp" /></p>
 <p>通过上图所示的摘要数据，可以得到均值、标准差和 <code class="docutils literal notranslate"> <span class="pre">94%</span> <span class="pre">HPD</span></code> 区间（<code class="docutils literal notranslate"><span class="pre">HPD</span> <span class="pre">3%</span></code>和 <code class="docutils literal notranslate"><span class="pre">HPD</span> <span class="pre">97%</span></code> )。正如在第一章“概率思维”中所讨论，可以使用这些数字来解释和报告贝叶斯推断的结果。后两个指标与诊断样本相关。详细信息请参阅第 8 章-推断引擎。</p>
 <p>另一种直观总结后验的方法是使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 附带的 <code class="docutils literal notranslate"><span class="pre">plot_posterior</span></code> 函数。默认情况下，<code class="docutils literal notranslate"><span class="pre">plot_posterior</span></code> 为离散变量显示直方图，为连续变量显示 <code class="docutils literal notranslate"><span class="pre">KDE</span></code> 。我们还获得了分布的均值（可以使用 <code class="docutils literal notranslate"><span class="pre">point_estimate</span></code> 参数指定中位数或其他模式），<code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">HPD</span></code> 作为图底部的一条黑线。可以使用 <code class="docutils literal notranslate"><span class="pre">credible_interval</span></code> 参数为 <code class="docutils literal notranslate"><span class="pre">HPD</span></code> 设置不同的间隔值。此类型的图由 <code class="docutils literal notranslate"><span class="pre">John</span> <span class="pre">K.Kruschke</span></code> 在其著作《 <code class="docutils literal notranslate"><span class="pre">Doing</span> <span class="pre">Bayesian</span> <span class="pre">Data</span> <span class="pre">Analysis</span></code> 》中引入。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504200820_a7.webp" /></p>
 </div>
@@ -541,20 +574,28 @@ NUTS: [θ]
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504202103_98.webp" style="zoom:67%;" />
 <p>如果迹的前面部分跟其他部分看起来不太一样，那就意味着需要进行老化处理，如果其他部分没有呈现稳定的相似性或者可以看到某种模式，那这意味着需要更多的采样，或者需要更换采样方法或者参数化方法。对于一些复杂的模型，我们可能需要结合使用前面所有的策略。</p>
 <p><code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 可以实现并行地运行一个模型多次，因而对同一个参数可以得到多条并行的迹。这可以通过在采样函数中指定 <code class="docutils literal notranslate"><span class="pre">njobs</span></code> 参数实现。此时使用 <code class="docutils literal notranslate"><span class="pre">plot_trace</span></code> 函数，便可在同一幅图中得到同一个参数的所有迹。由于每组迹都是相互独立的，所有的迹看起来都应该差不多。除了检查收敛性之外，这些并行的迹也可以用于推断，我们可以将这些并行的迹组合起来提升采样大小而不是扔掉多余的迹：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">our_first_model</span><span class="p">:</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">our_first_model</span><span class="p">:</span>
  <span class="n">step</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Metropolis</span><span class="p">()</span>
  <span class="n">multi_trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">,</span> <span class="n">njobs</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
  
 <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">multi_trace</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;theta&#39;</span><span class="p">:</span><span class="n">theta_real</span><span class="p">});</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>一种定量检测收敛性的方法是 <strong>Gelman-Rubin 检验</strong> （ <code class="docutils literal notranslate"><span class="pre">az.summary</span></code> 输出的表格中的 <span class="math notranslate nohighlight">\(\hat R\)</span> 值）。该检验的思想是比较不同迹之间的差异和迹内部的差异，因此，需要多组迹来执行检验。理想状态下，我们希望得到 <span class="math notranslate nohighlight">\(\hat R=1\)</span> 。但根据经验，值低于 1.1 也可以认为是收敛的，更高的值则意味着不收敛。</p>
 </div>
 <div class="section" id="id9">
 <h4>2.2.3.4 自相关问题<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <p>最理想的采样应该不会是自相关的，也就是说，某点的值应该与其他点的值相互独立。在实际中，从 <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 方法（特别是 <code class="docutils literal notranslate"><span class="pre">Metropolis-Hastings</span></code>）中得到的采样值通常是自相关的。由于参数间的相互依赖关系，模型会导致更多自相关采样。 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 有一个很方便的函数用来描述自相关。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_autocorr</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_autocorr</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p><img alt="image-20210504203037224" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504203039_fe.webp" /></p>
 <p>该图显示了采样值与相邻连续点之间的平均相关性。理想状态下，不应看到自相关性，实际中希望看到自相关性降低到较低水平。参数越自相关，要达到指定精度的采样次数就需要越多，也就是说，自相关性不利于降低采样次数。</p>
@@ -581,13 +622,21 @@ NUTS: [θ]
 <div><p><code class="docutils literal notranslate"><span class="pre">ROPE</span></code> 是根据背景或专业知识选择的任意区间，假设在该区间内的任何值都具有实际等效性。</p>
 </div></blockquote>
 <p>plot_posterior 函数可以用来刻画 <code class="docutils literal notranslate"><span class="pre">ROPE</span></code>。从图中可以看到，<code class="docutils literal notranslate"><span class="pre">ROPE</span></code> 是一段较宽的半透明的红色线段，同时上面有两个数值表示 <code class="docutils literal notranslate"><span class="pre">ROPE</span></code> 的两个端点。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">ROPE</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span> <span class="mf">.55</span><span class="p">])</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">ROPE</span><span class="o">=</span><span class="p">[</span><span class="mf">0.45</span><span class="p">,</span> <span class="mf">.55</span><span class="p">])</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504204839_cb.webp" /></p>
 <p>我们还可以给 <code class="docutils literal notranslate"><span class="pre">plot_posterior</span></code> 传递一个参考值，例如 0.5，用来和后验进行对比。从图中可以看出我们会得到一个橙色的垂直线以及大于该值和小于该值的后验比例。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span><span class="n">ref_val</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_posterior</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span><span class="n">ref_val</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504204959_25.webp" /></p>
 <p>关于如何使用 <code class="docutils literal notranslate"><span class="pre">ROPE</span></code> 的更多细节，可以阅读 Kruschke 的《<code class="docutils literal notranslate"><span class="pre">Doing</span> <span class="pre">Bayesian</span> <span class="pre">Data</span> <span class="pre">Analysis</span></code>》一书的第 12 章。该章还讨论了在贝叶斯框架下如何做假设检验，以及一些（贝叶斯或者非贝叶斯的）假设检验方面的警告。</p>
@@ -599,7 +648,9 @@ NUTS: [θ]
 <li><p>0-1 损失 <span class="math notranslate nohighlight">\(I(\theta \neq \hat{\theta})\)</span> ，其中 <span class="math notranslate nohighlight">\(I\)</span> 为指示函数</p></li>
 </ul>
 <p>实践中通常手头没有真实参数 <span class="math notranslate nohighlight">\(\theta\)</span> 的值，仅有一个后验分布形式的估计。因此，我们能做的就是找出最小化期望损失函数的 <span class="math notranslate nohighlight">\(\hat \theta\)</span> 值。期望损失函数是指整个后验分布的平均损失函数。在下面代码块中，我们有两个损失函数：绝对损失（ <code class="docutils literal notranslate"><span class="pre">lossf_a</span></code>）和平方损失（ <code class="docutils literal notranslate"><span class="pre">lossf_b</span></code>）。我们将尝试超过 200 个网格的 <span class="math notranslate nohighlight">\(\hat \theta\)</span> 值，然后绘制其曲线，还将包括最小化每个损失函数的 <span class="math notranslate nohighlight">\(\hat \theta\)</span> 值：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 <span class="n">θ_pos</span> <span class="o">=</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;θ&#39;</span><span class="p">]</span>
 <span class="n">lossf_a</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">θ_pos</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">]</span>
 <span class="n">lossf_b</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">i</span> <span class="o">-</span> <span class="n">θ_pos</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">]</span>
@@ -613,13 +664,17 @@ NUTS: [θ]
  <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39; $\hat \theta $ &#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504210053_d2.webp" /></p>
 <p>正如我们所看到的，结果显示 <code class="docutils literal notranslate"><span class="pre">lossf_a</span></code> 的最优解是 <span class="math notranslate nohighlight">\(\hat \theta=0.32\)</span> ，<code class="docutils literal notranslate"><span class="pre">lossf_b</span></code> 的最优解是 <span class="math notranslate nohighlight">\(\hat \theta=0.33\)</span> ​ 。该结果中比较有趣的是，前一个值等于后验的中位数，后一个值等于后验的平均值。通过计算 <code class="docutils literal notranslate"><span class="pre">np.Means(θ_pos)</span></code>、<code class="docutils literal notranslate"><span class="pre">np.Medium(θ_pos)</span></code> 可以检查这个情况。这似乎在暗示：不同的损失函数与不同的点估计有关。</p>
 <p>OK，如果想要形式化的结果并给出点估计，必须决定想要哪个损失函数，或者反过来，如果选择一个给定点估计，就隐含地（甚至可能是无意识地）决定了一个损失函数。显式选择损失函数的好处是可以根据问题调整函数，而不是使用一些可能不适合特定情况的预定义规则。</p>
 <p>在许多问题中，做出决定的成本是不对称的；例如，决定给五岁以下的儿童接种疫苗还是不接种疫苗。一个糟糕的决定可能会造成数千人生命损失，并产生健康危机，而这场危机本可以通过接种一种廉价而安全的疫苗来避免。因此，如果问题需要的话，可以构造一个不对称损失函数。</p>
 <p>同样重要的是要注意，由于后验分布是数字采样的形式，因此理论上可以计算任意复杂的损失函数，而不需要受数学形式上的限制。</p>
 <p>以下只是一个愚蠢的例子：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lossf</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lossf</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">:</span>
  <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
   <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">θ_pos</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">θ_pos</span><span class="p">))</span>
@@ -635,6 +690,8 @@ NUTS: [θ]
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39; $\hat \theta $ &#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504211017_cb.webp" /></p>
 <p>话虽如此，我想澄清一点。这并不是说，每次人们使用点估计时，他们都是真的在考虑损失函数。事实上，在我或多或少熟悉的许多科学领域，损失函数并不是很常见。人们经常选择中位数，只是因为它对异常值比平均值更可靠，或者仅仅因为它是一个简单而熟悉的概念，或者因为他们认为它们的可观测性真的是某种程度上某个过程的平均值，比如分子相互弹跳，或者基因与自己和环境相互作用。</p>
 <p>我们刚刚看到对损失函数的简单而浅显的介绍。如果你想了解更多这方面知识，可以尝试阅读决策理论，这是一个研究正式决策的领域。</p>
@@ -646,10 +703,14 @@ NUTS: [θ]
 <div class="section" id="id13">
 <h3>2.3.1 高斯推断<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>下面的例子与核磁共振实验有关，核磁共振是一种研究分子和生物的技术。下面这组数据，可能来自一群人身高的测量值、回家的平均时间、从超市买回来橙子的重量、大壁虎的伴侣个数或者任何可以用高斯分布近似的测量值。在这个例子中，我们有 48 个测量值：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;../data/chemical_shifts.csv&#39;</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;../data/chemical_shifts.csv&#39;</span><span class="p">)</span>
 <span class="n">az</span><span class="o">.</span><span class="n">plot_kde</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">rug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">0</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p>除了两个远离平均值的数据点外，该数据集的 <code class="docutils literal notranslate"><span class="pre">KDE</span></code> 图显示出类似高斯的分布：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504212534_30.webp" /></p>
@@ -663,7 +724,9 @@ y &amp;\sim \mathcal{N}(\mu, \sigma)
 <p>其中， <span class="math notranslate nohighlight">\(\mu\)</span> 来自上下界分别为 <span class="math notranslate nohighlight">\(l\)</span> 和 <span class="math notranslate nohighlight">\(h\)</span> 的均匀分布， <span class="math notranslate nohighlight">\(\sigma\)</span> 来自标准差为 <span class="math notranslate nohighlight">\(\sigma_\sigma\)</span> 的半正态分布。半正态分布和普通正态分布很像，不过只包含正数，看起来就好像将普通的正态分布沿着均值对折了。通过从正态分布中采样，然后取绝对值，可以获取半正态分布的样本。最后，在我们的模型中，数据 <span class="math notranslate nohighlight">\(y\)</span> 来自参数分别为 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 的正态分布，可以用 Kruschke 风格的图将其画出来：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504213129_7f.webp" /></p>
 <p>如果不知道 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 的值，可以通过先验来表示该未知信息。例如，可以将均匀分布的上下界分别设为（<span class="math notranslate nohighlight">\(l\)</span> = 40, <span class="math notranslate nohighlight">\(h\)</span> = 75），该范围要比数据本身的范围稍大一些。或者，可以根据先验知识设得更广一些，比如知道这类观测值不可能小于 0 或者大于 100 ，可以将均匀先验参数设为（<span class="math notranslate nohighlight">\(l\)</span> = 0, <span class="math notranslate nohighlight">\(h\)</span> = 100）。对于半正态分布而言，可以把 <span class="math notranslate nohighlight">\(\sigma_\sigma\)</span> 的值设为 10，该值相对于数据分布而言算是较大的。 利用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> ，我们可以将模型表示如下：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_g</span><span class="p">:</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_g</span><span class="p">:</span>
  <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mi">70</span><span class="p">)</span>
  <span class="n">σ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
  <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">σ</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
@@ -671,27 +734,45 @@ y &amp;\sim \mathcal{N}(\mu, \sigma)
 <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_g</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504213401_14.webp" /></p>
 <p>您可能已经注意到了，使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的 <code class="docutils literal notranslate"><span class="pre">plot_trace</span></code> 函数生成的图中，每个未知参数都有一行。对于这个模型，后验是二维的，所以上图显示了每个参数的边缘分布。我们可以使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">plot_joint</span></code> 函数来查看二维的后验分布是什么样子，以及 <span class="math notranslate nohighlight">\(μ\)</span> 和 <span class="math notranslate nohighlight">\(σ\)</span> 的边缘分布：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_joint</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;kde&#39;</span><span class="p">,</span> <span class="n">fill_last</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_joint</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;kde&#39;</span><span class="p">,</span> <span class="n">fill_last</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p><img alt="image-20210504213715796" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504213728_51.webp" /></p>
 <p>如果要访问存储在跟踪对象中的任何参数值，可以使用相关参数的名称做为跟踪索引。因此，您将获得一个 NumPy 数组。尝试执行 <code class="docutils literal notranslate"><span class="pre">trace_g['σ']</span></code> 或 <code class="docutils literal notranslate"><span class="pre">az.plot_kde(trace_g['σ'])</span></code>。顺便说一下，使用 Jupyter Notebook/lab，您可以通过在代码单元格中写入 \sigma，然后按 Tab 键来获取字符。</p>
 <p>我们将打印该摘要以供以后使用：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_g</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_g</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504213925_74.webp" /></p>
 <p>现在已经计算了后验概率，可以用它来模拟数据，并检查模拟数据与观测数据的一致性。如果你还记得第1章“概率思维”，这种比较被称为后验预测检查，因为使用后验进行预测，并使用这些预测来检验模型。如果使用 <code class="docutils literal notranslate"><span class="pre">sample_posterior_predictive</span></code> 函数，使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 可以非常容易获得后验预测样本。使用以下代码，我们将从后端生成 100 个预测，每个预测的大小与数据相同。请注意，我们必须将跟踪和模型传递给 <code class="docutils literal notranslate"><span class="pre">sample_posterior_predictive</span></code> ，而其他参数是可选的：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_g</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">model_g</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_g</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">model_g</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p><code class="docutils literal notranslate"><span class="pre">y_pred_g</span></code> 变量是一个字典，<code class="docutils literal notranslate"><span class="pre">keys</span></code> 是模型中观察到的变量名称，<code class="docutils literal notranslate"><span class="pre">values</span></code> 是形状为（<code class="docutils literal notranslate"><span class="pre">samples</span></code>、<code class="docutils literal notranslate"><span class="pre">size</span></code>）的数组，在本例中为 <span class="math notranslate nohighlight">\((100，len(data))\)</span> 。我们有一本字典，因为至少有一个可观测变量的模型。可以使用 <code class="docutils literal notranslate"><span class="pre">plot_ppc</span></code> 函数进行可视化后验预测检查：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data_ppc</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">from_PyMC3</span><span class="p">(</span><span class="n">trace</span><span class="o">=</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">posterior_predictive</span><span class="o">=</span><span class="n">y_pred_g</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_ppc</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">from_PyMC3</span><span class="p">(</span><span class="n">trace</span><span class="o">=</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">posterior_predictive</span><span class="o">=</span><span class="n">y_pred_g</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">plot_ppc</span><span class="p">(</span><span class="n">data_ppc</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">mean</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504214541_d9.webp" /></p>
 <p>上图中，黑色的线是观测数据的 <code class="docutils literal notranslate"><span class="pre">KDE</span></code> ，半透明（青色）线反映了我们对预测数据的推断分布的不确定性。有时，当你只有很少数据点时。像此类曲线图可能会显示预测曲线是毛茸茸的或摇摇晃晃的；这是由于 <code class="docutils literal notranslate"><span class="pre">KDE</span></code> 在 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 中的实现方式所致。密度是在传递给 <code class="docutils literal notranslate"><span class="pre">KDE</span></code> 函数的数据的实际范围内估计的，而在这个范围之外，密度被假定为零。虽然有些人可能认为这是一个错误，但我认为这是一个功能，因为它反映了数据的一个属性，而不是过度平滑。</p>
@@ -735,11 +816,17 @@ y &amp;\sim \mathcal{N}(\mu, \sigma)
 </li>
 </ul>
 <p>你可以尝试多次运行下面的代码，查看是否有稳定的均值（ 其中 <code class="docutils literal notranslate"><span class="pre">df</span></code> 为自由度）。将参数 <code class="docutils literal notranslate"><span class="pre">df</span></code> 换成一个更大100在尝试一下。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>下面的代码绘制了自由度为 1，2，5，30 时的 <span class="math notranslate nohighlight">\(t\)</span> 分布曲线：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">30</span><span class="p">]:</span>
   <span class="n">distri</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
   <span class="n">x_pdf</span> <span class="o">=</span> <span class="n">distri</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_values</span><span class="p">)</span>
@@ -750,6 +837,8 @@ y &amp;\sim \mathcal{N}(\mu, \sigma)
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210513181355ce.webp" /></p>
 <p>利用 <span class="math notranslate nohighlight">\(t\)</span> 分布可以将模型调整为如下形式：</p>
@@ -763,7 +852,9 @@ y &amp;\sim \mathcal{N}(\mu, \sigma)
 <p>此模型与高斯模型的主要区别是：似然调整为 <span class="math notranslate nohighlight">\(t\)</span> 分布，由于 <span class="math notranslate nohighlight">\(t\)</span> 分布多了一个新的参数 <span class="math notranslate nohighlight">\(\nu\)</span>，需要为其增加一个先验。此处计划采用均值为 30 的指数分布。通过上图可以看出，当 <span class="math notranslate nohighlight">\(\nu = 30\)</span> 时， <span class="math notranslate nohighlight">\(t\)</span> 分布看起来与高斯分布很相似。 从图中也可以看出， <span class="math notranslate nohighlight">\(\nu\)</span> 在 30 附近是一个比较适中的值，既可以调大也可以调小，因此属于弱信息先验。我们的模型可以表示如下：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210513182721ce.webp" /></p>
 <p>同样， <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 让我们只需要几行代码便可修改模型。唯一需要 注意的是， <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中指数分布的参数用的是分布均值的倒数。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_t</span><span class="p">:</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_t</span><span class="p">:</span>
     <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">75</span><span class="p">)</span>
     <span class="n">σ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
     <span class="n">ν</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Exponential</span><span class="p">(</span><span class="s1">&#39;ν&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">30</span><span class="p">)</span>
@@ -772,26 +863,36 @@ y &amp;\sim \mathcal{N}(\mu, \sigma)
 <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_t</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021051318284221.webp" /></p>
 <p>图 2.14</p>
 </center>
 <p>将 <code class="docutils literal notranslate"><span class="pre">model_g</span></code> 的轨迹图（图2.9）与 <code class="docutils literal notranslate"><span class="pre">model_t</span></code> 的跟踪（图2.14）进行比较。现在，打印 <code class="docutils literal notranslate"><span class="pre">model_t</span></code> 的摘要，并将其与 <code class="docutils literal notranslate"><span class="pre">model_g</span></code> 的摘要进行比较。在继续阅读之前，请花点时间找出两个结果之间的差异。你注意到什么有趣的事情了吗？</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_t</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_t</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021051318370550.webp" /></p>
 </center>
 <p>可以看到，高斯分布模型和基于 <span class="math notranslate nohighlight">\(t\)</span> 分布模型对 <span class="math notranslate nohighlight">\(µ\)</span> 的估计比较接近，只相差 0.5 左右，而 <span class="math notranslate nohighlight">\(σ\)</span> 的估计则从 3.5 变成了 2.1，这是因为 <span class="math notranslate nohighlight">\(t\)</span> 分布对于偏离均值的点赋予的权重较小。此外还可以看到， <span class="math notranslate nohighlight">\(\nu\)</span> 的值接近 4.5，也就是说，该分布并不太像高斯分布，而是更接近重尾分布。</p>
 <p>接下来对 <span class="math notranslate nohighlight">\(t\)</span> 分布模型做后验检查，并将其与高斯分布对比：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_ppc_t</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_ppc_t</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span>
     <span class="n">trace_t</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">model_t</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
 <span class="n">y_pred_t</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">from_pymc3</span><span class="p">(</span><span class="n">trace</span><span class="o">=</span><span class="n">trace_t</span><span class="p">,</span> <span class="n">posterior_predictive</span><span class="o">=</span><span class="n">y_ppc_t</span><span class="p">)</span>
 <span class="n">az</span><span class="o">.</span><span class="n">plot_ppc</span><span class="p">(</span><span class="n">y_pred_t</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">mean</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">70</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021051318400612.webp" /></p>
 <p>可以看到，使用 <span class="math notranslate nohighlight">\(t\)</span> 分布之后，从分布的峰值和形状来看，模型的预测值与观测数据更吻合了。留意预测值远离观测值中心的部分，那是因为 <span class="math notranslate nohighlight">\(t\)</span> 分布希望看到在偏离数据中心的两个方向上都有数据。</p>
@@ -844,29 +945,43 @@ y &amp;\sim \mathcal{N}(\mu, \sigma)
 <div class="section" id="id19">
 <h3>2.4.3 小费数据集<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <p>接下来，使用 <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">tips</span></code> 数据集来讨论前面提到的想法。我们希望知道星期几对于餐馆小费数量的影响。该例中实际并没有明确的实验组和对照组之分，只是观察性的实验。如果愿意，可以任选一天（例如星期四）作为实验组，或者对照组。需注意的一点是：对于观察性实验，没法得出某种因果关系，能得到相关性。事实上，如何从数据中得出因果关系是非常热门的研究问题，我们会在第 4 章重新讨论该问题。现在，首先用一行代码将数据导入成 <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>，<code class="docutils literal notranslate"><span class="pre">tail</span></code> 函数返回数据中的最后一条（当然你也可以用 <code class="docutils literal notranslate"><span class="pre">head</span></code> 函数返回第一条数据）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tips</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/tips.csv&#39;</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tips</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/tips.csv&#39;</span><span class="p">)</span>
 <span class="n">tips</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504182713_db.webp" /></p>
 <p>对于该数据集，我们只关心 <code class="docutils literal notranslate"><span class="pre">day</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tip</span></code> 列，利用 <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> 中的 <code class="docutils literal notranslate"><span class="pre">violinplot</span></code> 函数可以将其画出来：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;day&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;tip&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span><span class="n">t</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;day&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;tip&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">tips</span><span class="p">)</span><span class="n">t</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504182600_5a.webp" /></p>
 <p>图 2.16</p>
 </center>
 <p>把问题简化下，我们创建两个变量：变量 <code class="docutils literal notranslate"><span class="pre">y</span></code>表示 <code class="docutils literal notranslate"><span class="pre">tips</span></code>；变量 <code class="docutils literal notranslate"><span class="pre">idx</span></code> 表示分类变量的编码。即用数字 0、1、2、3 表示星期四、星期五、星期六和星期天。 groups 则包含其中每一组的数量。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tip</span> <span class="o">=</span> <span class="n">tips</span><span class="p">[</span><span class="s1">&#39;tip&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tip</span> <span class="o">=</span> <span class="n">tips</span><span class="p">[</span><span class="s1">&#39;tip&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">tips</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">],</span>
       <span class="n">categories</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Thur&#39;</span><span class="p">,</span> <span class="s1">&#39;Fri&#39;</span><span class="p">,</span> <span class="s1">&#39;Sat&#39;</span><span class="p">,</span> <span class="s1">&#39;Sun&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">codes</span>
 <span class="n">groups</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>该模型几乎与 <code class="docutils literal notranslate"><span class="pre">model_g</span></code> 相同；唯一区别是， <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 为向量而不是标量。对于这种情况，<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 语法非常有用：可以用向量化方式编写模型，而不用编写 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环。这意味着对于先验和似然，我们可以使用 <code class="docutils literal notranslate"><span class="pre">idx</span></code> 变量正确地索引到其 <code class="docutils literal notranslate"><span class="pre">mean</span></code> 和 <code class="docutils literal notranslate"><span class="pre">sd</span></code> 变量：</p>
 <p>的时候，我们会得到 4 个和 4 个。 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的语法能够很好地适应该场景，我们可以直接用向量的方式表示模型，而不用使用 <code class="docutils literal notranslate"><span class="pre">for</span></code> 循环，代码的变化相比前面的模型很小。对应先验，我们需要传一个维度变量 <code class="docutils literal notranslate"><span class="pre">shape</span></code>，对于似然，我们需要对和正确地进行编码，这也是 为什么创建了 <code class="docutils literal notranslate"><span class="pre">idx</span></code> 变量。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">comparing_groups</span><span class="p">:</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">comparing_groups</span><span class="p">:</span>
  <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
  <span class="n">σ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
  <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">sd</span><span class="o">=</span><span class="n">σ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="n">tip</span><span class="p">)</span>
@@ -874,12 +989,16 @@ y &amp;\sim \mathcal{N}(\mu, \sigma)
 <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_cg</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504182332_b3.webp" /></p>
 <p>图 2.17</p>
 </center>
 <p>下面的代码只是绘制差异的一种方式，而不重复比较。我们不是绘制All-And-All矩阵，而是绘制上三角部分：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dist</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dist</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span>
 <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">comparisons</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
 <span class="n">pos</span> <span class="o">=</span> <span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
@@ -895,6 +1014,8 @@ y &amp;\sim \mathcal{N}(\mu, \sigma)
 <span class="n">alpha</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504182144_09.webp" />
@@ -918,13 +1039,17 @@ y &amp;\sim \mathcal{N}(\mu, \sigma)
 <p>那么如何构建分层模型呢？简单说，就是在先验之上使用一个共享先验。也就是说，我们不再固定先验的参数，而是直接从数据中将其估计出来。这类更高层的先验通常被称为 <code class="docutils literal notranslate"><span class="pre">超先验（hyper-prior）</span></code> ，其参数称为 <code class="docutils literal notranslate"><span class="pre">超参数</span></code>。 “超”在希腊语中是”在某某之上”的意思。当然，还可以在超先验之上再增加先验，做到尽可能分层。问题是这么做会使模型变得相当复杂而且难以理解。 原则上，除非问题确实需要更复杂的结构，增加分层对于做推断并没有更大帮助，相反，会使分析人员陷入 <code class="docutils literal notranslate"><span class="pre">超参数</span></code> 和 <code class="docutils literal notranslate"><span class="pre">超先验</span></code> 的混乱中而无法做出有意义的解释，并降低模型的可解释性。</p>
 <p>为了更好地解释分层模型中的主要概念，以本节开头提到的水质模型为例，使用一些人工数据来讲解。假设我们从同一个城市的 3 个不同水域得到了含铅量的采样值：其中高于世界卫生组织标准的值标记为 0；低于标准的值标记为 1。（注：此处做了简化，实际中会使用铅含量的连续值，并分成更多组）。</p>
 <p>我们通过以下代码合成数据：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">N_samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N_samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
 <span class="n">G_samples</span> <span class="o">=</span> <span class="p">[</span><span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
 <span class="n">group_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">N_samples</span><span class="p">)),</span> <span class="n">N_samples</span><span class="p">)</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">N_samples</span><span class="p">)):</span>
  <span class="n">data</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="n">G_samples</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">N_samples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">G_samples</span><span class="p">[</span><span class="n">i</span><span class="p">]]))</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p>上述代码模拟了一个实验，其中测量了三组数据，每组包含一定数量样本。我们将每组的样本总数存储在 <code class="docutils literal notranslate"><span class="pre">N_samples</span></code> 中，将其中水质好的样本数量存储在 <code class="docutils literal notranslate"><span class="pre">G_samples</span></code> 中。代码的其余部分用来生成了对应的数据集，其中填满了 0 和 1 。</p>
 <p>该模型基本与解决抛硬币问题的模型相同，只是有两个重要特征：</p>
@@ -953,7 +1078,9 @@ y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right)
 <li><p>其次是处于教学目的。这个例子表明模型的表达方式可能不止一种，但在数学上等价时在实现上可能会有差异。采样器的效率是一个方面，而另一个方面可能是模型的可解释性。对于某些特定问题或特定受众，报告贝塔分布的均值和精度比报告 <span class="math notranslate nohighlight">\(\alpha\)</span> 和 <span class="math notranslate nohighlight">\(\beta\)</span> 参数更好。</p></li>
 </ul>
 <p>让我们在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中实现并求解该模型，这样我们就可以继续讨论层次模型：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_h</span><span class="p">:</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_h</span><span class="p">:</span>
  <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
  <span class="n">κ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;κ&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
  <span class="n">θ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">μ</span><span class="o">*</span><span class="n">κ</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">μ</span><span class="p">)</span><span class="o">*</span><span class="n">κ</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">N_samples</span><span class="p">))</span>
@@ -961,6 +1088,8 @@ y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right)
  <span class="n">trace_h</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
 <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_h</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504181604_78.webp" style="zoom:67%;" />
@@ -986,7 +1115,9 @@ y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right)
 <p>此外，超先验对收缩的程度有影响。如果对所有组的整体分布有一些可信的先验信息，那么将其加入到模型中将有助于收缩程度调整到比较合理的值。</p>
 <p>理论上完全可以只用两个组来构建分层模型，不过通常更倾向于使用多个组。直观原因是，收缩其实是将每个组看成一个数据点，而我们是在组这个层级上估计标准差，除非我们对估计值有很强的先验，否则通常不会太相信点数较少的估计值，。</p>
 <p>你可能对估计到的先验分布比较感兴趣，以下是将其表示出来的一种方式：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">trace_h</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
  <span class="n">u</span> <span class="o">=</span> <span class="n">trace_h</span><span class="p">[</span><span class="s1">&#39;μ&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
  <span class="n">k</span> <span class="o">=</span> <span class="n">trace_h</span><span class="p">[</span><span class="s1">&#39;κ&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
@@ -1006,6 +1137,8 @@ y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right)
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+</div>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504181857_6e.webp" style="zoom:67%;" />
 <p>图2.21</p>
@@ -1015,22 +1148,32 @@ y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right)
 <h3>2.5.3 另一个例子<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
 <p>我们再一次以化学漂移数据为例。这些数据来自一组蛋白质分子。准确地说，该化学漂移数据来自蛋白质的 <span class="math notranslate nohighlight">\(^{13}C_\alpha\)</span> 原子核，因为这是我们能够观测的有限类型原子核。蛋白质是由若干基础类型的 <code class="docutils literal notranslate"><span class="pre">氨基酸</span></code>（总共存在20种基础类型） 序列组合而成。每种氨基酸在序列中出现零次或多次，序列可由几个、数百个、数千个氨基酸组成。每种氨基酸都有且只有一种 <span class="math notranslate nohighlight">\(^{13}C_\alpha\)</span> ，所以可以很有把握地将每一种化学漂移与蛋白质中特定氨基酸联系在一起。此外，这 20 种氨基酸中的每一种都有不同化学性质，对蛋白质的生物学特性有贡献。有些带净电荷，有些是中性的；有些喜欢被水分子包围，而另一些喜欢与同类型氨基酸作伴等。关键点在于：这些氨基酸相似但不相等，因此，根据氨基酸类型的定义，将任何与化学漂移相关的推论建立在 20 个基团上可能是合理甚至自然的。你可以通过这个精彩的视频了解更多关于蛋白质的知识：<a class="reference external" href="https://www.youtube.com/watch?v=wvTv8TqWC48">https://www.youtube.com/watch?v=wvTv8TqWC48</a> 。</p>
 <p>在下面的代码块中，我们将数据加载到 <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> 的 <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> 中。可以看到四列：第一列是蛋白质的 ID ；第二列包括氨基酸的名称，使用标准的三字母代码；而其余列对应于理论计算的化学漂移和实验测量的化学漂移。这个例子的目的是比较理论计算值与实验测量值间的差异以了解其吻合程度即差异原因。出于这个原因，我们计算了系列差异 <code class="docutils literal notranslate"><span class="pre">diff</span></code>：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cs_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/chemical_shifts_theo_exp.csv&#39;</span><span class="p">)</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cs_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/chemical_shifts_theo_exp.csv&#39;</span><span class="p">)</span>
 <span class="n">diff</span> <span class="o">=</span> <span class="n">cs_data</span><span class="o">.</span><span class="n">theo</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">cs_data</span><span class="o">.</span><span class="n">exp</span><span class="o">.</span><span class="n">values</span>
 <span class="n">idx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="n">cs_data</span><span class="p">[</span><span class="s1">&#39;aa&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">codes</span>
 <span class="n">groups</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>为了解分层模型和非分层模型间的区别，我们构建两个模型。第一个与之前 <code class="docutils literal notranslate"><span class="pre">comparing_groups</span></code> 模型基本相同：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">cs_nh</span><span class="p">:</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">cs_nh</span><span class="p">:</span>
  <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
  <span class="n">σ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ&#39;</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">groups</span><span class="p">)</span>
  <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">sd</span><span class="o">=</span><span class="n">σ</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">observed</span><span class="o">=</span><span class="n">diff</span><span class="p">)</span>
  <span class="n">trace_cs_nh</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>现在，构建模型的分层版本。我们添加两个超先验：一个用于 <span class="math notranslate nohighlight">\(\mu\)</span> 的均值，另一个用于 <span class="math notranslate nohighlight">\(\mu\)</span> 的标准差（处于教学目的，此处未对 <span class="math notranslate nohighlight">\(\sigma\)</span> 设置超先验）。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">cs_h</span><span class="p">:</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">cs_h</span><span class="p">:</span>
  <span class="c1"># hyper_priors</span>
  <span class="n">μ_μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;μ_μ&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
  <span class="n">σ_μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;σ_μ&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
@@ -1041,13 +1184,19 @@ y_{i} &amp; \sim \operatorname{Bern}\left(\theta_{i}\right)
  <span class="n">trace_cs_h</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>我们使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的 <code class="docutils literal notranslate"><span class="pre">plot_forest</span></code> 函数比较结果。当想要比较不同模型（如本例）的参数值时，该函数很有用。注意，此处将几个参数传递给 <code class="docutils literal notranslate"><span class="pre">plot_forest</span></code> 以获得想要的图，例如：设置 <code class="docutils literal notranslate"><span class="pre">combined=True</span></code> 以合并所有链的结果。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">plot_forest</span><span class="p">([</span><span class="n">trace_cs_nh</span><span class="p">,</span> <span class="n">trace_cs_h</span><span class="p">],</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">plot_forest</span><span class="p">([</span><span class="n">trace_cs_nh</span><span class="p">,</span> <span class="n">trace_cs_h</span><span class="p">],</span>
        <span class="n">model_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;n_h&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">],</span>
        <span class="n">var_names</span><span class="o">=</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">combined</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;cycle&#39;</span><span class="p">)</span>
 <span class="n">y_lims</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">trace_cs_h</span><span class="p">[</span><span class="s1">&#39;μ_μ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="o">*</span><span class="n">y_lims</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="image-20210504224607251" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504224610_c3.webp" /></p>

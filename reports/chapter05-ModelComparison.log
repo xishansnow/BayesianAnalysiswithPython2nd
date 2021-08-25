@@ -17,27 +17,27 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-%matplotlib inline 
-import numpy as np 
-import scipy as sp 
-import pandas as pd 
-import matplotlib.pyplot as plt 
-import seaborn as sns 
-from scipy.stats import norm 
-sns.set_style('white') 
-sns.set_context('talk') 
-np.random.seed(123) 
+dummy_data = np.loadtxt('../data/dummy.csv')
+x_1 = dummy_data[:, 0]
+y_1 = dummy_data[:, 1]
+order = 2
+x_1p = np.vstack([x_1**i for i in range(1, order+1)])
+x_1s = (x_1p - x_1p.mean(axis=1, keepdims=True)) / x_1p.std(axis=1, keepdims=True)
+y_1s = (y_1 - y_1.mean()) / y_1.std()
+plt.scatter(x_1s[0], y_1s)
+plt.xlabel('x')
+plt.ylabel('y')
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m/tmp/ipykernel_1881/59451152.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      1[0m [0mget_ipython[0m[0;34m([0m[0;34m)[0m[0;34m.[0m[0mrun_line_magic[0m[0;34m([0m[0;34m'matplotlib'[0m[0;34m,[0m [0;34m'inline'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      2[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 3[0;31m [0;32mimport[0m [0mscipy[0m [0;32mas[0m [0msp[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      4[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      5[0m [0;32mimport[0m [0mmatplotlib[0m[0;34m.[0m[0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m[0m[0;34m[0m[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+[0;32m/tmp/ipykernel_2021/1113835353.py[0m in [0;36m<module>[0;34m[0m
+[0;32m----> 1[0;31m [0mdummy_data[0m [0;34m=[0m [0mnp[0m[0;34m.[0m[0mloadtxt[0m[0;34m([0m[0;34m'../data/dummy.csv'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      2[0m [0mx_1[0m [0;34m=[0m [0mdummy_data[0m[0;34m[[0m[0;34m:[0m[0;34m,[0m [0;36m0[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m      3[0m [0my_1[0m [0;34m=[0m [0mdummy_data[0m[0;34m[[0m[0;34m:[0m[0;34m,[0m [0;36m1[0m[0;34m][0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0morder[0m [0;34m=[0m [0;36m2[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0mx_1p[0m [0;34m=[0m [0mnp[0m[0;34m.[0m[0mvstack[0m[0;34m([0m[0;34m[[0m[0mx_1[0m[0;34m**[0m[0mi[0m [0;32mfor[0m [0mi[0m [0;32min[0m [0mrange[0m[0;34m([0m[0;36m1[0m[0;34m,[0m [0morder[0m[0;34m+[0m[0;36m1[0m[0;34m)[0m[0;34m][0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mModuleNotFoundError[0m: No module named 'scipy'
-ModuleNotFoundError: No module named 'scipy'
+[0;31mNameError[0m: name 'np' is not defined
+NameError: name 'np' is not defined
 

@@ -406,12 +406,30 @@
 <p>有限混合模型中的 <span class="math notranslate nohighlight">\(K\)</span> 是一个有限的数字，而且通常比较小。为拟合有限混合模型，需要人工提供 <span class="math notranslate nohighlight">\(K\)</span> 值，不管是事先确实已知，还是有根据地猜测。当然， <span class="math notranslate nohighlight">\(K\)</span> 值无法确切已知时，自然会带来如何确定最佳 <span class="math notranslate nohighlight">\(K\)</span> 值的问题，这个问题会在<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">6.2.4</span> <span class="pre">节</span></code>讨论。</p>
 <p>从概念上讲，求解混合模型需要做的就是将每个数据点适当地分配给其中一个组分，而后依据分配后的数据点，对各组分的概率密度建模。在概率模型中，可通过引入随机变量  <span class="math notranslate nohighlight">\(z\)</span> 来实现这一点，该变量将指示特定观测被分配给了哪个组分。这样的变量通常被称为『隐变量』，之所以称为 “隐” 是因为这些变量值无法直接被观测到。</p>
 <p>现在使用<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">2</span> <span class="pre">章『概率编程』</span></code>中的化学漂移数据集来构建有限混合模型：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/chemical_shifts_theo_exp.csv&#39;</span><span class="p">)</span>
 <span class="n">cs_exp</span> <span class="o">=</span> <span class="n">cs</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">]</span>
 <span class="n">az</span><span class="o">.</span><span class="n">plot_kde</span><span class="p">(</span><span class="n">cs_exp</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">cs_exp</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
 </pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2039</span><span class="o">/</span><span class="mf">2206902350.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">cs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/chemical_shifts_theo_exp.csv&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">cs_exp</span> <span class="o">=</span> <span class="n">cs</span><span class="p">[</span><span class="s1">&#39;exp&#39;</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">az</span><span class="o">.</span><span class="n">plot_kde</span><span class="p">(</span><span class="n">cs_exp</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">cs_exp</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+
+<span class="ne">NameError</span>: name &#39;pd&#39; is not defined
+</pre></div>
+</div>
+</div>
 </div>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505173831_56.webp" style="zoom:67%;" />
@@ -424,12 +442,14 @@
 <p>在之前的章节中，我们利用贝塔分布为 “正、反” 两个类别出现的概率（<span class="math notranslate nohighlight">\(\theta\)</span>、<span class="math notranslate nohighlight">\(1 - \theta\)</span>）设置了先验，利用伯努利分布为单次实验的结果变量 <span class="math notranslate nohighlight">\(y\)</span> 设置了似然，并通过采样得出后验推断。类似的，高斯混合模型先用狄利克雷分布为不同组分的概率 <span class="math notranslate nohighlight">\(p\)</span> 设置先验，用类别分布为单次实验的结果变量 <span class="math notranslate nohighlight">\(z\)</span> 建模，而后用高斯分布对 <span class="math notranslate nohighlight">\(z\)</span> 组分对应的可观测变量建模。</p>
 </div>
 <p>高斯混合模型的概念表达式如下：</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\theta &amp;\sim \operatorname{Direchlet}(\alpha)\\
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\theta &amp;\sim \operatorname{Direchlet}(\alpha)\\
 z &amp;\sim \operatorname{Categorical}(p=\theta)\\
 \mu_{i} &amp;\sim \mathcal{N}(\mu_{\mu_i},\sigma_{\mu})\\
 \sigma &amp;\sim \operatorname{Half-Cauchy}(\sigma_{\sigma})\\
-y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
+y &amp;\sim \mathcal{N}(\mu_{z},\sigma)
+\end{align*}\]</div>
 <p>注意：</p>
 <p>（1）可观测变量 <span class="math notranslate nohighlight">\(y\)</span> 的似然：均值为 <span class="math notranslate nohighlight">\(\mu_{z}\)</span> 、方差为 <span class="math notranslate nohighlight">\(\sigma\)</span> 的高斯分布，参数为：<span class="math notranslate nohighlight">\(组分均值\mu_{i},i=\{1,2,..,K\}、等方差\sigma、类别 z\)</span>。</p>
 <p>（2）均值（ <span class="math notranslate nohighlight">\(\mu_{i}\)</span> ）的先验为高斯分布。本模型并非分层模型，所以设置先验的均值 <span class="math notranslate nohighlight">\(\mu_{\mu_i}\)</span> 为样本均值，设置方差 <span class="math notranslate nohighlight">\(\sigma_{\mu}\)</span> 为常数。</p>
@@ -461,6 +481,8 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
 </center>
 <p>途中圆角矩形框表示我们有 <span class="math notranslate nohighlight">\(K\)</span> 个高斯似然（以及对应的先验），类别变量决定具体使用哪个类别来描述数据。 记住，假设已知这些高斯分布的均值和标准差；只需将每个点赋给一个高斯分布即可。</p>
 <p>该模型（假设 <code class="docutils literal notranslate"><span class="pre">clusters=2</span></code> ）可以用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 实现为：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_kg</span><span class="p">:</span>
     <span class="c1"># 先验p： 服从狄拉克雷分布</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Dirichlet</span> <span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">clusters</span><span class="p">))</span>
@@ -477,8 +499,12 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
     <span class="n">trace_kg</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>如果你运行这段代码，会发现非常慢，迹看起来也很糟糕。原因是，在 <code class="docutils literal notranslate"><span class="pre">model_kg</span></code> 中显式地包含了隐变量 <span class="math notranslate nohighlight">\(z\)</span> 。此时对离散变量 <span class="math notranslate nohighlight">\(z\)</span> 采样通常会导致缓慢的混合，以及对概率分布尾部的大量无效探索。解决该问题的一种方法是对模型重新参数化。</p>
 <p>注意，在混合模型中，观测变量 <span class="math notranslate nohighlight">\(y\)</span> 是在隐变量 <span class="math notranslate nohighlight">\(z\)</span> 基础上的条件建模，也就是 <span class="math notranslate nohighlight">\(p(y|z,\theta)\)</span> 。可以认为隐变量 <span class="math notranslate nohighlight">\(z\)</span> 是一个可被边缘化的多余变量并获得 <span class="math notranslate nohighlight">\(p(y|\theta)\)</span> 。<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 包含一个 <code class="docutils literal notranslate"><span class="pre">NormalMixture</span></code> 分布，可用于编写高斯混合模型：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clusters</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_mg</span><span class="p">:</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Dirichlet</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">clusters</span><span class="p">))</span>
@@ -488,18 +514,28 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
     <span class="n">trace_mg</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">random_seed</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 查看迹的效果，我们将在下一节中将其与使用 <code class="docutils literal notranslate"><span class="pre">model_mgp</span></code> 获得的迹进行比较：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">varnames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;means&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">]</span>
 <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_mg</span><span class="p">,</span> <span class="n">varnames</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505180821_7d.webp" /></p>
 <p>图 6.6</p>
 </center>
 <p>同时计算此模型的摘要，我们将在下一节中将其与使用 <code class="docutils literal notranslate"><span class="pre">model_mgp</span></code> 获得的摘要进行比较：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_mg</span><span class="p">,</span> <span class="n">varnames</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505180929_83.webp" /></p>
@@ -516,6 +552,8 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
 </ul>
 <p>使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 强制对组分排序可以使用 <code class="docutils literal notranslate"><span class="pre">pm.potential()</span></code> 。<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中模型的<code class="docutils literal notranslate"><span class="pre">势（potential）</span></code> 是人为添加到似然中的一种加性因子，并非新的随机变量。势和似然之间的主要区别在于：<strong>势大多根据模型约束人为设置，不一定取决于数据，而似然肯定取决于数据</strong> 。例如对上述不可辨识性问题，可以通过以下增加势的方法来解决：</p>
 <p>方法一：利用势作强制排序。如果符合指定排序，则在似然上增加一个值为 0 的势；否则，增加一个值为 <span class="math notranslate nohighlight">\(-\infty\)</span> 的势。最终结果是，模型认为违反指定排序约束的参数不可能出现。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clusters</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_mgp</span><span class="p">:</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Dirichlet</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">clusters</span><span class="p">))</span>
@@ -530,20 +568,30 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
     <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_mgp</span><span class="p">,</span> <span class="n">varnames</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505182452_a2.webp" /></p>
 <p>图 6.7</p>
 </center>
 <p>计算此模型的摘要：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">trace_mgp</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505182535_0f.webp" /></p>
 </center>
 <p>方法二：利用势保证所有组分的概率都不为零，或者换句话说，混合模型中的每个组分都至少有一个观测点。可以通过给自狄利克雷分布生成的概率 <span class="math notranslate nohighlight">\(p\)</span> ，设置阈值 <span class="math notranslate nohighlight">\(min_p\)</span>（ <span class="math notranslate nohighlight">\(min_p\)</span> 为某个任意的合理值，如 0.1 或 0.01）来实现：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_min</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Potential</span><span class="p">(</span><span class="s1">&#39;p_min&#39;</span><span class="p">,</span> <span class="n">tt</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span><span class="n">tt</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">min_p</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p>如图 6.4 所示，<span class="math notranslate nohighlight">\(α\)</span> 值控制狄利克雷分布的概率密度。与 <code class="docutils literal notranslate"><span class="pre">model_mgp</span></code> 中一样，可设置为单纯形上的平坦先验。<span class="math notranslate nohighlight">\(α\)</span> 值越大意味着先验的信息性越强。经验表明，<span class="math notranslate nohighlight">\(\alpha \approx 4 或 10 \)</span> 是比较好的选择，因为这通常会导致后验分布中每个组分至少有一个数据点，并且可以减少过高估计组分数量 <span class="math notranslate nohighlight">\(K\)</span> 的机会。</p>
 </div>
@@ -552,6 +600,8 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
 <p>有限混合模型带来的问题之一是如何确定组分数量。</p>
 <p>一般从相对较少的组分开始尝试，然后增加组分数量，以改进模型拟合度的评估。模型拟合度的评估可以采用 <code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">5</span> <span class="pre">章</span> <span class="pre">『模型比较』</span></code> 中介绍的方法，如： <code class="docutils literal notranslate"><span class="pre">后验预测检查</span></code>、<code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 等，并基于建模师的专业知识和判断。</p>
 <p>在次比较 <span class="math notranslate nohighlight">\(K=\{3,4,5,6\}\)</span> 四个模型，进行四次拟合，并保存每个迹和模型以供后面分析：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clusters</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
 <span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">traces</span> <span class="o">=</span> <span class="p">[]</span>
@@ -570,7 +620,11 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
         <span class="n">models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>为更好展示 <span class="math notranslate nohighlight">\(K\)</span> 对推断的影响，可以把模型拟合的结果与 <code class="docutils literal notranslate"><span class="pre">az.plot_kde</span></code> （内置 KDE 模型）进行比较，并且绘制混合模型的高斯组分图：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">cs_exp</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">cs_exp</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">200</span><span class="p">)</span>
@@ -595,6 +649,8 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
     <span class="n">ax</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505190548_b1.webp" /></p>
 <p>图 6.8</p>
@@ -602,6 +658,8 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
 <p>上图显示了概率密度图，黑色实线为基于观测数据的 KDE 结果，蓝实线为拟合均值线，半透明的蓝色线为来自后验的采样。不同数量的高斯组分用黑色虚线表示。图中 <span class="math notranslate nohighlight">\(K=3\)</span> 似乎太低了，而 4、5 或 6 可能是更好的选择。</p>
 <p>注意：高斯混合模型提示存在两个明显峰值（在 55-60 左右），而 KDE 的峰值则不那么明显。这并非因为高斯混合模型拟合效果不好，而是因为 KDE 会自动调整以提供更平滑的曲线。</p>
 <p>你也可以尝试使用直方图代替 KDE。如<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">5</span> <span class="pre">章</span> <span class="pre">『模型比较</span></code> 中讨论的，可尝试绘制感兴趣量的后验预测图，并计算贝叶斯 <span class="math notranslate nohighlight">\(p\)</span> 值。下图显示了此类计算和可视化的示例：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ppc_mm</span> <span class="o">=</span> <span class="p">[</span><span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">traces</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">models</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
           <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -619,20 +677,30 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
     <span class="n">ax</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
 </pre></div>
 </div>
+</div>
+</div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505190939_5f.webp" /></p>
 <p>图 6.9</p>
 </center>
 <p>从图 6.9 可以看出，<span class="math notranslate nohighlight">\(K=6\)</span> 是一个很好的选择，其贝叶斯 <span class="math notranslate nohighlight">\(p\)</span> 值非常接近 0.5。正如在下面表格和图 6.10 中看到的，<code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 也将 <span class="math notranslate nohighlight">\(K=6\)</span> 评为更好的模型：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">comp</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">compare</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">clusters</span><span class="p">,</span> <span class="n">traces</span><span class="p">)),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;BB-pseudo-BMA&#39;</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505191135_11.webp" /></p>
 </center>
 <p>大多数情况下看图比看表容易得多，所以让我们画一个对比图。如下图所示，虽然 6 组分模型的 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 比其他模型低，但当考虑估计标准误差时存在相当大的重叠，特别是对 5 组分模型：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_compare</span><span class="p">(</span><span class="n">comp</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505191504_15.webp" /></p>
@@ -666,6 +734,8 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
 </ul>
 <p>为使这些属性更加具象，让我们再看一看图 6.3 中的类别分布。可以通过指示 x 轴上的位置和 y 轴上的高度来完全指定这种分布。对于类别分布，x 轴上的位置被限制为非负整数，而且高度之和必须为 1。现在保留后一个限制，但放宽前一个限制。为了生成 x 轴上的位置，可以从某个基础分布中进行采样。原则上基础分布可以是任何分布，但它决定了 x 轴上位置的取值范围，例如：如果选择高斯分布，位置原则上可以是实轴上的任何值；如果选择贝塔分布，位置将被限制在区间 [0，1] 内；如果选择泊松分布，则位置将被限制在非负整数{0，1，2，…}。</p>
 <p>如何选择 y 轴上的值呢？我们遵循一个被称为折棍过程的 Gedanken 实验。假设有一根长度为 1 的棍子，我们把它一分为二（不一定相等）；把一部分放在一边，把另一部分一分为二；然后一直这样做，直到永远。由于实践中无法真正无限地重复这个过程，所以将其截断为某个预定义的值 <span class="math notranslate nohighlight">\(K\)</span> ，但大体上是成立的。为控制折棍过程，我们使用了一个参数 <span class="math notranslate nohighlight">\(α\)</span> 。随着 <span class="math notranslate nohighlight">\(α\)</span> 值的增加，把棍子分的越来越小。也就是，在 <span class="math notranslate nohighlight">\(lim_{\alpha \to 0}\)</span> 时，不会折断棍子；当 <span class="math notranslate nohighlight">\(lim_{\alpha \to \infty}\)</span> 时，将棍子折断成无限个碎片。图 6.11 显示了狄利克雷过程的四次对应不同 <span class="math notranslate nohighlight">\(\alpha\)</span> 值的抽样。稍后我将解释代码，现在先重点了解此示例有关狄利克雷过程的信息：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">stick_breaking_truncated</span><span class="p">(</span><span class="n">α</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Truncated stick-breaking process view of a 狄利克雷过程</span>
@@ -704,6 +774,8 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+</div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505193131_69.webp" /></p>
 <p>图 6.11</p>
@@ -714,6 +786,8 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
 <p>可以将狄利克雷过程视为随机分布 <span class="math notranslate nohighlight">\(f\)</span> 上的先验分布，其中基础分布是预期的 <span class="math notranslate nohighlight">\(f\)</span>，聚集参数表示对先验猜测的信心。</p>
 </div>
 <p>图 6.1 表明，如果在每个数据点上放置一个高斯分布，然后将所有高斯分布相加，则可以近似计算数据的分布。我们可以使用狄利克雷过程做类似的事情，但不是将高斯放在每个数据点的顶部，我们可以在狄利克雷过程实现中的每个子棒位置上放置一个高斯，然后根据子棒长度对该高斯进行缩放或加权。此过程提供了无限高斯混合模型的一般方案。也可以用其他分布代替高斯分布，这样就有了一个无限混合模型的通用方案。图 6.12 显示了使用拉普拉斯分布实现混合模型的一个例子。作者随意选择拉普拉斯分布是为了强 化 “不局限于高斯混合模型” 这一思想：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">α</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">H</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span>
 <span class="n">K</span> <span class="o">=</span> <span class="mi">5</span>
@@ -725,6 +799,8 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_</span><span class="p">)</span> <span class="o">*</span> <span class="n">w</span><span class="p">,</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505193226_8a.webp" /></p>
@@ -746,6 +822,8 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
 <li><p><span class="math notranslate nohighlight">\(\beta_{k}^{\prime} \sim \operatorname{Beta}(1, \alpha)\)</span>, 从中可看出：当 <span class="math notranslate nohighlight">\(\alpha\)</span> 增长时 <span class="math notranslate nohighlight">\(\beta_{k}^{\prime}\)</span> 平均将会变小</p></li>
 </ul>
 <p>现在可以尝试在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中实现狄利克雷过程了。首先定义一个使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的 <code class="docutils literal notranslate"><span class="pre">stick_breaking</span></code> 函数：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="n">cs_exp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">K</span> <span class="o">=</span> <span class="mi">20</span>
 
@@ -756,7 +834,11 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
     <span class="k">return</span> <span class="n">w</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>必须为 <span class="math notranslate nohighlight">\(\alpha\)</span> 定义一个先验。一种常见的选择是伽马分布：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
     <span class="n">α</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
     <span class="n">w</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">stick_breaking</span><span class="p">(</span><span class="n">α</span><span class="p">))</span>
@@ -766,6 +848,8 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
     <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">nuts_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;target_accept&#39;</span><span class="p">:</span><span class="mf">0.9</span><span class="p">})</span>
 </pre></div>
 </div>
+</div>
+</div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505194120_60.webp" /></p>
 <p>图 6.13</p>
@@ -773,6 +857,8 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
 <p>从图 6.13 可以看出，<span class="math notranslate nohighlight">\(\alpha\)</span> 的值相当低，这表明需要一些组分来描述数据。</p>
 <p>因为我们是通过折棍过程来近似无穷大的狄利克雷过程，所以检查截断值（在本例中 <span class="math notranslate nohighlight">\(K=20\)</span> ) 没有引入任何偏差很重要。要做到这一点，可以绘制每个组分的平均权重。为安全起见，应该有几个权重可以忽略不计的组分，否则就必须增加截断值。</p>
 <p>图 6.14 是一个例子。从图中可以看出，只有前面几个组分比较重要，因此可以确信所选上限值 <span class="math notranslate nohighlight">\(K=20\)</span> 对于此模型和数据已经足够：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="n">plot_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">plot_w</span><span class="p">,</span> <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="s1">&#39;o-&#39;</span><span class="p">)</span>
@@ -781,11 +867,15 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Average weight&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505194313_98.webp" /></p>
 <p>图 6.14</p>
 </center>
 <p>图 6.15 显示了使用狄利克雷过程模型估计的平均密度曲线（黑色）以及反映估计中不确定性的后验曲线样本（灰色）。与图 6.2 和图 6.8 中的 KDE 相比，该模型的密度也不那么平滑：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">exp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">cs</span><span class="o">.</span><span class="n">exp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
 <span class="n">post_pdf_contribs</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_3d</span><span class="p">(</span><span class="n">x_plot</span><span class="p">),</span>
                                    <span class="n">trace</span><span class="p">[</span><span class="s1">&#39;means&#39;</span><span class="p">][:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:],</span>
@@ -799,6 +889,8 @@ y &amp;\sim \mathcal{N}(\mu_{z},\sigma)\end{split}\]</div>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505194356_42.webp" /></p>

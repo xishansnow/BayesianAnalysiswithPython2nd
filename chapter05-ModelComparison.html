@@ -493,6 +493,8 @@
 <h2>5.1 后验预测性检查<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">第一章</span> <span class="pre">概率思维</span></code>介绍了后验预测性检查的概念，本章将用它来评估拟合出的模型对相同数据的解释程度。如前所述，所有的模型都是错误的，因此后验预测性检查的目的并非判定某个模型是否错误，而是希望通过后验预测性检查更好地把握模型的局限性，以做出适当改进。模型不会再现所有问题，但这并不是问题，因为构建模型都有特定目的，后验预测性检查则是在该目的背景下评估模型的一种方式；因此当考虑了多个模型时，可使用后验预测性检查来对它们进行比较。</p>
 <p>让我们读取并绘制一个简单的数据集：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dummy_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;../data/dummy.csv&#39;</span><span class="p">)</span>
 <span class="n">x_1</span> <span class="o">=</span> <span class="n">dummy_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
 <span class="n">y_1</span> <span class="o">=</span> <span class="n">dummy_data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
@@ -505,11 +507,29 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2021</span><span class="o">/</span><span class="mf">1113835353.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">dummy_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;../data/dummy.csv&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">x_1</span> <span class="o">=</span> <span class="n">dummy_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">y_1</span> <span class="o">=</span> <span class="n">dummy_data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">order</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="nn">      5 x_1p = np.vstack([x_1**i for i</span> in <span class="ni">range</span><span class="nt">(1, order+1)])</span>
+
+<span class="ne">NameError</span>: name &#39;np&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210510111807b3.webp" /></p>
 <p>图 5.1</p>
 </center>
 <p>现在，用两个略有不同的模型来拟合数据，第一个是线性模型，第二个是二阶多项式模型：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_l</span><span class="p">:</span>
     <span class="n">α</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">β</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
@@ -527,7 +547,11 @@
     <span class="n">trace_p</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>现在绘制这两个模型的平均拟合曲线：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x_1s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x_1s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">α_l_post</span> <span class="o">=</span> <span class="n">trace_l</span><span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">β_l_post</span> <span class="o">=</span> <span class="n">trace_l</span><span class="p">[</span><span class="s1">&#39;β&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -548,16 +572,24 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 </div>
+</div>
+</div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210510112129a4.webp" /></p>
 <p>图 5.2</p>
 </center>
 <p>图中二阶模型似乎做得更好，但线性模型也并没有那么糟糕。此时可以使用 PyMC3 来获得两个模型的后验预测样本，并执行检查：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_l</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_l</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model_l</span><span class="p">)[</span><span class="s1">&#39;y_pred&#39;</span><span class="p">]</span>
 <span class="n">y_p</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive</span><span class="p">(</span><span class="n">trace_p</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model_p</span><span class="p">)[</span><span class="s1">&#39;y_pred&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>正如已经看到的，后验预测性检查通常使用可视化方式来执行，如下例所示：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">y_1s</span><span class="p">,</span> <span class="n">y_l</span><span class="p">,</span> <span class="n">y_p</span><span class="p">]</span>
 <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="s1">&#39;linear model&#39;</span><span class="p">,</span> <span class="s1">&#39;order 2&#39;</span><span class="p">]</span>
@@ -570,11 +602,15 @@
     <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
 </pre></div>
 </div>
+</div>
+</div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210510112319ed.webp" /></p>
 <p>图 5.3</p>
 </center>
 <p>图 5.3 显示了数据、线性模型和二次多项式模型的均值和四分位数范围。该图对各模型的后验预测样本做了平均，而且两个模型的均值都复现得很好，分位数范围也不是很差。不过在实际问题中，一些小差异可能是值得注意的。可以尝试做更多不同曲线图来探索后验预测性分布。例如，绘制均值和四分位数间相对于数据真实值的离散度。下图就是一个例子：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">iqr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">75</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="n">a</span><span class="p">))</span>
@@ -590,6 +626,8 @@
     <span class="n">ax</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
     <span class="n">ax</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021051011245094.webp" /></p>
@@ -613,6 +651,8 @@
 <p>假如对同一个问题（或数据）有两个模型，二者对数据解释得同样好，应该选哪个模型呢？有一个基本准则叫做<strong>奥卡姆剃刀</strong>，如果对同一现象有两种不同假说，应选用比较简单的那一种。关于奥卡姆剃刀的论证很多，其中一种说法与波普尔的可证伪性有关，还有一种说法是从实用角度提出的，因为简单模型相比复杂模型更容易理解，此外还有一种论证是基于贝叶斯统计的。这里不深入讨论该准则的论证细节，只将该准则当做一个有用而合理的常识。</p>
 <p>在比较模型时，既要考虑简约型，也需要同时考虑<strong>模型准确性</strong>，即模型对数据拟合得怎么样。之前章节已出现过一些度量准确性的指标，如： <span class="math notranslate nohighlight">\(R^2\)</span> 系数可视为线性回归中可解释方差的比例。但如果有两个模型，其中一个对数据的解释比另一个更准确，是否应该选更准确率的模型呢？</p>
 <p>直觉上，似乎最好选择准确度高且简单的模型。但如果简单模型准确度最差，该怎么办？如何才能平衡这两种要素呢？为简化问题，此处引入一个例子来帮助理解如何平衡准确性与简约性。为了更形象些，该例使用一系列逐渐复杂的多项式来拟合同一个简单数据集，并且未采用贝叶斯方法，而是采用最小二乘估计来建模。当然，最小二乘估计其实可转化成带均匀先验的贝叶斯模型，因此，将其理解成贝叶斯方法也没问题。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">4.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">,</span> <span class="mf">9.</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mf">14.</span><span class="p">])</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">4.2</span><span class="p">,</span> <span class="mf">6.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">,</span> <span class="mf">9.</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mf">10.</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -633,6 +673,8 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210512104113_44.webp" /></p>
@@ -755,9 +797,13 @@
 <div class="section" id="pymc3">
 <h2>5.4 使用 PyMC3 做模型比较<a class="headerlink" href="#pymc3" title="Permalink to this headline">¶</a></h2>
 <p>采用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 进行模型比较想像起来容易得多！</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">waic_l</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">waic</span><span class="p">(</span><span class="n">trace_l</span><span class="p">)</span>
 <span class="n">waic_l</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210525103006_9f.webp" /></p>
 <p>如果你想计算 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 而不是 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> ，需要使用 <code class="docutils literal notranslate"><span class="pre">az.loo</span></code> 。对于 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 和 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> ，<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 报告了四个值（见上表）：</p>
@@ -773,9 +819,13 @@
 <p>无论如何，如果出现警告的情况，首先应当确保有足够样本，并且是一个混合良好、可靠的样本（参见第8章，推理引擎）。如果仍然接收到警告， <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 方法的提出者建议使用更健壮的模型，如使用学生 t 分布而不是高斯分布。如果上述建议都不起作用，那么可能需要考虑使用另一种方法，例如直接执行 <code class="docutils literal notranslate"><span class="pre">K-折交叉验证</span></code>。 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 和 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 只能帮助你在一组给定的模型中进行选择，但不能帮助你决定一个模型是否真的是解决特定问题的好方法。因此， <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 和 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 应该得到后验预测性检查以及任何其他信息和测试的补充，这些信息和测试可以帮助我们根据待解决的特定问题和领域知识来设置模型和数据。</p>
 </div>
 <p>由于 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 和 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 总是以相对的方式进行解释，<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 提供了两个辅助函数来简化比较。第一个是 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> ：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmp_df</span> <span class="o">=</span> <span class="n">az</span><span class="o">.</span><span class="n">compare</span><span class="p">({</span><span class="s1">&#39;model_l&#39;</span><span class="p">:</span><span class="n">trace_l</span><span class="p">,</span> <span class="s1">&#39;model_p&#39;</span><span class="p">:</span><span class="n">trace_p</span><span class="p">},</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;BB-pseudo-BMA&#39;</span><span class="p">)</span>
 <span class="n">cmp_df</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210525103242_82.webp" /></p>
 <p>这里有很多列：</p>
@@ -789,8 +839,12 @@
 <li><p>第 7 列名为 <code class="docutils literal notranslate"><span class="pre">WARNING</span></code> 。值 1 表示 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 的计算可能不可靠。</p></li>
 </ul>
 <p>我们还可以通过使用 <code class="docutils literal notranslate"><span class="pre">az.plot_compare</span></code> 函数可视化上述信息。该函数接受 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 的输出，并以 <code class="docutils literal notranslate"><span class="pre">Richard</span> <span class="pre">McElreath</span></code> 的《统计反思》一书中使用的样式生成汇总图：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_compare</span><span class="p">(</span><span class="n">cmp_df</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210525103532_b8.webp" /></p>
 <p>图 5.8</p>
@@ -835,6 +889,8 @@
 </ul>
 <p>所有这些问题都不是由统计数据来回答的，而是由领域知识背景下的统计数据来提供信息的。</p>
 <p>以下只是如何从 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 获得加权后验预测样本的一个虚拟示例。在这里，我们使用的是 <code class="docutils literal notranslate"><span class="pre">pm.sample_posterior_predictive_w</span></code> 函数（注意函数名称末尾的 <code class="docutils literal notranslate"><span class="pre">w</span></code> ）。<code class="docutils literal notranslate"><span class="pre">pm.sample_posterior_predictive</span></code> 和<code class="docutils literal notranslate"><span class="pre">pm.sample_posterior_predictive_w</span></code> 之间的区别在于，后者接受多个迹和模型，以及权重列表（默认值为所有模型的权重相同）。您可以通过 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 或其他来源获取这些权重：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span> <span class="o">=</span> <span class="mf">0.5</span>
 <span class="n">y_lp</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive_w</span><span class="p">([</span><span class="n">trace_l</span><span class="p">,</span> <span class="n">trace_p</span><span class="p">],</span>
                                         <span class="n">samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
@@ -851,6 +907,8 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210524232628_ac.webp" /></p>
@@ -909,12 +967,18 @@
 <p>图 5.10</p>
 </center>
 <p>让我们创建一些数据，以便在示例中使用：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coins</span> <span class="o">=</span> <span class="mi">30</span>
 <span class="n">heads</span> <span class="o">=</span> <span class="mi">9</span>
 <span class="n">y_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">coins</span><span class="o">-</span><span class="n">heads</span><span class="p">,</span> <span class="n">heads</span><span class="p">])</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>现在，来看一下 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 模型。为在之前的代码之间切换，我们使用了 <code class="docutils literal notranslate"><span class="pre">pm.math.switch</span></code> 函数。如果此函数的第一个参数的计算结果为 <code class="docutils literal notranslate"><span class="pre">true</span></code>，则返回第二个参数，否则返回第三个参数。请注意，还使用 <code class="docutils literal notranslate"><span class="pre">pm.math.eq</span></code> 函数来检查 <code class="docutils literal notranslate"><span class="pre">model_index</span></code> 变量是否等于 0 ：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_BF</span><span class="p">:</span>
     <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
     <span class="n">model_index</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Categorical</span><span class="p">(</span><span class="s1">&#39;model_index&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
@@ -929,15 +993,21 @@
 <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_BF</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210525130426_94.webp" /></p>
 <p>图 5.11</p>
 </center>
 <p>现在，需要通过计算 <code class="docutils literal notranslate"><span class="pre">model_index</span></code> 变量来计算贝叶斯因子。请注意，我们已经包括了每个模型的先验值：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pM1</span> <span class="o">=</span> <span class="n">trace_BF</span><span class="p">[</span><span class="s1">&#39;model_index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">pM0</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">pM1</span>
 <span class="n">BF</span> <span class="o">=</span> <span class="p">(</span><span class="n">pM0</span> <span class="o">/</span> <span class="n">pM1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p>结果，我们得到的值为≈11，这意味着模型 0 比模型 1 高出一个数量级。这非常有意义，因为数据的正面值比预期的 <span class="math notranslate nohighlight">\(\theta=0.5\)</span> 要少，两个模型之间的唯一区别是模型 0 的先验更兼容 <span class="math notranslate nohighlight">\(\theta&lt;0.5\)</span> (背面比正面多)，模型 1 更兼容 <span class="math notranslate nohighlight">\(\theta&gt;0.5\)</span> (正面比背面多)。</p>
 </div>
@@ -953,6 +1023,8 @@
 <div class="section" id="id17">
 <h3>5.6.4 用序贯蒙特卡罗方法计算贝叶斯因子<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <p>另一种计算贝叶斯因子的方法是使用 <code class="docutils literal notranslate"><span class="pre">序贯蒙特卡罗(SMC)采样方法</span></code>。我们将在 <code class="docutils literal notranslate"><span class="pre">第8章-推理引擎</span></code> 中学习此方法的详细信息。现在只需要知道这个采样器计算的边缘似然估计是一个副产品，可以直接使用它来计算贝叶斯因子。要在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中使用 <code class="docutils literal notranslate"><span class="pre">SMC</span></code>，需将 <code class="docutils literal notranslate"><span class="pre">pm.SMC()</span></code> 传递给 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 的 <code class="docutils literal notranslate"><span class="pre">step</span></code> 参数：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_BF_0</span><span class="p">:</span>
     <span class="n">θ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">θ</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">y_d</span><span class="p">)</span>
@@ -964,12 +1036,16 @@
 <span class="n">model_BF_0</span><span class="o">.</span><span class="n">marginal_likelihood</span> <span class="o">/</span> <span class="n">model_BF_1</span><span class="o">.</span><span class="n">marginal_likelihood</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>根据 <code class="docutils literal notranslate"><span class="pre">SMC</span> <span class="pre">方法</span></code>，贝叶斯因子也在 11 左右，如果你想用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 计算贝叶斯因子，我强烈推荐使用 SMC 方法。本书中提出的另一种方法在计算上更加繁琐，需要更多手动调整，主要是因为模型间的跳跃需要用户通过反复试验进行更多调整。从这点上来说，SMC 是一种自动化程度更高的方法。</p>
 </div>
 <div class="section" id="id18">
 <h3>5.6.5 贝叶斯因子与信息准则<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <p>如果对贝叶斯因子求对数，可以将两个边缘似然的比值转换成求差，这样比较边缘似然就与比较信息准则类似了。但是，衡量模型的数据拟合程度项以及惩罚项去哪儿了呢？前者包含在了似然部分，而后者包含在对先验取平均的部分。参数越多，先验空间相比似然就越大，平均之后似然就会较低，而参数越多，先验就会越分散，在计算证据时惩罚越大。这也是为什么人们说贝叶斯理论会很自然地惩罚更复杂的模型，或者称贝叶斯理论自带奥卡姆剃刀。</p>
 <p>此前说过，贝叶斯因子对先验过于敏感。这在执行推断时会导致本来不相关的差异，在计算贝叶斯因子时被证明为非常重要。现在我们来看一个例子，它将有助于阐明贝叶斯因子在做什么，信息准则在做什么，以及它们如何在相似的情况下专注于两个不同的方面。回到抛硬币例子的数据定义，现在设置 300 枚硬币和 90 个正面；这与以前的比例相同，但数据多了 10 倍。然后，分别运行每个模型：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">traces</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">waics</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">coins</span><span class="p">,</span> <span class="n">heads</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">90</span><span class="p">)]:</span>
@@ -983,6 +1059,8 @@
             <span class="n">waics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">az</span><span class="o">.</span><span class="n">waic</span><span class="p">(</span><span class="n">trace</span><span class="p">))</span>
 </pre></div>
 </div>
+</div>
+</div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210525130903_77.webp" /></p>
 <p>图 5.12</p>
@@ -990,6 +1068,8 @@
 <p>通过增加数据，我们几乎完全克服了先验，现在两个模型都做出了类似的预测。用 30 枚硬币和 9 个正面作为数据，可以看到的 <span class="math notranslate nohighlight">\(BF \approx 11\)</span> ，如果用 300 个硬币和 90 个正面的数据重复计算，我们会看到 <span class="math notranslate nohighlight">\(BF \approx 25\)</span> 。贝叶斯因子表明模型 0 比模型 1 更受青睐。当增加数据时，模型之间的决定变得更加清晰。这完全有道理，因为现在我们更确定模型 1 有一个与数据不一致的先验。</p>
 <p>还要注意，随着数据量增加，两个模型的 <span class="math notranslate nohighlight">\(\theta\)</span> 值趋于一致；实际上，两个模型的值都大约是 0.3。因此，如果决定用 <span class="math notranslate nohighlight">\(\theta\)</span> 来预测新的结果，将与计算 <span class="math notranslate nohighlight">\(\theta\)</span> 的分布的模型几乎没有什么不同。</p>
 <p>现在，比较一下 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 告诉我们的内容（参见图5.13）。模型 0 的 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 是 368.4，模型 1 的是 368.6，直觉上差别不大。比实际差异更重要的是，如果重新计算数据的信息准则，也就是 30 枚硬币和 9 个正面，你会得到模型 0 的 38.1 和模型 1 的 39.4 。也就是说，在增加数据时，相对差异变得越小，<span class="math notranslate nohighlight">\(\theta\)</span> 的估计值越相近，与信息准则估计出的预测准确度的值就越相似。如果你用 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 代替 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> ，会发现本质上是一样的：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">labels</span> <span class="o">=</span> <span class="n">model_names</span>
 <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
@@ -1004,6 +1084,8 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Deviance&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210525131100_4d.webp" /></p>
@@ -1039,6 +1121,8 @@
 <div class="math notranslate nohighlight">
 \[H(p)=-\sum_{i} p_i\text{log} (p_i) \tag{式5.15}  \label{式5.15}\]</div>
 <p>直观地说，分布越分散，其熵越大。通过运行以下代码并查看图 5.15，可以看到这一点：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">912</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">q</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">)</span>
@@ -1054,6 +1138,8 @@
     <span class="n">ax</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">ax</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">handlelength</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210525131621_8e.webp" /></p>
@@ -1088,20 +1174,28 @@
 \[D_{K L}(p \| q)=\underbrace{\sum_{i} p_{i} \log p_{i}}_{\text {entropy of p }}-\underbrace{\sum_{i} p_{i} \log q_{i}}_{\text {crossentropy of p,q }}=\sum_{i} p_{i}\left(\log p_{i}-\log q_{i}\right) \tag{式5.17}  \label{式5.17}\]</div>
 <p>利用对数性质，可以重新排列式 5.17 以恢复式 5.16。从式 5.17 的角度来看，也可以将 <span class="math notranslate nohighlight">\(D_{KL}({p||q})\)</span> 理解为 <span class="math notranslate nohighlight">\(p\)</span> 相对于 <span class="math notranslate nohighlight">\(q\)</span> 的相对熵(这一次顺着念)。</p>
 <p>作为一个简单例子，我们可以使用 KL 散度来评估哪个分布（ <span class="math notranslate nohighlight">\(q\)</span> 或 <span class="math notranslate nohighlight">\(r\)</span> ）更接近真实分布。使用Scipy，可以计算 <span class="math notranslate nohighlight">\(D_{KL}({真实分布||q})\)</span>  和 <span class="math notranslate nohighlight">\(D_{KL}({真实分布||r})\)</span> ：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">entropy</span><span class="p">(</span><span class="n">true_distribution</span><span class="p">,</span> <span class="n">q_pmf</span><span class="p">),</span> <span class="n">stats</span><span class="o">.</span><span class="n">entropy</span><span class="p">(</span><span class="n">true_distribution</span><span class="p">,</span><span class="n">r_pmf</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p>如果运行上段代码，您将获得 <span class="math notranslate nohighlight">\(\approx 0.0096,\approx 0.7394\)</span> 。因此可以判定，<span class="math notranslate nohighlight">\(q\)</span> 比 <span class="math notranslate nohighlight">\(r\)</span> 更接近于真实分布，因为它引入的额外不确定性更小。我希望您同意我的观点，即这个数值结果与您检查图 5.15 所预期的一致。</p>
 <p>您可能很想将 KL 散度描述为距离，但它是不对称的，因此不是真实距离。如果运行下面代码，将获得 <span class="math notranslate nohighlight">\(\approx 2.7,\approx 0.7\)</span> 。由此可见，结果数字是不同的。在此例中，可以看到 <span class="math notranslate nohighlight">\(r\)</span> 是 <span class="math notranslate nohighlight">\(q\)</span> 的更好近似，但反之可能不成立：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">entropy</span><span class="p">(</span><span class="n">r_pmf</span><span class="p">,</span> <span class="n">q_pmf</span><span class="p">),</span> <span class="n">stats</span><span class="o">.</span><span class="n">entropy</span><span class="p">(</span><span class="n">q_pmf</span><span class="p">,</span> <span class="n">r_pmf</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
 <p><span class="math notranslate nohighlight">\(D_{KL}({p||q})\)</span> 表示 <span class="math notranslate nohighlight">\(q\)</span> 有多像 <span class="math notranslate nohighlight">\(p\)</span> 。也可从惊喜的角度来考虑，如果在预期 <span class="math notranslate nohighlight">\(p\)</span> 的时候突然看到了 <span class="math notranslate nohighlight">\(q\)</span> ，我们会有多惊讶。对一个事件的惊讶程度取决于用于判断该事件的信息。我在一个非常干旱的城市长大，每年可能会有一两场真正的暴风雨。然后。我搬到另一省份去上大学，我真的很震惊，至少在雨季，平均每周有一场真正的暴风雨！我的一些同学来自布宜诺斯艾利斯，这是阿根廷最潮湿多雨的省份之一。但对他们来说，降雨频率或多或少是意料之中的。更重要的是，他们可能因为空气不够潮湿，而认为天气可能会下多一点雨。</p>
 <p>我们也可以使用 KL 散度来比较模型，因为它将给出哪个模型更接近真实分布的后验。但问题是我们并不知道真实分布。因此，KL 散度不能直接适用，但可用它作为论据来修正离差（式5.3）。如果假设真实分布存在（如下式所示），则其应当独立于任何模型和常数，并以同样方式影响 KL 散度，而与用于近似真实分布的后验分布无关。因此，可以使用离差（依赖于每个模型的部分）来估计我们离真实分布相对有多近，即使我们不知道它。对于公式 5.17 ，通过使用一些代数，可以得到：</p>
-<p>\begin{aligned}
+<p>\begin{align*}
 D_{K L}(p | q)-D_{K L}(p | r) &amp;=\left(\sum_{i} p_{i} \log p_{i}-\sum_{i} p_{i} \log q_{i}\right)-\left(\sum_{i} p_{i} \log p_{i}-\sum_{i} p_{i} \log r_{i}\right) \tag{式5.18}  \label{式5.18}\
 &amp;=\sum_{i} p_{i} \log q_{i}-\sum_{i} p_{i} \log r_{i} \notag
-end{aligned}</p>
+end{align*}</p>
 <p>即使不知道 <span class="math notranslate nohighlight">\(p\)</span>，我们也可以得出结论，具有更大对数似然（或离差）的分布就是在 KL 散度中更接近真实分布的分布。实践中对数似然（或离差）是从有限样本拟合的模型中获得的。因此，还必须增加一个惩罚项，以纠正对离差的高估，这就引出了 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 等信息准则。</p>
 </div>
 </div>

@@ -17,27 +17,20 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-%matplotlib inline 
-import numpy as np 
-import scipy as sp 
-import pandas as pd 
-import matplotlib.pyplot as plt 
-import seaborn as sns 
-from scipy.stats import norm 
-sns.set_style('white') 
-sns.set_context('talk') 
-np.random.seed(123) 
+np.random.seed(123)
+trials = 4
+theta_real = 0.35 # unknown value in a real experiment
+data = stats.bernoulli.rvs(p=theta_real, size=trials)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m/tmp/ipykernel_1881/59451152.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      1[0m [0mget_ipython[0m[0;34m([0m[0;34m)[0m[0;34m.[0m[0mrun_line_magic[0m[0;34m([0m[0;34m'matplotlib'[0m[0;34m,[0m [0;34m'inline'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      2[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 3[0;31m [0;32mimport[0m [0mscipy[0m [0;32mas[0m [0msp[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      4[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      5[0m [0;32mimport[0m [0mmatplotlib[0m[0;34m.[0m[0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m[0m[0;34m[0m[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+[0;32m/tmp/ipykernel_1960/567436309.py[0m in [0;36m<module>[0;34m[0m
+[0;32m----> 1[0;31m [0mnp[0m[0;34m.[0m[0mrandom[0m[0;34m.[0m[0mseed[0m[0;34m([0m[0;36m123[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      2[0m [0mtrials[0m [0;34m=[0m [0;36m4[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      3[0m [0mtheta_real[0m [0;34m=[0m [0;36m0.35[0m [0;31m# unknown value in a real experiment[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0mdata[0m [0;34m=[0m [0mstats[0m[0;34m.[0m[0mbernoulli[0m[0;34m.[0m[0mrvs[0m[0;34m([0m[0mp[0m[0;34m=[0m[0mtheta_real[0m[0;34m,[0m [0msize[0m[0;34m=[0m[0mtrials[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mModuleNotFoundError[0m: No module named 'scipy'
-ModuleNotFoundError: No module named 'scipy'
+[0;31mNameError[0m: name 'np' is not defined
+NameError: name 'np' is not defined
 
