@@ -1,3 +1,18 @@
+---
+jupyter:
+  jupytext:
+    formats: ipython,md:myst
+    text_representation:
+      extension: .md
+      format_name: markdown
+      format_version: '1.1'
+      jupytext_version: 1.1.0
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
 # 第 1 章 概率思维
 
 <style>p{text-indent:2em;2}</style>
