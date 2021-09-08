@@ -641,4 +641,3 @@ p(\hat{y} \mid y)=\int p(\hat{y} \mid \theta) p(\theta \mid y) d \theta \tag{式
 
 </center>
 
-

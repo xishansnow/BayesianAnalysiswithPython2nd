@@ -1,4 +1,150 @@
-jupyter-book
-matplotlib
-numpy
-ghp-import
+alabaster==0.7.12
+anyio==3.3.0
+argcomplete==1.12.3
+argon2-cffi==21.1.0
+attrs==20.3.0
+Babel @ file:///home/conda/feedstock_root/build_artifacts/babel_1619719576210/work
+backcall==0.2.0
+beautifulsoup4==4.10.0
+bleach==4.1.0
+Bottleneck==1.3.2
+brotlipy==0.7.0
+cached-property @ file:///tmp/build/80754af9/cached-property_1600785575025/work
+certifi==2021.5.30
+cffi @ file:///D:/bld/cffi_1625835485017/work
+chardet @ file:///D:/bld/chardet_1610093644405/work
+click==7.1.2
+colorama==0.4.4
+cryptography @ file:///D:/bld/cryptography_1616851687511/work
+cycler==0.10.0
+debugpy==1.4.1
+decorator==5.0.9
+defusedxml==0.7.1
+docutils==0.16
+entrypoints==0.3
+gitdb==4.0.7
+GitPython==3.1.20
+greenlet==1.1.1
+h5py @ file:///C:/ci/h5py_1622088627516/work
+idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1593328102638/work
+imagesize==1.2.0
+importlib-metadata==4.8.1
+importlib-resources==5.2.2
+ipykernel==6.3.1
+ipython==7.27.0
+ipython-genutils==0.2.0
+ipywidgets==7.6.4
+jedi==0.18.0
+Jinja2 @ file:///home/conda/feedstock_root/build_artifacts/jinja2_1621419064915/work
+jsonschema==3.2.0
+jupyter-book==0.11.3
+jupyter-cache==0.4.3
+jupyter-client==7.0.2
+jupyter-core==4.7.1
+jupyter-server==1.10.2
+jupyter-server-mathjax==0.2.3
+jupyter-sphinx==0.3.2
+jupyterlab-widgets==1.0.1
+jupytext==1.10.3
+kiwisolver @ file:///D:/bld/kiwisolver_1630173934816/work
+latexcodec==2.0.1
+linkify-it-py==1.0.1
+llvmlite==0.37.0
+Mako @ file:///tmp/build/80754af9/mako_1610650590832/work
+markdown-it-py==0.6.2
+MarkupSafe @ file:///D:/bld/markupsafe_1621455845013/work
+matplotlib @ file:///D:/bld/matplotlib-suite_1628881855335/work
+matplotlib-inline==0.1.3
+mdit-py-plugins==0.2.6
+mistune==0.8.4
+mkl-service==2.4.0
+mpmath==1.2.1
+myst-nb==0.12.3
+myst-parser==0.13.7
+nbclient==0.5.4
+nbconvert==5.6.1
+nbdime==3.1.0
+nbformat==5.1.3
+nest-asyncio==1.5.1
+notebook==6.4.3
+numba==0.54.0
+numexpr @ file:///C:/ci/numexpr_1618856761305/work
+numpy==1.20.3
+olefile @ file:///home/conda/feedstock_root/build_artifacts/olefile_1602866521163/work
+packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1625323647219/work
+pandas @ file:///C:/ci/pandas_1629682639137/work
+pandocfilters==1.4.3
+parso==0.8.2
+patsy==0.5.1
+pickleshare==0.7.5
+Pillow @ file:///D:/bld/pillow_1630696746604/work
+prometheus-client==0.11.0
+prompt-toolkit==3.0.20
+pybtex==0.24.0
+pybtex-docutils==1.0.1
+pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1593275161868/work
+pydata-sphinx-theme==0.6.3
+Pygments @ file:///home/conda/feedstock_root/build_artifacts/pygments_1629119114968/work
+pygpu==0.7.6
+pymc3 @ file:///Users/ktietz/demo/mc3/conda-bld/pymc3_1629812637918/work
+pyOpenSSL @ file:///home/conda/feedstock_root/build_artifacts/pyopenssl_1608055815057/work
+pyparsing==2.4.7
+PyQt5==5.12.3
+PyQt5-sip==4.19.18
+PyQtChart==5.12
+PyQtWebEngine==5.12.1
+pyreadline==2.1
+pyrsistent==0.18.0
+PySocks @ file:///D:/bld/pysocks_1610291658292/work
+python-dateutil @ file:///home/conda/feedstock_root/build_artifacts/python-dateutil_1626286286081/work
+pytz @ file:///home/conda/feedstock_root/build_artifacts/pytz_1612179539967/work
+pywin32==301
+pywinpty==1.1.4
+PyYAML==5.4.1
+pyzmq==22.2.1
+quantecon==0.5.1
+requests @ file:///home/conda/feedstock_root/build_artifacts/requests_1608156231189/work
+requests-unixsocket==0.2.0
+scipy @ file:///C:/ci/scipy_1630606897162/work
+seaborn @ file:///tmp/build/80754af9/seaborn_1629307859561/work
+Send2Trash==1.8.0
+six @ file:///home/conda/feedstock_root/build_artifacts/six_1620240208055/work
+smmap==4.0.0
+sniffio==1.2.0
+snowballstemmer @ file:///home/conda/feedstock_root/build_artifacts/snowballstemmer_1611270869511/work
+soupsieve==2.2.1
+Sphinx==3.5.4
+sphinx-book-theme==0.1.3
+sphinx-comments==0.0.3
+sphinx-copybutton==0.4.0
+sphinx-external-toc==0.2.3
+sphinx-jupyterbook-latex==0.4.2
+sphinx-multitoc-numbering==0.1.3
+sphinx-panels==0.5.2
+sphinx-thebe==0.0.10
+sphinx-togglebutton==0.2.3
+sphinxcontrib-applehelp==1.0.2
+sphinxcontrib-bibtex==2.2.1
+sphinxcontrib-devhelp==1.0.2
+sphinxcontrib-htmlhelp @ file:///home/conda/feedstock_root/build_artifacts/sphinxcontrib-htmlhelp_1621704829796/work
+sphinxcontrib-jsmath==1.0.1
+sphinxcontrib-qthelp==1.0.3
+sphinxcontrib-serializinghtml @ file:///home/conda/feedstock_root/build_artifacts/sphinxcontrib-serializinghtml_1621704833237/work
+SQLAlchemy==1.4.23
+sympy==1.8
+terminado==0.12.1
+testpath==0.5.0
+Theano==1.0.4
+toml==0.10.2
+tornado @ file:///D:/bld/tornado_1610094878337/work
+tqdm @ file:///tmp/build/80754af9/tqdm_1629302309755/work
+traitlets==5.1.0
+typing-extensions==3.10.0.2
+uc-micro-py==1.0.1
+urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1624634538755/work
+wcwidth==0.2.5
+webencodings==0.5.1
+websocket-client==1.2.1
+widgetsnbextension==3.5.1
+win-inet-pton @ file:///D:/bld/win_inet_pton_1610147627696/work
+zipp==3.5.0
