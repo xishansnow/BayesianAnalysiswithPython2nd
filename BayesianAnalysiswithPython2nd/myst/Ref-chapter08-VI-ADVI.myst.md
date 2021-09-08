@@ -12,8 +12,6 @@ kernelspec:
   name: python3
 ---
 
-
-
 # 自动微分变分推断
 
 > 原文链接：[Bayesian Deep Learning](http://twiecki.github.io/blog/2016/06/01/bayesian-deep-learning/)  
@@ -61,7 +59,7 @@ kernelspec:
 
 首先，我们生成一些小型数据——一个简单的二元分类问题，非线性可分。
 
-```{code-cell} ipython3
+```{code-cell}
 %matplotlib inline
 import pymc3 as pm
 import theano.tensor as T
@@ -79,7 +77,7 @@ from sklearn.datasets import make_moons
 
 In \[2\]:
 
-```{code-cell} ipython3
+```{code-cell}
 X, Y = make_moons(noise=0.2, random_state=0, n_samples=1000)
 X = scale(X)
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=.5)
@@ -87,7 +85,7 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=.5)
 
 In \[3\]:
 
-```{code-cell} ipython3
+```{code-cell}
 fig, ax = plt.subplots()
 ax.scatter(X[Y==0, 0], X[Y==0, 1], label='Class 0')
 ax.scatter(X[Y==1, 0], X[Y==1, 1], color='r', label='Class 1')
@@ -103,7 +101,7 @@ ax.set(xlabel='X', ylabel='Y', title='Toy binary classification data set');
 
 In \[17\]:
 
-```{code-cell} ipython3
+```{code-cell}
 # Trick: Turn inputs and outputs into shared variables. 
 # It's still the same thing, but we can later change the values of the shared variable 
 # (to switch in the test-data later) and pymc3 will just use the new data. 
@@ -159,7 +157,7 @@ with pm.Model() as neural_network:
 
 In \[34\]:
 
-```{code-cell} ipython3
+```{code-cell}
 %%time
 with neural_network:
     # Run ADVI which returns posterior means, standard deviations, and the evidence lower bound (ELBO)
@@ -186,7 +184,7 @@ Wall time: 37.2 s
 
 In \[35\]:
 
-```{code-cell} ipython3
+```{code-cell}
 with neural_network:
     trace = pm.variational.sample_vp(v_params, draws=5000)
 ```
@@ -195,7 +193,7 @@ with neural_network:
 
 In \[36\]:
 
-```{code-cell} ipython3
+```{code-cell}
 plt.plot(v_params.elbo_vals)
 plt.ylabel('ELBO')
 plt.xlabel('iteration')
@@ -203,7 +201,7 @@ plt.xlabel('iteration')
 
 Out\[36\]:
 
-```{code-cell} ipython3
+```{code-cell}
 <matplotlib.text.Text at 0x7fa5dae039b0>
 ```
 
@@ -213,7 +211,7 @@ Out\[36\]:
 
 In \[7\]:
 
-```{code-cell} ipython3
+```{code-cell}
 # Replace shared variables with testing set
 ann_input.set_value(X_test)
 ann_output.set_value(Y_test)
@@ -227,7 +225,7 @@ pred = ppc['out'].mean(axis=0) > 0.5
 
 In \[8\]:
 
-```{code-cell} ipython3
+```{code-cell}
 fig, ax = plt.subplots()
 ax.scatter(X_test[pred==0, 0], X_test[pred==0, 1])
 ax.scatter(X_test[pred==1, 0], X_test[pred==1, 1], color='r')
@@ -239,7 +237,7 @@ ax.set(title='Predicted labels in testing set', xlabel='X', ylabel='Y');
 
 In \[9\]:
 
-```{code-cell} ipython3
+```{code-cell}
 print('Accuracy = {}%'.format((Y_test == pred).mean() * 100))
 ```
 
@@ -253,7 +251,7 @@ print('Accuracy = {}%'.format((Y_test == pred).mean() * 100))
 
 In \[10\]:
 
-```{code-cell} ipython3
+```{code-cell}
 grid = np.mgrid[-3:3:100j,-3:3:100j]
 grid_2d = grid.reshape(2, -1).T
 dummy_out = np.ones(grid.shape[1], dtype=np.int8)
@@ -261,7 +259,7 @@ dummy_out = np.ones(grid.shape[1], dtype=np.int8)
 
 In \[11\]:
 
-```{code-cell} ipython3
+```{code-cell}
 ann_input.set_value(grid_2d)
 ann_output.set_value(dummy_out)
 
@@ -273,7 +271,7 @@ ppc = pm.sample_ppc(trace, model=neural_network, samples=500)
 
 In \[26\]:
 
-```{code-cell} ipython3
+```{code-cell}
 cmap = sns.diverging_palette(250, 12, s=85, l=25, as_cmap=True)
 fig, ax = plt.subplots(figsize=(10, 6))
 contour = ax.contourf(*grid, ppc['out'].mean(axis=0).reshape(100, 100), cmap=cmap)
@@ -292,7 +290,7 @@ cbar.ax.set_ylabel('Posterior predictive mean probability of class label = 0');
 
 In \[27\]:
 
-```{code-cell} ipython3
+```{code-cell}
 cmap = sns.cubehelix_palette(light=1, as_cmap=True)
 fig, ax = plt.subplots(figsize=(10, 6))
 contour = ax.contourf(*grid, ppc['out'].std(axis=0).reshape(100, 100), cmap=cmap)
@@ -313,7 +311,7 @@ cbar.ax.set_ylabel('Uncertainty (posterior predictive standard deviation)');
 
 In \[43\]:
 
-```{code-cell} ipython3
+```{code-cell}
 # Set back to original data to retrain
 ann_input.set_value(X_train)
 ann_output.set_value(Y_train)
@@ -345,7 +343,7 @@ total_size = len(Y_train)
 
 In \[48\]:
 
-```{code-cell} ipython3
+```{code-cell}
 %%time
 with neural_network:
     # Run advi_minibatch
@@ -372,14 +370,14 @@ with neural_network:
 
 In \[49\]:
 
-```{code-cell} ipython3
+```{code-cell}
 with neural_network:    
     trace = pm.variational.sample_vp(v_params, draws=5000)
 ```
 
 In \[50\]:
 
-```{code-cell} ipython3
+```{code-cell}
 plt.plot(v_params.elbo_vals)
 plt.ylabel('ELBO')
 plt.xlabel('iteration')
@@ -393,7 +391,7 @@ sns.despine()
 
 In \[51\]:
 
-```{code-cell} ipython3
+```{code-cell}
 pm.traceplot(trace);
 ```
 

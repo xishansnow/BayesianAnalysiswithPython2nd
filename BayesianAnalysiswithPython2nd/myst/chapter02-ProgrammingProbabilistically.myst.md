@@ -12,7 +12,6 @@ kernelspec:
   name: python3
 ---
 
-
 # 第 2 章 概率编程
 
 <style>p{text-indent:2em;2}</style>
@@ -54,20 +53,7 @@ kernelspec:
 
 重新回顾抛硬币问题，这次使用 `PyMC3` 。首先获取数据，此处使用手动构造的数据。由于数据是我们通过代码生成的，所以知道真实参数值，以下代码中用 `theta_real` 变量表示。显然，在实际数据中，通常并不知道参数的真实值，而是要将其估计出来。
 
-```{code-cell} ipython3
-import matplotlib.pyplot as plt
-import scipy.stats as stats
-import numpy as np
-import pandas as pd
-import seaborn as sns
-import pymc3 as pm
-import arviz as az
-
-az.style.use('arviz-darkgrid')
-```
-
-
-```{code-cell} ipython3
+```python
 np.random.seed(123)
 trials = 4
 theta_real = 0.35 # unknown value in a real experiment
@@ -87,7 +73,7 @@ y &\sim \operatorname{Bern}(p=\theta)
 
 该统计模型与 `PyMC3` 的语法几乎一一对应。
 
-```{code-cell} ipython3
+```python
 with pm.Model() as our_first_model:
  θ = pm.Beta('θ', alpha=1., beta=1.)
  y = pm.Bernoulli('y', p=θ, observed=data)
@@ -132,7 +118,7 @@ NUTS: [θ]
 
 现在我们根据有限数量的样本对后验做出了（近似）推断，接下来要做的是检查推断是否合理。可以通过可视化的或者定量的手段做一些测试，从中尝试发现样本中的问题。诊断并不能证明得到的分布是正确的，但能够提供证据证明样本看起来是合理的。`ArviZ` 中的 `plot_trace` 函数非常适合执行此任务：
 
-```{code-cell} ipython3
+```python
 az.plot_trace(trace)
 ```
 
@@ -142,7 +128,7 @@ az.plot_trace(trace)
 
 `ArviZ` 还提供了其他几个绘图来帮助解释轨迹图，我们将在后面看到它们。此外 `az.summary` 可以提供 `DataFrame` 形式的摘要数据。
 
-```{code-cell} ipython3
+```python
 az.summary(trace)
 ```
 
@@ -152,7 +138,7 @@ az.summary(trace)
 
 另一种直观总结后验的方法是使用 `ArviZ` 附带的 `plot_posterior` 函数。默认情况下，`plot_posterior` 为离散变量显示直方图，为连续变量显示 `KDE` 。我们还获得了分布的均值（可以使用 `point_estimate` 参数指定中位数或其他模式），`94% HPD` 作为图底部的一条黑线。可以使用 `credible_interval` 参数为 `HPD` 设置不同的间隔值。此类型的图由 `John K.Kruschke` 在其著作《 `Doing Bayesian Data Analysis` 》中引入。
 
-```{code-cell} ipython3
+```python
 az.plot_posterior(trace)
 ```
 
@@ -184,7 +170,7 @@ az.plot_posterior(trace)
 
  `PyMC3` 可以实现并行地运行一个模型多次，因而对同一个参数可以得到多条并行的迹。这可以通过在采样函数中指定 `njobs` 参数实现。此时使用 `plot_trace` 函数，便可在同一幅图中得到同一个参数的所有迹。由于每组迹都是相互独立的，所有的迹看起来都应该差不多。除了检查收敛性之外，这些并行的迹也可以用于推断，我们可以将这些并行的迹组合起来提升采样大小而不是扔掉多余的迹：
 
-```{code-cell} ipython3
+```python
 with our_first_model:
  step = pm.Metropolis()
  multi_trace = pm.sample(1000, step=step, njobs=4)
@@ -198,7 +184,7 @@ az.plot_trace(multi_trace, lines={'theta':theta_real});
 
 最理想的采样应该不会是自相关的，也就是说，某点的值应该与其他点的值相互独立。在实际中，从 `MCMC` 方法（特别是 `Metropolis-Hastings`）中得到的采样值通常是自相关的。由于参数间的相互依赖关系，模型会导致更多自相关采样。 `PyMC3` 有一个很方便的函数用来描述自相关。
 
-```{code-cell} ipython3
+```python
 az.plot_autocorr(trace)
 ```
 
@@ -232,7 +218,7 @@ az.plot_autocorr(trace)
 
 plot_posterior 函数可以用来刻画 `ROPE`。从图中可以看到，`ROPE` 是一段较宽的半透明的红色线段，同时上面有两个数值表示 `ROPE` 的两个端点。
 
-```{code-cell} ipython3
+```python
 az.plot_posterior(trace, ROPE=[0.45, .55])
 ```
 
@@ -240,7 +226,7 @@ az.plot_posterior(trace, ROPE=[0.45, .55])
 
 我们还可以给 `plot_posterior` 传递一个参考值，例如 0.5，用来和后验进行对比。从图中可以看出我们会得到一个橙色的垂直线以及大于该值和小于该值的后验比例。
 
-```{code-cell} ipython3
+```python
 az.plot_posterior(trace,ref_val=0.5)
 ```
 
@@ -258,7 +244,7 @@ az.plot_posterior(trace,ref_val=0.5)
 
 实践中通常手头没有真实参数 $\theta$ 的值，仅有一个后验分布形式的估计。因此，我们能做的就是找出最小化期望损失函数的 $\hat \theta$ 值。期望损失函数是指整个后验分布的平均损失函数。在下面代码块中，我们有两个损失函数：绝对损失（ `lossf_a`）和平方损失（ `lossf_b`）。我们将尝试超过 200 个网格的 $\hat \theta$ 值，然后绘制其曲线，还将包括最小化每个损失函数的 $\hat \theta$ 值：
 
-```{code-cell} ipython3
+```python
 grid = np.linspace(0, 1, 200)
 θ_pos = trace['θ']
 lossf_a = [np.mean(abs(i - θ_pos)) for i in grid]
@@ -285,7 +271,7 @@ OK，如果想要形式化的结果并给出点估计，必须决定想要哪个
 
 以下只是一个愚蠢的例子：
 
-```{code-cell} ipython3
+```python
 lossf = []
 for i in grid:
  if i < 0.5:
@@ -316,7 +302,7 @@ plt.xlabel(r' $\hat \theta $ ')
 
 下面的例子与核磁共振实验有关，核磁共振是一种研究分子和生物的技术。下面这组数据，可能来自一群人身高的测量值、回家的平均时间、从超市买回来橙子的重量、大壁虎的伴侣个数或者任何可以用高斯分布近似的测量值。在这个例子中，我们有 48 个测量值：
 
-```{code-cell} ipython3
+```python
 data = np.loadtxt('../data/chemical_shifts.csv')
 az.plot_kde(data, rug=True)
 plt.yticks([0], alpha=0
@@ -341,7 +327,7 @@ y &\sim \mathcal{N}(\mu, \sigma)
 
 如果不知道 $\mu$ 和 $\sigma$ 的值，可以通过先验来表示该未知信息。例如，可以将均匀分布的上下界分别设为（$l$ = 40, $h$ = 75），该范围要比数据本身的范围稍大一些。或者，可以根据先验知识设得更广一些，比如知道这类观测值不可能小于 0 或者大于 100 ，可以将均匀先验参数设为（$l$ = 0, $h$ = 100）。对于半正态分布而言，可以把 $\sigma_\sigma$ 的值设为 10，该值相对于数据分布而言算是较大的。 利用 `PyMC3` ，我们可以将模型表示如下：
 
-```{code-cell} ipython3
+```python
 with pm.Model() as model_g:
  μ = pm.Uniform('μ', lower=40, upper=70)
  σ = pm.HalfNormal('σ', sd=10)
@@ -354,7 +340,7 @@ az.plot_trace(trace_g)
 
 您可能已经注意到了，使用 `ArviZ` 的 `plot_trace` 函数生成的图中，每个未知参数都有一行。对于这个模型，后验是二维的，所以上图显示了每个参数的边缘分布。我们可以使用 `ArviZ` 中的 `plot_joint` 函数来查看二维的后验分布是什么样子，以及 $μ$ 和 $σ$ 的边缘分布：
 
-```{code-cell} ipython3
+```python
 az.plot_joint(trace_g, kind='kde', fill_last=False)
 ```
 
@@ -364,7 +350,7 @@ az.plot_joint(trace_g, kind='kde', fill_last=False)
 
 我们将打印该摘要以供以后使用：
 
-```{code-cell} ipython3
+```python
 az.summary(trace_g)
 ```
 
@@ -372,13 +358,13 @@ az.summary(trace_g)
 
 现在已经计算了后验概率，可以用它来模拟数据，并检查模拟数据与观测数据的一致性。如果你还记得第1章“概率思维”，这种比较被称为后验预测检查，因为使用后验进行预测，并使用这些预测来检验模型。如果使用 `sample_posterior_predictive` 函数，使用 `PyMC3` 可以非常容易获得后验预测样本。使用以下代码，我们将从后端生成 100 个预测，每个预测的大小与数据相同。请注意，我们必须将跟踪和模型传递给 `sample_posterior_predictive` ，而其他参数是可选的：
 
-```{code-cell} ipython3
+```python
 y_pred_g = pm.sample_posterior_predictive(trace_g, 100, model_g)
 ```
 
 `y_pred_g` 变量是一个字典，`keys` 是模型中观察到的变量名称，`values` 是形状为（`samples`、`size`）的数组，在本例中为 $(100，len(data))$ 。我们有一本字典，因为至少有一个可观测变量的模型。可以使用 `plot_ppc` 函数进行可视化后验预测检查：
 
-```{code-cell} ipython3
+```python
 data_ppc = az.from_PyMC3(trace=trace_g, posterior_predictive=y_pred_g)
 ax = az.plot_ppc(data_ppc, figsize=(12, 6), mean=False)
 ax[0].legend(fontsize=15)
@@ -417,13 +403,13 @@ ax[0].legend(fontsize=15)
 
 你可以尝试多次运行下面的代码，查看是否有稳定的均值（ 其中 `df` 为自由度）。将参数 `df` 换成一个更大100在尝试一下。
 
-```{code-cell} ipython3
+```python
 np.mean(stats.t(loc=0, scale=1, df=1).rvs(100))
 ```
 
 下面的代码绘制了自由度为 1，2，5，30 时的 $t$ 分布曲线：
 
-```{code-cell} ipython3
+```python
 x_values = np.linspace(-10, 10, 200)
 for df in [1, 2, 5, 30]:
   distri = stats.t(df)
@@ -453,7 +439,7 @@ plt.xlim(-7, 7)
 
 同样， `PyMC3` 让我们只需要几行代码便可修改模型。唯一需要 注意的是， `PyMC3` 中指数分布的参数用的是分布均值的倒数。
 
-```{code-cell} ipython3
+```python
 with pm.Model() as model_t:
     μ = pm.Uniform('μ', 40, 75)
     σ = pm.HalfNormal('σ', sd=10)
@@ -472,7 +458,7 @@ az.plot_trace(trace_t)
 
 将 `model_g` 的轨迹图（图2.9）与 `model_t` 的跟踪（图2.14）进行比较。现在，打印 `model_t` 的摘要，并将其与 `model_g` 的摘要进行比较。在继续阅读之前，请花点时间找出两个结果之间的差异。你注意到什么有趣的事情了吗？
 
-```{code-cell} ipython3
+```python
 az.summary(trace_t)
 ```
 
@@ -486,7 +472,7 @@ az.summary(trace_t)
 
 接下来对 $t$ 分布模型做后验检查，并将其与高斯分布对比：
 
-```{code-cell} ipython3
+```python
 y_ppc_t = pm.sample_posterior_predictive(
     trace_t, 100, model_t, random_seed=123)
 y_pred_t = az.from_pymc3(trace=trace_t, posterior_predictive=y_ppc_t)
@@ -561,7 +547,7 @@ ps=\Phi\left(\frac{\delta}{\sqrt{2}}\right) \tag{式2.5} \label{式2.5}
 
 接下来，使用 `seaborn` 中的 `tips` 数据集来讨论前面提到的想法。我们希望知道星期几对于餐馆小费数量的影响。该例中实际并没有明确的实验组和对照组之分，只是观察性的实验。如果愿意，可以任选一天（例如星期四）作为实验组，或者对照组。需注意的一点是：对于观察性实验，没法得出某种因果关系，能得到相关性。事实上，如何从数据中得出因果关系是非常热门的研究问题，我们会在第 4 章重新讨论该问题。现在，首先用一行代码将数据导入成 `Pandas` 中的 `DataFrame`，`tail` 函数返回数据中的最后一条（当然你也可以用 `head` 函数返回第一条数据）。
 
-```{code-cell} ipython3
+```python
 tips = pd.read_csv('../data/tips.csv')
 tips.tail()
 ```
@@ -570,7 +556,7 @@ tips.tail()
 
 对于该数据集，我们只关心 `day` 和 `tip` 列，利用 `seaborn` 中的 `violinplot` 函数可以将其画出来：
 
-```{code-cell} ipython3
+```python
 sns.violinplot(x='day', y='tip', data=tips)t
 ```
 
@@ -583,7 +569,7 @@ sns.violinplot(x='day', y='tip', data=tips)t
 
 把问题简化下，我们创建两个变量：变量 `y`表示 `tips`；变量 `idx` 表示分类变量的编码。即用数字 0、1、2、3 表示星期四、星期五、星期六和星期天。 groups 则包含其中每一组的数量。
 
-```{code-cell} ipython3
+```python
 tip = tips['tip'].values
 idx = pd.Categorical(tips['day'],
       categories=['Thur', 'Fri', 'Sat', 'Sun']).codes
@@ -593,7 +579,7 @@ groups = len(np.unique(idx))
 
 的时候，我们会得到 4 个和 4 个。 `PyMC3` 的语法能够很好地适应该场景，我们可以直接用向量的方式表示模型，而不用使用 `for` 循环，代码的变化相比前面的模型很小。对应先验，我们需要传一个维度变量 `shape`，对于似然，我们需要对和正确地进行编码，这也是 为什么创建了 `idx` 变量。
 
-```{code-cell} ipython3
+```python
 with pm.Model() as comparing_groups:
  μ = pm.Normal('μ', mu=0, sd=10, shape=groups)
  σ = pm.HalfNormal('σ', sd=10, shape=groups)
@@ -611,7 +597,7 @@ az.plot_trace(trace_cg)
 
 下面的代码只是绘制差异的一种方式，而不重复比较。我们不是绘制All-And-All矩阵，而是绘制上三角部分：
 
-```{code-cell} ipython3
+```python
 dist = stats.norm()
 _, ax = plt.subplots(3, 2, figsize=(14, 8), constrained_layout=True)
 comparisons = [(i, j) for i in range(4) for j in range(i+1, 4)]
@@ -657,7 +643,7 @@ alpha=0)
 
 我们通过以下代码合成数据：
 
-```{code-cell} ipython3
+```python
 N_samples = [30, 30, 30]
 G_samples = [18, 18, 18]
 group_idx = np.repeat(np.arange(len(N_samples)), N_samples)
@@ -700,7 +686,7 @@ y_{i} & \sim \operatorname{Bern}\left(\theta_{i}\right)
 
 让我们在 `PyMC3` 中实现并求解该模型，这样我们就可以继续讨论层次模型：
 
-```{code-cell} ipython3
+```python
 with pm.Model() as model_h:
  μ = pm.Beta('μ', 1., 1.)
  κ = pm.HalfNormal('κ', 10)
@@ -748,7 +734,7 @@ az.plot_trace(trace_h)
 
 你可能对估计到的先验分布比较感兴趣，以下是将其表示出来的一种方式：
 
-```{code-cell} ipython3
+```python
 x = np.linspace(0, 1, 100)
 for i in np.random.randint(0, len(trace_h), size=100):
  u = trace_h['μ'][i]
@@ -782,7 +768,7 @@ plt.tight_layout()
 
 在下面的代码块中，我们将数据加载到 `Pandas` 的 `DataFrame` 中。可以看到四列：第一列是蛋白质的 ID ；第二列包括氨基酸的名称，使用标准的三字母代码；而其余列对应于理论计算的化学漂移和实验测量的化学漂移。这个例子的目的是比较理论计算值与实验测量值间的差异以了解其吻合程度即差异原因。出于这个原因，我们计算了系列差异 `diff`：
 
-```{code-cell} ipython3
+```python
 cs_data = pd.read_csv('../data/chemical_shifts_theo_exp.csv')
 diff = cs_data.theo.values - cs_data.exp.values
 idx = pd.Categorical(cs_data['aa']).codes
@@ -791,7 +777,7 @@ groups = len(np.unique(idx))
 
 为了解分层模型和非分层模型间的区别，我们构建两个模型。第一个与之前 `comparing_groups` 模型基本相同：
 
-```{code-cell} ipython3
+```python
 with pm.Model() as cs_nh:
  μ = pm.Normal('μ', mu=0, sd=10, shape=groups)
  σ = pm.HalfNormal('σ', sd=10, shape=groups)
@@ -801,7 +787,7 @@ with pm.Model() as cs_nh:
 
 现在，构建模型的分层版本。我们添加两个超先验：一个用于 $\mu$ 的均值，另一个用于 $\mu$ 的标准差（处于教学目的，此处未对 $\sigma$ 设置超先验）。
 
-```{code-cell} ipython3
+```python
 with pm.Model() as cs_h:
  # hyper_priors
  μ_μ = pm.Normal('μ_μ', mu=0, sd=10)
@@ -815,7 +801,7 @@ with pm.Model() as cs_h:
 
 我们使用 `ArviZ` 的 `plot_forest` 函数比较结果。当想要比较不同模型（如本例）的参数值时，该函数很有用。注意，此处将几个参数传递给 `plot_forest` 以获得想要的图，例如：设置 `combined=True` 以合并所有链的结果。
 
-```{code-cell} ipython3
+```python
 _, axes = az.plot_forest([trace_cs_nh, trace_cs_h],
        model_names=['n_h', 'h'],
        var_names='μ', combined=False, colors='cycle')

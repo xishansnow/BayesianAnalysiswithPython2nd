@@ -2,15 +2,15 @@
 jupytext:
   formats: ipynb,.myst.md:myst,md
   text_representation:
-    extension: '.md'
+    extension: .md
     format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.10.3
 kernelspec:
   display_name: Python 3
   language: python
   name: python3
 ---
-
-
 
 # 变分推断傻瓜书
 
