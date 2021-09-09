@@ -10,6 +10,7 @@ sections:
 - file: chapter07-GaussianProcesses
 - file: chapter08-InterefenceEngine
 - file: chapter09-WheretoGoNext
-- file: Ref-chapter08-VI-VIforDummies
-- file: Ref-chapter08-VI-ADVI
-- file: Ref-chapter08-MC-MCMCforDummies
+- file: Ref-chapter08-01-MCMCforDummies
+- file: Ref-chapter08-02-VIforDummies
+- file: Ref-chapter08-03-BayesianDeepLearning
+
