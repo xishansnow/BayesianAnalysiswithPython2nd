@@ -71,6 +71,7 @@ plt.ylabel('y')
 现在，用两个略有不同的模型来拟合数据，第一个是线性模型，第二个是二阶多项式模型：
 
 ```{code-cell} ipython3
+
 with pm.Model() as model_l:
     α = pm.Normal('α', mu=0, sd=1)
     β = pm.Normal('β', mu=0, sd=10)

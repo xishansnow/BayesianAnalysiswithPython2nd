@@ -157,7 +157,7 @@ plt.tight_layout()
 现在使用 `PyMC3` 来构建和拟合模型。注意这里 $\mu$ 在模型中通过 `pm.deterministic` 来定义，表示它是`确定性变量`，反映了数学表达式和 Kruschke 图的内容。在`PyMC3`中，如果显式定义了一个确定性变量，则会计算该变量并保存其迹（ Trace ）：
 
 ```{code-cell} ipython3
-withpm.Model()asmodel_g:
+with pm.Model() as model_g:
 # 定义模型参数的先验
 α = pm.Normal('α', mu = 0, sd = 10)
 β = pm.Normal('β', mu = 0, sd = 1)

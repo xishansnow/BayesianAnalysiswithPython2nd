@@ -169,7 +169,7 @@ sns.pairplot(iris, hue='species', diag_kind='kde')
 和前面一样，这里用 0 和 1 对因变量 $\mathbf{y}$ 进行编码，利用 `Pandas` 可以这么做：
 
 ```{code-cell} ipython3
-df = iris.query(species == (' `Setosa` ', 'Versicolour '))
+df = iris.query("species == ('Setosa', 'Versicolour')")
 y_0 = pd.Categorical(df['species']).codes
 x_n = 'sepal_length'
 x_0 = df[x_n].values
