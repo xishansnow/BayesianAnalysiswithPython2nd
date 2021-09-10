@@ -1,13 +1,14 @@
 ---
 jupytext:
- formats: ipynb,.myst.md:myst,md
- text_representation:
-  extension: '.md'
-  format_name: myst
+  formats: ipynb,md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.12.0
 kernelspec:
- display_name: Python 3
- language: python
- name: python3
+  display_name: 'Python 3.9.6 64-bit (''books'': conda)'
+  name: python3
 ---
 
 # MCMC 采样的傻瓜书
@@ -64,8 +65,9 @@ np.random.seed(123)
 ```{code-cell} ipython3
 data = np.random.randn(20) 
 ax = plt.subplot() 
-sns.distplot(data, kde=False, ax=ax) 
-_ = ax.set(title='Histogram of observed data', xlabel='x', ylabel='# observations')
+sns.distplot(data, kde=True, ax=ax) 
+
+_ = ax.set(title='Histogram of observed data', xlabel='x', ylabel='Num of observations')
 ```
 
 接下来定义模型。在这个简单例子中，假设总体和样本呈正态分布（即模型的似然是正态分布）。正态分布有两个参数：均值（ $\mu$ ）和标准差（ $\sigma$ ）。为简单起见，假设已知 $\sigma=1$，想要推断 $\mu$ 的后验。根据贝叶斯原理，对于每个想要推断的参数，必须选择一个先验。为简单起见，仍然假设参数 $\mu$ 呈正态分布，且均值 $\mu_\mu = 0$ ，标准差 $\mu_\sigma = 1$ ，即将标准正态分布作为 $\mu$ 的先验分布。从统计学角度，模型是：
@@ -80,16 +82,20 @@ _ = ax.set(title='Histogram of observed data', xlabel='x', ylabel='# observation
 该模型较为简单，实际上可以获得后验的解析解。因为对于已知标准差的正态似然分布，$\mu$ 的先验与后验是共轭的（高斯分布是高斯似然的共轭先验），可以较为容易地计算后验。有关这一点的数学推导，请参见（[此处](https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxiYXllc2VjdHxneDplNGY0MDljNDA5MGYxYTM)）。
 
 ```{code-cell} ipython3
+# Analytical posterior of Guassian
 def calc_posterior_analytical(data, x, mu_0, sigma_0): 
    sigma = 1. 
    n = len(data) 
    mu_post = (mu_0 / sigma_0**2 + data.sum() / sigma**2) / (1. / sigma_0**2 + n / sigma**2) 
    sigma_post = (1. / sigma_0**2 + n / sigma**2)**-1 
+   
    return norm(mu_post, np.sqrt(sigma_post)).pdf(x) 
    
 ax = plt.subplot() 
 x = np.linspace(-1, 1, 500) 
+
 posterior_analytical = calc_posterior_analytical(data, x, 0., 1.) 
+
 ax.plot(x, posterior_analytical) 
 ax.set(xlabel='mu', ylabel='belief', title='Analytical posterior'); 
 sns.despine() 
@@ -209,9 +215,10 @@ def plot_proposal(mu_current, mu_proposal, mu_prior_mu, mu_prior_sd, data, accep
    x = np.linspace(-3, 3, 5000) 
    color = 'g' if accepted else 'r' 
         
-   # Plot prior 
+   # 先验Plot prior 
    prior_current = norm(mu_prior_mu, mu_prior_sd).pdf(mu_current) 
    prior_proposal = norm(mu_prior_mu, mu_prior_sd).pdf(mu_proposal) 
+
    prior = norm(mu_prior_mu, mu_prior_sd).pdf(x) 
    ax1.plot(x, prior) 
    ax1.plot([mu_current] * 2, [0, prior_current], marker='o', color='b') 
@@ -219,24 +226,25 @@ def plot_proposal(mu_current, mu_proposal, mu_prior_mu, mu_prior_sd, data, accep
    ax1.annotate("", xy=(mu_proposal, 0.2), xytext=(mu_current, 0.2), arrowprops=dict(arrowstyle="->", lw=2.)) 
    ax1.set(ylabel='Probability Density', title='current: prior(mu=%.2f) = %.2f\nproposal: prior(mu=%.2f) = %.2f' % (mu_current, prior_current, mu_proposal, prior_proposal)) 
     
-   # Likelihood 
+   # 似然 Likelihood 
    likelihood_current = norm(mu_current, 1).pdf(data).prod() 
    likelihood_proposal = norm(mu_proposal, 1).pdf(data).prod() 
 
    y = norm(loc=mu_proposal, scale=1).pdf(x) 
    sns.distplot(data, kde=False, norm_hist=True, ax=ax2) 
    ax2.plot(x, y, color=color) 
-   ax2.axvline(mu_current, color= b , linestyle= -- , label= mu_current ) 
+   ax2.axvline(mu_current, color= 'b' , linestyle='--' , label= 'mu_current' ) 
    ax2.axvline(mu_proposal, color=color, linestyle='--', label='mu_proposal') 
    #ax2.title('Proposal {}'.format('accepted' if accepted else 'rejected')) 
    ax2.annotate("", xy=(mu_proposal, 0.2), xytext=(mu_current, 0.2), arrowprops=dict(arrowstyle="->", lw=2.)) 
    ax2.set(title='likelihood(mu=%.2f) = %.2f\nlikelihood(mu=%.2f) = %.2f' % (mu_current, 1e14*likelihood_current, mu_proposal, 1e14*likelihood_proposal)) 
     
-   # Posterior 
+   # 后验 Posterior 
    posterior_analytical = calc_posterior_analytical(data, x, mu_prior_mu, mu_prior_sd) 
    ax3.plot(x, posterior_analytical) 
    posterior_current = calc_posterior_analytical(data, mu_current, mu_prior_mu, mu_prior_sd) 
    posterior_proposal = calc_posterior_analytical(data, mu_proposal, mu_prior_mu, mu_prior_sd) 
+   
    ax3.plot([mu_current] * 2, [0, posterior_current], marker='o', color='b') 
    ax3.plot([mu_proposal] * 2, [0, posterior_proposal], marker='o', color=color) 
    ax3.annotate("", xy=(mu_proposal, 0.2), xytext=(mu_current, 0.2),arrowprops=dict(arrowstyle="->", lw=2.)) 
@@ -270,8 +278,9 @@ def plot_proposal(mu_current, mu_proposal, mu_prior_mu, mu_prior_sd, data, accep
 
 ```{code-cell} ipython3
 np.random.seed(123) 
-sampler(data, samples=8, mu_init=-1., plot=True)
+sampler(data, samples=20, mu_init=-1., plot=True)
 ```
+
 MCMC 的神奇之处在于，只要做足够长的时间，就会产生来自模型后验分布的样本。有一个严格的数学证明可以保证这一点，但在这里不会详细说明。为了解这会产生什么，让我们抽取大量样本（建议值）并绘制其曲线图。
 
 ```{code-cell} ipython3
@@ -302,8 +311,8 @@ ax.legend();
 ```{code-cell} ipython3
 posterior_small = sampler(data, samples=5000, mu_init=1., proposal_width=.01) 
 fig, ax = plt.subplots() 
-ax.plot(posterior_small); 
-_ = ax.set(xlabel='sample', ylabel='mu'); 
+ax.plot(posterior_small)
+_ = ax.set(xlabel='sample', ylabel='mu')
 ```
 
 但你也不希望它太大，以至于永远不会接受移动：
@@ -311,16 +320,16 @@ _ = ax.set(xlabel='sample', ylabel='mu');
 ```{code-cell} ipython3
 posterior_large = sampler(data, samples=5000, mu_init=1., proposal_width=3.) 
 fig, ax = plt.subplots() 
-ax.plot(posterior_large); plt.xlabel('sample'); plt.ylabel('mu'); 
-_ = ax.set(xlabel='sample', ylabel='mu');
+ax.plot(posterior_large); plt.xlabel('sample'); plt.ylabel('mu')
+_ = ax.set(xlabel='sample', ylabel='mu')
 ```
 
 注意，不管建议宽度如何选择，数学证明保证了我们仍在从目标后验中采样，只是效率较低：
 
 ```{code-cell} ipython3
 sns.distplot(posterior_small[1000:], label='Small step size') 
-sns.distplot(posterior_large[1000:], label='Large step size'); 
-_ = plt.legend();
+sns.distplot(posterior_large[1000:], label='Large step size')
+_ = plt.legend()
 ```
 
 更多样本最终会看起来像真实后验，关键是样本应当彼此独立，但显然在本例中并非如此。因此，可以采用自相关性来量化评估采样器的效果，即分析第 $i$ 个样本与第 $i-1$ 、$i-2$ 个样本的相关性如何：
@@ -356,9 +365,9 @@ with pm.Model():
    step = pm.Metropolis() 
    trace = pm.sample(15000, step) 
     
-sns.distplot(trace[2000:]['mu'], label='PyMC3 sampler'); 
-sns.distplot(posterior[500:], label='Hand-written sampler'); 
-plt.legend();
+sns.distplot(trace[2000:]['mu'], label='PyMC3 sampler')
+sns.distplot(posterior[500:], label='Hand-written sampler')
+plt.legend()
 ```
 
 ## 8 总结
