@@ -342,10 +342,10 @@ y &\sim \mathcal{N}(\mu, \sigma)
 
 ```{code-cell} ipython3
 with pm.Model() as model_g:
- μ = pm.Uniform('μ', lower=40, upper=70)
- σ = pm.HalfNormal('σ', sd=10)
- y = pm.Normal('y', mu=μ, sd=σ, observed=data)
- trace_g = pm.sample(1000)
+  μ = pm.Uniform('μ', lower=40, upper=70)
+  σ = pm.HalfNormal('σ', sd=10)
+  y = pm.Normal('y', mu=μ, sd=σ, observed=data)
+  trace_g = pm.sample(1000)
 az.plot_trace(trace_g)
 ```
 
@@ -459,6 +459,7 @@ with pm.Model() as model_t:
     ν = pm.Exponential('ν', 1/30)
     y = pm.StudentT('y', mu=μ, sd=σ, nu=ν, observed=data)
     trace_t = pm.sample(1000)
+
 az.plot_trace(trace_t)
 ```
 
@@ -701,11 +702,12 @@ y_{i} & \sim \operatorname{Bern}\left(\theta_{i}\right)
 
 ```{code-cell} ipython3
 with pm.Model() as model_h:
- μ = pm.Beta('μ', 1., 1.)
- κ = pm.HalfNormal('κ', 10)
- θ = pm.Beta('θ', alpha=μ*κ, beta=(1.0-μ)*κ, shape=len(N_samples))
- y = pm.Bernoulli('y', p=θ[group_idx], observed=data)
- trace_h = pm.sample(2000)
+  μ = pm.Beta('μ', 1., 1.)
+  κ = pm.HalfNormal('κ', 10)
+  θ = pm.Beta('θ', alpha=μ*κ, beta=(1.0-μ)*κ, shape=len(N_samples))
+  y = pm.Bernoulli('y', p=θ[group_idx], observed=data)
+  
+  trace_h = pm.sample(2000)
 az.plot_trace(trace_h)
 ```
 <center>

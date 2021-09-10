@@ -1236,6 +1236,7 @@ with pm.Model() as model_vv:
     μ = pm.Deterministic('μ', α + β * x_shared**0.5)
     ϵ = pm.Deterministic('ϵ', γ + δ * x_shared)
     y_pred = pm.Normal('y_pred', mu=μ, sd=ϵ, observed=data.Lenght)
+    
     trace_vv = pm.sample(1000, tune=1000)
 ```
 

@@ -304,17 +304,20 @@ plt.ylabel('f(x)', rotation=0)
 ```{code-cell} ipython3
 # A one dimensional column vector of inputs.
 X = x[:, None]
+
 with pm.Model() as model_reg:
     # hyperprior for lengthscale kernel parameter
     ℓ = pm.Gamma('ℓ', 2, 0.5)
-    # instantiate a covariance function
+    # instanciate a covariance function
     cov = pm.gp.cov.ExpQuad(1, ls=ℓ)
-    # instantiate a GP prior
-    y = pm.gp.Marginal(cov_func=cov)
+    # instanciate a GP prior
+    gp = pm.gp.Marginal(cov_func=cov)
     # prior
     ϵ = pm.HalfNormal('ϵ', 25)
     # likelihood
     y_pred = gp.marginal_likelihood('y_pred', X=X, y=y, noise=ϵ)
+
+    trace_reg = pm.sample(2000)
 ```
 
 请注意，我们使用的不是表达式 7.7 中预期的正态似然，而是 `gp.marginal_likelihood` 方法。在第一章“概率思维”（公式 1.1) 和第五章“模型比较”（公式 5.13) 中，边际似然是似然和先验的积分：
@@ -488,6 +491,7 @@ with pm.Model() as model_islands:
     β = pm.Normal('β', 0, 1)
     μ = pm.math.exp(α + f[index] + β * log_pop)
     tt_pred = pm.Poisson('tt_pred', μ, observed=total_tools)
+
     trace_islands = pm.sample(1000, tune=1000)
 ```
 
@@ -617,8 +621,8 @@ with pm.Model() as model_iris:
     f = gp.prior("f", X=X_1)
     # logistic inverse link function and Bernoulli likelihood
     y_ = pm.Bernoulli("y", p=pm.math.sigmoid(f), observed=y)
-    trace_iris = pm.sample(1000, chains=1,
-compute_convergence_checks=False)
+
+    trace_iris = pm.sample(1000, chains=1,compute_convergence_checks=False)
 ```
 
 现在我们已经找到了 $\ell$ 的值 ，想要从高斯过程后验获取样本。与 `marginal_gp_model` 的操作一样，可以借助 `gp.conditional` 函数计算一组新输入位置上的条件分布，如以下代码所示：
@@ -696,8 +700,7 @@ with pm.Model() as model_iris2:
     f = gp.prior("f", X=X_1)
     # logistic inverse link function and Bernoulli likelihood
     y_ = pm.Bernoulli("y", p=pm.math.sigmoid(f), observed=y)
-    trace_iris2 = pm.sample(1000, chains=1,
-compute_convergence_checks=False)
+    trace_iris2 = pm.sample(1000, chains=1,compute_convergence_checks=False)
 ```
 
 现在为先前生成的 `X_new` 值生成 `model_iris2` 的后验预测样本：
@@ -765,8 +768,8 @@ with pm.Model() as model_space_flu:
     高斯过程= pm.gp.Latent(cov_func=cov)
     f = gp.prior('f', X=age)
     y_ = pm.Bernoulli('y', p=pm.math.sigmoid(f), observed=space_flu)
-    trace_space_flu = pm.sample(
-        1000, chains=1, compute_convergence_checks=False)
+
+    trace_space_flu = pm.sample(1000, chains=1, compute_convergence_checks=False)
 ```
 
 现在，为 `model_space_flu` 生成后验预测样本，然后绘制结果：
@@ -853,6 +856,7 @@ with pm.Model() as model_coal:
     高斯过程= pm.gp.Latent(cov_func=cov)
     f = gp.prior('f', X=x_data)
     y_pred = pm.Poisson('y_pred', mu=pm.math.exp(f), observed=y_data)
+    
     trace_coal = pm.sample(1000, chains=1)
 ```
 
@@ -929,6 +933,7 @@ with pm.Model() as model_rw:
     高斯过程= pm.gp.LatentKron(cov_funcs=[cov_func1, cov_func2])
     f = gp.prior('f', Xs=x_data)
     y = pm.Poisson('y', mu=pm.math.exp(f), observed=y_data)
+
     trace_rw = pm.sample(1000)
 ```
 

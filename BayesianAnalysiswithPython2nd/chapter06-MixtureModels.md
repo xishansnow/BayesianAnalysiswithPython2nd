@@ -199,6 +199,7 @@ with pm.Model() as model_mg:
     means = pm.Normal('means', mu=cs_exp.mean(), sd=10, shape=clusters)
     sd = pm.HalfNormal('sd', sd=10)
     y = pm.NormalMixture('y', w=p, mu=means, sd=sd, observed=cs_exp)
+
     trace_mg = pm.sample(random_seed=123)
 ```
 
@@ -254,9 +255,12 @@ with pm.Model() as model_mgp:
     order_means = pm.Potential('order_means',
                                tt.switch(means[1]-means[0] < 0, -np.inf, 0))
     y = pm.NormalMixture('y', w=p, mu=means, sd=sd, observed=cs_exp)
+
     trace_mgp = pm.sample(1000, random_seed=123)
+
     varnames = ['means', 'p']
-    az.plot_trace(trace_mgp, varnames)
+
+az.plot_trace(trace_mgp, varnames)
 ```
 
 <center>

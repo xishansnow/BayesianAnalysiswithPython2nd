@@ -188,7 +188,8 @@ with pm.Model() as model_0:
    θ = pm.Deterministic('θ', pm.math.sigmoid(μ)) 
    bd = pm.Deterministic('bd', -α/β)
    yl = pm.Bernoulli('yl', p=θ, observed=y_0)
-trace_0 = pm.sample(1000)
+   
+   trace_0 = pm.sample(1000)
 ```
 
 为节省页数，同时避免对同一类型图件反复出现感到厌烦，将省略迹图和其他类似的摘要图，但鼓励您制作自己的迹图和摘要，以进一步探索本书中的例子。我们将直接跳到如何生成下图，这是一个数据曲线图，以及拟合的 `sigmoid` 曲线和决策边界：

@@ -592,6 +592,7 @@ with pm.Model() as centered_model:
     a = pm.HalfNormal('a', 10)
     b = pm.Normal('b', 0, a, shape=10)
     trace_cm = pm.sample(2000, random_seed=7)
+    
 with pm.Model() as non_centered_model:
     a = pm.HalfNormal('a', 10)
     b_shift = pm.Normal('b_offset', mu=0, sd=1, shape=10)
