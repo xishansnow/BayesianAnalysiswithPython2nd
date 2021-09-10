@@ -54,7 +54,6 @@ import pandas as pd
 import matplotlib.pyplot as plt 
 import seaborn as sns 
 from scipy.stats import norm 
-
 sns.set_style('white') 
 sns.set_context('talk') 
 np.random.seed(123) 
@@ -66,7 +65,7 @@ np.random.seed(123)
 data = np.random.randn(20) 
 ax = plt.subplot() 
 sns.distplot(data, kde=False, ax=ax) 
-_ = ax.set(title='Histogram of observed data', xlabel='x', ylabel='# observations'); 
+_ = ax.set(title='Histogram of observed data', xlabel='x', ylabel='# observations')
 ```
 
 接下来定义模型。在这个简单例子中，假设总体和样本呈正态分布（即模型的似然是正态分布）。正态分布有两个参数：均值（ $\mu$ ）和标准差（ $\sigma$ ）。为简单起见，假设已知 $\sigma=1$，想要推断 $\mu$ 的后验。根据贝叶斯原理，对于每个想要推断的参数，必须选择一个先验。为简单起见，仍然假设参数 $\mu$ 呈正态分布，且均值 $\mu_\mu = 0$ ，标准差 $\mu_\sigma = 1$ ，即将标准正态分布作为 $\mu$ 的先验分布。从统计学角度，模型是：

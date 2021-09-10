@@ -71,7 +71,11 @@ kernelspec:
 
 ```{code-cell} ipython3
 %matplotlib inline
+<<<<<<< HEAD
 import theano 
+=======
+import Theano 
+>>>>>>> cdf135d1717a3870056b476c62a8f4bd21814f54
 import PyMC3 as pm
 import sklearn
 import numpy as np
@@ -159,8 +163,13 @@ neural_network = construct_nn(ann_input, ann_output)
 
 现在可以运行像 `NUTS` 这样的随机采样器，由于模型并不复杂，所以工作得很好，但随着将模型扩展到具有更多层的深度架构，随机方法将变得非常缓慢。此时，使用 OPVI 框架中的ADVI 自动变分推断算法，就会快得多，并可更好地扩展。
 
+<<<<<<< HEAD
 ```{admonition} 请注意
 ADVI 采用平均场近似，因此此处忽略了后验中的相关性。
+=======
+```{note}
+请注意，ADVI 采用平均场近似，因此此处忽略了后验中的相关性。
+>>>>>>> cdf135d1717a3870056b476c62a8f4bd21814f54
 ```
 
 ```{code-cell} ipython3
@@ -287,19 +296,33 @@ with neural_network_minibatch:
 ```
 
 ```{code-cell} ipython3
+<<<<<<< HEAD
   plt.plot(-inference.hist)
   plt.ylabel('ELBO')
   plt.xlabel('iteration')
+=======
+plt.plot(-inference.hist)
+plt.ylabel('ELBO')
+plt.xlabel('iteration');
+>>>>>>> cdf135d1717a3870056b476c62a8f4bd21814f54
 ```
 
 小批量 `ADVI` 的运行时间短得多，其收敛得也更快，并且可以查看迹图。而最关键的是同时能够得到神经网络权重的不确定性度量。
 
 ```{code-cell} ipython3
+<<<<<<< HEAD
   pm.traceplot(trace)
 ```
 
 ```{note} 注意
 您在 GPU 上运行上述示例，但需要在 .theanorc 文件中设置 device = GPU 和  floatX = float32 。您可能会说，上述模型并不是真正的深层网络，但实际上我们可以轻松地将其扩展到更多层（包括卷积层），以便在更具挑战性的数据集上进行训练。
+=======
+pm.traceplot(trace);
+```
+
+```{note}
+ 您在 GPU 上运行上述示例，但需要在 .theanorc 文件中设置 device = GPU 和  floatX = float32 。您可能会说，上述模型并不是真正的深层网络，但实际上我们可以轻松地将其扩展到更多层（包括卷积层），以便在更具挑战性的数据集上进行训练。
+>>>>>>> cdf135d1717a3870056b476c62a8f4bd21814f54
 ```
 
 我还在 `PyData London` 上介绍了一些这方面的工作，请观看以下 [视频](https://www.youtube.com/watch?v=LlzVlqVzeD8&feature=emb_imp_woyt)。此外，你可以从 [此处](https://github.com/twiecki/WhileMy`MCMC`GentlySamples/blob/master/content/downloads/notebooks/bayesian_neural_network.ipynb) 下载本例对应的 NoteBook。
