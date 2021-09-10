@@ -182,13 +182,13 @@ x_c = x_0 - x_0.mean()
 
 ```{code-cell} ipython3
 with pm.Model() as model_0:
- α = pm.Normal('α', mu=0, sd=10)
- β = pm.Normal('β', mu=0, sd=10)
- μ = α + pm.math.dot(x_c, β)
- θ = pm.Deterministic('θ', pm.math.sigmoid(μ)) 
- bd = pm.Deterministic('bd', -α/β)
- yl = pm.Bernoulli('yl', p=θ, observed=y_0)
- trace_0 = pm.sample(1000)
+   α = pm.Normal('α', mu=0, sd=10)
+   β = pm.Normal('β', mu=0, sd=10)
+   μ = α + pm.math.dot(x_c, β)
+   θ = pm.Deterministic('θ', pm.math.sigmoid(μ)) 
+   bd = pm.Deterministic('bd', -α/β)
+   yl = pm.Bernoulli('yl', p=θ, observed=y_0)
+trace_0 = pm.sample(1000)
 ```
 
 为节省页数，同时避免对同一类型图件反复出现感到厌烦，将省略迹图和其他类似的摘要图，但鼓励您制作自己的迹图和摘要，以进一步探索本书中的例子。我们将直接跳到如何生成下图，这是一个数据曲线图，以及拟合的 `sigmoid` 曲线和决策边界：

@@ -154,21 +154,21 @@ plt.tight_layout()
 图3.2
 </center>
 
-现在使用 `PyMC3` 来构建和拟合模型。注意这里 $\mu$ 在模型中通过 `pm.deterministic` 来定义，表示它是`确定性变量`，反映了数学表达式和 Kruschke 图的内容。在`PyMC3`中，如果显式定义了一个确定性变量，则会计算该变量并保存其迹（ Trace ）：
+现在使用 `PyMC3` 来构建和拟合模型。注意这里 $\mu$ 在模型中通过 `pm.deterministic` 来定义，表示它是`确定性变量`，反映了数学表达式和 Kruschke 图的内容。在`PyMC3`中，如果显式定义了一个确定性变量，则会计算该变量并保存其迹：
 
 ```{code-cell} ipython3
 with pm.Model() as model_g:
-# 定义模型参数的先验
-α = pm.Normal('α', mu = 0, sd = 10)
-β = pm.Normal('β', mu = 0, sd = 1)
-ϵ = pm.HalfCauchy('ϵ', 5)
+    # 定义模型参数的先验
+    α = pm.Normal('α', mu = 0, sd = 10)
+    β = pm.Normal('β', mu = 0, sd = 1)
+    ϵ = pm.HalfCauchy('ϵ', 5)
 
-# 定义映射 (y = α + β * x) 和似然 P(y|α,β,ε）
-μ=pm.Deterministic('μ', α + β * x)
-y_pred=pm.Normal('y_pred',mu = μ, sd = ϵ, observed = y)
+    # 定义映射 (y = α + β * x) 和似然 P(y|α,β,ε）
+    μ=pm.Deterministic('μ', α + β * x)
+    y_pred=pm.Normal('y_pred',mu = μ, sd = ϵ, observed = y)
 
-# 近似推断：随机采样生成模型中所有随机变量（模型参数或隐变量等）和显式确定性变量的迹
-trace_g = pm.sample(2000, tune = 1000)
+    # 近似推断：随机采样生成模型中所有随机变量（模型参数或隐变量等）和显式确定性变量的迹
+    trace_g = pm.sample(2000, tune = 1000)
 ```
 
 如果不在模型中显式地定义确定性变量。则 `PCMC3` 仍会计算该变量，但不会将保存其迹。例如，可编写以下代码：

@@ -169,6 +169,9 @@ y &\sim \mathcal{N}(\mu_{z},\sigma)
 该模型（假设 `clusters=2` ）可以用 `PyMC3` 实现为：
 
 ```{code-cell} ipython3
+
+clusters=2
+
 with pm.Model() as model_kg:
     # 先验p： 服从狄拉克雷分布
     p = pm.Dirichlet ('p', a=np.ones(clusters))

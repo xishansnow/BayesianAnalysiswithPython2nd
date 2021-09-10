@@ -78,7 +78,7 @@ with pm.Model() as model_l:
     ϵ = pm.HalfNormal('ϵ', 5)
     μ = α + β * x_1s[0]
     y_pred = pm.Normal('y_pred', mu=μ, sd=ϵ, observed=y_1s)
-    trace_l = pm.sample(2000)
+trace_l = pm.sample(2000)
 
 with pm.Model() as model_p:
     α = pm.Normal('α', mu=0, sd=1)
@@ -86,7 +86,7 @@ with pm.Model() as model_p:
     ϵ = pm.HalfNormal('ϵ', 5)
     μ = α + pm.math.dot(β, x_1s)
     y_pred = pm.Normal('y_pred', mu=μ, sd=ϵ, observed=y_1s)
-    trace_p = pm.sample(2000)
+trace_p = pm.sample(2000)
 ```
 
 现在绘制这两个模型的平均拟合曲线：
