@@ -188,7 +188,7 @@ az.plot_posterior(trace)
 with our_first_model:
  step = pm.Metropolis()
  multi_trace = pm.sample(1000, step=step, njobs=4)
- az.plot_trace(multi_trace, lines={'theta':theta_real});
+az.plot_trace(multi_trace, lines={'theta':theta_real});
 ```
 
 一种定量检测收敛性的方法是 **Gelman-Rubin 检验** （ `az.summary` 输出的表格中的 $\hat R$ 值）。该检验的思想是比较不同迹之间的差异和迹内部的差异，因此，需要多组迹来执行检验。理想状态下，我们希望得到 $\hat R=1$ 。但根据经验，值低于 1.1 也可以认为是收敛的，更高的值则意味着不收敛。
