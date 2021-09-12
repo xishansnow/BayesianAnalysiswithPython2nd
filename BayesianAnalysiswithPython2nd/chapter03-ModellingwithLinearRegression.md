@@ -55,9 +55,9 @@ kernelspec:
 
 让我们开始学习如何构建线性模型。看下面该公式：
 
-```{math}
-y_i= \alpha + x_i \beta  \tag{式3.1} \label{式3.1}
-```
+\begin{equation*}
+y_i= \alpha + x_i \beta \tag{式3.2}
+\end{equation*}
 
 该等式描述了变量 $\mathbb{x}$ 与变量 $\mathbb{y}$ 之间的线性关系。其中，参数 $β$ 控制直线的斜率，可以理解为变量 $\mathbb{x}$ 的单位变化量所对应 $\mathbb{y}$ 的变化量。另外一个参数 $α$ 为截距，可以解释为当 $x_i=0$ 时, $y_i$ 的值，在图形上表示， $α$ 就是直线与 $y$ 轴交点的坐标。
 
@@ -67,21 +67,19 @@ y_i= \alpha + x_i \beta  \tag{式3.1} \label{式3.1}
 
 从概率角度，线性回归模型可以表示成如下形式：
 
-```{math}
-\mathbb{y} \sim \mathcal{N} ( \mu = \alpha + \mathbb{x} \beta , \epsilon ) \tag{式3.2} \label{式3.2}
-```
+\begin{equation*}
+\mathbb{y} \sim \mathcal{N} ( \mu = \alpha + \mathbb{x} \beta , \epsilon ) \tag{式3.2}
+\end{equation*}
 
 也就是说，假设 $\mathbb{y}$ 是一个服从均值为 $α + \mathbb{x} β$ 、标准差为 $\epsilon$ 的正态分布的随机变量。其中 $α$ 、 $β$ 、 $\epsilon$ 为未知的模型参数（贝叶斯方法中视其为随机变量，具有自身概率分布），需要设置先验。
 
 先验的设置根据问题上下文和数据分析师的经验给出，例如，下面是假设参数服从正态分布的一组先验设置：
 
-\begin{equation*}
-\begin{aligned}
-\alpha &\sim \mathcal{N}\left(\mu_{\alpha}, \sigma_{\alpha}\right) \\ 
+\begin{align*}
+\alpha &\sim \mathcal{N}\left(\mu_{\alpha}, \sigma_{\alpha}\right) \tag{式3.3}\\ 
 \beta &\sim \mathcal{N}\left(\mu_{\beta}, \sigma_{\beta}\right)\\ 
 \epsilon &\sim\left|N\left(0, \sigma_{\epsilon}\right)\right|  
-\end{aligned} \tag{式3.3} \label{式3.3}
-\end{equation*} 
+\end{align*} 
 
 其中：
 
@@ -113,7 +111,7 @@ y_i= \alpha + x_i \beta  \tag{式3.1} \label{式3.1}
 
 定义好该模型，需要为其提供数据。这里采用人工合成的数据集（合成数据集的优点是：可事前知道参数的真值，进而方便检查是否能够使用模型恢复它们）：
 
-```{code-cell}
+```{code-cell} ipython3
 import matplotlib.pyplot as plt
 import scipy.stats as stats
 import numpy as np
@@ -125,7 +123,7 @@ import arviz as az
 az.style.use('arviz-darkgrid')
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 # 生成实验数据
 np.random.seed(1)
 N=100
@@ -155,7 +153,7 @@ plt.tight_layout()
 
 现在使用 `PyMC3` 来构建和拟合模型。注意这里 $\mu$ 在模型中通过 `pm.deterministic` 来定义，表示它是`确定性变量`，反映了数学表达式和 Kruschke 图的内容。在`PyMC3`中，如果显式定义了一个确定性变量，则会计算该变量并保存其迹：
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as model_g:
     # 定义模型参数的先验
     α = pm.Normal('α', mu = 0, sd = 10)
@@ -172,13 +170,13 @@ with pm.Model() as model_g:
 
 如果不在模型中显式地定义确定性变量。则 `PCMC3` 仍会计算该变量，但不会将保存其迹。例如，可编写以下代码：
 
-```{code-cell}
+```{code-cell} ipython3
 y_pred = pm.Normal('y_pred', mu = α + β*x, sd = ϵ, observed = y)
 ```
 
 为探索推断结果，可以绘制未知随机变量的迹图（`图 3.3`），此处省略了确定性变量 $\mu$ 。你可以通过将变量名称（随机变量或显式确定性变量）以列表形式传递给参数 `var_names` 的方式，来实现多变量迹图的绘制。许多 `ArviZ` 函数都有一个 `var_names` 参数，你可以尝试其他 `ArviZ` 的绘图函数来探索后验。
 
-```{code-cell}
+```{code-cell} ipython3
 az.plot_trace(trace_g, var_names = ['α','β','ϵ'])
 ```
 
@@ -199,7 +197,7 @@ az.plot_trace(trace_g, var_names = ['α','β','ϵ'])
 
 事实上，上述模型中，不论用哪条直线去拟合数据，该直线都会穿过 $\mathbb{x}$ 和 $\mathbb{y}$ 的均值点。拟合直线的过程相当于将直线固定在均值点上做旋转，其结果是呈现出`斜率越大截距越小`的相关性。如果将后验画出来的话可以很清楚地看到这点（见`图 3.4` , 暂时忽略 $ε$ ）。
 
-```{code-cell}
+```{code-cell} ipython3
 az.plot_pair(trace_g, var_names = ['α', 'β'], plot_kwargs = {'alpha': 0.1})
 ```
 
@@ -219,17 +217,17 @@ az.plot_pair(trace_g, var_names = ['α', 'β'], plot_kwargs = {'alpha': 0.1})
 
 解决问题的一个简单办法是先将 $\mathbb{x}$ 中心化，也就是说，对于每个点 $x_i$ ，减去 $\mathbb{x}$ 的均值。这样做的结果是 $x'$ 的中心在 0 附近，从而在修改斜率时，旋转点与截距点重合，参数空间也会变得不那么自相关。该方法在机器学习以及深度学习中经常被使用。
 
-```{math}
-x'=x-\bar x \tag{式3.4} \label{式3.4}
-```
+\begin{equation*} 
+x'=x-\bar x \tag{式3.4}
+\end{equation*} 
 
 中心化不仅是一种计算技巧，同时有利于解释数据。截距是指当 $x_i=0$ 时 $y_i$ 的值，对许多问题而言，截距并没有什么实际意义。例如，对于身高或者体重的关系模型，当值为 0 时没有实际意义，因而截距对理解数据就没有帮助；对于另外一些问题，估计出截距可能很有用，因为在实验中可能无法测量出 $x_i = 0$ 的情况，此时截距的估计值能够提供有价值的信息。但不管怎么说，外推都有其局限性，应当谨慎使用！
 
 根据问题和受众不同，可能需要汇报中心化之前和之后的参数估计值。如果需要汇报的是中心化之前的参数，那么可以像下面这样将参数转换成原来的尺度：
 
-```{math}
+\begin{equation*}
 \alpha=\alpha^{\prime}-\beta^{\prime} \bar{x} \tag{式3.5} \label{式3.5}
-```
+\end{equation*}
 
 上面的公式可以通过以下公式推导出来：
 
@@ -241,9 +239,9 @@ y &= \alpha^{\prime}-\beta^{\prime} \bar{x}+\beta^{\prime} x+\epsilon
 
 然后可以得出：
 
-```{math}
+\begin{equation*}
 \beta = \beta' \tag{式3.7}  \label{式3.7}
-```
+\end{equation*}
 
 进一步，在运行模型之前可以对数据进行`归一化处理`。归一化在统计学和机器学习中是常见的数据处理手段，许多算法对归一化后的数据效果更好。归一化过程在中心化基础上再除以标准差，其数学形式如下：
 
@@ -265,7 +263,7 @@ y^{\prime} &= \frac{y-\bar{y}}{y_{s d}}
 
 正如已经看到的，可以使用 `ArviZ` 函数（如 `plot_trace` 和 `summary` ）探索后验，也可以使用自己的函数。对于线性回归，绘制出符合数据均值的直线，并标示参数 $\alpha$ 和 $\beta$ 的均值可能很有用。对于感兴趣的不确定性程度，则可以从后验中采样并以半透明线条形式绘制在均值直线周边（`图 3.5`）。
 
-```{code-cell}
+```{code-cell} ipython3
 plt.plot(x, y, 'C0.')
 alpha_m = trace_g['α'].mean()
 beta_m = trace_g['β'].mean()
@@ -292,7 +290,7 @@ plt.legend()
 
 半透明直线是一种比较直观的表示方法，不过还可以给该图增加更酷的东西：用半透明区间来描述 $μ$ 的最大后验密度（ `HPD` ）区间（`图 3.6 `）。注意这也是在模型中将变量 $μ$ 显式定义为确定性变量的主要原因，简化以下代码：
 
-```{code-cell}
+```{code-cell} ipython3
 # 绘制均值直线
 plt.plot(x, alpha_m + beta_m * x, c = 'k', 
         label = f'y = {alpha_m:.2f} + {beta_m:.2f} * x')
@@ -315,13 +313,13 @@ plt.legend()
 
 利用 `PyMC3` 中的 `sample_posterior_predictive` 函数可以很容易得到预测值的采样。
 
-```{code-cell}
+```{code-cell} ipython3
 ppc = pm.sample_posterior_predictive(trace_g, samples = 2000, model=model_g)
 ```
 
 然后我们可以画出结果：
 
-```{code-cell}
+```{code-cell} ipython3
 plt.plot(x, y, 'b.')
 
 # 绘制均值直线
@@ -352,9 +350,9 @@ plt.ylabel('y', rotation=0)
 
 下面的公式可以在某种程度上减轻你的疑惑：
 
-```{math}
+\begin{equation*}
 r=\beta \frac{\sigma_{x}}{\sigma_{y}} \tag{式3.9} \label{式3.9}
-```
+\end{equation*}
 
 只有在 $\mathbb{x}$ 和 $\mathbb{y}$ 的标准差相等时，皮尔逊相关系数才与斜率相等。也就是说，皮尔逊相关系数和斜率的主要区别在于是否受数据尺度影响。在对数据做归一化处理消除尺度影响后，两者之间确实等价，但在未做归一化处理前，两者并不等价。需要注意：
 
@@ -368,9 +366,9 @@ r=\beta \frac{\sigma_{x}}{\sigma_{y}} \tag{式3.9} \label{式3.9}
 ```
 需要注意的是：在贝叶斯线性回归模型中，预测值方差可能大于测量值方差，进而导致 $R^2$ 大于 1，不利于解释。因此，通常对 $R^2$ 做如下定义：
 
-```{math}
+\begin{equation*}
 R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]+\mathbf{V}_{n=1}^{S}\left(\hat{y}^{s}-y\right)} \tag{式3.10}  \label{式3.10}
-```
+\end{equation*}
 
 上式中，$E[\hat y^S]$ 是后验样本 $S$ 上，预测值 $\hat y$ 的平均值。
 
@@ -378,7 +376,7 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 
 在 `PYMC3` 中计算 $R^2$ 最简单的方法是使用 `ArviZ` 的 `r2_core()` 函数。其输入为观测值 $\mathbb{y}$ 和预测值 $\hat y$ 。其中， $\hat y$ 可利用 `sample_posterior_predictive` 函数轻松获得：
 
-```{code-cell}
+```{code-cell} ipython3
 az.r2_score(y, ppc['y_pred'])
 ```
 
@@ -397,7 +395,7 @@ az.r2_score(y, ppc['y_pred'])
 
 下面的代码为双变量高斯分布生成等值线图，均值固定在 $(0，0)$ 点。其中一个标准差是固定的，另一个标准差采用值 1 或 2 以及皮尔逊相关系数 $\rho$ 的不同值：
 
-```{code-cell}
+```{code-cell} ipython3
 sigma_x1 = 1
 sigmas_x2 = [1, 2]
 rhos = [-0.90, -0.5, 0, 0.5, 0.90]
@@ -441,7 +439,7 @@ f.text(-0.05, 0.5, 'x_2', va='center', fontsize=18, rotation=0)
 
 此处探索第三种方法，然后使用这些参数手动构建协方差矩阵：
 
-```{code-cell}
+```{code-cell} ipython3
 data = np.stack((x, y)).T
 with pm.Model() as pearson_model:
     μ = pm.Normal('μ', mu=data.mean(0), sd=10, shape=2)
@@ -458,7 +456,7 @@ with pm.Model() as pearson_model:
 
 此处仅绘制 $R^2$ 的迹图：
 
-```{code-cell}
+```{code-cell} ipython3
 az.plot_trace(trace_p, var_names=['r2'])
 ```
 
@@ -471,7 +469,7 @@ az.plot_trace(trace_p, var_names=['r2'])
 
 可以看到，$r^2$ 值的分布与上一个示例中使用 `ArviZ` 的 `r2_core` 函数获得的值基本相同。通过摘要可以更简单地进行比较。
 
-```{code-cell}
+```{code-cell} ipython3
 az.summary(trace_p, var_names=['r2'])
 ```
 
@@ -488,7 +486,7 @@ az.summary(trace_p, var_names=['r2'])
 
 为了验证学生 $t$ 分布确实能增加线性回归的稳健性，这里使用[`Anscombe quartet`](https://en.wikipedia.org/wiki/Anscombe%27s_quartet)数据集中的第 3 组数据。下面代码用 `Pandas` 读取数据，并对数据做中心化处理，以使采样器更容易收敛。
 
-```{code-cell}
+```{code-cell} ipython3
 ans = pd.read_csv('../data/anscombe.csv')
 x_3 = ans[ans.group == 'III']['x'].values
 y_3 = ans[ans.group == 'III']['y'].values
@@ -497,7 +495,7 @@ x_3 = x_3 - x_3.mean()
 
 先来看看该数据集长什么样：
 
-```{code-cell}
+```{code-cell} ipython3
 _, ax = plt.subplots(1, 2, figsize=(10, 5))
 beta_c, alpha_c = stats.linregress(x_3, y_3)[:2]
 ax[0].plot(x_3, (alpha_c + beta_c * x_3), 'k',
@@ -523,7 +521,7 @@ plt.tight_layout()
 
 在下面的模型中，使用平移的指数分布来避免接近零的 $\nu$ 值。非平移的指数分布给接近零的值赋予过高权重。这对没有异常值的数据来说很好，但对有极端异常值的数据（比如 `Anscombe` 的第三个数据集）最好避免这么低的值。当然，默认设置是很好的起点，但没必要拘泥于它。其他常见的先验还包括 $\Gamma(2，0.1)$ 或 $\Gamma(\mu=20，SD=15)$ 等。
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as model_t:
     α = pm.Normal('α', mu=y_3.mean(), sd=1)
     β = pm.Normal('β', mu=0, sd=1)
@@ -537,7 +535,7 @@ with pm.Model() as model_t:
 
 在下图中，可以看到根据 `model_t` 的稳健拟合和根据 `SciPy` 线性回归的非稳健拟合（采用最小二乘回归）。作为额外练习，你可以尝试添加使用 `model_g` 获得的最佳直线：
 
-```{code-cell}
+```{code-cell} ipython3
 beta_c, alpha_c = stats.linregress(x_3, y_3)[:2]
 plt.plot(x_3, (alpha_c + beta_c * x_3), 'k', label='non-robust', alpha=0.5)
 plt.plot(x_3, y_3, 'C0o')
@@ -561,7 +559,7 @@ plt.tight_layout()
 
 在继续前，花一点时间来考虑模型参数的值：
 
-```{code-cell}
+```{code-cell} ipython3
 az.summary(trace_t, var_names=varnames)
 ```
 
@@ -575,7 +573,7 @@ az.summary(trace_t, var_names=varnames)
 
 运行后验预测性检查，以探索模型捕获数据的能力：
 
-```{code-cell}
+```{code-cell} ipython3
 ppc = pm.sample_posterior_predictive(trace_t, samples=200, model=model_t,random_seed=2)
 data_ppc = az.from_PyMC3(trace=trace_t, posterior_predictive=ppc)
 ax = az.plot_ppc(data_ppc, figsize=(12, 6), mean=True)
@@ -597,7 +595,7 @@ plt.xlim(0, 12)
 
 首先创建 8 个相关的数据组，其中有一组仅包含一个数据点。
 
-```{code-cell}
+```{code-cell} ipython3
 N = 20
 M = 8
 idx = np.repeat(range(M-1), N)
@@ -632,13 +630,13 @@ plt.tight_layout()
 
 在将数据提供给模型前先对其做中心化处理：
 
-```{code-cell}
+```{code-cell} ipython3
 x_centered = x_m - x_m.mean()
 ```
 
 首先，和前面做法一样，先用非多层的模型拟合，唯一区别是需要增加部分代码将 $α$ 转换到原始尺度。
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as unpooled_model:
     α_tmp = pm.Normal('α_tmp', mu=0, sd=10, shape=M)
     β = pm.Normal('β', mu=0, sd=10, shape=M)
@@ -652,7 +650,7 @@ with pm.Model() as unpooled_model:
 
 从结果中可以看到，除了其中一组参数（ $α7$ 和 $β7$ ），大多数情况下结果都很正常。根据它们的迹来看，似乎这一组参数一直在自由移动而没有收敛。
 
-```{code-cell}
+```{code-cell} ipython3
 az.plot_forest(trace_up, var_names=['α', 'β'], combined=True)
 ```
 
@@ -681,7 +679,7 @@ az.plot_forest(trace_up, var_names=['α', 'β'], combined=True)
 -   增加了超先验。
 -   增加了几行代码将参数转换到中心化前的尺度。记住这并非强制的，我们完全可以将参数保留在转换后的尺度上，只是对结果进行解释的时候需要小心。
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as hierarchical_model:
     # hyper-priors
     α_μ_tmp = pm.Normal('α_μ_tmp', mu=0, sd=10)
@@ -713,7 +711,7 @@ with pm.Model() as hierarchical_model:
 
 使用 `az.plot_forest()` 比较模型的一个好方法是在同一绘图中同时显示两个模型 ( `unpooled_model`、`hierarhical_model`) 的参数。要做到这一点，您只需传递一个迹的列表。为了更好地理解模型捕获的有关数据的内容，为八组中的每一组绘制拟合线：
 
-```{code-cell}
+```{code-cell} ipython3
 _, ax = plt.subplots(2, 4, figsize=(10, 5), sharex=True, sharey=True,
                      constrained_layout=True)
 ax = np.ravel(ax)
@@ -762,25 +760,25 @@ for i in range(M):
 
 接下来，将学习如何用线性回归拟合曲线。使用线性回归模型去拟合曲线的一种做法是构建如下多项式：
 
-```{math}
+\begin{equation*}
 \mu=\beta_{0} x^{0}+\beta_{1} x^{1} \cdots+\beta_{m} x^{m} \tag{式3.12}   \label{式3.12}
-```
+\end{equation*}
 
 可以看到多项式中其实包含了一元线性回归模型，只需将上式中 $ n>1$ 的系数 $β_n$ 设为 0 即可得到下式：
 
-```{math}
+\begin{equation*}
 \mu=\beta_{0}+\beta_{1} x^{1} \tag{式3.13}   \label{式3.13}
-```
+\end{equation*}
 
 多项式回归仍然是线性回归，此处“线性”的意思是`指模型中的参数是线性组合的，而不是指变量是线性变化的`。现从一个简单的抛物线开始构建多项式回归模型：
 
-```{math}
+\begin{equation*}
 \mu=\beta_{0}+\beta_{1} x^{1}+\beta_{2} x^{2}  \tag{式3.14}  \label{式3.14}
-```
+\end{equation*}
 
 其中第 3 项控制曲率。数据选用 `Anscombe quartet` 的第 2 组数据集
 
-```{code-cell}
+```{code-cell} ipython3
 x_2 = ans[ans.group == 'II']['x'].values
 y_2 = ans[ans.group == 'II']['y'].values
 x_2 = x_2 - x_2.mean()
@@ -798,7 +796,7 @@ plt.ylabel('y', rotation=0)
 
 现在建立 `PyMC3` 模型如下：
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as model_poly:
     α = pm.Normal('α', mu=y_2.mean(), sd=1)
     β1 = pm.Normal('β1', mu=0, sd=1)
@@ -811,7 +809,7 @@ with pm.Model() as model_poly:
 
 此处省略一些检查和汇总，直接绘制结果，这将是一条很好的曲线，几乎没有错误地拟合了数据。考虑到数据集的极简主义性质：
 
-```{code-cell}
+```{code-cell} ipython3
 x_p = np.linspace(-6, 6)
 y_p = trace_poly['α'].mean() + trace_poly['β1'].mean() * \
     x_p + trace_poly['β2'].mean() * x_p**2
@@ -848,27 +846,28 @@ plt.plot(x_p, y_p, c='C1')
 
 这种情况下，因变量可以这样建模：
 
-```{math}
-\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.15}   \label{式3.15}
-```
+\begin{equation*}
+\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.15}   
+\label{式3.15}
+\end{equation*}
 
 注意该式与多项式回归的式子不一样，现在有了多个变量而不再是一个变量的多次方。用线性代数方法可以表示为更简洁的形式：
 
-```{math}
+\begin{equation*}
 \mu=\alpha+ \mathbb{X} \beta \tag{式3.16}  \label{式3.16}
-```
+\end{equation*}
 
 其中， $β$ 是一个长度为 $m$ 的系数向量，也就是说，自变量的个数为 $m$ 。变量 $\mathbb{X}$ 是一个维度为 $n×m$ 的矩阵，其中， $n$ 表示观测的样本数， $m$ 表示自变量个数。有关线性代数，可参阅相关书籍。本书中，您需要知道的只是使用了一种更短、更方便的方式来编写我们的模型：
 
-```{math}
+\begin{equation*}
 \mathbb{X} \beta=\sum_{i=1}^{n} \beta_{i} x_{i}=\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.17}  \label{式3.17}
-```
+\end{equation*}
 
 在一元线性回归模型中，我们希望找到一条直线来解释数据，而在多元线性回归模型中，我们希望找到一个维度为 $m$ 的超平面来解释数据。因此，多元线性回归模型本质上与一元线性回归模型是一样的，唯一区别是：现在 $β$ 是一个向量而 $\mathbb{X}$ 是一个矩阵。
 
 现在定义如下数据：
 
-```{code-cell}
+```{code-cell} ipython3
 np.random.seed(314)
 N = 100
 alpha_real = 2.5
@@ -883,7 +882,7 @@ y = alpha_real + np.dot(X, beta_real) + eps_real
 
 然后定义一个函数去画 3 个散点图，前两个表示的是自变量与因变量的关系，最后一个表示的是两个自变量之间的关系。这只是个普通的绘图函数，本章后面将会反复用到。
 
-```{code-cell}
+```{code-cell} ipython3
 def scatter_plot(x, y):
     plt.figure(figsize=(10, 10))
     for idx, x_i in enumerate(x.T):
@@ -899,7 +898,7 @@ def scatter_plot(x, y):
 
 用前面刚刚定义的 scatter_plot 可以将我们的合成数据可视化地表示出来。
 
-```{code-cell}
+```{code-cell} ipython3
 scatter_plot(X_centered,y)
 ```
 
@@ -917,7 +916,7 @@ scatter_plot(X_centered,y)
 
 如果你对 `NumPy` 比较熟悉，那么应该知道 `NumPy` 包含一个点乘函数，而且 `Python3.5`（以及 `NumPy1.10`）之后增加了一个新的操作符@。不过这里我们使用的是 `PyMC3` 中的点乘函数（其实是 `Theano` 中矩阵相乘的一个别名），因为变量 $\beta$ 在这里是一个 `Theano` 中的张量而不是 `NumPy` 数组。
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as model_mlr:
     α_tmp = pm.Normal('α_tmp', mu=0, sd=10)
     β = pm.Normal('β', mu=0, sd=1, shape=2)
@@ -930,7 +929,7 @@ with pm.Model() as model_mlr:
 
 现在看一下推断出来的参数的总结，这样分析结果会更容易一些。我们的模型表现如何呢？
 
-```{code-cell}
+```{code-cell} ipython3
 varnames = ['α', 'β', 'ϵ']
 az.summary(trace_mlr, var_names=varnames)
 ```
@@ -955,7 +954,7 @@ az.summary(trace_mlr, var_names=varnames)
 
 下面使用人工合成数据来探讨混淆变量的问题。下面的代码中模拟了一个混淆变量 $x_1$，注意该变量是如何影响 $x_2$和 $y$ 的。
 
-```{code-cell}
+```{code-cell} ipython3
 np.random.seed(42)
 N = 100
 x_1 = np.random.normal(size=N)
@@ -967,7 +966,7 @@ X = np.vstack((x_1, x_2)).T
 
 根据生成数据的方式，可以看出变量已经中心化了。因此，不需要再对数据进行中心化处理来加速推断过程了。事实上该例中的数据已经是归一化的了。
 
-```{code-cell}
+```{code-cell} ipython3
 scatter_plot(X,y)
 ```
 
@@ -984,7 +983,7 @@ scatter_plot(X,y)
 - 第二个模型 `m_x1`， 是 $x_1$ 的简单线性回归模型。
 - 第三个模型 `m_x2`， 是 $x_2$ 的简单线性回归模型。
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as m_x1x2:
     α = pm.Normal('α', mu=0, sd=10)
     β1 = pm.Normal('β1', mu=0, sd=10)
@@ -1011,7 +1010,7 @@ with pm.Model() as m_x2:
 
 使用森林图，可以在一个图中对这些模型的参数 $\beta$进行比较：
 
-```{code-cell}
+```{code-cell} ipython3
 az.plot_forest([trace_x1x2, trace_x1, trace_x2],
                model_names=['m_x1x2', 'm_x1', 'm_x2'],
                var_names=['β1', 'β2'],
@@ -1031,7 +1030,7 @@ az.plot_forest([trace_x1x2, trace_x1, trace_x2],
 
 前面的例子中，可以看到多元线性回归模型中的冗余变量问题，同时还了解了混淆变量的重要性。接下来沿着前面例子继续深入学习：当两个变量高度相关时会发生什么。为了研究该问题及其对推断的影响，我们使用和前面一样的合成数据和模型，不过通过减小根据 $x_1$ 生成 $x_2$ 时的随机噪声，增加了  $x_1$ 和  $x_2$ 之间的相关性：
 
-```{code-cell}
+```{code-cell} ipython3
 np.random.seed(42)
 N = 100
 x_1 = np.random.normal(size=N)
@@ -1042,7 +1041,7 @@ X = np.vstack((x_1, x_2)).T
 
 数据生成代码中的这种变化实际上等同于将零加到 $x_1$ ，因此，在所有实际目的中，这两个变量都是相等的。然后，您可以尝试改变尺度值并使用不太极端的值，但现在我们想让事情简单些。生成新数据后，检查散点图的外观：
 
-```{code-cell}
+```{code-cell} ipython3
 scatter_plot(X, y)
 ```
 
@@ -1055,7 +1054,7 @@ scatter_plot(X, y)
 
 您应该看到上图中，$x_1$ 和 $x_2$ 的散点图实际上是一条斜率约为 1 的直线。然后，运行多元线性回归：
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as model_red:
     α = pm.Normal('α', mu=0, sd=10)
     β = pm.Normal('β', mu=0, sd=10, shape=2)
@@ -1067,7 +1066,7 @@ with pm.Model() as model_red:
 
 用森林图检查参数 $\beta$ 的结果：
 
-```{code-cell}
+```{code-cell} ipython3
 az.plot_forest(trace_red, var_names=['β'], combined=True, figsize=(8, 2))
 ```
 
@@ -1080,7 +1079,7 @@ az.plot_forest(trace_red, var_names=['β'], combined=True, figsize=(8, 2))
 
 $\beta$ 参数的 `HPD 区间` 相当广，与先验几乎一样。可以从系数的散点图中得到一些线索：
 
-```{code-cell}
+```{code-cell} ipython3
 az.plot_pair(trace_red, var_names=['β'])
 ```
 
@@ -1093,15 +1092,15 @@ az.plot_pair(trace_red, var_names=['β'])
 
 哇！参数 $\beta$ 的边缘后验是一条非常窄的对角线。当一个系数上升时，另一个系数必然下降。两者实际上是相关的。这只是模型和数据的结果。根据我们的模型，平均值 $\mu$ 是：
 
-```{math}
+\begin{equation*}
 \mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \tag{式3.19}  \label{式3.19}
-```
+\end{equation*}
 
 假设  $x_1$ 和  $x_2$ 不只是近似相同，而是完全一样的，那么可以将模型改写成如下形式：
 
-```{math}
+\begin{equation*}
 \mu=\alpha+（\beta_{1} +\beta_{2}） x \tag{式3.20}  \label{式3.20}
-```
+\end{equation*}
 
 可以看到，对 $μ$ 有影响的是  $\beta_1$ 与 $\beta_2$ 的和而不是二者单独的值，因而模型是不确定的（或者说，数据并不能决定  $\beta_1$ 和 $\beta_2$ 的值）。在我们的例子中，$\beta$ 并不能在区间 [-∞,∞] 内自由移动，原因有两个：其一，两个变量几乎是相同的，不过并非完全一样；其二，更重要的是 $\beta$ 系数的可能取值受到先验的限制。
 
@@ -1127,7 +1126,7 @@ az.plot_pair(trace_red, var_names=['β'])
 
 有一种情况与前面见过的类似，其中某个变量与因变量正相关而另外一个与因变量负相关。这里人工合成一些数据来说明。
 
-```{code-cell}
+```{code-cell} ipython3
 np.random.seed(42)
 N = 126
 r = 0.8
@@ -1153,7 +1152,7 @@ scatter_plot(X, y)
 
 从这些模型采样后，使用森林图查看参数进行比较：
 
-```{code-cell}
+```{code-cell} ipython3
 az.plot_forest([trace_x1x2, trace_x1, trace_x2],
                model_names=['m_x1x2', 'm_x1', 'm_x2'],
                var_names=['β1', 'β2'],
@@ -1177,16 +1176,16 @@ az.plot_forest([trace_x1x2, trace_x1, trace_x2],
 
 目前见过的所有例子中，因变量对于自变量的作用都是加性的。我们只是增加变量并乘以一个系）。如果希望捕捉到前述药物变量间的交互效应，需要给模型增加一项非加性的量，例如：变量间的乘积：
 
-```{math}
-\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}+\beta_{3} x_{1} x_{2} \tag{式3.21}   \label{式3.21}
-```
+\begin{equation*} \tag{式3.21} 
+\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}+\beta_{3} x_{1} x_{2} 
+\end{equation*}
 
 注意这里系数 $ β_3$  乘的是  $x_1$ 和  $x_2$ 的乘积，该非加性项只是用来说明统计学中的变量间相互作用的一个例子，因为它衡量了变量之间的相关性。事实上对相关性建模的表达式有很多种，相乘只是其中一个比较常用的。
 
 解释有交互作用的线性模型并不像解释没有交互作用的线性模型那么容易。让我们重写表达式 3.21：
 
 
-\begin{align*} \tag{式3.22}   \label{式3.22}
+\begin{align*} \tag{式3.22}
 \mu &=\alpha+\underbrace{\left(\beta_{1}+\beta_{3} x_{2}\right)}_{\text {slope of } x_{1}} x_{1}+\beta_{2} x_{2} \\
 \mu &=\alpha+\beta_{1} x_{1}+\underbrace{\left(\beta_{2}+\beta_{3} x_{1}\right)}_{\text {slope of } x_{2}} x_{2} 
 \end{align*}
@@ -1208,7 +1207,7 @@ az.plot_forest([trace_x1x2, trace_x1, trace_x2],
 
 世界卫生组织和世界各地其他卫生机构收集新生儿和学步儿童的数据，并设计了标准的生长图表。这些图表是儿童工具包的重要组成部分，也是衡量人口总体幸福感的指标（ [链接](http://www.Who.int/ChildGrowth/en/)）。这些数据的一个例子是新生女孩的身高随年龄（以月为单位）的变化：
 
-```{code-cell}
+```{code-cell} ipython3
 data = pd.read_csv('../data/babies.csv')
 data.plot.scatter('Month', 'Lenght')
 ```
@@ -1225,7 +1224,7 @@ data.plot.scatter('Month', 'Lenght')
 - 均值 $\mu$ 的线性模型是 $\sqrt{x}$ 的函数，将线性模型拟合到曲线上，仅用于说明案例，无物理解释。
 - 定义了一个共享变量 `x_shared` 。在模型拟合之后，用它来更改变量（在本例中为 Month) 的值，而无需重新调整模型。
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as model_vv:
     α = pm.Normal('α', sd=10)
     β = pm.Normal('β', sd=10)
@@ -1241,7 +1240,7 @@ with pm.Model() as model_vv:
 
 下图显示了我们模型的结果。均值用一条黑色曲线表示，两个半透明的橙色带分别表示 1 个和 2 个标准差：
 
-```{code-cell}
+```{code-cell} ipython3
 plt.plot(data.Month, data.Lenght, 'C0.', alpha=0.1)
 μ_m = trace_vv['μ'].mean(0)
 ϵ_m = trace_vv['ϵ'].mean(0)
@@ -1265,7 +1264,7 @@ plt.ylabel('y', rotation=0)
 
 该函数的输出基于观测数据和所估计参数分布（包括不确定性）的样本。唯一问题是：根据定义，此函数返回对观测值的预测，但数据集中所有度量都是以整月报告的，没有 0.5 个月的情况（我关心的值）。要获得非观测值的预测，更简单的方法是定义一个共享变量（作为模型的一部分），然后在对后验预测分布采样之前更新共享变量的值：
 
-```{code-cell}
+```{code-cell} ipython3
 x_shared.set_value([0.5])
 ppc = pm.sample_posterior_predictive(trace_vv, 2000, model=model_vv)
 y_ppc = ppc['y_pred'][:, 0]
@@ -1273,7 +1272,7 @@ y_ppc = ppc['y_pred'][:, 0]
 
 现在，可以画出两周大婴儿的预期身高分布，并计算额外数据。例如，给定孩子的身高，她所处的百分位数。在下面的代码块和图中查看该示例。
 
-```{code-cell}
+```{code-cell} ipython3
 ref = 47.5
 density, l, u = az._fast_kde(y_ppc)
 x_ = np.linspace(l, u, 200)
