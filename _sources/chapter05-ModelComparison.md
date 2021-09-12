@@ -1,11 +1,11 @@
 ---
 jupytext:
-  formats: ipynb,.myst.md:myst,md
+  formats: ipynb,md:myst
   text_representation:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.10.3
+    jupytext_version: 1.12.0
 kernelspec:
   display_name: Python 3
   language: python
@@ -36,7 +36,7 @@ kernelspec:
 
 让我们读取并绘制一个简单的数据集：
 
-```{code-cell} ipython3
+```{code-cell}
 import matplotlib.pyplot as plt
 import scipy.stats as stats
 import numpy as np
@@ -48,7 +48,7 @@ import arviz as az
 az.style.use('arviz-darkgrid')
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 dummy_data = np.loadtxt('../data/dummy.csv')
 x_1 = dummy_data[:, 0]
 y_1 = dummy_data[:, 1]
@@ -70,13 +70,14 @@ plt.ylabel('y')
 
 现在，用两个略有不同的模型来拟合数据，第一个是线性模型，第二个是二阶多项式模型：
 
-```{code-cell} ipython3
+```{code-cell}
 with pm.Model() as model_l:
     α = pm.Normal('α', mu=0, sd=1)
     β = pm.Normal('β', mu=0, sd=10)
     ϵ = pm.HalfNormal('ϵ', 5)
     μ = α + β * x_1s[0]
     y_pred = pm.Normal('y_pred', mu=μ, sd=ϵ, observed=y_1s)
+    
     trace_l = pm.sample(2000)
 
 with pm.Model() as model_p:
@@ -85,12 +86,13 @@ with pm.Model() as model_p:
     ϵ = pm.HalfNormal('ϵ', 5)
     μ = α + pm.math.dot(β, x_1s)
     y_pred = pm.Normal('y_pred', mu=μ, sd=ϵ, observed=y_1s)
+    
     trace_p = pm.sample(2000)
 ```
 
 现在绘制这两个模型的平均拟合曲线：
 
-```{code-cell} ipython3
+```{code-cell}
 x_new = np.linspace(x_1s[0].min(), x_1s[0].max(), 100)
 α_l_post = trace_l['α'].mean()
 β_l_post = trace_l['β'].mean(axis=0)
@@ -120,14 +122,14 @@ plt.legend()
 
 图中二阶模型似乎做得更好，但线性模型也并没有那么糟糕。此时可以使用 PyMC3 来获得两个模型的后验预测样本，并执行检查：
 
-```{code-cell} ipython3
+```{code-cell}
 y_l = pm.sample_posterior_predictive(trace_l, 2000, model=model_l)['y_pred']
 y_p = pm.sample_posterior_predictive(trace_p, 2000, model=model_p)['y_pred']
 ```
 
 正如已经看到的，后验预测性检查通常使用可视化方式来执行，如下例所示：
 
-```{code-cell} ipython3
+```{code-cell}
 plt.figure(figsize=(8, 3))
 data = [y_1s, y_l, y_p]
 labels = ['data', 'linear model', 'order 2']
@@ -149,7 +151,7 @@ for i, d in enumerate(data):
 
 图 5.3 显示了数据、线性模型和二次多项式模型的均值和四分位数范围。该图对各模型的后验预测样本做了平均，而且两个模型的均值都复现得很好，分位数范围也不是很差。不过在实际问题中，一些小差异可能是值得注意的。可以尝试做更多不同曲线图来探索后验预测性分布。例如，绘制均值和四分位数间相对于数据真实值的离散度。下图就是一个例子：
 
-```{code-cell} ipython3
+```{code-cell}
 fig, ax = plt.subplots(1, 2, figsize=(10, 3), constrained_layout=True)
 def iqr(x, a=0):
 return np.subtract(*np.percentile(x, [75, 25], axis=a))
@@ -202,7 +204,7 @@ for idx, func in enumerate([np.mean, iqr]):
 
 直觉上，似乎最好选择准确度高且简单的模型。但如果简单模型准确度最差，该怎么办？如何才能平衡这两种要素呢？为简化问题，此处引入一个例子来帮助理解如何平衡准确性与简约性。为了更形象些，该例使用一系列逐渐复杂的多项式来拟合同一个简单数据集，并且未采用贝叶斯方法，而是采用最小二乘估计来建模。当然，最小二乘估计其实可转化成带均匀先验的贝叶斯模型，因此，将其理解成贝叶斯方法也没问题。
 
-```{code-cell} ipython3
+```{code-cell}
 x = np.array([4., 5., 6., 9., 12, 14.])
 y = np.array([4.2, 6., 6., 9., 10, 10.])
 plt.figure(figsize=(10, 5))
@@ -223,6 +225,7 @@ plt.legend(loc=2)
 plt.xlabel('x')
 plt.ylabel('y', rotation=0)
 ```
+
 <center>
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210512104113_44.webp)
@@ -383,7 +386,7 @@ AIC 对非贝叶斯方法来说很有用，但对贝叶斯方法可能会有些�
 
 采用 `ArviZ` 进行模型比较想像起来容易得多！
 
-```{code-cell} ipython3
+```{code-cell}
 waic_l = az.waic(trace_l)
 waic_l
 ```
@@ -405,7 +408,7 @@ waic_l
 
 由于 `WAIC` 和 `LOO` 总是以相对的方式进行解释，`ArviZ` 提供了两个辅助函数来简化比较。第一个是 `az.compare` ：
 
-```{code-cell} ipython3
+```{code-cell}
 cmp_df = az.compare({'model_l':trace_l, 'model_p':trace_p}, method='BB-pseudo-BMA')
 cmp_df
 ```
@@ -424,7 +427,7 @@ cmp_df
 
 我们还可以通过使用 `az.plot_compare` 函数可视化上述信息。该函数接受 `az.compare` 的输出，并以 `Richard McElreath` 的《统计反思》一书中使用的样式生成汇总图：
 
-```{code-cell} ipython3
+```{code-cell}
 az.plot_compare(cmp_df)
 ```
 
@@ -490,7 +493,7 @@ w_{i}=\frac{e^{\frac{1}{2} d E_{i}}}{\sum_{j}^{M} e^{-\frac{1}{2} d E_{j}}} \tag
 
 以下只是如何从 `PyMC3` 获得加权后验预测样本的一个虚拟示例。在这里，我们使用的是 `pm.sample_posterior_predictive_w` 函数（注意函数名称末尾的 `w` ）。`pm.sample_posterior_predictive` 和`pm.sample_posterior_predictive_w` 之间的区别在于，后者接受多个迹和模型，以及权重列表（默认值为所有模型的权重相同）。您可以通过 `az.compare` 或其他来源获取这些权重：
 
-```{code-cell} ipython3
+```{code-cell}
 w = 0.5
 y_lp = pm.sample_posterior_predictive_w([trace_l, trace_p],
                                         samples=1000,
@@ -597,7 +600,7 @@ p\left(y \mid M_{k}\right)=\int_{\theta_{k}} p\left(y \mid \theta_{k}, M_{k}\rig
 
 让我们创建一些数据，以便在示例中使用：
 
-```{code-cell} ipython3
+```{code-cell}
 coins = 30
 heads = 9
 y_d = np.repeat([0, 1], [coins-heads, heads])
@@ -605,7 +608,7 @@ y_d = np.repeat([0, 1], [coins-heads, heads])
 
 现在，来看一下 `PyMC3` 模型。为在之前的代码之间切换，我们使用了 `pm.math.switch` 函数。如果此函数的第一个参数的计算结果为 `true`，则返回第二个参数，否则返回第三个参数。请注意，还使用 `pm.math.eq` 函数来检查 `model_index` 变量是否等于 0 ：
 
-```{code-cell} ipython3
+```{code-cell}
 with pm.Model() as model_BF:
     p = np.array([0.5, 0.5])
     model_index = pm.Categorical('model_index', p=p)
@@ -616,7 +619,9 @@ with pm.Model() as model_BF:
     θ = pm.Beta('θ', m[0], m[1])
     # likelihood
     y = pm.Bernoulli('y', θ, observed=y_d)
+
     trace_BF = pm.sample(5000)
+
 az.plot_trace(trace_BF)
 ```
 
@@ -630,7 +635,7 @@ az.plot_trace(trace_BF)
 
 现在，需要通过计算 `model_index` 变量来计算贝叶斯因子。请注意，我们已经包括了每个模型的先验值：
 
-```{code-cell} ipython3
+```{code-cell}
 pM1 = trace_BF['model_index'].mean()
 pM0 = 1 - pM1
 BF = (pM0 / pM1) * (p[1] / p[0])
@@ -651,15 +656,17 @@ BF = (pM0 / pM1) * (p[1] / p[0])
 
 另一种计算贝叶斯因子的方法是使用 `序贯蒙特卡罗(SMC)采样方法`。我们将在 `第8章-推理引擎` 中学习此方法的详细信息。现在只需要知道这个采样器计算的边缘似然估计是一个副产品，可以直接使用它来计算贝叶斯因子。要在 `PyMC3` 中使用 `SMC`，需将 `pm.SMC()` 传递给 `sample` 的 `step` 参数：
 
-```{code-cell} ipython3
+```{code-cell}
 with pm.Model() as model_BF_0:
     θ = pm.Beta('θ', 4, 8)
     y = pm.Bernoulli('y', θ, observed=y_d)
     trace_BF_0 = pm.sample(2500, step=pm.SMC())
+
 with pm.Model() as model_BF_1:
     θ = pm.Beta('θ', 8, 4)
     y = pm.Bernoulli('y', θ, observed=y_d)
     trace_BF_1 = pm.sample(2500, step=pm.SMC())
+    
 model_BF_0.marginal_likelihood / model_BF_1.marginal_likelihood
 ```
 
@@ -672,7 +679,7 @@ model_BF_0.marginal_likelihood / model_BF_1.marginal_likelihood
 
 此前说过，贝叶斯因子对先验过于敏感。这在执行推断时会导致本来不相关的差异，在计算贝叶斯因子时被证明为非常重要。现在我们来看一个例子，它将有助于阐明贝叶斯因子在做什么，信息准则在做什么，以及它们如何在相似的情况下专注于两个不同的方面。回到抛硬币例子的数据定义，现在设置 300 枚硬币和 90 个正面；这与以前的比例相同，但数据多了 10 倍。然后，分别运行每个模型：
 
-```{code-cell} ipython3
+```{code-cell}
 traces = []
 waics = []
 for coins, heads in [(30, 9), (300, 90)]:
@@ -700,7 +707,7 @@ for coins, heads in [(30, 9), (300, 90)]:
 
 现在，比较一下 `WAIC` 告诉我们的内容（参见图5.13）。模型 0 的 `WAIC` 是 368.4，模型 1 的是 368.6，直觉上差别不大。比实际差异更重要的是，如果重新计算数据的信息准则，也就是 30 枚硬币和 9 个正面，你会得到模型 0 的 38.1 和模型 1 的 39.4 。也就是说，在增加数据时，相对差异变得越小，$\theta$ 的估计值越相近，与信息准则估计出的预测准确度的值就越相似。如果你用 `LOO` 代替 `WAIC` ，会发现本质上是一样的：
 
-```{code-cell} ipython3
+```{code-cell}
 fig, ax = plt.subplots(1, 2, sharey=True)
 labels = model_names
 indices = [0, 0, 1, 1]
@@ -766,7 +773,7 @@ H(p)=-\sum_{i} p_i\text{log} (p_i) \tag{式5.15}  \label{式5.15}
 
 直观地说，分布越分散，其熵越大。通过运行以下代码并查看图 5.15，可以看到这一点：
 
-```{code-cell} ipython3
+```{code-cell}
 np.random.seed(912)
 x = range(0, 10)
 q = stats.binom(10, 0.75)
@@ -827,7 +834,7 @@ D_{K L}(p \| q)=\underbrace{\sum_{i} p_{i} \log p_{i}}_{\text {entropy of p }}-\
 
 作为一个简单例子，我们可以使用 KL 散度来评估哪个分布（ $q$ 或 $r$ ）更接近真实分布。使用Scipy，可以计算 $D_{KL}({真实分布||q})$  和 $D_{KL}({真实分布||r})$ ：
 
-```{code-cell} ipython3
+```{code-cell}
 stats.entropy(true_distribution, q_pmf), stats.entropy(true_distribution,r_pmf)
 ```
 
@@ -835,7 +842,7 @@ stats.entropy(true_distribution, q_pmf), stats.entropy(true_distribution,r_pmf)
 
 您可能很想将 KL 散度描述为距离，但它是不对称的，因此不是真实距离。如果运行下面代码，将获得 $\approx 2.7,\approx 0.7$ 。由此可见，结果数字是不同的。在此例中，可以看到 $r$ 是 $q$ 的更好近似，但反之可能不成立：
 
-```{code-cell} ipython3
+```{code-cell}
 stats.entropy(r_pmf, q_pmf), stats.entropy(q_pmf, r_pmf)
 ```
 

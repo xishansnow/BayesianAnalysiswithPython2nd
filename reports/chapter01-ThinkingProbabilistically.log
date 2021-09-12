@@ -17,26 +17,31 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import matplotlib.pyplot as plt
-import scipy.stats as stats
-import numpy as np
-import pandas as pd
-import seaborn as sns
-import pymc3 as pm
-import arviz as az
-
-az.style.use('arviz-darkgrid')
+n_params = [1, 2, 4]  # Number of trials
+p_params = [0.25, 0.5, 0.75]  # Probability of success
+x = np.arange(0, max(n_params)+1)
+f,ax = plt.subplots(len(n_params), len(p_params), sharex=True,
+                    sharey=True,
+                    figsize=(8, 7), constrained_layout=True)
+for i in range(len(n_params)):
+    for j in range(len(p_params)):
+        n = n_params[i]
+        p = p_params[j]
+        y = stats.binom(n=n, p=p).pmf(x)
+        ax[i,j].vlines(x, 0, y, colors='C0', lw=5)
+        ax[i,j].set_ylim(0, 1)
+        ax[i,j].plot(0, 0, label="N = {:3.2f}\nθ =
+                           {:3.2f}".format(n,p), alpha=0)
+        ax[i,j].legend()
+        ax[2,1].set_xlabel('y')
+        ax[1,0].set_ylabel('p(y | θ, N)')
+        ax[0,0].set_xticks(x)
 ------------------
 
-[0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m/tmp/ipykernel_1823/3373398946.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      1[0m [0;32mimport[0m [0mmatplotlib[0m[0;34m.[0m[0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 2[0;31m [0;32mimport[0m [0mscipy[0m[0;34m.[0m[0mstats[0m [0;32mas[0m [0mstats[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      3[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      4[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      5[0m [0;32mimport[0m [0mseaborn[0m [0;32mas[0m [0msns[0m[0;34m[0m[0;34m[0m[0m
+[0;36m  File [0;32m"/tmp/ipykernel_1923/3636673657.py"[0;36m, line [0;32m14[0m
+[0;31m    ax[i,j].plot(0, 0, label="N = {:3.2f}\nθ =[0m
+[0m                                              ^[0m
+[0;31mSyntaxError[0m[0;31m:[0m EOL while scanning string literal
 
-[0;31mModuleNotFoundError[0m: No module named 'scipy'
-ModuleNotFoundError: No module named 'scipy'
+SyntaxError: EOL while scanning string literal (3636673657.py, line 14)
 

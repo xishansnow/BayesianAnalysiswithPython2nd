@@ -42,7 +42,7 @@
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
@@ -91,6 +91,11 @@
   </a>
  </li>
 </ul>
+<p class="caption">
+ <span class="caption-text">
+  书籍正文
+ </span>
+</p>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="chapter01-ThinkingProbabilistically.html">
@@ -137,19 +142,26 @@
    第 9 章 下一步去哪儿？
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  其他阅读材料
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="Ref-chapter08-VI-VIforDummies.html">
+  <a class="reference internal" href="Ref-chapter08-01-MCMCforDummies.html">
+   MCMC 采样的傻瓜书
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ref-chapter08-02-VIforDummies.html">
    变分推断傻瓜书
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Ref-chapter08-VI-ADVI.html">
-   自动微分变分推断
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Ref-chapter08-MC-MCMCforDummies.html">
-   MCMC采样的傻瓜书
+  <a class="reference internal" href="Ref-chapter08-03-BayesianDeepLearning.html">
+   贝叶斯深度学习
   </a>
  </li>
 </ul>
@@ -237,14 +249,14 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=lab/tree/chapter03-ModellingwithLinearRegression.md"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=tree/chapter03-ModellingwithLinearRegression.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
                     alt="Interact on binder">Binder</button></a>
         
         
-        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=lab/tree/BayesianAnalysiswithPython2nd/chapter03-ModellingwithLinearRegression.md&branch=master"><button type="button"
+        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=tree/BayesianAnalysiswithPython2nd/chapter03-ModellingwithLinearRegression.ipynb&branch=master"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
                 data-placement="left"><img class="jupyterhub-button-logo"
                     src="_static/images/logo_jupyterhub.svg"
@@ -485,20 +497,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1866</span><span class="o">/</span><span class="mf">3373398946.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;scipy&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -523,26 +521,291 @@
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2290/4172630698.py:18: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
+  plt.tight_layout()
+</pre></div>
+</div>
+<img alt="_images/chapter03-ModellingwithLinearRegression_2_1.png" src="_images/chapter03-ModellingwithLinearRegression_2_1.png" />
+</div>
 </div>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505092831_15.webp" style="zoom:67%;"/>
 <p>图3.2</p>
 </center>
-<p>现在使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 来构建和拟合模型。注意这里 <span class="math notranslate nohighlight">\(\mu\)</span> 在模型中通过 <code class="docutils literal notranslate"><span class="pre">pm.deterministic</span></code> 来定义，表示它是<code class="docutils literal notranslate"><span class="pre">确定性变量</span></code>，反映了数学表达式和 Kruschke 图的内容。在<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>中，如果显式定义了一个确定性变量，则会计算该变量并保存其迹（ Trace ）：</p>
+<p>现在使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 来构建和拟合模型。注意这里 <span class="math notranslate nohighlight">\(\mu\)</span> 在模型中通过 <code class="docutils literal notranslate"><span class="pre">pm.deterministic</span></code> 来定义，表示它是<code class="docutils literal notranslate"><span class="pre">确定性变量</span></code>，反映了数学表达式和 Kruschke 图的内容。在<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>中，如果显式定义了一个确定性变量，则会计算该变量并保存其迹：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">withpm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span><span class="n">asmodel_g</span><span class="p">:</span>
-<span class="c1"># 定义模型参数的先验</span>
-<span class="n">α</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
-<span class="n">β</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">ϵ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;ϵ&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_g</span><span class="p">:</span>
+    <span class="c1"># 定义模型参数的先验</span>
+    <span class="n">α</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">β</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">ϵ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">(</span><span class="s1">&#39;ϵ&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 
-<span class="c1"># 定义映射 (y = α + β * x) 和似然 P(y|α,β,ε）</span>
-<span class="n">μ</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">α</span> <span class="o">+</span> <span class="n">β</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
-<span class="n">y_pred</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span><span class="n">mu</span> <span class="o">=</span> <span class="n">μ</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="n">ϵ</span><span class="p">,</span> <span class="n">observed</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
+    <span class="c1"># 定义映射 (y = α + β * x) 和似然 P(y|α,β,ε）</span>
+    <span class="n">μ</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">α</span> <span class="o">+</span> <span class="n">β</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">y_pred</span><span class="o">=</span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span><span class="n">mu</span> <span class="o">=</span> <span class="n">μ</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="n">ϵ</span><span class="p">,</span> <span class="n">observed</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
 
-<span class="c1"># 近似推断：随机采样生成模型中所有随机变量（模型参数或隐变量等）和显式确定性变量的迹</span>
-<span class="n">trace_g</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">tune</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="c1"># 近似推断：随机采样生成模型中所有随机变量（模型参数或隐变量等）和显式确定性变量的迹</span>
+    <span class="n">trace_g</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">tune</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2290/162259929.py:12: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+  trace_g = pm.sample(2000, tune = 1000)
+Auto-assigning NUTS sampler...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Initializing NUTS using jitter+adapt_diag...
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
+KeyboardInterrupt                         Traceback (most recent call last)
+/tmp/ipykernel_2290/162259929.py in &lt;module&gt;
+     10 
+     11     # 近似推断：随机采样生成模型中所有随机变量（模型参数或隐变量等）和显式确定性变量的迹
+---&gt; 12     trace_g = pm.sample(2000, tune = 1000)
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/sampling.py in sample(draws, step, init, n_init, start, trace, chain_idx, chains, cores, tune, progressbar, model, random_seed, discard_tuned_samples, compute_convergence_checks, callback, jitter_max_retries, return_inferencedata, idata_kwargs, mp_ctx, pickle_backend, **kwargs)
+    494             # By default, try to use NUTS
+    495             _log.info(&quot;Auto-assigning NUTS sampler...&quot;)
+--&gt; 496             start_, step = init_nuts(
+    497                 init=init,
+    498                 chains=chains,
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/sampling.py in init_nuts(init, chains, n_init, model, random_seed, progressbar, jitter_max_retries, **kwargs)
+   2185         raise ValueError(f&quot;Unknown initializer: {init}.&quot;)
+   2186 
+-&gt; 2187     step = pm.NUTS(potential=potential, model=model, **kwargs)
+   2188 
+   2189     return start, step
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/step_methods/hmc/nuts.py in __init__(self, vars, max_treedepth, early_max_treedepth, **kwargs)
+    166         `pm.sample` to the desired number of tuning steps.
+    167         &quot;&quot;&quot;
+--&gt; 168         super().__init__(vars, **kwargs)
+    169 
+    170         self.max_treedepth = max_treedepth
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/step_methods/hmc/base_hmc.py in __init__(self, vars, scaling, step_scale, is_cov, model, blocked, potential, dtype, Emax, target_accept, gamma, k, t0, adapt_step_size, step_rand, **theano_kwargs)
+     86         vars = inputvars(vars)
+     87 
+---&gt; 88         super().__init__(vars, blocked=blocked, model=model, dtype=dtype, **theano_kwargs)
+     89 
+     90         self.adapt_step_size = adapt_step_size
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/step_methods/arraystep.py in __init__(self, vars, model, blocked, dtype, logp_dlogp_func, **theano_kwargs)
+    252 
+    253         if logp_dlogp_func is None:
+--&gt; 254             func = model.logp_dlogp_function(vars, dtype=dtype, **theano_kwargs)
+    255         else:
+    256             func = logp_dlogp_func
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/model.py in logp_dlogp_function(self, grad_vars, tempered, **kwargs)
+   1002         varnames = [var.name for var in grad_vars]
+   1003         extra_vars = [var for var in self.free_RVs if var.name not in varnames]
+-&gt; 1004         return ValueGradFunction(costs, grad_vars, extra_vars, **kwargs)
+   1005 
+   1006     @property
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/model.py in __init__(self, costs, grad_vars, extra_vars, dtype, casting, compute_grads, **kwargs)
+    689 
+    690         if compute_grads:
+--&gt; 691             grad = tt.grad(self._cost_joined, self._vars_joined)
+    692             grad.name = &quot;__grad&quot;
+    693             outputs = [self._cost_joined, grad]
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in grad(cost, wrt, consider_constant, disconnected_inputs, add_names, known_grads, return_disconnected, null_gradients)
+    637             assert g.type.dtype in theano.tensor.float_dtypes
+    638 
+--&gt; 639     rval = _populate_grad_dict(var_to_app_to_idx, grad_dict, wrt, cost_name)
+    640 
+    641     for i in range(len(rval)):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in _populate_grad_dict(var_to_app_to_idx, grad_dict, wrt, cost_name)
+   1438         return grad_dict[var]
+   1439 
+-&gt; 1440     rval = [access_grad_cache(elem) for elem in wrt]
+   1441 
+   1442     return rval
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1438         return grad_dict[var]
+   1439 
+-&gt; 1440     rval = [access_grad_cache(elem) for elem in wrt]
+   1441 
+   1442     return rval
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1218                             )
+   1219 
+-&gt; 1220                 input_grads = node.op.L_op(inputs, node.outputs, new_output_grads)
+   1221 
+   1222                 if input_grads is None:
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py in L_op(self, inputs, outputs, output_grads)
+    323 
+    324         &quot;&quot;&quot;
+--&gt; 325         return self.grad(inputs, output_grads)
+    326 
+    327     def R_op(
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in grad(self, inp, grads)
+    310             return [
+    311                 DimShuffle(gz.type.broadcastable, grad_order)(
+--&gt; 312                     Elemwise(scalar.identity)(gz)
+    313                 )
+    314             ]
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py in __call__(self, *inputs, **kwargs)
+    251 
+    252         if config.compute_test_value != &quot;off&quot;:
+--&gt; 253             compute_test_value(node)
+    254 
+    255         if self.default_output is not None:
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py in compute_test_value(node)
+    124 
+    125     # Create a thunk that performs the computation
+--&gt; 126     thunk = node.op.make_thunk(node, storage_map, compute_map, no_recycling=[])
+    127     thunk.inputs = [storage_map[v] for v in node.inputs]
+    128     thunk.outputs = [storage_map[v] for v in node.outputs]
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py in make_thunk(self, node, storage_map, compute_map, no_recycling, impl)
+    632             )
+    633             try:
+--&gt; 634                 return self.make_c_thunk(node, storage_map, compute_map, no_recycling)
+    635             except (NotImplementedError, MethodNotDefined):
+    636                 # We requested the c code, so don&#39;t catch the error.
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py in make_c_thunk(self, node, storage_map, compute_map, no_recycling)
+    598                 print(f&quot;Disabling C code for {self} due to unsupported float16&quot;)
+    599                 raise NotImplementedError(&quot;float16&quot;)
+--&gt; 600         outputs = cl.make_thunk(
+    601             input_storage=node_input_storage, output_storage=node_output_storage
+    602         )
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/basic.py in make_thunk(self, input_storage, output_storage, storage_map)
+   1201         &quot;&quot;&quot;
+   1202         init_tasks, tasks = self.get_init_tasks()
+-&gt; 1203         cthunk, module, in_storage, out_storage, error_storage = self.__compile__(
+   1204             input_storage, output_storage, storage_map
+   1205         )
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/basic.py in __compile__(self, input_storage, output_storage, storage_map)
+   1136         input_storage = tuple(input_storage)
+   1137         output_storage = tuple(output_storage)
+-&gt; 1138         thunk, module = self.cthunk_factory(
+   1139             error_storage,
+   1140             input_storage,
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/basic.py in cthunk_factory(self, error_storage, in_storage, out_storage, storage_map)
+   1632             for node in self.node_order:
+   1633                 node.op.prepare_node(node, storage_map, None, &quot;c&quot;)
+-&gt; 1634             module = get_module_cache().module_from_key(key=key, lnk=self)
+   1635 
+   1636         vars = self.inputs + self.outputs + self.orphans
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in module_from_key(self, key, lnk)
+   1189             try:
+   1190                 location = dlimport_workdir(self.dirname)
+-&gt; 1191                 module = lnk.compile_cmodule(location)
+   1192                 name = module.__file__
+   1193                 assert name.startswith(location)
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/basic.py in compile_cmodule(self, location)
+   1541             try:
+   1542                 _logger.debug(f&quot;LOCATION {location}&quot;)
+-&gt; 1543                 module = c_compiler.compile_str(
+   1544                     module_name=mod.code_hash,
+   1545                     src_code=src_code,
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in compile_str(module_name, src_code, location, include_dirs, lib_dirs, libs, preargs, py_module, hide_symbols)
+   2494 
+   2495         try:
+-&gt; 2496             p_out = output_subprocess_Popen(cmd)
+   2497             compile_stderr = p_out[1].decode()
+   2498         except Exception:
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/utils.py in output_subprocess_Popen(command, **params)
+    252     # we need to use communicate to make sure we don&#39;t deadlock around
+    253     # the stdout/stderr pipe.
+--&gt; 254     out = p.communicate()
+    255     return out + (p.returncode,)
+    256 
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/subprocess.py in communicate(self, input, timeout)
+   1026 
+   1027             try:
+-&gt; 1028                 stdout, stderr = self._communicate(input, endtime, timeout)
+   1029             except KeyboardInterrupt:
+   1030                 # https://bugs.python.org/issue25942
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/subprocess.py in _communicate(self, input, endtime, orig_timeout)
+   1866                             &#39;failed to raise TimeoutExpired.&#39;)
+   1867 
+-&gt; 1868                     ready = selector.select(timeout)
+   1869                     self._check_timeout(endtime, orig_timeout, stdout, stderr)
+   1870 
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/selectors.py in select(self, timeout)
+    413         ready = []
+    414         try:
+--&gt; 415             fd_event_list = self._selector.poll(timeout)
+    416         except InterruptedError:
+    417             return ready
+
+KeyboardInterrupt: 
 </pre></div>
 </div>
 </div>
@@ -1526,6 +1789,7 @@ y^{\prime} &amp;= \frac{y-\bar{y}}{y_{s d}}
     <span class="n">μ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;μ&#39;</span><span class="p">,</span> <span class="n">α</span> <span class="o">+</span> <span class="n">β</span> <span class="o">*</span> <span class="n">x_shared</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
     <span class="n">ϵ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Deterministic</span><span class="p">(</span><span class="s1">&#39;ϵ&#39;</span><span class="p">,</span> <span class="n">γ</span> <span class="o">+</span> <span class="n">δ</span> <span class="o">*</span> <span class="n">x_shared</span><span class="p">)</span>
     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">ϵ</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">Lenght</span><span class="p">)</span>
+    
     <span class="n">trace_vv</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
 </pre></div>
 </div>

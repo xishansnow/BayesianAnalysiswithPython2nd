@@ -17,27 +17,43 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-%matplotlib inline 
-import numpy as np 
-import scipy as sp 
-import pandas as pd 
-import matplotlib.pyplot as plt 
-import seaborn as sns 
-from scipy.stats import norm 
-sns.set_style('white') 
-sns.set_context('talk') 
-np.random.seed(123) 
+%matplotlib inline
+import theano 
+import pymc3 as pm
+import sklearn
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from warnings import filterwarnings
+filterwarnings('ignore')
+sns.set_style('white')
+from sklearn import datasets
+from sklearn.preprocessing import scale
+from sklearn.cross_validation import train_test_split
+from sklearn.datasets import make_moons
+
+X, Y = make_moons(noise=0.2, random_state=0, n_samples=1000)
+X = scale(X)
+X = X.astype(floatX)
+Y = Y.astype(floatX)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=.5)
+
+fig, ax = plt.subplots(figsize=(12, 8))
+ax.scatter(X[Y==0, 0], X[Y==0, 1], label='Class 0')
+ax.scatter(X[Y==1, 0], X[Y==1, 1], color='r', label='Class 1')
+sns.despine(); ax.legend()
+ax.set(xlabel='X', ylabel='Y', title='Toy binary classification data set');
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m/tmp/ipykernel_1762/59451152.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      1[0m [0mget_ipython[0m[0;34m([0m[0;34m)[0m[0;34m.[0m[0mrun_line_magic[0m[0;34m([0m[0;34m'matplotlib'[0m[0;34m,[0m [0;34m'inline'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      2[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 3[0;31m [0;32mimport[0m [0mscipy[0m [0;32mas[0m [0msp[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      4[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      5[0m [0;32mimport[0m [0mmatplotlib[0m[0;34m.[0m[0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m[0m[0;34m[0m[0m
+[0;32m/tmp/ipykernel_1864/3715064878.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      2[0m [0;32mimport[0m [0mtheano[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      3[0m [0;32mimport[0m [0mpymc3[0m [0;32mas[0m [0mpm[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 4[0;31m [0;32mimport[0m [0msklearn[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      5[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      6[0m [0;32mimport[0m [0mmatplotlib[0m[0;34m.[0m[0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mModuleNotFoundError[0m: No module named 'scipy'
-ModuleNotFoundError: No module named 'scipy'
+[0;31mModuleNotFoundError[0m: No module named 'sklearn'
+ModuleNotFoundError: No module named 'sklearn'
 

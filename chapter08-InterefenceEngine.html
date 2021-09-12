@@ -42,7 +42,7 @@
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
@@ -91,6 +91,11 @@
   </a>
  </li>
 </ul>
+<p class="caption">
+ <span class="caption-text">
+  书籍正文
+ </span>
+</p>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="chapter01-ThinkingProbabilistically.html">
@@ -137,19 +142,26 @@
    第 9 章 下一步去哪儿？
   </a>
  </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  其他阅读材料
+ </span>
+</p>
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="Ref-chapter08-VI-VIforDummies.html">
+  <a class="reference internal" href="Ref-chapter08-01-MCMCforDummies.html">
+   MCMC 采样的傻瓜书
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ref-chapter08-02-VIforDummies.html">
    变分推断傻瓜书
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Ref-chapter08-VI-ADVI.html">
-   自动微分变分推断
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Ref-chapter08-MC-MCMCforDummies.html">
-   MCMC采样的傻瓜书
+  <a class="reference internal" href="Ref-chapter08-03-BayesianDeepLearning.html">
+   贝叶斯深度学习
   </a>
  </li>
 </ul>
@@ -237,14 +249,14 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=lab/tree/chapter08-InterefenceEngine.md"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=tree/chapter08-InterefenceEngine.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
                     alt="Interact on binder">Binder</button></a>
         
         
-        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=lab/tree/BayesianAnalysiswithPython2nd/chapter08-InterefenceEngine.md&branch=master"><button type="button"
+        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=tree/BayesianAnalysiswithPython2nd/chapter08-InterefenceEngine.ipynb&branch=master"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
                 data-placement="left"><img class="jupyterhub-button-logo"
                     src="_static/images/logo_jupyterhub.svg"
@@ -450,20 +462,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1969</span><span class="o">/</span><span class="mf">3373398946.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;scipy&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -495,6 +493,9 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/chapter08-InterefenceEngine_4_0.png" src="_images/chapter08-InterefenceEngine_4_0.png" />
 </div>
 </div>
 <div class="figure align-center" id="fig8-1">
@@ -546,6 +547,243 @@
      
      <span class="c1">#输出近似高斯分布 q 的均值和标准差</span>
      <span class="n">mean_q</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">],</span> <span class="n">std_q</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div>
+    <style>
+        /* Turns off some styling */
+        progress {
+            /* gets rid of default border in Firefox and Opera. */
+            border: none;
+            /* Needs to be in here for Safari polyfill so background images work as expected. */
+            background-size: auto;
+        }
+        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+            background: #F44336;
+        }
+    </style>
+  <progress value='6' class='' max='6' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [6/6 00:00<00:00 logp = -9.0109, ||grad|| = 3.5]
+</div>
+</div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_3709</span><span class="o">/</span><span class="mf">2956847994.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>      <span class="c1"># 最大后验点作为近似高斯分布的均值点，该点处的曲率用于近似计算标准差</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>      <span class="n">mean_q</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">find_MAP</span><span class="p">()</span>
+<span class="ne">----&gt; </span><span class="mi">8</span>      <span class="n">std_q</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span><span class="o">/</span><span class="n">pm</span><span class="o">.</span><span class="n">find_hessian</span><span class="p">(</span><span class="n">mean_q</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="n">p</span><span class="p">]))</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> 
+<span class="g g-Whitespace">     </span><span class="mi">10</span>      <span class="c1">#输出近似高斯分布 q 的均值和标准差</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/tuning/scaling.py</span> in <span class="ni">find_hessian</span><span class="nt">(point, vars, model)</span>
+<span class="g g-Whitespace">     </span><span class="mi">61</span>     <span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">62</span><span class="sd">     model = modelcontext(model)</span>
+<span class="ne">---&gt; </span><span class="mi">63</span><span class="sd">     H = model.fastd2logp(vars)</span>
+<span class="g g-Whitespace">     </span><span class="mi">64</span><span class="sd">     return H(Point(point, model=model))</span>
+<span class="g g-Whitespace">     </span><span class="mi">65</span><span class="sd"> </span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/model.py</span> in <span class="ni">fastd2logp</span><span class="nt">(self, vars)</span>
+<span class="g g-Whitespace">    </span><span class="mi">452</span><span class="sd">     def fastd2logp(self, vars=None):</span>
+<span class="g g-Whitespace">    </span><span class="mi">453</span><span class="sd">         &quot;&quot;&quot;</span><span class="n">Compiled</span> <span class="n">log</span> <span class="n">probability</span> <span class="n">density</span> <span class="n">hessian</span> <span class="n">function</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">454</span><span class="s2">         return self.model.fastfn(hessian(self.logpt, vars))</span>
+<span class="g g-Whitespace">    </span><span class="mi">455</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">456</span><span class="s2">     @property</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/configparser.py</span> in <span class="ni">res</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">46</span><span class="s2">         def res(*args, **kwargs):</span>
+<span class="g g-Whitespace">     </span><span class="mi">47</span><span class="s2">             with self:</span>
+<span class="ne">---&gt; </span><span class="mi">48</span><span class="s2">                 return f(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">49</span><span class="s2"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">50</span><span class="s2">         return res</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/theanof.py</span> in <span class="ni">hessian</span><span class="nt">(f, vars)</span>
+<span class="g g-Whitespace">    </span><span class="mi">169</span><span class="s2"> @theano.config.change_flags(compute_test_value=&quot;ignore&quot;)</span>
+<span class="g g-Whitespace">    </span><span class="mi">170</span><span class="s2"> def hessian(f, vars=None):</span>
+<span class="ne">--&gt; </span><span class="mi">171</span><span class="s2">     return -jacobian(gradient(f, vars), vars)</span>
+<span class="g g-Whitespace">    </span><span class="mi">172</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">173</span><span class="s2"> </span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/theanof.py</span> in <span class="ni">jacobian</span><span class="nt">(f, vars)</span>
+<span class="g g-Whitespace">    </span><span class="mi">153</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">154</span><span class="s2">     if vars:</span>
+<span class="ne">--&gt; </span><span class="mi">155</span><span class="s2">         return tt.concatenate([jacobian1(f, v) for v in vars], axis=1)</span>
+<span class="g g-Whitespace">    </span><span class="mi">156</span><span class="s2">     else:</span>
+<span class="g g-Whitespace">    </span><span class="mi">157</span><span class="s2">         return empty_gradient</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/theanof.py</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
+<span class="g g-Whitespace">    </span><span class="mi">153</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">154</span><span class="s2">     if vars:</span>
+<span class="ne">--&gt; </span><span class="mi">155</span><span class="s2">         return tt.concatenate([jacobian1(f, v) for v in vars], axis=1)</span>
+<span class="g g-Whitespace">    </span><span class="mi">156</span><span class="s2">     else:</span>
+<span class="g g-Whitespace">    </span><span class="mi">157</span><span class="s2">         return empty_gradient</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/theanof.py</span> in <span class="ni">jacobian1</span><span class="nt">(f, v)</span>
+<span class="g g-Whitespace">    </span><span class="mi">145</span><span class="s2">         return gradient1(f[i], v)</span>
+<span class="g g-Whitespace">    </span><span class="mi">146</span><span class="s2"> </span>
+<span class="ne">--&gt; </span><span class="mi">147</span><span class="s2">     return theano.map(grad_i, idx)[0]</span>
+<span class="g g-Whitespace">    </span><span class="mi">148</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">149</span><span class="s2"> </span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/scan/views.py</span> in <span class="ni">map</span><span class="nt">(fn, sequences, non_sequences, truncate_gradient, go_backwards, mode, name)</span>
+<span class="g g-Whitespace">     </span><span class="mi">48</span><span class="s2"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">49</span><span class="s2">     &quot;&quot;&quot;</span>
+<span class="ne">---&gt; </span><span class="mi">50</span>     <span class="k">return</span> <span class="n">scan</span><span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">51</span>         <span class="n">fn</span><span class="o">=</span><span class="n">fn</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">52</span>         <span class="n">sequences</span><span class="o">=</span><span class="n">sequences</span><span class="p">,</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/scan/basic.py</span> in <span class="ni">scan</span><span class="nt">(fn, sequences, outputs_info, non_sequences, n_steps, truncate_gradient, go_backwards, mode, name, profile, allow_gc, strict, return_list)</span>
+<span class="g g-Whitespace">    </span><span class="mi">745</span>     <span class="c1"># and outputs that needs to be separated</span>
+<span class="g g-Whitespace">    </span><span class="mi">746</span> 
+<span class="ne">--&gt; </span><span class="mi">747</span>     <span class="n">condition</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">updates</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_updates_and_outputs</span><span class="p">(</span><span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">748</span>     <span class="k">if</span> <span class="n">condition</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">749</span>         <span class="n">as_while</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/theanof.py</span> in <span class="ni">grad_i</span><span class="nt">(i)</span>
+<span class="g g-Whitespace">    </span><span class="mi">143</span> 
+<span class="g g-Whitespace">    </span><span class="mi">144</span>     <span class="k">def</span> <span class="nf">grad_i</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">145</span>         <span class="k">return</span> <span class="n">gradient1</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">v</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">146</span> 
+<span class="g g-Whitespace">    </span><span class="mi">147</span>     <span class="k">return</span> <span class="n">theano</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">grad_i</span><span class="p">,</span> <span class="n">idx</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/var.py</span> in <span class="ni">__getitem__</span><span class="nt">(self, args)</span>
+<span class="g g-Whitespace">    </span><span class="mi">613</span>                     <span class="k">return</span> <span class="n">view</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">new_args</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">614</span>             <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">615</span>                 <span class="k">return</span> <span class="n">theano</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">subtensor</span><span class="o">.</span><span class="n">Subtensor</span><span class="p">(</span><span class="n">args</span><span class="p">)(</span>
+<span class="g g-Whitespace">    </span><span class="mi">616</span>                     <span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">617</span>                     <span class="o">*</span><span class="n">theano</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">subtensor</span><span class="o">.</span><span class="n">Subtensor</span><span class="o">.</span><span class="n">collapse</span><span class="p">(</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py</span> in <span class="ni">__call__</span><span class="nt">(self, *inputs, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">248</span>         <span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">249</span><span class="sd">         return_list = kwargs.pop(&quot;return_list&quot;, False)</span>
+<span class="ne">--&gt; </span><span class="mi">250</span><span class="sd">         node = self.make_node(*inputs, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">251</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">252</span><span class="sd">         if config.compute_test_value != &quot;off&quot;:</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/subtensor.py</span> in <span class="ni">make_node</span><span class="nt">(self, x, *inputs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">627</span><span class="sd">         &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">628</span>         <span class="n">x</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">as_tensor_variable</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">629</span>         <span class="n">inputs</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">my_as_scalar</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">630</span> 
+<span class="g g-Whitespace">    </span><span class="mi">631</span>         <span class="n">idx_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">idx_list</span><span class="p">)</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/subtensor.py</span> in <span class="ni">&lt;genexpr&gt;</span><span class="nt">(.0)</span>
+<span class="g g-Whitespace">    </span><span class="mi">627</span>         <span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">628</span><span class="sd">         x = theano.tensor.as_tensor_variable(x)</span>
+<span class="ne">--&gt; </span><span class="mi">629</span><span class="sd">         inputs = tuple(self.my_as_scalar(a) for a in inputs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">630</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">631</span><span class="sd">         idx_list = list(self.idx_list)</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/subtensor.py</span> in <span class="ni">my_as_scalar</span><span class="nt">(a)</span>
+<span class="g g-Whitespace">    </span><span class="mi">612</span><span class="sd">         # TensorVariable or a ScalarVariable to a scalar.</span>
+<span class="g g-Whitespace">    </span><span class="mi">613</span><span class="sd">         if isinstance(a, Variable) and isinstance(a.type, TensorType):</span>
+<span class="ne">--&gt; </span><span class="mi">614</span><span class="sd">             return theano.tensor.scalar_from_tensor(a)</span>
+<span class="g g-Whitespace">    </span><span class="mi">615</span><span class="sd">         else:</span>
+<span class="g g-Whitespace">    </span><span class="mi">616</span><span class="sd">             return scal.as_scalar(a)</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py</span> in <span class="ni">__call__</span><span class="nt">(self, *inputs, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">251</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">252</span><span class="sd">         if config.compute_test_value != &quot;off&quot;:</span>
+<span class="ne">--&gt; </span><span class="mi">253</span><span class="sd">             compute_test_value(node)</span>
+<span class="g g-Whitespace">    </span><span class="mi">254</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">255</span><span class="sd">         if self.default_output is not None:</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py</span> in <span class="ni">compute_test_value</span><span class="nt">(node)</span>
+<span class="g g-Whitespace">    </span><span class="mi">124</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span><span class="sd">     # Create a thunk that performs the computation</span>
+<span class="ne">--&gt; </span><span class="mi">126</span><span class="sd">     thunk = node.op.make_thunk(node, storage_map, compute_map, no_recycling=[])</span>
+<span class="g g-Whitespace">    </span><span class="mi">127</span><span class="sd">     thunk.inputs = [storage_map[v] for v in node.inputs]</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span><span class="sd">     thunk.outputs = [storage_map[v] for v in node.outputs]</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py</span> in <span class="ni">make_thunk</span><span class="nt">(self, node, storage_map, compute_map, no_recycling, impl)</span>
+<span class="g g-Whitespace">    </span><span class="mi">632</span><span class="sd">             )</span>
+<span class="g g-Whitespace">    </span><span class="mi">633</span><span class="sd">             try:</span>
+<span class="ne">--&gt; </span><span class="mi">634</span><span class="sd">                 return self.make_c_thunk(node, storage_map, compute_map, no_recycling)</span>
+<span class="g g-Whitespace">    </span><span class="mi">635</span><span class="sd">             except (NotImplementedError, MethodNotDefined):</span>
+<span class="g g-Whitespace">    </span><span class="mi">636</span><span class="sd">                 # We requested the c code, so don&#39;t catch the error.</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py</span> in <span class="ni">make_c_thunk</span><span class="nt">(self, node, storage_map, compute_map, no_recycling)</span>
+<span class="g g-Whitespace">    </span><span class="mi">598</span><span class="sd">                 print(f&quot;Disabling C code for {self} due to unsupported float16&quot;)</span>
+<span class="g g-Whitespace">    </span><span class="mi">599</span><span class="sd">                 raise NotImplementedError(&quot;float16&quot;)</span>
+<span class="ne">--&gt; </span><span class="mi">600</span><span class="sd">         outputs = cl.make_thunk(</span>
+<span class="g g-Whitespace">    </span><span class="mi">601</span><span class="sd">             input_storage=node_input_storage, output_storage=node_output_storage</span>
+<span class="g g-Whitespace">    </span><span class="mi">602</span><span class="sd">         )</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/basic.py</span> in <span class="ni">make_thunk</span><span class="nt">(self, input_storage, output_storage, storage_map)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1201</span><span class="sd">         &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1202</span>         <span class="n">init_tasks</span><span class="p">,</span> <span class="n">tasks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_init_tasks</span><span class="p">()</span>
+<span class="ne">-&gt; </span><span class="mi">1203</span>         <span class="n">cthunk</span><span class="p">,</span> <span class="n">module</span><span class="p">,</span> <span class="n">in_storage</span><span class="p">,</span> <span class="n">out_storage</span><span class="p">,</span> <span class="n">error_storage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__compile__</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1204</span>             <span class="n">input_storage</span><span class="p">,</span> <span class="n">output_storage</span><span class="p">,</span> <span class="n">storage_map</span>
+<span class="g g-Whitespace">   </span><span class="mi">1205</span>         <span class="p">)</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/basic.py</span> in <span class="ni">__compile__</span><span class="nt">(self, input_storage, output_storage, storage_map)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1136</span>         <span class="n">input_storage</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">input_storage</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1137</span>         <span class="n">output_storage</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">output_storage</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1138</span>         <span class="n">thunk</span><span class="p">,</span> <span class="n">module</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cthunk_factory</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1139</span>             <span class="n">error_storage</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1140</span>             <span class="n">input_storage</span><span class="p">,</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/basic.py</span> in <span class="ni">cthunk_factory</span><span class="nt">(self, error_storage, in_storage, out_storage, storage_map)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1632</span>             <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_order</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1633</span>                 <span class="n">node</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">prepare_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">storage_map</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1634</span>             <span class="n">module</span> <span class="o">=</span> <span class="n">get_module_cache</span><span class="p">()</span><span class="o">.</span><span class="n">module_from_key</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">lnk</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1635</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1636</span>         <span class="nb">vars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">orphans</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py</span> in <span class="ni">module_from_key</span><span class="nt">(self, key, lnk)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1189</span>             <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1190</span>                 <span class="n">location</span> <span class="o">=</span> <span class="n">dlimport_workdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dirname</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1191</span>                 <span class="n">module</span> <span class="o">=</span> <span class="n">lnk</span><span class="o">.</span><span class="n">compile_cmodule</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1192</span>                 <span class="n">name</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="vm">__file__</span>
+<span class="g g-Whitespace">   </span><span class="mi">1193</span>                 <span class="k">assert</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/basic.py</span> in <span class="ni">compile_cmodule</span><span class="nt">(self, location)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1541</span>             <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1542</span>                 <span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;LOCATION </span><span class="si">{</span><span class="n">location</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1543</span>                 <span class="n">module</span> <span class="o">=</span> <span class="n">c_compiler</span><span class="o">.</span><span class="n">compile_str</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1544</span>                     <span class="n">module_name</span><span class="o">=</span><span class="n">mod</span><span class="o">.</span><span class="n">code_hash</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1545</span>                     <span class="n">src_code</span><span class="o">=</span><span class="n">src_code</span><span class="p">,</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py</span> in <span class="ni">compile_str</span><span class="nt">(module_name, src_code, location, include_dirs, lib_dirs, libs, preargs, py_module, hide_symbols)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2494</span> 
+<span class="g g-Whitespace">   </span><span class="mi">2495</span>         <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2496</span>             <span class="n">p_out</span> <span class="o">=</span> <span class="n">output_subprocess_Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2497</span>             <span class="n">compile_stderr</span> <span class="o">=</span> <span class="n">p_out</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">2498</span>         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/utils.py</span> in <span class="ni">output_subprocess_Popen</span><span class="nt">(command, **params)</span>
+<span class="g g-Whitespace">    </span><span class="mi">252</span>     <span class="c1"># we need to use communicate to make sure we don&#39;t deadlock around</span>
+<span class="g g-Whitespace">    </span><span class="mi">253</span>     <span class="c1"># the stdout/stderr pipe.</span>
+<span class="ne">--&gt; </span><span class="mi">254</span>     <span class="n">out</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">255</span>     <span class="k">return</span> <span class="n">out</span> <span class="o">+</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">returncode</span><span class="p">,)</span>
+<span class="g g-Whitespace">    </span><span class="mi">256</span> 
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/subprocess.py</span> in <span class="ni">communicate</span><span class="nt">(self, input, timeout)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1026</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1027</span>             <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1028</span>                 <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_communicate</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">endtime</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1029</span>             <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1030</span>                 <span class="c1"># https://bugs.python.org/issue25942</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/subprocess.py</span> in <span class="ni">_communicate</span><span class="nt">(self, input, endtime, orig_timeout)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1866</span>                             <span class="s1">&#39;failed to raise TimeoutExpired.&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1867</span> 
+<span class="ne">-&gt; </span><span class="mi">1868</span>                     <span class="n">ready</span> <span class="o">=</span> <span class="n">selector</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1869</span>                     <span class="bp">self</span><span class="o">.</span><span class="n">_check_timeout</span><span class="p">(</span><span class="n">endtime</span><span class="p">,</span> <span class="n">orig_timeout</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1870</span> 
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/selectors.py</span> in <span class="ni">select</span><span class="nt">(self, timeout)</span>
+<span class="g g-Whitespace">    </span><span class="mi">413</span>         <span class="n">ready</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="g g-Whitespace">    </span><span class="mi">414</span>         <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">415</span>             <span class="n">fd_event_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_selector</span><span class="o">.</span><span class="n">poll</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">416</span>         <span class="k">except</span> <span class="ne">InterruptedError</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">417</span>             <span class="k">return</span> <span class="n">ready</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
@@ -864,6 +1102,7 @@
     <span class="n">a</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
     <span class="n">trace_cm</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+    
 <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">non_centered_model</span><span class="p">:</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
     <span class="n">b_shift</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;b_offset&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
