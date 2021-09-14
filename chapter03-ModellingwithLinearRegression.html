@@ -447,24 +447,26 @@
 <div class="section" id="id4">
 <h3>3.1.2 线性回归模型的核心<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>让我们开始学习如何构建线性模型。看下面该公式：</p>
-<div class="math notranslate nohighlight">
-\[y_i= \alpha + x_i \beta  \tag{式3.1} \label{式3.1}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+y_i= \alpha + x_i \beta \tag{式3.2}
+\end{equation*}\]</div>
 <p>该等式描述了变量 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 与变量 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 之间的线性关系。其中，参数 <span class="math notranslate nohighlight">\(β\)</span> 控制直线的斜率，可以理解为变量 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 的单位变化量所对应 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的变化量。另外一个参数 <span class="math notranslate nohighlight">\(α\)</span> 为截距，可以解释为当 <span class="math notranslate nohighlight">\(x_i=0\)</span> 时, <span class="math notranslate nohighlight">\(y_i\)</span> 的值，在图形上表示， <span class="math notranslate nohighlight">\(α\)</span> 就是直线与 <span class="math notranslate nohighlight">\(y\)</span> 轴交点的坐标。</p>
 <p>计算线性模型参数的方法很多，最小二乘法是其中之一。每次使用软件去拟合直线时，底层可能用的就是最小二乘法。最小二乘法返回的 <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 能够让观测到的 <span class="math notranslate nohighlight">\(y\)</span> 与预测的 <span class="math notranslate nohighlight">\(\hat y\)</span> 之间均方误差最小。其估计 <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 本质是一个最优化问题，其目标是寻找使目标函数达到最值（最小值或最大值）时的参数解。</p>
 <p>最优化并非求解线性模型的唯一方法，同样的问题可以从概率（贝叶斯）角度描述。<code class="docutils literal notranslate"><span class="pre">用概率方式思考的优势是：在得到最优参数解</span> <span class="pre">$α$</span> <span class="pre">和</span> <span class="pre">$β$</span> <span class="pre">的同时，还能够知道其不确定性程度。</span></code>与此相对的，最优化方法需要一些其他工作来提供不确定性信息。此外，贝叶斯方法还具备很大灵活性，尤其在使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 等工具时，可将模型应用到本章后面所介绍的各种特定问题中。</p>
 <p>从概率角度，线性回归模型可以表示成如下形式：</p>
-<div class="math notranslate nohighlight">
-\[\mathbb{y} \sim \mathcal{N} ( \mu = \alpha + \mathbb{x} \beta , \epsilon ) \tag{式3.2} \label{式3.2}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\mathbb{y} \sim \mathcal{N} ( \mu = \alpha + \mathbb{x} \beta , \epsilon ) \tag{式3.2}
+\end{equation*}\]</div>
 <p>也就是说，假设 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 是一个服从均值为 <span class="math notranslate nohighlight">\(α + \mathbb{x} β\)</span> 、标准差为 <span class="math notranslate nohighlight">\(\epsilon\)</span> 的正态分布的随机变量。其中 <span class="math notranslate nohighlight">\(α\)</span> 、 <span class="math notranslate nohighlight">\(β\)</span> 、 <span class="math notranslate nohighlight">\(\epsilon\)</span> 为未知的模型参数（贝叶斯方法中视其为随机变量，具有自身概率分布），需要设置先验。</p>
 <p>先验的设置根据问题上下文和数据分析师的经验给出，例如，下面是假设参数服从正态分布的一组先验设置：</p>
 <div class="amsmath math notranslate nohighlight">
-\[\begin{equation*}
-\begin{aligned}
-\alpha &amp;\sim \mathcal{N}\left(\mu_{\alpha}, \sigma_{\alpha}\right) \\ 
+\[\begin{align*}
+\alpha &amp;\sim \mathcal{N}\left(\mu_{\alpha}, \sigma_{\alpha}\right) \tag{式3.3}\\ 
 \beta &amp;\sim \mathcal{N}\left(\mu_{\beta}, \sigma_{\beta}\right)\\ 
 \epsilon &amp;\sim\left|N\left(0, \sigma_{\epsilon}\right)\right|  
-\end{aligned} \tag{式3.3} \label{式3.3}
-\end{equation*}\]</div>
+\end{align*}\]</div>
 <p>其中：</p>
 <p>（1）截距参数 <span class="math notranslate nohighlight">\(α\)</span> 的先验，根据问题不同会有较大变化，可使用一个平坦的高斯分布（标注差 <span class="math notranslate nohighlight">\(\sigma_\alpha\)</span> 相对于数据的值域较大）。</p>
 <p>（2）斜率参数 <span class="math notranslate nohighlight">\(\beta\)</span> 可能比截距更容易获得先验，因为许多问题中至少可以预先知道斜率的正负符号；例如，预期权重值 <span class="math notranslate nohighlight">\(\beta\)</span> 平均会随着高度变化而增加。</p>
@@ -522,7 +524,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2290/4172630698.py:18: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2138/4172630698.py:18: UserWarning: This figure was using constrained_layout==True, but that is incompatible with subplots_adjust and or tight_layout: setting constrained_layout==False. 
   plt.tight_layout()
 </pre></div>
 </div>
@@ -552,7 +554,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2290/162259929.py:12: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2138/162259929.py:12: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_g = pm.sample(2000, tune = 1000)
 Auto-assigning NUTS sampler...
 </pre></div>
@@ -562,7 +564,7 @@ Auto-assigning NUTS sampler...
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
 KeyboardInterrupt                         Traceback (most recent call last)
-/tmp/ipykernel_2290/162259929.py in &lt;module&gt;
+/tmp/ipykernel_2138/162259929.py in &lt;module&gt;
      10 
      11     # 近似推断：随机采样生成模型中所有随机变量（模型参数或隐变量等）和显式确定性变量的迹
 ---&gt; 12     trace_g = pm.sample(2000, tune = 1000)
@@ -687,25 +689,158 @@ KeyboardInterrupt                         Traceback (most recent call last)
    1395                         if not isinstance(term, Variable):
 
 /opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
    1218                             )
    1219 
 -&gt; 1220                 input_grads = node.op.L_op(inputs, node.outputs, new_output_grads)
    1221 
    1222                 if input_grads is None:
 
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py in L_op(self, inputs, outputs, output_grads)
-    323 
-    324         &quot;&quot;&quot;
---&gt; 325         return self.grad(inputs, output_grads)
-    326 
-    327     def R_op(
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in L_op(self, inputs, outs, ograds)
+    562 
+    563         # compute grad with respect to broadcasted input
+--&gt; 564         rval = self._bgrad(inputs, outs, ograds)
+    565 
+    566         # TODO: make sure that zeros are clearly identifiable
 
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in grad(self, inp, grads)
-    310             return [
-    311                 DimShuffle(gz.type.broadcastable, grad_order)(
---&gt; 312                     Elemwise(scalar.identity)(gz)
-    313                 )
-    314             ]
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in _bgrad(self, inputs, outputs, ograds)
+    666                 ret.append(None)
+    667                 continue
+--&gt; 668             ret.append(transform(scalar_igrad))
+    669 
+    670         return ret
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
+    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+--&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
+    660             return new_r
+    661 
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in &lt;listcomp&gt;(.0)
+    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+--&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
+    660             return new_r
+    661 
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
+    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+--&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
+    660             return new_r
+    661 
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in &lt;listcomp&gt;(.0)
+    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+--&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
+    660             return new_r
+    661 
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
+    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+--&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
+    660             return new_r
+    661 
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in &lt;listcomp&gt;(.0)
+    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+--&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
+    660             return new_r
+    661 
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
+    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+--&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
+    660             return new_r
+    661 
 
 /opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py in __call__(self, *inputs, **kwargs)
     251 
@@ -854,12 +989,16 @@ KeyboardInterrupt:
 <div class="section" id="id6">
 <h4>（1）解决方法 1：运行之前做中心化或归一化处理<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <p>解决问题的一个简单办法是先将 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 中心化，也就是说，对于每个点 <span class="math notranslate nohighlight">\(x_i\)</span> ，减去 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 的均值。这样做的结果是 <span class="math notranslate nohighlight">\(x'\)</span> 的中心在 0 附近，从而在修改斜率时，旋转点与截距点重合，参数空间也会变得不那么自相关。该方法在机器学习以及深度学习中经常被使用。</p>
-<div class="math notranslate nohighlight">
-\[x'=x-\bar x \tag{式3.4} \label{式3.4}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+x'=x-\bar x \tag{式3.4}
+\end{equation*}\]</div>
 <p>中心化不仅是一种计算技巧，同时有利于解释数据。截距是指当 <span class="math notranslate nohighlight">\(x_i=0\)</span> 时 <span class="math notranslate nohighlight">\(y_i\)</span> 的值，对许多问题而言，截距并没有什么实际意义。例如，对于身高或者体重的关系模型，当值为 0 时没有实际意义，因而截距对理解数据就没有帮助；对于另外一些问题，估计出截距可能很有用，因为在实验中可能无法测量出 <span class="math notranslate nohighlight">\(x_i = 0\)</span> 的情况，此时截距的估计值能够提供有价值的信息。但不管怎么说，外推都有其局限性，应当谨慎使用！</p>
 <p>根据问题和受众不同，可能需要汇报中心化之前和之后的参数估计值。如果需要汇报的是中心化之前的参数，那么可以像下面这样将参数转换成原来的尺度：</p>
-<div class="math notranslate nohighlight">
-\[\alpha=\alpha^{\prime}-\beta^{\prime} \bar{x} \tag{式3.5} \label{式3.5}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\alpha=\alpha^{\prime}-\beta^{\prime} \bar{x} \tag{式3.5} \label{式3.5}
+\end{equation*}\]</div>
 <p>上面的公式可以通过以下公式推导出来：</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*} \tag{式3.6}  \label{式3.6}
@@ -868,8 +1007,10 @@ y &amp;= \alpha^{\prime}+\beta^{\prime}(x-\bar{x})+\epsilon  \\
 y &amp;= \alpha^{\prime}-\beta^{\prime} \bar{x}+\beta^{\prime} x+\epsilon 
 \end{align*}\]</div>
 <p>然后可以得出：</p>
-<div class="math notranslate nohighlight">
-\[\beta = \beta' \tag{式3.7}  \label{式3.7}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\beta = \beta' \tag{式3.7}  \label{式3.7}
+\end{equation*}\]</div>
 <p>进一步，在运行模型之前可以对数据进行<code class="docutils literal notranslate"><span class="pre">归一化处理</span></code>。归一化在统计学和机器学习中是常见的数据处理手段，许多算法对归一化后的数据效果更好。归一化过程在中心化基础上再除以标准差，其数学形式如下：</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*} \tag{式3.8} \label{式3.8}
@@ -969,8 +1110,10 @@ y^{\prime} &amp;= \frac{y-\bar{y}}{y_{s d}}
 <p>有时我们希望衡量两个变量之间的（线性）依赖关系。度量两个变量间线性相关性最常见的指标是<code class="docutils literal notranslate"><span class="pre">皮尔逊相关系数（Pearson</span> <span class="pre">correlation</span> <span class="pre">coefficient）</span></code> ，通常用小写的 <span class="math notranslate nohighlight">\(r\)</span> 表示。如果 <span class="math notranslate nohighlight">\(r\)</span> 值为 <span class="math notranslate nohighlight">\(+1\)</span> ，我们称两个变量完全正相关，即一个变量随另一个变量的增加而增加；如果 <span class="math notranslate nohighlight">\(r\)</span> 值为 <span class="math notranslate nohighlight">\(-1\)</span> ，则称完全负相关，即一个变量随另一变量的增加而减少；当 <span class="math notranslate nohighlight">\(r\)</span> 为 0 时，称两个变量间没有线性相关性。</p>
 <p>皮尔逊相关系数并不涉及非线性相关性。人们很容易将皮尔逊相关系数与线性回归中的斜率弄混淆，但查看 <a class="reference external" href="https://en.wikipedia.org/wiki/Correlation_and_dependence#/media/File:Correlation_examples2.svg">此链接</a> 就可以明白，二者本质上是两个完全不同的量。</p>
 <p>下面的公式可以在某种程度上减轻你的疑惑：</p>
-<div class="math notranslate nohighlight">
-\[r=\beta \frac{\sigma_{x}}{\sigma_{y}} \tag{式3.9} \label{式3.9}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+r=\beta \frac{\sigma_{x}}{\sigma_{y}} \tag{式3.9} \label{式3.9}
+\end{equation*}\]</div>
 <p>只有在 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 和 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的标准差相等时，皮尔逊相关系数才与斜率相等。也就是说，皮尔逊相关系数和斜率的主要区别在于是否受数据尺度影响。在对数据做归一化处理消除尺度影响后，两者之间确实等价，但在未做归一化处理前，两者并不等价。需要注意：</p>
 <ul class="simple">
 <li><p>皮尔逊相关系数衡量的是两个变量之间的相关性程度，其值位于 [-1,1] 区间内，<code class="docutils literal notranslate"><span class="pre">皮尔逊相关系数与数据尺度无关</span></code>；</p></li>
@@ -982,8 +1125,10 @@ y^{\prime} &amp;= \frac{y-\bar{y}}{y_{s d}}
 <p>注： 皮尔逊相关系数反映了两个变量之间的线性相关程度，而决定系数则反映了模型的确定性程度或可解释程度。因此，如果一个线性回归模型的决定系数非常高，则表明因变量和自变量之间的线性关系能够比较好地解释数据，两者之间的皮尔逊相关系数也应该越大。但对于非线性回归模型，决定系数和皮尔逊相关系数之间不一定存在这种映射关系。</p>
 </div>
 <p>需要注意的是：在贝叶斯线性回归模型中，预测值方差可能大于测量值方差，进而导致 <span class="math notranslate nohighlight">\(R^2\)</span> 大于 1，不利于解释。因此，通常对 <span class="math notranslate nohighlight">\(R^2\)</span> 做如下定义：</p>
-<div class="math notranslate nohighlight">
-\[R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]+\mathbf{V}_{n=1}^{S}\left(\hat{y}^{s}-y\right)} \tag{式3.10}  \label{式3.10}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]+\mathbf{V}_{n=1}^{S}\left(\hat{y}^{s}-y\right)} \tag{式3.10}  \label{式3.10}
+\end{equation*}\]</div>
 <p>上式中，<span class="math notranslate nohighlight">\(E[\hat y^S]\)</span> 是后验样本 <span class="math notranslate nohighlight">\(S\)</span> 上，预测值 <span class="math notranslate nohighlight">\(\hat y\)</span> 的平均值。</p>
 <p>上式用 <code class="docutils literal notranslate"><span class="pre">预测值的方差</span></code> 除以 <code class="docutils literal notranslate"><span class="pre">预测值的方差加残差（预测值与真实值之间的残差）</span></code> 来确保 <span class="math notranslate nohighlight">\(R^2\)</span> 被限制在区间 [0，1] 内。</p>
 <p>在 <code class="docutils literal notranslate"><span class="pre">PYMC3</span></code> 中计算 <span class="math notranslate nohighlight">\(R^2\)</span> 最简单的方法是使用 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的 <code class="docutils literal notranslate"><span class="pre">r2_core()</span></code> 函数。其输入为观测值 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 和预测值 <span class="math notranslate nohighlight">\(\hat y\)</span> 。其中， <span class="math notranslate nohighlight">\(\hat y\)</span> 可利用 <code class="docutils literal notranslate"><span class="pre">sample_posterior_predictive</span></code> 函数轻松获得：</p>
@@ -1353,14 +1498,20 @@ y^{\prime} &amp;= \frac{y-\bar{y}}{y_{s d}}
 <div class="section" id="id14">
 <h2>3.4 多项式回归<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
 <p>接下来，将学习如何用线性回归拟合曲线。使用线性回归模型去拟合曲线的一种做法是构建如下多项式：</p>
-<div class="math notranslate nohighlight">
-\[\mu=\beta_{0} x^{0}+\beta_{1} x^{1} \cdots+\beta_{m} x^{m} \tag{式3.12}   \label{式3.12}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\mu=\beta_{0} x^{0}+\beta_{1} x^{1} \cdots+\beta_{m} x^{m} \tag{式3.12}   \label{式3.12}
+\end{equation*}\]</div>
 <p>可以看到多项式中其实包含了一元线性回归模型，只需将上式中 <span class="math notranslate nohighlight">\( n&gt;1\)</span> 的系数 <span class="math notranslate nohighlight">\(β_n\)</span> 设为 0 即可得到下式：</p>
-<div class="math notranslate nohighlight">
-\[\mu=\beta_{0}+\beta_{1} x^{1} \tag{式3.13}   \label{式3.13}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\mu=\beta_{0}+\beta_{1} x^{1} \tag{式3.13}   \label{式3.13}
+\end{equation*}\]</div>
 <p>多项式回归仍然是线性回归，此处“线性”的意思是<code class="docutils literal notranslate"><span class="pre">指模型中的参数是线性组合的，而不是指变量是线性变化的</span></code>。现从一个简单的抛物线开始构建多项式回归模型：</p>
-<div class="math notranslate nohighlight">
-\[\mu=\beta_{0}+\beta_{1} x^{1}+\beta_{2} x^{2}  \tag{式3.14}  \label{式3.14}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\mu=\beta_{0}+\beta_{1} x^{1}+\beta_{2} x^{2}  \tag{式3.14}  \label{式3.14}
+\end{equation*}\]</div>
 <p>其中第 3 项控制曲率。数据选用 <code class="docutils literal notranslate"><span class="pre">Anscombe</span> <span class="pre">quartet</span></code> 的第 2 组数据集</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1429,14 +1580,21 @@ y^{\prime} &amp;= \frac{y-\bar{y}}{y_{s d}}
 <li><p>学生的平均成绩（因变量）与家庭收入、家到学校的距离、母亲的受教育程度（自变量）的关系。</p></li>
 </ul>
 <p>这种情况下，因变量可以这样建模：</p>
-<div class="math notranslate nohighlight">
-\[\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.15}   \label{式3.15}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.15}   
+\label{式3.15}
+\end{equation*}\]</div>
 <p>注意该式与多项式回归的式子不一样，现在有了多个变量而不再是一个变量的多次方。用线性代数方法可以表示为更简洁的形式：</p>
-<div class="math notranslate nohighlight">
-\[\mu=\alpha+ \mathbb{X} \beta \tag{式3.16}  \label{式3.16}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\mu=\alpha+ \mathbb{X} \beta \tag{式3.16}  \label{式3.16}
+\end{equation*}\]</div>
 <p>其中， <span class="math notranslate nohighlight">\(β\)</span> 是一个长度为 <span class="math notranslate nohighlight">\(m\)</span> 的系数向量，也就是说，自变量的个数为 <span class="math notranslate nohighlight">\(m\)</span> 。变量 <span class="math notranslate nohighlight">\(\mathbb{X}\)</span> 是一个维度为 <span class="math notranslate nohighlight">\(n×m\)</span> 的矩阵，其中， <span class="math notranslate nohighlight">\(n\)</span> 表示观测的样本数， <span class="math notranslate nohighlight">\(m\)</span> 表示自变量个数。有关线性代数，可参阅相关书籍。本书中，您需要知道的只是使用了一种更短、更方便的方式来编写我们的模型：</p>
-<div class="math notranslate nohighlight">
-\[\mathbb{X} \beta=\sum_{i=1}^{n} \beta_{i} x_{i}=\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.17}  \label{式3.17}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\mathbb{X} \beta=\sum_{i=1}^{n} \beta_{i} x_{i}=\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.17}  \label{式3.17}
+\end{equation*}\]</div>
 <p>在一元线性回归模型中，我们希望找到一条直线来解释数据，而在多元线性回归模型中，我们希望找到一个维度为 <span class="math notranslate nohighlight">\(m\)</span> 的超平面来解释数据。因此，多元线性回归模型本质上与一元线性回归模型是一样的，唯一区别是：现在 <span class="math notranslate nohighlight">\(β\)</span> 是一个向量而 <span class="math notranslate nohighlight">\(\mathbb{X}\)</span> 是一个矩阵。</p>
 <p>现在定义如下数据：</p>
 <div class="cell docutils container">
@@ -1667,11 +1825,15 @@ y^{\prime} &amp;= \frac{y-\bar{y}}{y_{s d}}
 <p>图3.24</p>
 </center>
 <p>哇！参数 <span class="math notranslate nohighlight">\(\beta\)</span> 的边缘后验是一条非常窄的对角线。当一个系数上升时，另一个系数必然下降。两者实际上是相关的。这只是模型和数据的结果。根据我们的模型，平均值 <span class="math notranslate nohighlight">\(\mu\)</span> 是：</p>
-<div class="math notranslate nohighlight">
-\[\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \tag{式3.19}  \label{式3.19}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \tag{式3.19}  \label{式3.19}
+\end{equation*}\]</div>
 <p>假设  <span class="math notranslate nohighlight">\(x_1\)</span> 和  <span class="math notranslate nohighlight">\(x_2\)</span> 不只是近似相同，而是完全一样的，那么可以将模型改写成如下形式：</p>
-<div class="math notranslate nohighlight">
-\[\mu=\alpha+（\beta_{1} +\beta_{2}） x \tag{式3.20}  \label{式3.20}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\mu=\alpha+（\beta_{1} +\beta_{2}） x \tag{式3.20}  \label{式3.20}
+\end{equation*}\]</div>
 <p>可以看到，对 <span class="math notranslate nohighlight">\(μ\)</span> 有影响的是  <span class="math notranslate nohighlight">\(\beta_1\)</span> 与 <span class="math notranslate nohighlight">\(\beta_2\)</span> 的和而不是二者单独的值，因而模型是不确定的（或者说，数据并不能决定  <span class="math notranslate nohighlight">\(\beta_1\)</span> 和 <span class="math notranslate nohighlight">\(\beta_2\)</span> 的值）。在我们的例子中，<span class="math notranslate nohighlight">\(\beta\)</span> 并不能在区间 [-∞,∞] 内自由移动，原因有两个：其一，两个变量几乎是相同的，不过并非完全一样；其二，更重要的是 <span class="math notranslate nohighlight">\(\beta\)</span> 系数的可能取值受到先验的限制。</p>
 <p>该例子中有几点需要注意。</p>
 <ul class="simple">
@@ -1738,12 +1900,14 @@ y^{\prime} &amp;= \frac{y-\bar{y}}{y_{s d}}
 <h3>3.5.4 在多元线性回归模型中增加变量间的交互作用<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
 <p>目前为止，所有多元回归模型的定义中，在其他自变量固定的条件下，  <span class="math notranslate nohighlight">\(x_1\)</span> 的变化都会隐式地带来 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的稳定变化。不过这显然并非一定的，有可能改变  <span class="math notranslate nohighlight">\(x_2\)</span> 之后，原来 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 与 <span class="math notranslate nohighlight">\(x_1\)</span> 之间的关系发生了改变。一个经典例子是药物之间的相互作用，例如，在没有使用药物 B 时，增加药物 A 的剂量有正向影响，而当增加药物 B 的剂量时，药物 A 反而有负向影响。</p>
 <p>目前见过的所有例子中，因变量对于自变量的作用都是加性的。我们只是增加变量并乘以一个系）。如果希望捕捉到前述药物变量间的交互效应，需要给模型增加一项非加性的量，例如：变量间的乘积：</p>
-<div class="math notranslate nohighlight">
-\[\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}+\beta_{3} x_{1} x_{2} \tag{式3.21}   \label{式3.21}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} \tag{式3.21} 
+\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}+\beta_{3} x_{1} x_{2} 
+\end{equation*}\]</div>
 <p>注意这里系数 <span class="math notranslate nohighlight">\( β_3\)</span>  乘的是  <span class="math notranslate nohighlight">\(x_1\)</span> 和  <span class="math notranslate nohighlight">\(x_2\)</span> 的乘积，该非加性项只是用来说明统计学中的变量间相互作用的一个例子，因为它衡量了变量之间的相关性。事实上对相关性建模的表达式有很多种，相乘只是其中一个比较常用的。</p>
 <p>解释有交互作用的线性模型并不像解释没有交互作用的线性模型那么容易。让我们重写表达式 3.21：</p>
 <div class="amsmath math notranslate nohighlight">
-\[\begin{align*} \tag{式3.22}   \label{式3.22}
+\[\begin{align*} \tag{式3.22}
 \mu &amp;=\alpha+\underbrace{\left(\beta_{1}+\beta_{3} x_{2}\right)}_{\text {slope of } x_{1}} x_{1}+\beta_{2} x_{2} \\
 \mu &amp;=\alpha+\beta_{1} x_{1}+\underbrace{\left(\beta_{2}+\beta_{3} x_{1}\right)}_{\text {slope of } x_{2}} x_{2} 
 \end{align*}\]</div>

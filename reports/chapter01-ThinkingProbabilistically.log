@@ -38,7 +38,7 @@ for i in range(len(n_params)):
         ax[0,0].set_xticks(x)
 ------------------
 
-[0;36m  File [0;32m"/tmp/ipykernel_1923/3636673657.py"[0;36m, line [0;32m14[0m
+[0;36m  File [0;32m"/tmp/ipykernel_1751/3636673657.py"[0;36m, line [0;32m14[0m
 [0;31m    ax[i,j].plot(0, 0, label="N = {:3.2f}\nθ =[0m
 [0m                                              ^[0m
 [0;31mSyntaxError[0m[0;31m:[0m EOL while scanning string literal
