@@ -12,11 +12,13 @@ kernelspec:
   name: python3
 ---
 
+
 # 附录 C：贝叶斯深度学习的初步尝试
 
-原文：https://twiecki.io/blog/2016/06/01/bayesian-deep-learning/
+[原文](https://twiecki.io/blog/2016/06/01/bayesian-deep-learning/)
 
 <style>p{text-indent:2em;2}</style>
+
 
 
 ## 1 概述
@@ -71,7 +73,7 @@ kernelspec:
 
 首先，生成一些有关玩具的数据，用于分析一个非线性可分的简单二分类问题。
 
-```{code-cell}
+```{code-cell} ipython3
 %matplotlib inline
 import theano 
 import pymc3 as pm
@@ -104,7 +106,7 @@ ax.set(xlabel='X', ylabel='Y', title='Toy binary classification data set');
 
 该模型对应的神经网络非常简单。基本单元是一个 `logistic 回归` 的感知机。我们并行使用多个感知机，然后将它们堆叠起来以获得隐藏层。此处将使用 2 个隐藏层，每个隐藏层有 5 个神经元，这足以解决本例的简单问题。
 
-```{code-cell}
+```{code-cell} ipython3
 def construct_nn(ann_input, ann_output):
   n_hidden = 5
   
@@ -165,12 +167,12 @@ neural_network = construct_nn(ann_input, ann_output)
 ADVI 采用平均场近似，因此此处忽略了后验中的相关性。
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 from PyMC3.Theanof import set_tt_rng, MRG_RandomStreams
 set_tt_rng(MRG_RandomStreams(42))
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 %%time
 
 with neural_network:
@@ -182,13 +184,13 @@ with neural_network:
 
 由于样本更方便后续处理，因此可以从变分近似推断结果中采样（此处仅简单从推断得到得正态分布中采样），而这与 `MCMC` 方法完全不同：
 
-```{code-cell}
+```{code-cell} ipython3
 trace = approx.sample(draws=5000)
 ```
 
 绘制目标函数（ELBO），可以看到随着时间推移，优化算法在逐渐改善拟合。
 
-```{code-cell}
+```{code-cell} ipython3
 plt.plot(-inference.hist)
 plt.ylabel('ELBO')
 plt.xlabel('iteration');
@@ -196,7 +198,7 @@ plt.xlabel('iteration');
 
 现在已经训练了模型，可以使用后验预测检查来预测验证集。
 
-```{code-cell}
+```{code-cell} ipython3
 # Replace arrays our NN references with the test data
 ann_input.set_value(X_test)
 ann_output.set_value(Y_test)
@@ -210,7 +212,7 @@ pred = ppc['out'].mean(axis=0) > 0.5
 
 看看预测结果：
 
-```{code-cell}
+```{code-cell} ipython3
 fig, ax = plt.subplots()
 ax.scatter(X_test[pred==0, 0], X_test[pred==0, 1])
 ax.scatter(X_test[pred==1, 0], X_test[pred==1, 1], color='r')
@@ -218,7 +220,7 @@ sns.despine()
 ax.set(title='Predicted labels in testing set', xlabel='X', ylabel='Y');
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 print('Accuracy = {}%'.format((Y_test == pred).mean() * 100))
 ```
 
@@ -229,13 +231,13 @@ print('Accuracy = {}%'.format((Y_test == pred).mean() * 100))
 
 我们在整个输入空间的网格上评估类概率的预测。
 
-```{code-cell}
+```{code-cell} ipython3
 grid = pm.floatX(np.mgrid[-3:3:100j,-3:3:100j])
 grid_2d = grid.reshape(2, -1).T
 dummy_out = np.ones(grid.shape[1], dtype=np.int8)
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 ann_input.set_value(grid_2d)
 ann_output.set_value(dummy_out)
 
@@ -245,7 +247,7 @@ with neural_network:
 
 ### 2.5 概率曲面
 
-```{code-cell}
+```{code-cell} ipython3
 cmap = sns.diverging_palette(250, 12, s=85, l=25, as_cmap=True)
 fig, ax = plt.subplots(figsize=(14, 8))
 contour = ax.contourf(grid[0], grid[1], ppc['out'].mean(axis=0).reshape(100, 100), cmap=cmap)
@@ -260,7 +262,7 @@ cbar.ax.set_ylabel('Posterior predictive mean probability of class label = 0');
 
 目前展示的一切，都可以用非贝叶斯神经网络来完成。每个类别标签的后验预测值的平均值应当与最大似然预测值相同。但，在贝叶斯神经网络中，我们还可以查看后验预测值的标准差，来了解预测的不确定性：
 
-```{code-cell}
+```{code-cell} ipython3
 cmap = sns.cubehelix_palette(light=1, as_cmap=True)
 fig, ax = plt.subplots(figsize=(14, 8))
 contour = ax.contourf(grid[0], grid[1], ppc['out'].std(axis=0).reshape(100, 100), cmap=cmap)
@@ -279,7 +281,7 @@ cbar.ax.set_ylabel('Uncertainty (posterior predictive standard deviation)');
 
 幸运的是，`ADVI` 支持小批量运行。只需做一些简单设置：
 
-```{code-cell}
+```{code-cell} ipython3
 minibatch_x = pm.Minibatch(X_train, batch_size=32)
 minibatch_y = pm.Minibatch(Y_train, batch_size=32)
 
@@ -289,7 +291,7 @@ with neural_network_minibatch:
   approx = pm.fit(40000, method=inference)
 ```
 
-```{code-cell}
+```{code-cell} ipython3
   plt.plot(-inference.hist)
   plt.ylabel('ELBO')
   plt.xlabel('iteration')
@@ -297,7 +299,7 @@ with neural_network_minibatch:
 
 小批量 `ADVI` 的运行时间短得多，其收敛得也更快，并且可以查看迹图。而最关键的是同时能够得到神经网络权重的不确定性度量。
 
-```{code-cell}
+```{code-cell} ipython3
   pm.traceplot(trace)
 ```
 
@@ -317,7 +319,7 @@ with neural_network_minibatch:
 
 此处使用的大部分代码都是从 [`Lasagne` 教程](http:// `Lasagne` .readthedocs.io/en/latest/user/tutorial.html) 中借用而来。
 
-```{code-cell}
+```{code-cell} ipython3
 %matplotlib inline
 import matplotlib.pyplot as plt
 import numpy as np
@@ -329,11 +331,8 @@ sns.set_context('talk')
 import PyMC3 as pm
 import Theano.tensor as T
 import Theano 
-
 from scipy.stats import mode, chisquare
-
 from sklearn.metrics import confusion_matrix, accuracy_score
-
 import Lasagne 
 ```
 
@@ -341,7 +340,7 @@ import Lasagne
 
 我们将使用手写数字的经典 MNIST 数据集。与我上一篇仅限于玩具数据集的博文相反，MNIST 实际上是一项具有挑战性的 ML 任务（当然不像 ImageNet 那样具有挑战性），具有合理数量的维度和数据点。
 
-```{code-cell}
+```{code-cell} ipython3
 import sys, os
 
 def load_dataset():
@@ -400,7 +399,7 @@ print("Loading data...")
 X_train, y_train, X_val, y_val, X_test, y_test = load_dataset()
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 # Building a `Theano` .shared variable with a subset of the data to make construction of the model faster.
 # We will later switch that out, this is just a placeholder to get the dimensionality right.
 input_var = `Theano` .shared(X_train[:500, ...].astype(np.float64))
@@ -413,7 +412,7 @@ target_var = `Theano` .shared(y_train[:500, ...].astype(np.float64))
 
 首先， `Lasagne` 函数用于创建一个 ANN，其中有两个完全连接的隐藏层，每个层有 800 个神经元，这是纯 `Lasagne` 代码，几乎直接取自教程。在用 `Lasagne` 创建图层时会用到技巧。层。DenseLayer，在这里我们可以传入一个函数 init，它必须返回一个 `Theano` 表达式作为权重和偏差矩阵。这就是我们将传递 `PyMC3` 创建的优先级的地方，这些优先级也是无表达式：
 
-```{code-cell}
+```{code-cell} ipython3
 def build_ann(init):
   l_in = `Lasagne` .layers.InputLayer(shape=(None, 1, 28, 28),
                    input_var=input_var)
@@ -459,7 +458,7 @@ def build_ann(init):
 
   先验值在这里充当正则化器，以尝试保持 ANN 的权重较小。这在数学上相当于将惩罚较大权重的 L2 损失项放入目标函数中，就像通常所做的那样。
 
-```{code-cell}
+```{code-cell} ipython3
 class GaussWeights(object):
 def __init__(self):
   self.count = 0
@@ -474,8 +473,8 @@ def __call__(self, shape):
 
   接下来是一些设置 mini-batch-ADVI 的函数，您可以在 [前面的博文](https://twiecki.github.io/blog/2016/06/01/bayesian-deep-learning/) 中找到更多信息。
 
-```{code-cell}
-  from six.moves import zip
+```{code-cell} ipython3
+from six.moves import zip
 
 # Tensors and RV that will be using mini-batches
 minibatch_tensors = [input_var, target_var]
@@ -523,7 +522,7 @@ def run_advi(likelihood, advi_iters=50000):
 
 让我们使用`小批量 ADVI` 运行模型：
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as neural_network:
   likelihood = build_ann(GaussWeights())
   v_params, trace, ppc, y_pred = run_advi(likelihood)
@@ -531,16 +530,16 @@ with pm.Model() as neural_network:
 
 确保所有内容都收敛：
 
-```{code-cell}
+```{code-cell} ipython3
 plt.plot(v_params.elbo_vals[10000:])
 sns.despine()
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 sns.heatmap(confusion_matrix(y_test, y_pred))
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 print('Accuracy on test data = {}%'.format(accuracy_score(y_test, y_pred) * 100))
 ```
 
@@ -550,7 +549,7 @@ print('Accuracy on test data = {}%'.format(accuracy_score(y_test, y_pred) * 100)
 
 `L2 惩罚项`强度之前的重量标准偏差之间的联系引出了一个有趣的想法。上面我们刚刚修正了 sd=0。1 表示所有层，但第一层的值可能与第二层的值不同。也许是 0。1 开始时太小或太大。在贝叶斯建模中，在这样的情况下，通常只需放置超先验，然后从数据中学习要应用的最佳正则化。这使我们不用在代价高昂的超参数优化中调整该参数。有关分层建模的更多信息，请参阅我的 [另一篇博文](https://twiecki.io/blog/2016/07/05/bayesian-deep-learning/)。
 
-```{code-cell}
+```{code-cell} ipython3
 class GaussWeightsHierarchicalRegularization(object):
   def __init__(self):
     self.count = 0
@@ -569,19 +568,19 @@ minibatches = zip(
 )
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as neural_network_hier:
   likelihood = build_ann(GaussWeightsHierarchicalRegularization())
   v_params, trace, ppc, y_pred = run_advi(likelihood)
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 print('Accuracy on test data = {}%'.format(accuracy_score(y_test, y_pred) * 100))
 ```
 
 我们得到了一个小但很好的提高精度。让我们看看超参数的后验值：
 
-```{code-cell}
+```{code-cell} ipython3
 pm.traceplot(trace, varnames=['reg_hyper1', 'reg_hyper2', 'reg_hyper3', 'reg_hyper4', 'reg_hyper5', 'reg_hyper6']);
 ```
 
@@ -591,7 +590,7 @@ pm.traceplot(trace, varnames=['reg_hyper1', 'reg_hyper2', 'reg_hyper3', 'reg_hyp
 
 这很好，但正如我在上一篇文章中所展示的，到目前为止，在 `PyMC3` 中直接实现的一切都非常简单。真正有趣的是，我们现在可以构建更复杂的人工神经网络，比如卷积神经网络：
 
-```{code-cell}
+```{code-cell} ipython3
 def build_ann_conv(init):
   network = `Lasagne` .layers.InputLayer(shape=(None, 1, 28, 28),
                     input_var=input_var)
@@ -636,7 +635,7 @@ def build_ann_conv(init):
           observed=target_var)
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 print('Accuracy on test data = {}%'.format(accuracy_score(y_test, y_pred) * 100))          
 ```
 
@@ -646,20 +645,20 @@ print('Accuracy on test data = {}%'.format(accuracy_score(y_test, y_pred) * 100)
 
 正如我们所见，当模型出错时，答案的不确定性要大得多（即提供的答案更加一致）。你可能会说，你从一个常规的人工神经网络得到的多项式预测得到了同样的效果，然而，[事实并非如此](http://mlg.eng.cam.ac.uk/yarin/blog_3d801aa532c1ce.html)。
 
-```{code-cell}
+```{code-cell} ipython3
 miss_class = np.where(y_test != y_pred)[0]
 corr_class = np.where(y_test == y_pred)[0]
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 preds = pd.DataFrame(ppc['out']).T
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 chis = preds.apply(lambda x: chisquare(x).statistic, axis='columns')
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 sns.distplot(chis.loc[miss_class].dropna(), label='Error')
 sns.distplot(chis.loc[corr_class].dropna(), label='Correct')
 plt.legend()
