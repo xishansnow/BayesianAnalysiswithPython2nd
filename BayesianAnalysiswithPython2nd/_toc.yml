@@ -14,9 +14,9 @@ parts:
     - file: chapter09-WheretoGoNext
   - caption: 附录阅读
     chapters: 
-    - file: Ref-chapter08-01-MCMCforDummies
-    - file: Ref-chapter08-02-VIforDummies
-    - file: Ref-chapter08-03-BayesianDeepLearning
+    - file: Append-01-MCMCforDummies
+    - file: Append-02-VIforDummies
+    - file: Append-03-BayesianDeepLearning
   #- caption: 参考文献
     #- file: 
 

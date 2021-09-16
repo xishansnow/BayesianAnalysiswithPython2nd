@@ -12,7 +12,7 @@ kernelspec:
   name: python3
 ---
 
-# 贝叶斯深度学习
+# 附录 C：贝叶斯深度学习的初步尝试
 
 原文：https://twiecki.io/blog/2016/06/01/bayesian-deep-learning/
 
