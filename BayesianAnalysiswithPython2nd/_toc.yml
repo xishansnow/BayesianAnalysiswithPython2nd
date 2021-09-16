@@ -1,8 +1,8 @@
-format: jb-article
+format: jb-book
 root: preface
-subtrees:
+parts:
   - caption: 书籍正文
-    sections:  
+    chapters:  
     - file: chapter01-ThinkingProbabilistically
     - file: chapter02-ProgrammingProbabilistically
     - file: chapter03-ModellingwithLinearRegression
@@ -12,11 +12,12 @@ subtrees:
     - file: chapter07-GaussianProcesses
     - file: chapter08-InterefenceEngine
     - file: chapter09-WheretoGoNext
-  
-  - caption: 其他阅读材料
-    sections: 
+  - caption: 附录阅读
+    chapters: 
     - file: Ref-chapter08-01-MCMCforDummies
     - file: Ref-chapter08-02-VIforDummies
     - file: Ref-chapter08-03-BayesianDeepLearning
+  #- caption: 参考文献
+    #- file: 
 
   

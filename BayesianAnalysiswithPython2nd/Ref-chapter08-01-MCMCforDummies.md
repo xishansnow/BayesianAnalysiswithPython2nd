@@ -7,7 +7,8 @@ jupytext:
     format_version: 0.13
     jupytext_version: 1.12.0
 kernelspec:
-  display_name: 'Python 3.9.6 64-bit (''books'': conda)'
+  display_name: Python 3
+  language: ipython3
   name: python3
 ---
 
@@ -47,7 +48,7 @@ P ( x ) = \int _ { \theta } P ( x , \theta ) d \theta
 
 首先，让导入 python 模块：
 
-```{code-cell} ipython3
+```{code-cell} 
 %matplotlib inline 
 import numpy as np 
 import scipy as sp 
@@ -62,7 +63,7 @@ np.random.seed(123)
 
 先生成一些实验数据，以零为中心的正态分布上的 20 个点。我们的目标是估计平均值 $\mu$ 的后验。
 
-```{code-cell} ipython3
+```{code-cell} 
 data = np.random.randn(20) 
 ax = plt.subplot() 
 sns.distplot(data, kde=True, ax=ax) 
@@ -81,7 +82,7 @@ _ = ax.set(title='Histogram of observed data', xlabel='x', ylabel='Num of observ
 
 该模型较为简单，实际上可以获得后验的解析解。因为对于已知标准差的正态似然分布，$\mu$ 的先验与后验是共轭的（高斯分布是高斯似然的共轭先验），可以较为容易地计算后验。有关这一点的数学推导，请参见（[此处](https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxiYXllc2VjdHxneDplNGY0MDljNDA5MGYxYTM)）。
 
-```{code-cell} ipython3
+```{code-cell} 
 # Analytical posterior of Guassian
 def calc_posterior_analytical(data, x, mu_0, sigma_0): 
    sigma = 1. 
@@ -168,7 +169,7 @@ if accept:
 
 将上述过程放在一起：
 
-```{code-cell} ipython3
+```{code-cell} 
 def sampler(data, samples=4, mu_init=.5, proposal_width=.5, plot=False, mu_prior_mu=0, mu_prior_sd=1.): 
    mu_current = mu_init 
    posterior = [mu_current] 
@@ -276,14 +277,14 @@ def plot_proposal(mu_current, mu_proposal, mu_prior_mu, mu_prior_sd, data, accep
 
 我们经常根据后验密度移动到相对更可能的 $\mu$ 值，只是有时移动到相对不太可能的值，就像在第 14 次迭代中看到的那样。
 
-```{code-cell} ipython3
+```{code-cell} 
 np.random.seed(123) 
 sampler(data, samples=20, mu_init=-1., plot=True)
 ```
 
 MCMC 的神奇之处在于，只要做足够长的时间，就会产生来自模型后验分布的样本。有一个严格的数学证明可以保证这一点，但在这里不会详细说明。为了解这会产生什么，让我们抽取大量样本（建议值）并绘制其曲线图。
 
-```{code-cell} ipython3
+```{code-cell} 
 posterior = sampler(data, samples=15000, mu_init=1.) 
 fig, ax = plt.subplots() 
 ax.plot(posterior) 
@@ -292,7 +293,7 @@ _ = ax.set(xlabel='sample', ylabel='mu');
 
 代码抽取的所有样本（建议值）构成迹。**要得到近似的后验，只需计算迹的直方图即可**。需要注意的是，尽管后验直方图看起来与上面为拟合模型而生成的采样数据直方图非常像，但其实两者应当是完全分离的。下图表示了我们对 $\mu$ 的信念，本例中后验碰巧也是正态分布，因此与似然和先验相似，但实际上对于不同模型，后验可能具有与似然或先验完全不同的形状。
 
-```{code-cell} ipython3
+```{code-cell} 
 ax = plt.subplot() 
 sns.distplot(posterior[500:], ax=ax, label='estimated posterior') 
 x = np.linspace(-.5, .5, 500) 
@@ -308,7 +309,7 @@ ax.legend();
 
 上面代码将建议宽度 `proposal_width` 设置为 0.5。事实证明，这是一个不错的值。一般来说，不希望宽度太窄，因为宽度越窄就需要越长时间来探索整个参数空间，从而造成采样效率会下降，并且出现随机游走的现象：
 
-```{code-cell} ipython3
+```{code-cell} 
 posterior_small = sampler(data, samples=5000, mu_init=1., proposal_width=.01) 
 fig, ax = plt.subplots() 
 ax.plot(posterior_small)
@@ -317,7 +318,7 @@ _ = ax.set(xlabel='sample', ylabel='mu')
 
 但你也不希望它太大，以至于永远不会接受移动：
 
-```{code-cell} ipython3
+```{code-cell} 
 posterior_large = sampler(data, samples=5000, mu_init=1., proposal_width=3.) 
 fig, ax = plt.subplots() 
 ax.plot(posterior_large); plt.xlabel('sample'); plt.ylabel('mu')
@@ -326,7 +327,7 @@ _ = ax.set(xlabel='sample', ylabel='mu')
 
 注意，不管建议宽度如何选择，数学证明保证了我们仍在从目标后验中采样，只是效率较低：
 
-```{code-cell} ipython3
+```{code-cell} 
 sns.distplot(posterior_small[1000:], label='Small step size') 
 sns.distplot(posterior_large[1000:], label='Large step size')
 _ = plt.legend()
@@ -334,7 +335,7 @@ _ = plt.legend()
 
 更多样本最终会看起来像真实后验，关键是样本应当彼此独立，但显然在本例中并非如此。因此，可以采用自相关性来量化评估采样器的效果，即分析第 $i$ 个样本与第 $i-1$ 、$i-2$ 个样本的相关性如何：
 
-```{code-cell} ipython3
+```{code-cell} 
 from pymc3.stats import autocorr 
 lags = np.arange(1, 100) 
 fig, ax = plt.subplots() 
@@ -355,7 +356,7 @@ _ = ax.set(xlabel='lag', ylabel='autocorrelation', ylim=(-.1, 1))
 
 例如：下面的模型可以很容易地用 PyMC3 编写。我们继续使用 `Metropolis 采样器`（自动调整建议宽度），并得到了相同的结果。有关更多信息以及更复杂的示例，请参阅 PyMC3 文档 （http://pymc-devs.github.io/pymc3/getting_started/）。
 
-```{code-cell} ipython3
+```{code-cell} 
 import pymc3 as pm 
 with pm.Model(): 
    mu = pm.Normal('mu', 0, 1) 

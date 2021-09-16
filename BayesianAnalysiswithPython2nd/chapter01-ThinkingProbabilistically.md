@@ -8,7 +8,7 @@ jupytext:
     jupytext_version: 1.12.0
 kernelspec:
   display_name: Python 3
-  language: python
+  language: ipython3
   name: python3
 ---
 
@@ -241,7 +241,8 @@ data = np.genfromtxt('../data/mauna_loa_CO2.csv', delimiter=',')
 plt.plot(data[:,0], data[:,1])
 plt.xlabel('year')
 plt.ylabel('$CO_2$ (ppmv)')
-plt.savefig('B11197_01_02.png', dpi=300)
+
+# plt.savefig('B11197_01_02.png', dpi=300)
 ```
 
 <center>

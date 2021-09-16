@@ -8,7 +8,7 @@ jupytext:
     jupytext_version: 1.12.0
 kernelspec:
   display_name: Python 3
-  language: python
+  language: ipython3
   name: python3
 ---
 

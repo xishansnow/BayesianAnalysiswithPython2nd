@@ -8,7 +8,7 @@ jupytext:
     jupytext_version: 1.12.0
 kernelspec:
   display_name: Python 3
-  language: python
+  language: ipython3
   name: python3
 ---
 
@@ -668,7 +668,8 @@ ax.vlines(db_mean, 0, 1, color='k')
 ax.fill_betweenx([0, 1], db_hpd[0], db_hpd[1], color='k', alpha=0.5)
 ax.set_xlabel('sepal_length')
 ax.set_ylabel('θ', rotation=0)
-plt.savefig('B11197_07_11.png')
+
+# plt.savefig('B11197_07_11.png')
 ```
 
 <center>
