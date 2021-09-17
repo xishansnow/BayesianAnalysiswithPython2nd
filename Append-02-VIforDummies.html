@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>变分推断傻瓜书 &#8212; Python贝叶斯分析(中文)</title>
+    <title>附录 B： 变分法确定性近似推断的傻瓜书 &#8212; Python贝叶斯分析(中文)</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,8 +51,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="贝叶斯深度学习" href="Ref-chapter08-03-BayesianDeepLearning.html" />
-    <link rel="prev" title="MCMC 采样的傻瓜书" href="Ref-chapter08-01-MCMCforDummies.html" />
+    <link rel="next" title="附录 C：贝叶斯深度学习的初步尝试" href="Append-03-BayesianDeepLearning.html" />
+    <link rel="prev" title="附录 A： MCMC 随机近似性推断的傻瓜书" href="Append-01-MCMCforDummies.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -143,23 +143,23 @@
 </ul>
 <p class="caption">
  <span class="caption-text">
-  其他阅读材料
+  附录阅读
  </span>
 </p>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="Ref-chapter08-01-MCMCforDummies.html">
-   MCMC 采样的傻瓜书
+  <a class="reference internal" href="Append-01-MCMCforDummies.html">
+   附录 A： MCMC 随机近似性推断的傻瓜书
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   变分推断傻瓜书
+   附录 B： 变分法确定性近似推断的傻瓜书
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Ref-chapter08-03-BayesianDeepLearning.html">
-   贝叶斯深度学习
+  <a class="reference internal" href="Append-03-BayesianDeepLearning.html">
+   附录 C：贝叶斯深度学习的初步尝试
   </a>
  </li>
 </ul>
@@ -202,11 +202,11 @@
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
         <a class="dropdown-buttons"
-            href="_sources/Ref-chapter08-02-VIforDummies.ipynb"><button type="button"
+            href="_sources/Append-02-VIforDummies.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/Ref-chapter08-02-VIforDummies.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/Append-02-VIforDummies.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -226,7 +226,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd/issues/new?title=Issue%20on%20page%20%2FRef-chapter08-02-VIforDummies.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd/issues/new?title=Issue%20on%20page%20%2FAppend-02-VIforDummies.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -247,14 +247,14 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=tree/Ref-chapter08-02-VIforDummies.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=lab/tree/Append-02-VIforDummies.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
                     alt="Interact on binder">Binder</button></a>
         
         
-        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=tree/BayesianAnalysiswithPython2nd/Ref-chapter08-02-VIforDummies.ipynb&branch=master"><button type="button"
+        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=lab/tree/BayesianAnalysiswithPython2nd/Append-02-VIforDummies.md&branch=master"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
                 data-placement="left"><img class="jupyterhub-button-logo"
                     src="_static/images/logo_jupyterhub.svg"
@@ -276,17 +276,17 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
+  <a class="reference internal nav-link" href="#id1">
    1 问题提出
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
+  <a class="reference internal nav-link" href="#id2">
    2 近似推断
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id4">
+  <a class="reference internal nav-link" href="#id3">
    3 变分推断
   </a>
  </li>
@@ -301,13 +301,13 @@
         
               <div>
                 
-  <div class="section" id="id1">
-<h1>变分推断傻瓜书<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="id2">
-<h2>1 问题提出<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="b">
+<h1>附录 B： 变分法确定性近似推断的傻瓜书<a class="headerlink" href="#b" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>1 问题提出<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="id3">
-<h2>2 近似推断<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h2>2 近似推断<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>首先，我们的原始目标是，需要根据已有数据推断需要的分布p；当p不容易表达，不能直接求解时，可以尝试用变分推断的方法， 即，寻找容易表达和求解的分布q，当q和p的差距很小的时候，q就可以作为p的近似分布，成为输出结果了。</p>
 <p>在这个过程中，我们的关键点转变了，从“求分布”的推断问题，变成了“缩小距离”的优化问题。</p>
 <p>举生活中的例子太难了，还是看图说话容易些。</p>
@@ -337,8 +337,8 @@
 <p><img alt="" src="https://pic2.zhimg.com/80/v2-fb1b1c5d37b493927795750fa1f99d04_720w.jpg?source=1940ef5c" /></p>
 <p>我知道，你就算背过这四步，照样不会做题，因为你尚不能达到”理解“的程度，只算”略知一二“。</p>
 </div>
-<div class="section" id="id4">
-<h2>3 变分推断<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>3 变分推断<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>写在前面：这部分的理解需要一些基本的概率论知识和最优化知识，适合本科生拓展阅读。你需要的是，沉下心来细细琢磨我接下来罗里吧嗦的逻辑，并且前后回顾我提到的数学符号和公式。放心，真正恶心的证明内容，在后面的后面的后面呢。</p>
 <p>现在请你忘掉上面看到的东西，听我重头开始讲一个故事。</p>
 <ol class="simple">
@@ -433,19 +433,19 @@
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="Ref-chapter08-01-MCMCforDummies.html" title="previous page">
+        <a class="left-prev" href="Append-01-MCMCforDummies.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">MCMC 采样的傻瓜书</p>
+                <p class="prevnext-title">附录 A： MCMC 随机近似性推断的傻瓜书</p>
             </div>
         </a>
     </div>
      <div id="next">
-        <a class="right-next" href="Ref-chapter08-03-BayesianDeepLearning.html" title="next page">
+        <a class="right-next" href="Append-03-BayesianDeepLearning.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">贝叶斯深度学习</p>
+                <p class="prevnext-title">附录 C：贝叶斯深度学习的初步尝试</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

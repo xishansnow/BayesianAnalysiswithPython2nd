@@ -8,7 +8,7 @@ jupytext:
     jupytext_version: 1.12.0
 kernelspec:
   display_name: Python 3
-  language: python
+  language: ipython3
   name: python3
 ---
 
@@ -60,7 +60,7 @@ Logistic 回归虽然名字中带有 『回归』 字眼，但其实际解决的
 
 下面代码绘制了 S 型函数的图形：
 
-```{code-cell}
+```{code-cell} ipython3
 import matplotlib.pyplot as plt
 import scipy.stats as stats
 import numpy as np
@@ -72,7 +72,7 @@ import arviz as az
 az.style.use('arviz-darkgrid')
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 z = np.linspace(-8, 8)
 plt.plot(z, 1 / (1 + np.exp(-z)))
 plt.xlabel('z')
@@ -119,7 +119,7 @@ Iris 数据集是经典数据集，包含有 `Setosa` 、 `Versicolour` 和 `Vir
 
 seaborn 软件包中包含 Iris 数据集，可以用如下代码将其导入成 `Pandas` 的 `DataFrame`：
 
-```{code-cell}
+```{code-cell} ipython3
 iris = pd.read_csv('../data/iris.csv')
 iris.head()
 ```
@@ -132,7 +132,7 @@ iris.head()
 
 现在，可以使用 seaborn 软件包中的 `stripplot` 函数绘制这三个物种与 `stepal_length` 的关系图：
 
-```{code-cell}
+```{code-cell} ipython3
 sns.stripplot(x="species", y="sepal_length", data=iris, jitter=True)
 ```
 
@@ -147,7 +147,7 @@ sns.stripplot(x="species", y="sepal_length", data=iris, jitter=True)
 
 此外可以使用 `pairplot` 函数画出散点图矩阵，用该函数可以得到一个 4×4 网格（因为有 4 种特征）。网格是对称的，上三角和下三角表示同样的信息。由于对角线上的散点图其实是变量本身，因此用一个特征的 KDE 图代替了散点图。可以看到，每个子图中分别用 3 种颜色表示 3 种不同的类别标签，与前面图中的表示方法一致。
 
-```{code-cell}
+```{code-cell} ipython3
 sns.pairplot(iris, hue='species', diag_kind='kde')
 ```
 
@@ -166,7 +166,7 @@ sns.pairplot(iris, hue='species', diag_kind='kde')
 
 和前面一样，这里用 0 和 1 对因变量 $\mathbf{y}$ 进行编码，利用 `Pandas` 可以这么做：
 
-```{code-cell}
+```{code-cell} ipython3
 df = iris.query("species == ('Setosa', 'Versicolour')")
 y_0 = pd.Categorical(df['species']).codes
 x_n = 'sepal_length'
@@ -178,7 +178,7 @@ x_c = x_0 - x_0.mean()
 
 此外，除了像下面写出 Logistic 函数的完整形式外，还可以使用 `PyMC3` 中现成的 `pm.math.sigmoid` 函数，该函数是 `Theano` 中 `sigmoid` 函数的别名。
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as model_0:
    α = pm.Normal('α', mu=0, sd=10)
    β = pm.Normal('β', mu=0, sd=10)
@@ -192,16 +192,16 @@ with pm.Model() as model_0:
 
 为节省页数，同时避免对同一类型图件反复出现感到厌烦，将省略迹图和其他类似的摘要图，但鼓励您制作自己的迹图和摘要，以进一步探索本书中的例子。我们将直接跳到如何生成下图，这是一个数据曲线图，以及拟合的 `sigmoid` 曲线和决策边界：
 
-```{code-cell}
+```{code-cell} ipython3
 theta = trace_0['θ'].mean(axis=0)
 idx = np.argsort(x_c)
 plt.plot(x_c[idx], theta[idx], color='C2', lw=3)
 plt.vlines(trace_0['bd'].mean(), 0, 1, color='k')
-bd_hpd = az.hpd(trace_0['bd'])
-plt.fill_betweenx([0, 1], bd_hpd[0], bd_hpd[1], color='k', alpha=0.5)
+bd_hdi = az.hdi(trace_0['bd'])
+plt.fill_betweenx([0, 1], bd_hdi[0], bd_hdi[1], color='k', alpha=0.5)
 plt.scatter(x_c, np.random.normal(y_0, 0.02),
             marker='.', color=[f'C{x}' for x in y_0])
-az.plot_hpd(x_c, trace_0['θ'], color='C2')
+az.plot_hdi(x_c, trace_0['θ'], color='C2')
 plt.xlabel(x_n)
 plt.ylabel('θ', rotation=0)
 # use original scale for xticks
@@ -216,7 +216,7 @@ plt.xticks(locs, np.round(locs + x_0.mean(), 1))
 图 4.4
 </center>
 
-前面这张图表示了花萼长度与花种类（ `Setosa = 0, Versicolour = 1`）之间的关系。绿色的 $S$ 型曲线表示 $\theta$ 的均值，这条线可以解释为：在知道花萼长度的情况下花的种类是 `Versicolour` 的概率，即半透明的绿色区间是 `94% HPD 区间`。边界判定用一条（黑色）垂直线表示，其 94%的 HPD 为半透明带。根据边界判定，左侧的值（在本例中为萼片长度）对应于 类 0 （ `Setosa` ），右侧的值对应于类 1 （ `Versicolour` ）。
+前面这张图表示了花萼长度与花种类（ `Setosa = 0, Versicolour = 1`）之间的关系。绿色的 $S$ 型曲线表示 $\theta$ 的均值，这条线可以解释为：在知道花萼长度的情况下花的种类是 `Versicolour` 的概率，即半透明的绿色区间是 `94% hdi 区间`。边界判定用一条（黑色）垂直线表示，其 94%的 hdi 为半透明带。根据边界判定，左侧的值（在本例中为萼片长度）对应于 类 0 （ `Setosa` ），右侧的值对应于类 1 （ `Versicolour` ）。
 
 决策边界由 $y=0.5$ 时的 $x$ 取值定义，可以证明其结果为 $-\frac{\alpha}{\beta}$ ，推导过程如下：
 
@@ -250,7 +250,7 @@ x_{i}=-\frac{\alpha}{\beta} \tag{式4.6} \label{式4.6}
 
 与多元线性回归类似，`多元 Logistic 回归` 使用多个自变量。这里举例将花萼长度与花萼宽度结合在一起，注意需要对数据做一些预处理。
 
-```{code-cell}
+```{code-cell} ipython3
 df = iris.query("species == ('setosa', 'versicolor')")
 y_1 = pd.Categorical(df['species']).codes
 x_n = ['sepal_length', 'sepal_width']
@@ -287,7 +287,7 @@ x_{2}=-\frac{\alpha}{\beta_{2}}+\left(-\frac{\beta_{1}}{\beta_{2}} x_{1}\right) 
 
 如果要用 `PyMC3` 写出多元 Logistic 回归模型，可以借助其向量化表示的优势，只需对单参数 Logistic 回归模型做一些简单修改即可。
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as model_1:
     α = pm.Normal('α', mu=0, sd=10)
     β = pm.Normal('β', mu=0, sd=2, shape=len(x_n))
@@ -301,19 +301,19 @@ with pm.Model() as model_1:
 
 绘制数据和决策边界：
 
-```{code-cell}
+```{code-cell} ipython3
 idx = np.argsort(x_1[:,0])
 bd = trace_1['bd'].mean(0)[idx]
 plt.scatter(x_1[:,0], x_1[:,1], c=[f'C{x}' for x in y_0])
 plt.plot(x_1[:,0][idx], bd, color='k');
 
-az.plot_hpd(x_1[:,0], trace_1['bd'], color='k')
+az.plot_hdi(x_1[:,0], trace_1['bd'], color='k')
 
 plt.xlabel(x_n[0])
 plt.ylabel(x_n[1]
 ```
 
-决策边界现在是一条直线，不要被 `95% HPD 区间`的曲线给误导了。图中半透明的曲线是由于在中间部分多条直线绕中心区域旋转的结果（大致围绕 $x$ 的平均值 和 $y$ 的平均值）。
+决策边界现在是一条直线，不要被 `95% hdi 区间`的曲线给误导了。图中半透明的曲线是由于在中间部分多条直线绕中心区域旋转的结果（大致围绕 $x$ 的平均值 和 $y$ 的平均值）。
 
 <center>
 
@@ -371,7 +371,7 @@ Logistic 函数的逆函数是 `logit 函数`，它是：
 图 4.6
 </center>
 
-```{code-cell}
+```{code-cell} ipython3
 probability = np.linspace(0.01, 1, 100)
 odds = probability / (1 - probability)
 _, ax1 = plt.subplots()
@@ -387,7 +387,7 @@ ax2.grid(False)
 
 因此，摘要数据提供的系数值是按照赔率对数进行标记和度量的：
 
-```{code-cell}
+```{code-cell} ipython3
 df = az.summary(trace_1, var_names=varnames)
 ```
 
@@ -401,7 +401,7 @@ df = az.summary(trace_1, var_names=varnames)
 
 在下面的代码块中，首先计算支持杂色的赔率对数 $\text{log_odds_versicolor_i}=\alpha+\beta_1x_1+\beta_2x_2$ ，然后用 Logistic 函数计算杂色的概率。然后，固定 $x_2$ 同时让 $x_1$ 加 1 重复做一次计算：
 
-```{code-cell}
+```{code-cell} ipython3
 x_1 = 4.5 # sepal_length
 x_2 = 3 # sepal_width
 
@@ -424,9 +424,9 @@ probability_versicolor_i
 
 在`第 3 章『线性回归模型』`中曾探讨过，当变量间存在（高度）相关时，会存在一些棘手的问题。此时，相关变量转化为能够解释数据的更广泛的系数组合，或者从互补角度来看，相关的变量对模型的约束能力变小。即使在类完全可分时（在给定变量的线性组合的情况下，类之间没有重叠），也会出现类似问题。
 
-使用 Iris 数据集，可以尝试运行 `model_1`，但这一次使用 `petal_width` 和 `petal_length` 变量。您会发现 $\beta$ 系数比以前更宽了，而且图中 `94% HPD区间` 也更宽了：
+使用 Iris 数据集，可以尝试运行 `model_1`，但这一次使用 `petal_width` 和 `petal_length` 变量。您会发现 $\beta$ 系数比以前更宽了，而且图中 `94% hdi区间` 也更宽了：
 
-```{code-cell}
+```{code-cell} ipython3
 corr = iris[iris['species'] != 'virginica'].corr()
 mask = np.tri(*corr.shape).T
 sns.heatmap(corr.abs(), mask=mask, annot=True, cmap='viridis')
@@ -461,7 +461,7 @@ sns.heatmap(corr.abs(), mask=mask, annot=True, cmap='viridis')
 
 现在看个实际例子，我们随机从 `Setosa` 类别中去掉一些数据点：
 
-```{code-cell}
+```{code-cell} ipython3
 df = iris.query("species == ('setosa', 'versicolor')")
 df = df[45:]
 y_3 = pd.Categorical(df['species']).codes
@@ -471,7 +471,7 @@ x_3 = df[x_n].values
 
 运行多元 Logistic 回归模型：
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as model_3:
  α = pm.Normal('α', mu=0, sd=10)
  β = pm.Normal('β', mu=0, sd=2, shape=len(x_n))
@@ -484,12 +484,12 @@ with pm.Model() as model_3:
 
 如`图 4.8 `所示，决策边界向样本量更少的类别偏移了，而且不确定性也比以前更大了。这是 Logistic 回归在处理不均衡数据时的常见表现。在一些数据中，类别之间的间隔可能不像这个例子中这么完美，此时用 Logistic 回归分类得到的结果中类别重叠的现象更严重。不过，你很有可能会觉得不确定性变大是数据总量变少造成的，而不是因为 `Setosa` 类别的数据比 `Versicolour` 更少。当然存在这样的可能，你可以通过习题部分的第 2 题，体验一下为什么不确定性变大是数据不平衡造成的。
 
-```{code-cell}
+```{code-cell} ipython3
 idx = np.argsort(x_3[:,0])
 bd = trace_3['bd'].mean(0)[idx]
 plt.scatter(x_3[:,0], x_3[:,1], c= [f'C{x}' for x in y_3])
 plt.plot(x_3[:,0][idx], bd, color='k')
-az.plot_hpd(x_3[:,0], trace_3['bd'], color='k')
+az.plot_hdi(x_3[:,0], trace_3['bd'], color='k')
 plt.xlabel(x_n[0])
 plt.ylabel(x_n[1])
 ```
@@ -524,7 +524,7 @@ plt.ylabel(x_n[1])
 
 示例只使用两个类别和一个特征。下面的代码用 `PyMC3` 实现了一个生成式分类器，从代码中可以看出，现在决策边界被定义为估计的两个类别的高斯均值之间的平均值。当分布为正态分布且标准差相同时，此决策边界是正确的。非常著名的`线性判别分析（Linear Discriminant Analysis，LDA）`模型就是一种做出了该假设的模型。尽管该模型名字中包含『判别式（Discriminant）』字眼，但实际上是一个生成式模型。
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as lda:
  μ = pm.Normal('μ', mu=0, sd=10, shape=2)
  σ = pm.HalfNormal('σ', 10)
@@ -535,12 +535,12 @@ with pm.Model() as lda:
  trace_lda = pm.sample(1000)
 ```
 
-下面再将 `setosa=0` 和 `versicolor=1` 两个类别与花萼长度的关系画出来，一同画出来的还有一条红色的决策边界以及对应的 `94% HPD 区间`。
+下面再将 `setosa=0` 和 `versicolor=1` 两个类别与花萼长度的关系画出来，一同画出来的还有一条红色的决策边界以及对应的 `94% hdi 区间`。
 
-```{code-cell}
+```{code-cell} ipython3
 plt.axvline(trace_lda['bd'].mean(), ymax=1, color='C1')
-bd_hpd = az.hpd(trace_lda['bd'])
-plt.fill_betweenx([0, 1], bd_hpd[0], bd_hpd[1], color='C1', alpha=0.5)
+bd_hdi = az.hdi(trace_lda['bd'])
+plt.fill_betweenx([0, 1], bd_hdi[0], bd_hdi[1], color='C1', alpha=0.5)
 plt.plot(x_0, np.random.normal(y_0, 0.02), '.', color='k')
 plt.ylabel('θ', rotation=0)
 plt.xlabel('sepal_length')
@@ -555,7 +555,7 @@ plt.xlabel('sepal_length')
 
 输出该模型的摘要，对决策边界进行检查。
 
-```{code-cell}
+```{code-cell} ipython3
 az.summary(trace_lda)
 ```
 
@@ -592,7 +592,7 @@ Softmax 回归模型与 Logistic 回归模型的另一个区别是：伯努利�
 
 为验证 Softmax 多分类模型，继续使用 Iris 数据集，不过使用了全部 3 个类别标签（ `Setosa` 、`Versicolour` 及 `Virginica` ）和 4 个特征（花萼长度、花萼宽度、花瓣长度及花瓣宽度）。示例同时对数据进行归一化处理，以获得更高的采样效率。
 
-```{code-cell}
+```{code-cell} ipython3
 iris = sns.load_dataset('iris')
 y_s = pd.Categorical(iris['species']).codes
 x_n = iris.columns[:-1]
@@ -602,7 +602,7 @@ x_s = (x_s - x_s.mean(axis=0)) / x_s.std(axis=0)
 
 从 `PyMC3` 的代码可以看出， Logistic 回归模型与 Softmax 回归模型之间的变化很小，留意 $\alpha$ 系数和 $\beta$ 系数的形状。这段代码中用到了 `Theano` 中的 Softmax 函数 ，根据 `PyMC3` 开发者的惯例，按 `import theano.tensor as tt` 方式导入 `Theano`。
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as model_s:
  α = pm.Normal('α', mu=0, sd=5, shape=3)
  β = pm.Normal('β', mu=0, sd=5, shape=(4,3))
@@ -614,7 +614,7 @@ with pm.Model() as model_s:
 
 那么模型表现如何呢？可以根据准确预测的样本个数来判断。下面代码使用了参数的均值来计算每个点分别属于 3 个类别的概率值，然后使用 argmax 函数求出概率最大的类别作为结果，最后将结果与观测值进行比较。
 
-```{code-cell}
+```{code-cell} ipython3
 data_pred = trace_s['μ'].mean(0)
 y_pred = [np.exp(point)/np.sum(np.exp(point), axis=0)
  for point in data_pred]
@@ -629,7 +629,7 @@ f'{np.sum(y_s == np.argmax(y_pred, axis=1)) / len(y_s):.2f}'
 
 解决该问题的办法是将额外的参数固定为某个值（比如 0）。下面的代码展示了如何用 `PyMC3` 来实现。
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as model_sf:
  α = pm.Normal('α', mu=0, sd=2, shape=2)
  β = pm.Normal('β', mu=0, sd=2, shape=(4,2))
@@ -667,7 +667,7 @@ f(x \mid \mu)=\frac{e^{-\mu} \mu^{x}}{x !} \tag{式4.17} \label{式4.17}
 
 下图中可以看到不同 $\mu$ 值的泊松分布示例：
 
-```{code-cell}
+```{code-cell} ipython3
 mu_params = [0.5, 1.5, 3, 8]
 x = np.arange(0, max(mu_params) * 3)
 for mu in mu_params:
@@ -746,7 +746,7 @@ p\left(y_{j}=k_{i}\right)=\psi \frac{\mu^{x_{i}} e^{-\mu}}{x_{i} !} \tag{式4.25
 
 为举例说明零膨胀泊松分布，可以创建一些人工合成的数据：
 
-```{code-cell}
+```{code-cell} ipython3
 n = 100
 θ_real = 2.5
 ψ = 0.1
@@ -757,7 +757,7 @@ counts = np.array([(np.random.random() > (1-ψ)) *
 
 可以很容易在 `PyMC3` 中实现`式 4.24` 和 `式4.25` 的模型。也可以直接使用 `PyMC3` 的内置零膨胀泊松分布：
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as ZIP:
  ψ = pm.Beta('ψ', 1, 1)
  θ = pm.Gamma('θ', 2, 0.1)
@@ -789,13 +789,13 @@ with pm.Model() as ZIP:
 
 使用这些数据，我们将建立一个模型，根据 child 和 camper 变量来预测 count 变量。可以使用 `Pandas` 来加载数据：
 
-```{code-cell}
+```{code-cell} ipython3
 fish_data = pd.read_csv('../data/fish.csv')
 ```
 
 目前，继续采用 `PyMC3` 的内置零膨胀泊松回归：
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as ZIP_reg:
  ψ = pm.Beta('ψ', 1, 1)
  α = pm.Normal('α', 0, 10)
@@ -809,7 +809,7 @@ with pm.Model() as ZIP_reg:
 
 为了更好地理解推断结果，让我们做一个图：
 
-```{code-cell}
+```{code-cell} ipython3
 children = [0, 1, 2, 3, 4]
 fish_count_pred_0 = []
 fish_count_pred_1 = []
@@ -847,7 +847,7 @@ plt.legend()
 
 我们刚刚了解了如何修复多余的零，而无需直接对生成它们的因素进行建模。Kruschke 建议的类似方法可以用于执行更健壮版本的 Logistic 回归。请记住，在 Logistic 回归中，我们将数据建模为二项式，即 0 和 1 。因此，可能会发现具有不寻常的 0 和/或 1 的数据集。以我们已经看到的 iris 数据集为例，但添加了一些入侵者：
 
-```{code-cell}
+```{code-cell} ipython3
 iris = sns.load_dataset("iris")
 df = iris.query("species == ('setosa', 'versicolor')")
 y_0 = pd.Categorical(df['species']).codes
@@ -867,7 +867,7 @@ p=\pi 0.5+(1-\pi) \operatorname{logistic}(\alpha+X \beta) \tag{式4.27}  \label{
 
 当 $\pi=1$ 时，我们得到 $p=0.5$ ，并且对于 $\pi=0$ ，我们恢复了 Logistic 回归的表达式。实施此模型是对本章第一个模型的直接修改：
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as model_rlg:
  α = pm.Normal('α', mu=0, sd=10)
  β = pm.Normal('β', mu=0, sd=10)
@@ -895,7 +895,7 @@ with pm.Model() as model_rlg:
 
 线性模型是非常有用的统计工具。因此，`PyMC3` 包含一个方便创建线性模型的 GLM 模块。使用该模块，简单的线性回归将如下所示：
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as model:
  glm.glm('y ~ x', data)
  trace = sample(2000)
@@ -923,7 +923,7 @@ Logistic 和 Softmax 都是判别式模型的例子；我们试图在没有显�
 
 ## 4.10 习题
 
-（1）使用花瓣长度和花瓣宽度作为变量重跑第一个模型。二者的结果有何区别？两种情况下的 95%HPD 区间分别是多少？
+（1）使用花瓣长度和花瓣宽度作为变量重跑第一个模型。二者的结果有何区别？两种情况下的 95%hdi 区间分别是多少？
 
 （2）重跑练习（1），这次使用 $t$ 分布作为弱先验信息。尝试使用不同的正态参数 $\nu$ 。
 

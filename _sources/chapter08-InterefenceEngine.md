@@ -8,7 +8,7 @@ jupytext:
     jupytext_version: 1.12.0
 kernelspec:
   display_name: Python 3
-  language: python
+  language: ipython3
   name: python3
 ---
 
@@ -72,7 +72,7 @@ kernelspec:
 
 下面的代码用网格计算法解决了第一章中的抛硬币问题：
 
-```{code-cell}
+```{code-cell} ipython3
 import matplotlib.pyplot as plt
 import scipy.stats as stats
 import numpy as np
@@ -84,7 +84,7 @@ import arviz as az
 az.style.use('arviz-darkgrid')
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 def posterior_grid(grid_points=50, heads=6, tails=9):
     """
     A grid implementation for the coin-flipping problem
@@ -99,7 +99,7 @@ def posterior_grid(grid_points=50, heads=6, tails=9):
 
 假设我们抛硬币 13 次，观察到 3 个头：
 
-```{code-cell}
+```{code-cell} ipython3
 data = np.repeat([0, 1], (10, 3))
 points = 10
 h = data.sum()
@@ -165,7 +165,7 @@ name: Fig8.2
 
 使用 `PyMC3`，可以执行以下操作：
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as normal_approximation:
      # Beta先验
      p = pm.Beta('p', 1., 1.)
@@ -185,7 +185,7 @@ with pm.Model() as normal_approximation:
 
 可以看下上述 “贝塔-二项模型” 的平方近似的曲线形态：
 
-```{code-cell}
+```{code-cell} ipython3
 # analytic calculation
 x = np.linspace(0, 1, 100)
 plt.plot(x, stats.beta.pdf(x , h+1, t+1),
@@ -367,7 +367,7 @@ q(\theta)=\prod_{j} q_{j}\left(\theta_{j}\right) \tag{8.8} \label{式8.8}
 
 圆和正方形的面积分别正比于圆内点数 $inside$ 和总点数 $N$，可以通过几行代码来模拟该蒙特卡洛过程，同时计算出估计值与实际值之间的相对误差：
 
-```{code-cell}
+```{code-cell} ipython3
 N = 10000
 x, y = np.random.uniform(-1, 1, size=(2, N))
 inside = (x**2 + y**2) <= 1
@@ -455,7 +455,7 @@ p_{a}\left(x_{i+1} \mid x_{i}\right)=\min \left(1, \frac{p\left(x_{i+1}\right)}{
 
 下面的代码展示了 `Metropolis 算法`的一个基本实现。这段代码并不是为了解决什么实际问题，只是用来演示，如果我们知道怎么计算给定点的函数值，就能得到该函数的采样。需要注意代码不包含贝叶斯相关的部分，既没有先验也没有数据。要知道，`MCMC` 是一类能够用于解决很多问题的通用方法。例如，在一个（非贝叶斯的）分子模型中，可能需要一个函数来计算在某个状态 $x$ 下系统的能量而不是简单地调用 `func.pdf(x)` 函数。`metropolis` 函数的第一个参数是一个 `SciPy` 的分布，假设我们不知道如何从中直接采样。
 
-```{code-cell}
+```{code-cell} ipython3
 def metropolis(func, draws=10000):
     """A very simple Metropolis implementation"""
     trace = np.zeros(draws)
@@ -477,7 +477,7 @@ def metropolis(func, draws=10000):
 
 在下一个示例中，我们将 `func` 定义为 `beta函数`，原因很简单，因为很容易更改它们的参数获得不同形状。我们将`Metropolis` 获得的样本绘制为直方图，并将真实分布绘制为连续(橙色)线：
 
-```{code-cell}
+```{code-cell} ipython3
 np.random.seed(3)
 func = stats.beta(2, 5)
 trace = metropolis(func=func)
@@ -485,8 +485,7 @@ x = np.linspace(0.01, .99, 100)
 y = func.pdf(x)
 plt.xlim(0, 1)
 plt.plot(x, y, 'C1-', lw=3, label='True distribution')
-plt.hist(trace[trace > 0], bins=25, density=True, label='Estimated
-distribution')
+plt.hist(trace[trace > 0], bins=25, density=True, label='Estimated distribution')
 plt.xlabel('x')
 plt.ylabel('pdf(x)')
 plt.yticks([])
@@ -581,7 +580,7 @@ name: Fig8.6
 
 为了使解释更具体，我们将使用具有两个参数的极简分层模型：全局参数 $a$ 和局部参数 $b$（每组参数）。仅此而已，我们在这个模型中甚至没有似然/数据！在这里省略数据是为了强调，我们将讨论的一些属性（特别是在散度一节中）与模型的结构相关，而不是与数据相关。我们将讨论同一模型的两种替代参数化：
 
-```{code-cell}
+```{code-cell} ipython3
 with pm.Model() as centered_model:
     a = pm.HalfNormal('a', 10)
     b = pm.Normal('b', 0, a, shape=10)
@@ -602,7 +601,7 @@ with pm.Model() as non_centered_model:
 
 直观检查收敛性的一种方法是运行 `arviz.plot_trace` 函数并检查结果。为更好地理解我们在检查这些曲线图时应该查看什么，此处比较一下前面定义的两个模型（参见图 8.6 和 8.7)：
 
-```{code-cell}
+```{code-cell} ipython3
 az.plot_trace(trace_cm, var_names=['a'], divergences='top')
 ```
 
@@ -614,7 +613,7 @@ name: Fig8.7
 中心模型的后验分布和迹图
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 az.plot_trace(trace_ncm, var_names=['a'])
 ```
 
@@ -646,7 +645,7 @@ name: Fig8.9
 
 比较独立链的一种定量方法是使用统计量 `R 帽` ，其思想是用链内方差计算链间方差。理想情况下，我们应该期望其值为 1。作为经验规则，值低于 1.1 也没问题；值越高越表示不收敛。我们可以使用 `az.r_hat` 函数计算它；我们只需要传递一个 `PyMC3` 迹对象。默认情况下，还会使用 `az.summary` 函数以及可选的 `az.plot_forest` 来计算 `r_hat 诊断`，如我们在以下示例中所看到的：
 
-```{code-cell}
+```{code-cell} ipython3
 az.plot_forest(trace_cm, var_names=['a'], r_hat=True, eff_n=True)
 ```
 
@@ -660,7 +659,7 @@ name: Fig8.10
 
 对于 `az.summary` 也是如此：
 
-```{code-cell}
+```{code-cell} ipython3
 summaries = pd.concat([az.summary(trace_cm, var_names=['a']),
                       az.summary(trace_ncm, var_names=['a'])])
 summaries.index = ['centered', 'non_centered']
@@ -687,7 +686,7 @@ align:  center
 
 分布（包括后验分布）的理想样本应该具有等于 0 的自相关。当给定迭代的值不独立于其他迭代的采样值时，样本是自相关的。在实践中，MCMC 方法产生的样本是自相关的，特别是 `Metropolis-Hastings`，在较小程度上是 `NUTS` 和 `SMC` 。`ArviZ` 提供了一个方便的函数来绘制自相关曲线：
 
-```{code-cell}
+```{code-cell} ipython3
 az.plot_autocorr(trace_cm, var_names=['a'])
 ```
 
@@ -701,7 +700,7 @@ name: Fig8.11
 
 `az.plot_autocorr` 显示采样值与连续点(最多100个点)的平均相关性。理想情况下，应该看不到自相关。在实践中，我们希望样本迅速下降到较低的自相关值。让我们绘制非中心模型的自相关图：
 
-```{code-cell}
+```{code-cell} ipython3
 az.plot_autocorr(trace_ncm, var_names=['a'])
 ```
 
@@ -732,7 +731,7 @@ name: Fig8.12
 
 当我试图设置本书中的模型以避免散度时，您可能已经看到指示出现散度的 `PyMC3` 消息。散度可能表明 `NUTS` 在后验遇到了无法正确探索的高曲率区域；这告诉我们采样器可能缺少参数空间的一个区域，因此结果将是有偏差的。散度通常比这里讨论的测试敏感得多，因此，即使其余测试通过，它们也可以发出问题的信号。散度的一个很好的特点是，它们往往看起来靠近有问题的参数空间区域，因此我们可以使用它们来识别问题所在。可视化散度的一种方法是使用带有 DISGENCES=True 参数的 az.plot_pair：
 
-```{code-cell}
+```{code-cell} ipython3
 _, ax = plt.subplots(1, 2, sharey=True, figsize=(10, 5),
 constrained_layout=True)
 for idx, tr in enumerate([trace_cm, trace_ncm]):
@@ -758,7 +757,7 @@ name: Fig8.13
 
 可视化散度的另一种有用的方法是用平行的曲线图：
 
-```{code-cell}
+```{code-cell} ipython3
 az.plot_parallel(trace_cm)
 ```
 

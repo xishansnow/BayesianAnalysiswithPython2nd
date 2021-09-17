@@ -42,7 +42,7 @@
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
@@ -145,23 +145,23 @@
 </ul>
 <p class="caption">
  <span class="caption-text">
-  其他阅读材料
+  附录阅读
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="Ref-chapter08-01-MCMCforDummies.html">
-   MCMC 采样的傻瓜书
+  <a class="reference internal" href="Append-01-MCMCforDummies.html">
+   附录 A： MCMC 随机近似性推断的傻瓜书
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Ref-chapter08-02-VIforDummies.html">
-   变分推断傻瓜书
+  <a class="reference internal" href="Append-02-VIforDummies.html">
+   附录 B： 变分法确定性近似推断的傻瓜书
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Ref-chapter08-03-BayesianDeepLearning.html">
-   贝叶斯深度学习
+  <a class="reference internal" href="Append-03-BayesianDeepLearning.html">
+   附录 C：贝叶斯深度学习的初步尝试
   </a>
  </li>
 </ul>
@@ -249,14 +249,14 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=tree/chapter03-ModellingwithLinearRegression.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=lab/tree/chapter03-ModellingwithLinearRegression.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
                     alt="Interact on binder">Binder</button></a>
         
         
-        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=tree/BayesianAnalysiswithPython2nd/chapter03-ModellingwithLinearRegression.ipynb&branch=master"><button type="button"
+        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=lab/tree/BayesianAnalysiswithPython2nd/chapter03-ModellingwithLinearRegression.md&branch=master"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
                 data-placement="left"><img class="jupyterhub-button-logo"
                     src="_static/images/logo_jupyterhub.svg"
@@ -451,7 +451,7 @@
 \[\begin{equation*}
 y_i= \alpha + x_i \beta \tag{式3.2}
 \end{equation*}\]</div>
-<p>该等式描述了变量 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 与变量 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 之间的线性关系。其中，参数 <span class="math notranslate nohighlight">\(β\)</span> 控制直线的斜率，可以理解为变量 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 的单位变化量所对应 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的变化量。另外一个参数 <span class="math notranslate nohighlight">\(α\)</span> 为截距，可以解释为当 <span class="math notranslate nohighlight">\(x_i=0\)</span> 时, <span class="math notranslate nohighlight">\(y_i\)</span> 的值，在图形上表示， <span class="math notranslate nohighlight">\(α\)</span> 就是直线与 <span class="math notranslate nohighlight">\(y\)</span> 轴交点的坐标。</p>
+<p>该等式描述了变量 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> ```{code-cell} <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的变化量。另外一个参数 <span class="math notranslate nohighlight">\(α\)</span> 为截距，可以解释为当 <span class="math notranslate nohighlight">\(x_i=0\)</span> 时, <span class="math notranslate nohighlight">\(y_i\)</span> 的值，在图形上表示， <span class="math notranslate nohighlight">\(α\)</span> 就是直线与 <span class="math notranslate nohighlight">\(y\)</span> 轴交点的坐标。</p>
 <p>计算线性模型参数的方法很多，最小二乘法是其中之一。每次使用软件去拟合直线时，底层可能用的就是最小二乘法。最小二乘法返回的 <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 能够让观测到的 <span class="math notranslate nohighlight">\(y\)</span> 与预测的 <span class="math notranslate nohighlight">\(\hat y\)</span> 之间均方误差最小。其估计 <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 本质是一个最优化问题，其目标是寻找使目标函数达到最值（最小值或最大值）时的参数解。</p>
 <p>最优化并非求解线性模型的唯一方法，同样的问题可以从概率（贝叶斯）角度描述。<code class="docutils literal notranslate"><span class="pre">用概率方式思考的优势是：在得到最优参数解</span> <span class="pre">$α$</span> <span class="pre">和</span> <span class="pre">$β$</span> <span class="pre">的同时，还能够知道其不确定性程度。</span></code>与此相对的，最优化方法需要一些其他工作来提供不确定性信息。此外，贝叶斯方法还具备很大灵活性，尤其在使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 等工具时，可将模型应用到本章后面所介绍的各种特定问题中。</p>
 <p>从概率角度，线性回归模型可以表示成如下形式：</p>
@@ -524,7 +524,7 @@ y_i= \alpha + x_i \beta \tag{式3.2}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2813/4172630698.py:18: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2272/4172630698.py:18: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
   plt.tight_layout()
 </pre></div>
 </div>
@@ -554,7 +554,7 @@ y_i= \alpha + x_i \beta \tag{式3.2}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2813/162259929.py:12: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2272/162259929.py:12: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_g = pm.sample(2000, tune = 1000)
 Auto-assigning NUTS sampler...
 </pre></div>
@@ -564,7 +564,7 @@ Auto-assigning NUTS sampler...
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
 KeyboardInterrupt                         Traceback (most recent call last)
-/tmp/ipykernel_2813/162259929.py in &lt;module&gt;
+/tmp/ipykernel_2272/162259929.py in &lt;module&gt;
      10 
      11     # 近似推断：随机采样生成模型中所有随机变量（模型参数或隐变量等）和显式确定性变量的迹
 ---&gt; 12     trace_g = pm.sample(2000, tune = 1000)
@@ -836,6 +836,27 @@ KeyboardInterrupt                         Traceback (most recent call last)
    1395                         if not isinstance(term, Variable):
 
 /opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
    1218                             )
    1219 
 -&gt; 1220                 input_grads = node.op.L_op(inputs, node.outputs, new_output_grads)
@@ -855,20 +876,6 @@ KeyboardInterrupt                         Traceback (most recent call last)
 --&gt; 668             ret.append(transform(scalar_igrad))
     669 
     670         return ret
-
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
-    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
-    658 
---&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
-    660             return new_r
-    661 
-
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in &lt;listcomp&gt;(.0)
-    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
-    658 
---&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
-    660             return new_r
-    661 
 
 /opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
     657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
@@ -962,32 +969,32 @@ KeyboardInterrupt                         Traceback (most recent call last)
    2498         except Exception:
 
 /opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/utils.py in output_subprocess_Popen(command, **params)
+    249     params[&quot;stdout&quot;] = subprocess.PIPE
+    250     params[&quot;stderr&quot;] = subprocess.PIPE
+--&gt; 251     p = subprocess_Popen(command, **params)
     252     # we need to use communicate to make sure we don&#39;t deadlock around
     253     # the stdout/stderr pipe.
---&gt; 254     out = p.communicate()
-    255     return out + (p.returncode,)
-    256 
 
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/subprocess.py in communicate(self, input, timeout)
-   1026 
-   1027             try:
--&gt; 1028                 stdout, stderr = self._communicate(input, endtime, timeout)
-   1029             except KeyboardInterrupt:
-   1030                 # https://bugs.python.org/issue25942
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/utils.py in subprocess_Popen(command, **params)
+    215 
+    216     try:
+--&gt; 217         proc = subprocess.Popen(command, startupinfo=startupinfo, **params)
+    218     finally:
+    219         if stdin is not None:
 
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/subprocess.py in _communicate(self, input, endtime, orig_timeout)
-   1866                             &#39;failed to raise TimeoutExpired.&#39;)
-   1867 
--&gt; 1868                     ready = selector.select(timeout)
-   1869                     self._check_timeout(endtime, orig_timeout, stdout, stderr)
-   1870 
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/subprocess.py in __init__(self, args, bufsize, executable, stdin, stdout, stderr, preexec_fn, close_fds, shell, cwd, env, universal_newlines, startupinfo, creationflags, restore_signals, start_new_session, pass_fds, encoding, errors, text)
+    856                             encoding=encoding, errors=errors)
+    857 
+--&gt; 858             self._execute_child(args, executable, preexec_fn, close_fds,
+    859                                 pass_fds, cwd, env,
+    860                                 startupinfo, creationflags, shell,
 
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/selectors.py in select(self, timeout)
-    413         ready = []
-    414         try:
---&gt; 415             fd_event_list = self._selector.poll(timeout)
-    416         except InterruptedError:
-    417             return ready
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/subprocess.py in _execute_child(self, args, executable, preexec_fn, close_fds, pass_fds, cwd, env, startupinfo, creationflags, shell, p2cread, p2cwrite, c2pread, c2pwrite, errread, errwrite, restore_signals, start_new_session)
+   1658                 errpipe_data = bytearray()
+   1659                 while True:
+-&gt; 1660                     part = os.read(errpipe_read, 50000)
+   1661                     errpipe_data += part
+   1662                     if not part or len(errpipe_data) &gt; 50000:
 
 KeyboardInterrupt: 
 </pre></div>
@@ -997,7 +1004,8 @@ KeyboardInterrupt:
 <p>如果不在模型中显式地定义确定性变量。则 <code class="docutils literal notranslate"><span class="pre">PCMC3</span></code> 仍会计算该变量，但不会将保存其迹。例如，可编写以下代码：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="n">α</span> <span class="o">+</span> <span class="n">β</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="n">ϵ</span><span class="p">,</span> <span class="n">observed</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model_g</span><span class="p">:</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="n">α</span> <span class="o">+</span> <span class="n">β</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="n">sd</span> <span class="o">=</span> <span class="n">ϵ</span><span class="p">,</span> <span class="n">observed</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1005,7 +1013,8 @@ KeyboardInterrupt:
 <p>为探索推断结果，可以绘制未知随机变量的迹图（<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">3.3</span></code>），此处省略了确定性变量 <span class="math notranslate nohighlight">\(\mu\)</span> 。你可以通过将变量名称（随机变量或显式确定性变量）以列表形式传递给参数 <code class="docutils literal notranslate"><span class="pre">var_names</span></code> 的方式，来实现多变量迹图的绘制。许多 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 函数都有一个 <code class="docutils literal notranslate"><span class="pre">var_names</span></code> 参数，你可以尝试其他 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 的绘图函数来探索后验。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">var_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span><span class="s1">&#39;β&#39;</span><span class="p">,</span><span class="s1">&#39;ϵ&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model_g</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_trace</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">var_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span><span class="s1">&#39;β&#39;</span><span class="p">,</span><span class="s1">&#39;ϵ&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1023,7 +1032,8 @@ KeyboardInterrupt:
 <p>事实上，上述模型中，不论用哪条直线去拟合数据，该直线都会穿过 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 和 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 的均值点。拟合直线的过程相当于将直线固定在均值点上做旋转，其结果是呈现出<code class="docutils literal notranslate"><span class="pre">斜率越大截距越小</span></code>的相关性。如果将后验画出来的话可以很清楚地看到这点（见<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">3.4</span></code> , 暂时忽略 <span class="math notranslate nohighlight">\(ε\)</span> ）。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">az</span><span class="o">.</span><span class="n">plot_pair</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">var_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="s1">&#39;β&#39;</span><span class="p">],</span> <span class="n">plot_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">model_g</span><span class="p">:</span>
+    <span class="n">az</span><span class="o">.</span><span class="n">plot_pair</span><span class="p">(</span><span class="n">trace_g</span><span class="p">,</span> <span class="n">var_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="s1">&#39;β&#39;</span><span class="p">],</span> <span class="n">plot_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
 </pre></div>
 </div>
 </div>

@@ -8,11 +8,11 @@ jupytext:
     jupytext_version: 1.12.0
 kernelspec:
   display_name: Python 3
-  language: python
+  language: python3
   name: python3
 ---
 
-# 变分推断傻瓜书
+# 附录 B： 变分法确定性近似推断的傻瓜书
 
 ## 1 问题提出
 

@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>贝叶斯深度学习 &#8212; Python贝叶斯分析(中文)</title>
+    <title>附录 C：贝叶斯深度学习的初步尝试 &#8212; Python贝叶斯分析(中文)</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -51,7 +51,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="变分推断傻瓜书" href="Ref-chapter08-02-VIforDummies.html" />
+    <link rel="prev" title="附录 B： 变分法确定性近似推断的傻瓜书" href="Append-02-VIforDummies.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -142,23 +142,23 @@
 </ul>
 <p class="caption">
  <span class="caption-text">
-  其他阅读材料
+  附录阅读
  </span>
 </p>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="Ref-chapter08-01-MCMCforDummies.html">
-   MCMC 采样的傻瓜书
+  <a class="reference internal" href="Append-01-MCMCforDummies.html">
+   附录 A： MCMC 随机近似性推断的傻瓜书
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Ref-chapter08-02-VIforDummies.html">
-   变分推断傻瓜书
+  <a class="reference internal" href="Append-02-VIforDummies.html">
+   附录 B： 变分法确定性近似推断的傻瓜书
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   贝叶斯深度学习
+   附录 C：贝叶斯深度学习的初步尝试
   </a>
  </li>
 </ul>
@@ -201,11 +201,11 @@
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
         <a class="dropdown-buttons"
-            href="_sources/Ref-chapter08-03-BayesianDeepLearning.ipynb"><button type="button"
+            href="_sources/Append-03-BayesianDeepLearning.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/Ref-chapter08-03-BayesianDeepLearning.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/Append-03-BayesianDeepLearning.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -225,7 +225,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd/issues/new?title=Issue%20on%20page%20%2FRef-chapter08-03-BayesianDeepLearning.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd/issues/new?title=Issue%20on%20page%20%2FAppend-03-BayesianDeepLearning.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -246,14 +246,14 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=tree/Ref-chapter08-03-BayesianDeepLearning.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=lab/tree/Append-03-BayesianDeepLearning.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
                     alt="Interact on binder">Binder</button></a>
         
         
-        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=tree/BayesianAnalysiswithPython2nd/Ref-chapter08-03-BayesianDeepLearning.ipynb&branch=master"><button type="button"
+        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=lab/tree/BayesianAnalysiswithPython2nd/Append-03-BayesianDeepLearning.md&branch=master"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
                 data-placement="left"><img class="jupyterhub-button-logo"
                     src="_static/images/logo_jupyterhub.svg"
@@ -275,27 +275,27 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
+  <a class="reference internal nav-link" href="#id1">
    1 概述
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id3">
+    <a class="reference internal nav-link" href="#id2">
      1.1 机器学习的当前趋势
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id4">
+    <a class="reference internal nav-link" href="#id3">
      1.2 大规模概率编程
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id5">
+    <a class="reference internal nav-link" href="#id4">
      1.3 深度学习
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id6">
+    <a class="reference internal nav-link" href="#id5">
      1.4 连接深度学习和概率编程
     </a>
    </li>
@@ -307,17 +307,17 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id7">
+    <a class="reference internal nav-link" href="#id6">
      2.1 生成数据
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id8">
+    <a class="reference internal nav-link" href="#id7">
      2.2 模型定义
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id9">
+    <a class="reference internal nav-link" href="#id8">
      2.3
      <code class="docutils literal notranslate">
       <span class="pre">
@@ -328,17 +328,17 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
+    <a class="reference internal nav-link" href="#id9">
      2.4 分类器到底学到了什么？
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
+    <a class="reference internal nav-link" href="#id10">
      2.5 概率曲面
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
+    <a class="reference internal nav-link" href="#id11">
      2.6 预测值的不确定性
     </a>
    </li>
@@ -360,34 +360,34 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id13">
+    <a class="reference internal nav-link" href="#id12">
      3.2 模型定义
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
+    <a class="reference internal nav-link" href="#id13">
      3.3 模型训练
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id15">
+    <a class="reference internal nav-link" href="#id14">
      3.4 分层贝叶斯神经网络
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id16">
+    <a class="reference internal nav-link" href="#id15">
      3.5 卷积神经网络的贝叶斯模型
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id17">
+    <a class="reference internal nav-link" href="#id16">
      3.6 结论
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id18">
+  <a class="reference internal nav-link" href="#id17">
    4 致谢
   </a>
  </li>
@@ -402,24 +402,24 @@
         
               <div>
                 
-  <div class="section" id="id1">
-<h1>贝叶斯深度学习<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>原文：<a class="reference external" href="https://twiecki.io/blog/2016/06/01/bayesian-deep-learning/">https://twiecki.io/blog/2016/06/01/bayesian-deep-learning/</a></p>
+  <div class="section" id="c">
+<h1>附录 C：贝叶斯深度学习的初步尝试<a class="headerlink" href="#c" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://twiecki.io/blog/2016/06/01/bayesian-deep-learning/">原文</a></p>
 <style>p{text-indent:2em;2}</style>
+<div class="section" id="id1">
+<h2>1 概述<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id2">
-<h2>1 概述<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id3">
-<h3>1.1 机器学习的当前趋势<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3>1.1 机器学习的当前趋势<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>目前机器学习有三大趋势：<code class="docutils literal notranslate"><span class="pre">概率编程</span></code>、<code class="docutils literal notranslate"><span class="pre">深度学习</span></code>和<code class="docutils literal notranslate"><span class="pre">大数据</span></code>。在概率编程中，很多创新使用<code class="docutils literal notranslate"><span class="pre">变分推断</span></code>以使事物能够适应规模。在本文中，我将展示如何在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中使用<code class="docutils literal notranslate"><span class="pre">变分推断</span></code>来拟合一个简单的贝叶斯神经网络。我还将讨论如何将概率编程和深度学习联系起来，以便在未来研究中开辟非常有趣的途径。</p>
 </div>
-<div class="section" id="id4">
-<h3>1.2 大规模概率编程<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>1.2 大规模概率编程<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>概率编程允许灵活地创建自定义概率模型，并且主要关注洞察力和从数据中学习。该方法本质上是贝叶斯的，因此可以指定先验来约束模型，并以后验分布的形式获得不确定性估计。使用 <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 采样算法，可以从后验中抽取样本来灵活估计这些模型。 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Stan</span></code> 是当前构建和估计此类模型的领先工具。然而，采样法的主要缺点是非常慢，尤其是对于高维模型。这就是为什么最近<code class="docutils literal notranslate"><span class="pre">变分推断算法</span></code>与 <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 一样灵活，但速度要快得多。</p>
 <p>变分算法不从后验中抽取样本，而是将某种分布（例如正态）拟合到后验上，将采样问题转化为优化问题。 自动微分变分推断（ <code class="docutils literal notranslate"><span class="pre">ADVI</span></code> ）方法在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 、 <code class="docutils literal notranslate"><span class="pre">Stan</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Edward</span></code>（现在改为 <code class="docutils literal notranslate"><span class="pre">TensorFlow</span> <span class="pre">Probability</span> <span class="pre">--</span> <span class="pre">TFP</span></code>）中被作为变分推断的主要算法实现。</p>
 <p>不幸的是：在传统的分类或回归等机器学习问题中，概率编程通常在非参数学习、集成学习（例如随机森林或梯度提升回归树）等算法中扮演着次要角色。</p>
 </div>
-<div class="section" id="id5">
-<h3>1.3 深度学习<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3>1.3 深度学习<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>现在深度学习已经成为热点，支配了几乎所有的物体识别基准，在 <a class="reference external" href="https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf"><code class="docutils literal notranslate"><span class="pre">Atari</span></code> 游戏</a>中获胜，并且<a class="reference external" href="http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html">战胜了世界围棋冠军李世石</a>。从统计学角度看，神经网络非常擅长非线性函数逼近和表征学习。深度学习不仅用于分类任务，还可以通过自编码器和其他各种有趣的方法扩展到非监督学习，例如：采用 <a class="reference external" href="https://en.wikipedia.org/wiki/Recurrent_neural_network">循环神经网络 <code class="docutils literal notranslate"><span class="pre">RNN</span></code></a>，或<a class="reference external" href="http://cbonnett.github.io/MDN_EDWARD_KERAS_TF.html">混合密度神经网络 <code class="docutils literal notranslate"><span class="pre">MDN</span></code></a> 来估计多模态分布。其效果为何如此好？没有人真正知道原因，因为有些统计特性仍不为人完全理解。</p>
 <p>深度学习的优势之一是可以训练极其复杂的模型。这依赖于几个基础：</p>
 <ul class="simple">
@@ -429,8 +429,8 @@
 <li><p><strong>架构：</strong> 大量创新都是改变输入层，比如卷积神经网络，或改变输出层，比如<a class="reference external" href="http://cbonnett.github.io/MDN_EDWARD_KERAS_TF.html">MDN</a>。</p></li>
 </ul>
 </div>
-<div class="section" id="id6">
-<h3>1.4 连接深度学习和概率编程<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>1.4 连接深度学习和概率编程<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>一方面，概率编程允许我们以非常有原则和易于理解的方式构建相当小但聚焦的模型，以深入了解数据；另一方面，深度学习使用启发式方法来训练巨大且高度复杂的模型，并在预测方面非常出色。</p>
 <p>然而，最新的 <code class="docutils literal notranslate"><span class="pre">变分推断</span></code> 方法允许概率编程扩展模型复杂性和数据大小。因此，我们正处于能够将两种方法结合起来以开启机器学习新创新的风口浪尖。如需更多动机，另请参阅 <code class="docutils literal notranslate"><span class="pre">Dustin</span> <span class="pre">Tran</span></code> 最近的 <a class="reference external" href="http://dustintran.com/blog/a-quick-update-edward-and-some-motivations/">博客文章</a>。</p>
 <p>虽然这种变化将使概率编程能够应用于更广泛的问题，但我相信这种变化也为深度学习的创新带来了巨大可能性。一些基本的想法包括：</p>
@@ -446,8 +446,8 @@
 </div>
 <div class="section" id="pymc3">
 <h2>2 PyMC3 中的贝叶斯神经网络<a class="headerlink" href="#pymc3" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id7">
-<h3>2.1 生成数据<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3>2.1 生成数据<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>首先，生成一些有关玩具的数据，用于分析一个非线性可分的简单二分类问题。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -483,21 +483,21 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2413</span><span class="o">/</span><span class="mf">3715064878.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">theano</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">sklearn</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1889</span><span class="o">/</span><span class="mf">3715064878.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">scale</span>
+<span class="ne">---&gt; </span><span class="mi">13</span> <span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_moons</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> 
 
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;sklearn&#39;
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;sklearn.cross_validation&#39;
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="section" id="id8">
-<h3>2.2 模型定义<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h3>2.2 模型定义<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <p>该模型对应的神经网络非常简单。基本单元是一个 <code class="docutils literal notranslate"><span class="pre">logistic</span> <span class="pre">回归</span></code> 的感知机。我们并行使用多个感知机，然后将它们堆叠起来以获得隐藏层。此处将使用 2 个隐藏层，每个隐藏层有 5 个神经元，这足以解决本例的简单问题。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -555,8 +555,8 @@ neural_network = construct_nn(ann_input, ann_output)
 </div>
 <p>正态先验有助于正则化权重。通常我们会在输入中添加一个常量 <code class="docutils literal notranslate"><span class="pre">b</span></code>，但在这里省略了它以保持代码清晰。</p>
 </div>
-<div class="section" id="id9">
-<h3>2.3 <code class="docutils literal notranslate"><span class="pre">变分推断</span></code>：提升模型的复杂性<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h3>2.3 <code class="docutils literal notranslate"><span class="pre">变分推断</span></code>：提升模型的复杂性<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>现在可以运行像 <code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 这样的随机采样器，由于模型并不复杂，所以工作得很好，但随着将模型扩展到具有更多层的深度架构，随机方法将变得非常缓慢。此时，使用 OPVI 框架中的ADVI 自动变分推断算法，就会快得多，并可更好地扩展。</p>
 <div class="admonition- admonition">
 <p class="admonition-title">请注意</p>
@@ -637,8 +637,8 @@ neural_network = construct_nn(ann_input, ann_output)
 </div>
 <p>可以看出，我们的神经网络做得很好！</p>
 </div>
-<div class="section" id="id10">
-<h3>2.4 分类器到底学到了什么？<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id9">
+<h3>2.4 分类器到底学到了什么？<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>我们在整个输入空间的网格上评估类概率的预测。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -661,8 +661,8 @@ neural_network = construct_nn(ann_input, ann_output)
 </div>
 </div>
 </div>
-<div class="section" id="id11">
-<h3>2.5 概率曲面<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h3>2.5 概率曲面<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">85</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -678,8 +678,8 @@ neural_network = construct_nn(ann_input, ann_output)
 </div>
 </div>
 </div>
-<div class="section" id="id12">
-<h3>2.6 预测值的不确定性<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3>2.6 预测值的不确定性<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>目前展示的一切，都可以用非贝叶斯神经网络来完成。每个类别标签的后验预测值的平均值应当与最大似然预测值相同。但，在贝叶斯神经网络中，我们还可以查看后验预测值的标准差，来了解预测的不确定性：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -757,11 +757,8 @@ neural_network = construct_nn(ann_input, ann_output)
 <span class="kn">import</span> <span class="nn">PyMC3</span> <span class="k">as</span> <span class="nn">pm</span>
 <span class="kn">import</span> <span class="nn">Theano.tensor</span> <span class="k">as</span> <span class="nn">T</span>
 <span class="kn">import</span> <span class="nn">Theano</span> 
-
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">mode</span><span class="p">,</span> <span class="n">chisquare</span>
-
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">accuracy_score</span>
-
 <span class="kn">import</span> <span class="nn">Lasagne</span> 
 </pre></div>
 </div>
@@ -843,8 +840,8 @@ target_var = `Theano` .shared(y_train[:500, ...].astype(np.float64))
 </div>
 </div>
 </div>
-<div class="section" id="id13">
-<h3>3.2 模型定义<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3>3.2 模型定义<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <p>我认为，仅仅因为意大利宽面条和 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 都依赖于西亚诺，就有可能将它们连接起来。然而，不清楚这到底有多困难。幸运的是，第一个实验效果很好，但有一些潜在的方法可以使这变得更容易。我在 <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 的回购协议上发行了一期 GitHub，几天后，PR695 被合并，这使得两者能够更好地融合，如下所示。OSS 万岁。</p>
 <p>首先， <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 函数用于创建一个 ANN，其中有两个完全连接的隐藏层，每个层有 800 个神经元，这是纯 <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 代码，几乎直接取自教程。在用 <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 创建图层时会用到技巧。层。DenseLayer，在这里我们可以传入一个函数 init，它必须返回一个 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 表达式作为权重和偏差矩阵。这就是我们将传递 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 创建的优先级的地方，这些优先级也是无表达式：</p>
 <div class="cell docutils container">
@@ -912,7 +909,7 @@ target_var = `Theano` .shared(y_train[:500, ...].astype(np.float64))
 <p>接下来是一些设置 mini-batch-ADVI 的函数，您可以在 <a class="reference external" href="https://twiecki.github.io/blog/2016/06/01/bayesian-deep-learning/">前面的博文</a> 中找到更多信息。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>  <span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">zip</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">zip</span>
 
 <span class="c1"># Tensors and RV that will be using mini-batches</span>
 <span class="n">minibatch_tensors</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_var</span><span class="p">,</span> <span class="n">target_var</span><span class="p">]</span>
@@ -959,8 +956,8 @@ target_var = `Theano` .shared(y_train[:500, ...].astype(np.float64))
 </div>
 </div>
 </div>
-<div class="section" id="id14">
-<h3>3.3 模型训练<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h3>3.3 模型训练<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>让我们使用<code class="docutils literal notranslate"><span class="pre">小批量</span> <span class="pre">ADVI</span></code> 运行模型：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -996,8 +993,8 @@ target_var = `Theano` .shared(y_train[:500, ...].astype(np.float64))
 </div>
 <p>性能并不是非常高，但嘿，它似乎真的起作用了。</p>
 </div>
-<div class="section" id="id15">
-<h3>3.4 分层贝叶斯神经网络<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3>3.4 分层贝叶斯神经网络<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">L2</span> <span class="pre">惩罚项</span></code>强度之前的重量标准偏差之间的联系引出了一个有趣的想法。上面我们刚刚修正了 sd=0。1 表示所有层，但第一层的值可能与第二层的值不同。也许是 0。1 开始时太小或太大。在贝叶斯建模中，在这样的情况下，通常只需放置超先验，然后从数据中学习要应用的最佳正则化。这使我们不用在代价高昂的超参数优化中调整该参数。有关分层建模的更多信息，请参阅我的 <a class="reference external" href="https://twiecki.io/blog/2016/07/05/bayesian-deep-learning/">另一篇博文</a>。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1047,8 +1044,8 @@ target_var = `Theano` .shared(y_train[:500, ...].astype(np.float64))
 </div>
 <p>有趣的是，它们都非常不同，这表明改变在网络的每一层应用的正则化量是有意义的。</p>
 </div>
-<div class="section" id="id16">
-<h3>3.5 卷积神经网络的贝叶斯模型<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id15">
+<h3>3.5 卷积神经网络的贝叶斯模型<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p>这很好，但正如我在上一篇文章中所展示的，到目前为止，在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中直接实现的一切都非常简单。真正有趣的是，我们现在可以构建更复杂的人工神经网络，比如卷积神经网络：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1142,16 +1139,16 @@ target_var = `Theano` .shared(y_train[:500, ...].astype(np.float64))
 </div>
 </div>
 </div>
-<div class="section" id="id17">
-<h3>3.6 结论<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id16">
+<h3>3.6 结论<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <p>通过连接 <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 和 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> ，并使用 mini-batch ADVI 在大小适中的复杂数据集（MNIST）上训练贝叶斯神经网络，我们朝着实际问题的贝叶斯深度学习迈出了一大步。</p>
 <p><code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 开发人员设计了 API，使得为这个不常见的应用程序集成变得微不足道，这是他们的荣幸。他们也非常乐于助人，乐于助人。</p>
 <p>最后，我还认为这显示了 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的好处。通过依赖一种常用语言（Python）和抽象计算后端（ <code class="docutils literal notranslate"><span class="pre">Theano</span></code> ），我们能够非常轻松地利用该生态系统的强大功能，并以创建 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 时从未想到的方式使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 。我期待着将其扩展到新的领域。</p>
 <p>这篇博文写在一本 Jupyter 笔记本上。你可以在这里访问 [笔记本](<a class="reference external" href="https://github.com/twiecki/twiecki.github.io/blob/master/downloads/notebooks/bayesian_neural_network_">https://github.com/twiecki/twiecki.github.io/blob/master/downloads/notebooks/bayesian_neural_network_</a> <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> .ipynb)，并在 Twitter 上关注 <a class="reference external" href="https://twitter.com/twiecki">我</a> 以了解最新情况。</p>
 </div>
 </div>
-<div class="section" id="id18">
-<h2>4 致谢<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id17">
+<h2>4 致谢<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">Taku</span> <span class="pre">Yoshioka</span></code> 在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中对最初的 ADVI 实现做了大量工作。我还要感谢斯坦兄弟（特别是阿尔普·库库克尔比尔和丹尼尔·李）推导出了 ADVI 并教给我们关于它的知识。还要感谢克里斯·丰内斯贝克、安德鲁·坎贝尔、吉冈拓谷和皮达尔·科伊尔对早期草稿的有用评论</p>
 </div>
 </div>
@@ -1186,11 +1183,11 @@ target_var = `Theano` .shared(y_train[:500, ...].astype(np.float64))
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="Ref-chapter08-02-VIforDummies.html" title="previous page">
+        <a class="left-prev" href="Append-02-VIforDummies.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">变分推断傻瓜书</p>
+                <p class="prevnext-title">附录 B： 变分法确定性近似推断的傻瓜书</p>
             </div>
         </a>
     </div>

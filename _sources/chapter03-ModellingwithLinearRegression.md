@@ -8,9 +8,10 @@ jupytext:
     jupytext_version: 1.12.0
 kernelspec:
   display_name: Python 3
-  language: python
+  language: ipython3
   name: python3
 ---
+
 
 # 第 3 章 线性回归模型的贝叶斯视角
 
@@ -59,7 +60,7 @@ kernelspec:
 y_i= \alpha + x_i \beta \tag{式3.2}
 \end{equation*}
 
-该等式描述了变量 $\mathbb{x}$ 与变量 $\mathbb{y}$ 之间的线性关系。其中，参数 $β$ 控制直线的斜率，可以理解为变量 $\mathbb{x}$ 的单位变化量所对应 $\mathbb{y}$ 的变化量。另外一个参数 $α$ 为截距，可以解释为当 $x_i=0$ 时, $y_i$ 的值，在图形上表示， $α$ 就是直线与 $y$ 轴交点的坐标。
+该等式描述了变量 $\mathbb{x}$ ```{code-cell} $\mathbb{y}$ 的变化量。另外一个参数 $α$ 为截距，可以解释为当 $x_i=0$ 时, $y_i$ 的值，在图形上表示， $α$ 就是直线与 $y$ 轴交点的坐标。
 
 计算线性模型参数的方法很多，最小二乘法是其中之一。每次使用软件去拟合直线时，底层可能用的就是最小二乘法。最小二乘法返回的 $α$ 和 $β$ 能够让观测到的 $y$ 与预测的 $\hat y$ 之间均方误差最小。其估计 $α$ 和 $β$ 本质是一个最优化问题，其目标是寻找使目标函数达到最值（最小值或最大值）时的参数解。
 
@@ -171,13 +172,15 @@ with pm.Model() as model_g:
 如果不在模型中显式地定义确定性变量。则 `PCMC3` 仍会计算该变量，但不会将保存其迹。例如，可编写以下代码：
 
 ```{code-cell} ipython3
-y_pred = pm.Normal('y_pred', mu = α + β*x, sd = ϵ, observed = y)
+with model_g:
+    y_pred = pm.Normal('y_pred', mu = α + β*x, sd = ϵ, observed = y)
 ```
 
 为探索推断结果，可以绘制未知随机变量的迹图（`图 3.3`），此处省略了确定性变量 $\mu$ 。你可以通过将变量名称（随机变量或显式确定性变量）以列表形式传递给参数 `var_names` 的方式，来实现多变量迹图的绘制。许多 `ArviZ` 函数都有一个 `var_names` 参数，你可以尝试其他 `ArviZ` 的绘图函数来探索后验。
 
 ```{code-cell} ipython3
-az.plot_trace(trace_g, var_names = ['α','β','ϵ'])
+with model_g:
+    az.plot_trace(trace_g, var_names = ['α','β','ϵ'])
 ```
 
 <center>
@@ -198,7 +201,8 @@ az.plot_trace(trace_g, var_names = ['α','β','ϵ'])
 事实上，上述模型中，不论用哪条直线去拟合数据，该直线都会穿过 $\mathbb{x}$ 和 $\mathbb{y}$ 的均值点。拟合直线的过程相当于将直线固定在均值点上做旋转，其结果是呈现出`斜率越大截距越小`的相关性。如果将后验画出来的话可以很清楚地看到这点（见`图 3.4` , 暂时忽略 $ε$ ）。
 
 ```{code-cell} ipython3
-az.plot_pair(trace_g, var_names = ['α', 'β'], plot_kwargs = {'alpha': 0.1})
+with model_g:
+    az.plot_pair(trace_g, var_names = ['α', 'β'], plot_kwargs = {'alpha': 0.1})
 ```
 
 <center>
