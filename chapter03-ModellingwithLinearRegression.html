@@ -524,7 +524,7 @@ y_i= \alpha + x_i \beta \tag{式3.2}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2272/4172630698.py:18: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2243/4172630698.py:18: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
   plt.tight_layout()
 </pre></div>
 </div>
@@ -554,7 +554,7 @@ y_i= \alpha + x_i \beta \tag{式3.2}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2272/162259929.py:12: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2243/162259929.py:12: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_g = pm.sample(2000, tune = 1000)
 Auto-assigning NUTS sampler...
 </pre></div>
@@ -564,7 +564,7 @@ Auto-assigning NUTS sampler...
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
 KeyboardInterrupt                         Traceback (most recent call last)
-/tmp/ipykernel_2272/162259929.py in &lt;module&gt;
+/tmp/ipykernel_2243/162259929.py in &lt;module&gt;
      10 
      11     # 近似推断：随机采样生成模型中所有随机变量（模型参数或隐变量等）和显式确定性变量的迹
 ---&gt; 12     trace_g = pm.sample(2000, tune = 1000)
@@ -836,27 +836,6 @@ KeyboardInterrupt                         Traceback (most recent call last)
    1395                         if not isinstance(term, Variable):
 
 /opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
    1218                             )
    1219 
 -&gt; 1220                 input_grads = node.op.L_op(inputs, node.outputs, new_output_grads)
@@ -876,6 +855,20 @@ KeyboardInterrupt                         Traceback (most recent call last)
 --&gt; 668             ret.append(transform(scalar_igrad))
     669 
     670         return ret
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
+    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+--&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
+    660             return new_r
+    661 
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in &lt;listcomp&gt;(.0)
+    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+--&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
+    660             return new_r
+    661 
 
 /opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
     657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
@@ -969,32 +962,32 @@ KeyboardInterrupt                         Traceback (most recent call last)
    2498         except Exception:
 
 /opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/utils.py in output_subprocess_Popen(command, **params)
-    249     params[&quot;stdout&quot;] = subprocess.PIPE
-    250     params[&quot;stderr&quot;] = subprocess.PIPE
---&gt; 251     p = subprocess_Popen(command, **params)
     252     # we need to use communicate to make sure we don&#39;t deadlock around
     253     # the stdout/stderr pipe.
+--&gt; 254     out = p.communicate()
+    255     return out + (p.returncode,)
+    256 
 
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/utils.py in subprocess_Popen(command, **params)
-    215 
-    216     try:
---&gt; 217         proc = subprocess.Popen(command, startupinfo=startupinfo, **params)
-    218     finally:
-    219         if stdin is not None:
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/subprocess.py in communicate(self, input, timeout)
+   1026 
+   1027             try:
+-&gt; 1028                 stdout, stderr = self._communicate(input, endtime, timeout)
+   1029             except KeyboardInterrupt:
+   1030                 # https://bugs.python.org/issue25942
 
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/subprocess.py in __init__(self, args, bufsize, executable, stdin, stdout, stderr, preexec_fn, close_fds, shell, cwd, env, universal_newlines, startupinfo, creationflags, restore_signals, start_new_session, pass_fds, encoding, errors, text)
-    856                             encoding=encoding, errors=errors)
-    857 
---&gt; 858             self._execute_child(args, executable, preexec_fn, close_fds,
-    859                                 pass_fds, cwd, env,
-    860                                 startupinfo, creationflags, shell,
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/subprocess.py in _communicate(self, input, endtime, orig_timeout)
+   1866                             &#39;failed to raise TimeoutExpired.&#39;)
+   1867 
+-&gt; 1868                     ready = selector.select(timeout)
+   1869                     self._check_timeout(endtime, orig_timeout, stdout, stderr)
+   1870 
 
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/subprocess.py in _execute_child(self, args, executable, preexec_fn, close_fds, pass_fds, cwd, env, startupinfo, creationflags, shell, p2cread, p2cwrite, c2pread, c2pwrite, errread, errwrite, restore_signals, start_new_session)
-   1658                 errpipe_data = bytearray()
-   1659                 while True:
--&gt; 1660                     part = os.read(errpipe_read, 50000)
-   1661                     errpipe_data += part
-   1662                     if not part or len(errpipe_data) &gt; 50000:
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/selectors.py in select(self, timeout)
+    413         ready = []
+    414         try:
+--&gt; 415             fd_event_list = self._selector.poll(timeout)
+    416         except InterruptedError:
+    417             return ready
 
 KeyboardInterrupt: 
 </pre></div>
