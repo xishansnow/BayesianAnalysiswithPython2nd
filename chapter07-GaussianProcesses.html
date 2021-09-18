@@ -425,7 +425,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f5a1b61ec40&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f2e6e98ae50&gt;
 </pre></div>
 </div>
 <img alt="_images/chapter07-GaussianProcesses_2_1.png" src="_images/chapter07-GaussianProcesses_2_1.png" />
@@ -633,7 +633,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3323/2934940681.py:16: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3267/2934940681.py:16: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_reg = pm.sample(2000)
 Auto-assigning NUTS sampler...
 </pre></div>
@@ -641,210 +641,301 @@ Auto-assigning NUTS sampler...
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Initializing NUTS using jitter+adapt_diag...
 </pre></div>
 </div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_3323</span><span class="o">/</span><span class="mf">2934940681.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">marginal_likelihood</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="n">ϵ</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span> 
-<span class="ne">---&gt; </span><span class="mi">16</span>     <span class="n">trace_reg</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
+KeyboardInterrupt                         Traceback (most recent call last)
+/tmp/ipykernel_3267/2934940681.py in &lt;module&gt;
+     14     y_pred = gp.marginal_likelihood(&#39;y_pred&#39;, X=X, y=y, noise=ϵ)
+     15 
+---&gt; 16     trace_reg = pm.sample(2000)
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/sampling.py</span> in <span class="ni">sample</span><span class="nt">(draws, step, init, n_init, start, trace, chain_idx, chains, cores, tune, progressbar, model, random_seed, discard_tuned_samples, compute_convergence_checks, callback, jitter_max_retries, return_inferencedata, idata_kwargs, mp_ctx, pickle_backend, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">494</span>             <span class="c1"># By default, try to use NUTS</span>
-<span class="g g-Whitespace">    </span><span class="mi">495</span>             <span class="n">_log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Auto-assigning NUTS sampler...&quot;</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">496</span>             <span class="n">start_</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="n">init_nuts</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">497</span>                 <span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">498</span>                 <span class="n">chains</span><span class="o">=</span><span class="n">chains</span><span class="p">,</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/sampling.py in sample(draws, step, init, n_init, start, trace, chain_idx, chains, cores, tune, progressbar, model, random_seed, discard_tuned_samples, compute_convergence_checks, callback, jitter_max_retries, return_inferencedata, idata_kwargs, mp_ctx, pickle_backend, **kwargs)
+    494             # By default, try to use NUTS
+    495             _log.info(&quot;Auto-assigning NUTS sampler...&quot;)
+--&gt; 496             start_, step = init_nuts(
+    497                 init=init,
+    498                 chains=chains,
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/sampling.py</span> in <span class="ni">init_nuts</span><span class="nt">(init, chains, n_init, model, random_seed, progressbar, jitter_max_retries, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2096</span>         <span class="n">potential</span> <span class="o">=</span> <span class="n">quadpotential</span><span class="o">.</span><span class="n">QuadPotentialDiagAdapt</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2097</span>     <span class="k">elif</span> <span class="n">init</span> <span class="o">==</span> <span class="s2">&quot;jitter+adapt_diag&quot;</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">2098</span>         <span class="n">start</span> <span class="o">=</span> <span class="n">_init_jitter</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">chains</span><span class="p">,</span> <span class="n">jitter_max_retries</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2099</span>         <span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">model</span><span class="o">.</span><span class="n">dict_to_array</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="k">for</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">start</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2100</span>         <span class="n">var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">mean</span><span class="p">)</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/sampling.py in init_nuts(init, chains, n_init, model, random_seed, progressbar, jitter_max_retries, **kwargs)
+   2185         raise ValueError(f&quot;Unknown initializer: {init}.&quot;)
+   2186 
+-&gt; 2187     step = pm.NUTS(potential=potential, model=model, **kwargs)
+   2188 
+   2189     return start, step
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/sampling.py</span> in <span class="ni">_init_jitter</span><span class="nt">(model, chains, jitter_max_retries)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1989</span>             <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">jitter_max_retries</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1990</span>                 <span class="k">try</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1991</span>                     <span class="n">check_start_vals</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1992</span>                 <span class="k">except</span> <span class="n">SamplingError</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1993</span>                     <span class="k">pass</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/step_methods/hmc/nuts.py in __init__(self, vars, max_treedepth, early_max_treedepth, **kwargs)
+    166         `pm.sample` to the desired number of tuning steps.
+    167         &quot;&quot;&quot;
+--&gt; 168         super().__init__(vars, **kwargs)
+    169 
+    170         self.max_treedepth = max_treedepth
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/util.py</span> in <span class="ni">check_start_vals</span><span class="nt">(start, model)</span>
-<span class="g g-Whitespace">    </span><span class="mi">232</span>             <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">233</span> 
-<span class="ne">--&gt; </span><span class="mi">234</span>         <span class="n">initial_eval</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">check_test_point</span><span class="p">(</span><span class="n">test_point</span><span class="o">=</span><span class="n">elem</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">235</span> 
-<span class="g g-Whitespace">    </span><span class="mi">236</span>         <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">initial_eval</span><span class="p">)):</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/step_methods/hmc/base_hmc.py in __init__(self, vars, scaling, step_scale, is_cov, model, blocked, potential, dtype, Emax, target_accept, gamma, k, t0, adapt_step_size, step_rand, **theano_kwargs)
+     86         vars = inputvars(vars)
+     87 
+---&gt; 88         super().__init__(vars, blocked=blocked, model=model, dtype=dtype, **theano_kwargs)
+     89 
+     90         self.adapt_step_size = adapt_step_size
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/model.py</span> in <span class="ni">check_test_point</span><span class="nt">(self, test_point, round_vals)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1382</span> 
-<span class="g g-Whitespace">   </span><span class="mi">1383</span>         <span class="k">return</span> <span class="n">Series</span><span class="p">(</span>
-<span class="ne">-&gt; </span><span class="mi">1384</span>             <span class="p">{</span><span class="n">RV</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">RV</span><span class="o">.</span><span class="n">logp</span><span class="p">(</span><span class="n">test_point</span><span class="p">),</span> <span class="n">round_vals</span><span class="p">)</span> <span class="k">for</span> <span class="n">RV</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">basic_RVs</span><span class="p">},</span>
-<span class="g g-Whitespace">   </span><span class="mi">1385</span>             <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Log-probability of test_point&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1386</span>         <span class="p">)</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/step_methods/arraystep.py in __init__(self, vars, model, blocked, dtype, logp_dlogp_func, **theano_kwargs)
+    252 
+    253         if logp_dlogp_func is None:
+--&gt; 254             func = model.logp_dlogp_function(vars, dtype=dtype, **theano_kwargs)
+    255         else:
+    256             func = logp_dlogp_func
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/model.py</span> in <span class="ni">&lt;dictcomp&gt;</span><span class="nt">(.0)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1382</span> 
-<span class="g g-Whitespace">   </span><span class="mi">1383</span>         <span class="k">return</span> <span class="n">Series</span><span class="p">(</span>
-<span class="ne">-&gt; </span><span class="mi">1384</span>             <span class="p">{</span><span class="n">RV</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">RV</span><span class="o">.</span><span class="n">logp</span><span class="p">(</span><span class="n">test_point</span><span class="p">),</span> <span class="n">round_vals</span><span class="p">)</span> <span class="k">for</span> <span class="n">RV</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">basic_RVs</span><span class="p">},</span>
-<span class="g g-Whitespace">   </span><span class="mi">1385</span>             <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Log-probability of test_point&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1386</span>         <span class="p">)</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/model.py in logp_dlogp_function(self, grad_vars, tempered, **kwargs)
+   1002         varnames = [var.name for var in grad_vars]
+   1003         extra_vars = [var for var in self.free_RVs if var.name not in varnames]
+-&gt; 1004         return ValueGradFunction(costs, grad_vars, extra_vars, **kwargs)
+   1005 
+   1006     @property
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/model.py</span> in <span class="ni">logp</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">415</span>     <span class="k">def</span> <span class="nf">logp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">416</span>         <span class="sd">&quot;&quot;&quot;Compiled log probability density function&quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">417</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">fn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">logpt</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">418</span> 
-<span class="g g-Whitespace">    </span><span class="mi">419</span>     <span class="nd">@property</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/model.py in __init__(self, costs, grad_vars, extra_vars, dtype, casting, compute_grads, **kwargs)
+    689 
+    690         if compute_grads:
+--&gt; 691             grad = tt.grad(self._cost_joined, self._vars_joined)
+    692             grad.name = &quot;__grad&quot;
+    693             outputs = [self._cost_joined, grad]
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/model.py</span> in <span class="ni">fn</span><span class="nt">(self, outs, mode, *args, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1276</span>         <span class="n">Compiled</span> <span class="n">Theano</span> <span class="n">function</span>
-<span class="g g-Whitespace">   </span><span class="mi">1277</span>         <span class="sd">&quot;&quot;&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">1278</span><span class="sd">         return LoosePointFunc(self.makefn(outs, mode, *args, **kwargs), self)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1279</span><span class="sd"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">1280</span><span class="sd">     def fastfn(self, outs, mode=None, *args, **kwargs):</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in grad(cost, wrt, consider_constant, disconnected_inputs, add_names, known_grads, return_disconnected, null_gradients)
+    637             assert g.type.dtype in theano.tensor.float_dtypes
+    638 
+--&gt; 639     rval = _populate_grad_dict(var_to_app_to_idx, grad_dict, wrt, cost_name)
+    640 
+    641     for i in range(len(rval)):
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/model.py</span> in <span class="ni">makefn</span><span class="nt">(self, outs, mode, *args, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1252</span><span class="sd">         &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1253</span>         <span class="k">with</span> <span class="bp">self</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1254</span>             <span class="k">return</span> <span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1255</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">vars</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1256</span>                 <span class="n">outs</span><span class="p">,</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in _populate_grad_dict(var_to_app_to_idx, grad_dict, wrt, cost_name)
+   1438         return grad_dict[var]
+   1439 
+-&gt; 1440     rval = [access_grad_cache(elem) for elem in wrt]
+   1441 
+   1442     return rval
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/compile/function/__init__.py</span> in <span class="ni">function</span><span class="nt">(inputs, outputs, mode, updates, givens, no_default_updates, accept_inplace, name, rebuild_strict, allow_input_downcast, profile, on_unused_input)</span>
-<span class="g g-Whitespace">    </span><span class="mi">335</span>         <span class="c1"># note: pfunc will also call orig_function -- orig_function is</span>
-<span class="g g-Whitespace">    </span><span class="mi">336</span>         <span class="c1">#      a choke point that all compilation must pass through</span>
-<span class="ne">--&gt; </span><span class="mi">337</span>         <span class="n">fn</span> <span class="o">=</span> <span class="n">pfunc</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">338</span>             <span class="n">params</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">339</span>             <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1438         return grad_dict[var]
+   1439 
+-&gt; 1440     rval = [access_grad_cache(elem) for elem in wrt]
+   1441 
+   1442     return rval
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/compile/function/pfunc.py</span> in <span class="ni">pfunc</span><span class="nt">(params, outputs, mode, updates, givens, no_default_updates, accept_inplace, name, rebuild_strict, allow_input_downcast, profile, on_unused_input, output_keys)</span>
-<span class="g g-Whitespace">    </span><span class="mi">522</span>         <span class="n">inputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">si</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">523</span> 
-<span class="ne">--&gt; </span><span class="mi">524</span>     <span class="k">return</span> <span class="n">orig_function</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">525</span>         <span class="n">inputs</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">526</span>         <span class="n">cloned_outputs</span><span class="p">,</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/compile/function/types.py</span> in <span class="ni">orig_function</span><span class="nt">(inputs, outputs, mode, accept_inplace, name, profile, on_unused_input, output_keys)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1968</span>     <span class="k">try</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1969</span>         <span class="n">Maker</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mode</span><span class="p">,</span> <span class="s2">&quot;function_maker&quot;</span><span class="p">,</span> <span class="n">FunctionMaker</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1970</span>         <span class="n">m</span> <span class="o">=</span> <span class="n">Maker</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1971</span>             <span class="n">inputs</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1972</span>             <span class="n">outputs</span><span class="p">,</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/compile/function/types.py</span> in <span class="ni">__init__</span><span class="nt">(self, inputs, outputs, mode, accept_inplace, function_builder, profile, on_unused_input, fgraph, output_keys, name)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1613</span>                         <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1614</span>                     <span class="k">else</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1615</span>                         <span class="n">optimizer_profile</span> <span class="o">=</span> <span class="n">optimizer</span><span class="p">(</span><span class="n">fgraph</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1616</span> 
-<span class="g g-Whitespace">   </span><span class="mi">1617</span>                     <span class="n">end_optimizer</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/opt.py</span> in <span class="ni">__call__</span><span class="nt">(self, fgraph)</span>
-<span class="g g-Whitespace">     </span><span class="mi">90</span> 
-<span class="g g-Whitespace">     </span><span class="mi">91</span>         <span class="sd">&quot;&quot;&quot;</span>
-<span class="ne">---&gt; </span><span class="mi">92</span><span class="sd">         return self.optimize(fgraph)</span>
-<span class="g g-Whitespace">     </span><span class="mi">93</span><span class="sd"> </span>
-<span class="g g-Whitespace">     </span><span class="mi">94</span><span class="sd">     def add_requirements(self, fgraph):</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/opt.py</span> in <span class="ni">optimize</span><span class="nt">(self, fgraph, *args, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">81</span><span class="sd">         &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">82</span>         <span class="bp">self</span><span class="o">.</span><span class="n">add_requirements</span><span class="p">(</span><span class="n">fgraph</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">83</span>         <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">fgraph</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">84</span>         <span class="k">return</span> <span class="n">ret</span>
-<span class="g g-Whitespace">     </span><span class="mi">85</span> 
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/opt.py</span> in <span class="ni">apply</span><span class="nt">(self, fgraph)</span>
-<span class="g g-Whitespace">    </span><span class="mi">243</span>                     <span class="n">nb_nodes_before</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fgraph</span><span class="o">.</span><span class="n">apply_nodes</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">244</span>                     <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="ne">--&gt; </span><span class="mi">245</span>                     <span class="n">sub_prof</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">fgraph</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">246</span>                     <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">247</span>                     <span class="n">sub_profs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub_prof</span><span class="p">)</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/opt.py</span> in <span class="ni">optimize</span><span class="nt">(self, fgraph, *args, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">81</span>         <span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">82</span><span class="sd">         self.add_requirements(fgraph)</span>
-<span class="ne">---&gt; </span><span class="mi">83</span><span class="sd">         ret = self.apply(fgraph, *args, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">84</span><span class="sd">         return ret</span>
-<span class="g g-Whitespace">     </span><span class="mi">85</span><span class="sd"> </span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/opt.py</span> in <span class="ni">apply</span><span class="nt">(self, fgraph)</span>
-<span class="g g-Whitespace">    </span><span class="mi">243</span><span class="sd">                     nb_nodes_before = len(fgraph.apply_nodes)</span>
-<span class="g g-Whitespace">    </span><span class="mi">244</span><span class="sd">                     t0 = time.time()</span>
-<span class="ne">--&gt; </span><span class="mi">245</span><span class="sd">                     sub_prof = optimizer.optimize(fgraph)</span>
-<span class="g g-Whitespace">    </span><span class="mi">246</span><span class="sd">                     l.append(float(time.time() - t0))</span>
-<span class="g g-Whitespace">    </span><span class="mi">247</span><span class="sd">                     sub_profs.append(sub_prof)</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/opt.py</span> in <span class="ni">optimize</span><span class="nt">(self, fgraph, *args, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">81</span><span class="sd">         &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">82</span>         <span class="bp">self</span><span class="o">.</span><span class="n">add_requirements</span><span class="p">(</span><span class="n">fgraph</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">83</span>         <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">fgraph</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">84</span>         <span class="k">return</span> <span class="n">ret</span>
-<span class="g g-Whitespace">     </span><span class="mi">85</span> 
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/opt.py</span> in <span class="ni">apply</span><span class="nt">(self, fgraph)</span>
-<span class="g g-Whitespace">   </span><span class="mi">7725</span>                 <span class="c1"># Don&#39;t try to fuse node that have already been fused.</span>
-<span class="g g-Whitespace">   </span><span class="mi">7726</span>                 <span class="k">if</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">fgraph</span><span class="o">.</span><span class="n">apply_nodes</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">7727</span>                     <span class="n">new_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">(</span><span class="n">fgraph</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">7728</span>                     <span class="k">if</span> <span class="n">new_outputs</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">7729</span>                         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_outputs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/opt.py</span> in <span class="ni">local_fuse</span><span class="nt">(fgraph, node)</span>
-<span class="g g-Whitespace">   </span><span class="mi">7651</span> 
-<span class="g g-Whitespace">   </span><span class="mi">7652</span>         <span class="c1"># create the composite op.</span>
-<span class="ne">-&gt; </span><span class="mi">7653</span>         <span class="n">composite_op</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Composite</span><span class="p">(</span><span class="n">s_inputs</span><span class="p">,</span> <span class="n">s_new_out</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">7654</span> 
-<span class="g g-Whitespace">   </span><span class="mi">7655</span>         <span class="c1"># create the new node.</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/scalar/basic.py</span> in <span class="ni">__init__</span><span class="nt">(self, inputs, outputs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">4143</span>             <span class="c1"># 1. Create a new graph from inputs up to the</span>
-<span class="g g-Whitespace">   </span><span class="mi">4144</span>             <span class="c1"># Composite</span>
-<span class="ne">-&gt; </span><span class="mi">4145</span>             <span class="n">res</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">compile</span><span class="o">.</span><span class="n">rebuild_collect_shared</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">4146</span>                 <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">owner</span><span class="o">.</span><span class="n">inputs</span><span class="p">,</span> <span class="n">copy_inputs_over</span><span class="o">=</span><span class="kc">False</span>
-<span class="g g-Whitespace">   </span><span class="mi">4147</span>             <span class="p">)</span>  <span class="c1"># Clone also the inputs</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/compile/function/pfunc.py</span> in <span class="ni">rebuild_collect_shared</span><span class="nt">(outputs, inputs, replace, updates, rebuild_strict, copy_inputs_over, no_default_updates)</span>
-<span class="g g-Whitespace">    </span><span class="mi">160</span>             <span class="k">return</span> <span class="n">clone_d</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">161</span> 
-<span class="ne">--&gt; </span><span class="mi">162</span>     <span class="n">input_variables</span> <span class="o">=</span> <span class="p">[</span><span class="n">clone_inputs</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">163</span> 
-<span class="g g-Whitespace">    </span><span class="mi">164</span>     <span class="c1"># It was decided, as a first step, to prevent shared variables from</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/compile/function/pfunc.py</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
-<span class="g g-Whitespace">    </span><span class="mi">160</span>             <span class="k">return</span> <span class="n">clone_d</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">161</span> 
-<span class="ne">--&gt; </span><span class="mi">162</span>     <span class="n">input_variables</span> <span class="o">=</span> <span class="p">[</span><span class="n">clone_inputs</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">163</span> 
-<span class="g g-Whitespace">    </span><span class="mi">164</span>     <span class="c1"># It was decided, as a first step, to prevent shared variables from</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/compile/function/pfunc.py</span> in <span class="ni">clone_inputs</span><span class="nt">(i)</span>
-<span class="g g-Whitespace">    </span><span class="mi">156</span>     <span class="k">def</span> <span class="nf">clone_inputs</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">157</span>         <span class="k">if</span> <span class="ow">not</span> <span class="n">copy_inputs_over</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">158</span>             <span class="k">return</span> <span class="n">clone_d</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">.</span><span class="n">clone</span><span class="p">())</span>
-<span class="g g-Whitespace">    </span><span class="mi">159</span>         <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">160</span>             <span class="k">return</span> <span class="n">clone_d</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/basic.py</span> in <span class="ni">clone</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">480</span>         <span class="c1"># return copy(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">481</span>         <span class="n">cp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">482</span>         <span class="n">cp</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">483</span>         <span class="k">return</span> <span class="n">cp</span>
-<span class="g g-Whitespace">    </span><span class="mi">484</span> 
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/copy.py</span> in <span class="ni">copy</span><span class="nt">(x)</span>
-<span class="g g-Whitespace">    </span><span class="mi">100</span>     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rv</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">101</span>         <span class="k">return</span> <span class="n">x</span>
-<span class="ne">--&gt; </span><span class="mi">102</span>     <span class="k">return</span> <span class="n">_reconstruct</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">rv</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">103</span> 
-<span class="g g-Whitespace">    </span><span class="mi">104</span> 
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/copy.py</span> in <span class="ni">_reconstruct</span><span class="nt">(x, memo, func, args, state, listiter, dictiter, deepcopy)</span>
-<span class="g g-Whitespace">    </span><span class="mi">269</span>         <span class="k">if</span> <span class="n">deep</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">270</span>             <span class="n">state</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">memo</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">271</span>         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;__setstate__&#39;</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">272</span>             <span class="n">y</span><span class="o">.</span><span class="n">__setstate__</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">273</span>         <span class="k">else</span><span class="p">:</span>
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
 
-<span class="ne">KeyboardInterrupt</span>: 
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1218                             )
+   1219 
+-&gt; 1220                 input_grads = node.op.L_op(inputs, node.outputs, new_output_grads)
+   1221 
+   1222                 if input_grads is None:
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in L_op(self, inputs, outs, ograds)
+    582                     new_rval.append(elem)
+    583                 else:
+--&gt; 584                     elem = ipt.zeros_like()
+    585                     if str(elem.type.dtype) not in theano.tensor.continuous_dtypes:
+    586                         elem = elem.astype(config.floatX)
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/var.py in zeros_like(model, dtype)
+    773 
+    774     def zeros_like(model, dtype=None):
+--&gt; 775         return theano.tensor.basic.zeros_like(model, dtype=dtype)
+    776 
+    777     def ones_like(model, dtype=None):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/basic.py in zeros_like(model, dtype, opt)
+   2576     if opt and ret.type == model.type:
+   2577         return ret
+-&gt; 2578     return fill(model, ret)
+   2579 
+   2580 
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py in __call__(self, *inputs, **kwargs)
+    248         &quot;&quot;&quot;
+    249         return_list = kwargs.pop(&quot;return_list&quot;, False)
+--&gt; 250         node = self.make_node(*inputs, **kwargs)
+    251 
+    252         if config.compute_test_value != &quot;off&quot;:
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in make_node(self, *inputs)
+    501             DimShuffle, *inputs
+    502         )
+--&gt; 503         outputs = [
+    504             TensorType(dtype=dtype, broadcastable=broadcastable)()
+    505             for dtype, broadcastable in zip(out_dtypes, out_broadcastables)
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in &lt;listcomp&gt;(.0)
+    502         )
+    503         outputs = [
+--&gt; 504             TensorType(dtype=dtype, broadcastable=broadcastable)()
+    505             for dtype, broadcastable in zip(out_dtypes, out_broadcastables)
+    506         ]
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/type.py in __call__(self, name)
+    190 
+    191         &quot;&quot;&quot;
+--&gt; 192         return utils.add_tag_trace(self.make_variable(name))
+    193 
+    194     @classmethod
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/utils.py in add_tag_trace(thing, user_line)
+     67 
+     68 
+---&gt; 69 def add_tag_trace(thing, user_line=None):
+     70     &quot;&quot;&quot;Add tag.trace to a node or variable.
+     71 
+
+KeyboardInterrupt: 
 </pre></div>
 </div>
 </div>
