@@ -1,4 +1,18 @@
+# Tools for build the book
 jupyter-book
-matplotlib
-numpy
 ghp-import
+
+# Libs used by the book
+pymc3==3.11.4
+aesara==2.2.1
+arviz>=0.11.2
+
+# Basic common libs
+matplotlib  #==3.2.2
+sklearn
+pandas      #>=1.2.0
+seaborn     #==0.11.2
+numpy       #>=1.15.0
+scipy       #==1.4.1
+graphviz    #==0.16
+watermark

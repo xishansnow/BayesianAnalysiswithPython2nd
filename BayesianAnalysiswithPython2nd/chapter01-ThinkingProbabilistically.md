@@ -1,14 +1,14 @@
 ---
 jupytext:
-  formats: ipynb,.myst.md:myst,md
+  formats: ipynb,md:myst
   text_representation:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.10.3
+    jupytext_version: 1.12.0
 kernelspec:
   display_name: Python 3
-  language: python
+  language: ipython3
   name: python3
 ---
 
@@ -237,13 +237,14 @@ ax[1,0].set_yticks([])
 非iid变量的常见案例是时间序列，其中随机变量间的时间依赖性是需要考虑的关键特征。例如，以下数据来自 http://cdiac.esd.ornl.gov 。该数据记录了从1959年到1997年的大气二氧化碳水平。加载数据并绘制它得到：
 
 ```{code-cell} ipython3
-
 data = np.genfromtxt('../data/mauna_loa_CO2.csv', delimiter=',')
 plt.plot(data[:,0], data[:,1])
 plt.xlabel('year')
 plt.ylabel('$CO_2$ (ppmv)')
-plt.savefig('B11197_01_02.png', dpi=300)
+
+# plt.savefig('B11197_01_02.png', dpi=300)
 ```
+
 <center>
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210524144726a0.webp)
@@ -355,8 +356,7 @@ for i in range(len(n_params)):
         y = stats.binom(n=n, p=p).pmf(x)
         ax[i,j].vlines(x, 0, y, colors='C0', lw=5)
         ax[i,j].set_ylim(0, 1)
-        ax[i,j].plot(0, 0, label="N = {:3.2f}\nθ =
-                           {:3.2f}".format(n,p), alpha=0)
+        ax[i,j].plot(0, 0, label="N = {:3.2f} \n θ ={:3.2f}".format(n,p), alpha=0)
         ax[i,j].legend()
         ax[2,1].set_xlabel('y')
         ax[1,0].set_ylabel('p(y | θ, N)')
@@ -640,5 +640,3 @@ p(\hat{y} \mid y)=\int p(\hat{y} \mid \theta) p(\theta \mid y) d \theta \tag{式
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505165408_07.webp)
 
 </center>
-
-

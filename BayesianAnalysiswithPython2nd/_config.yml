@@ -24,7 +24,7 @@ execute:
   run_in_temp               : false # If `True`, then a temporary directory will be created and used as the command working directory (cwd),
                                     # otherwise the notebook's parent directory will be the cwd.
   allow_errors              : false # If `False`, when a code cell raises an error the execution is stopped, otherwise all cells are always run.
-  stderr_output             : show  # One of 'show', 'remove', 'remove-warn', 'warn', 'error', 'severe'
+  stderr_output             : error  # One of 'show', 'remove', 'remove-warn', 'warn', 'error', 'severe'
 
 #######################################################################################
 # Parse and render settings
@@ -68,7 +68,7 @@ latex:
 #######################################################################################
 # Launch button settings
 launch_buttons:
-  notebook_interface        : jupyterlab  # The interface interactive links will activate ["classic", "jupyterlab"]
+  notebook_interface        : "jupyterlab"  # The interface interactive links will activate ["classic", "jupyterlab"]
   binderhub_url             : https://mybinder.org  # The URL of the BinderHub (e.g., https://mybinder.org)
   jupyterhub_url            : "https://datahub.berkeley.edu"  # The URL of the JupyterHub (e.g., https://datahub.berkeley.edu)
   thebe                     : false  # Add a thebe button to pages (requires the repository to run on Binder)
@@ -85,7 +85,7 @@ sphinx:
   extra_extensions          :   # A list of extra extensions to load by Sphinx (added to those already used by JB).
   local_extensions          :   # A list of local extensions to load by sphinx specified by "name: path" items
   config                    :   # key-value pairs to directly over-ride the Sphinx configuration
-    html_theme:  'sphinx_book_theme'
-    mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+    html_theme:   'sphinx_book_theme'
+    mathjax_path: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
 
      

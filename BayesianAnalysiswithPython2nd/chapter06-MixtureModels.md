@@ -1,17 +1,16 @@
 ---
 jupytext:
-  formats: ipynb,.myst.md:myst,md
+  formats: ipynb,md:myst
   text_representation:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.10.3
+    jupytext_version: 1.12.0
 kernelspec:
   display_name: Python 3
-  language: python
+  language: ipython3
   name: python3
 ---
-
 
  # 第 6 章 混合模型
 
@@ -169,6 +168,8 @@ y &\sim \mathcal{N}(\mu_{z},\sigma)
 该模型（假设 `clusters=2` ）可以用 `PyMC3` 实现为：
 
 ```{code-cell} ipython3
+clusters=2
+
 with pm.Model() as model_kg:
     # 先验p： 服从狄拉克雷分布
     p = pm.Dirichlet ('p', a=np.ones(clusters))
@@ -196,6 +197,7 @@ with pm.Model() as model_mg:
     means = pm.Normal('means', mu=cs_exp.mean(), sd=10, shape=clusters)
     sd = pm.HalfNormal('sd', sd=10)
     y = pm.NormalMixture('y', w=p, mu=means, sd=sd, observed=cs_exp)
+
     trace_mg = pm.sample(random_seed=123)
 ```
 
@@ -251,9 +253,12 @@ with pm.Model() as model_mgp:
     order_means = pm.Potential('order_means',
                                tt.switch(means[1]-means[0] < 0, -np.inf, 0))
     y = pm.NormalMixture('y', w=p, mu=means, sd=sd, observed=cs_exp)
+
     trace_mgp = pm.sample(1000, random_seed=123)
+
     varnames = ['means', 'p']
-    az.plot_trace(trace_mgp, varnames)
+
+az.plot_trace(trace_mgp, varnames)
 ```
 
 <center>

@@ -1,17 +1,16 @@
 ---
 jupytext:
-  formats: ipynb,.myst.md:myst,md
+  formats: ipynb,md:myst
   text_representation:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.10.3
+    jupytext_version: 1.12.0
 kernelspec:
   display_name: Python 3
-  language: python
+  language: ipython3
   name: python3
 ---
-
 
 # 第 2 章 概率编程
 
@@ -66,14 +65,12 @@ import arviz as az
 az.style.use('arviz-darkgrid')
 ```
 
-
 ```{code-cell} ipython3
 np.random.seed(123)
 trials = 4
 theta_real = 0.35 # unknown value in a real experiment
 data = stats.bernoulli.rvs(p=theta_real, size=trials)
 ```
-
 
 ### 2.2.1 建立模型
 
@@ -89,9 +86,9 @@ y &\sim \operatorname{Bern}(p=\theta)
 
 ```{code-cell} ipython3
 with pm.Model() as our_first_model:
- θ = pm.Beta('θ', alpha=1., beta=1.)
- y = pm.Bernoulli('y', p=θ, observed=data)
- trace = pm.sample(1000, random_seed=123)
+  θ = pm.Beta('θ', alpha=1., beta=1.)
+  y = pm.Bernoulli('y', p=θ, observed=data)
+  trace = pm.sample(1000, random_seed=123)
 ```
 
 第 1 行代码构建了一个模型的容器， `PyMC3` 使用 `with` 语法将所有位于该语法块内的代码都指向同一个模型，你可以把它看作是简化模型描述的“语法糖”，此处将模型命名为 `our_first_model` 。
@@ -187,8 +184,7 @@ az.plot_posterior(trace)
 ```{code-cell} ipython3
 with our_first_model:
  step = pm.Metropolis()
- multi_trace = pm.sample(1000, step=step, njobs=4)
- 
+ multi_trace = pm.sample(1000, step=step)
 az.plot_trace(multi_trace, lines={'theta':theta_real});
 ```
 
@@ -343,10 +339,10 @@ y &\sim \mathcal{N}(\mu, \sigma)
 
 ```{code-cell} ipython3
 with pm.Model() as model_g:
- μ = pm.Uniform('μ', lower=40, upper=70)
- σ = pm.HalfNormal('σ', sd=10)
- y = pm.Normal('y', mu=μ, sd=σ, observed=data)
- trace_g = pm.sample(1000)
+  μ = pm.Uniform('μ', lower=40, upper=70)
+  σ = pm.HalfNormal('σ', sd=10)
+  y = pm.Normal('y', mu=μ, sd=σ, observed=data)
+  trace_g = pm.sample(1000)
 az.plot_trace(trace_g)
 ```
 
@@ -435,6 +431,7 @@ plt.ylabel(\'p(x)\', rotation=0)
 plt.legend(loc=0, fontsize=14)
 plt.xlim(-7, 7)
 ```
+
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210513181355ce.webp)
 
 利用 $t$ 分布可以将模型调整为如下形式：
@@ -460,6 +457,7 @@ with pm.Model() as model_t:
     ν = pm.Exponential('ν', 1/30)
     y = pm.StudentT('y', mu=μ, sd=σ, nu=ν, observed=data)
     trace_t = pm.sample(1000)
+
 az.plot_trace(trace_t)
 ```
 
@@ -589,6 +587,7 @@ idx = pd.Categorical(tips['day'],
       categories=['Thur', 'Fri', 'Sat', 'Sun']).codes
 groups = len(np.unique(idx))
 ```
+
 该模型几乎与 `model_g` 相同；唯一区别是， $\mu$ 和 $\sigma$ 为向量而不是标量。对于这种情况，`PyMC3` 语法非常有用：可以用向量化方式编写模型，而不用编写 `for` 循环。这意味着对于先验和似然，我们可以使用 `idx` 变量正确地索引到其 `mean` 和 `sd` 变量：
 
 的时候，我们会得到 4 个和 4 个。 `PyMC3` 的语法能够很好地适应该场景，我们可以直接用向量的方式表示模型，而不用使用 `for` 循环，代码的变化相比前面的模型很小。对应先验，我们需要传一个维度变量 `shape`，对于似然，我们需要对和正确地进行编码，这也是 为什么创建了 `idx` 变量。
@@ -702,13 +701,15 @@ y_{i} & \sim \operatorname{Bern}\left(\theta_{i}\right)
 
 ```{code-cell} ipython3
 with pm.Model() as model_h:
- μ = pm.Beta('μ', 1., 1.)
- κ = pm.HalfNormal('κ', 10)
- θ = pm.Beta('θ', alpha=μ*κ, beta=(1.0-μ)*κ, shape=len(N_samples))
- y = pm.Bernoulli('y', p=θ[group_idx], observed=data)
- trace_h = pm.sample(2000)
+  μ = pm.Beta('μ', 1., 1.)
+  κ = pm.HalfNormal('κ', 10)
+  θ = pm.Beta('θ', alpha=μ*κ, beta=(1.0-μ)*κ, shape=len(N_samples))
+  y = pm.Bernoulli('y', p=θ[group_idx], observed=data)
+  
+  trace_h = pm.sample(2000)
 az.plot_trace(trace_h)
 ```
+
 <center>
 
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210504181604_78.webp" style="zoom:67%;" />

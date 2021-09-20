@@ -1,18 +1,16 @@
 ---
 jupytext:
-  formats: ipynb,.myst.md:myst,md
+  formats: ipynb,md:myst
   text_representation:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.10.3
+    jupytext_version: 1.12.0
 kernelspec:
   display_name: Python 3
-  language: python
+  language: ipython3
   name: python3
 ---
-
-
 
  #  第 8 章 推断引擎
 
@@ -113,7 +111,6 @@ plt.yticks([])
 plt.xlabel('θ');
 ```
 
-
 ```{figure} https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021060716063392.webp
 ---
 align:  center
@@ -203,7 +200,6 @@ plt.title(f'heads = {h}, tails = {t}')
 plt.xlabel('θ', fontsize=14)
 plt.yticks([]);
 ```
-
 
 ```{figure} https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021060716150097.webp
 ---
@@ -388,7 +384,6 @@ plt.yticks([])
 plt.legend(loc=1, frameon=True, framealpha=0.9);
 ```
 
-
 ```{figure} https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021060716361541.webp
 ---
 align:  center
@@ -490,14 +485,12 @@ x = np.linspace(0.01, .99, 100)
 y = func.pdf(x)
 plt.xlim(0, 1)
 plt.plot(x, y, 'C1-', lw=3, label='True distribution')
-plt.hist(trace[trace > 0], bins=25, density=True, label='Estimated
-distribution')
+plt.hist(trace[trace > 0], bins=25, density=True, label='Estimated distribution')
 plt.xlabel('x')
 plt.ylabel('pdf(x)')
 plt.yticks([])
 plt.legend();
 ```
-
 
 ```{figure} https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210608114143f5.webp
 ---
@@ -592,6 +585,7 @@ with pm.Model() as centered_model:
     a = pm.HalfNormal('a', 10)
     b = pm.Normal('b', 0, a, shape=10)
     trace_cm = pm.sample(2000, random_seed=7)
+    
 with pm.Model() as non_centered_model:
     a = pm.HalfNormal('a', 10)
     b_shift = pm.Normal('b_offset', mu=0, sd=1, shape=10)
@@ -622,7 +616,6 @@ name: Fig8.7
 ```{code-cell} ipython3
 az.plot_trace(trace_ncm, var_names=['a'])
 ```
-
 
 ```{figure} https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210607170440ad.webp
 ---
@@ -656,7 +649,6 @@ name: Fig8.9
 az.plot_forest(trace_cm, var_names=['a'], r_hat=True, eff_n=True)
 ```
 
-
 ```{figure} https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210607170617f5.webp
 ---
 align:  center
@@ -673,7 +665,6 @@ summaries = pd.concat([az.summary(trace_cm, var_names=['a']),
 summaries.index = ['centered', 'non_centered']
 summaries
 ```
-
 
 ```{image} https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210607170651ca.webp
 ---
@@ -699,7 +690,6 @@ align:  center
 az.plot_autocorr(trace_cm, var_names=['a'])
 ```
 
-
 ```{figure} https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_202106071708494c.webp
 ---
 align:  center
@@ -713,7 +703,6 @@ name: Fig8.11
 ```{code-cell} ipython3
 az.plot_autocorr(trace_ncm, var_names=['a'])
 ```
-
 
 ```{figure} https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210608130900c0.webp
 ---
@@ -754,7 +743,6 @@ divergences_kwargs={'color':'C1'},
     ax[idx].set_title(['centered', 'non-centered'][idx])
 ```
 
-
 ```{figure} https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_2021060717112515.webp
 ---
 align:  center
@@ -772,7 +760,6 @@ name: Fig8.13
 ```{code-cell} ipython3
 az.plot_parallel(trace_cm)
 ```
-
 
 ```{figure} https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210607171240da.webp
 ---

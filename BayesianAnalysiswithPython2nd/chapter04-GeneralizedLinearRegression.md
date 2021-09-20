@@ -1,17 +1,16 @@
 ---
 jupytext:
-  formats: ipynb,.myst.md:myst,md
+  formats: ipynb,md:myst
   text_representation:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.10.3
+    jupytext_version: 1.12.0
 kernelspec:
   display_name: Python 3
-  language: python
+  language: ipython3
   name: python3
 ---
-
 
  # 第 4 章 广义线性回归模型
 
@@ -72,7 +71,6 @@ import arviz as az
 
 az.style.use('arviz-darkgrid')
 ```
-
 
 ```{code-cell} ipython3
 z = np.linspace(-8, 8)
@@ -169,7 +167,7 @@ sns.pairplot(iris, hue='species', diag_kind='kde')
 和前面一样，这里用 0 和 1 对因变量 $\mathbf{y}$ 进行编码，利用 `Pandas` 可以这么做：
 
 ```{code-cell} ipython3
-df = iris.query(species == (' `Setosa` ', 'Versicolour '))
+df = iris.query("species == ('Setosa', 'Versicolour')")
 y_0 = pd.Categorical(df['species']).codes
 x_n = 'sepal_length'
 x_0 = df[x_n].values
@@ -182,13 +180,14 @@ x_c = x_0 - x_0.mean()
 
 ```{code-cell} ipython3
 with pm.Model() as model_0:
- α = pm.Normal('α', mu=0, sd=10)
- β = pm.Normal('β', mu=0, sd=10)
- μ = α + pm.math.dot(x_c, β)
- θ = pm.Deterministic('θ', pm.math.sigmoid(μ)) 
- bd = pm.Deterministic('bd', -α/β)
- yl = pm.Bernoulli('yl', p=θ, observed=y_0)
- trace_0 = pm.sample(1000)
+   α = pm.Normal('α', mu=0, sd=10)
+   β = pm.Normal('β', mu=0, sd=10)
+   μ = α + pm.math.dot(x_c, β)
+   θ = pm.Deterministic('θ', pm.math.sigmoid(μ)) 
+   bd = pm.Deterministic('bd', -α/β)
+   yl = pm.Bernoulli('yl', p=θ, observed=y_0)
+   
+   trace_0 = pm.sample(1000)
 ```
 
 为节省页数，同时避免对同一类型图件反复出现感到厌烦，将省略迹图和其他类似的摘要图，但鼓励您制作自己的迹图和摘要，以进一步探索本书中的例子。我们将直接跳到如何生成下图，这是一个数据曲线图，以及拟合的 `sigmoid` 曲线和决策边界：
@@ -198,11 +197,11 @@ theta = trace_0['θ'].mean(axis=0)
 idx = np.argsort(x_c)
 plt.plot(x_c[idx], theta[idx], color='C2', lw=3)
 plt.vlines(trace_0['bd'].mean(), 0, 1, color='k')
-bd_hpd = az.hpd(trace_0['bd'])
-plt.fill_betweenx([0, 1], bd_hpd[0], bd_hpd[1], color='k', alpha=0.5)
+bd_hdi = az.hdi(trace_0['bd'])
+plt.fill_betweenx([0, 1], bd_hdi[0], bd_hdi[1], color='k', alpha=0.5)
 plt.scatter(x_c, np.random.normal(y_0, 0.02),
             marker='.', color=[f'C{x}' for x in y_0])
-az.plot_hpd(x_c, trace_0['θ'], color='C2')
+az.plot_hdi(x_c, trace_0['θ'], color='C2')
 plt.xlabel(x_n)
 plt.ylabel('θ', rotation=0)
 # use original scale for xticks
@@ -217,7 +216,7 @@ plt.xticks(locs, np.round(locs + x_0.mean(), 1))
 图 4.4
 </center>
 
-前面这张图表示了花萼长度与花种类（ `Setosa = 0, Versicolour = 1`）之间的关系。绿色的 $S$ 型曲线表示 $\theta$ 的均值，这条线可以解释为：在知道花萼长度的情况下花的种类是 `Versicolour` 的概率，即半透明的绿色区间是 `94% HPD 区间`。边界判定用一条（黑色）垂直线表示，其 94%的 HPD 为半透明带。根据边界判定，左侧的值（在本例中为萼片长度）对应于 类 0 （ `Setosa` ），右侧的值对应于类 1 （ `Versicolour` ）。
+前面这张图表示了花萼长度与花种类（ `Setosa = 0, Versicolour = 1`）之间的关系。绿色的 $S$ 型曲线表示 $\theta$ 的均值，这条线可以解释为：在知道花萼长度的情况下花的种类是 `Versicolour` 的概率，即半透明的绿色区间是 `94% hdi 区间`。边界判定用一条（黑色）垂直线表示，其 94%的 hdi 为半透明带。根据边界判定，左侧的值（在本例中为萼片长度）对应于 类 0 （ `Setosa` ），右侧的值对应于类 1 （ `Versicolour` ）。
 
 决策边界由 $y=0.5$ 时的 $x$ 取值定义，可以证明其结果为 $-\frac{\alpha}{\beta}$ ，推导过程如下：
 
@@ -308,13 +307,13 @@ bd = trace_1['bd'].mean(0)[idx]
 plt.scatter(x_1[:,0], x_1[:,1], c=[f'C{x}' for x in y_0])
 plt.plot(x_1[:,0][idx], bd, color='k');
 
-az.plot_hpd(x_1[:,0], trace_1['bd'], color='k')
+az.plot_hdi(x_1[:,0], trace_1['bd'], color='k')
 
 plt.xlabel(x_n[0])
 plt.ylabel(x_n[1]
 ```
 
-决策边界现在是一条直线，不要被 `95% HPD 区间`的曲线给误导了。图中半透明的曲线是由于在中间部分多条直线绕中心区域旋转的结果（大致围绕 $x$ 的平均值 和 $y$ 的平均值）。
+决策边界现在是一条直线，不要被 `95% hdi 区间`的曲线给误导了。图中半透明的曲线是由于在中间部分多条直线绕中心区域旋转的结果（大致围绕 $x$ 的平均值 和 $y$ 的平均值）。
 
 <center>
 
@@ -391,6 +390,7 @@ ax2.grid(False)
 ```{code-cell} ipython3
 df = az.summary(trace_1, var_names=varnames)
 ```
+
 <center>
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210429234020_01.webp)
@@ -424,7 +424,7 @@ probability_versicolor_i
 
 在`第 3 章『线性回归模型』`中曾探讨过，当变量间存在（高度）相关时，会存在一些棘手的问题。此时，相关变量转化为能够解释数据的更广泛的系数组合，或者从互补角度来看，相关的变量对模型的约束能力变小。即使在类完全可分时（在给定变量的线性组合的情况下，类之间没有重叠），也会出现类似问题。
 
-使用 Iris 数据集，可以尝试运行 `model_1`，但这一次使用 `petal_width` 和 `petal_length` 变量。您会发现 $\beta$ 系数比以前更宽了，而且图中 `94% HPD区间` 也更宽了：
+使用 Iris 数据集，可以尝试运行 `model_1`，但这一次使用 `petal_width` 和 `petal_length` 变量。您会发现 $\beta$ 系数比以前更宽了，而且图中 `94% hdi区间` 也更宽了：
 
 ```{code-cell} ipython3
 corr = iris[iris['species'] != 'virginica'].corr()
@@ -489,7 +489,7 @@ idx = np.argsort(x_3[:,0])
 bd = trace_3['bd'].mean(0)[idx]
 plt.scatter(x_3[:,0], x_3[:,1], c= [f'C{x}' for x in y_3])
 plt.plot(x_3[:,0][idx], bd, color='k')
-az.plot_hpd(x_3[:,0], trace_3['bd'], color='k')
+az.plot_hdi(x_3[:,0], trace_3['bd'], color='k')
 plt.xlabel(x_n[0])
 plt.ylabel(x_n[1])
 ```
@@ -535,12 +535,12 @@ with pm.Model() as lda:
  trace_lda = pm.sample(1000)
 ```
 
-下面再将 `setosa=0` 和 `versicolor=1` 两个类别与花萼长度的关系画出来，一同画出来的还有一条红色的决策边界以及对应的 `94% HPD 区间`。
+下面再将 `setosa=0` 和 `versicolor=1` 两个类别与花萼长度的关系画出来，一同画出来的还有一条红色的决策边界以及对应的 `94% hdi 区间`。
 
 ```{code-cell} ipython3
 plt.axvline(trace_lda['bd'].mean(), ymax=1, color='C1')
-bd_hpd = az.hpd(trace_lda['bd'])
-plt.fill_betweenx([0, 1], bd_hpd[0], bd_hpd[1], color='C1', alpha=0.5)
+bd_hdi = az.hdi(trace_lda['bd'])
+plt.fill_betweenx([0, 1], bd_hdi[0], bd_hdi[1], color='C1', alpha=0.5)
 plt.plot(x_0, np.random.normal(y_0, 0.02), '.', color='k')
 plt.ylabel('θ', rotation=0)
 plt.xlabel('sepal_length')
@@ -640,6 +640,7 @@ with pm.Model() as model_sf:
  yl = pm.Categorical('yl', p=θ, observed=y_s)
  trace_sf = pm.sample(1000)
 ```
+
 ## 4.5 面向计数问题的泊松回归
 
 另一个非常流行的广义线性模型是泊松回归。此模型假设数据是按泊松分布的。泊松分布对于很多计数场景非常有用，例如：放射性原子核衰变、每对夫妇的孩子数量、推特上关注者的数量等。其共同点是：通常使用离散的非负数 $\{0，1，2，3，...\}$ 对事件建模。此类变量被称为 `计数变量`。
@@ -764,6 +765,7 @@ with pm.Model() as ZIP:
     observed=counts)
  trace = pm.sample(1000)
 ```
+
 <center>
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505130946_25.webp)
@@ -921,7 +923,7 @@ Logistic 和 Softmax 都是判别式模型的例子；我们试图在没有显�
 
 ## 4.10 习题
 
-（1）使用花瓣长度和花瓣宽度作为变量重跑第一个模型。二者的结果有何区别？两种情况下的 95%HPD 区间分别是多少？
+（1）使用花瓣长度和花瓣宽度作为变量重跑第一个模型。二者的结果有何区别？两种情况下的 95%hdi 区间分别是多少？
 
 （2）重跑练习（1），这次使用 $t$ 分布作为弱先验信息。尝试使用不同的正态参数 $\nu$ 。
 

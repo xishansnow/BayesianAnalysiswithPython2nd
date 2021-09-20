@@ -1,14 +1,14 @@
 ---
 jupytext:
-  formats: ipynb,.myst.md:myst,md
+  formats: ipynb,md:myst
   text_representation:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.10.3
+    jupytext_version: 1.12.0
 kernelspec:
   display_name: Python 3
-  language: python
+  language: ipython3
   name: python3
 ---
 
@@ -77,6 +77,7 @@ with pm.Model() as model_l:
     ϵ = pm.HalfNormal('ϵ', 5)
     μ = α + β * x_1s[0]
     y_pred = pm.Normal('y_pred', mu=μ, sd=ϵ, observed=y_1s)
+    
     trace_l = pm.sample(2000)
 
 with pm.Model() as model_p:
@@ -85,6 +86,7 @@ with pm.Model() as model_p:
     ϵ = pm.HalfNormal('ϵ', 5)
     μ = α + pm.math.dot(β, x_1s)
     y_pred = pm.Normal('y_pred', mu=μ, sd=ϵ, observed=y_1s)
+    
     trace_p = pm.sample(2000)
 ```
 
@@ -150,9 +152,12 @@ for i, d in enumerate(data):
 图 5.3 显示了数据、线性模型和二次多项式模型的均值和四分位数范围。该图对各模型的后验预测样本做了平均，而且两个模型的均值都复现得很好，分位数范围也不是很差。不过在实际问题中，一些小差异可能是值得注意的。可以尝试做更多不同曲线图来探索后验预测性分布。例如，绘制均值和四分位数间相对于数据真实值的离散度。下图就是一个例子：
 
 ```{code-cell} ipython3
+
 fig, ax = plt.subplots(1, 2, figsize=(10, 3), constrained_layout=True)
+
 def iqr(x, a=0):
-return np.subtract(*np.percentile(x, [75, 25], axis=a))
+    return np.subtract(*np.percentile(x, [75, 25], axis=a))
+
 for idx, func in enumerate([np.mean, iqr]):
     T_obs = func(y_1s)
     ax[idx].axvline(T_obs, 0, 1, color='k', ls='--')
@@ -223,6 +228,7 @@ plt.legend(loc=2)
 plt.xlabel('x')
 plt.ylabel('y', rotation=0)
 ```
+
 <center>
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210512104113_44.webp)
@@ -616,7 +622,9 @@ with pm.Model() as model_BF:
     θ = pm.Beta('θ', m[0], m[1])
     # likelihood
     y = pm.Bernoulli('y', θ, observed=y_d)
+
     trace_BF = pm.sample(5000)
+
 az.plot_trace(trace_BF)
 ```
 
@@ -656,10 +664,12 @@ with pm.Model() as model_BF_0:
     θ = pm.Beta('θ', 4, 8)
     y = pm.Bernoulli('y', θ, observed=y_d)
     trace_BF_0 = pm.sample(2500, step=pm.SMC())
+
 with pm.Model() as model_BF_1:
     θ = pm.Beta('θ', 8, 4)
     y = pm.Bernoulli('y', θ, observed=y_d)
     trace_BF_1 = pm.sample(2500, step=pm.SMC())
+    
 model_BF_0.marginal_likelihood / model_BF_1.marginal_likelihood
 ```
 

@@ -1,15 +1,23 @@
-format: jb-article
+format: jb-book
 root: preface
-sections:
-- file: chapter01-ThinkingProbabilistically
-- file: chapter02-ProgrammingProbabilistically
-- file: chapter03-ModellingwithLinearRegression
-- file: chapter04-GeneralizedLinearRegression
-- file: chapter05-ModelComparison
-- file: chapter06-MixtureModels
-- file: chapter07-GaussianProcesses
-- file: chapter08-InterefenceEngine
-- file: chapter09-WheretoGoNext
-- file: Ref-chapter08-VI-VIforDummies
-- file: Ref-chapter08-VI-ADVI
-- file: Ref-chapter08-MC-MCMCforDummies
+parts:
+  - caption: 书籍正文
+    chapters:  
+    - file: chapter01-ThinkingProbabilistically
+    - file: chapter02-ProgrammingProbabilistically
+    - file: chapter03-ModellingwithLinearRegression
+    - file: chapter04-GeneralizedLinearRegression
+    - file: chapter05-ModelComparison
+    - file: chapter06-MixtureModels
+    - file: chapter07-GaussianProcesses
+    - file: chapter08-InterefenceEngine
+    - file: chapter09-WheretoGoNext
+  - caption: 附录阅读
+    chapters: 
+    - file: Append-01-MCMCforDummies
+    - file: Append-02-VIforDummies
+    - file: Append-03-BayesianDeepLearning
+  #- caption: 参考文献
+    #- file: 
+
+  

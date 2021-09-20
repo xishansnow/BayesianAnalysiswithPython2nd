@@ -1,14 +1,14 @@
 ---
 jupytext:
-  formats: ipynb,.myst.md:myst,md
+  formats: ipynb,md:myst
   text_representation:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.10.3
+    jupytext_version: 1.12.0
 kernelspec:
   display_name: Python 3
-  language: python
+  language: ipython3
   name: python3
 ---
 
@@ -56,11 +56,11 @@ kernelspec:
 
 让我们开始学习如何构建线性模型。看下面该公式：
 
-```{math}
-y_i= \alpha + x_i \beta  \tag{式3.1} \label{式3.1}
-```
+\begin{equation*}
+y_i= \alpha + x_i \beta \tag{式3.2}
+\end{equation*}
 
-该等式描述了变量 $\mathbb{x}$ 与变量 $\mathbb{y}$ 之间的线性关系。其中，参数 $β$ 控制直线的斜率，可以理解为变量 $\mathbb{x}$ 的单位变化量所对应 $\mathbb{y}$ 的变化量。另外一个参数 $α$ 为截距，可以解释为当 $x_i=0$ 时, $y_i$ 的值，在图形上表示， $α$ 就是直线与 $y$ 轴交点的坐标。
+该等式描述了变量 $\mathbb{x}$ ```{code-cell} $\mathbb{y}$ 的变化量。另外一个参数 $α$ 为截距，可以解释为当 $x_i=0$ 时, $y_i$ 的值，在图形上表示， $α$ 就是直线与 $y$ 轴交点的坐标。
 
 计算线性模型参数的方法很多，最小二乘法是其中之一。每次使用软件去拟合直线时，底层可能用的就是最小二乘法。最小二乘法返回的 $α$ 和 $β$ 能够让观测到的 $y$ 与预测的 $\hat y$ 之间均方误差最小。其估计 $α$ 和 $β$ 本质是一个最优化问题，其目标是寻找使目标函数达到最值（最小值或最大值）时的参数解。
 
@@ -68,21 +68,19 @@ y_i= \alpha + x_i \beta  \tag{式3.1} \label{式3.1}
 
 从概率角度，线性回归模型可以表示成如下形式：
 
-```{math}
-\mathbb{y} \sim \mathcal{N} ( \mu = \alpha + \mathbb{x} \beta , \epsilon ) \tag{式3.2} \label{式3.2}
-```
+\begin{equation*}
+\mathbb{y} \sim \mathcal{N} ( \mu = \alpha + \mathbb{x} \beta , \epsilon ) \tag{式3.2}
+\end{equation*}
 
 也就是说，假设 $\mathbb{y}$ 是一个服从均值为 $α + \mathbb{x} β$ 、标准差为 $\epsilon$ 的正态分布的随机变量。其中 $α$ 、 $β$ 、 $\epsilon$ 为未知的模型参数（贝叶斯方法中视其为随机变量，具有自身概率分布），需要设置先验。
 
 先验的设置根据问题上下文和数据分析师的经验给出，例如，下面是假设参数服从正态分布的一组先验设置：
 
-\begin{equation*}
-\begin{aligned}
-\alpha &\sim \mathcal{N}\left(\mu_{\alpha}, \sigma_{\alpha}\right) \\ 
+\begin{align*}
+\alpha &\sim \mathcal{N}\left(\mu_{\alpha}, \sigma_{\alpha}\right) \tag{式3.3}\\ 
 \beta &\sim \mathcal{N}\left(\mu_{\beta}, \sigma_{\beta}\right)\\ 
 \epsilon &\sim\left|N\left(0, \sigma_{\epsilon}\right)\right|  
-\end{aligned} \tag{式3.3} \label{式3.3}
-\end{equation*} 
+\end{align*} 
 
 其中：
 
@@ -154,33 +152,35 @@ plt.tight_layout()
 图3.2
 </center>
 
-现在使用 `PyMC3` 来构建和拟合模型。注意这里 $\mu$ 在模型中通过 `pm.deterministic` 来定义，表示它是`确定性变量`，反映了数学表达式和 Kruschke 图的内容。在`PyMC3`中，如果显式定义了一个确定性变量，则会计算该变量并保存其迹（ Trace ）：
+现在使用 `PyMC3` 来构建和拟合模型。注意这里 $\mu$ 在模型中通过 `pm.deterministic` 来定义，表示它是`确定性变量`，反映了数学表达式和 Kruschke 图的内容。在`PyMC3`中，如果显式定义了一个确定性变量，则会计算该变量并保存其迹：
 
 ```{code-cell} ipython3
-withpm.Model()asmodel_g:
-# 定义模型参数的先验
-α = pm.Normal('α', mu = 0, sd = 10)
-β = pm.Normal('β', mu = 0, sd = 1)
-ϵ = pm.HalfCauchy('ϵ', 5)
+with pm.Model() as model_g:
+    # 定义模型参数的先验
+    α = pm.Normal('α', mu = 0, sd = 10)
+    β = pm.Normal('β', mu = 0, sd = 1)
+    ϵ = pm.HalfCauchy('ϵ', 5)
 
-# 定义映射 (y = α + β * x) 和似然 P(y|α,β,ε）
-μ=pm.Deterministic('μ', α + β * x)
-y_pred=pm.Normal('y_pred',mu = μ, sd = ϵ, observed = y)
+    # 定义映射 (y = α + β * x) 和似然 P(y|α,β,ε）
+    μ=pm.Deterministic('μ', α + β * x)
+    y_pred=pm.Normal('y_pred',mu = μ, sd = ϵ, observed = y)
 
-# 近似推断：随机采样生成模型中所有随机变量（模型参数或隐变量等）和显式确定性变量的迹
-trace_g = pm.sample(2000, tune = 1000)
+    # 近似推断：随机采样生成模型中所有随机变量（模型参数或隐变量等）和显式确定性变量的迹
+    trace_g = pm.sample(2000, tune = 1000)
 ```
 
 如果不在模型中显式地定义确定性变量。则 `PCMC3` 仍会计算该变量，但不会将保存其迹。例如，可编写以下代码：
 
 ```{code-cell} ipython3
-y_pred = pm.Normal('y_pred', mu = α + β*x, sd = ϵ, observed = y)
+with model_g:
+    y_pred = pm.Normal('y_pred', mu = α + β*x, sd = ϵ, observed = y)
 ```
 
 为探索推断结果，可以绘制未知随机变量的迹图（`图 3.3`），此处省略了确定性变量 $\mu$ 。你可以通过将变量名称（随机变量或显式确定性变量）以列表形式传递给参数 `var_names` 的方式，来实现多变量迹图的绘制。许多 `ArviZ` 函数都有一个 `var_names` 参数，你可以尝试其他 `ArviZ` 的绘图函数来探索后验。
 
 ```{code-cell} ipython3
-az.plot_trace(trace_g, var_names = ['α','β','ϵ'])
+with model_g:
+    az.plot_trace(trace_g, var_names = ['α','β','ϵ'])
 ```
 
 <center>
@@ -201,7 +201,8 @@ az.plot_trace(trace_g, var_names = ['α','β','ϵ'])
 事实上，上述模型中，不论用哪条直线去拟合数据，该直线都会穿过 $\mathbb{x}$ 和 $\mathbb{y}$ 的均值点。拟合直线的过程相当于将直线固定在均值点上做旋转，其结果是呈现出`斜率越大截距越小`的相关性。如果将后验画出来的话可以很清楚地看到这点（见`图 3.4` , 暂时忽略 $ε$ ）。
 
 ```{code-cell} ipython3
-az.plot_pair(trace_g, var_names = ['α', 'β'], plot_kwargs = {'alpha': 0.1})
+with model_g:
+    az.plot_pair(trace_g, var_names = ['α', 'β'], plot_kwargs = {'alpha': 0.1})
 ```
 
 <center>
@@ -220,17 +221,17 @@ az.plot_pair(trace_g, var_names = ['α', 'β'], plot_kwargs = {'alpha': 0.1})
 
 解决问题的一个简单办法是先将 $\mathbb{x}$ 中心化，也就是说，对于每个点 $x_i$ ，减去 $\mathbb{x}$ 的均值。这样做的结果是 $x'$ 的中心在 0 附近，从而在修改斜率时，旋转点与截距点重合，参数空间也会变得不那么自相关。该方法在机器学习以及深度学习中经常被使用。
 
-```{math}
-x'=x-\bar x \tag{式3.4} \label{式3.4}
-```
+\begin{equation*} 
+x'=x-\bar x \tag{式3.4}
+\end{equation*} 
 
 中心化不仅是一种计算技巧，同时有利于解释数据。截距是指当 $x_i=0$ 时 $y_i$ 的值，对许多问题而言，截距并没有什么实际意义。例如，对于身高或者体重的关系模型，当值为 0 时没有实际意义，因而截距对理解数据就没有帮助；对于另外一些问题，估计出截距可能很有用，因为在实验中可能无法测量出 $x_i = 0$ 的情况，此时截距的估计值能够提供有价值的信息。但不管怎么说，外推都有其局限性，应当谨慎使用！
 
 根据问题和受众不同，可能需要汇报中心化之前和之后的参数估计值。如果需要汇报的是中心化之前的参数，那么可以像下面这样将参数转换成原来的尺度：
 
-```{math}
+\begin{equation*}
 \alpha=\alpha^{\prime}-\beta^{\prime} \bar{x} \tag{式3.5} \label{式3.5}
-```
+\end{equation*}
 
 上面的公式可以通过以下公式推导出来：
 
@@ -242,9 +243,9 @@ y &= \alpha^{\prime}-\beta^{\prime} \bar{x}+\beta^{\prime} x+\epsilon
 
 然后可以得出：
 
-```{math}
+\begin{equation*}
 \beta = \beta' \tag{式3.7}  \label{式3.7}
-```
+\end{equation*}
 
 进一步，在运行模型之前可以对数据进行`归一化处理`。归一化在统计学和机器学习中是常见的数据处理手段，许多算法对归一化后的数据效果更好。归一化过程在中心化基础上再除以标准差，其数学形式如下：
 
@@ -353,9 +354,9 @@ plt.ylabel('y', rotation=0)
 
 下面的公式可以在某种程度上减轻你的疑惑：
 
-```{math}
+\begin{equation*}
 r=\beta \frac{\sigma_{x}}{\sigma_{y}} \tag{式3.9} \label{式3.9}
-```
+\end{equation*}
 
 只有在 $\mathbb{x}$ 和 $\mathbb{y}$ 的标准差相等时，皮尔逊相关系数才与斜率相等。也就是说，皮尔逊相关系数和斜率的主要区别在于是否受数据尺度影响。在对数据做归一化处理消除尺度影响后，两者之间确实等价，但在未做归一化处理前，两者并不等价。需要注意：
 
@@ -369,9 +370,9 @@ r=\beta \frac{\sigma_{x}}{\sigma_{y}} \tag{式3.9} \label{式3.9}
 ```
 需要注意的是：在贝叶斯线性回归模型中，预测值方差可能大于测量值方差，进而导致 $R^2$ 大于 1，不利于解释。因此，通常对 $R^2$ 做如下定义：
 
-```{math}
+\begin{equation*}
 R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]+\mathbf{V}_{n=1}^{S}\left(\hat{y}^{s}-y\right)} \tag{式3.10}  \label{式3.10}
-```
+\end{equation*}
 
 上式中，$E[\hat y^S]$ 是后验样本 $S$ 上，预测值 $\hat y$ 的平均值。
 
@@ -763,21 +764,21 @@ for i in range(M):
 
 接下来，将学习如何用线性回归拟合曲线。使用线性回归模型去拟合曲线的一种做法是构建如下多项式：
 
-```{math}
+\begin{equation*}
 \mu=\beta_{0} x^{0}+\beta_{1} x^{1} \cdots+\beta_{m} x^{m} \tag{式3.12}   \label{式3.12}
-```
+\end{equation*}
 
 可以看到多项式中其实包含了一元线性回归模型，只需将上式中 $ n>1$ 的系数 $β_n$ 设为 0 即可得到下式：
 
-```{math}
+\begin{equation*}
 \mu=\beta_{0}+\beta_{1} x^{1} \tag{式3.13}   \label{式3.13}
-```
+\end{equation*}
 
 多项式回归仍然是线性回归，此处“线性”的意思是`指模型中的参数是线性组合的，而不是指变量是线性变化的`。现从一个简单的抛物线开始构建多项式回归模型：
 
-```{math}
+\begin{equation*}
 \mu=\beta_{0}+\beta_{1} x^{1}+\beta_{2} x^{2}  \tag{式3.14}  \label{式3.14}
-```
+\end{equation*}
 
 其中第 3 项控制曲率。数据选用 `Anscombe quartet` 的第 2 组数据集
 
@@ -849,21 +850,22 @@ plt.plot(x_p, y_p, c='C1')
 
 这种情况下，因变量可以这样建模：
 
-```{math}
-\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.15}   \label{式3.15}
-```
+\begin{equation*}
+\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.15}   
+\label{式3.15}
+\end{equation*}
 
 注意该式与多项式回归的式子不一样，现在有了多个变量而不再是一个变量的多次方。用线性代数方法可以表示为更简洁的形式：
 
-```{math}
+\begin{equation*}
 \mu=\alpha+ \mathbb{X} \beta \tag{式3.16}  \label{式3.16}
-```
+\end{equation*}
 
 其中， $β$ 是一个长度为 $m$ 的系数向量，也就是说，自变量的个数为 $m$ 。变量 $\mathbb{X}$ 是一个维度为 $n×m$ 的矩阵，其中， $n$ 表示观测的样本数， $m$ 表示自变量个数。有关线性代数，可参阅相关书籍。本书中，您需要知道的只是使用了一种更短、更方便的方式来编写我们的模型：
 
-```{math}
+\begin{equation*}
 \mathbb{X} \beta=\sum_{i=1}^{n} \beta_{i} x_{i}=\beta_{1} x_{1}+\beta_{2} x_{2} \cdots+\beta_{m} x_{m} \tag{式3.17}  \label{式3.17}
-```
+\end{equation*}
 
 在一元线性回归模型中，我们希望找到一条直线来解释数据，而在多元线性回归模型中，我们希望找到一个维度为 $m$ 的超平面来解释数据。因此，多元线性回归模型本质上与一元线性回归模型是一样的，唯一区别是：现在 $β$ 是一个向量而 $\mathbb{X}$ 是一个矩阵。
 
@@ -1094,15 +1096,15 @@ az.plot_pair(trace_red, var_names=['β'])
 
 哇！参数 $\beta$ 的边缘后验是一条非常窄的对角线。当一个系数上升时，另一个系数必然下降。两者实际上是相关的。这只是模型和数据的结果。根据我们的模型，平均值 $\mu$ 是：
 
-```{math}
+\begin{equation*}
 \mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \tag{式3.19}  \label{式3.19}
-```
+\end{equation*}
 
 假设  $x_1$ 和  $x_2$ 不只是近似相同，而是完全一样的，那么可以将模型改写成如下形式：
 
-```{math}
+\begin{equation*}
 \mu=\alpha+（\beta_{1} +\beta_{2}） x \tag{式3.20}  \label{式3.20}
-```
+\end{equation*}
 
 可以看到，对 $μ$ 有影响的是  $\beta_1$ 与 $\beta_2$ 的和而不是二者单独的值，因而模型是不确定的（或者说，数据并不能决定  $\beta_1$ 和 $\beta_2$ 的值）。在我们的例子中，$\beta$ 并不能在区间 [-∞,∞] 内自由移动，原因有两个：其一，两个变量几乎是相同的，不过并非完全一样；其二，更重要的是 $\beta$ 系数的可能取值受到先验的限制。
 
@@ -1178,16 +1180,16 @@ az.plot_forest([trace_x1x2, trace_x1, trace_x2],
 
 目前见过的所有例子中，因变量对于自变量的作用都是加性的。我们只是增加变量并乘以一个系）。如果希望捕捉到前述药物变量间的交互效应，需要给模型增加一项非加性的量，例如：变量间的乘积：
 
-```{math}
-\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}+\beta_{3} x_{1} x_{2} \tag{式3.21}   \label{式3.21}
-```
+\begin{equation*} \tag{式3.21} 
+\mu=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}+\beta_{3} x_{1} x_{2} 
+\end{equation*}
 
 注意这里系数 $ β_3$  乘的是  $x_1$ 和  $x_2$ 的乘积，该非加性项只是用来说明统计学中的变量间相互作用的一个例子，因为它衡量了变量之间的相关性。事实上对相关性建模的表达式有很多种，相乘只是其中一个比较常用的。
 
 解释有交互作用的线性模型并不像解释没有交互作用的线性模型那么容易。让我们重写表达式 3.21：
 
 
-\begin{align*} \tag{式3.22}   \label{式3.22}
+\begin{align*} \tag{式3.22}
 \mu &=\alpha+\underbrace{\left(\beta_{1}+\beta_{3} x_{2}\right)}_{\text {slope of } x_{1}} x_{1}+\beta_{2} x_{2} \\
 \mu &=\alpha+\beta_{1} x_{1}+\underbrace{\left(\beta_{2}+\beta_{3} x_{1}\right)}_{\text {slope of } x_{2}} x_{2} 
 \end{align*}
@@ -1236,6 +1238,7 @@ with pm.Model() as model_vv:
     μ = pm.Deterministic('μ', α + β * x_shared**0.5)
     ϵ = pm.Deterministic('ϵ', γ + δ * x_shared)
     y_pred = pm.Normal('y_pred', mu=μ, sd=ϵ, observed=data.Lenght)
+    
     trace_vv = pm.sample(1000, tune=1000)
 ```
 
