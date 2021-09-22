@@ -297,7 +297,6 @@ with pm.Model() as model_reg:
     ϵ = pm.HalfNormal('ϵ', 25)
     # likelihood
     y_pred = gp.marginal_likelihood('y_pred', X=X, y=y, noise=ϵ)
-
     trace_reg = pm.sample(2000)
 ```
 
@@ -307,20 +306,15 @@ with pm.Model() as model_reg:
 p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) df \tag{式7.9} \label{式7.9}
 ```
 
-与往常一样，$\theta$ 表示所有未知参数，$X$ 是预测变量，$y$ 是结果变量。请注意，我们正在对函数 $f$ 的值进行边缘化。对于高斯过程先验和正态似然，可以解析地执行边缘化。
+与往常一样，$\theta$ 代表所有未知参数，$X$ 是预测变量，$y$ 是结果变量。注意，我们正在对函数 $f$ 的值进行边缘化。对于高斯过程先验和正态似然，可以解析地得到边缘化结果。
 
-根据 PyMC3 的核心开发者、GP 模块的主要贡献者 Bill Engels 的说法，对于核宽度参数，避免采用零先验通常效果更好。$\ell$ 的一个有用默认设置是 `pm.Gamma(2，0.5)`。你可以从 [Stan team](https://github.com/stan-dev/stan/wiki/Prior-ChoiceRecommendations) 阅读更多关于默认有用先验的建议。
+根据 PyMC3 的核心开发者、GP 模块的主要贡献者 Bill Engels 的说法，尽量避免对核宽度参数 $\ell$ 设置零先验效果会更好。$\ell$ 非常有用的默认设置是 `pm.Gamma(2，0.5)`。你可以从 [Stan team](https://github.com/stan-dev/stan/wiki/Prior-ChoiceRecommendations) 阅读更多关于默认先验的建议。
 
 ```{code-cell} ipython3
 az.plot_trace(trace_reg)
 ```
 
-<center>
-
-![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204431_42.webp)
-
-图 7.5
-</center>
+<center> 图 7.5 </center>
 
 现在已经找到 $\ell$ 和 $\epsilon$ 的值，我们可能想要从高斯过程分布的后验中获取样本；即已与数据拟合的函数的样本。通过使用 `gp.conditional` 条件函数计算新输入位置的条件分布来实现这一点：
 
@@ -330,14 +324,14 @@ with model_reg:
     f_pred = gp.conditional('f_pred', X_new)
 ```
 
-结果得到了一个新的 PyMC3 随机变量 f_pred，我们可以使用它从后验预测分布中获取样本（基于 X_new 值计算）：
+结果得到了一个新的 PyMC3 随机变量 f_pred，可以使用它从后验预测分布中获取样本（基于 X_new 值计算）：
 
 ```{code-cell} ipython3
 with model_reg:
     pred_samples = pm.sample_posterior_predictive(trace_reg, vars=[f_pred],samples=82)
 ```
 
-现在可以在原始数据上绘制拟合函数图，以直观检查它们与数据的拟合程度以及预测中的相关不确定性：
+现在可以在原始数据上绘制拟合函数图，以直观检查其与数据的拟合程度以及预测中的不确定性：
 
 ```{code-cell} ipython3
 _, ax = plt.subplots(figsize=(12,5))
@@ -346,14 +340,9 @@ ax.plot(X, y, 'ko')
 ax.set_xlabel('X')
 ```
 
-<center>
+<center> 图 7.6 </center>
 
-<img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204540_3f.webp" style="zoom:67%;" />
-
-图 7.6
-</center>
-
-或者，我们可以使用 `pm.gp.util.plot_gp_dist` 函数来获得一些不错的绘图。每个绘图代表一个百分位数，范围从 51（浅色）到 99（深色）：
+或者，可以使用 `pm.gp.util.plot_gp_dist` 函数来获得一些图形。每个图代表一个百分位数，范围从 51（浅色）到 99（深色）：
 
 ```{code-cell} ipython3
 _, ax = plt.subplots(figsize=(12,5))
@@ -364,14 +353,9 @@ ax.set_xlabel('x')
 ax.set_ylabel('f(x)', rotation=0, labelpad=15)
 ```
 
-<center>
+<center> 图 7.7 </center>
 
-![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204617_c7.webp)
-
-图 7.7
-</center>
-
-另一种选择是计算在参数空间中给定点评估的条件分布的平均向量和标准差。在下面的示例中，我们使用 $\ell$ 和 $\epsilon$ 的平均值（在迹的样本上）。我们可以使用 `gp.predict` 函数计算平均值和方差。我们之所以能做到这一点，是因为 PyMC3 已经解析地计算了后验结果：
+另一种选择是计算在参数空间中给定点估计的条件分布的平均向量和标准差。在下面示例中，使用 $\ell$ 和 $\epsilon$ 的平均值（在迹的样本上）。我们可以使用 `gp.predict` 函数计算平均值和方差。之所以能做到这一点，是因为 PyMC3 已经解析地计算了后验结果：
 
 ```{code-cell} ipython3
 _, ax = plt.subplots(figsize=(12,5))
@@ -391,28 +375,22 @@ ax.plot(X, y, 'ko')
 ax.set_xlabel('X')
 ```
 
-<center>
+<center> 图 7.8 </center>
 
-![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505204701_d1.webp)
-
-图 7.8
-</center>
-
-正如第四章“广义线性模型”中看到的，可以使用具有非高斯似然的线性模型和适当的逆连接函数来扩展线性模型的范围。我们可以为高斯过程做同样的事情。例如，可以使用具有指数逆连接函数的泊松似然。对于这样的模型，后验不再是可分析的，但可以用数值方法来逼近它。
+正如第四章 “广义线性模型” 中看到的，可以使用具有非高斯似然的线性模型和适当的逆连接函数来扩展线性模型的范围。我们可以为高斯过程做同样的事情。例如，使用具有指数逆连接函数的泊松似然。如果这样做，则后验不再是可解析的，此时需要用 MCMC 或 变分等数值推断方法来逼近后验。
 
 ## 7.4 空间自相关回归
 
-下面的例子取自理查德·麦克雷思 (Richard McElreath) 的“统计反思”(Statistics Reink) 一书。我强烈推荐你读他的书，因为你会发现很多像这样的好例子和非常好的解释。唯一需要注意的是，书中的示例是 R/stan 格式的，但请不要担心；您可以在 https://github.com/pymc-devs/Resources 中找到这些示例的 Python/PyMC3 版本。
+下面的例子取自 `Richard McElreath` 的 《统计反思（ Statistical Rethinking ）》 一书。我强烈推荐你读这本书，因为你会发现很多像本例一样的好例子以及很好的解释。唯一需要注意的是，书中示例是 `R/stan` 格式的，但不要担心；在 https://github.com/pymc-devs/Resources 中可以找到其 `Python/PyMC3` 版本。
 
-现在回到例子，我们有 10 个不同的岛屿社会；每一个都有其使用的工具数量。一些理论预测，较大人口需要开发和维护更多工具；另一个重要因素是人群间的接触率。
+现在回到案例，有 10 个不同的岛屿社会；每一个都有其使用的工具数量。一些理论预测，较大人口需要开发和维护更多工具；另一个重要因素是人群间的接触率。
 
-当将工具数量作为结果变量时，可以使用泊松回归并将人口数量作为预测变量。事实上，可以使用人口的对数，因为根据理论真正重要的是人口比例，而不是绝对大小。将接触率包括在模型中的一种方法是收集有关这些岛屿社会在历史上的接触频率，可以考虑创建一个分类变量，如低/高接触率（请下表中的 Contact 列）。另一种方式是使用不同岛屿社会间的距离作为接触率的代理，可以假设距离近的社会会更频繁地接触。
+当将工具数量作为结果变量时，可以使用泊松回归，并将人口数量作为预测变量。事实上，可以使用人口的对数，因为根据理论真正重要的是人口比例，而不是绝对数量。将接触率包括在模型中的一种方法是收集有关这些岛屿社会在历史上的接触频率，可以考虑创建一个定类变量，如低/高接触率（见下表中的 Contact 列）。另一种方式是使用不同岛屿社会间的距离来代表接触率，假设距离近的社会接触会更频繁。
 
 我们通过读取本书附带的 `island_dist.csv` 文件来访问以千公里为单位表示的距离矩阵：
 
 ```{code-cell} ipython3
-islands_dist = pd.read_csv('../data/islands_dist.csv',
-                           sep=',', index_col=0)
+islands_dist = pd.read_csv('../data/islands_dist.csv',sep=',', index_col=0)
 islands_dist.round(1)
 ```
 
@@ -422,7 +400,7 @@ islands_dist.round(1)
 
 </center>
 
-主对角线上填满了零,因为岛屿社会自身距离为零。矩阵是对称的，表示从 A 点到 B 点的距离。工具数量和人口规模存储在另一个文件 `islands.csv` 中，该文件也随书一起分发：
+主对角线上填满了零,因为岛屿社会自身距离为零。矩阵是对称的，表示从 $A$ 点到 $B$ 点的距离。工具数量和人口规模存储在另一个文件 `islands.csv` 中，该文件也随书一起分发：
 
 ```{code-cell} ipython3
 islands = pd.read_csv('../data/islands.csv', sep=',')
@@ -435,7 +413,7 @@ islands.head().round(1)
 
 </center>
 
-在表中，只列出和使用 culture, total_tools, lat, lon2 和 logpop 列:
+表中只列出和使用了 culture, total_tools, lat, lon2 和 logpop 列:
 
 ```{code-cell} ipython3
 islands_dist_sqr = islands_dist.values**2
@@ -456,9 +434,9 @@ y &\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 \end{align*}
 ```
 
-这里，我们省略了 $\alpha$ 和 $\beta$ 的前缀，以及核的超先验。 $x$ 是对数人口， $y$ 是工具总数。
+此处省略了 $\alpha$ 和 $\beta$ 的前缀，以及核的超先验。 $x$ 是对数人口， $y$ 是工具总数。
 
-与第四章“广义线性模型”中的模型相比，本模型基本上是一个泊松回归模型，此外，线性模型中的 $f$ 项来自高斯过程。为了计算高斯过程的核，我们将使用距离矩阵 `islands_dist`。通过这种方式，将基于距离矩阵有效地纳入相似性度量。由此，将每个岛屿社会的工具数量建模为其地理相似性的函数，而不是假设仅仅是人口规模的结果，而且岛屿社会间没有接触。
+与第四章 “广义线性模型” 中的模型相比，本模型基本上是一个泊松回归模型，此外，线性模型中的 $f$ 项来自高斯过程。为了计算高斯过程的核，使用了距离矩阵 `islands_dist`。通过该方式，将距离矩阵有效地纳入了相似性度量。由此，将每个岛屿社会的工具数量建模为其地理相似性的函数，而不仅仅是人口规模的结果，而且岛屿社会间没有接触。
 
 此模型（包括之前的模型）类似于 PyMC3 中的以下代码：
 
@@ -494,12 +472,7 @@ ax.set_xlabel('distance (thousand kilometers)')
 ax.set_ylabel('covariance')
 ```
 
-<center>
-
-![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205145_a6.webp)
-
-图 7.9
-</center>
+<center> 图 7.9 </center>
 
 图 7.9 中的粗线是成对岛屿社会间协方差作为距离函数的后验中位数。我们使用中位数是因为 $\ell$ 和 $η$ 的分布非常不对称。可以看到，平均下来协方差没有那么高，在大约 2000 公里处降到了几乎为 0。细线代表不确定性，可以看到有很大的不确定性。
 
@@ -522,7 +495,7 @@ columns=islands_dist.columns)
 
 比较明显的是，夏威夷非常独立，因为夏威夷离其他岛屿社会很远。此外，还可以看到 `Malekula(Ml)`、`Tikopia(Ti)` 和 `Santa Cruz(Sc)` 之间高度相关，因为这些社会非常接近，而且有类似数量的工具。
 
-现在我们使用纬度和经度信息来绘制 `岛屿-社会` 的相对位置：
+现在使用纬度和经度信息来绘制 `岛屿-社会` 的相对位置：
 
 ```{code-cell} ipython3
 # scale point size to logpop
@@ -557,21 +530,15 @@ ax[1].set_xlim(6.8, 12.8)
 ax[1].set_ylim(10, 73)
 ```
 
-<center>
-
-![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205338_5f.webp)
-
-图7.10
-</center>
+<center> 图7.10 </center>
 
 图 7.10 的左侧显示了之前在相对地理位置上下文中计算的岛屿社会间的后验中值相关性线条。有些线条是不可见的，因为使用相关性来设置了线条的不透明度。在右侧，再次显示了后验中值相关性，但此次是根据对数人口与工具数量绘制的。虚线表示工具的中位数和 94%HPD 间隔作为对数填充的函数。两幅图中，圆点大小与每个岛屿社会的人口成正比。
 
 请注意 `Malekula`、`Tikopia` 和 `Santa Cruz` 之间的相关性如何描述这样一个事实，即它们拥有的工具数量相当少，接近或低于其人口的预期工具数量。类似的事情正发生在`Trobriands`和 `Manus`；它们地理位置相近，拥有的工具比预期人口规模要少。`Tonga` 为其人口提供的工具比预期要多得多，而且与 `Fiji` 的相关性较高。在某种程度上，该模型告诉我们，`Tonga`对 `Lua Fiji`有积极的影响，增加了工具总数，抵消了 `Malekula`、`Tikopia` 和 `Santa Cruz`等近邻对 `Fiji` 的影响。
 
-
 ## 7.5 高斯过程分类
 
-高斯过程不限于回归，也可以用于分类。正如第 4 章“广义线性模型”中所述，通过使用 Logistic 逆连接函数的伯努利似然，将线性模型转化为适合分类的模型。对于iris数据集，本节将尝试重述第 4 章“广义线性模型”中的 model_0，不过这次使用高斯过程而不是线性模型。
+高斯过程不限于回归，也可以用于分类。正如第 4 章 “广义线性模型” 中所述，通过使用 Logistic 逆连接函数的伯努利似然，将线性模型转化为适合分类的模型。对于 iris 数据集，本节将尝试重述第 4 章中的 model_0，不过这次使用高斯过程而不是线性模型。
 
 ```{code-cell} ipython3
 iris = pd.read_csv('../data/iris.csv')
@@ -584,7 +551,7 @@ iris.head()
 
 </center>
 
-我们从最简单的分类问题开始：类别只有两类：山鸢尾和变色鸢尾；预测变量只有一个：萼片长度。使用数字 0 和 1 对分类变量山鸢尾和变色鸢尾进行编码：
+我们从最简单的分类问题开始，类别只有两类：山鸢尾（`setosa`）和变色鸢尾（`versicolor`）；预测变量只有一个：萼片长度（`sepal_length`）。使用数字 `0` 和 `1` 对山鸢尾（`setosa`）和变色鸢尾（`versicolor`）进行编码：
 
 ```{code-cell} ipython3
 df = iris.query("species == ('setosa', 'versicolor')")
@@ -593,7 +560,7 @@ x_1 = df['sepal_length'].values
 X_1 = x_1[:, None]
 ```
 
-对于此模型，我们不使用 `pm.gp.Marginal` 类实例化高斯过程先验，而是使用 `pm.gp.Latent` 类。前者仅限于高斯似然，不过通过高斯过程先验与高斯似然具有更高效率，而后者更通用些，可与任何似然一起使用：
+对于此模型，我们不使用 `pm.gp.Marginal` 类实例化高斯过程先验，而是使用 `pm.gp.Latent` 类。前者仅限于高斯似然，而后者更通用些，可与任何似然一起使用（不过高斯过程先验与高斯似然结合通过共轭先验得到解析推断结果，具有更高效率）：
 
 ```{code-cell} ipython3
 with pm.Model() as model_iris:
@@ -607,7 +574,7 @@ with pm.Model() as model_iris:
     trace_iris = pm.sample(1000, chains=1,compute_convergence_checks=False)
 ```
 
-现在我们已经找到了 $\ell$ 的值 ，想要从高斯过程后验获取样本。与 `marginal_gp_model` 的操作一样，可以借助 `gp.conditional` 函数计算一组新输入位置上的条件分布，如以下代码所示：
+现在找到了 $\ell$ 的值 ，想要从高斯过程后验获取样本。与 `marginal_gp_model` 函数一样，可借助 `gp.conditional` 函数计算一组新输入位置上的条件分布，如以下代码所示：
 
 ```{code-cell} ipython3
 X_new = np.linspace(np.floor(x_1.min()), np.ceil(x_1.max()), 200)[:, None]
@@ -632,7 +599,7 @@ def find_midpoint(array1, array2, value):
     return (array2[idx0] + array2[idx1]) / 2
 ```
 
-以下代码与第 4 章“广义线性模型”中用于生成图 4.4 的代码非常相似：
+以下代码与第 4 章 “广义线性模型” 中用于生成图 4.4 的代码非常相似：
 
 ```{code-cell} ipython3
 _, ax = plt.subplots(figsize=(10, 6))
@@ -654,16 +621,11 @@ ax.set_ylabel('θ', rotation=0)
 # plt.savefig('B11197_07_11.png')
 ```
 
-<center>
+<center> 图 7.11 </center>
 
-![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205739_e4.webp)
+图 7.11 与图 4.4 非常相似， `f_pred` 曲线看起来像是一条 `S` 型曲线，除尾部在较低的 $x_1$ 值时上升，在较高的 $x_1$ 值下降。这是没有数据时预测函数向前移动的结果。如果只关心决策边界，这应该不是真正的问题，但如果想要为不同萼片长度值建立属于山鸢尾或变色鸢尾的概率模型，那么应该改进模型，并做一些事情来获得更好的尾部模型。实现此目标的方法是给高斯过程增加更多的构造。获得更好的高斯过程模型的一般方法是组合协方差函数，以便更好地捕捉函数细节。
 
-图 7.11
-</center>
-
-图 7.11 与图 4.4 非常相似， `f_pred` 曲线看起来像是一条 S 型曲线，除尾部在较低的 x_1 值时上升，在较高的 x_1 值下降。这是没有数据时预测函数向前移动的结果。如果只关心决策边界，这应该不是真正的问题，但如果想要为不同萼片长度值建立属于山鸢尾或变色鸢尾的概率模型，那么应该改进模型，并做一些事情来获得更好的尾部模型。实现此目标的方法是给高斯过程增加更多的构造。获得更好的高斯过程模型的一般方法是组合协方差函数，以便更好地捕捉函数细节。
-
-以下模型 (`model_iris2`) 与 `model_iris` 相同，不同之处在于协方差矩阵，为三个核的组合：
+以下模型 （`model_iris2`） 与 `model_iris` 相同，不同之处在于协方差矩阵，来自三个核的组合：
 
 ```{code-cell} ipython3
 cov = K_{ExpQuad} + K_{Linear} + K_{whitenoise}(1E-5)
@@ -710,12 +672,7 @@ ax.set_xlabel('sepal_length')
 ax.set_ylabel('θ', rotation=0)
 ```
 
-<center>
-
-![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505205912_68.webp)
-
-图 7.12
-</center>
+<center> 图 7.12 </center>
 
 图 7.12 看起来更类似于图 4.4，而不是图 7.11。此示例有两个主要目的：
 
@@ -724,7 +681,7 @@ ax.set_ylabel('θ', rotation=0)
 
 尤其是第二点，Logistic 回归确实是高斯过程的特例，因为一元线性回归是高斯过程的特例。事实上，许多已知的模型都可以被视为高斯过程的特例，或者至少以某种方式与高斯过程联系在一起。你可以阅读凯文·墨菲 (Kevin Murphy) 的《 Machine Learning: A Probabilistic Perspective 》中的第 15 章。
 
-实践中，使用高斯过程对只能用 Logistic 回归来解决的问题进行建模没有太大意义。相反，我们希望使用高斯过程来建模更复杂的数据，而这些数据使用灵活性较低的模型无法很好地捕获。例如，假设想要将患病概率建模为年龄的函数。事实证明，非常年轻和非常年长的人比中年人有更高风险。数据集 `space_flu.csv` 是受前面描述启发的假数据集。
+实践中，使用高斯过程对只能用 Logistic 回归来解决的问题进行建模没有太大意义。相反，我们希望使用高斯过程来建模更复杂的数据，而这些数据使用灵活性较低的模型很难捕获。例如，假设想要将患病概率建模为年龄的函数。事实证明，非常年轻和非常年长的人比中年人有更高风险。数据集 `space_flu.csv` 是受前面描述启发的假数据集。
 
 ```{code-cell} ipython3
 df_sf = pd.read_csv('../data/space_flu.csv')
@@ -776,20 +733,15 @@ ax.set_yticklabels(['healthy', 'sick'])
 ax.set_xlabel('age')
 ```
 
-<center>
+<center> 图 7.14 </center>
 
-![image-20210505210106544](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210109_bb.webp)
-
-图 7.14
-</center>
-
-图 7.14 中，高斯过程能够很好地适应此数据集，即使数据要求函数比逻辑函数更复杂。对于一元逻辑回归来说，很好地拟合该数据是不可能的，除非引入一些特殊的修改来帮助它。
+图 7.14 中，高斯过程能够很好地适应此数据集，即使数据要求函数比 logistic 函数更复杂。对于一元逻辑回归来说，很好地拟合该数据是不可能的，除非引入一些特殊的修改来帮助它。
 
 ##  7.6 考克斯 （Cox） 过程 
 
-现在考虑计数类数据的建模问题。在此将看到两个示例；一个具有时变计数，另一个具有 2D 空间计数。为做到这点，使用泊松分布对似然建模（每个数据点来自于一个泊松分布的抽样），使用高斯过程对计数函数建模（所有数据点计数的集合来自一个高斯过程的抽样）。因泊松分布的计数被限制为正值，所以我们将使用指数函数作为逆连接函数，类似第 4 章 “广义线性模型” 中的零膨胀泊松回归。
+现在考虑计数类数据的建模问题。在此将看到两个示例；一个具有时域计数，另一个具有二维空间计数。为做到这点，使用泊松分布对似然建模（每个数据点来自于一个泊松分布的抽样），使用高斯过程对计数函数建模（所有数据点计数的集合来自一个高斯过程的抽样）。因泊松分布的计数被限制为正值，所以使用指数函数作为逆连接函数，类似第 4 章 “广义线性模型” 中的零膨胀泊松回归。
 
-在很多资料中，可变计数也以强度名称出现，此类型问题统称为强度估计问题，此类型的模型则被称为考克斯（Cox）模型。考克斯模型是泊松过程的一种，其计数本身就是一个随机过程。正如高斯过程是随机变量的集合，而且这些随机变量的每个有限集合都具有多维高斯分布一样，泊松过程也是随机变量集合，其中这些随机变量的每个有限集合都具有泊松分布。当泊松过程的计数本身是一个随机过程（如高斯过程）时，称之为考克斯（Cox）过程。
+在很多资料中，可变计数也以强度的形式出现，此类型问题被统称为强度估计问题，此类模型则被称为考克斯（Cox）模型。考克斯模型是泊松过程的一种，其计数本身就是一个随机过程。高斯过程是随机变量的集合，而且这些随机变量的每个有限集合都是多维高斯分布，泊松过程也有类似的特性，泊松过程也是随机变量集合，这些随机变量的每个有限集合都具有泊松分布。当泊松过程的计数本身是一个随机过程时，称之为考克斯（Cox）过程。
 
 ### 7.6.1 煤矿灾害
 
@@ -858,12 +810,7 @@ ax.set_xlabel('years')
 ax.set_ylabel('rate')
 ```
 
-<center>
-
-![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210433_70.webp)
-
-图 7.15
-</center>
+<center> 图 7.15 </center>
 
 图 7.15 用白线显示了灾害计数的中位数与时间的关系。这些条带表示 50%HPD 区间（较深）和 94%HPD 区间（较浅）。在底部，用黑色记号笔标出了每一场灾难（这被称为地毯图）。如图所示，除最初的短暂上升外，事故计数随时间的推移而下降。PyMC3 的文档中包括煤矿灾难这个案例，但从不同角度建的模。建议您检查下该示例，因为其本身非常有用，而且将其与刚刚使用 `model_coal` 模型实现的方法进行比较也很有用。
 
@@ -883,12 +830,7 @@ ax.set_xlabel('x1 coordinate')
 ax.set_ylabel('x2 coordinate')
 ```
 
-<center>
-
-![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210601_88.webp)
-
-图 7.16
-</center>
+<center> 图 7.16 </center>
 
 同煤矿灾难示例类似，需要对数据进行离散化：
 
@@ -936,20 +878,15 @@ ax.set_yticklabels(ticks_lab)
 cbar = fig.colorbar(ims, fraction=0.046, pad=0.04)
 ```
 
-<center>
-
-![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210705_b5.webp)
-
-图 7.17
-</center>
+<center> 图 7.17 </center>
 
 图 7.17 中，较浅的颜色意味着比较深颜色有更高的树木比率。可以想象，我们对寻找高增长率地区很感兴趣，因为可能对森林是如何从火灾中恢复的感兴趣，或者我们对土壤性质感兴趣，也可以把树木当作代理。
 
 ## 7.7 总结
 
- 高斯过程是多维高斯分布向无限维的推广，并且由均值函数和协方差函数完全指定。由于可以在概念上把函数看作无限长的向量，所以可使用高斯过程作为函数的先验。在实践中，通常处理的不是无限大的对象，而是维数与数据点一样多的多维高斯分布。为定义相应的协方差函数，我们使用了适当的参数化核；通过学习这些超参数，最终来描述任意复杂的函数。
+ 高斯过程是多维高斯分布向无限维的推广，并且由均值函数和协方差函数完全指定。由于在概念上可以把函数看作无限长的向量，所以可使用高斯过程作为函数的先验。在实践中，通常处理的不是无限多的对象，而是维数与数据点一样多的多维高斯分布。为定义相应的协方差函数，我们使用了适当的参数化核；通过学习这些超参数，最终来描述任意复杂的函数。
 
- 本章中，我们简要介绍了高斯过程，还有很多与之相关的主题需要进一步学习（比如构建一个半参数化模型，将线性模型作为均值函数），或是将两个或者多个核函数组合在一起来描述未知函数，或将高斯过程用于分类任务，或是如何将高斯过程与统计学或者机器学习中的其他模型联系起来。不管怎么说，希望本章对高斯过程的介绍以及本书中一些其他主题的介绍能够激励你阅读、使用和进一步学习贝叶斯统计。
+ 本章简要介绍了高斯过程，还有很多与之相关的主题需要进一步学习（比如构建一个半参数化模型，将线性模型作为均值函数），或是将两个或者多个核函数组合在一起来描述未知函数，或将高斯过程用于分类任务，或是如何将高斯过程与统计学或者机器学习中的其他模型联系起来。不管怎么说，希望本章对高斯过程的介绍以及本书中一些其他主题的介绍能够激励你阅读、使用和进一步学习贝叶斯统计。
 
 
 ##  7.8 练习
