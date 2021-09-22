@@ -16,7 +16,8 @@ parts:
     chapters: 
     - file: Append-01-MCMCforDummies
     - file: Append-02-VIforDummies
-    - file: Append-03-BayesianDeepLearning
+    - file: Append-03-BayesianDeepLearningWithPymc3
+    - file: Append-04-BayesianDeepLearning
   #- caption: 参考文献
     #- file: 
 
