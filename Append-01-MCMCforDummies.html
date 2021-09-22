@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -72,6 +72,10 @@
     
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
       
       <img src="_static/logo.png" class="logo" alt="logo">
       
@@ -160,8 +164,13 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Append-03-BayesianDeepLearning.html">
+  <a class="reference internal" href="Append-03-BayesianDeepLearningWithPymc3.html">
    附录 C：贝叶斯深度学习的初步尝试
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-04-BayesianDeepLearning.html">
+   附录 D：贝叶斯神经网络的实践 – 面向深度学习用户的教程
   </a>
  </li>
 </ul>
@@ -720,18 +729,18 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1723</span><span class="o">/</span><span class="mf">268937468.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1614</span><span class="o">/</span><span class="mf">268937468.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">posterior</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">15000</span><span class="p">,</span> <span class="n">mu_init</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">posterior</span><span class="p">)</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;mu&#39;</span><span class="p">);</span>
 
-<span class="nn">/tmp/ipykernel_1723/1044358219.py</span> in <span class="ni">sampler</span><span class="nt">(data, samples, mu_init, proposal_width, plot, mu_prior_mu, mu_prior_sd)</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span><span class="p">):</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>        <span class="c1"># 提出一个建议值 suggest new position</span>
-<span class="ne">----&gt; </span><span class="mi">7</span>        <span class="n">mu_proposal</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_current</span><span class="p">,</span> <span class="n">proposal_width</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> 
-<span class="g g-Whitespace">      </span><span class="mi">9</span>        <span class="c1"># 计算当前值和建议值的似然 Compute likelihood by multiplying probabilities of each data point</span>
+<span class="nn">/tmp/ipykernel_1614/1044358219.py</span> in <span class="ni">sampler</span><span class="nt">(data, samples, mu_init, proposal_width, plot, mu_prior_mu, mu_prior_sd)</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span>        <span class="c1"># 计算当前值和建议值的先验概率 Compute prior probability of current and proposed mu</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span>        <span class="n">prior_current</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_prior_mu</span><span class="p">,</span> <span class="n">mu_prior_sd</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">mu_current</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">15</span>        <span class="n">prior_proposal</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_prior_mu</span><span class="p">,</span> <span class="n">mu_prior_sd</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">mu_proposal</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> 
+<span class="g g-Whitespace">     </span><span class="mi">17</span>        <span class="c1"># 计算后验的分子项</span>
 
 <span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">__call__</span><span class="nt">(self, *args, **kwds)</span>
 <span class="g g-Whitespace">    </span><span class="mi">863</span> 
@@ -755,25 +764,60 @@
 <span class="g g-Whitespace">    </span><span class="mi">441</span><span class="s2">         shapes, _, _ = self.dist._parse_args(*args, **kwds)</span>
 
 <span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">__init__</span><span class="nt">(self, momtype, a, b, xtol, badvalue, name, longname, shapes, extradoc, seed)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1737</span><span class="s2">             else:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1738</span><span class="s2">                 dct = dict(distcont)</span>
-<span class="ne">-&gt; </span><span class="mi">1739</span><span class="s2">                 self._construct_doc(docdict, dct.get(self.name))</span>
-<span class="g g-Whitespace">   </span><span class="mi">1740</span><span class="s2"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">1741</span><span class="s2">     def __getstate__(self):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1691</span><span class="s2">                  shapes=None, extradoc=None, seed=None):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1692</span><span class="s2"> </span>
+<span class="ne">-&gt; </span><span class="mi">1693</span><span class="s2">         super().__init__(seed)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1694</span><span class="s2"> </span>
+<span class="g g-Whitespace">   </span><span class="mi">1695</span><span class="s2">         # save the ctor parameters, cf generic freeze</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">_construct_doc</span><span class="nt">(self, docdict, shapes_vals)</span>
-<span class="g g-Whitespace">    </span><span class="mi">822</span><span class="s2">                 self.__doc__ = self.__doc__.replace(&quot;</span><span class="si">%(shapes)s</span><span class="s2">, &quot;, &quot;&quot;)</span>
-<span class="g g-Whitespace">    </span><span class="mi">823</span><span class="s2">             try:</span>
-<span class="ne">--&gt; </span><span class="mi">824</span><span class="s2">                 self.__doc__ = doccer.docformat(self.__doc__, tempdict)</span>
-<span class="g g-Whitespace">    </span><span class="mi">825</span><span class="s2">             except TypeError as e:</span>
-<span class="g g-Whitespace">    </span><span class="mi">826</span><span class="s2">                 raise Exception(&quot;Unable to construct docstring for &quot;</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">__init__</span><span class="nt">(self, seed)</span>
+<span class="g g-Whitespace">    </span><span class="mi">648</span><span class="s2">         # and if not set self._size inside self.rvs()</span>
+<span class="g g-Whitespace">    </span><span class="mi">649</span><span class="s2">         # before calling self._rvs().</span>
+<span class="ne">--&gt; </span><span class="mi">650</span><span class="s2">         argspec = inspect.getfullargspec(self._rvs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">651</span><span class="s2">         self._rvs_uses_size_attribute = (argspec.varkw is None and</span>
+<span class="g g-Whitespace">    </span><span class="mi">652</span><span class="s2">                                          &#39;size&#39; not in argspec.args and</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/scipy/_lib/doccer.py</span> in <span class="ni">docformat</span><span class="nt">(docstring, docdict)</span>
-<span class="g g-Whitespace">     </span><span class="mi">56</span><span class="s2">     indented = </span><span class="si">{}</span><span class="s2"></span>
-<span class="g g-Whitespace">     </span><span class="mi">57</span><span class="s2">     for name, dstr in docdict.items():</span>
-<span class="ne">---&gt; </span><span class="mi">58</span><span class="s2">         lines = dstr.expandtabs().splitlines()</span>
-<span class="g g-Whitespace">     </span><span class="mi">59</span><span class="s2">         try:</span>
-<span class="g g-Whitespace">     </span><span class="mi">60</span><span class="s2">             newlines = [lines[0]]</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/inspect.py</span> in <span class="ni">getfullargspec</span><span class="nt">(func)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1133</span><span class="s2">         # so we ensure that remains the case in 3.3+</span>
+<span class="g g-Whitespace">   </span><span class="mi">1134</span><span class="s2"> </span>
+<span class="ne">-&gt; </span><span class="mi">1135</span><span class="s2">         sig = _signature_from_callable(func,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1136</span><span class="s2">                                        follow_wrapper_chains=False,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1137</span><span class="s2">                                        skip_bound_arg=False,</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/inspect.py</span> in <span class="ni">_signature_from_callable</span><span class="nt">(obj, follow_wrapper_chains, skip_bound_arg, sigcls)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2231</span><span class="s2">         # In this case we skip the first parameter of the underlying</span>
+<span class="g g-Whitespace">   </span><span class="mi">2232</span><span class="s2">         # function (usually `self` or `cls`).</span>
+<span class="ne">-&gt; </span><span class="mi">2233</span><span class="s2">         sig = _signature_from_callable(</span>
+<span class="g g-Whitespace">   </span><span class="mi">2234</span><span class="s2">             obj.__func__,</span>
+<span class="g g-Whitespace">   </span><span class="mi">2235</span><span class="s2">             follow_wrapper_chains=follow_wrapper_chains,</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/inspect.py</span> in <span class="ni">_signature_from_callable</span><span class="nt">(obj, follow_wrapper_chains, skip_bound_arg, sigcls)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2302</span><span class="s2">         # If it&#39;s a pure Python function, or an object that is duck type</span>
+<span class="g g-Whitespace">   </span><span class="mi">2303</span><span class="s2">         # of a Python function (Cython functions, for instance), then:</span>
+<span class="ne">-&gt; </span><span class="mi">2304</span><span class="s2">         return _signature_from_function(sigcls, obj,</span>
+<span class="g g-Whitespace">   </span><span class="mi">2305</span><span class="s2">                                         skip_bound_arg=skip_bound_arg)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2306</span><span class="s2"> </span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/inspect.py</span> in <span class="ni">_signature_from_function</span><span class="nt">(cls, func, skip_bound_arg)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2211</span><span class="s2">     # Is &#39;func&#39; is a pure Python function - don&#39;t validate the</span>
+<span class="g g-Whitespace">   </span><span class="mi">2212</span><span class="s2">     # parameters list (for correct order and defaults), it should be OK.</span>
+<span class="ne">-&gt; </span><span class="mi">2213</span><span class="s2">     return cls(parameters,</span>
+<span class="g g-Whitespace">   </span><span class="mi">2214</span><span class="s2">                return_annotation=annotations.get(&#39;return&#39;, _empty),</span>
+<span class="g g-Whitespace">   </span><span class="mi">2215</span><span class="s2">                __validate_parameters__=is_duck_function)</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/inspect.py</span> in <span class="ni">__init__</span><span class="nt">(self, parameters, return_annotation, __validate_parameters__)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2819</span><span class="s2">                     params[name] = param</span>
+<span class="g g-Whitespace">   </span><span class="mi">2820</span><span class="s2">             else:</span>
+<span class="ne">-&gt; </span><span class="mi">2821</span><span class="s2">                 params = OrderedDict(((param.name, param)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2822</span><span class="s2">                                                 for param in parameters))</span>
+<span class="g g-Whitespace">   </span><span class="mi">2823</span><span class="s2"> </span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/inspect.py</span> in <span class="ni">&lt;genexpr&gt;</span><span class="nt">(.0)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2819</span><span class="s2">                     params[name] = param</span>
+<span class="g g-Whitespace">   </span><span class="mi">2820</span><span class="s2">             else:</span>
+<span class="ne">-&gt; </span><span class="mi">2821</span><span class="s2">                 params = OrderedDict(((param.name, param)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2822</span><span class="s2">                                                 for param in parameters))</span>
+<span class="g g-Whitespace">   </span><span class="mi">2823</span><span class="s2"> </span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
@@ -931,7 +975,7 @@
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         

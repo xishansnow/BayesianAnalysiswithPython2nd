@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -72,6 +72,10 @@
     
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
       
       <img src="_static/logo.png" class="logo" alt="logo">
       
@@ -160,8 +164,13 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Append-03-BayesianDeepLearning.html">
+  <a class="reference internal" href="Append-03-BayesianDeepLearningWithPymc3.html">
    附录 C：贝叶斯深度学习的初步尝试
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-04-BayesianDeepLearning.html">
+   附录 D：贝叶斯神经网络的实践 – 面向深度学习用户的教程
   </a>
  </li>
 </ul>
@@ -570,7 +579,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2726/3228340448.py:8: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2670/3228340448.py:8: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_l = pm.sample(2000)
 Auto-assigning NUTS sampler...
 </pre></div>
@@ -599,7 +608,7 @@ Auto-assigning NUTS sampler...
         }
     </style>
   <progress value='3000' class='' max='3000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [3000/3000 00:03<00:00 Sampling chain 0, 0 divergences]
+  100.00% [3000/3000 00:02<00:00 Sampling chain 0, 0 divergences]
 </div>
 </div><div class="output text_html">
 <div>
@@ -615,13 +624,190 @@ Auto-assigning NUTS sampler...
             background: #F44336;
         }
     </style>
-  <progress value='1364' class='' max='3000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  45.47% [1364/3000 00:01<00:01 Sampling chain 1, 0 divergences]
+  <progress value='3000' class='' max='3000' style='width:300px; height:20px; vertical-align: middle;'></progress>
+  100.00% [3000/3000 00:01<00:00 Sampling chain 1, 0 divergences]
 </div>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 1 chain for 1_000 tune and 2_000 draw iterations (1_000 + 2_000 draws total) took 4 seconds.
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 2_000 draw iterations (2_000 + 4_000 draws total) took 4 seconds.
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Only one chain was sampled, this makes it impossible to run some convergence checks
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2670</span><span class="o">/</span><span class="mf">3228340448.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">α</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">β</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">13</span>     <span class="n">ϵ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;ϵ&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">μ</span> <span class="o">=</span> <span class="n">α</span> <span class="o">+</span> <span class="n">pm</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">β</span><span class="p">,</span> <span class="n">x_1s</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">μ</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">ϵ</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">y_1s</span><span class="p">)</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/distributions/distribution.py</span> in <span class="ni">__new__</span><span class="nt">(cls, name, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">120</span>         <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">121</span>             <span class="n">dist</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">122</span>         <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">total_size</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="n">dims</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">123</span> 
+<span class="g g-Whitespace">    </span><span class="mi">124</span>     <span class="k">def</span> <span class="nf">__getnewargs__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/model.py</span> in <span class="ni">Var</span><span class="nt">(self, name, dist, data, total_size, dims)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1140</span>             <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1141</span>                 <span class="k">with</span> <span class="bp">self</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1142</span>                     <span class="n">var</span> <span class="o">=</span> <span class="n">TransformedRV</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1143</span>                         <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">1144</span>                         <span class="n">distribution</span><span class="o">=</span><span class="n">dist</span><span class="p">,</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/model.py</span> in <span class="ni">__init__</span><span class="nt">(self, type, owner, index, name, distribution, model, transform, total_size)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2011</span> 
+<span class="g g-Whitespace">   </span><span class="mi">2012</span>             <span class="bp">self</span><span class="o">.</span><span class="n">transformed</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span>
+<span class="ne">-&gt; </span><span class="mi">2013</span>                 <span class="n">transformed_name</span><span class="p">,</span> <span class="n">transform</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">distribution</span><span class="p">),</span> <span class="n">total_size</span><span class="o">=</span><span class="n">total_size</span>
+<span class="g g-Whitespace">   </span><span class="mi">2014</span>             <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2015</span> 
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/distributions/transforms.py</span> in <span class="ni">apply</span><span class="nt">(self, dist)</span>
+<span class="g g-Whitespace">    </span><span class="mi">124</span>     <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span>         <span class="c1"># avoid circular import</span>
+<span class="ne">--&gt; </span><span class="mi">126</span>         <span class="k">return</span> <span class="n">TransformedDistribution</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">127</span> 
+<span class="g g-Whitespace">    </span><span class="mi">128</span>     <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/distributions/distribution.py</span> in <span class="ni">dist</span><span class="nt">(cls, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span>     <span class="k">def</span> <span class="nf">dist</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">129</span>         <span class="n">dist</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">130</span>         <span class="n">dist</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">131</span>         <span class="k">return</span> <span class="n">dist</span>
+<span class="g g-Whitespace">    </span><span class="mi">132</span> 
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/distributions/transforms.py</span> in <span class="ni">__init__</span><span class="nt">(self, dist, transform, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">152</span>         <span class="bp">self</span><span class="o">.</span><span class="n">dist</span> <span class="o">=</span> <span class="n">dist</span>
+<span class="g g-Whitespace">    </span><span class="mi">153</span>         <span class="bp">self</span><span class="o">.</span><span class="n">transform_used</span> <span class="o">=</span> <span class="n">transform</span>
+<span class="ne">--&gt; </span><span class="mi">154</span>         <span class="n">v</span> <span class="o">=</span> <span class="n">forward</span><span class="p">(</span><span class="n">FreeRV</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;v&quot;</span><span class="p">,</span> <span class="n">distribution</span><span class="o">=</span><span class="n">dist</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">155</span>         <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">type</span>
+<span class="g g-Whitespace">    </span><span class="mi">156</span> 
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/model.py</span> in <span class="ni">__init__</span><span class="nt">(self, type, owner, index, name, distribution, total_size, model)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1673</span>             <span class="c1"># This is done in `Factor`.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1674</span>             <span class="bp">self</span><span class="o">.</span><span class="n">logp_sum_unscaledt</span> <span class="o">=</span> <span class="n">distribution</span><span class="o">.</span><span class="n">logp_sum</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1675</span>             <span class="bp">self</span><span class="o">.</span><span class="n">logp_nojac_unscaledt</span> <span class="o">=</span> <span class="n">distribution</span><span class="o">.</span><span class="n">logp_nojac</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1676</span>             <span class="bp">self</span><span class="o">.</span><span class="n">total_size</span> <span class="o">=</span> <span class="n">total_size</span>
+<span class="g g-Whitespace">   </span><span class="mi">1677</span>             <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/distributions/distribution.py</span> in <span class="ni">logp_nojac</span><span class="nt">(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">257</span>         <span class="n">distributions</span><span class="o">.</span>
+<span class="g g-Whitespace">    </span><span class="mi">258</span>         <span class="sd">&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">259</span><span class="sd">         return self.logp(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">260</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">261</span><span class="sd">     def logp_sum(self, *args, **kwargs):</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/distributions/continuous.py</span> in <span class="ni">logp</span><span class="nt">(self, value)</span>
+<span class="g g-Whitespace">    </span><span class="mi">891</span><span class="sd">         tau = self.tau</span>
+<span class="g g-Whitespace">    </span><span class="mi">892</span><span class="sd">         sigma = self.sigma</span>
+<span class="ne">--&gt; </span><span class="mi">893</span><span class="sd">         return bound(</span>
+<span class="g g-Whitespace">    </span><span class="mi">894</span><span class="sd">             -0.5 * tau * value ** 2 + 0.5 * tt.log(tau * 2.0 / np.pi),</span>
+<span class="g g-Whitespace">    </span><span class="mi">895</span><span class="sd">             value &gt;= 0,</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/distributions/dist_math.py</span> in <span class="ni">bound</span><span class="nt">(logp, *conditions, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">80</span><span class="sd">         alltrue = alltrue_scalar</span>
+<span class="g g-Whitespace">     </span><span class="mi">81</span><span class="sd"> </span>
+<span class="ne">---&gt; </span><span class="mi">82</span><span class="sd">     return tt.switch(alltrue(conditions), logp, -np.inf)</span>
+<span class="g g-Whitespace">     </span><span class="mi">83</span><span class="sd"> </span>
+<span class="g g-Whitespace">     </span><span class="mi">84</span><span class="sd"> </span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/pymc3/distributions/dist_math.py</span> in <span class="ni">alltrue_elemwise</span><span class="nt">(vals)</span>
+<span class="g g-Whitespace">     </span><span class="mi">86</span><span class="sd">     ret = 1</span>
+<span class="g g-Whitespace">     </span><span class="mi">87</span><span class="sd">     for c in vals:</span>
+<span class="ne">---&gt; </span><span class="mi">88</span><span class="sd">         ret = ret * (1 * c)</span>
+<span class="g g-Whitespace">     </span><span class="mi">89</span><span class="sd">     return ret</span>
+<span class="g g-Whitespace">     </span><span class="mi">90</span><span class="sd"> </span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/var.py</span> in <span class="ni">__rmul__</span><span class="nt">(self, other)</span>
+<span class="g g-Whitespace">    </span><span class="mi">202</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">203</span><span class="sd">     def __rmul__(self, other):</span>
+<span class="ne">--&gt; </span><span class="mi">204</span><span class="sd">         return theano.tensor.basic.mul(other, self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">205</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">206</span><span class="sd">     def __rdiv__(self, other):</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py</span> in <span class="ni">__call__</span><span class="nt">(self, *inputs, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">251</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">252</span><span class="sd">         if config.compute_test_value != &quot;off&quot;:</span>
+<span class="ne">--&gt; </span><span class="mi">253</span><span class="sd">             compute_test_value(node)</span>
+<span class="g g-Whitespace">    </span><span class="mi">254</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">255</span><span class="sd">         if self.default_output is not None:</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py</span> in <span class="ni">compute_test_value</span><span class="nt">(node)</span>
+<span class="g g-Whitespace">    </span><span class="mi">124</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">125</span><span class="sd">     # Create a thunk that performs the computation</span>
+<span class="ne">--&gt; </span><span class="mi">126</span><span class="sd">     thunk = node.op.make_thunk(node, storage_map, compute_map, no_recycling=[])</span>
+<span class="g g-Whitespace">    </span><span class="mi">127</span><span class="sd">     thunk.inputs = [storage_map[v] for v in node.inputs]</span>
+<span class="g g-Whitespace">    </span><span class="mi">128</span><span class="sd">     thunk.outputs = [storage_map[v] for v in node.outputs]</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py</span> in <span class="ni">make_thunk</span><span class="nt">(self, node, storage_map, compute_map, no_recycling, impl)</span>
+<span class="g g-Whitespace">    </span><span class="mi">632</span><span class="sd">             )</span>
+<span class="g g-Whitespace">    </span><span class="mi">633</span><span class="sd">             try:</span>
+<span class="ne">--&gt; </span><span class="mi">634</span><span class="sd">                 return self.make_c_thunk(node, storage_map, compute_map, no_recycling)</span>
+<span class="g g-Whitespace">    </span><span class="mi">635</span><span class="sd">             except (NotImplementedError, MethodNotDefined):</span>
+<span class="g g-Whitespace">    </span><span class="mi">636</span><span class="sd">                 # We requested the c code, so don&#39;t catch the error.</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py</span> in <span class="ni">make_c_thunk</span><span class="nt">(self, node, storage_map, compute_map, no_recycling)</span>
+<span class="g g-Whitespace">    </span><span class="mi">573</span><span class="sd">         node_output_storage = [storage_map[r] for r in node.outputs]</span>
+<span class="g g-Whitespace">    </span><span class="mi">574</span><span class="sd"> </span>
+<span class="ne">--&gt; </span><span class="mi">575</span><span class="sd">         e = FunctionGraph(node.inputs, node.outputs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">576</span><span class="sd">         e_no_recycling = [</span>
+<span class="g g-Whitespace">    </span><span class="mi">577</span><span class="sd">             new_o</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/fg.py</span> in <span class="ni">__init__</span><span class="nt">(self, inputs, outputs, features, clone, update_mapping)</span>
+<span class="g g-Whitespace">    </span><span class="mi">113</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">114</span><span class="sd">         if clone:</span>
+<span class="ne">--&gt; </span><span class="mi">115</span><span class="sd">             inputs, outputs = clone_graph(inputs, outputs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">116</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">117</span><span class="sd">         if not isinstance(inputs, list):</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/basic.py</span> in <span class="ni">clone</span><span class="nt">(inputs, outputs, copy_inputs, copy_orphans)</span>
+<span class="g g-Whitespace">    </span><span class="mi">895</span><span class="sd">     if copy_orphans is None:</span>
+<span class="g g-Whitespace">    </span><span class="mi">896</span><span class="sd">         copy_orphans = copy_inputs</span>
+<span class="ne">--&gt; </span><span class="mi">897</span><span class="sd">     equiv = clone_get_equiv(inputs, outputs, copy_inputs, copy_orphans)</span>
+<span class="g g-Whitespace">    </span><span class="mi">898</span><span class="sd">     return [equiv[input] for input in inputs], [equiv[output] for output in outputs]</span>
+<span class="g g-Whitespace">    </span><span class="mi">899</span><span class="sd"> </span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/basic.py</span> in <span class="ni">clone_get_equiv</span><span class="nt">(inputs, outputs, copy_inputs, copy_orphans, memo)</span>
+<span class="g g-Whitespace">    </span><span class="mi">931</span><span class="sd">     for input in inputs:</span>
+<span class="g g-Whitespace">    </span><span class="mi">932</span><span class="sd">         if copy_inputs:</span>
+<span class="ne">--&gt; </span><span class="mi">933</span><span class="sd">             cpy = input.clone()</span>
+<span class="g g-Whitespace">    </span><span class="mi">934</span><span class="sd">             cpy.owner = None</span>
+<span class="g g-Whitespace">    </span><span class="mi">935</span><span class="sd">             cpy.index = None</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/basic.py</span> in <span class="ni">clone</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">638</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">639</span><span class="sd">         &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">640</span>         <span class="n">cp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">641</span>         <span class="n">cp</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">642</span>         <span class="k">return</span> <span class="n">cp</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/var.py</span> in <span class="ni">__init__</span><span class="nt">(self, type, data, name)</span>
+<span class="g g-Whitespace">    </span><span class="mi">984</span> 
+<span class="g g-Whitespace">    </span><span class="mi">985</span>     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">986</span>         <span class="n">Constant</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">987</span>         <span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">unique_value</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">988</span>         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/basic.py</span> in <span class="ni">__init__</span><span class="nt">(self, type, data, name)</span>
+<span class="g g-Whitespace">    </span><span class="mi">608</span>         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">609</span>         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="nb">type</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">610</span>         <span class="n">add_tag_trace</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">611</span> 
+<span class="g g-Whitespace">    </span><span class="mi">612</span>     <span class="k">def</span> <span class="nf">get_test_value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/utils.py</span> in <span class="ni">add_tag_trace</span><span class="nt">(thing, user_line)</span>
+<span class="g g-Whitespace">    </span><span class="mi">114</span>         <span class="n">skips</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="g g-Whitespace">    </span><span class="mi">115</span> 
+<span class="ne">--&gt; </span><span class="mi">116</span>     <span class="n">tr</span> <span class="o">=</span> <span class="n">simple_extract_stack</span><span class="p">(</span><span class="n">limit</span><span class="o">=</span><span class="n">user_line</span><span class="p">,</span> <span class="n">skips</span><span class="o">=</span><span class="n">skips</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">117</span>     <span class="c1"># Different python version use different sementic for</span>
+<span class="g g-Whitespace">    </span><span class="mi">118</span>     <span class="c1"># limit. python 2.7 include the call to extrack_stack. The -1 get</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/utils.py</span> in <span class="ni">simple_extract_stack</span><span class="nt">(f, limit, skips)</span>
+<span class="g g-Whitespace">     </span><span class="mi">43</span>         <span class="n">line</span> <span class="o">=</span> <span class="n">linecache</span><span class="o">.</span><span class="n">getline</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">f_globals</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">44</span>         <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">45</span>             <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">46</span>         <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">47</span>             <span class="n">line</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
@@ -1347,7 +1533,7 @@ end{align*}</p>
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         

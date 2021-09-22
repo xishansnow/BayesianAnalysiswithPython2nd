@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e2363ea40746bee74734a24ffefccd78.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -72,6 +72,10 @@
     
         <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
       
       <img src="_static/logo.png" class="logo" alt="logo">
       
@@ -160,8 +164,13 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Append-03-BayesianDeepLearning.html">
+  <a class="reference internal" href="Append-03-BayesianDeepLearningWithPymc3.html">
    附录 C：贝叶斯深度学习的初步尝试
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-04-BayesianDeepLearning.html">
+   附录 D：贝叶斯神经网络的实践 – 面向深度学习用户的教程
   </a>
  </li>
 </ul>
@@ -425,7 +434,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f2e6e98ae50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f01c3043ee0&gt;
 </pre></div>
 </div>
 <img alt="_images/chapter07-GaussianProcesses_2_1.png" src="_images/chapter07-GaussianProcesses_2_1.png" />
@@ -633,7 +642,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3267/2934940681.py:16: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3206/2934940681.py:16: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_reg = pm.sample(2000)
 Auto-assigning NUTS sampler...
 </pre></div>
@@ -643,7 +652,7 @@ Auto-assigning NUTS sampler...
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
 KeyboardInterrupt                         Traceback (most recent call last)
-/tmp/ipykernel_3267/2934940681.py in &lt;module&gt;
+/tmp/ipykernel_3206/2934940681.py in &lt;module&gt;
      14     y_pred = gp.marginal_likelihood(&#39;y_pred&#39;, X=X, y=y, noise=ϵ)
      15 
 ---&gt; 16     trace_reg = pm.sample(2000)
@@ -873,18 +882,382 @@ KeyboardInterrupt                         Traceback (most recent call last)
    1395                         if not isinstance(term, Variable):
 
 /opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
    1218                             )
    1219 
 -&gt; 1220                 input_grads = node.op.L_op(inputs, node.outputs, new_output_grads)
    1221 
    1222                 if input_grads is None:
 
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in L_op(self, inputs, outs, ograds)
-    582                     new_rval.append(elem)
-    583                 else:
---&gt; 584                     elem = ipt.zeros_like()
-    585                     if str(elem.type.dtype) not in theano.tensor.continuous_dtypes:
-    586                         elem = elem.astype(config.floatX)
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py in L_op(self, inputs, outputs, output_grads)
+    323 
+    324         &quot;&quot;&quot;
+--&gt; 325         return self.grad(inputs, output_grads)
+    326 
+    327     def R_op(
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/subtensor.py in grad(self, inputs, grads)
+    735             # set subtensor here at:
+    736             # theano/tensor/opt.py:local_incsubtensor_of_zeros_to_setsubtensor()
+--&gt; 737             first = IncSubtensor(self.idx_list)(x.zeros_like(), gz, *rest)
+    738         return [first] + [DisconnectedType()()] * len(rest)
+    739 
 
 /opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/var.py in zeros_like(model, dtype)
     773 
@@ -901,39 +1274,102 @@ KeyboardInterrupt                         Traceback (most recent call last)
    2580 
 
 /opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py in __call__(self, *inputs, **kwargs)
-    248         &quot;&quot;&quot;
-    249         return_list = kwargs.pop(&quot;return_list&quot;, False)
---&gt; 250         node = self.make_node(*inputs, **kwargs)
     251 
     252         if config.compute_test_value != &quot;off&quot;:
+--&gt; 253             compute_test_value(node)
+    254 
+    255         if self.default_output is not None:
 
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in make_node(self, *inputs)
-    501             DimShuffle, *inputs
-    502         )
---&gt; 503         outputs = [
-    504             TensorType(dtype=dtype, broadcastable=broadcastable)()
-    505             for dtype, broadcastable in zip(out_dtypes, out_broadcastables)
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py in compute_test_value(node)
+    124 
+    125     # Create a thunk that performs the computation
+--&gt; 126     thunk = node.op.make_thunk(node, storage_map, compute_map, no_recycling=[])
+    127     thunk.inputs = [storage_map[v] for v in node.inputs]
+    128     thunk.outputs = [storage_map[v] for v in node.outputs]
 
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in &lt;listcomp&gt;(.0)
-    502         )
-    503         outputs = [
---&gt; 504             TensorType(dtype=dtype, broadcastable=broadcastable)()
-    505             for dtype, broadcastable in zip(out_dtypes, out_broadcastables)
-    506         ]
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py in make_thunk(self, node, storage_map, compute_map, no_recycling, impl)
+    632             )
+    633             try:
+--&gt; 634                 return self.make_c_thunk(node, storage_map, compute_map, no_recycling)
+    635             except (NotImplementedError, MethodNotDefined):
+    636                 # We requested the c code, so don&#39;t catch the error.
 
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/type.py in __call__(self, name)
-    190 
-    191         &quot;&quot;&quot;
---&gt; 192         return utils.add_tag_trace(self.make_variable(name))
-    193 
-    194     @classmethod
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/op.py in make_c_thunk(self, node, storage_map, compute_map, no_recycling)
+    598                 print(f&quot;Disabling C code for {self} due to unsupported float16&quot;)
+    599                 raise NotImplementedError(&quot;float16&quot;)
+--&gt; 600         outputs = cl.make_thunk(
+    601             input_storage=node_input_storage, output_storage=node_output_storage
+    602         )
 
-/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/graph/utils.py in add_tag_trace(thing, user_line)
-     67 
-     68 
----&gt; 69 def add_tag_trace(thing, user_line=None):
-     70     &quot;&quot;&quot;Add tag.trace to a node or variable.
-     71 
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/basic.py in make_thunk(self, input_storage, output_storage, storage_map)
+   1201         &quot;&quot;&quot;
+   1202         init_tasks, tasks = self.get_init_tasks()
+-&gt; 1203         cthunk, module, in_storage, out_storage, error_storage = self.__compile__(
+   1204             input_storage, output_storage, storage_map
+   1205         )
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/basic.py in __compile__(self, input_storage, output_storage, storage_map)
+   1136         input_storage = tuple(input_storage)
+   1137         output_storage = tuple(output_storage)
+-&gt; 1138         thunk, module = self.cthunk_factory(
+   1139             error_storage,
+   1140             input_storage,
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/basic.py in cthunk_factory(self, error_storage, in_storage, out_storage, storage_map)
+   1632             for node in self.node_order:
+   1633                 node.op.prepare_node(node, storage_map, None, &quot;c&quot;)
+-&gt; 1634             module = get_module_cache().module_from_key(key=key, lnk=self)
+   1635 
+   1636         vars = self.inputs + self.outputs + self.orphans
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in module_from_key(self, key, lnk)
+   1189             try:
+   1190                 location = dlimport_workdir(self.dirname)
+-&gt; 1191                 module = lnk.compile_cmodule(location)
+   1192                 name = module.__file__
+   1193                 assert name.startswith(location)
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/basic.py in compile_cmodule(self, location)
+   1541             try:
+   1542                 _logger.debug(f&quot;LOCATION {location}&quot;)
+-&gt; 1543                 module = c_compiler.compile_str(
+   1544                     module_name=mod.code_hash,
+   1545                     src_code=src_code,
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in compile_str(module_name, src_code, location, include_dirs, lib_dirs, libs, preargs, py_module, hide_symbols)
+   2494 
+   2495         try:
+-&gt; 2496             p_out = output_subprocess_Popen(cmd)
+   2497             compile_stderr = p_out[1].decode()
+   2498         except Exception:
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/site-packages/theano/utils.py in output_subprocess_Popen(command, **params)
+    252     # we need to use communicate to make sure we don&#39;t deadlock around
+    253     # the stdout/stderr pipe.
+--&gt; 254     out = p.communicate()
+    255     return out + (p.returncode,)
+    256 
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/subprocess.py in communicate(self, input, timeout)
+   1026 
+   1027             try:
+-&gt; 1028                 stdout, stderr = self._communicate(input, endtime, timeout)
+   1029             except KeyboardInterrupt:
+   1030                 # https://bugs.python.org/issue25942
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/subprocess.py in _communicate(self, input, endtime, orig_timeout)
+   1866                             &#39;failed to raise TimeoutExpired.&#39;)
+   1867 
+-&gt; 1868                     ready = selector.select(timeout)
+   1869                     self._check_timeout(endtime, orig_timeout, stdout, stderr)
+   1870 
+
+/opt/hostedtoolcache/Python/3.8.11/x64/lib/python3.8/selectors.py in select(self, timeout)
+    413         ready = []
+    414         try:
+--&gt; 415             fd_event_list = self._selector.poll(timeout)
+    416         except InterruptedError:
+    417             return ready
 
 KeyboardInterrupt: 
 </pre></div>
@@ -1637,7 +2073,7 @@ y  &amp;\sim \operatorname{Poisson}(f(x)) \tag{式7.14} \label{式7.14}
         
         </div>
     </div>
-    <footer class="footer mt-5 mt-md-0">
+    <footer class="footer">
     <div class="container">
       <p>
         
