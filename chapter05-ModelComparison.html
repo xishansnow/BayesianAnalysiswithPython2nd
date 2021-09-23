@@ -579,7 +579,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2649/3228340448.py:8: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3129/3228340448.py:8: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_l = pm.sample(2000)
 Auto-assigning NUTS sampler...
 </pre></div>
@@ -587,192 +587,191 @@ Auto-assigning NUTS sampler...
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Initializing NUTS using jitter+adapt_diag...
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential sampling (2 chains in 1 job)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NUTS: [ϵ, β, α]
-</pre></div>
-</div>
-<div class="output text_html">
-<div>
-    <style>
-        /* Turns off some styling */
-        progress {
-            /* gets rid of default border in Firefox and Opera. */
-            border: none;
-            /* Needs to be in here for Safari polyfill so background images work as expected. */
-            background-size: auto;
-        }
-        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-            background: #F44336;
-        }
-    </style>
-  <progress value='3000' class='' max='3000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [3000/3000 00:03<00:00 Sampling chain 0, 0 divergences]
-</div>
-</div><div class="output text_html">
-<div>
-    <style>
-        /* Turns off some styling */
-        progress {
-            /* gets rid of default border in Firefox and Opera. */
-            border: none;
-            /* Needs to be in here for Safari polyfill so background images work as expected. */
-            background-size: auto;
-        }
-        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-            background: #F44336;
-        }
-    </style>
-  <progress value='3000' class='' max='3000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  100.00% [3000/3000 00:02<00:00 Sampling chain 1, 0 divergences]
-</div>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 2 chains for 1_000 tune and 2_000 draw iterations (2_000 + 4_000 draws total) took 5 seconds.
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2649</span><span class="o">/</span><span class="mf">3228340448.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_p</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">α</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;α&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">12</span>     <span class="n">β</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;β&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="n">ϵ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;ϵ&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">μ</span> <span class="o">=</span> <span class="n">α</span> <span class="o">+</span> <span class="n">pm</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">β</span><span class="p">,</span> <span class="n">x_1s</span><span class="p">)</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
+KeyboardInterrupt                         Traceback (most recent call last)
+/tmp/ipykernel_3129/3228340448.py in &lt;module&gt;
+      6     y_pred = pm.Normal(&#39;y_pred&#39;, mu=μ, sd=ϵ, observed=y_1s)
+      7 
+----&gt; 8     trace_l = pm.sample(2000)
+      9 
+     10 with pm.Model() as model_p:
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/distributions/distribution.py</span> in <span class="ni">__new__</span><span class="nt">(cls, name, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">120</span>         <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">121</span>             <span class="n">dist</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">dist</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">122</span>         <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">dist</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">total_size</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="n">dims</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">123</span> 
-<span class="g g-Whitespace">    </span><span class="mi">124</span>     <span class="k">def</span> <span class="nf">__getnewargs__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/sampling.py in sample(draws, step, init, n_init, start, trace, chain_idx, chains, cores, tune, progressbar, model, random_seed, discard_tuned_samples, compute_convergence_checks, callback, jitter_max_retries, return_inferencedata, idata_kwargs, mp_ctx, pickle_backend, **kwargs)
+    494             # By default, try to use NUTS
+    495             _log.info(&quot;Auto-assigning NUTS sampler...&quot;)
+--&gt; 496             start_, step = init_nuts(
+    497                 init=init,
+    498                 chains=chains,
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/model.py</span> in <span class="ni">Var</span><span class="nt">(self, name, dist, data, total_size, dims)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1136</span>             <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dist</span><span class="p">,</span> <span class="s2">&quot;transform&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1137</span>                 <span class="k">with</span> <span class="bp">self</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1138</span>                     <span class="n">var</span> <span class="o">=</span> <span class="n">FreeRV</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">distribution</span><span class="o">=</span><span class="n">dist</span><span class="p">,</span> <span class="n">total_size</span><span class="o">=</span><span class="n">total_size</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1139</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">free_RVs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1140</span>             <span class="k">else</span><span class="p">:</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/sampling.py in init_nuts(init, chains, n_init, model, random_seed, progressbar, jitter_max_retries, **kwargs)
+   2185         raise ValueError(f&quot;Unknown initializer: {init}.&quot;)
+   2186 
+-&gt; 2187     step = pm.NUTS(potential=potential, model=model, **kwargs)
+   2188 
+   2189     return start, step
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/model.py</span> in <span class="ni">__init__</span><span class="nt">(self, type, owner, index, name, distribution, total_size, model)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1669</span>                 <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">distribution</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">distribution</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span> <span class="o">*</span> <span class="n">distribution</span><span class="o">.</span><span class="n">default</span><span class="p">()</span>
-<span class="g g-Whitespace">   </span><span class="mi">1670</span>             <span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1671</span>             <span class="bp">self</span><span class="o">.</span><span class="n">logp_elemwiset</span> <span class="o">=</span> <span class="n">distribution</span><span class="o">.</span><span class="n">logp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1672</span>             <span class="c1"># The logp might need scaling in minibatches.</span>
-<span class="g g-Whitespace">   </span><span class="mi">1673</span>             <span class="c1"># This is done in `Factor`.</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/step_methods/hmc/nuts.py in __init__(self, vars, max_treedepth, early_max_treedepth, **kwargs)
+    166         `pm.sample` to the desired number of tuning steps.
+    167         &quot;&quot;&quot;
+--&gt; 168         super().__init__(vars, **kwargs)
+    169 
+    170         self.max_treedepth = max_treedepth
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/distributions/continuous.py</span> in <span class="ni">logp</span><span class="nt">(self, value)</span>
-<span class="g g-Whitespace">    </span><span class="mi">533</span>         <span class="n">mu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span>
-<span class="g g-Whitespace">    </span><span class="mi">534</span> 
-<span class="ne">--&gt; </span><span class="mi">535</span>         <span class="k">return</span> <span class="n">bound</span><span class="p">((</span><span class="o">-</span><span class="n">tau</span> <span class="o">*</span> <span class="p">(</span><span class="n">value</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">tt</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">tau</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">))</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">536</span> 
-<span class="g g-Whitespace">    </span><span class="mi">537</span>     <span class="k">def</span> <span class="nf">_distr_parameters_for_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/step_methods/hmc/base_hmc.py in __init__(self, vars, scaling, step_scale, is_cov, model, blocked, potential, dtype, Emax, target_accept, gamma, k, t0, adapt_step_size, step_rand, **theano_kwargs)
+     86         vars = inputvars(vars)
+     87 
+---&gt; 88         super().__init__(vars, blocked=blocked, model=model, dtype=dtype, **theano_kwargs)
+     89 
+     90         self.adapt_step_size = adapt_step_size
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/var.py</span> in <span class="ni">__sub__</span><span class="nt">(self, other)</span>
-<span class="g g-Whitespace">    </span><span class="mi">118</span>         <span class="c1"># and the return value in that case</span>
-<span class="g g-Whitespace">    </span><span class="mi">119</span>         <span class="k">try</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">120</span>             <span class="k">return</span> <span class="n">theano</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">basic</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">121</span>         <span class="k">except</span> <span class="p">(</span><span class="ne">NotImplementedError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">122</span>             <span class="k">return</span> <span class="bp">NotImplemented</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/step_methods/arraystep.py in __init__(self, vars, model, blocked, dtype, logp_dlogp_func, **theano_kwargs)
+    252 
+    253         if logp_dlogp_func is None:
+--&gt; 254             func = model.logp_dlogp_function(vars, dtype=dtype, **theano_kwargs)
+    255         else:
+    256             func = logp_dlogp_func
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py</span> in <span class="ni">__call__</span><span class="nt">(self, *inputs, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">251</span> 
-<span class="g g-Whitespace">    </span><span class="mi">252</span>         <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">compute_test_value</span> <span class="o">!=</span> <span class="s2">&quot;off&quot;</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">253</span>             <span class="n">compute_test_value</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">254</span> 
-<span class="g g-Whitespace">    </span><span class="mi">255</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_output</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/model.py in logp_dlogp_function(self, grad_vars, tempered, **kwargs)
+   1002         varnames = [var.name for var in grad_vars]
+   1003         extra_vars = [var for var in self.free_RVs if var.name not in varnames]
+-&gt; 1004         return ValueGradFunction(costs, grad_vars, extra_vars, **kwargs)
+   1005 
+   1006     @property
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py</span> in <span class="ni">compute_test_value</span><span class="nt">(node)</span>
-<span class="g g-Whitespace">    </span><span class="mi">124</span> 
-<span class="g g-Whitespace">    </span><span class="mi">125</span>     <span class="c1"># Create a thunk that performs the computation</span>
-<span class="ne">--&gt; </span><span class="mi">126</span>     <span class="n">thunk</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">make_thunk</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">storage_map</span><span class="p">,</span> <span class="n">compute_map</span><span class="p">,</span> <span class="n">no_recycling</span><span class="o">=</span><span class="p">[])</span>
-<span class="g g-Whitespace">    </span><span class="mi">127</span>     <span class="n">thunk</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">storage_map</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">inputs</span><span class="p">]</span>
-<span class="g g-Whitespace">    </span><span class="mi">128</span>     <span class="n">thunk</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">storage_map</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">outputs</span><span class="p">]</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/model.py in __init__(self, costs, grad_vars, extra_vars, dtype, casting, compute_grads, **kwargs)
+    697         inputs = [self._vars_joined]
+    698 
+--&gt; 699         self._theano_function = theano.function(inputs, outputs, givens=givens, **kwargs)
+    700 
+    701     def set_weights(self, values):
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py</span> in <span class="ni">make_thunk</span><span class="nt">(self, node, storage_map, compute_map, no_recycling, impl)</span>
-<span class="g g-Whitespace">    </span><span class="mi">632</span>             <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">633</span>             <span class="k">try</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">634</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_c_thunk</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">storage_map</span><span class="p">,</span> <span class="n">compute_map</span><span class="p">,</span> <span class="n">no_recycling</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">635</span>             <span class="k">except</span> <span class="p">(</span><span class="ne">NotImplementedError</span><span class="p">,</span> <span class="n">MethodNotDefined</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">636</span>                 <span class="c1"># We requested the c code, so don&#39;t catch the error.</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/compile/function/__init__.py in function(inputs, outputs, mode, updates, givens, no_default_updates, accept_inplace, name, rebuild_strict, allow_input_downcast, profile, on_unused_input)
+    335         # note: pfunc will also call orig_function -- orig_function is
+    336         #      a choke point that all compilation must pass through
+--&gt; 337         fn = pfunc(
+    338             params=inputs,
+    339             outputs=outputs,
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py</span> in <span class="ni">make_c_thunk</span><span class="nt">(self, node, storage_map, compute_map, no_recycling)</span>
-<span class="g g-Whitespace">    </span><span class="mi">598</span>                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Disabling C code for </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2"> due to unsupported float16&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">599</span>                 <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;float16&quot;</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">600</span>         <span class="n">outputs</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">make_thunk</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">601</span>             <span class="n">input_storage</span><span class="o">=</span><span class="n">node_input_storage</span><span class="p">,</span> <span class="n">output_storage</span><span class="o">=</span><span class="n">node_output_storage</span>
-<span class="g g-Whitespace">    </span><span class="mi">602</span>         <span class="p">)</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/compile/function/pfunc.py in pfunc(params, outputs, mode, updates, givens, no_default_updates, accept_inplace, name, rebuild_strict, allow_input_downcast, profile, on_unused_input, output_keys)
+    522         inputs.append(si)
+    523 
+--&gt; 524     return orig_function(
+    525         inputs,
+    526         cloned_outputs,
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py</span> in <span class="ni">make_thunk</span><span class="nt">(self, input_storage, output_storage, storage_map)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1201</span>         <span class="s2">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1202</span><span class="s2">         init_tasks, tasks = self.get_init_tasks()</span>
-<span class="ne">-&gt; </span><span class="mi">1203</span><span class="s2">         cthunk, module, in_storage, out_storage, error_storage = self.__compile__(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1204</span><span class="s2">             input_storage, output_storage, storage_map</span>
-<span class="g g-Whitespace">   </span><span class="mi">1205</span><span class="s2">         )</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/compile/function/types.py in orig_function(inputs, outputs, mode, accept_inplace, name, profile, on_unused_input, output_keys)
+   1979         )
+   1980         with config.change_flags(compute_test_value=&quot;off&quot;):
+-&gt; 1981             fn = m.create(defaults)
+   1982     finally:
+   1983         t2 = time.time()
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py</span> in <span class="ni">__compile__</span><span class="nt">(self, input_storage, output_storage, storage_map)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1136</span><span class="s2">         input_storage = tuple(input_storage)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1137</span><span class="s2">         output_storage = tuple(output_storage)</span>
-<span class="ne">-&gt; </span><span class="mi">1138</span><span class="s2">         thunk, module = self.cthunk_factory(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1139</span><span class="s2">             error_storage,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1140</span><span class="s2">             input_storage,</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/compile/function/types.py in create(self, input_storage, trustme, storage_map)
+   1834 
+   1835         with config.change_flags(traceback__limit=config.traceback__compile_limit):
+-&gt; 1836             _fn, _i, _o = self.linker.make_thunk(
+   1837                 input_storage=input_storage_lists, storage_map=storage_map
+   1838             )
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py</span> in <span class="ni">cthunk_factory</span><span class="nt">(self, error_storage, in_storage, out_storage, storage_map)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1632</span><span class="s2">             for node in self.node_order:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1633</span><span class="s2">                 node.op.prepare_node(node, storage_map, None, &quot;c&quot;)</span>
-<span class="ne">-&gt; </span><span class="mi">1634</span><span class="s2">             module = get_module_cache().module_from_key(key=key, lnk=self)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1635</span><span class="s2"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">1636</span><span class="s2">         vars = self.inputs + self.outputs + self.orphans</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/basic.py in make_thunk(self, input_storage, output_storage, storage_map)
+    264 
+    265     def make_thunk(self, input_storage=None, output_storage=None, storage_map=None):
+--&gt; 266         return self.make_all(
+    267             input_storage=input_storage,
+    268             output_storage=output_storage,
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py</span> in <span class="ni">module_from_key</span><span class="nt">(self, key, lnk)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1189</span><span class="s2">             try:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1190</span><span class="s2">                 location = dlimport_workdir(self.dirname)</span>
-<span class="ne">-&gt; </span><span class="mi">1191</span><span class="s2">                 module = lnk.compile_cmodule(location)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1192</span><span class="s2">                 name = module.__file__</span>
-<span class="g g-Whitespace">   </span><span class="mi">1193</span><span class="s2">                 assert name.startswith(location)</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/vm.py in make_all(self, profiler, input_storage, output_storage, storage_map)
+   1129                 # no_recycling here.
+   1130                 thunks.append(
+-&gt; 1131                     node.op.make_thunk(node, storage_map, compute_map, [], impl=impl)
+   1132                 )
+   1133                 linker_make_thunk_time[node] = time.time() - thunk_start
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py</span> in <span class="ni">compile_cmodule</span><span class="nt">(self, location)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1541</span><span class="s2">             try:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1542</span><span class="s2">                 _logger.debug(f&quot;LOCATION </span><span class="si">{location}</span><span class="s2">&quot;)</span>
-<span class="ne">-&gt; </span><span class="mi">1543</span><span class="s2">                 module = c_compiler.compile_str(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1544</span><span class="s2">                     module_name=mod.code_hash,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1545</span><span class="s2">                     src_code=src_code,</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py in make_thunk(self, node, storage_map, compute_map, no_recycling, impl)
+    632             )
+    633             try:
+--&gt; 634                 return self.make_c_thunk(node, storage_map, compute_map, no_recycling)
+    635             except (NotImplementedError, MethodNotDefined):
+    636                 # We requested the c code, so don&#39;t catch the error.
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py</span> in <span class="ni">compile_str</span><span class="nt">(module_name, src_code, location, include_dirs, lib_dirs, libs, preargs, py_module, hide_symbols)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2494</span><span class="s2"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">2495</span><span class="s2">         try:</span>
-<span class="ne">-&gt; </span><span class="mi">2496</span><span class="s2">             p_out = output_subprocess_Popen(cmd)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2497</span><span class="s2">             compile_stderr = p_out[1].decode()</span>
-<span class="g g-Whitespace">   </span><span class="mi">2498</span><span class="s2">         except Exception:</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py in make_c_thunk(self, node, storage_map, compute_map, no_recycling)
+    598                 print(f&quot;Disabling C code for {self} due to unsupported float16&quot;)
+    599                 raise NotImplementedError(&quot;float16&quot;)
+--&gt; 600         outputs = cl.make_thunk(
+    601             input_storage=node_input_storage, output_storage=node_output_storage
+    602         )
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/utils.py</span> in <span class="ni">output_subprocess_Popen</span><span class="nt">(command, **params)</span>
-<span class="g g-Whitespace">    </span><span class="mi">252</span><span class="s2">     # we need to use communicate to make sure we don&#39;t deadlock around</span>
-<span class="g g-Whitespace">    </span><span class="mi">253</span><span class="s2">     # the stdout/stderr pipe.</span>
-<span class="ne">--&gt; </span><span class="mi">254</span><span class="s2">     out = p.communicate()</span>
-<span class="g g-Whitespace">    </span><span class="mi">255</span><span class="s2">     return out + (p.returncode,)</span>
-<span class="g g-Whitespace">    </span><span class="mi">256</span><span class="s2"> </span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py in make_thunk(self, input_storage, output_storage, storage_map)
+   1201         &quot;&quot;&quot;
+   1202         init_tasks, tasks = self.get_init_tasks()
+-&gt; 1203         cthunk, module, in_storage, out_storage, error_storage = self.__compile__(
+   1204             input_storage, output_storage, storage_map
+   1205         )
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/subprocess.py</span> in <span class="ni">communicate</span><span class="nt">(self, input, timeout)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1026</span><span class="s2"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">1027</span><span class="s2">             try:</span>
-<span class="ne">-&gt; </span><span class="mi">1028</span><span class="s2">                 stdout, stderr = self._communicate(input, endtime, timeout)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1029</span><span class="s2">             except KeyboardInterrupt:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1030</span><span class="s2">                 # https://bugs.python.org/issue25942</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py in __compile__(self, input_storage, output_storage, storage_map)
+   1136         input_storage = tuple(input_storage)
+   1137         output_storage = tuple(output_storage)
+-&gt; 1138         thunk, module = self.cthunk_factory(
+   1139             error_storage,
+   1140             input_storage,
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/subprocess.py</span> in <span class="ni">_communicate</span><span class="nt">(self, input, endtime, orig_timeout)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1866</span><span class="s2">                             &#39;failed to raise TimeoutExpired.&#39;)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1867</span><span class="s2"> </span>
-<span class="ne">-&gt; </span><span class="mi">1868</span><span class="s2">                     ready = selector.select(timeout)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1869</span><span class="s2">                     self._check_timeout(endtime, orig_timeout, stdout, stderr)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1870</span><span class="s2"> </span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py in cthunk_factory(self, error_storage, in_storage, out_storage, storage_map)
+   1632             for node in self.node_order:
+   1633                 node.op.prepare_node(node, storage_map, None, &quot;c&quot;)
+-&gt; 1634             module = get_module_cache().module_from_key(key=key, lnk=self)
+   1635 
+   1636         vars = self.inputs + self.outputs + self.orphans
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/selectors.py</span> in <span class="ni">select</span><span class="nt">(self, timeout)</span>
-<span class="g g-Whitespace">    </span><span class="mi">413</span><span class="s2">         ready = []</span>
-<span class="g g-Whitespace">    </span><span class="mi">414</span><span class="s2">         try:</span>
-<span class="ne">--&gt; </span><span class="mi">415</span><span class="s2">             fd_event_list = self._selector.poll(timeout)</span>
-<span class="g g-Whitespace">    </span><span class="mi">416</span><span class="s2">         except InterruptedError:</span>
-<span class="g g-Whitespace">    </span><span class="mi">417</span><span class="s2">             return ready</span>
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in module_from_key(self, key, lnk)
+   1189             try:
+   1190                 location = dlimport_workdir(self.dirname)
+-&gt; 1191                 module = lnk.compile_cmodule(location)
+   1192                 name = module.__file__
+   1193                 assert name.startswith(location)
 
-<span class="ne">KeyboardInterrupt</span>: 
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py in compile_cmodule(self, location)
+   1541             try:
+   1542                 _logger.debug(f&quot;LOCATION {location}&quot;)
+-&gt; 1543                 module = c_compiler.compile_str(
+   1544                     module_name=mod.code_hash,
+   1545                     src_code=src_code,
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in compile_str(module_name, src_code, location, include_dirs, lib_dirs, libs, preargs, py_module, hide_symbols)
+   2494 
+   2495         try:
+-&gt; 2496             p_out = output_subprocess_Popen(cmd)
+   2497             compile_stderr = p_out[1].decode()
+   2498         except Exception:
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/utils.py in output_subprocess_Popen(command, **params)
+    252     # we need to use communicate to make sure we don&#39;t deadlock around
+    253     # the stdout/stderr pipe.
+--&gt; 254     out = p.communicate()
+    255     return out + (p.returncode,)
+    256 
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/subprocess.py in communicate(self, input, timeout)
+   1026 
+   1027             try:
+-&gt; 1028                 stdout, stderr = self._communicate(input, endtime, timeout)
+   1029             except KeyboardInterrupt:
+   1030                 # https://bugs.python.org/issue25942
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/subprocess.py in _communicate(self, input, endtime, orig_timeout)
+   1866                             &#39;failed to raise TimeoutExpired.&#39;)
+   1867 
+-&gt; 1868                     ready = selector.select(timeout)
+   1869                     self._check_timeout(endtime, orig_timeout, stdout, stderr)
+   1870 
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/selectors.py in select(self, timeout)
+    413         ready = []
+    414         try:
+--&gt; 415             fd_event_list = self._selector.poll(timeout)
+    416         except InterruptedError:
+    417             return ready
+
+KeyboardInterrupt: 
 </pre></div>
 </div>
 </div>
