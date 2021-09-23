@@ -155,22 +155,17 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Append-01-MCMCforDummies.html">
-   附录 A： MCMC 随机近似性推断的傻瓜书
+   附录 A： MCMC 随机近似性推断
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Append-02-VIforDummies.html">
-   附录 B： 变分法确定性近似推断的傻瓜书
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Append-03-BayesianDeepLearningWithPymc3.html">
-   附录 C：贝叶斯深度学习的初步尝试
+   附录 B： 变分法近似推断
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Append-04-BayesianDeepLearning.html">
-   附录 D：贝叶斯神经网络的实践 – 面向深度学习用户的教程
+   附录 C：贝叶斯深度学习的初步尝试
   </a>
  </li>
 </ul>
@@ -562,7 +557,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_3865</span><span class="o">/</span><span class="mf">2956847994.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_3765</span><span class="o">/</span><span class="mf">2956847994.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span>      <span class="n">w</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Binomial</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">p</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
 <span class="g g-Whitespace">      </span><span class="mi">6</span>      <span class="c1"># 最大后验点作为近似高斯分布的均值点，该点处的曲率用于近似计算标准差</span>
 <span class="ne">----&gt; </span><span class="mi">7</span>      <span class="n">mean_q</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">find_MAP</span><span class="p">()</span>
@@ -759,6 +754,48 @@
 <span class="g g-Whitespace">   </span><span class="mi">1395</span>                         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">Variable</span><span class="p">):</span>
 
 <span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py</span> in <span class="ni">access_term_cache</span><span class="nt">(node)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1059</span>             <span class="n">inputs</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">inputs</span>
+<span class="g g-Whitespace">   </span><span class="mi">1060</span> 
+<span class="ne">-&gt; </span><span class="mi">1061</span>             <span class="n">output_grads</span> <span class="o">=</span> <span class="p">[</span><span class="n">access_grad_cache</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">outputs</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1062</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1063</span>             <span class="c1"># list of bools indicating if each output is connected to the cost</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1059</span>             <span class="n">inputs</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">inputs</span>
+<span class="g g-Whitespace">   </span><span class="mi">1060</span> 
+<span class="ne">-&gt; </span><span class="mi">1061</span>             <span class="n">output_grads</span> <span class="o">=</span> <span class="p">[</span><span class="n">access_grad_cache</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">outputs</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1062</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1063</span>             <span class="c1"># list of bools indicating if each output is connected to the cost</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py</span> in <span class="ni">access_grad_cache</span><span class="nt">(var)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1391</span>                     <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">node_to_idx</span><span class="p">[</span><span class="n">node</span><span class="p">]:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1392</span> 
+<span class="ne">-&gt; </span><span class="mi">1393</span>                         <span class="n">term</span> <span class="o">=</span> <span class="n">access_term_cache</span><span class="p">(</span><span class="n">node</span><span class="p">)[</span><span class="n">idx</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1394</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1395</span>                         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">Variable</span><span class="p">):</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py</span> in <span class="ni">access_term_cache</span><span class="nt">(node)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1059</span>             <span class="n">inputs</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">inputs</span>
+<span class="g g-Whitespace">   </span><span class="mi">1060</span> 
+<span class="ne">-&gt; </span><span class="mi">1061</span>             <span class="n">output_grads</span> <span class="o">=</span> <span class="p">[</span><span class="n">access_grad_cache</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">outputs</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1062</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1063</span>             <span class="c1"># list of bools indicating if each output is connected to the cost</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1059</span>             <span class="n">inputs</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">inputs</span>
+<span class="g g-Whitespace">   </span><span class="mi">1060</span> 
+<span class="ne">-&gt; </span><span class="mi">1061</span>             <span class="n">output_grads</span> <span class="o">=</span> <span class="p">[</span><span class="n">access_grad_cache</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">outputs</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1062</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1063</span>             <span class="c1"># list of bools indicating if each output is connected to the cost</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py</span> in <span class="ni">access_grad_cache</span><span class="nt">(var)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1391</span>                     <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">node_to_idx</span><span class="p">[</span><span class="n">node</span><span class="p">]:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1392</span> 
+<span class="ne">-&gt; </span><span class="mi">1393</span>                         <span class="n">term</span> <span class="o">=</span> <span class="n">access_term_cache</span><span class="p">(</span><span class="n">node</span><span class="p">)[</span><span class="n">idx</span><span class="p">]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1394</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1395</span>                         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">Variable</span><span class="p">):</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py</span> in <span class="ni">access_term_cache</span><span class="nt">(node)</span>
 <span class="g g-Whitespace">   </span><span class="mi">1218</span>                             <span class="p">)</span>
 <span class="g g-Whitespace">   </span><span class="mi">1219</span> 
 <span class="ne">-&gt; </span><span class="mi">1220</span>                 <span class="n">input_grads</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">L_op</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">outputs</span><span class="p">,</span> <span class="n">new_output_grads</span><span class="p">)</span>
@@ -778,20 +815,6 @@
 <span class="ne">--&gt; </span><span class="mi">668</span>             <span class="n">ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transform</span><span class="p">(</span><span class="n">scalar_igrad</span><span class="p">))</span>
 <span class="g g-Whitespace">    </span><span class="mi">669</span> 
 <span class="g g-Whitespace">    </span><span class="mi">670</span>         <span class="k">return</span> <span class="n">ret</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py</span> in <span class="ni">transform</span><span class="nt">(r)</span>
-<span class="g g-Whitespace">    </span><span class="mi">657</span>                 <span class="k">return</span> <span class="n">DimShuffle</span><span class="p">((),</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">nd</span><span class="p">)(</span><span class="n">res</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">658</span> 
-<span class="ne">--&gt; </span><span class="mi">659</span>             <span class="n">new_r</span> <span class="o">=</span> <span class="n">Elemwise</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">op</span><span class="p">,</span> <span class="p">{})(</span><span class="o">*</span><span class="p">[</span><span class="n">transform</span><span class="p">(</span><span class="n">ipt</span><span class="p">)</span> <span class="k">for</span> <span class="n">ipt</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">inputs</span><span class="p">])</span>
-<span class="g g-Whitespace">    </span><span class="mi">660</span>             <span class="k">return</span> <span class="n">new_r</span>
-<span class="g g-Whitespace">    </span><span class="mi">661</span> 
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py</span> in <span class="ni">&lt;listcomp&gt;</span><span class="nt">(.0)</span>
-<span class="g g-Whitespace">    </span><span class="mi">657</span>                 <span class="k">return</span> <span class="n">DimShuffle</span><span class="p">((),</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">nd</span><span class="p">)(</span><span class="n">res</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">658</span> 
-<span class="ne">--&gt; </span><span class="mi">659</span>             <span class="n">new_r</span> <span class="o">=</span> <span class="n">Elemwise</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">op</span><span class="p">,</span> <span class="p">{})(</span><span class="o">*</span><span class="p">[</span><span class="n">transform</span><span class="p">(</span><span class="n">ipt</span><span class="p">)</span> <span class="k">for</span> <span class="n">ipt</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">inputs</span><span class="p">])</span>
-<span class="g g-Whitespace">    </span><span class="mi">660</span>             <span class="k">return</span> <span class="n">new_r</span>
-<span class="g g-Whitespace">    </span><span class="mi">661</span> 
 
 <span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py</span> in <span class="ni">transform</span><span class="nt">(r)</span>
 <span class="g g-Whitespace">    </span><span class="mi">657</span>                 <span class="k">return</span> <span class="n">DimShuffle</span><span class="p">((),</span> <span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">nd</span><span class="p">)(</span><span class="n">res</span><span class="p">)</span>

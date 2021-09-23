@@ -155,22 +155,17 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Append-01-MCMCforDummies.html">
-   附录 A： MCMC 随机近似性推断的傻瓜书
+   附录 A： MCMC 随机近似性推断
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Append-02-VIforDummies.html">
-   附录 B： 变分法确定性近似推断的傻瓜书
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Append-03-BayesianDeepLearningWithPymc3.html">
-   附录 C：贝叶斯深度学习的初步尝试
+   附录 B： 变分法近似推断
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Append-04-BayesianDeepLearning.html">
-   附录 D：贝叶斯神经网络的实践 – 面向深度学习用户的教程
+   附录 C：贝叶斯深度学习的初步尝试
   </a>
  </li>
 </ul>
@@ -293,38 +288,43 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id3">
-   7.2 对函数建模
+   7.2 什么是高斯过程？
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id4">
-     7.2.1 多维高斯与函数
+     7.2.1 如何为函数建模？
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id5">
-     7.2.2 协方差函数与核
+     7.2.2 多维高斯与函数
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id6">
-     7.2.3 高斯过程
+     7.2.3 协方差矩阵与核函数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     7.2.4 高斯过程
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id7">
+  <a class="reference internal nav-link" href="#id8">
    7.3 高斯过程回归
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id8">
+  <a class="reference internal nav-link" href="#id9">
    7.4 空间自相关回归
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id9">
+  <a class="reference internal nav-link" href="#id10">
    7.5 高斯过程分类
   </a>
  </li>
@@ -334,24 +334,24 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id10">
+    <a class="reference internal nav-link" href="#id11">
      7.6.1 煤矿灾害
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
+    <a class="reference internal nav-link" href="#id12">
      7.6.2 红杉数据集
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id12">
+  <a class="reference internal nav-link" href="#id13">
    7.7 总结
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id13">
+  <a class="reference internal nav-link" href="#id14">
    7.8 练习
   </a>
  </li>
@@ -389,7 +389,9 @@
 <p>以下各节从实用角度解释了高斯过程，几乎避免了所有数学知识。有关更正式的解释，请查看<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">9</span> <span class="pre">章</span> <span class="pre">『下一步去哪里？』</span></code>中列出的资源。</p>
 </div>
 <div class="section" id="id3">
-<h2>7.2 对函数建模<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2>7.2 什么是高斯过程？<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h3>7.2.1 如何为函数建模？<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>我们将首先描述一种将函数表示为概率对象的方法，以开始对高斯过程的讨论。可以把函数 <span class="math notranslate nohighlight">\(f\)</span> 看作是从一组输入 <span class="math notranslate nohighlight">\(x\)</span> 到一组输出 <span class="math notranslate nohighlight">\(y\)</span> 的映射。因此，可以这样写：</p>
 <div class="math notranslate nohighlight">
 \[y=f(x) \tag{式7.2} \label{式7.2}\]</div>
@@ -434,7 +436,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f36c3e9adc0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ffadb164340&gt;
 </pre></div>
 </div>
 <img alt="_images/chapter07-GaussianProcesses_2_1.png" src="_images/chapter07-GaussianProcesses_2_1.png" />
@@ -443,8 +445,9 @@
 <p>图 7.1</p>
 <p>图 7.1 显示，使用高斯分布的样本对高斯函数进行编码并不复杂，但类似生成图 7.1 的这种函数表达能力有限且不够灵活。例如：有时我们期望函数具有某种结构或模式，此时第一种函数表达方式就无法编码数据点之间的关系。事实上，实验是从同一个高斯分布中获得的 10 个独立样本，因此数据点之间是完全独立的。对于第二个函数，实验引入了一些简单的依赖关系，将点 <span class="math notranslate nohighlight">\(y_{i+1}\)</span> 处高斯分布的平均值设置为了 <span class="math notranslate nohighlight">\(y_i\)</span> 的采样值，进而使数据点之间有了某种依赖关系。这为编码具有结构或模式的函数提供了基本思路思路。在本章后续内容中，将介绍一种更通用的方法来捕获不同数据点之间的依赖关系，而不仅限于相邻点之间。</p>
 <p>此处使用高斯分布的原因主要有两个：一是高斯分布具备形成任何形状函数的灵活性，因为每个数据点处都有各自均值和方差的高斯分布；二是从数学角度看，高斯分布具有一些非常好的特性。</p>
-<div class="section" id="id4">
-<h3>7.2.1 多维高斯与函数<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id5">
+<h3>7.2.2 多维高斯与函数<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>在图 7.1 中，使用一维高斯的 <span class="math notranslate nohighlight">\(n\)</span> 个独立样本表示了第一个函数，然后尝试用 <span class="math notranslate nohighlight">\(n\)</span> 个不同高斯分布（每个分布一个样本）表示了第二个函数。其实还可以换一种方式思考：既然每个数据点均被视为来自特定高斯分布的一个采样，是否可以将连续 <span class="math notranslate nohighlight">\(n\)</span> 个数据点视为来自于 <span class="math notranslate nohighlight">\(n\)</span> 维高斯分布的一次采样呢？ 更进一步，如果样本数量无限大，是否可以用一个无限维高斯分布来对其建模呢？</p>
 <p>答案是肯定的。 在每个数据点均为独立的高斯分布样本假设下，可以使用 <span class="math notranslate nohighlight">\(n\)</span> 维高斯分布来对连续 <span class="math notranslate nohighlight">\(n\)</span> 个数据点进行建模，而此样本则可视为 <span class="math notranslate nohighlight">\(n\)</span> 维高斯分布的一个向量形式（长度为 <span class="math notranslate nohighlight">\(n\)</span> ）的抽样。如果预测变量 <span class="math notranslate nohighlight">\(x\)</span> 代表时间，则该模型就表示了一个基于高斯的随机过程，即高斯过程。</p>
 <p>通过上述分析，大家会发现高斯过程本质上是一个无限维高斯分布（虽然实践种中通常是有限维的），其每一维的边缘概率密度都是高斯分布，也代表着每个数据点都是来自某个一维高斯分布的抽样。</p>
@@ -452,8 +455,8 @@
 <p><strong>将模型视为多维高斯分布有一个比较大的优势：可以利用协方差矩阵来编码数据点之间的相关性信息，进而打破观测独立性假设，为数据点间的依赖关系建模</strong>。例如，PyMC3 允许协方差矩阵为单位矩阵 <code class="docutils literal notranslate"><span class="pre">np.eye(len(X))</span></code>，此时表示图中 10 个数据点处的随机变量方差为 1，而协方差为 0（因为观测独立性假设）。如果用其他正数替换单位矩阵中的零，则反映了另外一个完全不同的故事。</p>
 <p>该也意味着，要以概率方式对函数建模，需要打破观测独立性假设，通过选择合适的协方差矩阵，来构造一个能够反映函数特征的多维高斯分布（或高斯过程）。</p>
 </div>
-<div class="section" id="id5">
-<h3>7.2.2 协方差函数与核<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3>7.2.3 协方差矩阵与核函数<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>根据上文分析，高斯过程与其他无限维高斯分布稍有不同，那就是高斯过程的维度间存在某种依赖关系，我们称之为相关性。从数学上，反映不同变量之间相关性的主要工具是协方差矩阵。设想一下，如果通过某种方式，结合样本数据，量化了高斯过程中相邻维度间的特殊依赖关系，是否就完成了对高斯过程的建模？</p>
 <p>在实际工作中，协方差矩阵是用<code class="docutils literal notranslate"><span class="pre">核函数</span></code>来指定的。也就是说，将高斯过程的建模问题转变为了核函数的建模问题。出于讨论目的，此处简化定义核函数为一个对称函数，它接受两个输入，当两个输入相同时返回 1 否则返回一个 <span class="math notranslate nohighlight">\([0,1)\)</span> 间的正值。如果该条件满足，则可将核函数的输出解释为两个输入之间的相似性度量，并用于构造协方差矩阵。</p>
 <p>在众多可用核函数中，指数族二次核是比较常用的一种：</p>
@@ -543,8 +546,8 @@
 <center> 图7.3 </center>
 <p>如图 7.3 所示，高斯核蕴含了多个函数，通过超参数 <span class="math notranslate nohighlight">\(\ell\)</span> 控制函数的平滑度。<span class="math notranslate nohighlight">\(\ell\)</span> 的值越大，函数越平滑。</p>
 </div>
-<div class="section" id="id6">
-<h3>7.2.3 高斯过程<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h3>7.2.4 高斯过程<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <p>了解对函数建模的原理后，就可以进一步理解什么是高斯过程以及其应用了。从维基百科摘取的对高斯过程的一个比较正式的定义如下：</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -558,17 +561,17 @@
 </div>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>7.3 高斯过程回归<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h2>7.3 高斯过程回归<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>假设可以将 <span class="math notranslate nohighlight">\(y\)</span> 建模为一个关于 <span class="math notranslate nohighlight">\(x\)</span> 的函数 <span class="math notranslate nohighlight">\(f（x）\)</span> 和加性噪声的高斯分布：</p>
 <div class="math notranslate nohighlight">
 \[y \sim \mathcal{N}(\mu=f(x), \sigma=\epsilon) \tag{式7.5} \label{式7.5}\]</div>
 <p>此处 <span class="math notranslate nohighlight">\(\epsilon \sim \mathcal{N}\left(0, \sigma_{\epsilon}\right)\)</span></p>
-<p>这类似于第 3 章“线性回归模型”中做出的假设。此处的主要区别在于，我们将在 <span class="math notranslate nohighlight">\(f\)</span> 上设置先验以体现相邻 <span class="math notranslate nohighlight">\(y\)</span> 之间的某些依赖（相关）关系，而高斯过程正适合做这个工作：</p>
+<p>这类似于第 3 章“线性回归模型”中做出的假设。此处的主要区别在于，我们将在 <span class="math notranslate nohighlight">\(f\)</span> 上设置先验以体现相邻的函数值之间的某些依赖关系，而高斯过程正适合做这个工作：</p>
 <div class="math notranslate nohighlight">
-\[f(x) \sim \mathcal{G} \mathcal{P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.6} \label{式7.6}\]</div>
-<p><span class="math notranslate nohighlight">\(\mathcal{GP}\)</span> 表示高斯过程分布， <span class="math notranslate nohighlight">\(\mu_x\)</span> 为均值函数， <span class="math notranslate nohighlight">\(K(x,x')\)</span> 为核（或协方差）函数。注意我们使用 <code class="docutils literal notranslate"><span class="pre">函数</span></code> 这个词汇，表示在数学上均值和协方差都是无限的对象，尽管实践中总是作为有限对象来处理的。</p>
-<p>如果先验是高斯过程分布，似然是正态分布，那么后验也应当是高斯过程分布，根据共轭先验的知识可以解析地计算出来：</p>
+\[f(x) \sim \mathcal{GP}(\mu_x, K(x, x')) \tag{式7.6} \label{式7.6}\]</div>
+<p><span class="math notranslate nohighlight">\(\mathcal{GP}\)</span> 表示高斯过程分布， <span class="math notranslate nohighlight">\(\mu_x\)</span> 为均值函数， <span class="math notranslate nohighlight">\(K(x,x')\)</span> 为核函数或协方差函数。注意我们使用 <code class="docutils literal notranslate"><span class="pre">函数</span></code> 这个词汇，表示在数学上均值和协方差都是无限的对象，尽管实践中总是作为有限对象来处理的。</p>
+<p>如果先验是高斯过程分布，似然是正态分布，那么根据共轭先验的知识，后验分布也应当是一个高斯过程分布，并且可以解析地计算如下公式：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*} 
 p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \Sigma) \tag{式7.7}  \label{式7.7}\\
@@ -582,8 +585,8 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 &amp;\text { - } K_{*}=K\left(X_{*}, X\right) \\
 &amp;\text { - } K_{* *}=K\left(X_{*}, X_{*}\right)
 \end{align*}\end{split}\]</div>
-<p><span class="math notranslate nohighlight">\(X\)</span> 是观察到的数据点，<span class="math notranslate nohighlight">\(X_*\)</span> 表示测试点；也就是我们希望推断得出函数值的新点。</p>
-<p>像往常一样，PyMC3 会自动完成整个推断过程，高斯过程也不例外。让我们继续创建一些数据，然后构建一个 PyMC3 模型：</p>
+<p><span class="math notranslate nohighlight">\(X\)</span> 是观察到的数据点，<span class="math notranslate nohighlight">\(X_*\)</span> 表示测试点；也就是我们希望推断得出新点的函数值。</p>
+<p>像往常一样，PyMC3 会自动完成整个高斯过程的推断过程。让我们继续创建一些数据，然后构建一个 PyMC3 模型：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
@@ -605,7 +608,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 </div>
 </div>
 <center> 图7.4  </center>
-<p>在图 7.4 中，我们看到真实的未知函数是一条黑色的虚线，而点则表示了未知函数的带噪声样本。</p>
+<p>在图 7.4 中，我们看到真实的未知函数是一条黑色的虚线，而点则表示了未知函数的含噪声样本。</p>
 <p>请注意，为了将公式 7.7 和 7.8 编码到 PyMC3 模型中，需要设置指数族二次核的 <span class="math notranslate nohighlight">\(\epsilon\)</span> 参数、核宽 <span class="math notranslate nohighlight">\(\ell\)</span> 和正态似然方差。</p>
 <p>高斯过程在 PyMC3 中实现为一系列 Python 类，与以前的模型略有不同；然而，代码仍然非常 <code class="docutils literal notranslate"><span class="pre">PyMC3</span> <span class="pre">风格</span></code>。我在以下代码中添加了一些注释，以指导您完成使用 PyMC3 定义高斯过程的关键步骤：</p>
 <div class="cell docutils container">
@@ -631,7 +634,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_3640</span><span class="o">/</span><span class="mf">2938772653.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_3531</span><span class="o">/</span><span class="mf">2938772653.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="c1"># likelihood</span>
 <span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">marginal_likelihood</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="n">ϵ</span><span class="p">)</span>
 <span class="ne">---&gt; </span><span class="mi">15</span>     <span class="n">trace_reg</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
@@ -899,8 +902,8 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 <center> 图 7.8 </center>
 <p>正如第四章 “广义线性模型” 中看到的，可以使用具有非高斯似然的线性模型和适当的逆连接函数来扩展线性模型的范围。我们可以为高斯过程做同样的事情。例如，使用具有指数逆连接函数的泊松似然。如果这样做，则后验不再是可解析的，此时需要用 MCMC 或 变分等数值推断方法来逼近后验。</p>
 </div>
-<div class="section" id="id8">
-<h2>7.4 空间自相关回归<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h2>7.4 空间自相关回归<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>下面的例子取自 <code class="docutils literal notranslate"><span class="pre">Richard</span> <span class="pre">McElreath</span></code> 的 《统计反思（ Statistical Rethinking ）》 一书。我强烈推荐你读这本书，因为你会发现很多像本例一样的好例子以及很好的解释。唯一需要注意的是，书中示例是 <code class="docutils literal notranslate"><span class="pre">R/stan</span></code> 格式的，但不要担心；在 <a class="reference external" href="https://github.com/pymc-devs/Resources">https://github.com/pymc-devs/Resources</a> 中可以找到其 <code class="docutils literal notranslate"><span class="pre">Python/PyMC3</span></code> 版本。</p>
 <p>现在回到案例，有 10 个不同的岛屿社会；每一个都有其使用的工具数量。一些理论预测，较大人口需要开发和维护更多工具；另一个重要因素是人群间的接触率。</p>
 <p>当将工具数量作为结果变量时，可以使用泊松回归，并将人口数量作为预测变量。事实上，可以使用人口的对数，因为根据理论真正重要的是人口比例，而不是绝对数量。将接触率包括在模型中的一种方法是收集有关这些岛屿社会在历史上的接触频率，可以考虑创建一个定类变量，如低/高接触率（见下表中的 Contact 列）。另一种方式是使用不同岛屿社会间的距离来代表接触率，假设距离近的社会接触会更频繁。</p>
@@ -1049,8 +1052,8 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 <p>图 7.10 的左侧显示了之前在相对地理位置上下文中计算的岛屿社会间的后验中值相关性线条。有些线条是不可见的，因为使用相关性来设置了线条的不透明度。在右侧，再次显示了后验中值相关性，但此次是根据对数人口与工具数量绘制的。虚线表示工具的中位数和 94%HPD 间隔作为对数填充的函数。两幅图中，圆点大小与每个岛屿社会的人口成正比。</p>
 <p>请注意 <code class="docutils literal notranslate"><span class="pre">Malekula</span></code>、<code class="docutils literal notranslate"><span class="pre">Tikopia</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Santa</span> <span class="pre">Cruz</span></code> 之间的相关性如何描述这样一个事实，即它们拥有的工具数量相当少，接近或低于其人口的预期工具数量。类似的事情正发生在<code class="docutils literal notranslate"><span class="pre">Trobriands</span></code>和 <code class="docutils literal notranslate"><span class="pre">Manus</span></code>；它们地理位置相近，拥有的工具比预期人口规模要少。<code class="docutils literal notranslate"><span class="pre">Tonga</span></code> 为其人口提供的工具比预期要多得多，而且与 <code class="docutils literal notranslate"><span class="pre">Fiji</span></code> 的相关性较高。在某种程度上，该模型告诉我们，<code class="docutils literal notranslate"><span class="pre">Tonga</span></code>对 <code class="docutils literal notranslate"><span class="pre">Lua</span> <span class="pre">Fiji</span></code>有积极的影响，增加了工具总数，抵消了 <code class="docutils literal notranslate"><span class="pre">Malekula</span></code>、<code class="docutils literal notranslate"><span class="pre">Tikopia</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Santa</span> <span class="pre">Cruz</span></code>等近邻对 <code class="docutils literal notranslate"><span class="pre">Fiji</span></code> 的影响。</p>
 </div>
-<div class="section" id="id9">
-<h2>7.5 高斯过程分类<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id10">
+<h2>7.5 高斯过程分类<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
 <p>高斯过程不限于回归，也可以用于分类。正如第 4 章 “广义线性模型” 中所述，通过使用 Logistic 逆连接函数的伯努利似然，将线性模型转化为适合分类的模型。对于 iris 数据集，本节将尝试重述第 4 章中的 model_0，不过这次使用高斯过程而不是线性模型。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1267,8 +1270,8 @@ y &amp;\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 <h2>7.6 考克斯 （Cox） 过程<a class="headerlink" href="#cox" title="Permalink to this headline">¶</a></h2>
 <p>现在考虑计数类数据的建模问题。在此将看到两个示例；一个具有时域计数，另一个具有二维空间计数。为做到这点，使用泊松分布对似然建模（每个数据点来自于一个泊松分布的抽样），使用高斯过程对计数函数建模（所有数据点计数的集合来自一个高斯过程的抽样）。因泊松分布的计数被限制为正值，所以使用指数函数作为逆连接函数，类似第 4 章 “广义线性模型” 中的零膨胀泊松回归。</p>
 <p>在很多资料中，可变计数也以强度的形式出现，此类型问题被统称为强度估计问题，此类模型则被称为考克斯（Cox）模型。考克斯模型是泊松过程的一种，其计数本身就是一个随机过程。高斯过程是随机变量的集合，而且这些随机变量的每个有限集合都是多维高斯分布，泊松过程也有类似的特性，泊松过程也是随机变量集合，这些随机变量的每个有限集合都具有泊松分布。当泊松过程的计数本身是一个随机过程时，称之为考克斯（Cox）过程。</p>
-<div class="section" id="id10">
-<h3>7.6.1 煤矿灾害<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3>7.6.1 煤矿灾害<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>第一个例子是煤矿灾难。该案例包括英国从 1851 年到 1962 年的煤矿灾难记录。灾难数量被认为受到安全法规变化的影响。我们希望将灾害率建模为时间的函数，数据集只有一列，每个条目都对应灾难发生的时间。让我们加载数据并查看它的一些值：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1340,8 +1343,8 @@ y  &amp;\sim \operatorname{Poisson}(f(x)) \tag{式7.14} \label{式7.14}
 <p>图 7.15 用白线显示了灾害计数的中位数与时间的关系。这些条带表示 50%HPD 区间（较深）和 94%HPD 区间（较浅）。在底部，用黑色记号笔标出了每一场灾难（这被称为地毯图）。如图所示，除最初的短暂上升外，事故计数随时间的推移而下降。PyMC3 的文档中包括煤矿灾难这个案例，但从不同角度建的模。建议您检查下该示例，因为其本身非常有用，而且将其与刚刚使用 <code class="docutils literal notranslate"><span class="pre">model_coal</span></code> 模型实现的方法进行比较也很有用。</p>
 <p>请注意，将数据装入了抽屉后，会得到一条平滑的曲线。从该意义上说，可将 <code class="docutils literal notranslate"><span class="pre">model_coal</span></code>看作是构建了一个直方图，并对其做了平滑。</p>
 </div>
-<div class="section" id="id11">
-<h3>7.6.2 红杉数据集<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3>7.6.2 红杉数据集<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <p>第二个案例是面向二维空间的红杉木数据。该数据集来自 <code class="docutils literal notranslate"><span class="pre">GPStuff</span></code> 包（一个用于 Matlab、Octave 和 R 的高斯过程包）。该数据集由给定区域上红杉树的位置组成。推断目的是找出该地区树木计数是如何分布的。</p>
 <p>像往常一样，我们加载数据并绘制它：</p>
 <div class="cell docutils container">
@@ -1412,13 +1415,13 @@ y  &amp;\sim \operatorname{Poisson}(f(x)) \tag{式7.14} \label{式7.14}
 <p>图 7.17 中，较浅的颜色意味着比较深颜色有更高的树木比率。可以想象，我们对寻找高增长率地区很感兴趣，因为可能对森林是如何从火灾中恢复的感兴趣，或者我们对土壤性质感兴趣，也可以把树木当作代理。</p>
 </div>
 </div>
-<div class="section" id="id12">
-<h2>7.7 总结<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id13">
+<h2>7.7 总结<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
 <p>高斯过程是多维高斯分布向无限维的推广，并且由均值函数和协方差函数完全指定。由于在概念上可以把函数看作无限长的向量，所以可使用高斯过程作为函数的先验。在实践中，通常处理的不是无限多的对象，而是维数与数据点一样多的多维高斯分布。为定义相应的协方差函数，我们使用了适当的参数化核；通过学习这些超参数，最终来描述任意复杂的函数。</p>
 <p>本章简要介绍了高斯过程，还有很多与之相关的主题需要进一步学习（比如构建一个半参数化模型，将线性模型作为均值函数），或是将两个或者多个核函数组合在一起来描述未知函数，或将高斯过程用于分类任务，或是如何将高斯过程与统计学或者机器学习中的其他模型联系起来。不管怎么说，希望本章对高斯过程的介绍以及本书中一些其他主题的介绍能够激励你阅读、使用和进一步学习贝叶斯统计。</p>
 </div>
-<div class="section" id="id13">
-<h2>7.8 练习<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id14">
+<h2>7.8 练习<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210819_20.webp" /></p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505210830_d3.webp" /></p>
 </div>

@@ -155,22 +155,17 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Append-01-MCMCforDummies.html">
-   附录 A： MCMC 随机近似性推断的傻瓜书
+   附录 A： MCMC 随机近似性推断
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Append-02-VIforDummies.html">
-   附录 B： 变分法确定性近似推断的傻瓜书
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Append-03-BayesianDeepLearningWithPymc3.html">
-   附录 C：贝叶斯深度学习的初步尝试
+   附录 B： 变分法近似推断
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Append-04-BayesianDeepLearning.html">
-   附录 D：贝叶斯神经网络的实践 – 面向深度学习用户的教程
+   附录 C：贝叶斯深度学习的初步尝试
   </a>
  </li>
 </ul>
@@ -533,7 +528,7 @@ y_i= \alpha + x_i \beta \tag{式3.2}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2611/4172630698.py:18: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2495/4172630698.py:18: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
   plt.tight_layout()
 </pre></div>
 </div>
@@ -563,7 +558,7 @@ y_i= \alpha + x_i \beta \tag{式3.2}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2611/162259929.py:12: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2495/162259929.py:12: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_g = pm.sample(2000, tune = 1000)
 Auto-assigning NUTS sampler...
 </pre></div>
@@ -573,7 +568,7 @@ Auto-assigning NUTS sampler...
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
 KeyboardInterrupt                         Traceback (most recent call last)
-/tmp/ipykernel_2611/162259929.py in &lt;module&gt;
+/tmp/ipykernel_2495/162259929.py in &lt;module&gt;
      10 
      11     # 近似推断：随机采样生成模型中所有随机变量（模型参数或隐变量等）和显式确定性变量的迹
 ---&gt; 12     trace_g = pm.sample(2000, tune = 1000)

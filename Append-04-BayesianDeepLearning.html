@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>附录 D：贝叶斯神经网络的实践 – 面向深度学习用户的教程 &#8212; Python贝叶斯分析(中文)</title>
+    <title>附录 C：贝叶斯深度学习的初步尝试 &#8212; Python贝叶斯分析(中文)</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -42,8 +42,6 @@
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -53,7 +51,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="附录 C：贝叶斯深度学习的初步尝试" href="Append-03-BayesianDeepLearningWithPymc3.html" />
+    <link rel="prev" title="附录 B： 变分法近似推断" href="Append-02-VIforDummies.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -154,22 +152,17 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Append-01-MCMCforDummies.html">
-   附录 A： MCMC 随机近似性推断的傻瓜书
+   附录 A： MCMC 随机近似性推断
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Append-02-VIforDummies.html">
-   附录 B： 变分法确定性近似推断的傻瓜书
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Append-03-BayesianDeepLearningWithPymc3.html">
-   附录 C：贝叶斯深度学习的初步尝试
+   附录 B： 变分法近似推断
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   附录 D：贝叶斯神经网络的实践 – 面向深度学习用户的教程
+   附录 C：贝叶斯深度学习的初步尝试
   </a>
  </li>
 </ul>
@@ -287,188 +280,119 @@
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id1">
-   1 简介
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   2 什么是贝叶斯神经网络？
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
-   3 深度学习中贝叶斯方法的动机
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id4">
-   4 用于贝叶斯深度学习的随机模型
+   1 概述
   </a>
   <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     1.1 机器学习的当前趋势
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     1.2 大规模概率编程
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     1.3 深度学习
+    </a>
+   </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id5">
-     4.1 概率图模型
+     1.4 连接深度学习和概率编程
     </a>
    </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#pymc3">
+   2 PyMC3 中的贝叶斯神经网络
+  </a>
+  <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id6">
-     4.2 根据概率图模型定义贝叶斯神经网络的随机模型
+     2.1 生成数据
     </a>
    </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id7">
-   5 设置先验
-  </a>
-  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     2.2 模型定义
+    </a>
+   </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id8">
-     5.1 良好的缺省先验
+     2.3
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       变分推断
+      </span>
+     </code>
+     ：提升模型的复杂性
     </a>
    </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id9">
-   5.2 解决贝叶斯神经网络中的不可辨识性问题
-  </a>
-  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     2.4 分类器到底学到了什么？
+    </a>
+   </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id10">
-     5.3 正则化和先验之间的联系
+     2.5 概率曲面
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id11">
-     5.4 满足一致性条件的先验
+     2.6 预测值的不确定性
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#advi">
+     2.7 小批量 ADVI
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id12">
-   5 监督的程度和先验知识的替代形式
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id13">
-   6 监督程度和先验知识的替代形式
+  <a class="reference internal nav-link" href="#pymc3-lasagne">
+   3 使用 PyMC3 和 Lasagne 构建更为复杂的分层神经网络
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mnist">
+     3.1 数据集：MNIST
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     3.2 模型定义
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id13">
+     3.3 模型训练
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id14">
-     6.1 噪声标签和半监督学习
+     3.4 分层贝叶斯神经网络
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id15">
-     6.2 数据增强
+     3.5 卷积神经网络的贝叶斯模型
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id16">
-     6.3 元学习、转移学习和自我监督学习
+     3.6 结论
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id17">
-   7 贝叶斯推断算法
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#mcmc">
-     7.1 MCMC 方法
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id18">
-     7.2 变分推断
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id19">
-     7.3 反向传播贝叶斯
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id20">
-     7.4 学习先验
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id21">
-   8 将贝叶斯方法用于深度学习
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#dropout">
-     8.1 通过 Dropout 实现贝叶斯
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id22">
-     8.2 通过随机梯度下降实现贝叶斯
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#sgd-mcmc">
-       8.2.1 基于 SGD 动力学的 MCMC 算法。
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#sgd">
-       8.2.2 基于 SGD 动态的变分推断
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#n">
-     8.3 只对最后 n 层进行贝叶斯推断
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id23">
-     8.4 贝叶斯教师法
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id24">
-   9 评估贝叶斯神经网络的性能
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id25">
-   10 贝叶斯深度学习编程框架
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id26">
-     10.1 概率编程语言
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id27">
-     10.2 深度学习框架下的概率编程
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id28">
-   11 结论
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id29">
-   参考文献
+   4 致谢
   </a>
  </li>
 </ul>
@@ -482,691 +406,754 @@
         
               <div>
                 
-  <div class="section" id="d">
-<h1>附录 D：贝叶斯神经网络的实践 – 面向深度学习用户的教程<a class="headerlink" href="#d" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://arxiv.org/abs/2007.06823">原文</a></p>
-<p>[作者]</p>
-<ul class="simple">
-<li><p>LAURENT VALENTIN JOSPIN,University of Western Australia</p></li>
-<li><p>WRAY BUNTINE,Monash University</p></li>
-<li><p>FARID BOUSSAID,University of Western Australia</p></li>
-<li><p>HAMID LAGA,Murdoch university</p></li>
-<li><p>MOHAMMED BENNAMOUN,University of Western Australia</p></li>
-</ul>
-<p>[引用]
-Laurent Valentin Jospin, Wray Buntine, Farid Boussaid, Hamid Laga, and Mohammed Bennamoun. 2020.Hands-on Bayesian Neural Networks - a Tutorial for Deep Learning Users.ACM Comput. Surv.1, 1 ( July 2020),35 pages</p>
+  <div class="section" id="c">
+<h1>附录 C：贝叶斯深度学习的初步尝试<a class="headerlink" href="#c" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://twiecki.io/blog/2016/06/01/bayesian-deep-learning/">原文</a></p>
 <style>p{text-indent:2em;2}</style>
-<p>现代深度学习方法已经成为研究人员和工程师常用的强大工具，可以解决以前似乎不可能解决的问题。然而，深度学习是一种黑箱方法，与其预测相关的不确定性很难量化。而贝叶斯统计学提供了一种形式化方法来理解和量化与深度神经网络预测相关的不确定性。</p>
-<p>本文为正在使用机器学习（特别是深度学习）的研究人员和科学家，提供了一个相关文献的概述和较为完整的工具集，以帮助大家设计、实现、训练、使用和评估贝叶斯神经网络。</p>
 <div class="section" id="id1">
-<h2>1 简介<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>深度学习导致了机器学习的革命，为解决现实生活中复杂而具挑战性的问题提供了解决方案。然而，深度学习模型容易过拟合，这对其泛化能力产生了不利影响。此外，深度学习模型存在预测结果过于自信的问题。上述特点对于诸如自动驾驶汽车 [74]、医疗诊断 [38] 、交易和金融 [11] 等应用来说存在严重的问题，因为无声的失败会导致戏剧性的结果。因此，人们提出了许多方法来减轻风险，特别是通过<code class="docutils literal notranslate"><span class="pre">随机神经网络（SNN）</span></code>来估计模型预测结果的不确定性。贝叶斯范式为分析和训练随机神经网络提供了严格框架，并广泛地支持了学习算法的发展。</p>
-<p>统计学中的贝叶斯范式通常与纯粹的频率主义范式相对立，其主要区别在于假设检验方面[15]。贝叶斯范式基于两个简单理念。第一，概率是对事件发生信念的衡量，而不仅是当样本数量趋于无穷大时对事件发生频率的某种约束。其次，先验信念会影响后验信念。而这些理念都被一个非常简单的反转条件概率公式，以及其在贝叶斯统计中的解释所概括，这就是贝叶斯定理：</p>
-<div class="math notranslate nohighlight" id="equation-1">
-<span class="eqno">(1)<a class="headerlink" href="#equation-1" title="Permalink to this equation">¶</a></span>\[
-P(H \mid D)=\frac{P(D \mid H) P(H)}{P(D)}=\frac{P(D \mid H) P(H)}{\int_{H} P\left(D \mid H^{\prime}\right) P\left(H^{\prime}\right) d H^{\prime}}=\frac{P(D, H)}{\int_{H} P\left(D, H^{\prime}\right) d H^{\prime}}
-\]</div>
-<p>在传统解释中，<span class="math notranslate nohighlight">\(H\)</span> 和 <span class="math notranslate nohighlight">\(D\)</span> 可能被简单地认为是一组输出结果。但贝叶斯解释则明确认为 <span class="math notranslate nohighlight">\(H\)</span> 是一个假设（如深层神经网络的参数），而 <span class="math notranslate nohighlight">\(D\)</span> 是一些数据。这在传统解释中不存在，因为人们无法为一个假设定义概率。<span class="math notranslate nohighlight">\(P(D|H)\)</span> 被称为似然，<span class="math notranslate nohighlight">\(P(H)\)</span> 被称为先验，<span class="math notranslate nohighlight">\(P(D)\)</span> 被称为证据，<span class="math notranslate nohighlight">\(P(H|D)\)</span> 为后验。按照概率论的定义，<span class="math notranslate nohighlight">\(P(D|H)P(H)=P(D,H)\)</span> 为 <span class="math notranslate nohighlight">\(D\)</span> 和 <span class="math notranslate nohighlight">\(H\)</span> 的联合概率。</p>
-<p>这种解释可以理解为从数据中学习，这意味着贝叶斯范式不仅为深度学习模型中不确定性的量化提供了坚实的方法，它还为理解和解释经典深度学习中的正则化技术和学习策略提供了数学框架[69] 。</p>
-<p>在贝叶斯（深度）学习领域有丰富的文献，包括综述或概览[50,85,89]，但没有一篇文献以具体和详尽的方式探讨贝叶斯神经网络的一般理论。然而，贝叶斯机器学习的范畴远大于贝叶斯神经网络。这使得人们在缺乏贝叶斯方法和高级统计学知识的情况下，很难理解这些文献。这对于愿意了解贝叶斯神经网络的深度学习从业者来说，又增加了一层复杂性。同样，这也解释了为何该领域的理论贡献很多，而贝叶斯深度学习的实际应用却很少的原因。另一个主要原因可能来自于缺乏有效算法来解决贝叶斯方法和大数据之间的计算效率问题，或者人们缺乏对最近为解决这些挑战所做贡献的了解。</p>
-<p>本文旨在填补这一空白。本文为那些已经熟悉深度学习方法，并对贝叶斯方法感兴趣的科学家和研究生提供。它涵盖了设计、实现、训练和评估贝叶斯神经网络所需的主要原理（图1）。它还提供了关于贝叶斯神经网络相关文献的广泛概述，从20世纪末的早期开创性工作[54]到之前引用的任何综述中都未涉及的最新文献。</p>
-<p>它还提供了有关贝叶斯神经网络相关文献的广泛概述，从追溯到20世纪末的早期开创性工作[54]到任何先前所提综述中都没有涉及的最新成果。本教程还将重点放在实践方面。人们已经开发了大量方法来构建贝叶斯神经网络，它们的内在方法有时存在很大不同，而对这些不同方法的良好理解是有效使用贝叶斯神经网络的先决条件。据我们所知，已有文献都没有提供对这些不同方法的系统回顾。</p>
-<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig01.webp" /></p>
-<p>图 1.  本文所涉及主题的思维导图。大致可分为贝叶斯深度神经网络的概念、学习方法、评估方法、以及研究人员可用于实施的工具集。</p>
-<p>本文在第 2 节首先定义了贝叶斯神经网络的概念。第 3 节提供了一些使用深度贝叶斯神经网络的动机以及为什么它有用。然后，第 4 节介绍了统计学中的一些重要概念，这些概念被用来构思和分析贝叶斯神经网络。第 5 节介绍了如何在贝叶斯深度学习中考虑先验知识，而先验是贝叶斯统计学的一个重要部分，此外，该节还讨论了贝叶斯神经网络的先验知识与传统神经网络正则化之间的关系。第 6 节解释了如何用贝叶斯设计工具来调整监督程度和定义学习策略。第 7 节探讨了一些用于贝叶斯推断的重要算法。第 8 节回顾了贝叶斯方法如何适应于深度学习，以减少计算复杂性或内存占用率。第 9 节介绍了评估贝叶斯神经网络性能的方法。第 10 节回顾了可用于贝叶斯深度学习的不同软件框架。最后，我们在第 11 节得出结论。</p>
-</div>
+<h2>1 概述<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id2">
-<h2>2 什么是贝叶斯神经网络？<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>贝叶斯神经网络在不同文献中的定义略有不同，但一个共识是：贝叶斯神经网络是一个使用贝叶斯推断训练的随机人工神经网络（图2）。</p>
-<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig02.webp" /></p>
-<p><strong>图 2 从统计学角度对神经网络进行分类。可以划分为点估计神经网络和随机神经网络，点估计神经网络学习参数的单个实例，随机神经网络学习参数的概率分布。不含正则化的点估计模型隐含了均匀分布的先验假设，常采用最大似然估计法学习；含正则化的点估计模型则使用最大后验估计法学习。而贝叶斯神经网络则是一种具有先验的随机神经网络。</strong></p>
-<p><strong>（1）传统神经网络的问题</strong>
-人工神经网络（ANN）的目标是表示一个任意的函数 <span class="math notranslate nohighlight">\(y=N N(x)\)</span>。传统的人工神经网络（如前馈网络、循环网络、分支网络……）是用一个输入层、若干个隐藏层和一个输出层连接构建的。通常把输入变量命名为 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span>，把输出变量（预测）命名为 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 。其中，在最简单的前馈网络中，每一层都表示为前一层的线性转换，后接一个非线性运算 <span class="math notranslate nohighlight">\(nl\)</span>（又称激活函数）。</p>
-<div class="math notranslate nohighlight" id="equation-2">
-<span class="eqno">(2)<a class="headerlink" href="#equation-2" title="Permalink to this equation">¶</a></span>\[\begin{split}
-\begin{aligned}
-&amp;\boldsymbol{l}_{0}=x \\
-&amp;\boldsymbol{l}_{i}=n l_{i}\left(\boldsymbol{W}_{i} \boldsymbol{l}_{i-1}+\boldsymbol{b}_{i}\right) \quad \forall i \in[1, n] \\
-&amp;\boldsymbol{y}=\boldsymbol{l}_{n}
-\end{aligned}
-\end{split}\]</div>
-<p>当然也存在更复杂的架构（例如，具有多个输入、输出、奇异激活函数的网络，循环架构……）。这意味着，一个给定的人工神经网络架构代表了一组与可能的系数 <span class="math notranslate nohighlight">\(θ\)</span> 同构的函数（系数 <span class="math notranslate nohighlight">\(θ\)</span> 代表了网络的所有权重 <span class="math notranslate nohighlight">\(W\)</span> 和偏置 <span class="math notranslate nohighlight">\(b\)</span>）。深度学习是将参数 <span class="math notranslate nohighlight">\(θ\)</span> 回归到某种训练数据 <span class="math notranslate nohighlight">\(D\)</span> 上的过程，通常是一系列的输入 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 和其相应的标签 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span>。标准方法是使用反向传播算法对最小成本函数的点估计值 <span class="math notranslate nohighlight">\(θ\)</span> 进行逼近（图3a）。成本函数通常被定义为训练数据集的对数似然，有时会有一个正则化项来惩罚过度的参数化。从统计学角度来看，不含正则化项时可以被看作最大似然估计（MLE），而当使用正则化时，则是最大后验（MAP）估计（图2）。</p>
-<p>点估计方法相对容易实现，但往往缺乏可解释性，并且可能以不可预见和过度自信的方式泛化到训练外的数据点 [27,63]。上述特征以及人工神经网络自身无法回答“我不知道”问题的特点，在预测结果具有重要意义的应用领域中存在问题，例如交易、自动驾驶或医疗应用。</p>
-<p>在点估计模型情况下，减轻该风险的方法主要有两种：一种基于 Softmax 的预测类别的 logit 阈值，另外一种方法则对分布外的样本增加额外模块来处理[28]。深度生成模型（Deep Generative Model）是另一种用于分布外检测的方法，这是一种旨在对复杂数据分布进行编码的特殊神经网络（例如，生成性对抗性网络）[79]。然而，人们对这些不同方法还是心存担忧，因为它们要么过于简单（例如 Softmax 的 logit 阈值），要么用于分布外检测的附加模块或深度生成模型自身可能会存在过度自信的问题[60]。这些不同解决方存在的缺陷，是引入随机神经网络的主要动机之一。</p>
-<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig03.webp" /></p>
-<p><strong>（2）什么是随机神经网络？</strong></p>
-<p>随机神经网络是一种通过将随机成分引入网络（通过给予网络图 3b中所示随机激活或图 3c中所示的随机权重）来模拟很多可能的模型参数 <span class="math notranslate nohighlight">\(θ\)</span> 及其相关概率分布 <span class="math notranslate nohighlight">\(p(θ)\)</span> 的人工神经网络。因此，随机神经网络可以被视为集成学习的一种特殊情况[99]，不过随机神经网络不是训练单个模型，而是训练一组模型并聚合其预测结果。</p>
-<p>集成学习的主要动机来自以下观察：大量性能一般但独立的预测器输出，在聚合后，可以产生比单个优良性能预测器更好的预测输出 [20]。该方式同样适用于随机神经网络。据观察，尽管没有证据表明随机神经网络是提高准确性的最佳方法，但其预测输出确实优于其对应的点估计结果。不过，使用随机神经网络架构的主要目标是更好地了解与底层过程相关的不确定性，而这是通过比较不同参数 <span class="math notranslate nohighlight">\(θ\)</span> 采样的模型及其预测来实现的。如果不同的模型输出基本一致，则不确定性较低；如果不一致，那么不确定性就很高。这个过程可以总结如下：</p>
-<div class="math notranslate nohighlight" id="equation-3">
-<span class="eqno">(3)<a class="headerlink" href="#equation-3" title="Permalink to this equation">¶</a></span>\[\begin{split}
-\begin{aligned}
-&amp;\theta \sim p(\theta) \\
-&amp;y=N N_{\theta}(x)+\epsilon
-\end{aligned}
-\end{split}\]</div>
-<p>其中 <span class="math notranslate nohighlight">\(\epsilon\)</span> 代表随机噪声，说明函数 <span class="math notranslate nohighlight">\(NN\)</span> 只是一个近似。</p>
-<p><strong>（3）贝叶斯神经网络</strong></p>
-<p>使用贝叶斯推断 [54] 训练的任何随机神经网络，都可以被称为贝叶斯神经网络。要设计贝叶斯神经网络，第一步是选择深度神经网络架构，即功能模型。然后选择一个随机模型，即模型参数的先验分布 <span class="math notranslate nohighlight">\(p(θ)\)</span> 和对模型 <span class="math notranslate nohighlight">\(p(y|x,θ)\)</span> 预测能力的先验置信度（图 4a）。模型的参数化可以被理解为是训练集 <span class="math notranslate nohighlight">\(D\)</span> 支撑下的假设 <span class="math notranslate nohighlight">\(mathcal{H}\)</span> 。本文其余部分会将模型参数表示为 <span class="math notranslate nohighlight">\(θ\)</span>，并使用 <span class="math notranslate nohighlight">\(D\)</span> 表示训练集，用 <span class="math notranslate nohighlight">\(D_x\)</span> 表示训练特征，用 <span class="math notranslate nohighlight">\(D_y\)</span> 表示训练标签，这主要是为了区分训练数据和任何输入/输出对 <span class="math notranslate nohighlight">\((x，y)\)</span>。应用贝叶斯定理，并加强模型参数和输入之间的独立性，贝叶斯后验可以写为：</p>
-<div class="math notranslate nohighlight" id="equation-4">
-<span class="eqno">(4)<a class="headerlink" href="#equation-4" title="Permalink to this equation">¶</a></span>\[
-p(\theta \mid D)=\frac{p\left(D_{y} \mid D_{x}, \theta\right) p(\theta)}{\int_{\theta} p\left(D_{y} \mid D_{x}, \theta^{\prime}\right) p\left(\theta^{\prime}\right) d \theta^{\prime}} \propto p\left(D_{y} \mid D_{x}, \theta\right) p(\theta)
-\]</div>
-<p>计算这个分布而且使用标准方法从中采样，通常是一个棘手的问题，特别是证据 <span class="math notranslate nohighlight">\(\int p\left(D_{u} \mid D_{x}, \theta^{\prime}\right) p\left(\theta^{\prime}\right)\)</span> 的计算非常困难（即式 4 的分母）。为解决该问题，前人设计了两种方法：</p>
-<p>第一是使用马尔可夫链蒙特卡罗算法（ MCMC ）。它允许直接对后验采样，但需要缓存样本集合 <span class="math notranslate nohighlight">\(\Theta\)</span>。</p>
-<p>第二种是使用变分推断方法（VI），该方法学习一个变分分布 <span class="math notranslate nohighlight">\(q_φ(θ)\)</span> 来近似精确的后验分布（图 4b）。</p>
-<p>这两种方法都绕过了证据的计算，这也是为什么在讨论后验时，证据仅被视为缩放常数的原因。上述两种方法将在第 7 节介绍一般性原理，第 8 节会介绍其面向深度学习的方法。</p>
-<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig04.webp" /></p>
-<p>给定贝叶斯后验或其变分近似，在给定某个输入的情况下，可以计算模型预测输出的边缘概率分布 [93]，这可以准确量化模型的不确定性：</p>
-<div class="math notranslate nohighlight" id="equation-5">
-<span class="eqno">(5)<a class="headerlink" href="#equation-5" title="Permalink to this equation">¶</a></span>\[
-p(\boldsymbol{y} \mid \boldsymbol{x}, D)=\int_{\theta} p\left(\boldsymbol{y} \mid \boldsymbol{x}, \boldsymbol{\theta}^{\prime}\right) p\left(\boldsymbol{\theta}^{\prime} \mid D\right) d \boldsymbol{\theta}^{\prime}
-\]</div>
-<p>在实践中，分布 <span class="math notranslate nohighlight">\(p(\boldsymbol{y} \mid \boldsymbol{x}, D)\)</span> 是使用式 3 间接采样的。而 <span class="math notranslate nohighlight">\(θ\)</span> 从变分分布 <span class="math notranslate nohighlight">\(q_φ(θ)\)</span> 中抽取或均匀地从 MCMC 采样集合 <span class="math notranslate nohighlight">\(\Theta\)</span> 中抽取。使用蒙特卡罗方法计算的一些统计量，可以对最终预测结果和不确定性做出汇总（图 4c）。</p>
-<p>对贝叶斯神经网络的回归预测结果做汇总，通常方法是执行模型平均 （Model Average）[17]：</p>
-<div class="math notranslate nohighlight" id="equation-6">
-<span class="eqno">(6)<a class="headerlink" href="#equation-6" title="Permalink to this equation">¶</a></span>\[
-\hat{\boldsymbol{y}}=\frac{1}{|\Theta|} \sum_{\theta_{i} \in \Theta} N N_{\theta_{i}}(\boldsymbol{x})
-\]</div>
-<p>该方法在集成学习中非常普遍，以至于有时也直接被称为集成。为量化不确定性，协方差矩阵可以计算如下：</p>
-<div class="math notranslate nohighlight" id="equation-7">
-<span class="eqno">(7)<a class="headerlink" href="#equation-7" title="Permalink to this equation">¶</a></span>\[
-\Sigma_{\boldsymbol{y} \mid x, D}=\frac{1}{|\Theta|-1} \sum_{\theta_{i} \in \Theta}\left(N N_{\theta_{i}}(\boldsymbol{x})-\hat{\boldsymbol{y}}\right)\left(N N_{\theta_{i}}(\boldsymbol{x})-\hat{\boldsymbol{y}}\right)^{\top}
-\]</div>
-<p>在执行分类任务时，模型平均会给出每个类别的相对概率，此时也可以被视为不确定性的度量：
-$<span class="math notranslate nohighlight">\(
-\hat{\boldsymbol{p}}=\frac{1}{|\Theta|} \sum_{\theta_{i} \in \Theta} N N_{\theta_{i}}(\boldsymbol{x})
-\)</span>$ (式 8)</p>
-<p>此时，最有可能的类别被视为最终的预测结果（当所有类别的假阳性成本相等时）。</p>
-<div class="math notranslate nohighlight" id="equation-9">
-<span class="eqno">(8)<a class="headerlink" href="#equation-9" title="Permalink to this equation">¶</a></span>\[
-\hat{\boldsymbol{y}}=\underset{i}{\arg \max } p_{i} \in \hat{\boldsymbol{p}}
-\]</div>
-<p>如果不同类别的假阳性成本不同，则应使用它来计算风险并选择风险最小的预测。</p>
+<h3>1.1 机器学习的当前趋势<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>目前机器学习有三大趋势：<code class="docutils literal notranslate"><span class="pre">概率编程</span></code>、<code class="docutils literal notranslate"><span class="pre">深度学习</span></code>和<code class="docutils literal notranslate"><span class="pre">大数据</span></code>。在概率编程中，很多创新使用<code class="docutils literal notranslate"><span class="pre">变分推断</span></code>以使事物能够适应规模。在本文中，我将展示如何在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中使用<code class="docutils literal notranslate"><span class="pre">变分推断</span></code>来拟合一个简单的贝叶斯神经网络。我还将讨论如何将概率编程和深度学习联系起来，以便在未来研究中开辟非常有趣的途径。</p>
 </div>
 <div class="section" id="id3">
-<h2>3 深度学习中贝叶斯方法的动机<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>一些用户认为定义模型参数的先验 <span class="math notranslate nohighlight">\(p(θ)\)</span> 即便可能，也会很难。为简单模型定义先验通常是直观的，例如：明确地添加一个正则化项以支持低次多项式函数或平滑函数 [54]。但对深度学习中使用的多层模型来说，定义先验比较困难。</p>
-<p>那么，既然在定义先验时很难理解深度神经网络的行为，为什么还要为其使用贝叶斯方法呢？</p>
-<p>人工神经网络所编码的函数关系隐含代表了条件概率 <span class="math notranslate nohighlight">\(p(y|x,θ)\)</span> 。贝叶斯公式是用来反转条件概率的合适工具，即使人们事先对 <span class="math notranslate nohighlight">\(p(θ)\)</span> 没有什么信息。虽然有很强的理论原则和模式可以作为贝叶斯公式的基础 [76]，但本节重点讨论使用贝叶斯深度网络的一些实际好处。</p>
-<p>（1）贝叶斯方法提供了一种方法来量化深度学习中的不确定性。贝叶斯神经网络通常比经典神经网络有更好的校准 [46,58,66]，即其预测的不确定性与观测误差更加一致。与非贝叶斯神经网络相比，它们既不过度自信，也不缺乏自信。使用贝叶斯神经网络可以区分认知不确定性（epistemic uncertainty）和偶然不确定性（aleatoric uncertainty）。前者是由于缺乏知识而产生的不确定性，用 <span class="math notranslate nohighlight">\(p(θ|D)\)</span> 来测量，随着数据的增加该不确定性在减少；后者是由于数据的偶然性质而产生的不确定性，用 <span class="math notranslate nohighlight">\(p(y|x，θ)\)</span> 来测量 [14,44] 。这使得贝叶斯神经网络具有非常高的数据效率：在学习时，它可以从一个小数据集开始，而不会产生过拟合；在预测时，超出训练集范围的数据只会产生认知不确定性。因此，贝叶斯神经网络成为主动学习（activate learning）的有趣工具 [19,88]，因为人们可以解释模型的预测结果，查看对于相同输入，不同（可能的）参数是否会导致不同预测结果。</p>
-<p>（2）机器学习“没有免费的午餐定理” [94] 可以被解释为任何监督学习算法都包括隐含先验（虽然这种解释更多是哲学而非数学的），而贝叶斯方法则明确了先验。虽然并非不可能，但现在的黑盒工具确实在整合先验知识方面非常困难。而在贝叶斯深度学习中，先验被认为是一种软约束，类似于正则化。大多数用于点估计神经网络的正则化方法，基本都可以从贝叶斯角度理解为设置了某种先验（见第 5.3 节）。此外，当新数据出现时，以前学到的后验可循环使用，这使贝叶斯神经网络成为在线学习的重要工具 [64]。</p>
-<p>（3）贝叶斯范式能够分析学习方法，并在它们之间建立联系。一些最初不被视为贝叶斯的方法可以被隐含地理解为近似贝叶斯方法，如正则化（见第 5.3 节）或集成概念（第 8.2.2 节）。这也解释了“为什么某些很好用的非贝叶斯算法，也仍然能给出贝叶斯理解？”。实践中大多数贝叶斯神经网络架构都依赖于近似或隐含的贝叶斯方法（见第 8 节），因为精确算法往往太昂贵了。贝叶斯范式还提供了一个系统框架来设计新的学习和正则化策略，即使模型是面向点估计的。</p>
+<h3>1.2 大规模概率编程<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>概率编程允许灵活地创建自定义概率模型，并且主要关注洞察力和从数据中学习。该方法本质上是贝叶斯的，因此可以指定先验来约束模型，并以后验分布的形式获得不确定性估计。使用 <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 采样算法，可以从后验中抽取样本来灵活估计这些模型。 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Stan</span></code> 是当前构建和估计此类模型的领先工具。然而，采样法的主要缺点是非常慢，尤其是对于高维模型。这就是为什么最近<code class="docutils literal notranslate"><span class="pre">变分推断算法</span></code>与 <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 一样灵活，但速度要快得多。</p>
+<p>变分算法不从后验中抽取样本，而是将某种分布（例如正态）拟合到后验上，将采样问题转化为优化问题。 自动微分变分推断（ <code class="docutils literal notranslate"><span class="pre">ADVI</span></code> ）方法在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 、 <code class="docutils literal notranslate"><span class="pre">Stan</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Edward</span></code>（现在改为 <code class="docutils literal notranslate"><span class="pre">TensorFlow</span> <span class="pre">Probability</span> <span class="pre">--</span> <span class="pre">TFP</span></code>）中被作为变分推断的主要算法实现。</p>
+<p>不幸的是：在传统的分类或回归等机器学习问题中，概率编程通常在非参数学习、集成学习（例如随机森林或梯度提升回归树）等算法中扮演着次要角色。</p>
 </div>
 <div class="section" id="id4">
-<h2>4 用于贝叶斯深度学习的随机模型<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<p>在设计贝叶斯神经网络时，我们需要选择一个深度网络架构（即功能模型），同时还要选择一个随机模型（即哪些变量被视为随机变量以及其先验分布）。本教程中不会涉及功能模型的设计，因为几乎所有用于点估计的网络模型都可用于贝叶斯深度学习，而且已经有关于功能模型的丰富文献 [71]。</p>
-<p>此处将介绍概率图模型（Probabilistic Graphical Models, 概率图模型），一种用来表示随机变量及其条件依赖关系的工具。特别是贝叶斯统计中常使用的一种概率图模型：贝叶斯信念网络。然后展示如何从概率图中实现贝叶斯神经网络的随机模型。</p>
+<h3>1.3 深度学习<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>现在深度学习已经成为热点，支配了几乎所有的物体识别基准，在 <a class="reference external" href="https://www.cs.toronto.edu/~vmnih/docs/dqn.pdf"><code class="docutils literal notranslate"><span class="pre">Atari</span></code> 游戏</a>中获胜，并且<a class="reference external" href="http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html">战胜了世界围棋冠军李世石</a>。从统计学角度看，神经网络非常擅长非线性函数逼近和表征学习。深度学习不仅用于分类任务，还可以通过自编码器和其他各种有趣的方法扩展到非监督学习，例如：采用 <a class="reference external" href="https://en.wikipedia.org/wiki/Recurrent_neural_network">循环神经网络 <code class="docutils literal notranslate"><span class="pre">RNN</span></code></a>，或<a class="reference external" href="http://cbonnett.github.io/MDN_EDWARD_KERAS_TF.html">混合密度神经网络 <code class="docutils literal notranslate"><span class="pre">MDN</span></code></a> 来估计多模态分布。其效果为何如此好？没有人真正知道原因，因为有些统计特性仍不为人完全理解。</p>
+<p>深度学习的优势之一是可以训练极其复杂的模型。这依赖于几个基础：</p>
+<ul class="simple">
+<li><p><strong>速度：</strong> 提高GPU性能获得更快的处理。</p></li>
+<li><p><strong>软件：</strong> 像<a class="reference external" href="http://deeplearning.net/software/theano/">Theano</a>和<a class="reference external" href="https://www.tensorflow.org/">TensorFlow</a>这样的框架允许灵活创建抽象模型，然后可以对其优化并编译到 <code class="docutils literal notranslate"><span class="pre">CPU</span></code> 或 <code class="docutils literal notranslate"><span class="pre">GPU</span></code> 上。</p></li>
+<li><p><strong>学习算法：</strong> 在数据子集上作随机梯度下降可以让我们在海量数据上训练这些模型。使用 <code class="docutils literal notranslate"><span class="pre">drop-out</span></code> 等技术可避免过拟合。</p></li>
+<li><p><strong>架构：</strong> 大量创新都是改变输入层，比如卷积神经网络，或改变输出层，比如<a class="reference external" href="http://cbonnett.github.io/MDN_EDWARD_KERAS_TF.html">MDN</a>。</p></li>
+</ul>
+</div>
 <div class="section" id="id5">
-<h3>4.1 概率图模型<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p>概率图模型是统计学家用于表示多个随机变量之间的相互依赖性，并用图形方式来分解其概率分布的一种工具。概率图涵盖了大量模型，而本教程中只讨论其中的贝叶斯信念网络（有时也称为信念网络或贝叶斯网络）, 贝叶斯信念网络是用有向无环图表示的概率图模型。</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>有关概率图模型的详细回顾，请参考 [9]。</p>
+<h3>1.4 连接深度学习和概率编程<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>一方面，概率编程允许我们以非常有原则和易于理解的方式构建相当小但聚焦的模型，以深入了解数据；另一方面，深度学习使用启发式方法来训练巨大且高度复杂的模型，并在预测方面非常出色。</p>
+<p>然而，最新的 <code class="docutils literal notranslate"><span class="pre">变分推断</span></code> 方法允许概率编程扩展模型复杂性和数据大小。因此，我们正处于能够将两种方法结合起来以开启机器学习新创新的风口浪尖。如需更多动机，另请参阅 <code class="docutils literal notranslate"><span class="pre">Dustin</span> <span class="pre">Tran</span></code> 最近的 <a class="reference external" href="http://dustintran.com/blog/a-quick-update-edward-and-some-motivations/">博客文章</a>。</p>
+<p>虽然这种变化将使概率编程能够应用于更广泛的问题，但我相信这种变化也为深度学习的创新带来了巨大可能性。一些基本的想法包括：</p>
+<ul class="simple">
+<li><p><strong>预测的不确定性：</strong> 正如下面将看到的，贝叶斯神经网络能够得到其预测的不确定性。我认为不确定性在机器学习中是一个被低估的概念，因为它不仅对现实世界的应用很重要，而且在训练中也很有用。例如，可以专门针对最不确定的样本训练模型。</p></li>
+<li><p><strong>表征的不确定性：</strong> 通过贝叶斯神经网络能够获得权重的不确定性估计，进而告诉我们表征学习的稳定性。</p></li>
+<li><p><strong>使用先验进行正则化：</strong> 权重通常被 <code class="docutils literal notranslate"><span class="pre">L2</span> <span class="pre">正则化</span></code>以避免过度拟合，这等效于为权重参数设置高斯先验。但我们可以设想其他先验，比如用<code class="docutils literal notranslate"><span class="pre">尖板分布(spike-and-slab)</span></code> 来强化稀疏性（更像使用 L1 正则）。</p></li>
+<li><p><strong>有先验知识的迁移学习：</strong> 如果想在新对象识别数据集上训练网络，我们可以为网络权重设置以某些预训练网络（如 <code class="docutils literal notranslate"><span class="pre">GoogLeNet</span></code>）权重为中心的先验，进而引导新网络的训练和学习。</p></li>
+<li><p><strong>分层神经网络：</strong> 概率编程中一个非常强大的方法是分层模型，它允许将在子组上学到的东西汇集到总体中（参见 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中的<a class="reference external" href="https://twiecki.github.io/blog/2014/03/17/bayesian-glms-3/">分层线性回归教程</a>）。而结合神经网络，可以在分层数据集中训练单个神经网络以专注于子组，同时仍然了解整体人口的表征。例如：想象一个经过训练的网络，可以从汽车图片中对汽车模型进行分类。我们可以设置一个分层神经网络，其中训练子神经网络来区分单个制造商的模型。直觉是来自某个制造商的汽车都有某些相似之处，因此训练针对品牌的专门子网络是有意义的。但由于各网络在更高层存在连接，它们仍会与其他专门子网络共享有关所有品牌的有用信息。有趣的是，神经网络的不同层可以通过层次结构的各层来通知，例如：提取线条的网络层在所有子网络中可能是相同的，而高阶表征会有所不同。分层模型将从数据中学习所有这些信息。</p></li>
+<li><p><strong>其他混合架构：</strong> 我们可以更自由地构建各种神经网络。例如，非参数的贝叶斯模型可用于灵活调整隐藏层的大小和形状，以便在训练期间针对手头问题优化网络架构。目前，这需要代价高昂的超参数优化和大量知识。</p></li>
+</ul>
 </div>
-<p>虽然贝叶斯信念网络（随机模型）和贝叶斯神经网络（功能模型）都表示为有向无环图，但两者完全不是一回事。贝叶斯神经网络模型表示一组函数关系，如公式（2）所示，具有先验分布；而贝叶斯信念网络则表示模型中所考虑变量的联合概率分布。在构思贝叶斯神经网络时，相应的贝叶斯信念网络代表先验的基础结构，最终在使用变分推断时则代表了变分后验（见第 7.2 节）。</p>
-<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig05.webp" /></p>
-<p>在概率图模型中，图中的节点代表随机变量，用不同符号来区分所考虑的变量性质（图 5）。贝叶斯信念网络中仅允许有向链接，这意味着目标随机变量的概率分布是以源随机变量为条件来定义的（反过来不成立）。根据乘法法则，这种条件依赖性使得贝叶斯信念网络中所有变量 <span class="math notranslate nohighlight">\(v_i\)</span> 的联合概率分布，能够被分解为局部随机变量某些概率分布的组合。</p>
-<div class="math notranslate nohighlight">
-\[
-p\left(\boldsymbol{v}_{1}, \ldots, \boldsymbol{v}_{n}\right)=\prod_{i=1}^{n} p\left(\boldsymbol{v}_{i} \mid \operatorname{parents}\left(\boldsymbol{v}_{i}\right)\right)
-\]</div>
-<p>为完成贝叶斯信念网络，必须定义所有的概率分布 <span class="math notranslate nohighlight">\(p(v_i | parents(v_i))\)</span> 。所用分布类型取决于上下文。一旦定义了 <span class="math notranslate nohighlight">\(p(v_i|parents(v_i))\)</span> ，则贝叶斯信念网络描述了一个数据生成过程。有向无环图的约束条件，使得父变量总是在其子孙变量前被抽样，而所有变量一起形成了联合概率分布 <span class="math notranslate nohighlight">\(p(v_1,...,v_n)\)</span> 的一个样本。</p>
-<p>模型通常基于同一分布中采样出的多个样本进行学习。为强调这一事实，引入了板（plate）符号（图 5e）。一个板表示其所封装的子图中所有变量 <span class="math notranslate nohighlight">\((v_1,...,v_n)\)</span> 会按照指定批次维度进行重复，这也意味着板种所有节点在批次之间存在独立性。这种独立性质可被用来计算某个批次 <span class="math notranslate nohighlight">\(B={(v_1,...,v_n)_b:b=1,...,|B|}\)</span> 的联合概率。</p>
-<div class="math notranslate nohighlight">
-\[
-p(B)=\prod_{\left(\boldsymbol{v}_{1}, \ldots, \boldsymbol{v}_{n}\right) \in B} p\left(\boldsymbol{v}_{1}, \ldots, \boldsymbol{v}_{n}\right)
-\]</div>
-<p>在概率图模型中，需要区分观测变量和非观测变量，前者用灰色圆圈表示（图 5a），作为数据来处理；后者用白色圆圈表示（图 5b），作为假设来处理。从概率图模型得出的联合概率来看，使用贝叶斯公式可以直接定义给定观测变量的潜变量后验。</p>
-<div class="math notranslate nohighlight">
-\[
-p\left(\boldsymbol{v}_{\text {latent }} \mid \boldsymbol{v}_{o b s}\right)=\frac{p\left(\boldsymbol{v}_{o b s}, \boldsymbol{v}_{\text {latent }}\right)}{\int_{\boldsymbol{v}_{\text {latent }}} p\left(\boldsymbol{v}_{\text {obs }}, \boldsymbol{v}_{\text {latent }}\right) d \boldsymbol{v}_{\text {latent }}} \propto p\left(\boldsymbol{v}_{\text {obs }}, \boldsymbol{v}_{\text {latent }}\right)
-\]</div>
-<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig06.webp" /></p>
 </div>
+<div class="section" id="pymc3">
+<h2>2 PyMC3 中的贝叶斯神经网络<a class="headerlink" href="#pymc3" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id6">
-<h3>4.2 根据概率图模型定义贝叶斯神经网络的随机模型<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<p>考虑图 6 中的两个模型，贝叶斯神经网络和相应的贝叶斯信念网络都被画出来了。将权重视为随机变量情况下的贝叶斯信念网络（图 6a）可以代表以下数据生成过程，假设神经网络是为了做回归。</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{aligned}
-&amp;\theta \sim p(\theta)=\mathcal{N}(\mu, \Sigma) \\
-&amp;\boldsymbol{y} \sim p(\boldsymbol{y} \mid x, \theta)=\mathcal{N}\left(N N_{\theta}(x), \Sigma\right)
-\end{aligned}
-\end{split}\]</div>
-<p>模型中选择正态分布 <span class="math notranslate nohighlight">\(\mathcal{N}(\mu, \Sigma)\)</span> 完全是随意的，不过在实践中比较常见。</p>
-<p>如果神经网络是为了做分类，那么该模型将有一个类别分布 <span class="math notranslate nohighlight">\(Cat(pi)\)</span> 来对预测进行采样，而不是正态分布。</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{aligned}
-&amp;\theta \sim p(\theta)=\mathcal{N}(\mu, \Sigma) \\
-&amp;y \sim p(\boldsymbol{y} \mid x, \theta)=\operatorname{Cat}\left(N N_{\theta}(x)\right)
-\end{aligned}
-\end{split}\]</div>
-<p>可以利用训练集中数据点相互独立这一假设，即用图 6 中的“板”符号表示，将训练集的概率写成：</p>
-<div class="math notranslate nohighlight">
-\[
-p\left(D_{y} \mid D_{x}, \theta\right)=\prod_{(x, y) \in D} p(\boldsymbol{y} \mid x, \theta)
-\]</div>
-<p>图 6b 中所示的将激活视为随机变量的情况，数据生成过程可能变成：
-$<span class="math notranslate nohighlight">\(
-\begin{aligned}
-&amp;l_{0}=x \\
-&amp;l_{i} \sim p\left(l_{i} \mid l_{i-1}\right)=n l_{i}\left(\mathcal{N}\left(W_{i} l_{i-1}+b_{i}, \Sigma\right)\right) \quad \forall i \in[1, n] \\
-&amp;y=l_{n}
-\end{aligned}
-\)</span>$</p>
-<p>贝叶斯公式的联合概率公式稍微复杂一些，因为必须考虑贝叶斯信念网络跨越多个潜在变量 <span class="math notranslate nohighlight">\(l_{[1, n-1]}\)</span> 的链式依赖关系：</p>
-<div class="math notranslate nohighlight">
-\[
-p\left(D_{\boldsymbol{y}}, \boldsymbol{l}_{[1, n-1]} \mid D_{x}\right)=\prod_{\left(l_{0}, l_{n}\right) \in D}\left(\prod_{i=1}^{n} p\left(\boldsymbol{l}_{i} \mid \boldsymbol{l}_{i-1}\right)\right)
-\]</div>
-<p>定义 <span class="math notranslate nohighlight">\(p\left(\boldsymbol{l}_{i} \mid \boldsymbol{l}_{i-1}\right)\)</span> 有时是可能的，而且通常是可取的。例如：图 6a 和图 6b 中所描述的贝叶斯信念网络可以被认为是等效的，例如，以下 <span class="math notranslate nohighlight">\(l\)</span> 的采样：</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{aligned}
-&amp;W \sim \mathcal{N}\left(\mu_{W}, \Sigma_{W}\right) \\
-&amp;b \sim \mathcal{N}\left(\mu_{b}, \Sigma_{b}\right) \\
-&amp;l=n l\left(W l_{-1}+b\right)
-\end{aligned}
-\end{split}\]</div>
-<p>等价于如下对 <span class="math notranslate nohighlight">\(l\)</span> 的采样：</p>
-<div class="math notranslate nohighlight">
-\[
-l \sim n l\left(\mathcal{N}\left(\mu_{W} l_{-1}+\mu_{b},\left(I \otimes l_{-1}\right)^{\top} \Sigma_{W}\left(I \otimes l_{-1}\right)+\Sigma_{b}\right)\right)
-\]</div>
-<p>其中 <span class="math notranslate nohighlight">\(⊗\)</span> 表示克罗内克积。</p>
-<p>图 6a 中描绘的贝叶斯回归架构在实践中更为常见。有时会使用图 6b 中的替代公式，因为它有助于在使用变分推断时压缩参数的数量 [92]。这为定义先验提供了不同的选择。</p>
+<h3>2.1 生成数据<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>首先，生成一些有关玩具的数据，用于分析一个非线性可分的简单二分类问题。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">theano</span> 
+<span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="kn">import</span> <span class="nn">sklearn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">filterwarnings</span>
+<span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">scale</span>
+<span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_moons</span>
+
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">make_moons</span><span class="p">(</span><span class="n">noise</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">scale</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">floatX</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">floatX</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">Y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">Y</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="n">Y</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Class 0&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">Y</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="n">Y</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Class 1&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">();</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Y&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Toy binary classification data set&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2099</span><span class="o">/</span><span class="mf">3715064878.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">scale</span>
+<span class="ne">---&gt; </span><span class="mi">13</span> <span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_moons</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> 
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;sklearn.cross_validation&#39;
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="id7">
-<h2>5 设置先验<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<p>为小型的、因果的概率模型先验非常直接。但对于深层神经网络来说，情况不一样，设置一个好的先验往往是一项繁琐而不直观的任务。主要问题是：对于具有大量参数和非微观结构的模型，如人工神经网络，如何对给定的参数进行归纳，并不十分明确 [98]。</p>
-<p>本节将介绍与人工神经网络的 “统计不可辨识性” 有关的常见做法和相关问题。然后，在第 5.3 节，介绍贝叶斯深度学习中的先验如何与点估计方法的正则化相关。在那里会展示传统正则化方法如何帮助我们选择合适的先验，以及贝叶斯分析如何帮助传统方法设计新的目标函数。</p>
-<div class="section" id="id8">
-<h3>5.1 良好的缺省先验<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
-<p>对于基本架构，如图 6a 中所示的带有人工神经网络的贝叶斯回归，标准程序是对网络系数采用均值为 <span class="math notranslate nohighlight">\(0\)</span> 、对角线协方差为 <span class="math notranslate nohighlight">\(σ_I\)</span> 的正态先验：</p>
-<div class="math notranslate nohighlight">
-\[
-P(θ) = \mathcal{N}(0，σI)
-\]</div>
-<p>正如在第 5.3 节中将证明的，在训练点估计网络时，该方法等同于权重为 <span class="math notranslate nohighlight">\(1/σ\)</span> 的加权 ℓ2 正则化。概率编程语言 <code class="docutils literal notranslate"><span class="pre">Stan[10]</span></code> 提供了一些在知道所考虑参数预期规模的情况下，如何选择 <span class="math notranslate nohighlight">\(σ\)</span> 的例子 [21]。</p>
-<p>但是，虽然该方法在实践中被普遍使用，但并没有理论上的依据表明其优于任何其他表示 [80]。正态分布因其数学特性和其对数的简单表示而受到青睐，因为大多数学习算法中都使用了概率分布的对数。</p>
+<h3>2.2 模型定义<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>该模型对应的神经网络非常简单。基本单元是一个 <code class="docutils literal notranslate"><span class="pre">logistic</span> <span class="pre">回归</span></code> 的感知机。我们并行使用多个感知机，然后将它们堆叠起来以获得隐藏层。此处将使用 2 个隐藏层，每个隐藏层有 5 个神经元，这足以解决本例的简单问题。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def construct_nn(ann_input, ann_output):
+  n_hidden = 5
+  
+  # Initialize random weights between each layer
+  init_1 = np.random.randn(X.shape[1], n_hidden).astype(floatX)
+  init_2 = np.random.randn(n_hidden, n_hidden).astype(floatX)
+  init_out = np.random.randn(n_hidden).astype(floatX)
+    
+  with pm.Model() as neural_network:
+    # Weights from input to hidden layer
+    weights_in_1 = pm.Normal(&#39;w_in_1&#39;, 0, sd=1, 
+                 shape=(X.shape[1], n_hidden), 
+                 testval=init_1)
+    
+    # Weights from 1st to 2nd layer
+    weights_1_2 = pm.Normal(&#39;w_1_2&#39;, 0, sd=1, 
+                shape=(n_hidden, n_hidden), 
+                testval=init_2)
+    
+    # Weights from hidden layer to output
+    weights_2_out = pm.Normal(&#39;w_2_out&#39;, 0, sd=1, 
+                 shape=(n_hidden,), 
+                 testval=init_out)
+    
+    # Build neural-network using tanh activation function
+    act_1 = pm.math.tanh(pm.math.dot(ann_input, 
+                     weights_in_1))
+    act_2 = pm.math.tanh(pm.math.dot(act_1, 
+                     weights_1_2))
+    act_out = pm.math.sigmoid(pm.math.dot(act_2, 
+                       weights_2_out))
+    
+    # Binary classification -&gt; Bernoulli likelihood
+    out = pm.Bernoulli(&#39;out&#39;, 
+              act_out,
+              observed=ann_output,
+              total_size=Y_train.shape[0] # IMPORTANT for minibatches
+             )
+  return neural_network
+
+# Trick: Turn inputs and outputs into shared variables. 
+# It&#39;s still the same thing, but we can later change the values of the shared variable 
+# (to switch in the test-data later) and `PyMC3` will just use the new data. 
+# Kind-of like a pointer we can redirect.
+# For more info, see: http://deeplearning.net/software/ `Theano` /library/compile/shared.html
+ann_input = `Theano` .shared(X_train)
+ann_output = `Theano` .shared(Y_train)
+neural_network = construct_nn(ann_input, ann_output)
+</pre></div>
 </div>
+</div>
+</div>
+<p>正态先验有助于正则化权重。通常我们会在输入中添加一个常量 <code class="docutils literal notranslate"><span class="pre">b</span></code>，但在这里省略了它以保持代码清晰。</p>
+</div>
+<div class="section" id="id8">
+<h3>2.3 <code class="docutils literal notranslate"><span class="pre">变分推断</span></code>：提升模型的复杂性<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>现在可以运行像 <code class="docutils literal notranslate"><span class="pre">NUTS</span></code> 这样的随机采样器，由于模型并不复杂，所以工作得很好，但随着将模型扩展到具有更多层的深度架构，随机方法将变得非常缓慢。此时，使用 OPVI 框架中的ADVI 自动变分推断算法，就会快得多，并可更好地扩展。</p>
+<div class="admonition- admonition">
+<p class="admonition-title">请注意</p>
+<p>ADVI 采用平均场近似，因此此处忽略了后验中的相关性。</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PyMC3.Theanof</span> <span class="kn">import</span> <span class="n">set_tt_rng</span><span class="p">,</span> <span class="n">MRG_RandomStreams</span>
+<span class="n">set_tt_rng</span><span class="p">(</span><span class="n">MRG_RandomStreams</span><span class="p">(</span><span class="mi">42</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+
+<span class="k">with</span> <span class="n">neural_network</span><span class="p">:</span>
+  <span class="n">inference</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">ADVI</span><span class="p">()</span>
+  <span class="n">approx</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">50000</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">inference</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>下面为了让它真正快起来，我们可能希望在 <code class="docutils literal notranslate"><span class="pre">GPU</span></code> 上运行神经网络。</p>
+<p>由于样本更方便后续处理，因此可以从变分近似推断结果中采样（此处仅简单从推断得到得正态分布中采样），而这与 <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 方法完全不同：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trace</span> <span class="o">=</span> <span class="n">approx</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">draws</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>绘制目标函数（ELBO），可以看到随着时间推移，优化算法在逐渐改善拟合。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">-</span><span class="n">inference</span><span class="o">.</span><span class="n">hist</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;ELBO&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;iteration&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>现在已经训练了模型，可以使用后验预测检查来预测验证集。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace arrays our NN references with the test data</span>
+<span class="n">ann_input</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">ann_output</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">Y_test</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">neural_network</span><span class="p">:</span>
+  <span class="n">ppc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_ppc</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">progressbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Use probability of &gt; 0.5 to assume prediction of class 1</span>
+<span class="n">pred</span> <span class="o">=</span> <span class="n">ppc</span><span class="p">[</span><span class="s1">&#39;out&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.5</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>看看预测结果：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">pred</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_test</span><span class="p">[</span><span class="n">pred</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">pred</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_test</span><span class="p">[</span><span class="n">pred</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Predicted labels in testing set&#39;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Y&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy = </span><span class="si">{}</span><span class="s1">%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">Y_test</span> <span class="o">==</span> <span class="n">pred</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>可以看出，我们的神经网络做得很好！</p>
 </div>
 <div class="section" id="id9">
-<h2>5.2 解决贝叶斯神经网络中的不可辨识性问题<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
-<p>贝叶斯深度学习的主要问题之一是，深度神经网络可能是一个过度参数化的模型，即其中许多参数之间存在等价关系 [59]。这被称为统计学上的不可辨识性问题，即推断不会产生唯一的结果。在训练贝叶斯神经网络时，这会导致很难取样和近似的复杂多模态后验。有两种解决方案来处理该问题：一是调整功能模型的参数化形式；二是约束先验的支持度以消除不可辨识性。</p>
-<p>人工神经网络中最常见的两类非唯一性是：权重空间对称性和缩放对称性。两者都不是点估计神经网络的关注点，但对于贝叶斯神经网络来说则可能是。</p>
-<p>（1）权重空间对称性</p>
-<p>权重空间对称性意味着我们可以通过改变其中一个隐藏层的权重 <span class="math notranslate nohighlight">\(W_i\)</span>（不考虑偏差 <span class="math notranslate nohighlight">\(b_i\)</span> ）中的两行和下面一层权重矩阵 <span class="math notranslate nohighlight">\(W_{i+1}\)</span> 中的相应列来建立一个至少有一个隐藏层的人工神经网络的等效参数化。这意味着，随着隐层和隐层中单元数量的增加，等价表征的数量也会以阶乘形式增长，这些表征大致对应于后验分布中的众数。一种缓解策略是强制每层的偏置向量按升序或降序排列。然而，其实际效果未知，在优化的早期阶段，权重空间对称性可能隐含着对参数空间探索的支持。</p>
-<p>（2）缩放对称性</p>
-<p>缩放对称性是在使用具有 <span class="math notranslate nohighlight">\(nl(αx)=αnl(x)\)</span> 性质的非线因子时产生的不可辨识性问题，典型如：RELU 和 Leaky-RELU 这两个现代机器学习中最受欢迎的非线性因子。在这种情况下，给层 <span class="math notranslate nohighlight">\(l\)</span> 和 <span class="math notranslate nohighlight">\(l+1\)</span> 赋于权重 <span class="math notranslate nohighlight">\(W_l,W_{l+1}\)</span> 就严格等同于赋 <span class="math notranslate nohighlight">\(αWl,1/αWl+1\)</span>。这可能会降低点估计神经网络的收敛速度，该问题在实践中可通过各种激活的归一化技术来解决 [1]。对于贝叶斯神经网络来说，问题稍微复杂一些，因为缩放对称性会影响后验，使得它更难近似其真实形状。一些作者提议使用 <code class="docutils literal notranslate"><span class="pre">Givens</span> <span class="pre">变换</span></code>（有时也称 <code class="docutils literal notranslate"><span class="pre">Givens</span> <span class="pre">旋转</span></code>）来约束隐藏层的范数 [70]，以解决缩放对称问题。</p>
-<p>在实践中，使用高斯先验已经减少了缩放对称问题，因为它将有利于每个层上具有相同 <code class="docutils literal notranslate"><span class="pre">Frobenius</span> <span class="pre">范数</span></code> 的权重。如第 5.4 节所述，激活归一化的软版本也可以通过使用一致性条件来实现。从计算复杂度角度来看，在受限空间中对网络参数进行采样的额外复杂性是不值得的。</p>
+<h3>2.4 分类器到底学到了什么？<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>我们在整个输入空间的网格上评估类概率的预测。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">floatX</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:</span><span class="mi">3</span><span class="p">:</span><span class="mi">100</span><span class="n">j</span><span class="p">,</span><span class="o">-</span><span class="mi">3</span><span class="p">:</span><span class="mi">3</span><span class="p">:</span><span class="mi">100</span><span class="n">j</span><span class="p">])</span>
+<span class="n">grid_2d</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="n">dummy_out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ann_input</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">grid_2d</span><span class="p">)</span>
+<span class="n">ann_output</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">dummy_out</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">neural_network</span><span class="p">:</span>
+  <span class="n">ppc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_ppc</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">progressbar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="section" id="id10">
-<h3>5.3 正则化和先验之间的联系<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
-<p>点估计神经网络的通常学习程序是找到使某些损失函数最小的参数集 <span class="math notranslate nohighlight">\(θ\)</span> ，该参数集是用训练集数据学习得到的。</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\theta}=\underset{\theta}{\arg \min } \operatorname{loss}_{D_{\boldsymbol{x}}, D_{y}}(\theta)
-\]</div>
-<p>假设损失为减去对数似然函数（总是这样的，最多是一个加法常数），问题可以重写为：</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\boldsymbol{\theta}}=\underset{\boldsymbol{\theta}}{\arg \max } p\left(D_{\boldsymbol{y}} \mid D_{\boldsymbol{x}}, \boldsymbol{\theta}\right)
-\]</div>
-<p>根据贝叶斯范式，这是模型的前一半。现在假设我们也有一个关于 <span class="math notranslate nohighlight">\(θ\)</span> 的先验，并且想从后验中找到最可能的点估计。那么问题就变成了:</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\theta}=\underset{\theta}{\arg \max } p\left(D_{\boldsymbol{y}} \mid D_{\boldsymbol{x}}, \boldsymbol{\theta}\right) p(\theta)
-\]</div>
-<p>接下来，由于它更容易优化，人们会回到对数似然的表述。</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\theta}=\underset{\theta}{\arg \min } \operatorname{loss}_{D_{x}, D_{y}}(\theta)+\operatorname{reg}(\theta)
-\]</div>
-<p>如果这个公式看起来很熟悉，那并不奇怪。这正是正则化在机器学习和许多其他领域的应用方式。这里暗含以下思想：</p>
-<p>作为先验，我们有</p>
-<div class="math notranslate nohighlight">
-\[
-p(\theta) \propto e^{-r e g(\theta)+c s t}
-\]</div>
-<p>对于某些在实践中使用的正则化，这可能是一个不理想的分布，但一般的想法是存在的。另一个不太正式的论点是，正则化作为搜索空间的软约束，与先验对后验的作用相同。</p>
+<h3>2.5 概率曲面<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">diverging_palette</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">85</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ppc</span><span class="p">[</span><span class="s1">&#39;out&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">pred</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_test</span><span class="p">[</span><span class="n">pred</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">pred</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_test</span><span class="p">[</span><span class="n">pred</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Y&#39;</span><span class="p">);</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Posterior predictive mean probability of class label = 0&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="id11">
-<h3>5.4 满足一致性条件的先验<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-<p>使用方程 25 中的表述，在某些情况下可以使用函数模型的预期行为来扩展先验。为此，人们通常定义一个一致性条件 <span class="math notranslate nohighlight">\(C(θ,x)\)</span> 来评估在输入 <span class="math notranslate nohighlight">\(x\)</span> 和参数集 <span class="math notranslate nohighlight">\(θ\)</span> 下的预测的相对对数似然。例如，<span class="math notranslate nohighlight">\(C\)</span> 可以被设置为有利于稀疏或有规律的预测，鼓励预测与某些输入变量的同调性（例如：得流感的概率随年龄的增长而增加），或者在进行半监督学习时有利于低密度区域的决策边界（第 6 节）。</p>
-<div class="math notranslate nohighlight">
-\[
-C(\theta)=\int_{\boldsymbol{x}} C(\theta, x) p(x) d x
-\]</div>
-<p>在实践中，<span class="math notranslate nohighlight">\(p(x)\)</span> 是未知的，<span class="math notranslate nohighlight">\(C(\theta)\)</span> 是从训练集的特征中近似估计出来的：</p>
-<div class="math notranslate nohighlight">
-\[
-C(\theta) \approx \frac{1}{\left|D_{x}\right|} \sum_{\boldsymbol{x} \in\left|D_{x}\right|} C(\theta, x)
-\]</div>
-<p>现在可以写一个与包含一致性条件的先验成比例的函数：</p>
-<div class="math notranslate nohighlight">
-\[
-p\left(\theta \mid D_{\boldsymbol{x}}\right) \propto p(\theta) \exp \left(-\frac{1}{\left|D_{x}\right|} \sum_{\boldsymbol{x} \in\left|D_{\boldsymbol{x}}\right|} C(\theta, \boldsymbol{x})\right)
-\]</div>
-<p>其中 <span class="math notranslate nohighlight">\(p(θ)\)</span> 是没有一致性条件的先验。</p>
+<h3>2.6 预测值的不确定性<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>目前展示的一切，都可以用非贝叶斯神经网络来完成。每个类别标签的后验预测值的平均值应当与最大似然预测值相同。但，在贝叶斯神经网络中，我们还可以查看后验预测值的标准差，来了解预测的不确定性：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">cubehelix_palette</span><span class="p">(</span><span class="n">light</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">as_cmap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">contour</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ppc</span><span class="p">[</span><span class="s1">&#39;out&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">pred</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_test</span><span class="p">[</span><span class="n">pred</span><span class="o">==</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="n">pred</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_test</span><span class="p">[</span><span class="n">pred</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Y&#39;</span><span class="p">);</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Uncertainty (posterior predictive standard deviation)&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>可以看到，在非常接近决策边界时，预测标签类别的不确定性最高。可以想象，将预测与不确定性关联起来是许多应用（如医疗保健）的关键特性。为进一步提高精度，我们可能希望主要根据高不确定性区域的样本来训练模型。</p>
+</div>
+<div class="section" id="advi">
+<h3>2.7 小批量 ADVI<a class="headerlink" href="#advi" title="Permalink to this headline">¶</a></h3>
+<p>由于训练数据集规模较小，前面采用的方法直接在所有数据上同时训练模型。但这显然无法扩展到类似 <code class="docutils literal notranslate"><span class="pre">ImageNet</span></code> 这种海量数据集上。此外，小批量数据训练的随机梯度下降方法可有效避免局部极小值，并更快的收敛。因此，贝叶斯神经网络应当具备支持小批量训练的能力。</p>
+<p>幸运的是，<code class="docutils literal notranslate"><span class="pre">ADVI</span></code> 支持小批量运行。只需做一些简单设置：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">minibatch_x</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Minibatch</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">minibatch_y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Minibatch</span><span class="p">(</span><span class="n">Y_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="n">neural_network_minibatch</span> <span class="o">=</span> <span class="n">construct_nn</span><span class="p">(</span><span class="n">minibatch_x</span><span class="p">,</span> <span class="n">minibatch_y</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">neural_network_minibatch</span><span class="p">:</span>
+  <span class="n">inference</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">ADVI</span><span class="p">()</span>
+  <span class="n">approx</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="mi">40000</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">inference</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">-</span><span class="n">inference</span><span class="o">.</span><span class="n">hist</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;ELBO&#39;</span><span class="p">)</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;iteration&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>小批量 <code class="docutils literal notranslate"><span class="pre">ADVI</span></code> 的运行时间短得多，其收敛得也更快，并且可以查看迹图。而最关键的是同时能够得到神经网络权重的不确定性度量。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>  <span class="n">pm</span><span class="o">.</span><span class="n">traceplot</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>注意：</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>您在 GPU 上运行上述示例，但需要在 .theanorc 文件中设置 device = GPU 和  floatX = float32 。您可能会说，上述模型并不是真正的深层网络，但实际上我们可以轻松地将其扩展到更多层（包括卷积层），以便在更具挑战性的数据集上进行训练。</p>
+</div>
+<p>我还在 <code class="docutils literal notranslate"><span class="pre">PyData</span> <span class="pre">London</span></code> 上介绍了一些这方面的工作，请观看以下 <a class="reference external" href="https://www.youtube.com/watch?v=LlzVlqVzeD8&amp;feature=emb_imp_woyt">视频</a>。此外，你可以从 <a class="reference external" href="https://github.com/twiecki/WhileMyMCMCGentlySamples/blob/master/content/downloads/notebooks/bayesian_neural_network.ipynb">此处</a> 下载本例对应的 NoteBook。</p>
+</div>
+</div>
+<div class="section" id="pymc3-lasagne">
+<h2>3 使用 PyMC3 和 Lasagne 构建更为复杂的分层神经网络<a class="headerlink" href="#pymc3-lasagne" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 是一个灵活的 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 库，用于构建各种类型的神经网络。<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 也在使用 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> ，因此将两者结合用于构建复杂的贝叶斯神经网络是可能的。可以利用 <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 构建人工神经网络（<code class="docutils literal notranslate"><span class="pre">ANN</span></code>），并在参数上设置贝叶斯先验，然后利用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的 <code class="docutils literal notranslate"><span class="pre">ADVI</span> <span class="pre">变分推断</span></code> 来估计模型。令人兴奋的是，这个想法不仅可能，而且非常直接。</p>
+<p>下面，首先展示如何集成 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> ，以构建一个密集的 2 层人工神经网络；然后使用<code class="docutils literal notranslate"><span class="pre">小批量</span> <span class="pre">ADVI</span></code> 在 <code class="docutils literal notranslate"><span class="pre">MNIST</span></code> 手写数字数据集上拟合模型；最后实现分层贝叶斯神经网络模型。由于 <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 的强大能力，我们同样可以轻松构建具有最大池层的分层贝叶斯卷积神经网络，并在 <code class="docutils literal notranslate"><span class="pre">MNIST</span></code> 上实现 98% 的准确率。</p>
+<p>此处使用的大部分代码都是从 [<code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 教程](http:// <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> .readthedocs.io/en/latest/user/tutorial.html) 中借用而来。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_context</span><span class="p">(</span><span class="s1">&#39;talk&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">PyMC3</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="kn">import</span> <span class="nn">Theano.tensor</span> <span class="k">as</span> <span class="nn">T</span>
+<span class="kn">import</span> <span class="nn">Theano</span> 
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">mode</span><span class="p">,</span> <span class="n">chisquare</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">accuracy_score</span>
+<span class="kn">import</span> <span class="nn">Lasagne</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="mnist">
+<h3>3.1 数据集：MNIST<a class="headerlink" href="#mnist" title="Permalink to this headline">¶</a></h3>
+<p>我们将使用手写数字的经典 MNIST 数据集。与我上一篇仅限于玩具数据集的博文相反，MNIST 实际上是一项具有挑战性的 ML 任务（当然不像 ImageNet 那样具有挑战性），具有合理数量的维度和数据点。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">load_dataset</span><span class="p">():</span>
+  <span class="c1"># We first define a download function, supporting both Python 2 and 3.</span>
+  <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlretrieve</span>
+
+  <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s1">&#39;http://yann.lecun.com/exdb/mnist/&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Downloading </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="n">urlretrieve</span><span class="p">(</span><span class="n">source</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+  <span class="c1"># We then define functions for loading MNIST images and labels.</span>
+  <span class="c1"># For convenience, they also download the requested files if needed.</span>
+  <span class="kn">import</span> <span class="nn">gzip</span>
+
+  <span class="k">def</span> <span class="nf">load_mnist_images</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+      <span class="n">download</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="c1"># Read the inputs in Yann LeCun&#39;s binary format.</span>
+    <span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="c1"># The inputs are vectors now, we reshape them to monochrome 2D images,</span>
+    <span class="c1"># following the shape convention: (examples, channels, rows, columns)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+    <span class="c1"># The inputs come as bytes, we convert them to float32 in range [0,1].</span>
+    <span class="c1"># (Actually to range [0, 255/256], for compatibility to the version</span>
+    <span class="c1"># provided at http://deeplearning.net/data/mnist/mnist.pkl.gz.)</span>
+    <span class="k">return</span> <span class="n">data</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mi">256</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">load_mnist_labels</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+      <span class="n">download</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="c1"># Read the labels in Yann LeCun&#39;s binary format.</span>
+    <span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">frombuffer</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+    <span class="c1"># The labels are vectors of integers now, that&#39;s exactly what we want.</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+  <span class="c1"># We can now download and read the training and test set images and labels.</span>
+  <span class="n">X_train</span> <span class="o">=</span> <span class="n">load_mnist_images</span><span class="p">(</span><span class="s1">&#39;train-images-idx3-ubyte.gz&#39;</span><span class="p">)</span>
+  <span class="n">y_train</span> <span class="o">=</span> <span class="n">load_mnist_labels</span><span class="p">(</span><span class="s1">&#39;train-labels-idx1-ubyte.gz&#39;</span><span class="p">)</span>
+  <span class="n">X_test</span> <span class="o">=</span> <span class="n">load_mnist_images</span><span class="p">(</span><span class="s1">&#39;t10k-images-idx3-ubyte.gz&#39;</span><span class="p">)</span>
+  <span class="n">y_test</span> <span class="o">=</span> <span class="n">load_mnist_labels</span><span class="p">(</span><span class="s1">&#39;t10k-labels-idx1-ubyte.gz&#39;</span><span class="p">)</span>
+
+  <span class="c1"># We reserve the last 10000 training examples for validation.</span>
+  <span class="n">X_train</span><span class="p">,</span> <span class="n">X_val</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[:</span><span class="o">-</span><span class="mi">10000</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[</span><span class="o">-</span><span class="mi">10000</span><span class="p">:]</span>
+  <span class="n">y_train</span><span class="p">,</span> <span class="n">y_val</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[:</span><span class="o">-</span><span class="mi">10000</span><span class="p">],</span> <span class="n">y_train</span><span class="p">[</span><span class="o">-</span><span class="mi">10000</span><span class="p">:]</span>
+
+  <span class="c1"># We just return all the arrays in order, as expected in main().</span>
+  <span class="c1"># (It doesn&#39;t matter how we do this as long as we can read them again.)</span>
+  <span class="k">return</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading data...&quot;</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Building a `Theano` .shared variable with a subset of the data to make construction of the model faster.
+# We will later switch that out, this is just a placeholder to get the dimensionality right.
+input_var = `Theano` .shared(X_train[:500, ...].astype(np.float64))
+target_var = `Theano` .shared(y_train[:500, ...].astype(np.float64))
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="id12">
-<h2>5 监督的程度和先验知识的替代形式<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
-<p>到目前为止介绍的架构主要集中在贝叶斯神经网络在监督学习环境中的使用。然而，在现实世界的应用中，获得地面真实标签可能是昂贵的，因此应该采用新的学习策略 [72]。我们现在介绍如何使贝叶斯神经网络适应不同程度的监督。在这样做的同时，我们还展示了贝叶斯后验的表述，它来自于下面介绍的不同的贝叶斯后验（图 8、9 和 10），可以用来（第 5.3 节）获得一个合适的最大后验估计器的损失函数，在这种情况下，一个点估计神经网络足以满足所考虑的使用情况。</p>
+<h3>3.2 模型定义<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>我认为，仅仅因为意大利宽面条和 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 都依赖于西亚诺，就有可能将它们连接起来。然而，不清楚这到底有多困难。幸运的是，第一个实验效果很好，但有一些潜在的方法可以使这变得更容易。我在 <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 的回购协议上发行了一期 GitHub，几天后，PR695 被合并，这使得两者能够更好地融合，如下所示。OSS 万岁。</p>
+<p>首先， <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 函数用于创建一个 ANN，其中有两个完全连接的隐藏层，每个层有 800 个神经元，这是纯 <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 代码，几乎直接取自教程。在用 <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 创建图层时会用到技巧。层。DenseLayer，在这里我们可以传入一个函数 init，它必须返回一个 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 表达式作为权重和偏差矩阵。这就是我们将传递 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 创建的优先级的地方，这些优先级也是无表达式：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def build_ann(init):
+  l_in = `Lasagne` .layers.InputLayer(shape=(None, 1, 28, 28),
+                   input_var=input_var)
+
+  # Add a fully-connected layer of 800 units, using the linear rectifier, and
+  # initializing weights with Glorot&#39;s scheme (which is the default anyway):
+  n_hid1 = 800
+  l_hid1 = `Lasagne` .layers.DenseLayer(
+    l_in, num_units=n_hid1,
+    nonlinearity= `Lasagne` .nonlinearities.tanh,
+    b=init,
+    W=init
+  )
+
+  n_hid2 = 800
+  # Another 800-unit layer:
+  l_hid2 = `Lasagne` .layers.DenseLayer(
+    l_hid1, num_units=n_hid2,
+    nonlinearity= `Lasagne` .nonlinearities.tanh,
+    b=init,
+    W=init
+  )
+
+  # Finally, we&#39;ll add the fully-connected output layer, of 10 softmax units:
+  l_out = `Lasagne` .layers.DenseLayer(
+    l_hid2, num_units=10,
+    nonlinearity= `Lasagne` .nonlinearities.softmax,
+    b=init,
+    W=init
+  )
+  
+  prediction = `Lasagne` .layers.get_output(l_out)
+  
+  # 10 discrete output classes -&gt; `PyMC3` categorical distribution
+  out = pm.Categorical(&#39;out&#39;, 
+             prediction,
+             observed=target_var)
+  
+  return out
+</pre></div>
+</div>
+</div>
+</div>
+<p>接下来是为 ANN 创建权重的函数。因为 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 要求每个随机变量都有不同的名称，所以我们将创建一个类来创建唯一命名的优先级。</p>
+<p>先验值在这里充当正则化器，以尝试保持 ANN 的权重较小。这在数学上相当于将惩罚较大权重的 L2 损失项放入目标函数中，就像通常所做的那样。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GaussWeights</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+  <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+  <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="k">return</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;w</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span> 
+           <span class="n">testval</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span>
+           <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>如果你把我们到目前为止所做的与之前的博客文章相比较，很明显，使用 <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 要舒服得多。我们不必手动跟踪单个矩阵的形状，也不必处理底层矩阵的数学运算以使其全部匹配在一起。</p>
+<p>接下来是一些设置 mini-batch-ADVI 的函数，您可以在 <a class="reference external" href="https://twiecki.github.io/blog/2016/06/01/bayesian-deep-learning/">前面的博文</a> 中找到更多信息。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">six.moves</span> <span class="kn">import</span> <span class="nb">zip</span>
+
+<span class="c1"># Tensors and RV that will be using mini-batches</span>
+<span class="n">minibatch_tensors</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_var</span><span class="p">,</span> <span class="n">target_var</span><span class="p">]</span>
+
+<span class="c1"># Generator that returns mini-batches in each iteration</span>
+<span class="k">def</span> <span class="nf">create_minibatch</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">batchsize</span><span class="o">=</span><span class="mi">500</span><span class="p">):</span>
+  
+  <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">start_idx</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="c1"># Return random data samples of set size batchsize each iteration</span>
+    <span class="n">ixs</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="n">batchsize</span><span class="p">)</span>
+    <span class="k">yield</span> <span class="n">data</span><span class="p">[</span><span class="n">ixs</span><span class="p">]</span>
+
+<span class="n">minibatches</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span>
+  <span class="n">create_minibatch</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span>
+  <span class="n">create_minibatch</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">total_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">run_advi</span><span class="p">(</span><span class="n">likelihood</span><span class="p">,</span> <span class="n">advi_iters</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
+  <span class="c1"># Train on train data</span>
+  <span class="n">input_var</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">X_train</span><span class="p">[:</span><span class="mi">500</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span>
+  <span class="n">target_var</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">y_train</span><span class="p">[:</span><span class="mi">500</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span>
+  
+  <span class="n">v_params</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">variational</span><span class="o">.</span><span class="n">advi_minibatch</span><span class="p">(</span>
+    <span class="n">n</span><span class="o">=</span><span class="n">advi_iters</span><span class="p">,</span> <span class="n">minibatch_tensors</span><span class="o">=</span><span class="n">minibatch_tensors</span><span class="p">,</span> 
+    <span class="n">minibatch_RVs</span><span class="o">=</span><span class="p">[</span><span class="n">likelihood</span><span class="p">],</span> <span class="n">minibatches</span><span class="o">=</span><span class="n">minibatches</span><span class="p">,</span> 
+    <span class="n">total_size</span><span class="o">=</span><span class="n">total_size</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1.0</span>
+  <span class="p">)</span>
+  <span class="n">trace</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">variational</span><span class="o">.</span><span class="n">sample_vp</span><span class="p">(</span><span class="n">v_params</span><span class="p">,</span> <span class="n">draws</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+  
+  <span class="c1"># Predict on test data</span>
+  <span class="n">input_var</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+  <span class="n">target_var</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+  
+  <span class="n">ppc</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_ppc</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+  <span class="n">y_pred</span> <span class="o">=</span> <span class="n">mode</span><span class="p">(</span><span class="n">ppc</span><span class="p">[</span><span class="s1">&#39;out&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">mode</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+  
+  <span class="k">return</span> <span class="n">v_params</span><span class="p">,</span> <span class="n">trace</span><span class="p">,</span> <span class="n">ppc</span><span class="p">,</span> <span class="n">y_pred</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="id13">
-<h2>6 监督程度和先验知识的替代形式<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
-<p>到目前为止，所提出的架构主要集中在贝叶斯神经网络在监督学习环境中的使用。然而，在现实世界的应用中，获得地面真实标签可能是昂贵的，因此应该采用新的学习策略 [72]。我们现在介绍如何使贝叶斯神经网络适应不同程度的监督。在这样做的同时，我们还展示了 PGM（主要是贝叶斯信念网络）如何有助于设计或解释学习策略。</p>
-<p>特别是，贝叶斯后验的表述，是由下面介绍的不同的 PGM 得出的（图 8、9 和 10），可以用来（第 5.3 节）获得一个合适的损失函数，用于在点估计神经网络足以满足所考虑的使用情况下的最大后验估计器。</p>
+<h3>3.3 模型训练<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>让我们使用<code class="docutils literal notranslate"><span class="pre">小批量</span> <span class="pre">ADVI</span></code> 运行模型：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">neural_network</span><span class="p">:</span>
+  <span class="n">likelihood</span> <span class="o">=</span> <span class="n">build_ann</span><span class="p">(</span><span class="n">GaussWeights</span><span class="p">())</span>
+  <span class="n">v_params</span><span class="p">,</span> <span class="n">trace</span><span class="p">,</span> <span class="n">ppc</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">run_advi</span><span class="p">(</span><span class="n">likelihood</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>确保所有内容都收敛：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">v_params</span><span class="o">.</span><span class="n">elbo_vals</span><span class="p">[</span><span class="mi">10000</span><span class="p">:])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy on test data = </span><span class="si">{}</span><span class="s1">%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>性能并不是非常高，但嘿，它似乎真的起作用了。</p>
+</div>
 <div class="section" id="id14">
-<h3>6.1 噪声标签和半监督学习<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
-<p>训练集的输入可能是不确定的，要么是因为标签 Dyare 被噪声破坏 [61]，要么是因为一些点没有标签，即半监督学习方法的设置</p>
-<p>在有噪声标签的情况下，我们应该扩展 BBN，为噪声标签增加一个新的变量–以 y 为条件（图 7a）。由于噪声水平本身往往是未知的，所以添加一个变量σ来描述噪声是很常见的。Frenay 和 Veleysen[16] 提出了在 PGM 中集成σ的不同方法的分类法（图 8），他们区分了三种情况：完全随机噪声（NCAR）；随机噪声（NAR）；非随机噪声（NNAR）模型。在 NCAR 模型中，σ是独立于任何其他变量的，根据定义，噪声是同调的。在 NAR 模型中，σ依赖于真实标签，但仍然独立于特征，而 NNAC 模型也考虑了特征 x 的影响，例如，如果图像中的噪声水平增加了图像被误标的机会。NAR 和 NNAC 模型都表示异方差（即同方差的反义词）噪声。</p>
-<p>这些模型比第 4 节中介绍的纯监督贝叶斯神经网络稍微复杂一些，但可以用类似的方式来处理，即从 PGM 中推导出后验公式（公式 12）并应用所选择的推断算法。我们在此介绍 NNAR 模型的程序，这是最通用的一种。后验成为</p>
-<p>在预测阶段，对于从后验中取样的每个元组 (y,σ,θ)，y 和σ可以不被考虑。</p>
-<p>在部分标记数据的情况下，也被称为半监督学习，（图 7b），数据集 D 被分成标记的 L 和未标记的 U 的例子。理论上，这种 PGM 可以被认为等同于图 6a 中描述的监督学习情况，但在这种情况下，未观察到的数据 U 不会带来任何信息。未标记的数据的额外信息来自于先验，也只有先验。在传统的机器学习中，最常见实施半监督学习的方法要么使用某种数据驱动的正则化 [86]，要么依赖伪标签 [82]，贝叶斯学习也不例外。</p>
-<p>（1） 数据驱动正则化</p>
-<p>数据驱动的正则化意味着修改先验假设，从而修改随机模型，以便能够从未标记的数据集 U 中提取有意义的信息。有两种常见的方法来处理这个过程</p>
-<p>第一种方法是将模型参数的先验分布限定在未标记的例子上，以利于模型的某些属性，如低密度区域的决策边界，即使用分布 p(θ|U) 而不是 p(θ)。这意味着将随机模型写成：
-p(θ|D)∝p(Ly|Lx,θ)p(θ|U),(30)
-其中 p(θ|U) 是一个具有一致性条件的先验，如公式 28 中定义。</p>
-<p>第二种方式是假设数据集中的观察和非观察样本之间存在某种依赖关系。这种类型的贝叶斯半监督学习依赖于非定向 PGM[96] 来建立先验，或者至少不假设不同训练对（x,y）之间的独立性 [48]。为了简单起见，我们在图 7b 中通过去掉 y 周围的板块来表示这一事实。这样，后验就以通常的方式写出来了（公式 4），主要区别在于现在 p(Dy|Dx,θ) 的选择是为了在整个数据集中强制执行某种一致性。例如，它可以通过假设两个靠近的点（根据某种取决于输入空间的接近度概念）有可能具有类似的标签 y，其不确定性水平随距离的增加而增加。</p>
-<p>这两种方法都有类似的效果，选择哪种方法取决于建立模型时喜欢的数学公式。</p>
-<p>半监督学习策略也可以被重新表述为有一个弱预测，能够给出一些伪标签～y，有时还具有一定的置信度。许多用于半监督学习的算法使用一个初始版本的模型，用已标记的例子来训练 [51]，以产生伪标签～y，并用这些标签来训练最终模型。这对贝叶斯神经网络来说是有问题的，因为如果预测的不确定性被计算在内，那么，就不可能减少与未标记数据相关的不确定性，至少在先验中没有额外的假设。使用更简单的模型 [53] 来获得伪标签，即使在实践中不太现实，也可以帮助缓解这个问题。</p>
+<h3>3.4 分层贝叶斯神经网络<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">L2</span> <span class="pre">惩罚项</span></code>强度之前的重量标准偏差之间的联系引出了一个有趣的想法。上面我们刚刚修正了 sd=0。1 表示所有层，但第一层的值可能与第二层的值不同。也许是 0。1 开始时太小或太大。在贝叶斯建模中，在这样的情况下，通常只需放置超先验，然后从数据中学习要应用的最佳正则化。这使我们不用在代价高昂的超参数优化中调整该参数。有关分层建模的更多信息，请参阅我的 <a class="reference external" href="https://twiecki.io/blog/2016/07/05/bayesian-deep-learning/">另一篇博文</a>。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">GaussWeightsHierarchicalRegularization</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="n">regularization</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">HalfNormal</span><span class="p">(</span><span class="s1">&#39;reg_hyper</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;w</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="n">regularization</span><span class="p">,</span> 
+             <span class="n">testval</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">shape</span><span class="p">),</span>
+             <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+  
+<span class="n">minibatches</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span>
+  <span class="n">create_minibatch</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span>
+  <span class="n">create_minibatch</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="mi">500</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">neural_network_hier</span><span class="p">:</span>
+  <span class="n">likelihood</span> <span class="o">=</span> <span class="n">build_ann</span><span class="p">(</span><span class="n">GaussWeightsHierarchicalRegularization</span><span class="p">())</span>
+  <span class="n">v_params</span><span class="p">,</span> <span class="n">trace</span><span class="p">,</span> <span class="n">ppc</span><span class="p">,</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="n">run_advi</span><span class="p">(</span><span class="n">likelihood</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy on test data = </span><span class="si">{}</span><span class="s1">%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>我们得到了一个小但很好的提高精度。让我们看看超参数的后验值：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pm</span><span class="o">.</span><span class="n">traceplot</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">varnames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;reg_hyper1&#39;</span><span class="p">,</span> <span class="s1">&#39;reg_hyper2&#39;</span><span class="p">,</span> <span class="s1">&#39;reg_hyper3&#39;</span><span class="p">,</span> <span class="s1">&#39;reg_hyper4&#39;</span><span class="p">,</span> <span class="s1">&#39;reg_hyper5&#39;</span><span class="p">,</span> <span class="s1">&#39;reg_hyper6&#39;</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>有趣的是，它们都非常不同，这表明改变在网络的每一层应用的正则化量是有意义的。</p>
 </div>
 <div class="section" id="id15">
-<h3>6.2 数据增强<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
-<p>数据增强是一种策略，可以大大增加可用于训练深度模型的数据的多样性，而无需实际收集新的数据。它依赖于在不改变标签的情况下，生成一个增强的数据集 A(D)，例如，在图像中应用旋转、翻转或添加噪音。数据增强现在是图像处理 [82] 和越来越多的自然语言处理 [3] 中最先进技术的前沿。</p>
-<p>从贝叶斯的角度来看，额外的信息是由增强过程的知识带来的，而不是实际的额外数据。A(D) 可以包含初始数据集的无限可能的变体，例如，当使用连续变换，如旋转或额外的噪声时。在实践中，A(D) 是在训练过程中不断采样的，而不是事先在训练集中缓存所有可能的增强。在训练点估计神经网络时，这个过程是直接的，但在应用贝叶斯统计学时有一些微妙的地方。主要的问题是，感兴趣的后验是 p(φ|D,Auд)，其中 Auд代表关于增强的一些知识，而不是 p(φ|A(D),D)。这意味着，从贝叶斯的角度来看，数据增强不应该，或者至少不应该仅仅被视为额外的数据，而应该被视为模型的隐性转换，以其他方式说明，作为先验。此外，在传统的统计学背景下，数据增殖的概念反而与缺失值的建模有关 [84]，这是一个相关但不同的问题</p>
-<p>增加更多的数据点或多次计算类似的数据点的效果将是使后验更加集中在 MAP 点估计值周围，即假设一个模型具有给定的似然 p(y|x,θ)，计算相同的数据点相当于将似然改为。</p>
-<p>从贝叶斯的角度来看，这并不是不正确的，因为它可以通过修改原始随机模型中的似然来完成。然而，当增加的数据集的规模变得无限大时，这就带来了一个问题，即正确地解释认识上的不确定性。</p>
-<p>可以说，数据增强应该在随机模型中实现。这个想法是，如果一个人得到了数据 D，那么他也可能得到了数据 D′，其中 D 中的每一个元素都被增强所替代。那么 D′就是数据 D′的一个不同角度。作为模型，我们有一个增强分布 p(x′|x,Auд)，使用增强模型 Auд对观察到的数据进行增强，以产生（概率上）x′。这个 x′是 x 附近的数据（图 9）。然后 x′可以被边缘化以简化随机模型。</p>
-<p>通过设置：</p>
-<p>我们可以将增强的贝叶斯后验定义为：。</p>
-<p>这是与邻近风险 [12] 相对应的一种概率。使用这种形式的增强似然，可以避免上述天真的方法会出现的多重计数。</p>
-<p>在实践中，这意味着我们可以用蒙特卡洛方法进行方程（33）中的积分，所以我们根据 top(x′|x,Auд) 对一小部分增量 Ax 进行取样，然后平均</p>
-<p>那么，在训练中使用的相关成本函数就变成了：</p>
-<p>Axc 可以包含少至一个元素，只要它在每次优化迭代中被重新采样即可。这大大简化了方程（36），特别是当指数家族的分布被用于建立随机模型时。</p>
-<p>这种方法的一个延伸是在半监督学习的背景下，加入一个训练成本，以鼓励增强下的预测的一致性 [82,95]，其中未标记的数据被用来建立一致性项的样本。请注意，这并不是给未标记的例子添加标签。它增加了一个术语来鼓励无标签数据的标签和其增强的一致性。</p>
+<h3>3.5 卷积神经网络的贝叶斯模型<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>这很好，但正如我在上一篇文章中所展示的，到目前为止，在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中直接实现的一切都非常简单。真正有趣的是，我们现在可以构建更复杂的人工神经网络，比如卷积神经网络：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def build_ann_conv(init):
+  network = `Lasagne` .layers.InputLayer(shape=(None, 1, 28, 28),
+                    input_var=input_var)
+
+  network = `Lasagne` .layers.Conv2DLayer(
+      network, num_filters=32, filter_size=(5, 5),
+      nonlinearity= `Lasagne` .nonlinearities.tanh,
+      W=init)
+
+  # Max-pooling layer of factor 2 in both dimensions:
+  network = `Lasagne` .layers.MaxPool2DLayer(network, pool_size=(2, 2))
+
+  # Another convolution with 32 5x5 kernels, and another 2x2 pooling:
+  network = `Lasagne` .layers.Conv2DLayer(
+    network, num_filters=32, filter_size=(5, 5),
+    nonlinearity= `Lasagne` .nonlinearities.tanh,
+    W=init)
+  
+  network = `Lasagne` .layers.MaxPool2DLayer(network, 
+                      pool_size=(2, 2))
+  
+  n_hid2 = 256
+  network = `Lasagne` .layers.DenseLayer(
+    network, num_units=n_hid2,
+    nonlinearity= `Lasagne` .nonlinearities.tanh,
+    b=init,
+    W=init
+  )
+
+  # Finally, we&#39;ll add the fully-connected output layer, of 10 softmax units:
+  network = `Lasagne` .layers.DenseLayer(
+    network, num_units=10,
+    nonlinearity= `Lasagne` .nonlinearities.softmax,
+    b=init,
+    W=init
+  )
+  
+  prediction = `Lasagne` .layers.get_output(network)
+  
+  return pm.Categorical(&#39;out&#39;, 
+          prediction,
+          observed=target_var)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Accuracy on test data = </span><span class="si">{}</span><span class="s1">%&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>          
+</pre></div>
+</div>
+</div>
+</div>
+<p>更高的准确度——很好。我也尝试了分层模型，但它的准确率较低（95%），我认为这是由于过度拟合。</p>
+<p>让我们更多地利用我们处于贝叶斯框架中的事实，探索我们预测中的不确定性。由于我们的预测是分类的，我们不能简单地计算后验预测标准差。相反，我们计算卡方统计量，它告诉我们样本是多么均匀。越是统一，我们的不确定性就越高。我不太确定这是否是最好的方法，如果有一个更成熟的方法我不知道，请留下评论。</p>
+<p>正如我们所见，当模型出错时，答案的不确定性要大得多（即提供的答案更加一致）。你可能会说，你从一个常规的人工神经网络得到的多项式预测得到了同样的效果，然而，<a class="reference external" href="http://mlg.eng.cam.ac.uk/yarin/blog_3d801aa532c1ce.html">事实并非如此</a>。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">miss_class</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y_test</span> <span class="o">!=</span> <span class="n">y_pred</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">corr_class</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y_test</span> <span class="o">==</span> <span class="n">y_pred</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">preds</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ppc</span><span class="p">[</span><span class="s1">&#39;out&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chis</span> <span class="o">=</span> <span class="n">preds</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">chisquare</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">statistic</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">chis</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">miss_class</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Error&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">chis</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">corr_class</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Correct&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Chi-Square statistic&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="id16">
-<h3>6.3 元学习、转移学习和自我监督学习<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
-<p>广义的元学习 [33]，是指使用机器学习算法来协助其他机器学习模型的训练和优化。通过元学习获得的元知识可以区别于标准知识，因为它适用于一组相关的任务，而不是单一的任务。</p>
-<p>转移学习指的是在给定问题上获得的一些中间知识被重新用于解决一个不同的问题的方法。在深度学习中，它主要用于领域适应，当标记的数据可用时，在与感兴趣的领域有某种相似的丰富的数据，而在感兴趣的领域却很稀缺 [67]。另外，一些预训练的模型 [73] 也是一种解决方案，用于研究架构，以至于从头开始多次训练在实践中变得很不方便。</p>
-<p>自监督学习是一种由数据本身提供标签的学习策略 [36]。由于数据直接获得的标签与感兴趣的任务不匹配，所以问题被当作元学习来处理，在感兴趣的任务之外还有一个借口（或代理）任务。使用自我监督的产品现在被普遍认为是某些领域的必要步骤。例如，在自然语言处理中，大多数先进的方法都使用这些预训练的模型 [73] 。</p>
-<p>在我们对元学习的贝叶斯理解中，从上面的广义定义中得出，我们认为转移学习和自我监督学习都是元学习的特例。</p>
-<p>贝叶斯统计中元学习的一个常见方法是将问题重塑为层次贝叶斯 [25]，其中每个任务的先验 p(θt|ξ) 都以一个新的全局变量ξ为条件（图。ξ可以代表一些连续的元参数（本教程的重点）或关于贝叶斯神经网络结构的离散信息（学习可能的功能模型的情况）或 PGM 的底层子图（学习可能的随机模型的情况）。如果需要的话，可以增加多个层次来组织更复杂的任务，但我们将只介绍的情况下，作为一般化的一个层次是直截了当的。一般的后验成为</p>
-<p>因此，在实践中，通常用经验贝叶斯法来处理问题（第 7.4 节），只考虑全局变量的点估计值ξ，最好是通过边缘化 p(θ,ξ|D) 并选择最可能的点来获得 MAP 估计值，但这并不总是如此</p>
-<p>在迁移学习中，通常的方法是设置ξ=θm，θm 是主任务的系数。然后，新的先验可以从ξ中获得，例如</p>
-<p>未选择的参数按惯例被赋予 0 的平均值，但也可以使用其他方法来设计先验参数的这些部分。如果贝叶斯神经网络已经为主要任务进行了训练，那么σ可以在以前的后验上进行估计，但仍然需要略微放大以考虑额外的不确定性。</p>
-<p>自我监督学习可以分两步实现，首先学习预言任务，然后使用转移学习。这可能被认为是过于复杂，但如果预设任务具有较高的计算复杂性（例如，自然语言处理中的 BERT 模型 [73]），则可能需要这样做。最近的贡献表明，联合学习预设任务和最终任务（图 10b）可以改善自我监督学习中获得的结果 [4]。这种方法更接近于 hierarchical Bayes，也允许一次性设置先验，同时仍然保留了自我监督学习的优点。</p>
+<h3>3.6 结论<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>通过连接 <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 和 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> ，并使用 mini-batch ADVI 在大小适中的复杂数据集（MNIST）上训练贝叶斯神经网络，我们朝着实际问题的贝叶斯深度学习迈出了一大步。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> 开发人员设计了 API，使得为这个不常见的应用程序集成变得微不足道，这是他们的荣幸。他们也非常乐于助人，乐于助人。</p>
+<p>最后，我还认为这显示了 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的好处。通过依赖一种常用语言（Python）和抽象计算后端（ <code class="docutils literal notranslate"><span class="pre">Theano</span></code> ），我们能够非常轻松地利用该生态系统的强大功能，并以创建 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 时从未想到的方式使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 。我期待着将其扩展到新的领域。</p>
+<p>这篇博文写在一本 Jupyter 笔记本上。你可以在这里访问 [笔记本](<a class="reference external" href="https://github.com/twiecki/twiecki.github.io/blob/master/downloads/notebooks/bayesian_neural_network_">https://github.com/twiecki/twiecki.github.io/blob/master/downloads/notebooks/bayesian_neural_network_</a> <code class="docutils literal notranslate"><span class="pre">Lasagne</span></code> .ipynb)，并在 Twitter 上关注 <a class="reference external" href="https://twitter.com/twiecki">我</a> 以了解最新情况。</p>
 </div>
 </div>
 <div class="section" id="id17">
-<h2>7 贝叶斯推断算法<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
-<p>先验地，使用贝叶斯神经网络时不必经历学习阶段，只需对后验进行抽样并进行模型平均化（见公式（4）和（6））。但在一般情况下，对后验进行采样并不容易。如果数据的条件概率 P(D|H) 和模型的概率 P(H) 是由我们的先验和模型给出的，那么证据项∫HP(D|H′)P(H′)dH′的积分可能就很难计算。对于非微观模型，即使已经计算了证据，也很难直接对后验进行采样，由于高维度的抽样空间和均匀随机变量的样本的非微妙的转变。不使用传统的方法对后验进行抽样，如反转抽样或拒绝抽样，而是使用专门的算法。最流行的是马尔科夫链蒙特卡洛方法，这是一种对后验进行精确采样的算法系列，或者是变分推断，这是一种学习后验近似值的方法（图 4）。本节回顾这些方法</p>
-<div class="section" id="mcmc">
-<h3>7.1 MCMC 方法<a class="headerlink" href="#mcmc" title="Permalink to this headline">¶</a></h3>
-<p>马尔科夫链蒙特卡洛方法的思想是构建一个马尔科夫链，一个随机样本序列 Si，其概率上只取决于前一个样本 Si-1，这样序列中的元素最终会按照一个期望的分布进行分布。与标准的、简单的、低维的抽样方法不同，如拒绝抽样或反转抽样，大多数 MCMC 算法在底层马尔可夫链收敛到所需分布之前，需要一些初始烧录时间。另外，连续的 Sim 可能是自相关的。这意味着必须生成一大批样本Θ，并进行子采样，以便从基础分布中获得近似独立的样本。此外，一定数量的初始样本必须在序列开始时被丢弃，而准确的数量并不总是容易定义。最后但并非最不重要的是，最终的样本集合Θ必须在训练后被缓存，这可能是非常昂贵的，即使对于平均规模的深度学习模型。</p>
-<p>尽管有其固有的缺点，MCMC 方法可以被认为是贝叶斯统计学中从精确后验分布中取样的最佳可用和最流行的解决方案之一 [2]。然而，并非所有的 MCMC 算法都与贝叶斯深度学习有关。例如，吉布斯抽样 [22] 在一般统计学和无监督机器学习中非常流行，但很少用于 BNNs。与贝叶斯神经网络最相关的一类 MCMC 方法是 Metropolis-Hastings 算法 [13]。使得 Metropolis-Hastings 算法流行的特性是，它们不需要知道确切的概率分布 P(x) 来进行抽样。相反，一个与该分布成正比的函数 f(x) 就足够了。这就是贝叶斯后验分布的情况，除了证据项之外，它通常很容易计算。</p>
-<p>Metropolis-Hasting 算法的基本思想是以一个随机的初始猜测 x0 开始，然后在前一个候选点的 “周围 “抽取一个新候选点。如果这个候选点比前一个候选点更有可能（根据我们想要取样的分布），那么它就被接受。如果它的似然较小，那么它将以一定的概率被接受，否则被拒绝。</p>
-<p>更正式地说，算法，见算法 1，是用一个提议分布 Q(x′|x) 构建的，它告诉我们如何 “围绕 “先前的样本进行采样</p>
-<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig40.webp" /></p>
-<p>算法 1 的接受概率可以被证明是产生所有可逆的 Makrov 链中接受度最高的。此外，如果选择 Q 是对称的，即 Q(x′|xn)=Q(xn|x′)，则概率可以简化，接受率的公式为</p>
-<p>在这种情况下，该算法被简单地称为 Metropolis 方法。Q 的常见选择可以是正态分布 Q(x′|xn)=N(xn,σ2)，或均匀分布 Q(x′|xn)=U(xn-ε,xn+ε)，以先前的样本为中心。但有时，我们必须处理非对称分布，例如，为了适应模型中的约束，比如所考虑的分布域是有界的。在这种情况下，我们必须考虑到完整的 Metropolis-Hasting 算法所带来的修正项</p>
-<p>建议分布的范围必须加以调整。如果它太大，拒绝率会太高。如果它太小，样本就会有更多的自动关联性。目前还没有调整这些参数的一般方法。然而，一个巧妙的策略来获得新提议的样本 x′可以减少这些参数的影响。这就是为什么 Hamilton Monte-Carlo 方法被提出来了</p>
-<p>Hamiltonian Monte-Carlo 算法 [62] 是 Metropolis-Hasting 算法的另一个例子，该算法为连续分布设计了一个巧妙的方案来抽取新的提议 x′，以确保尽可能少的样本被拒绝，并且样本之间的相关性尽可能少。此外，燃烧的时间也非常短。产生新跳跃的过程是基于汉密尔顿力学的。首先，我们假设从实际位置 xn 开始，我们将以初始随机速度 v 从一个提议分布 Q(v) 中移动。然后，我们定义系统的哈密顿力学为。</p>
-<p>势能，loд(P(x)) 被认为是势能，loд(Q(v)) 是动能。我们让系统在给定的时间 T 内运动。相应的动力系统被以下 PDE 参数化。</p>
-<p>的初始条件 x′0=xnandv0=v′。这样做的好处是，我们仍然需要知道分布 P，但只需要知道一个比例系数。我们接受拟议的样本 x′T，其概率 yp 计算为：。</p>
-<p>现在，由于哈密顿人随着时间的推移而保存下来，所以 P 应该等于 1，而且新闻样本永远不会被拒绝。问题是，如果不是不可能的话，得到一个精确的解决方案往往是很难的，所以我们必须依靠数字积分来代替。要做到这一点，需要使用一个对称积分器。这是一个代表离散哈密顿系统 H′(x,v) 的积分器，与原来的连续系统 H(x,v) 相比，最好只受到轻微的扰动。这就保留了 MCMC 算法底层马尔科夫链的重要特性，其中最主要的是，如果所考虑的哈密尔顿路径在起点 x0 上循环，数值积分器也会在 x0 上循环。请注意，大多数数值积分器，包括流行的 Runge-Kutta 方案，不是对称性的。交互式积分器的一个很好的选择是跃迁式，其时间步长∆t</p>
-<p>有了这个对称积分器，我们在原哈密顿 H(x,v) 和修正的哈密顿 H′(x,v) 之间有如下关系</p>
-<p>这意味着很容易适应性地调整整合步骤∆t 来调整接受概率 p</p>
-<p>现在的问题是选择提议分布 Q(v) 和积分时间 T。Q(v) 通常被选择为正态分布 N(0,Σ)。对Σ最明显的选择是σ2I.σ2 可以增加，以提高对远离先前样本的新点的采样几率。如果它太短，那么连续的样本就有可能是自相关的。如果它太大，那么哈密顿路径可能会循环，大量的时间将被浪费在反复积分相同的东西上。</p>
-<p>有人提出了对经典 HMC 算法的改进，以自动调整积分时间 [31]，称为 No-U-Turn 采样器（简称 NUTS），大多数贝叶斯统计软件包都实现了这一点。</p>
-</div>
-<div class="section" id="id18">
-<h3>7.2 变分推断<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
-<p>MCMC 算法是贝叶斯统计学中从精确后验中取样的得力工具。然而，由于深度学习中通常考虑的模型规模巨大，其缺乏可扩展性。尽管该问题在某种程度上可以得到缓解，但在贝叶斯深度学习领域中还是不太受欢迎。变分推断 [6] 比 MCMC 算法的扩展性更好，因此更受欢迎。不过变分推断并不是一种精确推断方法，其想法是有一个分布 <span class="math notranslate nohighlight">\(q_φ(H)\)</span>，由一组参数 <span class="math notranslate nohighlight">\(φ\)</span> 来描述，称为变分分布。然后推断或学习参数 <span class="math notranslate nohighlight">\(φ\)</span> 的值，使变分分布 <span class="math notranslate nohighlight">\(q_φ(H)\)</span> 尽可能地接近精确后验 <span class="math notranslate nohighlight">\(P(H|D)\)</span> 。该接近程度最常使用的测度是 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>，它是两个概率分布函数之间近似度的测量，是 <span class="math notranslate nohighlight">\(φ\)</span> 的函数。</p>
-<div class="math notranslate nohighlight">
-\[
-D_{K L}\left(q_{\phi} \| P\right)=\int_{H} q_{\phi}\left(H^{\prime}\right) \log \left(\frac{q_{\phi}\left(H^{\prime}\right)}{P\left(H^{\prime} \mid D\right)}\right) d H^{\prime}
-\]</div>
-<p>这里一个明显的问题就是要计算  <span class="math notranslate nohighlight">\(D_{K L}\left(q_{\phi} \| P\right)\)</span> ，公式中看起来需要计算 <span class="math notranslate nohighlight">\(P(H \mid D)\)</span> 。不过幸运的是，有人推导出了一个更容易的公式来代替它，这就是<code class="docutils literal notranslate"><span class="pre">证据下限（或</span> <span class="pre">ELBO</span> <span class="pre">）</span></code>：</p>
-<div class="math notranslate nohighlight">
-\[
-E L B O=\int_{H} q_{\phi}\left(H^{\prime}\right) \log \left(\frac{P\left(H^{\prime}, D\right)}{q_{\phi}\left(H^{\prime}\right)}\right) d H^{\prime}=\log (P(D))-D_{K L}\left(q_{\phi} \| P\right)
-\]</div>
-<p>由于 <span class="math notranslate nohighlight">\(log(P(D))\)</span> 只取决于先验，所以最小化 <span class="math notranslate nohighlight">\(D_{K L}(q_φ||P)\)</span> 等价于最大化 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code>。</p>
-<p>几乎所有用于经典机器学习的大规模优化方法都适用于对 ELBO 进行优化。在神经网络中最流行的是随机变分推断（ Stochastic variational inference） [32]，实际上是应用了变分推断的随机梯度下降（SGD）。这个优势十七可以扩展到现代机器学习中遇到的大型数据集，因为每次迭代都可以在小批量上计算 ELBO 。</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>（1）请注意，当用变分推断学习后验知识时，与普通反向传播相比，收敛会相对较慢。
-（2）在执行梯度步骤前，大多数实现都使用最少数量的样本量来评估 ELBO，通常只使用一个样本。这意味着作为迭代函数的 ELBO 会相当嘈杂。</p>
-</div>
-<p>在传统机器学习和统计中，<span class="math notranslate nohighlight">\(q_ϕ(H)\)</span> 大多是由指数族分布构造的，例如多元正态分布 [26]、Gamma 分布 和 Dirichlet 分布。ELBO 可以被戏剧性地简化为组件 [23]，从而导致期望最大化（EM）算法的推广。为考虑大量参数之间的存在相关性，可以进行某些近似，例如使用块对角线协方差矩阵 [75]，或者低秩加对角线协方差矩阵 [55]。</p>
-</div>
-<div class="section" id="id19">
-<h3>7.3 反向传播贝叶斯<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
-<p>变分推断为贝叶斯推断提供了很好的数学工具，但它需要进一步适应深度学习。主要问题是：随机性限制了反向传播对网络内部节点发挥作用 [9]。已经提出了解决方多种方案来缓解此问题，比如：<code class="docutils literal notranslate"><span class="pre">概率反向传播</span></code> [29] 或<code class="docutils literal notranslate"><span class="pre">后向贝叶斯</span></code> [7]。这两种方法服务于相同目标，但<code class="docutils literal notranslate"><span class="pre">后向贝叶斯</span></code>可能对深度学习从业者来说更熟悉，因此重点关注它。<code class="docutils literal notranslate"><span class="pre">后向贝叶斯</span></code>是<code class="docutils literal notranslate"><span class="pre">变分推断</span></code>与<code class="docutils literal notranslate"><span class="pre">重新参数化技巧</span></code> [42] 相结合的一种实现，可以确保反向传播能够照常工作。</p>
-<p>其思想是使用某些随机变量 <span class="math notranslate nohighlight">\(ε∼q(ε)\)</span> 作为噪声的非变分来源。<span class="math notranslate nohighlight">\(θ\)</span> 的采样不是直接进行的，而是通过确定性变换 <span class="math notranslate nohighlight">\(t(ε，ϕ)\)</span> 获得的，使得 <span class="math notranslate nohighlight">\(θ=t(ε，ϕ)\)</span> 跟随 <span class="math notranslate nohighlight">\(q_ϕ(θ).ε\)</span> 被采样，即使每次迭代时都在改变，但仍然可被视为相对于其他变量的一个常数。所有其他变换都是非随机的，对于变分参数 <span class="math notranslate nohighlight">\(ϕ\)</span>，反向传播照常工作。此时 ELBO 的一般公式转变为：</p>
-<div class="math notranslate nohighlight">
-\[
-E L B O=\int_{\varepsilon} q_{\phi}(t(\varepsilon, \boldsymbol{\phi})) \log \left(\frac{P(t(\varepsilon, \boldsymbol{\phi}), D)}{q_{\phi}(t(\varepsilon, \boldsymbol{\phi}))}\right)\left|\operatorname{Det}\left(\nabla_{\varepsilon} t(\varepsilon, \boldsymbol{\phi})\right)\right| d \varepsilon
-\]</div>
-<p>这工作过于繁杂。取而代之的，为估计 ELBO 的梯度，文献 [7] 建议使用 <span class="math notranslate nohighlight">\(q_{\phi}(\boldsymbol{\theta}) d \boldsymbol{\theta}=q(\varepsilon) d \varepsilon\)</span> ，则对于可微函数 <span class="math notranslate nohighlight">\(f(\boldsymbol{\theta}, \boldsymbol{\phi})\)</span>，有：</p>
-<div class="math notranslate nohighlight">
-\[
-\frac{\partial}{\partial \phi} \int_{\phi} q_{\phi}\left(\boldsymbol{\theta}^{\prime}\right) f\left(\boldsymbol{\theta}^{\prime}, \boldsymbol{\phi}\right) d \boldsymbol{\theta}^{\prime}=\int_{\varepsilon} q(\varepsilon)\left(\frac{\partial f(\boldsymbol{\theta}, \boldsymbol{\phi})}{\partial \boldsymbol{\theta}} \frac{\partial \boldsymbol{\theta}}{\partial \boldsymbol{\phi}}+\frac{\partial f(\boldsymbol{\theta}, \boldsymbol{\phi})}{\partial \boldsymbol{\phi}}\right) d \varepsilon
-\]</div>
-<p>文献 [7] 提供相关证明。本文附录 A 中提供了另一个版本的证明，以更详细说明何时可以假设 <span class="math notranslate nohighlight">\(q_ϕ(θ)dθ=q(ε)dε\)</span> ，充分条件是 <span class="math notranslate nohighlight">\(t(ε，ϕ)\)</span> 关于 <span class="math notranslate nohighlight">\(ε\)</span> 可逆，且分布 <span class="math notranslate nohighlight">\(q(ε)\)</span> 和 <span class="math notranslate nohighlight">\(q_ϕ(θ)\)</span> 不是退化的概率分布。</p>
-<p>对于其中权重被视为随机变量并且假设为 H 的情况（即后向贝叶斯的原始论文中考虑的情况），可以如算法 2 中描述的那样实现训练循环。</p>
-<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/statistics_20210920_164425_b8.webp" /></p>
-<p>目标函数 <span class="math notranslate nohighlight">\(f\)</span> 对应于来自单个样本的 ELBO 估计值。这意味着梯度估计将是嘈杂的。收敛图也将是嘈杂的，比经典反向传播的情况要多得多（图 11）。为更好地估计收敛，可以对多个时段的损失进行平均。</p>
-<p>算法 2 非常类似于点估计深度学习的经典训练循环。事实上，许多最近对深度学习的优化策略可直接用于后向贝叶斯，例如，使用 Adam 优化器 [41] 而不是随机梯度下降。自然梯度下降也被用作贝叶斯神经网络变分推断的优化工具 [65]，因为如果在自然空间中参数化，则来自指数族的分布会导出一个非常简单的自然梯度公式 [39]。</p>
-<p>还要注意的是，该方法也可以直接用于具有随机激活的贝叶斯神经网络，尽管原始算法是针对具有随机权重的贝叶斯神经网络提出的。在该情况下，激活 <span class="math notranslate nohighlight">\(l\)</span> 表示：假设 <span class="math notranslate nohighlight">\(H\)</span> 和权重 <span class="math notranslate nohighlight">\(θ\)</span> 是变分参数 <span class="math notranslate nohighlight">\(ϕ\)</span> 的一部分。</p>
-</div>
-<div class="section" id="id20">
-<h3>7.4 学习先验<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
-<p>尽管有悖于直觉，但在学习了后验之后再学习先验也是可能的。这在用已有知识设置了部分先验，并在得到后验之前学习剩余自由参数的先验时，显得非常有意义。在标准贝叶斯统计学中，这被称为 <code class="docutils literal notranslate"><span class="pre">经验贝叶斯</span></code>。当待学习的先验超参数数量远小于模型本身参数数量时，这通常是有效的近似。</p>
-<p>给定一个参数化的先验分布 <span class="math notranslate nohighlight">\(p_ξ(H)\)</span>，最大化数据似然是学习参数 <span class="math notranslate nohighlight">\(ξ\)</span> 的一个好方法。</p>
-<div class="math notranslate nohighlight" id="equation-49">
-<span class="eqno">(9)<a class="headerlink" href="#equation-49" title="Permalink to this equation">¶</a></span>\[
-\hat{\xi}=\underset{\xi}{\arg \max } P(D \mid \xi)=\underset{\xi}{\arg \max } \int_{H} p_{\xi}\left(D \mid H^{\prime}\right) p_{\xi}\left(H^{\prime}\right) d H^{\prime}
-\]</div>
-<p>一般来说，直接寻找 <span class="math notranslate nohighlight">\(ξ\)</span> 是一个难解的问题，但当使用变分推断时，可以利用 ELBO 的一个特定属性 [26]。即 ELBO 是数据的对数似然减去变分后验和先验的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>（见公式 46）。</p>
-<div class="math notranslate nohighlight" id="equation-50">
-<span class="eqno">(10)<a class="headerlink" href="#equation-50" title="Permalink to this equation">¶</a></span>\[
-\log (P(D \mid \xi))=E L B O+D_{K L}\left(q_{\phi} \| P\right)
-\]</div>
-<p>这意味着最大化 ELBO （现在是 <span class="math notranslate nohighlight">\(ξ\)</span> 和 <span class="math notranslate nohighlight">\(φ\)</span> 的函数） 相当于最大化数据的对数似然下界，当 <span class="math notranslate nohighlight">\(q_φ\)</span> 是一个适合 <span class="math notranslate nohighlight">\(P\)</span> 的泛化分布族时，该下限会更紧致。第 7.3 节中介绍的后向贝叶斯算法只需稍作修改即可，见算法 3。</p>
-<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/statistics_20210920_171205_ae.webp" /></p>
-</div>
-</div>
-<div class="section" id="id21">
-<h2>8 将贝叶斯方法用于深度学习<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
-<p>到目前为止，我们介绍了设计和训练贝叶斯神经网络的基本理论。然而，上述方法很难适用于目前深度学习中使用的大规模架构。最近的研究也表明，只有近似贝叶斯方法才能够得到一个较好的、正确校准的模型和不确定性估计 [46]。</p>
-<p>本节将介绍如何贝将叶斯方法应用于深度学习，从而产生新的、更有效的算法。我们将加速训练（或预测）的方法分为两大类（图 12）：<code class="docutils literal notranslate"><span class="pre">专门的推断方法</span></code>和<code class="docutils literal notranslate"><span class="pre">简化及压缩方法</span></code>。根据其所依赖的随机性来源、是否 MCMC 类随机算法、是否变分推断形式，专门推断算法可以被进一步分类。其中可以用于驱动这些方法的两个比较主要的随机性来源：一是Dropout与噪声层；二是随机梯度下降噪声。</p>
-<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig12.webp" /></p>
-<p>图 12 贝叶斯神经网络的简化算法可大致分为：（a）专用推断算法；（b）其他简化和压缩策略。专用推断算法可以进一步划分，首先看是 MCMC 算法还是变分推断方法，其次分析其所依赖的随机性来源，是由 Dropout （或噪声层）产生的随机性，还是由动态随机梯度产生的随机性。</p>
-<div class="section" id="dropout">
-<h3>8.1 通过 Dropout 实现贝叶斯<a class="headerlink" href="#dropout" title="Permalink to this headline">¶</a></h3>
-<p>Dropout 最初是作为训练期间的正则化程序被提出来的 [83]，用于对前一层施加乘法噪声。到目前为止，最常用的噪声类型是 <code class="docutils literal notranslate"><span class="pre">Bernouilli</span> <span class="pre">噪声</span></code>，但有时也会使用其他类型的噪声（如：高斯噪声，此时该程序被称为高斯 Dropout [83]） 。</p>
-<p>Dropout 也可以在评估阶段作为集成学习的一种形式使用，这提供了获得预测输出概率分布的能力 [18,52]。这个被称为MC-Dropout 的过程，可以被认为是一种变分推断，对每个权重矩阵定义的变分后验为：</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{gathered}
-z_{i, j} \sim \text { Bernouilli }\left(p_{i}\right) \\
-\boldsymbol{W}_{i}=\boldsymbol{M}_{i} \cdot \operatorname{diag}\left(z_{i}\right)
-\end{gathered}
-\end{split}\]</div>
-<p>在应用放弃之前，其中 <span class="math notranslate nohighlight">\(z_i\)</span> 为随机激活或失活系数，<span class="math notranslate nohighlight">\(M_i\)</span> 为执行 Dropout 之前的权重矩阵。<span class="math notranslate nohighlight">\(p_i\)</span> 是每个层 <span class="math notranslate nohighlight">\(i\)</span> 的激活概率，可以学习得到或手动设置。</p>
-<p>采用了 Dropout 的训练标准目标函数与加性的 ℓ2 权重正则化之间，存在等效性：</p>
-<div class="math notranslate nohighlight">
-\[
-\mathbf{L}_{d r o p o u t}=\frac{1}{N} \sum_{D} f(\boldsymbol{y}, \hat{\boldsymbol{y}})+\lambda \sum_{\theta} \theta_{i}^{2}
-\]</div>
-<p>假设权重采用正态先验，将变分后验设置为方程 51 中的分布，则用于变分推断的 ELBO 已经被证明 [18]，使用的论据与第 5.3 节提出的论据相似。</p>
-<p>MC-Dropout 是一种非常方便的贝叶斯深度学习技术，因为它与传统方法相比几乎不需要额外的知识或建模努力。此外，与其他变分推断方法相比，它通常会使训练阶段更快。</p>
-<p>但是 MC-Dropout 可能缺乏一些表达能力，因此不能完全捕捉与模型预测相关的不确定性。与其他方法相比，它在进行贝叶斯在线学习或主动学习时，也缺乏一些灵活性。</p>
-<p>MC-Dropout 的一个变种是 Variational Dropout，它试图在评价时应用高斯 Dropout [43]。Variational Dropout 被批评为非贝叶斯的 [34]，主要是因为作者选择了一个目标函数，其中高斯 Dropout 是唯一的正则化形式。在这种情况下，隐含先验（即对数均匀先验，对应于退化的概率分布）会导致退化的后验。必须强调的是，当使用 Dropout 作贝叶斯近似时，训练过程中必须考虑到 Dropout 之上的先验正则化。</p>
-</div>
-<div class="section" id="id22">
-<h3>8.2 通过随机梯度下降实现贝叶斯<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
-<p>随机梯度下降（SGD）和类似算法是现代机器学习的核心。SGD 的最初目标是提供一种算法，在只有目标函数的有噪声梯度估计条件下，收敛到对应最优解的点估计，特别是当训练数据必须被分割成小批次时。在时间 <span class="math notranslate nohighlight">\(t\)</span> 时的参数更新规则可以写为：</p>
-<div class="math notranslate nohighlight">
-\[
-\Delta \boldsymbol{\theta}_{t}=\frac{\epsilon_{t}}{2}\left(\frac{N}{n} \nabla \log \left(p\left(D_{t}, \boldsymbol{\theta}_{t}\right)\right)+\nabla \log \left(p\left(\boldsymbol{\theta}_{t}\right)\right)\right)
-\]</div>
-<p>其中，<span class="math notranslate nohighlight">\(D_t\)</span> 是在 <span class="math notranslate nohighlight">\(t\)</span> 时从数据集 <span class="math notranslate nohighlight">\(D\)</span> 中抽取的小批样本，<span class="math notranslate nohighlight">\(ε_t\)</span> 是 <span class="math notranslate nohighlight">\(t\)</span> 时的学习率，<span class="math notranslate nohighlight">\(N\)</span> 是整个数据集的大小，<span class="math notranslate nohighlight">\(n\)</span> 是小批次的大小。</p>
-<p>SGD 或相关优化算法，如 Adam[41]，可以被重新解释为马尔科夫链算法 [56]，其中小批量的采样作为随机性来源。通常，会调整算法的超参数以确保链能够收敛到 <code class="docutils literal notranslate"><span class="pre">Dirac</span> <span class="pre">分布</span></code>，即最终的点估计指示分布。其中通过减小学习率 <span class="math notranslate nohighlight">\(ε_t-&gt;0\)</span> ，并确保 <span class="math notranslate nohighlight">\(\sum_{t=0}^∞ε_t=∞\)</span> 是常用策略。但情况并不一定如此，如果学习率向某个常数降低，则马尔科夫链将收敛至一个平稳分布。如果在目标函数中考虑了贝叶斯先验，那么这个平稳分布可以是相应后验的近似值。</p>
-<div class="section" id="sgd-mcmc">
-<h4>8.2.1 基于 SGD 动力学的 MCMC 算法。<a class="headerlink" href="#sgd-mcmc" title="Permalink to this headline">¶</a></h4>
-<p>基于上述观察，人们从 SGD 算法中开发了一种特殊的 MCMC 方法，称为随机梯度郎之万动力学法（SGLD）[91]。将 SGD 与<code class="docutils literal notranslate"><span class="pre">郎之万动力学</span></code>相结合的想法导致了一个略微修改的更新步骤：</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{aligned}
-&amp;\Delta \boldsymbol{\theta}_{t}=\frac{\epsilon_{t}}{2}\left(\frac{N}{n} \nabla \log \left(p\left(D_{t}, \boldsymbol{\theta}_{t}\right)\right)+\nabla \log \left(p\left(\boldsymbol{\theta}_{t}\right)\right)\right)+\eta_{t} \\
-&amp;\eta_{t} \sim \mathcal{N}\left(0, \epsilon_{t}\right)
-\end{aligned}
-\end{split}\]</div>
-<p>有研究表明，如果 <span class="math notranslate nohighlight">\(ε_t\)</span> 趋于 0，这种方法会能够使马尔科夫链对精确的后验进行采样 [91]。问题是，如果 <span class="math notranslate nohighlight">\(ε_t\)</span> 趋近于 0，那么相邻样本就会变得越来越自相关。为处理该问题，作者建议在某个点上停止减少 <span class="math notranslate nohighlight">\(ε_t\)</span> ，从而使样本只达到精确后验的近似值。不过，与其他 MCMC 方法相比，如果数据集必须被分割成小批，SGLD 还是提供了更好的理论保证，这使得该算法在贝叶斯深度学习中非常有用。</p>
-<p>为支持对后验的探索而非精确抽样，SGD 也可以用一种稍微不同的方式，粗略地近似贝叶斯后验，同时在实践中容易实现。
-为了支持对后验的探索而不是精确抽样，SGD 也可以用一种稍微不同的方式，粗略地接近贝叶斯的后验，同时在实践中易于实现。这个想法是使用热重启，即用大的学习率 <span class="math notranslate nohighlight">\(ε_0\)</span> 和可能的新随机权重 <span class="math notranslate nohighlight">\(\theta_0\)</span> 重启梯度下降。</p>
-<p>这种方法显然是对真正贝叶斯方法的一种粗略近似，但它具有多种优点。主要的优点是避免了峰值崩溃问题 [49]。在贝叶斯神经网络情况下，真正的贝叶斯后验通常是一个复杂的多峰值分布，因此网络可能存在多个、有时等价的参数 <span class="math notranslate nohighlight">\(θ\)</span> 可以拟合训练数据集。倾向于探索而非精确重建可以帮助更好地了解这些峰值。然后，由于从同一峰值采样的 <span class="math notranslate nohighlight">\(θ\)</span> 更有可能使模型以类似方式泛化，因此在处理不可见数据时，使用热重启可以更好地估计模型的不确定性，即使这种方法不是完美的贝叶斯方法。</p>
-<p>还有一些文献中提出了利用上述想法的算法，例如 RECAST[78]，其中包含对热重启 SGLD 的修改。</p>
-<p>上述方法仍然存在 MCMC 方法的主要缺点，即内存占用大。因此，一些作者提出了更像传统变分推断的方法。</p>
-</div>
-<div class="section" id="sgd">
-<h4>8.2.2 基于 SGD 动态的变分推断<a class="headerlink" href="#sgd" title="Permalink to this headline">¶</a></h4>
-<p>与其从 SGD 动态中推导出 MCMC 算法，还不如用它来拟合一个变分分布，这种方法可以被认为是变分推断。</p>
-<p>许多方法都是基于拉普拉斯近似，它允许通过使用最大后验估计作为平均值、使用损失（假设损失代表对数似然）的海森矩阵作为逆协方差矩阵来拟合高斯后验。计算海森矩阵，从而计算损失的曲率，对于现代大规模的神经网络架构来说通常难以实现，所以需要近似方法，例如 KFAC[75]。KFAC 是一种可扩展方法，使用 Kronecker 分解法来拟合一个具有块对角线协方差矩阵的高斯作为后验。另一种获得二阶导数估计的方法是在多个 SGD 迭代中估计梯度方差。SWAG[55] 就是利用该思想来拟合了一个具有低秩正对角协方差矩阵的高斯后验。还有一个名为 Vadam[40]的类似方法，用于 Adam 算法。不过上述方法如果能够捕捉到后验的某个峰值的精细形状，那么它们就不能拟合其他峰值。</p>
-<p>在文献 [49] 中，作者提出使用热重启来获得不同的点估计网络，而不是拟合一个参数分布。这种方法被称为深度集成（见图 13），过去曾被用来进行模型平均化，但 [49] 的主要贡献是<strong>表明它能实现良好的校准误差估计</strong>。虽然 [49] 的作者声称其方法是非贝叶斯的，但已经证明他们的方法可以从贝叶斯角度来理解 [68,93]，特别是如果使用正则化（即隐含一个先验），不同的点估计应该对应于贝叶斯后验的峰值。为了成为真正的贝叶斯，这些不同峰值的相对后验概率应该在模型平均化过程中得到考虑。这可以解释为用参数为多个 Direc 三角函数的分布来逼近后验（可以被认为是某种变分推断）。即使对于这种变分分布，也不可能以对传统优化有意义的方式计算ELBO。</p>
-<div class="math notranslate nohighlight" id="equation-55">
-<span class="eqno">(11)<a class="headerlink" href="#equation-55" title="Permalink to this equation">¶</a></span>\[
-q_{\phi}(\boldsymbol{\theta})=\sum_{\theta_{i} \in \phi} \alpha_{\theta_{i}} \delta_{\theta_{i}}(\boldsymbol{\theta})
-\]</div>
-<p>其中 <span class="math notranslate nohighlight">\(α_θ\)</span> 是正常数，其和为 1</p>
-</div>
-</div>
-<div class="section" id="n">
-<h3>8.3 只对最后 n 层进行贝叶斯推断<a class="headerlink" href="#n" title="Permalink to this headline">¶</a></h3>
-<p>对于整个人工神经网络来说，真正贝叶斯的主要顾虑是：深层神经网络的结构使得考虑大量后续层的不确定性显得有点多余。相反，最近的研究试图只使用几个位于网络末端的随机层 [8, 97]。</p>
-<p>只训练几个随机层可以大大简化学习程序。它消除了许多概念和训练问题，同时仍然能从贝叶斯角度给出有意义的结果。它可以被解释为传统神经网络与浅层贝叶斯神经网络共同学习一个点估计变换。</p>
-<p>训练最后 n 层的贝叶斯神经网络起初似乎并不复杂，但事实上它与学习先验参数非常相似，如第 7.4 节所述。非贝叶斯层的权重应当既被视为先验的参数，也被视为变分后验的参数。</p>
-</div>
-<div class="section" id="id23">
-<h3>8.4 贝叶斯教师法<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
-<p>在实时性能很重要的应用中，使用蒙特卡洛样本做评估仍然有问题，例如：自动驾驶汽车、内存有限的智能手机和嵌入式设备（MCMC 获得的大量参数样本存在内存存储问题）。</p>
-<p>一些学者提出了一个解决方案，以加快使用贝叶斯神经网络时的评估时间，该方案源自已经用于贝叶斯建模的方法 [81]。该方法使用贝叶斯神经网络（被称为教师）来训练一个非随机人工神经网络（被称为学生），用于预测边缘概率 <span class="math notranslate nohighlight">\(p(y|x,D)\)</span> [45]。该方法与知识蒸馏的思想有关 [30,57]，知识蒸馏中通常存在几个预训练的知识源用来训练一个功能更强的系统。</p>
-<p>为此，参数分布 <span class="math notranslate nohighlight">\(q_ω(y|x)\)</span>（其中 <span class="math notranslate nohighlight">\(ω\)</span> 是学生网络的系数）和边缘分布 <span class="math notranslate nohighlight">\(p(y|x,D)\)</span> 之间的 KL 散度需最小化：</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\omega}=\underset{\omega}{\arg \min } D_{K L}\left(p(\boldsymbol{y} \mid x, D) \| q_{\omega}(\boldsymbol{y} \mid \boldsymbol{x})\right)
-\]</div>
-<p>这是很难做到的。Korattikara 等人 [45] 提出了一种蒙特卡洛近似方法：</p>
-<div class="math notranslate nohighlight">
-\[
-\hat{\omega}=\underset{\omega}{\arg \min }-\frac{1}{|\Theta|} \sum_{\theta_{i} \in \Theta} \mathrm{E}_{p\left(\boldsymbol{y} \mid x, \theta_{i}\right)}\left[\log \left(q_{\omega}(\boldsymbol{y} \mid \boldsymbol{x})\right)\right]
-\]</div>
-<p>这个量可以在训练数据集 <span class="math notranslate nohighlight">\(D′\)</span> 上估计。此方法的最大优点是在训练中只需要特征 <span class="math notranslate nohighlight">\(x\)</span> ，因为标签的概率 <span class="math notranslate nohighlight">\(p(y|x,θ)\)</span> 是由贝叶斯神经网络随机模型定义的（见第 4.2 节）。如果不需要标签， 则 <span class="math notranslate nohighlight">\(D′\)</span> 可以比用来训练教师贝叶斯神经网络的原始集合 <span class="math notranslate nohighlight">\(D\)</span> 大很多。这样，学生网络就更不可能出现意外的泛化缺陷了。</p>
-<p>也有人观察到，对于分类问题，简单使用教师贝叶斯网络输出的类概率而不是标签，可以帮助学生网络学习，同时保留原始贝叶斯神经网络的校准和不确定性 [57]。</p>
-<p>现在，对于希望压缩 MCMC 算法生成的样本集的情况，贝叶斯教师法也是一个有趣的解决方案 [90]。此时代替缓存样本集合 <span class="math notranslate nohighlight">\(Θ\)</span> 的是生成模型 <span class="math notranslate nohighlight">\(G\)</span>（即 [90] 中的 GAN），在评估时针对 MCMC 样本进行训练以生成系数 <span class="math notranslate nohighlight">\(θ_i\)</span> 。该方法在某种程度上类似于变分推断，因为生成模型实际上代表了一个参数分布，但所提出的算法允许训练一个比通常被视为变分推断的分布更复杂的模型。</p>
-</div>
-</div>
-<div class="section" id="id24">
-<h2>9 评估贝叶斯神经网络的性能<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
-<p>贝叶斯神经网络的一大挑战是评估其性能，因为它们并不直接输出一个点估计预测 <span class="math notranslate nohighlight">\(\hat y\)</span>，而是输出一个条件概率分布 <span class="math notranslate nohighlight">\(p(y|x,D)\)</span>，之后可以从该分布中抽取一个 <span class="math notranslate nohighlight">\(\hat y\)</span> 的最佳估计 。</p>
-<p>网络的预测性能（有时在统计学中被称为锐度）可以通过将估计器 <span class="math notranslate nohighlight">\(\hat y\)</span> 视为预测结果来评估。这个过程通常取决于网络要处理的数据类型，在实践中使用了许多不同的指标，如：MSE 、ℓ 阶距离、交叉熵等。这些指标的解释不在本教程范围内，更多细节可以参考[35]。</p>
-<p>检查预测后验 <span class="math notranslate nohighlight">\(p(y|x,D)\)</span> 是否行为良好，即网络对其预测既不过度自信也不缺乏自信，也很重要。</p>
-<p>在实践中，校准曲线是一个函数 <span class="math notranslate nohighlight">\(\check{p}:[0,1] \rightarrow[0,1]\)</span> ，代表观察到的概率 <span class="math notranslate nohighlight">\(\check{p}\)</span> （或称为经验频率）是预测概率 <span class="math notranslate nohighlight">\(\hat p\)</span> 的函数（图 15）。如果 <span class="math notranslate nohighlight">\(\check{p}&lt;\hat p\)</span> ，那么该模型过度自信，否则，它是不自信的。一个经过良好校准的模型应该有<span class="math notranslate nohighlight">\(\check{p} \approxeq \hat p\)</span>。这种方法在实践中确实有用，它需要选择一组具有不同预测概率的事件 <span class="math notranslate nohighlight">\(E\)</span>，并使用测试集 <span class="math notranslate nohighlight">\(T\)</span> 测量每个事件的经验频率。</p>
-<p><strong>（1） 分类问题</strong></p>
-<p>对于二元分类器来说，测试事件集可以被选为所有数据点的集合，这些数据点的预测接受概率在所选 <span class="math notranslate nohighlight">\(δ\)</span> 对应的区间 <span class="math notranslate nohighlight">\([p-δ,p+δ]\)</span> 内，或者对于小数据集来说，可以选择 <span class="math notranslate nohighlight">\([0,p]\)</span> 或 <span class="math notranslate nohighlight">\([1-p,1]\)</span>。经验频率由以下公式给出：</p>
-<div class="math notranslate nohighlight" id="equation-58">
-<span class="eqno">(12)<a class="headerlink" href="#equation-58" title="Permalink to this equation">¶</a></span>\[
-\check{p}=\frac{\sum_{\check{y} \in T_{y}} \check{\boldsymbol{y}} \cdot \mathbb{I}_{[\hat{p}-\delta, \hat{p}+\delta]}(\hat{\boldsymbol{y}})}{\sum_{\check{\boldsymbol{y}} \in T_{\boldsymbol{y}}} \mathbb{I}_{[\hat{p}-\delta, \hat{p}+\delta]}(\hat{\boldsymbol{y}})}
-\]</div>
-<p>对于多类分类器，校准曲线可以针对每一类独立地检查所有其他类别。在这种情况下，问题被简化为二进制分类器。</p>
-<p><strong>（2）回归问题</strong></p>
-<p>回归问题稍微复杂一些，因为神经网络不会像分类器那样输出置信水平，而是输出可能输出的分布。解决方案是使用具有已知概率分布的中间统计量。</p>
-<p>假设对于一组足够大的、随机选择的输入 x，<span class="math notranslate nohighlight">\(\hat y\)</span> 之间相互独立，可以假设归一化平方误差和遵循卡方律。</p>
-<div class="math notranslate nohighlight" id="equation-59">
-<span class="eqno">(13)<a class="headerlink" href="#equation-59" title="Permalink to this equation">¶</a></span>\[
-(\hat{\boldsymbol{y}}-\check{\boldsymbol{y}})^{\top} \Sigma_{\hat{\boldsymbol{y}}}^{-1}(\hat{\boldsymbol{y}}-\check{\boldsymbol{y}}) \sim \chi_{\operatorname{Dim}(\boldsymbol{y})}^{2}
-\]</div>
-<p>这允许将预测概率作为观察到预测和真实值之间的方差归一化距离等于或低于实际距离的概率归因于测试集合中的每个数据点。形式上，预测的概率计算如下：
-$<span class="math notranslate nohighlight">\(
-\hat{p}_{i}=X_{\operatorname{Dim}(\boldsymbol{y})}^{2}\left(\left(E_{p\left(\boldsymbol{y} \mid x_{i}, D\right)}[\boldsymbol{y}]-\boldsymbol{y}_{i}\right)^{\top} \Sigma_{\boldsymbol{y} \mid x_{i}, D}^{-1}\left(E_{p\left(\boldsymbol{y} \mid x_{i}, D\right)}[\boldsymbol{y}]-\boldsymbol{y}_{i}\right)\right) \quad \forall\left(\boldsymbol{y}_{i}, \boldsymbol{x}_{i}\right) \in T
-\)</span>$
-where  is the cumulative distribution of the chi-square law with  degrees of fre The observed probability can be computed as:</p>
-<p>其中 <span class="math notranslate nohighlight">\(X_{\operatorname{Dim}(\boldsymbol{y})}^{2}\)</span> 是自由度为 <span class="math notranslate nohighlight">\(\operatorname{Dim}(\boldsymbol{y})\)</span> 的卡方律累积分布。</p>
-<p>观测到的概率可以被计算为：</p>
-<div class="math notranslate nohighlight">
-\[
-\check{p}_{i}=\frac{1}{|T|} \sum_{j=1}^{|T|} \mathbb{I}_{[0, \infty)}\left(\hat{p}_{j}-\hat{p}_{i}\right)
-\]</div>
-<p>现在，为一个给定的随机模型提供整个校准曲线通常是一个好主意，因为它可以看到模型在哪些方面可能过于自信或不够自信。在一定程度上，它也允许重新校准模型 [47]。然而，也可能有必要提供总结性的统计数字，以方便比较或解释。曲线下面积（AUC）是一个标准的指标，其形式为：</p>
-<div class="math notranslate nohighlight">
-\[
-A U C=\int_{0}^{1} \check{p} d \hat{p}
-\]</div>
-<p>值为 0.5 的 AUC 表明该模型平均且仅平均而言，经过良好校准。</p>
-<p>虽然在实践中较少使用，但与理想校准曲线（在函数希尔伯特空间中定义）之间的距离，也是一个很好的模型校准指标。</p>
-<div class="math notranslate nohighlight">
-\[
-d(\check{p}, \hat{p})=\sqrt{\int_{0}^{1}(\check{p}-\hat{p})^{2} d \hat{p}}
-\]</div>
-<p>当 <span class="math notranslate nohighlight">\(d(\check{p},\hat{p})=0\)</span> 时，模型是完全校准的。</p>
-<p>此外，学者们也提出了其他措施。例如，预期校准误差及其变种[63]，它们基本都是理想校准曲线距离的离散化变体。</p>
-<p>这些措施对于总结校准很好，但对于正确学习校准模型却不太适用。统计学中用于优化校准的工具是评分规则 [24]。评分规则是一个函数 <span class="math notranslate nohighlight">\(S(P,x)\)</span>，其中 <span class="math notranslate nohighlight">\(P\)</span> 是一个预测性的概率分布，类似贝叶斯神经网络给出的边缘概率，<span class="math notranslate nohighlight">\(x\)</span> 是一个事件。给定目标分布 <span class="math notranslate nohighlight">\(Q\)</span> ，记 <span class="math notranslate nohighlight">\(S(P，Q)=E_{x∼Q}[S(P，x)]\)</span>。按照习惯，评分规则是正向的，使得优化目标变为最大化 <span class="math notranslate nohighlight">\(S(P，Q)\)</span>。评分规则的一个重要属性是：其最大值倾向于一个校准良好的模型，即：</p>
-<div class="math notranslate nohighlight" id="equation-64">
-<span class="eqno">(14)<a class="headerlink" href="#equation-64" title="Permalink to this equation">¶</a></span>\[
-\bar{S}(Q, Q) \geq \bar{S}(P, Q) \quad \forall P 
-\]</div>
-<p>在这种情况下，计分规则被称为适合的计分规则。如果也有 ̄<span class="math notranslate nohighlight">\(S(Q,Q)= ̄S(P,Q)⇒P=Q\)</span> ，那么该评分规则被称为严格适合的。</p>
-<p>理论上，要得到一个合适的校准模型，只需确保用于训练的损失与（严格）适合的评分规则相对应即可。在实践中，这一点更为复杂，因为只有在大型数据集上才能准确评估分数的预期值。当训练好的模型出现在与原始训练集稍有偏差的数据中时，这可能会导致错误校准误差 [66]。这是贝叶斯模型真正的闪光点，因为它们在设计上遵循了适当的评分规则，并且考虑了认知不确定性和偶然不确定性，使模型对这种变化即使不能免疫，也足够有弹性。在这种情况下，可能需要调整先验，因为所做假设太具体，而且可能不合理。另外，训练策略可能需要重新考虑，特别是如果训练期间使用的变分分布不能正确接近后验的时候。</p>
-</div>
-<div class="section" id="id25">
-<h2>10 贝叶斯深度学习编程框架<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
-<p>在结束本教程之前，本节会简单介绍一些可用于贝叶斯深度学习的框架。</p>
-<div class="section" id="id26">
-<h3>10.1 概率编程语言<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
-<p>概率编程语言（PPL）旨在描述概率分布，同时以类似概率图模型（PGM）的方式计算变量之间的关系，以加快推断速度。大多数概率编程语言包括许多不同的优化算法，例如： MCMC、变分推断和最大似然估计器，少部分只关注特定的专门方法。</p>
-<p>Stan[10] 和 PyMC3[77] 是普遍使用的概率编程语言。Stan 是用 C++编写的，用自己的语言来定义模型。它为所有流行的科学软件包提供了 API，包括 Python、R、Matlab、Julia 和一个命令行接口。PyMC3 是用 Python 编写的，基于 Theano 实现自动微分。</p>
-<p>使用纯概率编程语言设计贝叶斯神经网络的问题在于：它们建立自复杂的概率模型基础，不是专门面向深度学习的。使用概率编程语言编写贝叶斯神经网络是可能的，但大部分工作需要从头开始，特别是深度学习的部分几乎要从头做起。</p>
-</div>
-<div class="section" id="id27">
-<h3>10.2 深度学习框架下的概率编程<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
-<p>概率编程语言和深度学习框架存在着或多或少相同的要求，其中最主要的要求是自动微分和大规模数据的优化程序。根据这一思考，最近的进展主要集中在将概率编程语言整合到深度学习框架中。其中比较重要的成果是 Pyro[5]，该框架构建在 PyTorch 之上。此外还有 Edward [87]，其构建在 TensorFlow 之上，现在 Edward 已经被扩展并集成到了 Tensorflow 的 Tensorflow Probability （TFP）子模块中。</p>
-<p>这些概率编程语言与各自深度学习框架的无缝集成使其成为设计、训练和使用贝叶斯神经网络的理想工具。它们还允许轻松地重新使用为点估计神经网络而设计的组件。</p>
-<p>Pyro 的开发重点是变分推断。它基于功能化编程范式，再加上上下文管理器来轻松地修改随机函数。Pyro 包括一个封装类，可以将 PyTorch 层转化为概率层，允许在运行中用样本点替换其参数。</p>
-<p>Edward 和 TFP 包括一些更高层次的结构，特别是可单独使用的概率层，以及一些建立概率网络的低层次结构。</p>
-<p>在未做详细比较的情况下，我们建议你选择能够与熟悉的深度学习框架集成的框架，而这两个框架都有类似潜力。Pyro 可能更适合动态概率图模型，因为 Pytorch 使用的是动态计算图，而如果你只是想在一个固定的架构中使用贝叶斯层，那么 Edward 与 TFP 或许更适合你。</p>
-</div>
-</div>
-<div class="section" id="id28">
-<h2>11 结论<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
-<p>本教程包括贝叶斯神经网络的设计、实现、训练、使用和评估。虽然其基本思想很简单，即只是训练一个人工神经网络，并在其权重上附加一些概率分布，但其中隐含的挑战，即设计高效的算法来训练或使用贝叶斯神经网络，仍然难以解决。这就解释了为什么贝叶斯神经网络在实际应用中仍然很少。</p>
-<p>然而，贝叶斯神经网络的潜在应用巨大，该范式提供了一个很有前途的技术途径，可以将深度学习应用于不允许出现失败泛化，而且必须发出警告的系统。此外，传统深度学习算法和贝叶斯范式之间的联系比人们事先想象的要多，这意味着贝叶斯方法也可以帮助设计新的学习和正则化V策略。</p>
-</div>
-<div class="section" id="id29">
-<h2>参考文献<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
-<p>[1]Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization.CoRR, arXiv:1607.06450, 2016. In NIPS 2016 Deep Learning Symposium.
-[2]Rémi Bardenet, Arnaud Doucet, and Chris Holmes. On Markov Chain Monte Carlo methods for tall data.J. Mach. Learn. Res., 18(1):1515–1557, January 2017. ISSN 1532–4435.
-[3]M Saiful Bari, Muhammad Tasnim Mohiuddin, and Shafiq Joty. MultiMix: A robust data augmentation strategy for cross-lingual nlp. InICML, 2020.
-[4]L. Beyer, X. Zhai, A. Oliver, and A. Kolesnikov. S4L: Self-supervised semi-supervised learning. In2019 IEEE/CVF International Conference on Computer Vision (ICCV), pages 1476–1485, 2019.
-[5]Eli Bingham, Jonathan P. Chen, Martin Jankowiak, Fritz Obermeyer, Neeraj Pradhan, Theofanis Karaletsos, Rohit Singh, Paul Szerlip, Paul Horsfall, and Noah D. Goodman. Pyro: Deep universal probabilistic programming.J. Mach. Learn. Res., 20(1):973âĂŞ978, January 2019. ISSN 1532-4435.
-[6]David M. Blei, Alp Kucukelbir, and Jon D. McAuliffe. Variational inference: A review for statisticians.Journal of the American Statistical Association, 112(518):859–877, 2017.
-[7]Charles Blundell, Julien Cornebise, Koray Kavukcuoglu, and Daan Wierstra. Weight uncertainty in neural network. In Proceedings of the 32nd International Conference on Machine Learning, volume 37 ofProceedings of Machine Learning Research, pages 1613–1622, 2015.
-[8]Nicolas Brosse, Carlos Riquelme, Alice Martin, Sylvain Gelly, and ÃĽric Moulines. On last-layer algorithms for classification: Decoupling representation from uncertainty estimation.CoRR, abs/2001.08049, 2020. URL <a class="reference external" href="http://arxiv">http://arxiv</a>. org/abs/2001.08049.
-[9]W. L. Buntine. Operations for learning with graphical models.Journal of Artificial Intelligence Research, 2:159–225, Dec 1994. ISSN 1076–9757.
-[10]Bob Carpenter, Andrew Gelman, Matthew D Hoffman, Daniel Lee, Ben Goodrich, Michael Betancourt, Marcus Brubaker, Jiqiang Guo, Peter Li, and Allen Riddell. Stan: A probabilistic programming language.Journal of statistical software, 76(1), 2017.
-[11]Rodolfo C. Cavalcante, Rodrigo C. Brasileiro, Victor L.F. Souza, Jarley P. Nobrega, and Adriano L.I. Oliveira. Computational intelligence and financial markets: A survey and future directions.Expert Systems with Applications, 55:194–211.
-[12]Olivier Chapelle, Jason Weston, Léon Bottou, and Vladimir Vapnik. Vicinal risk minimization. In T. K. Leen, T. G. Dietterich, and V. Tresp, editors,Advances in Neural Information Processing Systems 13, pages 416–422. MIT Press, 2001.
-[13]Siddhartha Chib and Edward Greenberg. Understanding the Metropolis-Hastings algorithm.The American Statistician, 49(4):327–335, 1995.
-[14]Stefan Depeweg, Jose-Miguel Hernandez-Lobato, Finale Doshi-Velez, and Steffen Udluft. Decomposition of uncertainty  in Bayesian deep learning for efficient and risk-sensitive learning. InProceedings of the 35th International Conference on Machine Learning, volume 80 ofProceedings of Machine Learning Research, pages 1184–1193, 2018.
-[15]Alexander Etz, Quentin F. Gronau, Fabian Dablander, Peter A. Edelsbrunner, and Beth Baribault. How to become a Bayesian in eight easy steps: An annotated reading list.Psychonomic Bulletin &amp; Review, 25:219–234, 2018.
-[16]B. Frenay and M. Verleysen. Classification in the presence of label noise: A survey.IEEE Transactions on Neural Networks and Learning Systems, 25(5):845–869, 2014.
-[17]Yarin Gal and Zoubin Ghahramani. Bayesian convolutional neural networks with Bernoulli approximate variational inference.CoRR, abs/1506.02158, 2015. URL <a class="reference external" href="http://arxiv.org/abs/1506.02158">http://arxiv.org/abs/1506.02158</a>.
-[18]Yarin Gal and Zoubin Ghahramani. Dropout as a Bayesian approximation: Representing model uncertainty in deep learning. InProceedings of the 33rd International Conference on Machine Learning - Volume 48, ICMLâĂŹ16, page 1050âĂŞ1059, 2016.
-[19]Yarin Gal, Riashat Islam, and Zoubin Ghahramani. Deep Bayesian active learning with image data. InProceedings of the 34th International Conference on Machine Learning - Volume 70, ICMLâĂŹ17, page 1183âĂŞ1192, 2017.
-[20]Francis Galton. Vox Populi.Nature, 75(1949):450–451, Mar 1907. ISSN 1476–4687.
-[21]Andrew Gelman and other Stan developers. Prior choice recommendations, 2020. Retrieved from
-<a class="reference external" href="https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations">https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations</a> [last seen 13.07.2020].
-[22]Edward I. George, George Casella, and Edward I. George. Explaining the Gibbs sampler.The American Statistician, 1992.
-[23]Zoubin Ghahramani and Matthew J. Beal. Propagation algorithms for variational Bayesian learning. In T. K. Leen, T. G. Dietterich, and V. Tresp, editors,Advances in Neural Information Processing Systems 13, pages 507–513. MIT Press, 2001.
-[24]Tilmann Gneiting and Adrian E Raftery. Strictly proper scoring rules, prediction, and estimation.Journal of the American Statistical Association, 102(477):359–378, 2007.
-[25]Erin Grant, Chelsea Finn, Sergey Levine, Trevor Darrell, and Thomas L. Griffiths. Recasting gradient-based meta-learning as hierarchical Bayes. In6th International Conference on Learning Representations, ICLR 2018, Vancouver, BC, Canada, April 30 - May 3, 2018, Conference Track Proceedings, 2018.
-[26]Alex Graves. Practical variational inference for neural networks. In J. Shawe-Taylor, R. S. Zemel, P. L. Bartlett, F. Pereira, and K. Q. Weinberger, editors,Advances in Neural Information Processing Systems 24, pages 2348–2356. Curran Associates, Inc., 2011.
-[27]Chuan Guo, Geoff Pleiss, Yu Sun, and Kilian Q. Weinberger. On calibration of modern neural network. InProceedings of the 34th International Conference on Machine Learning - Volume 70, ICMLâĂŹ17, pages 1321–1330, 2017.
-[28]Dan Hendrycks and Kevin Gimpel. A baseline for detecting misclassified and out-of-distribution examples in neural networks. In5th International Conference on Learning Representations, ICLR 2017, Conference Track Proceedings, 2017.
-[29]José Miguel Hernández-Lobato and Ryan P. Adams. Probabilistic backpropagation for scalable learning of Bayesian neural networks. InProceedings of the 32nd International Conference on International Conference on Machine Learning - Volume 37, ICMLâĂŹ15, page 1861âĂŞ1869, 2015.
-[30]Geoffrey Hinton, Oriol Vinyals, and Jeff Dean. Distilling the knowledge in a neural network.arXiv preprint arXiv:1503.02531, 2015. In NIPS 2014 Deep Learning Workshop.
-[31]Matthew D Hoffman and Andrew Gelman. The No-U-Turn sampler: adaptively setting path lengths in Hamiltonian Monte Carlo.Journal of Machine Learning Research, 15(1):1593–1623, 2014.
-[32]Matthew D. Hoffman, David M. Blei, Chong Wang, and John Paisley. Stochastic variational inference.J. Mach. Learn. Res., 14(1):1303–1347, May 2013. ISSN 1532-4435.
-[33]Timothy Hospedales, Antreas Antoniou, Paul Micaelli, and Amos Storkey. Meta-learning in neural networks: A survey. CoRR, abs/2004.05439, 2020. URL <a class="reference external" href="http://arxiv.org/abs/2004.05439">http://arxiv.org/abs/2004.05439</a>.
-[34]Jiri Hron, Alex Matthews, and Zoubin Ghahramani. Variational Bayesian dropout: pitfalls and fixes. InProceedings of the 35th International Conference on Machine Learning, volume 80 ofProceedings of Machine Learning Research, pages 2019–2028, 2018.
-[35]Katarzyna Janocha and Wojciech Marian Czarnecki. On loss functions for deep neural networks in classification. Schedae Informaticae, 1/2016, 2017. ISSN 2083-8476. doi: 10.4467/20838476si.16.004.6185. URL <a class="reference external" href="http://dx.doi.org/10.4467/20838476SI.16.004.6185">http://dx.doi.org/10.4467/20838476SI.16.004.6185</a>.
-[36]L. Jing and Y. Tian. Self-supervised visual feature learning with deep neural networks: A survey.IEEE Transactions on Pattern Analysis and Machine Intelligence, pages 1–1, 2020.
-[37]Alex Kendall and Yarin Gal. What uncertainties do we need in Bayesian deep learning for computer vision? In Proceedings of the 31st International Conference on Neural Information Processing Systems, NIPSâĂŹ17, page 5580âĂŞ5590, 2017. ISBN 9781510860964.
-[38]J. Ker, L. Wang, J. Rao, and T. Lim. Deep learning applications in medical image analysis.IEEE Access, 6:9375–9389, 2018.
-[39]M. E. Khan and D. Nielsen. Fast yet simple natural-gradient descent for variational inference in complex models. In 2018 International Symposium on Information Theory and Its Applications (ISITA), pages 31–35, 2018.
-[40]Mohammad Khan, Didrik Nielsen, Voot Tangkaratt, Wu Lin, Yarin Gal, and Akash Srivastava. Fast and scalable Bayesian deep learning by weight-perturbation in Adam. InProceedings of the 35th International Conference on Machine Learning, volume 80 ofProceedings of Machine Learning Research, pages 2611–2620, 2018.
-[41]Diederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization.International Conference on Learning Representations, 12 2014.
-[42]Diederik P Kingma, Max Welling, et al. An introduction to variational autoencoders.Foundations and Trends®in Machine Learning, 12(4):307–392, 2019.
-[43]Durk P Kingma, Tim Salimans, and Max Welling. Variational dropout and the local reparameterization trick. In C. Cortes, N. D. Lawrence, D. D. Lee, M. Sugiyama, and R. Garnett, editors,Advances in Neural Information Processing Systems 28, pages 2575–2583. Curran Associates, Inc., 2015.
-[44]Armen Der Kiureghian and Ove Ditlevsen. Aleatory or epistemic? does it matter?Structural Safety, 31(2):105–112, 2009. ISSN 0167–4730. Risk Acceptance and Risk Communication.
-[45]Anoop Korattikara, Vivek Rathod, Kevin Murphy, and Max Welling. Bayesian dark knowledge. InProceedings of the 28th International Conference on Neural Information Processing Systems - Volume 2, NIPSâĂŹ15, page 3438âĂŞ3446, 2015.
-[46]Agustinus Kristiadi, Matthias Hein, and Philipp Hennig. Being Bayesian, even just a bit, fixes overconfidence in ReLU networks.CoRR, abs/2002.10118, 2020. URL <a class="reference external" href="http://arxiv.org/abs/2002.10118">http://arxiv.org/abs/2002.10118</a>.
-[47]Volodymyr Kuleshov, Nathan Fenner, and Stefano Ermon. Accurate uncertainties for deep learning using calibrated regression. InProceedings of the 35th International Conference on Machine Learning, volume 80 ofProceedings of Machine Learning Research, pages 2796–2804, 2018.
-[48]R. Kunwar, U. Pal, and M. Blumenstein. Semi-supervised online Bayesian network learner for handwritten characters recognition. In2014 22nd International Conference on Pattern Recognition, pages 3104–3109, 2014.
-[49]Balaji Lakshminarayanan, Alexander Pritzel, and Charles Blundell. Simple and scalable predictive uncertainty estimation using deep ensembles. In I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett, editors,Advances in Neural Information Processing Systems 30, pages 6402–6413. Curran Associates, Inc., 2017.
-[50]Jouko Lampinen and Aki Vehtari. Bayesian approach for neural networksâĂŤreview and case studies.Neural Networks, 14(3):257 – 274, 2001. ISSN 0893-6080.
-[51]Dong-Hyun Lee. Pseudo-label: The simple and efficient semi-supervised learning method for deep neural networks. In Workshop on challenges in representation learning, ICML, volume 3, 2013.
-[52]Yingzhen Li and Yarin Gal. Dropout inference in Bayesian neural networks with  lpha-divergences. InProceedings of the 34th International Conference on Machine Learning - Volume 70, ICMLâĂŹ17, pages 2052–2061, 2017.
-[53]Zhun Li, ByungSoo Ko, and Ho-Jin Choi. Naive semi-supervised deep learning using pseudo-label.Peer-to-Peer Networking and Applications, 12(5):1358–1368, 2019. ISSN 1936-6450.
-[54]David J. C. MacKay. A practical Bayesian framework for backpropagation networks.Neural Computation, 4(3):448–472, 1992.
-[55]Wesley J Maddox, Pavel Izmailov, Timur Garipov, Dmitry P Vetrov, and Andrew Gordon Wilson. A simple baseline for Bayesian uncertainty in deep learning. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d’Alché-Buc, E. Fox, and R. Garnett, editors,Advances in Neural Information Processing Systems 32, pages 13153–13164. Curran Associates, Inc., 2019.
-[56]Stephan Mandt, Matthew D Hoffman, and David M Blei. Stochastic gradient descent as approximate Bayesian inference. The Journal of Machine Learning Research, 18(1):4873–4907, 2017.
-[57]Aditya Krishna Menon, Ankit Singh Rawat, Sashank J. Reddi, Seungyeon Kim, and Sanjiv Kumar. Why distillation helps: a statistical perspective.CoRR, abs/2005.10419, 2020. URL <a class="reference external" href="https://arxiv.org/abs/2005.10419">https://arxiv.org/abs/2005.10419</a>.
-[58]John Mitros and Brian Mac Namee. On the validity of Bayesian neural networks for uncertainty estimation. InAICS,2019.
-[59]Kevin P. Murphy.Machine Learning: A Probabilistic Perspective. The MIT Press, 2012. ISBN 0262018020.
-[60]Eric Nalisnick, Akihiro Matsukawa, Yee Whye Teh, Dilan Gorur, and Balaji Lakshminarayanan. Do deep generative models know what they don’t know? InInternational Conference on Learning Representations, 2019.
-[61]Nagarajan Natarajan, Inderjit S Dhillon, Pradeep K Ravikumar, and Ambuj Tewari. Learning with noisy labels. In C. J. C. Burges, L. Bottou, M. Welling, Z. Ghahramani, and K. Q. Weinberger, editors,Advances in Neural Information Processing Systems 26, pages 1196–1204. Curran Associates, Inc., 2013.
-[62]Radford M Neal et al. MCMC using Hamiltonian dynamics.Handbook of Markov Chain Monte Carlo, 2(11):2, 2011.
-[63]Jeremy Nixon, Michael W. Dusenberry, Linchuan Zhang, Ghassen Jerfel, and Dustin Tran. Measuring calibration in deep learning. InThe IEEE Conference on Computer Vision and Pattern Recognition (CVPR) Workshops, June 2019.
-[64]Manfred Opper and Ole Winther. A Bayesian approach to on-line learning.On-line learning in neural networks, pages 363–378, 1998.
-[65]Kazuki Osawa, Siddharth Swaroop, Mohammad Emtiyaz E Khan, Anirudh Jain, Runa Eschenhagen, Richard E Turner, and Rio Yokota. Practical deep learning with Bayesian principles. InAdvances in Neural Information Processing Systems 32, pages 4287–4299. Curran Associates, Inc., 2019.
-[66]Yaniv Ovadia, Emily Fertig, Jie Ren, Zachary Nado, D. Sculley, Sebastian Nowozin, Joshua Dillon, Balaji Lakshmi-narayanan, and Jasper Snoek. Can you trust your model’s uncertainty? evaluating predictive uncertainty under dataset shift. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d’Alché-Buc, E. Fox, and R. Garnett, editors,Advances in Neural Information Processing Systems 32, pages 13991–14002. Curran Associates, Inc., 2019.
-[67]S. J. Pan and Q. Yang. A survey on transfer learning.IEEE Transactions on Knowledge and Data Engineering, 22(10): 1345–1359, 2010.
-[68]Tim Pearce, Felix Leibfried, Alexandra Brintrup, Mohamed Zaki, and Andy Neely. Uncertainty in neural networks: Approximately Bayesian ensembling. InAISTATS 2020, 2020.
-[69]Nicholas G Polson, Vadim Sokolov, et al. Deep learning: a Bayesian perspective.Bayesian Analysis, 12(4):1275–1304, 2017.
-[70]Arya A Pourzanjani, Richard M Jiang, Brian Mitchell, Paul J Atzberger, and Linda R Petzold. Bayesian inference over the Stiefel manifold via the Givens representation.CoRR, abs/1710.09443, 2017. URL <a class="reference external" href="http://arxiv.org/abs/1710.09443">http://arxiv.org/abs/1710.09443</a>.
-[71]Samira Pouyanfar, Saad Sadiq, Yilin Yan, Haiman Tian, Yudong Tao, Maria Presa Reyes, Mei-Ling Shyu, Shu-Ching Chen, and S. S. Iyengar. A survey on deep learning: Algorithms, techniques, and applications.
-[72]Guo-Jun Qi and Jiebo Luo. Small data challenges in big data era: A survey of recent progress on unsupervised and semi-supervised methods.CoRR, abs/1903.11260, 2019. URL <a class="reference external" href="http://arxiv.org/abs/1903.11260">http://arxiv.org/abs/1903.11260</a>.
-[73]Xipeng Qiu, Tianxiang Sun, Yige Xu, Yunfan Shao, Ning Dai, and Xuanjing Huang. Pre-trained models for natural language processing: A survey.CoRR, abs/2003.08271, 2020.
-[74]Qing Rao and Jelena Frtunikj. Deep learning for self-driving cars: Chances and challenges. InProceedings of the 1st International Workshop on Software Engineering for AI in Autonomous Systems, SEFAIS âĂŹ18, pages 35–38, 2018.
-[75]Hippolyt Ritter, Aleksandar Botev, and David Barber. A scalable laplace approximation for neural networks. In International Conference on Learning Representations, 2018.
-[76]Christian Robert.The Bayesian choice: from decision-theoretic foundations to computational implementation. Springer Science &amp; Business Media, 2007.
-[77]John Salvatier, Thomas V Wieckiâ, and Christopher Fonnesbeck. PyMC3: Python probabilistic programming framework. PeerJ Computer Science, 2:e55, 2016. <a class="reference external" href="https://doi.org/10.7717/peerj-cs.55">https://doi.org/10.7717/peerj-cs.55</a>.
-[78]Nabeel Seedat and Christopher Kanan. Towards calibrated and scalable uncertainty representations for neural networks. CoRR, abs/1911.00104, 2019. URL <a class="reference external" href="http://arxiv.org/abs/1911.00104">http://arxiv.org/abs/1911.00104</a>.
-[79]Joan SerrÃă, David ÃĄlvarez, VicenÃğ GÃşmez, Olga Slizovskaia, JosÃľ F. NÃžÃśez, and Jordi Luque. Input complexity and out-of-distribution detection with likelihood-based generative models.CoRR, abs/1909.11480, 2020. URL <a class="reference external" href="http://arxiv.org/abs/1909.11480">http://arxiv.org/abs/1909.11480</a>.
-[80]Daniele Silvestro and Tobias Andermann. Prior choice affects ability of Bayesian neural networks to identify unknowns. CoRR, abs/2005.04987, 2020. URL <a class="reference external" href="http://arxiv.org/abs/2005.04987">http://arxiv.org/abs/2005.04987</a>.
-[81]Edward Snelson and Zoubin Ghahramani. Compact approximations to Bayesian predictive distributions. InProceedings of the 22nd International Conference on Machine Learning, ICML âĂŹ05, page 840âĂŞ847, 2005.
-[82]Kihyuk Sohn, David Berthelot, Chun-Liang Li, Zizhao Zhang, Nicholas Carlini, Ekin D. Cubuk, Alex Kurakin, Han Zhang, and Colin Raffel. FixMatch: Simplifying semi-supervised learning with consistency and confidence.CoRR, abs/2001.07685, 2020. URL <a class="reference external" href="https://arxiv.org/abs/2001.07685">https://arxiv.org/abs/2001.07685</a>.
-[83]Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout: A simple way to prevent neural networks from overfitting.Journal of Machine Learning Research, 15(56):1929–1958, 2014.
-[84]Martin A. Tanner and Wing Hung Wong. The calculation of posterior distributions by data augmentation.Journal of the American Statistical Association, 82(398):528–540, 1987.
-[85]D. M. Titterington. Bayesian methods for neural networks and related models.Statist. Sci., 19(1):128–139, 02 2004.
-[86]Adrian Corduneanu Tommi and Tommi Jaakkola. On information regularization. InIn Proceedings of the 19th UAI,2003.
-[87]Dustin Tran, Matthew D. Hoffman, Rif A. Saurous, Eugene Brevdo, Kevin Murphy, and David M. Blei. Deep probabilistic programming.CoRR, abs/1701.03757, 2017. URL <a class="reference external" href="http://arxiv.org/abs/1701.03757">http://arxiv.org/abs/1701.03757</a>.
-[88]Toan Tran, Thanh-Toan Do, Ian Reid, and Gustavo Carneiro. Bayesian generative active deep learning.CoRR, abs/1904.11643, 2019. URL <a class="reference external" href="http://arxiv.org/abs/1904.11643">http://arxiv.org/abs/1904.11643</a>.
-[89]Hao Wang and Dit-Yan Yeung. Towards Bayesian deep learning: A framework and some existing methods.IEEE Trans.
-on Knowl. and Data Eng., 28(12):3395–3408, December 2016. ISSN 1041–4347.
-[90]Kuan-Chieh Wang, Paul Vicol, James Lucas, Li Gu, Roger Grosse, and Richard Zemel. Adversarial distillation of Bayesian neural network posteriors. InProceedings of the 35th International Conference on Machine Learning, volume 80 of Proceedings of Machine Learning Research, pages 5190–5199, 2018.
-[91]Max Welling and Yee W Teh. Bayesian learning via stochastic gradient Langevin dynamics. InProceedings of the 28th international conference on machine learning, ICML âĂŹ11, pages 681–688, 2011.
-[92]Yeming Wen, Paul Vicol, Jimmy Ba, Dustin Tran, and Roger Grosse. Flipout: Efficient pseudo-independent weight perturbations on mini-batches. InInternational Conference on Learning Representations, 2018.
-[93]Andrew Gordon Wilson and Pavel Izmailov. Bayesian deep learning and a probabilistic perspective of generalization. CoRR, abs/2002.08791, 2020. URL <a class="reference external" href="http://arxiv.org/abs/2002.08791">http://arxiv.org/abs/2002.08791</a>.
-[94]D. H. Wolpert. The lack of a priori distinctions between learning algorithms.Neural Computation, 8(7):1341–1390, 1996.
-[95]Qizhe Xie, Zihang Dai, Eduard H. Hovy, Minh-Thang Luong, and Quoc V. Le. Unsupervised data augmentation.CoRR, abs/1904.12848, 2019. URL <a class="reference external" href="http://arxiv.org/abs/1904.12848">http://arxiv.org/abs/1904.12848</a>.
-[96]Shipeng Yu, Balaji Krishnapuram, Rómer Rosales, and R. Bharat Rao. Bayesian co-training.Journal of Machine Learning Research, 12(80):2649–2680, 2011.
-[97]Jiaming Zeng, Adam Lesnikowski, and Jose M. Alvarez. The relevance of Bayesian layer positioning to model  uncertainty in deep Bayesian active learning.CoRR, abs/1811.12535, 2018. URL <a class="reference external" href="http://arxiv.org/abs/1811.12535">http://arxiv.org/abs/1811.12535</a>.
-[98]Chiyuan Zhang, Samy Bengio, Moritz Hardt, Benjamin Recht, and Oriol Vinyals. Understanding deep learning requires rethinking generalization. In 5th International Conference on Learning Representations, ICLR, 2017.
-[99]Zhi-Hua Zhou.Ensemble Methods: Foundations and Algorithms. Chapman and Hall/CRC, 1st edition, 2012.</p>
-<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig01.webp" />
-<img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig02.webp" />
-<img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig03.webp" />
-<img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig04.webp" />
-<img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig05.webp" />
-<img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig06.webp" />
-<img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig07.webp" />
-<img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig08.webp" />
-<img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig09.webp" />
-<img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig10.webp" />
-<img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig11.webp" />
-<img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig12.webp" />
-<img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig13.webp" />
-<img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig14.webp" /></p>
+<h2>4 致谢<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Taku</span> <span class="pre">Yoshioka</span></code> 在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中对最初的 ADVI 实现做了大量工作。我还要感谢斯坦兄弟（特别是阿尔普·库库克尔比尔和丹尼尔·李）推导出了 ADVI 并教给我们关于它的知识。还要感谢克里斯·丰内斯贝克、安德鲁·坎贝尔、吉冈拓谷和皮达尔·科伊尔对早期草稿的有用评论</p>
 </div>
 </div>
 
@@ -1200,11 +1187,11 @@ on Knowl. and Data Eng., 28(12):3395–3408, December 2016. ISSN 1041–4347.
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="Append-03-BayesianDeepLearningWithPymc3.html" title="previous page">
+        <a class="left-prev" href="Append-02-VIforDummies.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">附录 C：贝叶斯深度学习的初步尝试</p>
+                <p class="prevnext-title">附录 B： 变分法近似推断</p>
             </div>
         </a>
     </div>
