@@ -12,7 +12,7 @@ kernelspec:
   name: python3
 ---
 
-# 附录 A： MCMC 随机近似性推断的傻瓜书
+# 附录 A： MCMC 随机近似性推断
 
 <style>p{text-indent:2em;2}</style>
 
