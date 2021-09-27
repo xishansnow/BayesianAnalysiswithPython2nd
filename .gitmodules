@@ -1,3 +1,6 @@
-[submodule "aloctavodia"]
-#	path = aloctavodia
-#	url = https://github.com/aloctavodia/BAP.git
+[submodule "BAP"]
+	path = BAP
+	url = https://github.com/aloctavodia/BAP.git
+[submodule "Gaussian-Processes-Regression-Tutorial"]
+	path = Gaussian-Processes-Regression-Tutorial
+	url = https://github.com/jwangjie/Gaussian-Processes-Regression-Tutorial.git
