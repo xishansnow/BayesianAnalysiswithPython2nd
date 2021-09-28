@@ -14,10 +14,12 @@ parts:
     - file: chapter09-WheretoGoNext
   - caption: 附录阅读
     chapters: 
-    - file: Append-01-MCMCforDummies
-    - file: Append-02-VIforDummies
-    - file: Append-03-BayesianDeepLearningWithPymc3
-    - file: Append-04-BayesianDeepLearning
+    - file: Append-01-MCMC_Tutorial
+    - file: Append-02-VariationalInference_Tutorial
+    - file: Append-03-GaussianProcessTutorial
+    - file: Append-04-BayesianNN_Tutorial
+    - file: Append-05-BayesianDeepLearningPymc3
+    - file: Append-06-CausalInference
   #- caption: 参考文献
     #- file: 
 
