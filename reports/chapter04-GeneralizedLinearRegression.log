@@ -1,15 +1,4 @@
 Traceback (most recent call last):
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 627, in _async_poll_for_reply
-    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/util.py", line 89, in ensure_async
-    result = await obj
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/jupyter_client/channels.py", line 230, in get_msg
-    raise Empty
-_queue.Empty
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
   File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
     executenb(
   File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 1117, in execute
@@ -22,24 +11,51 @@ Traceback (most recent call last):
     return future.result()
   File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 558, in async_execute
     await self.async_execute_cell(
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 846, in async_execute_cell
-    exec_reply = await self.task_poll_for_reply
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 651, in _async_poll_for_reply
-    await self._async_handle_timeout(timeout, cell)
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 701, in _async_handle_timeout
-    raise CellTimeoutError.error_from_timeout_and_cell(
-nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
-The message was: Cell execution timed out.
-Here is a preview of the cell contents:
--------------------
-with pm.Model() as model_0:
-   α = pm.Normal('α', mu=0, sd=10)
-   β = pm.Normal('β', mu=0, sd=10)
-   μ = α + pm.math.dot(x_c, β)
-   θ = pm.Deterministic('θ', pm.math.sigmoid(μ)) 
-   bd = pm.Deterministic('bd', -α/β)
-   yl = pm.Bernoulli('yl', p=θ, observed=y_0)
-   
-   trace_0 = pm.sample(1000)
--------------------
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 862, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 765, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+theta = trace_0['θ'].mean(axis=0)
+idx = np.argsort(x_c)
+plt.plot(x_c[idx], theta[idx], color='C2', lw=3)
+plt.vlines(trace_0['bd'].mean(), 0, 1, color='k')
+bd_hdi = az.hdi(trace_0['bd'])
+plt.fill_betweenx([0, 1], bd_hdi[0], bd_hdi[1], color='k', alpha=0.5)
+plt.scatter(x_c, np.random.normal(y_0, 0.02),
+            marker='.', color=[f'C{x}' for x in y_0])
+az.plot_hdi(x_c, trace_0['θ'], color='C2')
+plt.xlabel(x_n)
+plt.ylabel('θ', rotation=0)
+# use original scale for xticks
+locs, _ = plt.xticks()
+plt.xticks(locs, np.round(locs + x_0.mean(), 1))
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mValueError[0m                                Traceback (most recent call last)
+[0;32m/tmp/ipykernel_2856/3758173195.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      7[0m plt.scatter(x_c, np.random.normal(y_0, 0.02),
+[1;32m      8[0m             marker='.', color=[f'C{x}' for x in y_0])
+[0;32m----> 9[0;31m [0maz[0m[0;34m.[0m[0mplot_hdi[0m[0;34m([0m[0mx_c[0m[0;34m,[0m [0mtrace_0[0m[0;34m[[0m[0;34m'θ'[0m[0;34m][0m[0;34m,[0m [0mcolor[0m[0;34m=[0m[0;34m'C2'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     10[0m [0mplt[0m[0;34m.[0m[0mxlabel[0m[0;34m([0m[0mx_n[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     11[0m [0mplt[0m[0;34m.[0m[0mylabel[0m[0;34m([0m[0;34m'θ'[0m[0;34m,[0m [0mrotation[0m[0;34m=[0m[0;36m0[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/arviz/plots/hdiplot.py[0m in [0;36mplot_hdi[0;34m(x, y, hdi_prob, hdi_data, color, circular, smooth, smooth_kwargs, figsize, fill_kwargs, plot_kwargs, hdi_kwargs, ax, backend, backend_kwargs, show)[0m
+[1;32m    155[0m         [0msmooth_kwargs[0m[0;34m.[0m[0msetdefault[0m[0;34m([0m[0;34m"window_length"[0m[0;34m,[0m [0;36m55[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    156[0m         [0msmooth_kwargs[0m[0;34m.[0m[0msetdefault[0m[0;34m([0m[0;34m"polyorder"[0m[0;34m,[0m [0;36m2[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 157[0;31m         [0mx_data[0m [0;34m=[0m [0mnp[0m[0;34m.[0m[0mlinspace[0m[0;34m([0m[0mx[0m[0;34m.[0m[0mmin[0m[0;34m([0m[0;34m)[0m[0;34m,[0m [0mx[0m[0;34m.[0m[0mmax[0m[0;34m([0m[0;34m)[0m[0;34m,[0m [0;36m200[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    158[0m         [0mx_data[0m[0;34m[[0m[0;36m0[0m[0;34m][0m [0;34m=[0m [0;34m([0m[0mx_data[0m[0;34m[[0m[0;36m0[0m[0;34m][0m [0;34m+[0m [0mx_data[0m[0;34m[[0m[0;36m1[0m[0;34m][0m[0;34m)[0m [0;34m/[0m [0;36m2[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    159[0m         [0mhdi_interp[0m [0;34m=[0m [0mgriddata[0m[0;34m([0m[0mx[0m[0;34m,[0m [0mhdi_data[0m[0;34m,[0m [0mx_data[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/numpy/core/_methods.py[0m in [0;36m_amin[0;34m(a, axis, out, keepdims, initial, where)[0m
+[1;32m     42[0m def _amin(a, axis=None, out=None, keepdims=False,
+[1;32m     43[0m           initial=_NoValue, where=True):
+[0;32m---> 44[0;31m     [0;32mreturn[0m [0mumr_minimum[0m[0;34m([0m[0ma[0m[0;34m,[0m [0maxis[0m[0;34m,[0m [0;32mNone[0m[0;34m,[0m [0mout[0m[0;34m,[0m [0mkeepdims[0m[0;34m,[0m [0minitial[0m[0;34m,[0m [0mwhere[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     45[0m [0;34m[0m[0m
+[1;32m     46[0m def _sum(a, axis=None, dtype=None, out=None, keepdims=False,
+
+[0;31mValueError[0m: zero-size array to reduction operation minimum which has no identity
+ValueError: zero-size array to reduction operation minimum which has no identity
 
