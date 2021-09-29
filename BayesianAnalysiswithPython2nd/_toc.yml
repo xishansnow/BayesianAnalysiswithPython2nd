@@ -18,8 +18,9 @@ parts:
     - file: Append-02-VariationalInference_Tutorial
     - file: Append-03-GaussianProcessTutorial
     - file: Append-04-BayesianNN_Tutorial
-    - file: Append-05-BayesianDeepLearningPymc3
-    - file: Append-06-CausalInference
+    - file: Append-05-BayesianDeepLearning_Tutorial
+    - file: Append-06-BayesianDeepLearningPymc3
+    - file: Append-07-CausalInference
   #- caption: 参考文献
     #- file: 
 

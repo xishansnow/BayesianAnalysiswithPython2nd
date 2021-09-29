@@ -1,0 +1,21 @@
+---
+jupytext:
+  formats: ipynb,md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.12.0
+kernelspec:
+  display_name: Python 3
+  language: ipython3
+  name: python3
+---
+
+
+# 附录 G：因果推断问题
+
+[原文](https://twiecki.io/blog/2016/06/01/bayesian-deep-learning/)
+
+<style>p{text-indent:2em;2}</style>
+
