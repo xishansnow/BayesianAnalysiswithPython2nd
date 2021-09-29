@@ -1,0 +1,58 @@
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
+    executenb(
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 1117, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/util.py", line 78, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/util.py", line 57, in just_run
+    return loop.run_until_complete(coro)
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
+    return future.result()
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 558, in async_execute
+    await self.async_execute_cell(
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 862, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 765, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+from __future__ import division
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+
+plt.rcParams['figure.dpi'] = 600
+plt.rcParams['savefig.format'] = 'pdf'
+
+rom scipy.stats import norm
+
+# Plot 1-D gaussian
+n = 1         # n number of independent 1-D gaussian 
+m= 1000       # m points in 1-D gaussian 
+f_random = np.random.normal(size=(n, m)) 
+# more information about 'size': https://www.sharpsightlabs.com/blog/numpy-random-normal/ 
+#print(f_random.shape)
+
+for i in range(n):
+    #sns.distplot(f_random[i], hist=True, rug=True, vertical=True, color="orange")
+    sns.distplot(f_random[i], hist=True, rug=True, fit=norm, kde=False, color="r", vertical=False)
+
+#plt.title('1000 random samples by a 1-D Gaussian')
+
+plt.xlabel(r'$x$', fontsize = 16)
+plt.ylabel(r'$P_X(x)$', fontsize = 16)
+
+# plt.show()
+# plt.savefig('1d_random.png', bbox_inches='tight', dpi=600)
+plt.savefig('1d_random')
+------------------
+
+[0;36m  File [0;32m"/tmp/ipykernel_2059/99525081.py"[0;36m, line [0;32m10[0m
+[0;31m    rom scipy.stats import norm[0m
+[0m        ^[0m
+[0;31mSyntaxError[0m[0;31m:[0m invalid syntax
+
+SyntaxError: invalid syntax (99525081.py, line 10)
+

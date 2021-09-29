@@ -1,0 +1,470 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>附录 C：高斯过程 &#8212; Python贝叶斯分析(中文)</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="附录 D：贝叶斯神经网络概述" href="Append-04-BayesianNN_Tutorial.html" />
+    <link rel="prev" title="附录 B： 变分法确定性推断" href="Append-02-VariationalInference_Tutorial.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Python贝叶斯分析(中文)</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   封面
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  书籍正文
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter01-ThinkingProbabilistically.html">
+   第 1 章 概率思维
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter02-ProgrammingProbabilistically.html">
+   第 2 章 概率编程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter03-ModellingwithLinearRegression.html">
+   第 3 章 线性回归模型的贝叶斯视角
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter04-GeneralizedLinearRegression.html">
+   第 4 章 广义线性回归模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter05-ModelComparison.html">
+   第 5 章 模型比较
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter06-MixtureModels.html">
+   第 6 章 混合模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter07-GaussianProcesses.html">
+   第 7 章 高斯过程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter08-InterefenceEngine.html">
+   第 8 章 推断引擎
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter09-WheretoGoNext.html">
+   第 9 章 下一步去哪儿？
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  附录阅读
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-01-MCMC_Tutorial.html">
+   附录 A： MCMC 随机性推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-02-VariationalInference_Tutorial.html">
+   附录 B： 变分法确定性推断
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   附录 C：高斯过程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-04-BayesianNN_Tutorial.html">
+   附录 D：贝叶斯神经网络概述
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-05-BayesianDeepLearningPymc3.html">
+   附录 E：贝叶斯深度学习的初步尝试
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-06-CausalInference.html">
+   附录 F：贝叶斯深度学习的初步尝试
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="_sources/Append-03-GaussianProcessTutorial.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/Append-03-GaussianProcessTutorial.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd/issues/new?title=Issue%20on%20page%20%2FAppend-03-GaussianProcessTutorial.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=lab/tree/Append-03-GaussianProcessTutorial.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=lab/tree/BayesianAnalysiswithPython2nd/Append-03-GaussianProcessTutorial.ipynb&branch=master"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
+                data-placement="left"><img class="jupyterhub-button-logo"
+                    src="_static/images/logo_jupyterhub.svg"
+                    alt="Interact on JupyterHub">JupyterHub</button></a>
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   1 引言
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   2 数学基础
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     2.1 高斯分布
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="c">
+<h1>附录 C：高斯过程<a class="headerlink" href="#c" title="Permalink to this headline">¶</a></h1>
+<p>【原文】Jie Wang (2020). An Intuitive Tutorial to Gaussian Processes Regression. <a class="reference external" href="https://arxiv.org/abs/2009.10862">https://arxiv.org/abs/2009.10862</a></p>
+<p>【摘要】本教程旨在提供对高斯过程回归（Gaussian processes regression, GPR）的直观理解。高斯过程回归模型因其表达方式的灵活性和内涵的不确定性预测能力而广泛用于机器学习应用中。本文首先解释了构建高斯过程的基本概念，包括多元正态分布、核、非参数模型、联合和条件概率等。然后，简明描述了 GPR 以及标准 GPR 算法的实现。除了标准 GPR，本文还审查了目前最先进的高斯过程算法软件包。</p>
+<hr class="docutils" />
+<style>p{text-indent:2em;2}</style>
+<div class="section" id="id1">
+<h2>1 引言<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>高斯过程模型是一种概率监督机器学习框架，已广泛用于回归和分类任务。高斯过程回归 (GPR) 模型可以结合先验知识（核）进行预测，并提供预测的不确定性度量 [11]。高斯过程模型是由计算机科学和统计学界开发的一种监督学习方法。具有工程背景的研究人员经常发现很难清楚地了解它。要理解 GPR，即使只有基础知识也需要了解多元正态分布、核、非参数模型以及联合和条件概率。</p>
+<p>在本教程中，我们将提供 GPR 的简洁易懂的解释。我们首先回顾了 GPR 模型所基于的数学概念，以确保读者有足够的基础知识。为了提供对 GPR 的直观理解，图表被积极使用。为生成绘图而开发的代码在 <a class="reference external" href="https://github.com/jwangjie/Gaussian-Processes-Regression-Tutorial">https://github.com/jwangjie/Gaussian-Processes-Regression-Tutorial</a> 处提供。</p>
+</div>
+<div class="section" id="id2">
+<h2>2 数学基础<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>本节回顾了理解 GPR 所需的基本概念。从高斯（正态）分布开始，然后解释多元正态分布（ MVN ）、核、非参数模型以及联合和条件概率理论。在回归任务中，给定一些观察到的数据点，我们的目的是拟合一个函数来表示这些数据点，然后使用该函数对新数据点进行预测。例如：对于 <code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">1(a)</span></code> 所示的一组给定观测数据点，理论上能够拟合这些数据点的函数有无数个。在 <code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">1（b）</span></code> 中， 示例性地展示了其中五个可能的函数。在 GPR 中，高斯过程正是通过定义这些函数（无限个）的分布，来处理回归问题的 [8]。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;savefig.format&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;pdf&#39;</span>
+
+<span class="n">rom</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span> <span class="kn">import</span> <span class="nn">norm</span>
+
+<span class="c1"># Plot 1-D gaussian</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>         <span class="c1"># n number of independent 1-D gaussian </span>
+<span class="n">m</span><span class="o">=</span> <span class="mi">1000</span>       <span class="c1"># m points in 1-D gaussian </span>
+<span class="n">f_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span> 
+<span class="c1"># more information about &#39;size&#39;: https://www.sharpsightlabs.com/blog/numpy-random-normal/ </span>
+<span class="c1">#print(f_random.shape)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="c1">#sns.distplot(f_random[i], hist=True, rug=True, vertical=True, color=&quot;orange&quot;)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">f_random</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">hist</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">vertical</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1">#plt.title(&#39;1000 random samples by a 1-D Gaussian&#39;)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$P_X(x)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># plt.show()</span>
+<span class="c1"># plt.savefig(&#39;1d_random.png&#39;, bbox_inches=&#39;tight&#39;, dpi=600)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;1d_random&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;/tmp/ipykernel_2059/99525081.py&quot;</span><span class="gt">, line </span><span class="mi">10</span>
+    <span class="n">rom</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span> <span class="kn">import</span> <span class="nn">norm</span>
+        <span class="o">^</span>
+<span class="ne">SyntaxError</span>: invalid syntax
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>2.1 高斯分布<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>当某个随机变量 <span class="math notranslate nohighlight">\(X\)</span> 的概率密度函数呈下式时，我们称其服从均值为 <span class="math notranslate nohighlight">\(μ\)</span> 、方差为例<span class="math notranslate nohighlight">\(σ^2\)</span> 的高斯分布：</p>
+<div class="math notranslate nohighlight">
+\[
+P_X(x) = \frac{1}{\sqrt{2 \pi} \sigma} exp{\left(-\frac{{\left(x - \mu \right)}^{2}}{2 \sigma^{2}}\right)}
+\]</div>
+<p>其中， <span class="math notranslate nohighlight">\(X\)</span> 表示随机变量， <span class="math notranslate nohighlight">\(x\)</span> 表示变量实值。<span class="math notranslate nohighlight">\(X\)</span> 的高斯（或正态）分布通常表示为 <span class="math notranslate nohighlight">\( P(x) ~ \sim\mathcal{N}(\mu, \sigma^2)\)</span> 。</p>
+<p>下图为 <span class="math notranslate nohighlight">\(1-D\)</span> 高斯密度函数。我么从该分布中随机采样了 <code class="docutils literal notranslate"><span class="pre">1000</span></code> 个样本点，并将其绘制在 <span class="math notranslate nohighlight">\(x\)</span> 轴上。</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="Append-02-VariationalInference_Tutorial.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">附录 B： 变分法确定性推断</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="Append-04-BayesianNN_Tutorial.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">附录 D：贝叶斯神经网络概述</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Osvaldo Martin<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

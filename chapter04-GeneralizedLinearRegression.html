@@ -147,6 +147,43 @@
   </a>
  </li>
 </ul>
+<p class="caption">
+ <span class="caption-text">
+  附录阅读
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-01-MCMC_Tutorial.html">
+   附录 A： MCMC 随机性推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-02-VariationalInference_Tutorial.html">
+   附录 B： 变分法确定性推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-03-GaussianProcessTutorial.html">
+   附录 C：高斯过程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-04-BayesianNN_Tutorial.html">
+   附录 D：贝叶斯神经网络概述
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-05-BayesianDeepLearningPymc3.html">
+   附录 E：贝叶斯深度学习的初步尝试
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-06-CausalInference.html">
+   附录 F：贝叶斯深度学习的初步尝试
+  </a>
+ </li>
+</ul>
 
     </div>
 </nav> <!-- To handle the deprecated key -->
@@ -587,7 +624,7 @@
   self._figure.tight_layout(*args, **kwargs)
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f114227bbb0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7fed5bb3a6d0&gt;
 </pre></div>
 </div>
 <img alt="_images/chapter04-GeneralizedLinearRegression_8_2.png" src="_images/chapter04-GeneralizedLinearRegression_8_2.png" />
@@ -614,7 +651,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2491/2603014128.py:5: RuntimeWarning: Mean of empty slice.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2789/2603014128.py:5: RuntimeWarning: Mean of empty slice.
   x_c = x_0 - x_0.mean()
 /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/numpy/core/_methods.py:189: RuntimeWarning: invalid value encountered in double_scalars
   ret = ret.dtype.type(ret / rcount)
@@ -666,7 +703,7 @@
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: TensorConstant{[]}
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2491/2411449454.py:9: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2789/2411449454.py:9: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_0 = pm.sample(1000)
 Auto-assigning NUTS sampler...
 </pre></div>
@@ -729,17 +766,8 @@ Auto-assigning NUTS sampler...
 </pre></div>
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
-FileNotFoundError                         Traceback (most recent call last)
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/importlib/_bootstrap_external.py in _path_is_mode_type(path, mode)
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/importlib/_bootstrap_external.py in _path_stat(path)
-
-FileNotFoundError: [Errno 2] No such file or directory: &#39;/home/runner/.theano/compiledir_Linux-5.8--azure-x86_64-with-glibc2.2.5-x86_64-3.8.12-64/tmpq2hj3n2e/__init__.cpython-38-x86_64-linux-gnu.so&#39;
-
-During handling of the above exception, another exception occurred:
-
 KeyboardInterrupt                         Traceback (most recent call last)
-/tmp/ipykernel_2491/2411449454.py in &lt;module&gt;
+/tmp/ipykernel_2789/2411449454.py in &lt;module&gt;
       7    yl = pm.Bernoulli(&#39;yl&#39;, p=θ, observed=y_0)
       8 
 ----&gt; 9    trace_0 = pm.sample(1000)
@@ -1025,34 +1053,39 @@ KeyboardInterrupt                         Traceback (most recent call last)
    1545                     src_code=src_code,
 
 /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in compile_str(module_name, src_code, location, include_dirs, lib_dirs, libs, preargs, py_module, hide_symbols)
-   2555             open(os.path.join(location, &quot;__init__.py&quot;), &quot;w&quot;).close()
-   2556             assert os.path.isfile(lib_filename)
--&gt; 2557             return dlimport(lib_filename)
-   2558 
-   2559 
+   2494 
+   2495         try:
+-&gt; 2496             p_out = output_subprocess_Popen(cmd)
+   2497             compile_stderr = p_out[1].decode()
+   2498         except Exception:
 
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in dlimport(fullpath, suffix)
-    292         with warnings.catch_warnings():
-    293             warnings.filterwarnings(&quot;ignore&quot;, message=&quot;numpy.ndarray size changed&quot;)
---&gt; 294             rval = __import__(module_name, {}, {}, [module_name])
-    295         t1 = time.time()
-    296         import_time += t1 - t0
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/utils.py in output_subprocess_Popen(command, **params)
+    252     # we need to use communicate to make sure we don&#39;t deadlock around
+    253     # the stdout/stderr pipe.
+--&gt; 254     out = p.communicate()
+    255     return out + (p.returncode,)
+    256 
 
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/importlib/_bootstrap.py in _find_and_load(name, import_)
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/subprocess.py in communicate(self, input, timeout)
+   1026 
+   1027             try:
+-&gt; 1028                 stdout, stderr = self._communicate(input, endtime, timeout)
+   1029             except KeyboardInterrupt:
+   1030                 # https://bugs.python.org/issue25942
 
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/importlib/_bootstrap.py in _find_and_load_unlocked(name, import_)
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/subprocess.py in _communicate(self, input, endtime, orig_timeout)
+   1866                             &#39;failed to raise TimeoutExpired.&#39;)
+   1867 
+-&gt; 1868                     ready = selector.select(timeout)
+   1869                     self._check_timeout(endtime, orig_timeout, stdout, stderr)
+   1870 
 
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/importlib/_bootstrap.py in _find_spec(name, path, target)
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/importlib/_bootstrap_external.py in find_spec(cls, fullname, path, target)
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/importlib/_bootstrap_external.py in _get_spec(cls, fullname, path, target)
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/importlib/_bootstrap_external.py in find_spec(self, fullname, target)
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/importlib/_bootstrap_external.py in _path_isfile(path)
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/importlib/_bootstrap_external.py in _path_is_mode_type(path, mode)
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/selectors.py in select(self, timeout)
+    413         ready = []
+    414         try:
+--&gt; 415             fd_event_list = self._selector.poll(timeout)
+    416         except InterruptedError:
+    417             return ready
 
 KeyboardInterrupt: 
 </pre></div>
