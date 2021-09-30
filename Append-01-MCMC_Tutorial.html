@@ -408,7 +408,6 @@
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> 
 <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">()</span> 
 <span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span> 
-
 <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Histogram of observed data&#39;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Num of observations&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -459,21 +458,31 @@
 <div class="section" id="mcmc">
 <h2>3 MCMC 采样的代码说明<a class="headerlink" href="#mcmc" title="Permalink to this headline">¶</a></h2>
 <p>现在来理解采样逻辑。首先找到起始参数位置（可以随机选择），任意固定为：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mu_current</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu_current</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">proposal_width</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
+</div>
+</div>
 </div>
 <div class="section" id="id3">
 <h3>（1）位置提议<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>先建议从该位置移动到其他位置（建议的方法可以简单也可以复杂，可以跳跃也可以平稳，当这种移动是平稳时，通常正是 MCMC 的马尔可夫部分）。著名的<code class="docutils literal notranslate"><span class="pre">Metropolis</span> <span class="pre">采样器</span></code>采用的就是比较简单的办法，它从以当前 <code class="docutils literal notranslate"><span class="pre">mu_current</span></code> 为中心的正态分布中抽取样本（注意：此处是 <code class="docutils literal notranslate"><span class="pre">Metropolis</span> <span class="pre">准则</span></code>的设计要求，并非源于模型的高斯假设），该值具有一定标准差（<code class="docutils literal notranslate"><span class="pre">proposal_width</span></code>），该标准差将决定建议移动的距离（这里使用了 <code class="docutils literal notranslate"><span class="pre">scipy.stats.norm</span></code> 计算距离）：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mu_proposal</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_current</span><span class="p">,</span> <span class="n">proposal_width</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">()</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu_proposal</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_current</span><span class="p">,</span> <span class="n">proposal_width</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">()</span>
 </pre></div>
+</div>
+</div>
 </div>
 </div>
 <div class="section" id="id4">
 <h3>（2）位置评估<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>接下来，将评估这是否是一个好位置。如果所建议的 <code class="docutils literal notranslate"><span class="pre">mu_proposal</span></code> 得到的正态分布比原来的 <code class="docutils literal notranslate"><span class="pre">mu_current</span></code> 更能够解释数据，则肯定想去建议位置。“更好地解释数据”是什么意思？ 我们按照当前平均值（<code class="docutils literal notranslate"><span class="pre">mu_current</span></code>）和建议平均值（<code class="docutils literal notranslate"><span class="pre">mu_proposal</span></code>）以及已知标准差 <code class="docutils literal notranslate"><span class="pre">sigma</span> <span class="pre">=</span> <span class="pre">1</span></code> 分别计算似然（通过 <code class="docutils literal notranslate"><span class="pre">scipy.stats.Normal(µ，sigma).pdf(Data)</span></code> 计算每个数据点的概率，然后将各数据点的概率相乘），而后进行量化拟合。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 计算似然 Likelihood</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 计算似然 Likelihood</span>
 <span class="n">likelihood_current</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_current</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">prod</span><span class="p">()</span>
 <span class="n">likelihood_proposal</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_proposal</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">prod</span><span class="p">()</span>
 
@@ -486,17 +495,41 @@
 <span class="n">p_proposal</span> <span class="o">=</span> <span class="n">likelihood_proposal</span> <span class="o">*</span> <span class="n">prior_proposal</span>
 </pre></div>
 </div>
-<p>到目前为止，我们基本上可以设计一个爬山算法。该算法从一个随机值开始，只按照建议的随机方向移动。按照最大似然目标，应当只有在建议参数值（ <code class="docutils literal notranslate"><span class="pre">mu_proposal</span></code>）的分子项高于当前值（<code class="docutils literal notranslate"><span class="pre">mu_current</span></code>）的分子项时才接受移动，并最终逼近 <span class="math notranslate nohighlight">\(\mu = 0\)</span>。 但由于初始值是随机选择的，为了获得完整后验，也需要接受建议值小于当前值的情况，此时可以定义两个分子项的比值作为接受率，用其确定接受移动的概率，接受率越大，则接受移动的概率越高。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p_accept</span> <span class="o">=</span> <span class="n">p_proposal</span> <span class="o">/</span> <span class="n">p_current</span>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2006</span><span class="o">/</span><span class="mf">3839138964.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> 
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="c1"># 计算先验 Prior</span>
+<span class="ne">----&gt; </span><span class="mi">6</span> <span class="n">prior_current</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_prior_mu</span><span class="p">,</span> <span class="n">mu_prior_sd</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">mu_current</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">prior_proposal</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_prior_mu</span><span class="p">,</span> <span class="n">mu_prior_sd</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">mu_proposal</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> 
+
+<span class="ne">NameError</span>: name &#39;mu_prior_mu&#39; is not defined
 </pre></div>
 </div>
+</div>
+</div>
+<p>到目前为止，我们基本上可以设计一个爬山算法。该算法从一个随机值开始，只按照建议的随机方向移动。按照最大似然目标，应当只有在建议参数值（ <code class="docutils literal notranslate"><span class="pre">mu_proposal</span></code>）的分子项高于当前值（<code class="docutils literal notranslate"><span class="pre">mu_current</span></code>）的分子项时才接受移动，并最终逼近 <span class="math notranslate nohighlight">\(\mu = 0\)</span>。 但由于初始值是随机选择的，为了获得完整后验，也需要接受建议值小于当前值的情况，此时可以定义两个分子项的比值作为接受率，用其确定接受移动的概率，接受率越大，则接受移动的概率越高。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_accept</span> <span class="o">=</span> <span class="n">p_proposal</span> <span class="o">/</span> <span class="n">p_current</span>
+</pre></div>
+</div>
+</div>
+</div>
 <p>以上 <code class="docutils literal notranslate"><span class="pre">p_accept</span></code> 即为接受率。如果 <code class="docutils literal notranslate"><span class="pre">p_accept</span> <span class="pre">&gt;</span> <span class="pre">1</span></code> ，则肯定接受移动；如果 <code class="docutils literal notranslate"><span class="pre">p_accept</span> <span class="pre">&lt;</span> <span class="pre">1</span></code>，则以 <code class="docutils literal notranslate"><span class="pre">p_accept</span></code> 为概率决定是否接受移动。例如：当 <code class="docutils literal notranslate"><span class="pre">p_accept</span> <span class="pre">=</span> <span class="pre">0.5</span></code> 时，即建议的参数值解释数据的能力只有当前值一半时，有 50% 的机会选择接受移动。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">accept</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">p_accept</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accept</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">p_accept</span>
 
 <span class="k">if</span> <span class="n">accept</span><span class="p">:</span>
     <span class="c1"># Update position</span>
     <span class="n">cur_pos</span> <span class="o">=</span> <span class="n">proposal</span>
 </pre></div>
+</div>
+</div>
 </div>
 <p>这个简单程序为我们提供了后验的样本。</p>
 </div>
@@ -621,113 +654,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-1.        , -1.        , -0.50132728, -0.50132728,  0.32439099,
-        0.32439099,  0.10993468,  0.10993468,  0.06258019,  0.06258019,
-        0.06258019,  0.06258019,  0.25567339, -0.21224354,  0.37567098,
-        0.37567098,  0.37567098,  0.2478613 ,  0.2478613 ,  0.2478613 ,
-        0.16104345])
-</pre></div>
-</div>
-<img alt="_images/Append-01-MCMC_Tutorial_9_20.png" src="_images/Append-01-MCMC_Tutorial_9_20.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_21.png" src="_images/Append-01-MCMC_Tutorial_9_21.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_22.png" src="_images/Append-01-MCMC_Tutorial_9_22.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_23.png" src="_images/Append-01-MCMC_Tutorial_9_23.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_24.png" src="_images/Append-01-MCMC_Tutorial_9_24.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_25.png" src="_images/Append-01-MCMC_Tutorial_9_25.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_26.png" src="_images/Append-01-MCMC_Tutorial_9_26.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_27.png" src="_images/Append-01-MCMC_Tutorial_9_27.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_28.png" src="_images/Append-01-MCMC_Tutorial_9_28.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_29.png" src="_images/Append-01-MCMC_Tutorial_9_29.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_30.png" src="_images/Append-01-MCMC_Tutorial_9_30.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_31.png" src="_images/Append-01-MCMC_Tutorial_9_31.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_32.png" src="_images/Append-01-MCMC_Tutorial_9_32.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_33.png" src="_images/Append-01-MCMC_Tutorial_9_33.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_34.png" src="_images/Append-01-MCMC_Tutorial_9_34.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_35.png" src="_images/Append-01-MCMC_Tutorial_9_35.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_36.png" src="_images/Append-01-MCMC_Tutorial_9_36.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_37.png" src="_images/Append-01-MCMC_Tutorial_9_37.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_38.png" src="_images/Append-01-MCMC_Tutorial_9_38.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_39.png" src="_images/Append-01-MCMC_Tutorial_9_39.png" />
-</div>
 </div>
 <p>MCMC 的神奇之处在于，只要做足够长的时间，就会产生来自模型后验分布的样本。有一个严格的数学证明可以保证这一点，但在这里不会详细说明。为了解这会产生什么，让我们抽取大量样本（建议值）并绘制其曲线图。</p>
 <div class="cell docutils container">
@@ -736,70 +662,6 @@
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span> 
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">posterior</span><span class="p">)</span> 
 <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;mu&#39;</span><span class="p">);</span> 
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1896</span><span class="o">/</span><span class="mf">268937468.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">posterior</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">15000</span><span class="p">,</span> <span class="n">mu_init</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">posterior</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;mu&#39;</span><span class="p">);</span>
-
-<span class="nn">/tmp/ipykernel_1896/1044358219.py</span> in <span class="ni">sampler</span><span class="nt">(data, samples, mu_init, proposal_width, plot, mu_prior_mu, mu_prior_sd)</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> 
-<span class="g g-Whitespace">     </span><span class="mi">13</span>        <span class="c1"># 计算当前值和建议值的先验概率 Compute prior probability of current and proposed mu</span>
-<span class="ne">---&gt; </span><span class="mi">14</span>        <span class="n">prior_current</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_prior_mu</span><span class="p">,</span> <span class="n">mu_prior_sd</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">mu_current</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span>        <span class="n">prior_proposal</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_prior_mu</span><span class="p">,</span> <span class="n">mu_prior_sd</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">mu_proposal</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> 
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">__call__</span><span class="nt">(self, *args, **kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">863</span> 
-<span class="g g-Whitespace">    </span><span class="mi">864</span>     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">865</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">freeze</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">866</span>     <span class="fm">__call__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">freeze</span><span class="o">.</span><span class="vm">__doc__</span>
-<span class="g g-Whitespace">    </span><span class="mi">867</span> 
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">freeze</span><span class="nt">(self, *args, **kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">860</span> 
-<span class="g g-Whitespace">    </span><span class="mi">861</span>         <span class="sd">&quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">862</span><span class="sd">         return rv_frozen(self, *args, **kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">863</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">864</span><span class="sd">     def __call__(self, *args, **kwds):</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">__init__</span><span class="nt">(self, dist, *args, **kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">437</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">438</span><span class="sd">         # create a new instance</span>
-<span class="ne">--&gt; </span><span class="mi">439</span><span class="sd">         self.dist = dist.__class__(**dist._updated_ctor_param())</span>
-<span class="g g-Whitespace">    </span><span class="mi">440</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">441</span><span class="sd">         shapes, _, _ = self.dist._parse_args(*args, **kwds)</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">__init__</span><span class="nt">(self, momtype, a, b, xtol, badvalue, name, longname, shapes, extradoc, seed)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1719</span><span class="sd">                                   locscale_in=&#39;loc=0, scale=1&#39;,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1720</span><span class="sd">                                   locscale_out=&#39;loc, scale&#39;)</span>
-<span class="ne">-&gt; </span><span class="mi">1721</span><span class="sd">         self._attach_methods()</span>
-<span class="g g-Whitespace">   </span><span class="mi">1722</span><span class="sd"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">1723</span><span class="sd">         if longname is None:</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">_attach_methods</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1754</span><span class="sd">         &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1755</span>         <span class="c1"># _attach_methods is responsible for calling _attach_argparser_methods</span>
-<span class="ne">-&gt; </span><span class="mi">1756</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_attach_argparser_methods</span><span class="p">()</span>
-<span class="g g-Whitespace">   </span><span class="mi">1757</span> 
-<span class="g g-Whitespace">   </span><span class="mi">1758</span>         <span class="c1"># nin correction</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">_attach_argparser_methods</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">706</span>         <span class="s2">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">707</span><span class="s2">         ns = </span><span class="si">{}</span><span class="s2"></span>
-<span class="ne">--&gt; </span><span class="mi">708</span><span class="s2">         exec(self._parse_arg_template, ns)</span>
-<span class="g g-Whitespace">    </span><span class="mi">709</span><span class="s2">         # NB: attach to the instance, not class</span>
-<span class="g g-Whitespace">    </span><span class="mi">710</span><span class="s2">         for name in [&#39;_parse_args&#39;, &#39;_parse_args_stats&#39;, &#39;_parse_args_rvs&#39;]:</span>
-
-<span class="s2">&lt;string&gt; in &lt;module&gt;</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
@@ -822,7 +684,7 @@
 </div>
 <div class="section" id="id7">
 <h2>6 建议宽度<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<p>上面代码将建议宽度 <code class="docutils literal notranslate"><span class="pre">proposal_width</span></code> 设置为 0.5。事实证明，这是一个不错的值。一般来说，不希望宽度太窄，因为宽度越窄就需要越长时间来探索整个参数空间，从而造成采样效率会下降，并且出现随机游走的现象：</p>
+<p>上面代码将建议宽度（步长） <code class="docutils literal notranslate"><span class="pre">proposal_width</span></code> 设置为 0.5。事实证明，这是一个不错的值。一般来说，不希望宽度太窄，因为宽度越窄就需要越长时间来探索整个参数空间，从而造成采样效率会下降，并且出现随机游走的现象：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">posterior_small</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">mu_init</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">proposal_width</span><span class="o">=</span><span class="mf">.01</span><span class="p">)</span> 
@@ -854,7 +716,7 @@
 </div>
 </div>
 </div>
-<p>更多样本最终会看起来像真实后验，关键是样本应当彼此独立，但显然在本例中并非如此。因此，可以采用自相关性来量化评估采样器的效果，即分析第 <span class="math notranslate nohighlight">\(i\)</span> 个样本与第 <span class="math notranslate nohighlight">\(i-1\)</span> 、<span class="math notranslate nohighlight">\(i-2\)</span> 个样本的相关性如何：</p>
+<p>更多的样本最终会看起来像真实后验，根据蒙特卡洛方法的假设，样本之间应彼此独立，但显然本例无法做到这一点。因此，可以采用自相关性来量化评估采样器的效果，即分析第 <span class="math notranslate nohighlight">\(i\)</span> 个样本与第 <span class="math notranslate nohighlight">\(i-1\)</span> 、<span class="math notranslate nohighlight">\(i-2\)</span> 个样本的相关性如何：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pymc3.stats</span> <span class="kn">import</span> <span class="n">autocorr</span> 
@@ -871,11 +733,11 @@
 </div>
 </div>
 </div>
-<p>显然，我们希望有一种智能方法来自动计算出正确的步宽。一种常见方法是不断调整建议宽度，以便大约 50% 的建议被拒绝。</p>
+<p>显然，我们希望有一种智能方法来自动计算出正确的宽度（步长）。一种常见方法是保持接受率（如：50%）不变，而不断调整建议宽度。</p>
 </div>
 <div class="section" id="id8">
 <h2>7 扩展到更复杂的模型<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
-<p>我们还可以为标准差添加一个 <span class="math notranslate nohighlight">\(\sigma\)</span> 参数，然后对第二个参数执行相同的步骤。在此情况下，要为 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 两者生成建议值，不过算法逻辑几乎相同。我们也可以从非常不同的分布（如：二项分布）抽取数据，但依然使用相同算法并得到正确后验。这就是概率编程巨大的好处：只需定义想要的模型，让 MCMC 负责推断。</p>
+<p>我们还可以将标准差视为一个参数，命名为 <span class="math notranslate nohighlight">\(\sigma\)</span> ，然后对其执行相同的步骤。此时需要为 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 两个随机变量在二维参数空间中生成建议值，其算法逻辑几乎与单变量时相同。当然我们也可以将高斯分布换成其他完全不同的分布（如：二项分布），并从中抽取数据，但依然可以使用相同算法逻辑，并得到正确后验。这是概率编程的巨大好处：<strong>只需定义想要的模型，让 MCMC 负责推断</strong>。</p>
 <p>例如：下面的模型可以很容易地用 PyMC3 编写。我们继续使用 <code class="docutils literal notranslate"><span class="pre">Metropolis</span> <span class="pre">采样器</span></code>（自动调整建议宽度），并得到了相同的结果。有关更多信息以及更复杂的示例，请参阅 PyMC3 文档 （<a class="reference external" href="http://pymc-devs.github.io/pymc3/getting_started/%EF%BC%89%E3%80%82">http://pymc-devs.github.io/pymc3/getting_started/）。</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -898,7 +760,7 @@
 </div>
 <div class="section" id="id9">
 <h2>8 总结<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
-<p>有关 MCMC 的细节当然重要，但还有很多其他帖子介绍它。因此，本文重点在于直观地介绍 <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Metropolis</span> <span class="pre">采样器</span></code>的核心思想。希望您已经形成了直观感觉。其他更奇特的 MCMC 算法，如：哈密尔顿蒙特卡罗（HMC），与此非常相似，只是提出建议值的方法要聪明得多。</p>
+<p>有关 MCMC 的细节非常重要，但还有很多其他帖子介绍它。因此，本文重点在于直观地介绍 <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Metropolis</span> <span class="pre">采样器</span></code>的核心思想。希望读者已经形成了直观感觉。其他更先进和复杂的 MCMC 算法，如：汉密尔顿蒙特卡罗方法（HMC）、NUTS等，算法逻辑与此非常相似，只是步长选择和建议值生成的方法聪明得多。</p>
 <p>本文有 Jupyter Notebook 版本，可以从 <a class="reference external" href="https://github.com/twiecki/WhileMyMCMCGentlySamples/blob/master/content/downloads/notebooks/MCMC-sampling-for-dummies.ipynb">此处</a>  下载。</p>
 </div>
 </div>

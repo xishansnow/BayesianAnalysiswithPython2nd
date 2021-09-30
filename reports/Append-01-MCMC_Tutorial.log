@@ -1,15 +1,4 @@
 Traceback (most recent call last):
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 627, in _async_poll_for_reply
-    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/util.py", line 89, in ensure_async
-    result = await obj
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/jupyter_client/channels.py", line 230, in get_msg
-    raise Empty
-_queue.Empty
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
   File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
     executenb(
   File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 1117, in execute
@@ -22,19 +11,34 @@ Traceback (most recent call last):
     return future.result()
   File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 558, in async_execute
     await self.async_execute_cell(
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 846, in async_execute_cell
-    exec_reply = await self.task_poll_for_reply
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 651, in _async_poll_for_reply
-    await self._async_handle_timeout(timeout, cell)
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 701, in _async_handle_timeout
-    raise CellTimeoutError.error_from_timeout_and_cell(
-nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
-The message was: Cell execution timed out.
-Here is a preview of the cell contents:
--------------------
-posterior = sampler(data, samples=15000, mu_init=1.) 
-fig, ax = plt.subplots() 
-ax.plot(posterior) 
-_ = ax.set(xlabel='sample', ylabel='mu'); 
--------------------
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 862, in async_execute_cell
+    self._check_raise_for_error(cell, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 765, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# 计算似然 Likelihood
+likelihood_current = norm(mu_current, 1).pdf(data).prod()
+likelihood_proposal = norm(mu_proposal, 1).pdf(data).prod()
+
+# 计算先验 Prior        
+prior_current = norm(mu_prior_mu, mu_prior_sd).pdf(mu_current)
+prior_proposal = norm(mu_prior_mu, mu_prior_sd).pdf(mu_proposal)
+
+# 计算分子项 Nominator of Bayes formula
+p_current = likelihood_current * prior_current
+p_proposal = likelihood_proposal * prior_proposal
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+[0;32m/tmp/ipykernel_2006/3839138964.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      4[0m [0;34m[0m[0m
+[1;32m      5[0m [0;31m# 计算先验 Prior[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 6[0;31m [0mprior_current[0m [0;34m=[0m [0mnorm[0m[0;34m([0m[0mmu_prior_mu[0m[0;34m,[0m [0mmu_prior_sd[0m[0;34m)[0m[0;34m.[0m[0mpdf[0m[0;34m([0m[0mmu_current[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      7[0m [0mprior_proposal[0m [0;34m=[0m [0mnorm[0m[0;34m([0m[0mmu_prior_mu[0m[0;34m,[0m [0mmu_prior_sd[0m[0;34m)[0m[0;34m.[0m[0mpdf[0m[0;34m([0m[0mmu_proposal[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      8[0m [0;34m[0m[0m
+
+[0;31mNameError[0m: name 'mu_prior_mu' is not defined
+NameError: name 'mu_prior_mu' is not defined
 

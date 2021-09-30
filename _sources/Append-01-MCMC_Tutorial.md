@@ -5,10 +5,10 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.12.0
+    jupytext_version: 1.10.3
 kernelspec:
-  display_name: Python 3
-  language: ipython3
+  display_name: Python 3 (ipykernel)
+  language: python
   name: python3
 ---
 
@@ -48,7 +48,7 @@ P ( x ) = \int _ { \theta } P ( x , \theta ) d \theta
 
 首先，让导入 python 模块：
 
-```{code-cell} ipython3 
+```{code-cell} ipython3
 %matplotlib inline 
 import numpy as np 
 import scipy as sp 
@@ -63,11 +63,10 @@ np.random.seed(123)
 
 先生成一些实验数据，以零为中心的正态分布上的 20 个点。我们的目标是估计平均值 $\mu$ 的后验。
 
-```{code-cell} ipython3 
+```{code-cell} ipython3
 data = np.random.randn(20) 
 ax = plt.subplot() 
 sns.distplot(data, kde=True, ax=ax) 
-
 _ = ax.set(title='Histogram of observed data', xlabel='x', ylabel='Num of observations')
 ```
 
@@ -82,7 +81,7 @@ _ = ax.set(title='Histogram of observed data', xlabel='x', ylabel='Num of observ
 
 该模型较为简单，实际上可以获得后验的解析解。因为对于已知标准差的正态似然分布，$\mu$ 的先验与后验是共轭的（高斯分布是高斯似然的共轭先验），可以较为容易地计算后验。有关这一点的数学推导，请参见（[此处](https://docs.google.com/viewer?a=v&pid=sites&srcid=ZGVmYXVsdGRvbWFpbnxiYXllc2VjdHxneDplNGY0MDljNDA5MGYxYTM)）。
 
-```{code-cell} ipython3 
+```{code-cell} ipython3
 # Analytical posterior of Guassian
 def calc_posterior_analytical(data, x, mu_0, sigma_0): 
    sigma = 1. 
@@ -108,7 +107,7 @@ sns.despine()
 
 现在来理解采样逻辑。首先找到起始参数位置（可以随机选择），任意固定为：
 
-```
+```{code-cell} ipython
 mu_current = 1
 proposal_width = 1
 ```
@@ -117,7 +116,7 @@ proposal_width = 1
 
 先建议从该位置移动到其他位置（建议的方法可以简单也可以复杂，可以跳跃也可以平稳，当这种移动是平稳时，通常正是 MCMC 的马尔可夫部分）。著名的`Metropolis 采样器`采用的就是比较简单的办法，它从以当前 `mu_current` 为中心的正态分布中抽取样本（注意：此处是 `Metropolis 准则`的设计要求，并非源于模型的高斯假设），该值具有一定标准差（`proposal_width`），该标准差将决定建议移动的距离（这里使用了 `scipy.stats.norm` 计算距离）：
 
-```
+```{code-cell} ipython
 mu_proposal = norm(mu_current, proposal_width).rvs()
 ```
 
@@ -125,7 +124,7 @@ mu_proposal = norm(mu_current, proposal_width).rvs()
 
 接下来，将评估这是否是一个好位置。如果所建议的 `mu_proposal` 得到的正态分布比原来的 `mu_current` 更能够解释数据，则肯定想去建议位置。“更好地解释数据”是什么意思？ 我们按照当前平均值（`mu_current`）和建议平均值（`mu_proposal`）以及已知标准差 `sigma = 1` 分别计算似然（通过 `scipy.stats.Normal(µ，sigma).pdf(Data)` 计算每个数据点的概率，然后将各数据点的概率相乘），而后进行量化拟合。
 
-```
+```{code-cell} ipython
 # 计算似然 Likelihood
 likelihood_current = norm(mu_current, 1).pdf(data).prod()
 likelihood_proposal = norm(mu_proposal, 1).pdf(data).prod()
@@ -141,13 +140,13 @@ p_proposal = likelihood_proposal * prior_proposal
 
 到目前为止，我们基本上可以设计一个爬山算法。该算法从一个随机值开始，只按照建议的随机方向移动。按照最大似然目标，应当只有在建议参数值（ `mu_proposal`）的分子项高于当前值（`mu_current`）的分子项时才接受移动，并最终逼近 $\mu = 0$。 但由于初始值是随机选择的，为了获得完整后验，也需要接受建议值小于当前值的情况，此时可以定义两个分子项的比值作为接受率，用其确定接受移动的概率，接受率越大，则接受移动的概率越高。
 
-```
+```{code-cell} ipython
 p_accept = p_proposal / p_current
 ```
 
 以上 `p_accept` 即为接受率。如果 `p_accept > 1` ，则肯定接受移动；如果 `p_accept < 1`，则以 `p_accept` 为概率决定是否接受移动。例如：当 `p_accept = 0.5` 时，即建议的参数值解释数据的能力只有当前值一半时，有 50% 的机会选择接受移动。
 
-```
+```{code-cell} ipython
 accept = np.random.rand() < p_accept
 
 if accept:
@@ -169,7 +168,7 @@ if accept:
 
 将上述过程放在一起：
 
-```{code-cell} ipython3 
+```{code-cell} ipython3
 def sampler(data, samples=4, mu_init=.5, proposal_width=.5, plot=False, mu_prior_mu=0, mu_prior_sd=1.): 
    mu_current = mu_init 
    posterior = [mu_current] 
@@ -277,14 +276,14 @@ def plot_proposal(mu_current, mu_proposal, mu_prior_mu, mu_prior_sd, data, accep
 
 我们经常根据后验密度移动到相对更可能的 $\mu$ 值，只是有时移动到相对不太可能的值，就像在第 14 次迭代中看到的那样。
 
-```{code-cell} ipython3 
+```{code-cell} ipython3
 np.random.seed(123) 
 sampler(data, samples=20, mu_init=-1., plot=True)
 ```
 
 MCMC 的神奇之处在于，只要做足够长的时间，就会产生来自模型后验分布的样本。有一个严格的数学证明可以保证这一点，但在这里不会详细说明。为了解这会产生什么，让我们抽取大量样本（建议值）并绘制其曲线图。
 
-```{code-cell} ipython3 
+```{code-cell} ipython3
 posterior = sampler(data, samples=15000, mu_init=1.) 
 fig, ax = plt.subplots() 
 ax.plot(posterior) 
@@ -293,7 +292,7 @@ _ = ax.set(xlabel='sample', ylabel='mu');
 
 代码抽取的所有样本（建议值）构成迹。**要得到近似的后验，只需计算迹的直方图即可**。需要注意的是，尽管后验直方图看起来与上面为拟合模型而生成的采样数据直方图非常像，但其实两者应当是完全分离的。下图表示了我们对 $\mu$ 的信念，本例中后验碰巧也是正态分布，因此与似然和先验相似，但实际上对于不同模型，后验可能具有与似然或先验完全不同的形状。
 
-```{code-cell} ipython3 
+```{code-cell} ipython3
 ax = plt.subplot() 
 sns.distplot(posterior[500:], ax=ax, label='estimated posterior') 
 x = np.linspace(-.5, .5, 500) 
@@ -307,9 +306,9 @@ ax.legend();
 
 ## 6 建议宽度
 
-上面代码将建议宽度 `proposal_width` 设置为 0.5。事实证明，这是一个不错的值。一般来说，不希望宽度太窄，因为宽度越窄就需要越长时间来探索整个参数空间，从而造成采样效率会下降，并且出现随机游走的现象：
+上面代码将建议宽度（步长） `proposal_width` 设置为 0.5。事实证明，这是一个不错的值。一般来说，不希望宽度太窄，因为宽度越窄就需要越长时间来探索整个参数空间，从而造成采样效率会下降，并且出现随机游走的现象：
 
-```{code-cell} ipython3 
+```{code-cell} ipython3
 posterior_small = sampler(data, samples=5000, mu_init=1., proposal_width=.01) 
 fig, ax = plt.subplots() 
 ax.plot(posterior_small)
@@ -318,7 +317,7 @@ _ = ax.set(xlabel='sample', ylabel='mu')
 
 但你也不希望它太大，以至于永远不会接受移动：
 
-```{code-cell} ipython3 
+```{code-cell} ipython3
 posterior_large = sampler(data, samples=5000, mu_init=1., proposal_width=3.) 
 fig, ax = plt.subplots() 
 ax.plot(posterior_large); plt.xlabel('sample'); plt.ylabel('mu')
@@ -327,15 +326,15 @@ _ = ax.set(xlabel='sample', ylabel='mu')
 
 注意，不管建议宽度如何选择，数学证明保证了我们仍在从目标后验中采样，只是效率较低：
 
-```{code-cell} ipython3 
+```{code-cell} ipython3
 sns.distplot(posterior_small[1000:], label='Small step size') 
 sns.distplot(posterior_large[1000:], label='Large step size')
 _ = plt.legend()
 ```
 
-更多样本最终会看起来像真实后验，关键是样本应当彼此独立，但显然在本例中并非如此。因此，可以采用自相关性来量化评估采样器的效果，即分析第 $i$ 个样本与第 $i-1$ 、$i-2$ 个样本的相关性如何：
+更多的样本最终会看起来像真实后验，根据蒙特卡洛方法的假设，样本之间应彼此独立，但显然本例无法做到这一点。因此，可以采用自相关性来量化评估采样器的效果，即分析第 $i$ 个样本与第 $i-1$ 、$i-2$ 个样本的相关性如何：
 
-```{code-cell} ipython3 
+```{code-cell} ipython3
 from pymc3.stats import autocorr 
 lags = np.arange(1, 100) 
 fig, ax = plt.subplots() 
@@ -348,15 +347,15 @@ ax.legend(loc=0)
 _ = ax.set(xlabel='lag', ylabel='autocorrelation', ylim=(-.1, 1))
 ```
 
-显然，我们希望有一种智能方法来自动计算出正确的步宽。一种常见方法是不断调整建议宽度，以便大约 50% 的建议被拒绝。
+显然，我们希望有一种智能方法来自动计算出正确的宽度（步长）。一种常见方法是保持接受率（如：50%）不变，而不断调整建议宽度。
 
 ## 7 扩展到更复杂的模型
 
-我们还可以为标准差添加一个 $\sigma$ 参数，然后对第二个参数执行相同的步骤。在此情况下，要为 $\mu$ 和 $\sigma$ 两者生成建议值，不过算法逻辑几乎相同。我们也可以从非常不同的分布（如：二项分布）抽取数据，但依然使用相同算法并得到正确后验。这就是概率编程巨大的好处：只需定义想要的模型，让 MCMC 负责推断。
+我们还可以将标准差视为一个参数，命名为 $\sigma$ ，然后对其执行相同的步骤。此时需要为 $\mu$ 和 $\sigma$ 两个随机变量在二维参数空间中生成建议值，其算法逻辑几乎与单变量时相同。当然我们也可以将高斯分布换成其他完全不同的分布（如：二项分布），并从中抽取数据，但依然可以使用相同算法逻辑，并得到正确后验。这是概率编程的巨大好处：**只需定义想要的模型，让 MCMC 负责推断**。
 
 例如：下面的模型可以很容易地用 PyMC3 编写。我们继续使用 `Metropolis 采样器`（自动调整建议宽度），并得到了相同的结果。有关更多信息以及更复杂的示例，请参阅 PyMC3 文档 （http://pymc-devs.github.io/pymc3/getting_started/）。
 
-```{code-cell} ipython3 
+```{code-cell} ipython3
 import pymc3 as pm 
 with pm.Model(): 
    mu = pm.Normal('mu', 0, 1) 
@@ -373,6 +372,6 @@ plt.legend()
 
 ## 8 总结
 
-有关 MCMC 的细节当然重要，但还有很多其他帖子介绍它。因此，本文重点在于直观地介绍 `MCMC` 和 `Metropolis 采样器`的核心思想。希望您已经形成了直观感觉。其他更奇特的 MCMC 算法，如：哈密尔顿蒙特卡罗（HMC），与此非常相似，只是提出建议值的方法要聪明得多。
+有关 MCMC 的细节非常重要，但还有很多其他帖子介绍它。因此，本文重点在于直观地介绍 `MCMC` 和 `Metropolis 采样器`的核心思想。希望读者已经形成了直观感觉。其他更先进和复杂的 MCMC 算法，如：汉密尔顿蒙特卡罗方法（HMC）、NUTS等，算法逻辑与此非常相似，只是步长选择和建议值生成的方法聪明得多。
 
 本文有 Jupyter Notebook 版本，可以从 [此处](https://github.com/twiecki/WhileMyMCMCGentlySamples/blob/master/content/downloads/notebooks/MCMC-sampling-for-dummies.ipynb)  下载。
