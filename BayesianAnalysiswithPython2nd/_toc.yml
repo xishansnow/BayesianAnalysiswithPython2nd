@@ -12,7 +12,7 @@ parts:
     - file: chapter07-GaussianProcesses
     - file: chapter08-InterefenceEngine
     - file: chapter09-WheretoGoNext
-  - caption: 附录阅读
+  - caption: 文献阅读
     chapters: 
     - file: Append-01-MCMC_Tutorial
     - file: Append-02-VariationalInference_Tutorial
@@ -20,7 +20,7 @@ parts:
     - file: Append-04-BayesianNN_Tutorial
     - file: Append-05-BayesianDeepLearning_Tutorial
     - file: Append-06-BayesianDeepLearningPymc3
-    - file: Append-07-CausalInference
+    - file: Append-07-ModelSelectAndAveraging
   #- caption: 参考文献
     #- file: 
 
