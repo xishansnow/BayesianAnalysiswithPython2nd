@@ -149,7 +149,7 @@
 </ul>
 <p class="caption">
  <span class="caption-text">
-  附录阅读
+  文献阅读
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -181,11 +181,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="Append-06-BayesianDeepLearningPymc3.html">
    附录 F：贝叶斯深度学习编程初步
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Append-07-CausalInference.html">
-   附录 G：因果推断问题
   </a>
  </li>
 </ul>
@@ -538,7 +533,7 @@ y &amp;\sim \operatorname{Bern}(p=\theta)
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2243</span><span class="o">/</span><span class="mf">931022958.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1855</span><span class="o">/</span><span class="mf">931022958.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">our_first_model</span><span class="p">:</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span>   <span class="n">θ</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Beta</span><span class="p">(</span><span class="s1">&#39;θ&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
 <span class="ne">----&gt; </span><span class="mi">3</span>   <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Bernoulli</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">θ</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
@@ -572,12 +567,12 @@ y &amp;\sim \operatorname{Bern}(p=\theta)
 <span class="g g-Whitespace">    </span><span class="mi">454</span>             <span class="p">)</span>
 <span class="g g-Whitespace">    </span><span class="mi">455</span> 
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/var.py</span> in <span class="ni">__le__</span><span class="nt">(self, other)</span>
-<span class="g g-Whitespace">     </span><span class="mi">34</span> 
-<span class="g g-Whitespace">     </span><span class="mi">35</span>     <span class="k">def</span> <span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-<span class="ne">---&gt; </span><span class="mi">36</span>         <span class="n">rval</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">basic</span><span class="o">.</span><span class="n">le</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">37</span>         <span class="n">rval</span><span class="o">.</span><span class="n">_is_nonzero</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="g g-Whitespace">     </span><span class="mi">38</span>         <span class="k">return</span> <span class="n">rval</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/var.py</span> in <span class="ni">__ge__</span><span class="nt">(self, other)</span>
+<span class="g g-Whitespace">     </span><span class="mi">44</span> 
+<span class="g g-Whitespace">     </span><span class="mi">45</span>     <span class="k">def</span> <span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">46</span>         <span class="n">rval</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">tensor</span><span class="o">.</span><span class="n">basic</span><span class="o">.</span><span class="n">ge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">47</span>         <span class="n">rval</span><span class="o">.</span><span class="n">_is_nonzero</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="g g-Whitespace">     </span><span class="mi">48</span>         <span class="k">return</span> <span class="n">rval</span>
 
 <span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py</span> in <span class="ni">__call__</span><span class="nt">(self, *inputs, **kwargs)</span>
 <span class="g g-Whitespace">    </span><span class="mi">251</span> 

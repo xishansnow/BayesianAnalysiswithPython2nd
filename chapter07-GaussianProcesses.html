@@ -149,7 +149,7 @@
 </ul>
 <p class="caption">
  <span class="caption-text">
-  附录阅读
+  文献阅读
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -181,11 +181,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="Append-06-BayesianDeepLearningPymc3.html">
    附录 F：贝叶斯深度学习编程初步
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Append-07-CausalInference.html">
-   附录 G：因果推断问题
   </a>
  </li>
 </ul>
@@ -456,7 +451,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fa1b3dbbe20&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f42fb7e5d00&gt;
 </pre></div>
 </div>
 <img alt="_images/chapter07-GaussianProcesses_2_1.png" src="_images/chapter07-GaussianProcesses_2_1.png" />
@@ -654,7 +649,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_3541</span><span class="o">/</span><span class="mf">2938772653.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_3112</span><span class="o">/</span><span class="mf">2938772653.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="c1"># likelihood</span>
 <span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">marginal_likelihood</span><span class="p">(</span><span class="s1">&#39;y_pred&#39;</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="n">ϵ</span><span class="p">)</span>
 <span class="ne">---&gt; </span><span class="mi">15</span>     <span class="n">trace_reg</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">2000</span><span class="p">)</span>
@@ -786,53 +781,25 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 <span class="g g-Whitespace">   </span><span class="mi">1636</span><span class="s2">         vars = self.inputs + self.outputs + self.orphans</span>
 
 <span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py</span> in <span class="ni">module_from_key</span><span class="nt">(self, key, lnk)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1189</span><span class="s2">             try:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1190</span><span class="s2">                 location = dlimport_workdir(self.dirname)</span>
-<span class="ne">-&gt; </span><span class="mi">1191</span><span class="s2">                 module = lnk.compile_cmodule(location)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1192</span><span class="s2">                 name = module.__file__</span>
-<span class="g g-Whitespace">   </span><span class="mi">1193</span><span class="s2">                 assert name.startswith(location)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1174</span><span class="s2">             #    compilations. So reloading the cache here</span>
+<span class="g g-Whitespace">   </span><span class="mi">1175</span><span class="s2">             #    compilation fixes this problem. (we could do that only once)</span>
+<span class="ne">-&gt; </span><span class="mi">1176</span><span class="s2">             self.refresh(cleanup=False)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1177</span><span class="s2"> </span>
+<span class="g g-Whitespace">   </span><span class="mi">1178</span><span class="s2">             module = self._get_from_key(key)</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py</span> in <span class="ni">compile_cmodule</span><span class="nt">(self, location)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1541</span><span class="s2">             try:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1542</span><span class="s2">                 _logger.debug(f&quot;LOCATION </span><span class="si">{location}</span><span class="s2">&quot;)</span>
-<span class="ne">-&gt; </span><span class="mi">1543</span><span class="s2">                 module = c_compiler.compile_str(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1544</span><span class="s2">                     module_name=mod.code_hash,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1545</span><span class="s2">                     src_code=src_code,</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py</span> in <span class="ni">refresh</span><span class="nt">(self, age_thresh_use, delete_if_problem, cleanup)</span>
+<span class="g g-Whitespace">    </span><span class="mi">976</span><span class="s2">             try:</span>
+<span class="g g-Whitespace">    </span><span class="mi">977</span><span class="s2">                 # Test to see that the file is [present and] readable.</span>
+<span class="ne">--&gt; </span><span class="mi">978</span><span class="s2">                 open(entry).close()</span>
+<span class="g g-Whitespace">    </span><span class="mi">979</span><span class="s2">                 gone = False</span>
+<span class="g g-Whitespace">    </span><span class="mi">980</span><span class="s2">             except OSError:</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py</span> in <span class="ni">compile_str</span><span class="nt">(module_name, src_code, location, include_dirs, lib_dirs, libs, preargs, py_module, hide_symbols)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2494</span><span class="s2"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">2495</span><span class="s2">         try:</span>
-<span class="ne">-&gt; </span><span class="mi">2496</span><span class="s2">             p_out = output_subprocess_Popen(cmd)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2497</span><span class="s2">             compile_stderr = p_out[1].decode()</span>
-<span class="g g-Whitespace">   </span><span class="mi">2498</span><span class="s2">         except Exception:</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/utils.py</span> in <span class="ni">output_subprocess_Popen</span><span class="nt">(command, **params)</span>
-<span class="g g-Whitespace">    </span><span class="mi">252</span><span class="s2">     # we need to use communicate to make sure we don&#39;t deadlock around</span>
-<span class="g g-Whitespace">    </span><span class="mi">253</span><span class="s2">     # the stdout/stderr pipe.</span>
-<span class="ne">--&gt; </span><span class="mi">254</span><span class="s2">     out = p.communicate()</span>
-<span class="g g-Whitespace">    </span><span class="mi">255</span><span class="s2">     return out + (p.returncode,)</span>
-<span class="g g-Whitespace">    </span><span class="mi">256</span><span class="s2"> </span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/subprocess.py</span> in <span class="ni">communicate</span><span class="nt">(self, input, timeout)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1026</span><span class="s2"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">1027</span><span class="s2">             try:</span>
-<span class="ne">-&gt; </span><span class="mi">1028</span><span class="s2">                 stdout, stderr = self._communicate(input, endtime, timeout)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1029</span><span class="s2">             except KeyboardInterrupt:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1030</span><span class="s2">                 # https://bugs.python.org/issue25942</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/subprocess.py</span> in <span class="ni">_communicate</span><span class="nt">(self, input, endtime, orig_timeout)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1866</span><span class="s2">                             &#39;failed to raise TimeoutExpired.&#39;)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1867</span><span class="s2"> </span>
-<span class="ne">-&gt; </span><span class="mi">1868</span><span class="s2">                     ready = selector.select(timeout)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1869</span><span class="s2">                     self._check_timeout(endtime, orig_timeout, stdout, stderr)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1870</span><span class="s2"> </span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/selectors.py</span> in <span class="ni">select</span><span class="nt">(self, timeout)</span>
-<span class="g g-Whitespace">    </span><span class="mi">413</span><span class="s2">         ready = []</span>
-<span class="g g-Whitespace">    </span><span class="mi">414</span><span class="s2">         try:</span>
-<span class="ne">--&gt; </span><span class="mi">415</span><span class="s2">             fd_event_list = self._selector.poll(timeout)</span>
-<span class="g g-Whitespace">    </span><span class="mi">416</span><span class="s2">         except InterruptedError:</span>
-<span class="g g-Whitespace">    </span><span class="mi">417</span><span class="s2">             return ready</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/_bootlocale.py</span> in <span class="ni">getpreferredencoding</span><span class="nt">(do_setlocale)</span>
+<span class="g g-Whitespace">     </span><span class="mi">31</span><span class="s2">                 return locale.getpreferredencoding(do_setlocale)</span>
+<span class="g g-Whitespace">     </span><span class="mi">32</span><span class="s2">     else:</span>
+<span class="ne">---&gt; </span><span class="mi">33</span><span class="s2">         def getpreferredencoding(do_setlocale=True):</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span><span class="s2">             assert not do_setlocale</span>
+<span class="g g-Whitespace">     </span><span class="mi">35</span><span class="s2">             if sys.flags.utf8_mode:</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>

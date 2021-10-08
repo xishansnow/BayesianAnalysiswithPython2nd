@@ -49,7 +49,7 @@ plt.ylabel(r'$P_X(x)$', fontsize = 16)
 plt.savefig('1d_random')
 ------------------
 
-[0;36m  File [0;32m"/tmp/ipykernel_2050/99525081.py"[0;36m, line [0;32m10[0m
+[0;36m  File [0;32m"/tmp/ipykernel_1678/99525081.py"[0;36m, line [0;32m10[0m
 [0;31m    rom scipy.stats import norm[0m
 [0m        ^[0m
 [0;31mSyntaxError[0m[0;31m:[0m invalid syntax
