@@ -548,7 +548,7 @@ y_i= \alpha + x_i \beta \tag{式3.2}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2362/4172630698.py:18: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2465/4172630698.py:18: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
   plt.tight_layout()
 </pre></div>
 </div>
@@ -578,7 +578,7 @@ y_i= \alpha + x_i \beta \tag{式3.2}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2362/162259929.py:12: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2465/162259929.py:12: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_g = pm.sample(2000, tune = 1000)
 Auto-assigning NUTS sampler...
 </pre></div>
@@ -588,7 +588,7 @@ Auto-assigning NUTS sampler...
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
 KeyboardInterrupt                         Traceback (most recent call last)
-/tmp/ipykernel_2362/162259929.py in &lt;module&gt;
+/tmp/ipykernel_2465/162259929.py in &lt;module&gt;
      10 
      11     # 近似推断：随机采样生成模型中所有随机变量（模型参数或隐变量等）和显式确定性变量的迹
 ---&gt; 12     trace_g = pm.sample(2000, tune = 1000)
@@ -797,6 +797,69 @@ KeyboardInterrupt                         Traceback (most recent call last)
    1395                         if not isinstance(term, Variable):
 
 /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
+   1059             inputs = node.inputs
+   1060 
+-&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
+   1062 
+   1063             # list of bools indicating if each output is connected to the cost
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
+   1391                     for idx in node_to_idx[node]:
+   1392 
+-&gt; 1393                         term = access_term_cache(node)[idx]
+   1394 
+   1395                         if not isinstance(term, Variable):
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
    1218                             )
    1219 
 -&gt; 1220                 input_grads = node.op.L_op(inputs, node.outputs, new_output_grads)
@@ -816,34 +879,6 @@ KeyboardInterrupt                         Traceback (most recent call last)
 --&gt; 668             ret.append(transform(scalar_igrad))
     669 
     670         return ret
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
-    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
-    658 
---&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
-    660             return new_r
-    661 
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in &lt;listcomp&gt;(.0)
-    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
-    658 
---&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
-    660             return new_r
-    661 
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
-    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
-    658 
---&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
-    660             return new_r
-    661 
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in &lt;listcomp&gt;(.0)
-    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
-    658 
---&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
-    660             return new_r
-    661 
 
 /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
     657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
