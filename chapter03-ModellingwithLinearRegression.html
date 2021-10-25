@@ -22,8 +22,8 @@
       
 
     
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -33,19 +33,19 @@
     
   <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
 
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
+    <script>
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
@@ -95,7 +95,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption" role="heading">
  <span class="caption-text">
   书籍正文
  </span>
@@ -147,7 +147,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption" role="heading">
  <span class="caption-text">
   文献阅读
  </span>
@@ -437,7 +437,7 @@
         
               <div>
                 
-  <div class="section" id="id1">
+  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
 <h1>第 3 章 线性回归模型的贝叶斯视角<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <style>p{text-indent:2em;2}</style>
 <p>本章将介绍最流行、最有用的一种模型–线性模型。其本身就是非常有用的模型，也是许多其他模型的基础。如果你学过统计学课程，你可能听说过简单线性回归、多元线性回归、逻辑回归、方差分析、方差分析等。所有这些方法都是同一基本主题–线性回归模型的变体。在本章中，我们将介绍以下主题：</p>
@@ -548,7 +548,7 @@ y_i= \alpha + x_i \beta \tag{式3.2}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2465/4172630698.py:18: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2575/4172630698.py:18: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
   plt.tight_layout()
 </pre></div>
 </div>
@@ -578,7 +578,7 @@ y_i= \alpha + x_i \beta \tag{式3.2}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2465/162259929.py:12: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2575/162259929.py:12: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_g = pm.sample(2000, tune = 1000)
 Auto-assigning NUTS sampler...
 </pre></div>
@@ -588,7 +588,7 @@ Auto-assigning NUTS sampler...
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
 KeyboardInterrupt                         Traceback (most recent call last)
-/tmp/ipykernel_2465/162259929.py in &lt;module&gt;
+/tmp/ipykernel_2575/162259929.py in &lt;module&gt;
      10 
      11     # 近似推断：随机采样生成模型中所有随机变量（模型参数或隐变量等）和显式确定性变量的迹
 ---&gt; 12     trace_g = pm.sample(2000, tune = 1000)
@@ -797,69 +797,6 @@ KeyboardInterrupt                         Traceback (most recent call last)
    1395                         if not isinstance(term, Variable):
 
 /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
    1218                             )
    1219 
 -&gt; 1220                 input_grads = node.op.L_op(inputs, node.outputs, new_output_grads)
@@ -879,20 +816,6 @@ KeyboardInterrupt                         Traceback (most recent call last)
 --&gt; 668             ret.append(transform(scalar_igrad))
     669 
     670         return ret
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
-    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
-    658 
---&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
-    660             return new_r
-    661 
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in &lt;listcomp&gt;(.0)
-    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
-    658 
---&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
-    660             return new_r
-    661 
 
 /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
     657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)

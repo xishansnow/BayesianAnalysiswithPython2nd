@@ -22,8 +22,8 @@
       
 
     
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -33,19 +33,19 @@
     
   <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
 
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
+    <script>
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
@@ -95,7 +95,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption" role="heading">
  <span class="caption-text">
   书籍正文
  </span>
@@ -147,7 +147,7 @@
   </a>
  </li>
 </ul>
-<p class="caption">
+<p class="caption" role="heading">
  <span class="caption-text">
   文献阅读
  </span>
@@ -386,7 +386,7 @@
         
               <div>
                 
-  <div class="section" id="id1">
+  <div class="tex2jax_ignore mathjax_ignore section" id="id1">
 <h1>第 7 章 高斯过程<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <style>p{text-indent:2em;2}</style>
 <p>在上一章中，我们学习了狄利克雷过程，它是狄利克雷分布的无限维推广，可用于设置未知连续分布的先验。在本章中，我们将学习高斯过程，这是高斯分布的无限维推广，可用于设置未知函数的先验。在贝叶斯统计中，狄利克雷过程和高斯过程都被用来建立灵活的模型，其中允许参数的数量随着数据的大小而增加。</p>
@@ -456,7 +456,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f94af0a7f10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fd36da3fe20&gt;
 </pre></div>
 </div>
 <img alt="_images/chapter07-GaussianProcesses_2_1.png" src="_images/chapter07-GaussianProcesses_2_1.png" />
@@ -652,7 +652,7 @@ p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &amp;\sim \mathcal{N}(\mu, \S
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3540/2938772653.py:15: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_3794/2938772653.py:15: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_reg = pm.sample(2000)
 Auto-assigning NUTS sampler...
 </pre></div>
@@ -662,7 +662,7 @@ Auto-assigning NUTS sampler...
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
 KeyboardInterrupt                         Traceback (most recent call last)
-/tmp/ipykernel_3540/2938772653.py in &lt;module&gt;
+/tmp/ipykernel_3794/2938772653.py in &lt;module&gt;
      13     # likelihood
      14     y_pred = gp.marginal_likelihood(&#39;y_pred&#39;, X=X, y=y, noise=ϵ)
 ---&gt; 15     trace_reg = pm.sample(2000)
@@ -1207,81 +1207,32 @@ KeyboardInterrupt                         Traceback (most recent call last)
    1395                         if not isinstance(term, Variable):
 
 /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
    1218                             )
    1219 
 -&gt; 1220                 input_grads = node.op.L_op(inputs, node.outputs, new_output_grads)
    1221 
    1222                 if input_grads is None:
 
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py in L_op(self, inputs, outputs, output_grads)
-    323 
-    324         &quot;&quot;&quot;
---&gt; 325         return self.grad(inputs, output_grads)
-    326 
-    327     def R_op(
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in L_op(self, inputs, outs, ograds)
+    562 
+    563         # compute grad with respect to broadcasted input
+--&gt; 564         rval = self._bgrad(inputs, outs, ograds)
+    565 
+    566         # TODO: make sure that zeros are clearly identifiable
 
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/subtensor.py in grad(self, inputs, grads)
-    735             # set subtensor here at:
-    736             # theano/tensor/opt.py:local_incsubtensor_of_zeros_to_setsubtensor()
---&gt; 737             first = IncSubtensor(self.idx_list)(x.zeros_like(), gz, *rest)
-    738         return [first] + [DisconnectedType()()] * len(rest)
-    739 
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in _bgrad(self, inputs, outputs, ograds)
+    666                 ret.append(None)
+    667                 continue
+--&gt; 668             ret.append(transform(scalar_igrad))
+    669 
+    670         return ret
 
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/var.py in zeros_like(model, dtype)
-    773 
-    774     def zeros_like(model, dtype=None):
---&gt; 775         return theano.tensor.basic.zeros_like(model, dtype=dtype)
-    776 
-    777     def ones_like(model, dtype=None):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/basic.py in zeros_like(model, dtype, opt)
-   2576     if opt and ret.type == model.type:
-   2577         return ret
--&gt; 2578     return fill(model, ret)
-   2579 
-   2580 
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
+    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+--&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
+    660             return new_r
+    661 
 
 /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py in __call__(self, *inputs, **kwargs)
     251 
