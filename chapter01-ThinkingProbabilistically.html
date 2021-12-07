@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>第 1 章 概率思维 &#8212; Python贝叶斯分析(中文)</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -42,7 +42,7 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
@@ -56,7 +56,10 @@
     <link rel="next" title="第 2 章 概率编程" href="chapter02-ProgrammingProbabilistically.html" />
     <link rel="prev" title="封面" href="preface.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
     
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
@@ -95,7 +98,7 @@
   </a>
  </li>
 </ul>
-<p class="caption" role="heading">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   书籍正文
  </span>
@@ -113,7 +116,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter03-ModellingwithLinearRegression.html">
-   第 3 章 线性回归模型的贝叶斯视角
+   第 3 章 线性回归模型
   </a>
  </li>
  <li class="toctree-l1">
@@ -147,7 +150,7 @@
   </a>
  </li>
 </ul>
-<p class="caption" role="heading">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   文献阅读
  </span>
@@ -339,12 +342,12 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id9">
-       （2）独立同分布变量
+      <a class="reference internal nav-link" href="#i-i-d">
+       （2）独立同分布变量（ I.I.D. ）
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id10">
+      <a class="reference internal nav-link" href="#id9">
        （3）贝叶斯定理
       </a>
      </li>
@@ -353,88 +356,88 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id11">
+  <a class="reference internal nav-link" href="#id10">
    1.3 以单参数的贝叶斯推断为例
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
+    <a class="reference internal nav-link" href="#id11">
      （1）抛硬币问题
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id13">
-     （2）通用模型
+    <a class="reference internal nav-link" href="#id12">
+     （2）贝叶斯框架
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
+    <a class="reference internal nav-link" href="#id13">
      （3）选择似然
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id15">
+    <a class="reference internal nav-link" href="#id14">
      （4）选择先验
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id16">
+    <a class="reference internal nav-link" href="#id15">
      （5）计算后验
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id17">
+    <a class="reference internal nav-link" href="#id16">
      （6）后验诊断
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id18">
+    <a class="reference internal nav-link" href="#id17">
      （7）先验的影响以及选择
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id19">
-   1.4 贝叶斯分析方法的沟通交流
+  <a class="reference internal nav-link" href="#id18">
+   1.4 贝叶斯分析方法中的沟通交流
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id20">
-     1.4.1 模型的概念表示和图形化表示
+    <a class="reference internal nav-link" href="#id19">
+     1.4.1 如何表示贝叶斯模型？
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id21">
-     1.4.2 总结后验
+    <a class="reference internal nav-link" href="#id20">
+     1.4.2 如何对后验分布做汇总分析？
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id22">
+  <a class="reference internal nav-link" href="#id21">
    1.5 后验预测检验
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id23">
-     （1） 后验预测性分布
+    <a class="reference internal nav-link" href="#id22">
+     （1） 后验预测分布
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id24">
-     （2）后验预测检验
+    <a class="reference internal nav-link" href="#id23">
+     （2）后验预测检查
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id25">
+  <a class="reference internal nav-link" href="#id24">
    1.6 总结
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id26">
+  <a class="reference internal nav-link" href="#id25">
    1.7 习题
   </a>
  </li>
@@ -471,7 +474,7 @@
 <h2>1.1 统计、模型与本书途径<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>统计学主要是收集、组织、分析并解释数据，因此，统计学基础知识对数据分析至关重要。数据分析主要使用两种统计方法：</p>
 <ul class="simple">
-<li><p><strong>探索性数据分析（ Exploratory Data Analysis ）</strong> ：利用一些数据汇总信息辅助分析的统计方法，主要包括可视化图表、统计摘要两种手段。常见统计摘要信息有均值、众数、标准差等，此类信息也被称为描述性统计；常见可视化手段包括直方图、散点图等。</p></li>
+<li><p><strong>探索性数据分析（ Exploratory Data Analysis ）</strong> ：利用一些数据汇总信息辅助分析的统计方法，主要包括可视化图表、统计数据汇总两种手段。常见统计数据汇总信息有均值、众数、标准差等，此类信息也被称为描述性统计；常见可视化手段包括直方图、散点图等。</p></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -505,10 +508,10 @@
 <div class="section" id="id4">
 <h3>（2）贝叶斯建模<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p><strong>模型是对给定系统或流程的简化描述</strong>。这些描述被故意设计成只捕获系统中最相关的方面，而不是解释每个细节。这就是为什么更复杂模型并不总是更好的原因。存在许多不同类型的模型，本书中将仅介绍贝叶斯模型。可以使用三个步骤总结贝叶斯建模过程：</p>
-<p>（1）设计模型：给定一些数据以及关于数据生成的假设，通过组合以概率分布为主要内容的模块来设计一个模型。模型是粗略近似的，但通常能够满足需要。</p>
-<p>（2）拟合模型：利用贝叶斯理论将数据和模型结合起来，根据数据和假设推导出逻辑结论，人们称之为经数据拟合后的模型。</p>
-<p>（3）诊断模型：根据多种标准（包括真实数据和领域专业知识），判断模型拟合得是否合理。</p>
-<p>当然，你会发现实际建模过程并非严格按照该顺序进行，有时可能会跳到其中任何一步，原因可能是程序编写错误，也可能是有了新的改进模型，又或者是需要增加更多数据。</p>
+<p><strong>（1）设计模型：</strong> 给定一些数据以及关于数据生成的假设，通过组合以概率分布为主要内容的模块来设计一个模型。模型是粗略近似的，但通常能够满足需要。</p>
+<p><strong>（2）拟合模型：</strong> 利用贝叶斯理论将数据和模型结合起来，根据数据和假设推导出逻辑结论，人们称之为经数据拟合后的模型。</p>
+<p><strong>（3）诊断模型：</strong> 根据多种标准（包括真实数据和领域专业知识），判断模型拟合的是否合理。</p>
+<p>当然，你会发现实际建模过程并非严格按照该顺序进行，有时可能会跳到其中任何一步，原因可能是程序编写错误，也可能是对模型有了新的改进，又或者是需要增加更多数据。</p>
 <p>贝叶斯模型是基于概率构建的，因此也称概率模型。为什么基于概率呢？因为概率能够很好地描述数据中的不确定性，并让我们在满是岔路的花园里不至于迷路。</p>
 </div>
 </div>
@@ -519,13 +522,14 @@
 <h3>1.2.1 解释概率<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>虽然概率论是成熟且久负盛名的数学分支，但对概率的解释不止一种。<strong>从贝叶斯角度看，概率是一种量化命题不确定性水平的度量</strong>。根据该定义，询问火星上有生命的概率、电子质量为 <span class="math notranslate nohighlight">\(9.1 \times 10^{-31}\)</span> 千克的概率或布宜诺斯艾利斯 1816 年 7 月 9 日为晴天的概率是完全有效和自然的。注意，火星上存在或不存在生命，原本是一个结果为 <code class="docutils literal notranslate"><span class="pre">是</span></code> 或 <code class="docutils literal notranslate"><span class="pre">否</span></code> 的二元问题。但考虑到不能完全确定这一事实，明智做法是找出火星上有生命的可能性有多大。</p>
 <p>由于概率的贝叶斯定义与人类认知心理状态有关，所以也被称为概率的主观定义。但任何有科学头脑的人都不会仅仅用自己的想法来回答概率问题，而是会使用所有有关火星的地球物理数据、有关生命必备条件的生化知识等来推断出答案。因此，贝叶斯统计和人们拥有的任何其他成熟科学方法一样都既是主观又是客观的。</p>
-<p>如果没有关于一个问题的任何信息，那么所有可能事件具有相同的可能性，这形式上等同于为每个可能的事件分配相同概率。在没有信息的情况下，不确定性是最大的。相反，如果知道某些事件更有可能发生，那么可以通过给其分配更高概率（或给其他事件分配更少的概率）来形式化表示。此外，用统计语言谈论事件时，通常并不局限于可能发生的事情，例如：小行星撞向地球或姑姑 60 岁的生日派对。事件是一个可以接受任何可能值（或值的集合）的变量，例如：30 岁以上的事件，或去年在世界各地售出的自行车数量。</p>
+<p>如果没有关于一个问题的任何信息，那么所有可能事件具有相同的可能性，这形式上等同于为每个可能的事件分配相同概率。 <strong>在没有信息的情况下，不确定性是最大的。</strong> 相反，如果知道某些事件更有可能发生，那么可以通过给其分配更高概率（或给其他事件分配更少的概率）来形式化表示。此外，用统计语言谈论事件时，通常并不局限于可能发生的事情，例如：小行星撞向地球或姑姑 60 岁的生日派对。事件是一个可以接受任何可能值（或值的集合）的变量，例如：30 岁以上的事件，或去年在世界各地售出的自行车数量。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>参考概率论中有关样本空间、样本点和事件的定义。样本所有可能的值构成样本空间，其中每一个可能的值为样本点，若干样本点的集合构成事件。</p>
 </div>
-<p>概率的概念还与逻辑学有关。在亚里士多德或古典逻辑中，只有取值为真或假的语句。在概率贝叶斯定义下，确定性只是一个特例：真陈述的概率为 1，假陈述的概率为 0。只有在有确凿数据表明某些东西正在生长、繁殖和其他生物相关活动后，才会将火星生命概率定为 1。然而，将概率指定为 0 更难，因为几乎总是可以认为：由于实验或观测的问题，导致了得出火星上没有生命该可能错误的结论。</p>
-<p>与此相关的是克伦威尔规则，该规则指出：应保留使用先验概率 0 或 1 来处理逻辑上正确或错误的陈述。有趣的是，<code class="docutils literal notranslate"><span class="pre">理查德·考克斯（Richard</span> <span class="pre">Cox）</span></code>在数学上证明，如果想要将逻辑扩展到包含不确定性，必须使用概率理论。贝叶斯定理只是概率规则的一个逻辑推论。因此，<strong>贝叶斯统计的另一种思维方式是在处理不确定性时将其作为逻辑的延伸</strong>，当然这与贬义意义上的 “主观推理” 无关。</p>
+<p>概率的概念还与逻辑学有关。</p>
+<p>在亚里士多德或古典逻辑中，只有取值为真或假的语句。在概率贝叶斯定义下，确定性只是一个特例：真陈述的概率为 1，假陈述的概率为 0。只有在有确凿数据表明某些东西正在生长、繁殖和其他生物相关活动后，才会将火星生命概率定为 1。然而，将概率指定为 0 更难，因为几乎总是可以认为：由于实验或观测的问题，导致了得出火星上没有生命该可能错误的结论。</p>
+<p>与此相关的是克伦威尔规则，该规则指出：应保留使用先验概率 0 或 1 来处理逻辑上正确或错误的陈述。有趣的是，<code class="docutils literal notranslate"><span class="pre">理查德·考克斯（Richard</span> <span class="pre">Cox）</span></code>在数学上证明，如果想要将逻辑扩展到包含不确定性，必须使用概率理论。贝叶斯定理只是概率规则的一个逻辑推论。因此，<strong>贝叶斯统计的另一种思维方式是在处理不确定性时将其作为逻辑的延伸</strong>，当然这与贬义意义上的 “主观推断” 无关。</p>
 <p>综上所述，用概率来模拟不确定性并不一定与自然界是“确定性”还是“随机性”的争论有关，也不一定与主观个人信念有关。这是一种纯粹用来建模不确定性的方法论。我们认识到大多数现象很难理解，因为通常不得不处理不完整和（或）有噪声的数据，而本质上人类会受到大脑限制。因此，使用了一种明确考虑不确定性的建模方法。</p>
 </div>
 <div class="section" id="id7">
@@ -543,13 +547,19 @@
 <p>上例表明，通过观测数据的条件作用，可以有效地改变事件发生的概率，即事件的不确定性。条件概率是统计学的核心，不管你的问题是掷骰子还是制造自动驾驶汽车。</p>
 <div class="section" id="id8">
 <h4>（1）概率分布<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
-<p>概率分布是一个数学对象，用来描述不同事件发生的可能性有多大。通常事件以某种方式被限制在一组可能的事件中，例如：骰子的 <span class="math notranslate nohighlight">\(\{1,2,3,4,5,6\}\)</span> 。统计学中一个常见且有用的概念是：<strong>数据是从某个具有未知参数的真实概率分布中生成的</strong>。而<strong>推理是从符合真实概率分布的样本中找出这些参数值的过程</strong>。一般来说，我们无法获得真实的概率分布，因此必须想办法以某种方式创建一个具有近似分布的模型，而概率模型则是通过合理组合概率分布来建立的。</p>
+<p>概率分布是一个数学对象，用来描述不同事件发生的可能性有多大（这在概率编程语言中表现得很明显）。通常事件以某种方式被限制在一组可能的事件中，例如：骰子的 <span class="math notranslate nohighlight">\(\{1,2,3,4,5,6\}\)</span> 。统计学中一个常见且有用的概念是：<strong>数据是从某个具有未知参数的真实概率分布中生成的，而推断是从符合真实概率分布的样本中找出这些参数值的过程</strong>。一般来说，我们无法获得真实的概率分布，因此必须想办法以某种方式创建一个具有近似分布的模型，而概率模型则是通过合理组合概率分布来建立的。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>请注意，一般来说不能确定一个模型是否正确，因此需要评估和批判模型，以便获得信心并说服他人相信模型适用于想要探索或解决的问题。</p>
+<p>请注意，一般来说不能确定一个模型是否正确，因为理论上所有模型都是错误的，我们能够做的是严谨地 <strong>评估和批判模型</strong> ，以便获得信心并说服他人相信模型适用于想要探索或解决的问题。</p>
 </div>
-<p>如果一个变量 <span class="math notranslate nohighlight">\(X\)</span> 可以用概率分布来描述，即可以称之为随机变量 <span class="math notranslate nohighlight">\(X\)</span> 。一般来说，使用大写字母（如 <span class="math notranslate nohighlight">\(X\)</span>） 来表示一个随机变量，使用大写字母粗体（如 <span class="math notranslate nohighlight">\(mathbb{X}\)</span> ）来表示一个随机向量；并用小写 <span class="math notranslate nohighlight">\(x\)</span> 表示该随机变量的一个实例（取值），使用小写粗体 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span> 表示随机向量的一个实例（取值）。此外，统计学中通常用大写的 <span class="math notranslate nohighlight">\(N\)</span> 表示样本数量， 用小写的 <span class="math notranslate nohighlight">\(p\)</span> 表示随机向量的维度。</p>
-<p>让我们看一个使用 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 的示例：真实概率分布是均值 <span class="math notranslate nohighlight">\(\mu=0\)</span> 和方差 <span class="math notranslate nohighlight">\(\sigma=1\)</span> 的正态（或高斯）分布；这两个参数完全明确地定义了正态分布。使用 SciPy，可以通过编写 <code class="docutils literal notranslate"><span class="pre">stats.Norm(μ，σ)</span></code> 来定义随机变量，并且使用 <code class="docutils literal notranslate"><span class="pre">rvs</span></code> （random variates 的缩写）方法生成一个实例 <span class="math notranslate nohighlight">\(x\)</span> 。而下面示例中，代码要求提供三个值：</p>
+<p>如果一个变量 <span class="math notranslate nohighlight">\(X\)</span> 可以用概率分布来描述，即可以称之为随机变量 <span class="math notranslate nohighlight">\(X\)</span> 。一般来说，使用大写字母表示变量，用小写字母表示该变量的一个实例，用正常体表示一个标量，而用粗体表示一个向量。</p>
+<p>例如：</p>
+<ul class="simple">
+<li><p>使用大写字母（如： <span class="math notranslate nohighlight">\(X\)</span>） 来表示一个随机的标量，使用大写字母粗体（如 <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> ）来表示一个随机的向量；用小写 <span class="math notranslate nohighlight">\(x\)</span> 表示随机变量的一个实例（样本、取值），使用小写粗体 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 表示随机向量的一个实例（取值）。</p></li>
+<li><p>使用希腊字母（如：<span class="math notranslate nohighlight">\(\alpha, \beta,\gamma\)</span> 等）表示模型参数，在贝叶斯框架下，模型参数被视为随机变量，因此用小写的 <span class="math notranslate nohighlight">\(\alpha, \beta,\gamma\)</span> 表示标量形式的模型参数，而用粗体 <span class="math notranslate nohighlight">\(\boldsymbol{\alpha, \beta,\gamma}\)</span> 表示向量形式的参数。</p></li>
+</ul>
+<p>此外，统计学中习惯于用大写的 <span class="math notranslate nohighlight">\(N\)</span> 表示样本数量， 用小写的 <span class="math notranslate nohighlight">\(p\)</span> 表示随机向量的维度。</p>
+<p>让我们看一个使用 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 的示例：真实概率分布是均值 <span class="math notranslate nohighlight">\(\mu=0\)</span> 和方差 <span class="math notranslate nohighlight">\(\sigma=1\)</span> 的正态（或高斯）分布；这两个参数完全明确地定义了正态分布。使用 SciPy，可以通过编写 <code class="docutils literal notranslate"><span class="pre">stats.Norm(μ，σ)</span></code> 来定义随机变量，并且使用 <code class="docutils literal notranslate"><span class="pre">rvs</span></code> （random variates 的缩写）方法生成一个实例（或样本） <span class="math notranslate nohighlight">\(x\)</span> 。而下面示例中，代码要求提供三个值：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -561,13 +571,8 @@
 <span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
 
 <span class="n">az</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;arviz-darkgrid&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">μ</span> <span class="o">=</span> <span class="mf">0.</span>
+
+<span class="n">μ</span> <span class="o">=</span> <span class="mf">0.</span>
 <span class="n">σ</span> <span class="o">=</span> <span class="mf">1.</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">μ</span><span class="p">,</span> <span class="n">σ</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -575,22 +580,23 @@
 </div>
 </div>
 </div>
-<p>您会注意到，每次执行此代码（统计术语为：一次试验）时，将获得不同随机结果。同时还需注意，一旦知道了概率分布参数的值，则每个值的概率就是已知的，随机发生的是每次试验中获得的确切值。</p>
+<p>您会注意到，每次执行此代码（统计术语为：做一次试验）时，<span class="math notranslate nohighlight">\(x\)</span> 将获得不同随机结果。同时还需注意，<strong>一旦知道了概率分布的参数值，则每个可选值的概率就是已知的，随机发生的是每次试验中获得的确切值</strong>。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>关于随机的含义，一个常见误解是：可以从随机变量中得到任何可能的值，或认为所有值都是等可能的。</p>
+<p>关于随机的含义，一个常见误解是：可以从随机变量中得到任何可能的值，或潜意识里面认为所有值都是等可能的。而事实上随机变量应当遵循一定可能值域范围上的概率分布（离散）或概率密度（连续），而且每个可能值的概率通常不一样，因此某些值可能永远抽不到或者很少概率会被抽到，而某些值则被抽到的概率很多大。以高斯（正态）分布为例，均值附近的点被抽中的概率显然要远远大于距其 <span class="math notranslate nohighlight">\(2σ\)</span> 处的点。</p>
 </div>
-<p>随机变量的可能值及其概率是由概率分布严格控制的，随机性只是因为人们无法预测在每次试验中将要得到的确切值。每次执行前面的代码，都会得到三个不同数字，但如果重复代码数千次，将能够经验性地检查 <span class="math notranslate nohighlight">\(\mu\)</span> 的平均值是否在零附近，以及 95% 的样本值是否在 [-1.96，+1.96] 范围内。当然如果研究正态分布的数学性质，我们可以得出同样的结论。</p>
-<p>统计学中表示变量随参数 <span class="math notranslate nohighlight">\(\mu,\sigma\)</span> 呈正态分布的形式为：</p>
+<p>随机变量的可选值及其概率是由概率分布严格控制的，随机性只是因为人们无法预测在每次具体试验中会得到的哪个确切值。因此，每次执行前面的代码，都会得到三个不同数字，但如果重复该代码数千次，将能够经验性（即通过历史试验数据）地检查 <span class="math notranslate nohighlight">\(\mu\)</span> 的平均值是否在零附近，以及 95% 的样本值是否在 [-1.96，+1.96] 范围内。当然如果研究正态分布的数学性质，我们可以得出同样的结论。</p>
+<p>统计学中表示随机变量呈正态分布的表达形式为（参数为 <span class="math notranslate nohighlight">\(\mu,\sigma\)</span> ）：</p>
 <div class="math notranslate nohighlight">
 \[x \sim \mathcal{N}(\mu,\sigma) \tag{式1.2} \label{式1.2}\]</div>
-<p>在本书中，当看到波浪号“ <span class="math notranslate nohighlight">\(\sim\)</span> ”符号时，读为：<span class="math notranslate nohighlight">\(x\)</span> 服从 … 分布。</p>
-<p>在许多文献中，常用方差而不是标准差来表示正态分布，记作 <span class="math notranslate nohighlight">\(\mathcal{N}(\mu,\sigma^2)\)</span> 。本书中，我们将使用标准差来做正态分布的参数，首先是因为它更容易解释，其次是因为  <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>  是这样工作的。</p>
-<p>在本书后面将遇到很多概率分布；每次出现一个概率分布，都会花一些时间来介绍它。首先从正态分布开始，因为它类似于概率分布中的宙斯。如果变量值由以下表达式规定，则变量服从高斯分布：</p>
+<p>在本书中，当看到波浪号“ <span class="math notranslate nohighlight">\(\sim\)</span> ”符号时，读为：<span class="math notranslate nohighlight">\(x\)</span> 服从 “某某” 分布。</p>
+<p>在很多文献中，也会用方差而不是标准差来表示正态分布，记作 <span class="math notranslate nohighlight">\(\mathcal{N}(\mu,\sigma^2)\)</span> 。本书中约定，使用标准差来做正态分布的参数。一是因为其更容易解释，二是因为  <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 采用了这种表示方法。</p>
+<p>在本书后面将遇到很多概率分布；每次出现一个概率分布，都会花一些时间来介绍它。首先从正态分布开始，因为它是最终的一种概率分布。</p>
+<p>如果变量值能够由以下表达式规定，则变量服从高斯分布：</p>
 <div class="math notranslate nohighlight">
 \[p(x \mid \mu, \sigma)=\frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{(x-\mu)^{2}}{2 \sigma^{2}}}\tag{式1.3} \label{式1.3}\]</div>
-<p>这是正态分布的概率密度函数。不需要记住公式 1.3，此处只想展示给大家看，这样就能知道数字是从哪里来的。正如已经提到的，<span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 是该分布的参数，通过指定这些参数值，完全可以定义分布；可以从表达式 1.3 中看到这一点，因为其他项都是常量。<span class="math notranslate nohighlight">\(\mu\)</span> 可以取任何实值，即 <span class="math notranslate nohighlight">\(\mu \in \mathbf{R}\)</span> ，并指定分布的平均值 （以及中位数或众数）。<span class="math notranslate nohighlight">\(\sigma\)</span> 是标准差，它只能是正数，表示概率分布的散布情况，值越大分布越分散。因为 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 有无限多个可能组合，所以存在无限多个高斯分布的实例，并且所有实例都属于相同的高斯族。</p>
-<p>数学公式简明扼要而且不存在二义性。但必须承认，第一次遇到它会让人害怕，特别是对数学不太感兴趣的人；打破僵局的一个好方法是使用 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 来探索它们：</p>
+<p>上式是正态分布的概率密度函数。读者们不需要记住公式，此处只想展示给大家看，以便知道数字的由来。正如已经提到的，<span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 是该分布的参数，通过指定这些参数值，就可以定义分布；可以从表达式 1.3 中看到这一点，因为其他项都是常量。<span class="math notranslate nohighlight">\(\mu\)</span> 可以取任何实值（ 即 <span class="math notranslate nohighlight">\(\mu \in \mathbb{R}\)</span> ），并指定了该分布的平均值 （由于正态分布呈对称形态，所以同时指定了中位数或众数）。<span class="math notranslate nohighlight">\(\sigma\)</span> 是标准差，只能为正数，表示概率分布的散布情况，值越大分布越分散。由于 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 有无限多个可能组合，所以存在无限多个高斯分布的实例，并且所有实例都属于高斯族。</p>
+<p>数学公式简明扼要并且不存在二义性。但第一次遇到它会让人害怕，特别是对数学不太感兴趣的人；打破僵局的一个好方法是使用 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 来探索它们：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mu_params</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
@@ -618,25 +624,24 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[]
 </pre></div>
 </div>
-<img alt="_images/chapter01-ThinkingProbabilistically_4_1.png" src="_images/chapter01-ThinkingProbabilistically_4_1.png" />
+<img alt="_images/chapter01-ThinkingProbabilistically_3_1.png" src="_images/chapter01-ThinkingProbabilistically_3_1.png" />
 </div>
 </div>
-<p>前面大部分代码用于绘图，概率部分由 <code class="docutils literal notranslate"><span class="pre">y=stats.norm(u，sd).pdf(X)</span></code> 执行。在给定一组 <span class="math notranslate nohighlight">\(x\)</span> 值的 <span class="math notranslate nohighlight">\(µ\)</span> 和 <span class="math notranslate nohighlight">\(sd\)</span> 参数的情况下，通过这条线，可以评估正态分布的概率密度函数。前面的代码生成图 1.1。在每个子图中，我们有一条蓝色（深灰色）曲线，表示具有特定参数的高斯分布，并且包含在每个子图的图例中：</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>本书中大多数数字都是直接从它们前面的代码生成的，很多时候甚至没有将代码与数字联系起来的前导短语。使用 Jupyter 笔记本或 Jupyter Lab 的人应该熟悉这种模式。</p>
-</div>
+<p>前面大部分代码用于绘图，概率部分由 <code class="docutils literal notranslate"><span class="pre">y=stats.norm(u，sd).pdf(X)</span></code> 执行。在给定一组 <span class="math notranslate nohighlight">\(x\)</span> 值的 <span class="math notranslate nohighlight">\(mu\)</span> 和 <span class="math notranslate nohighlight">\(sd\)</span> 参数的情况下，通过这条线，可以评估正态分布的概率密度函数。前面的代码生成图 1.1。在每个子图中都有一条蓝色曲线，表示具有特定参数的高斯分布，相应参数包含在每个子图的图例中：</p>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210430230432_cf.webp" style="zoom:67%;" />
-<p>图1.1</p>
+<p><strong>图1.1 不同参数下的正态分布。</strong></p>
 </center>
 <p>随机变量有两种类型：连续型和离散型。连续变量可以取某个区间中的任何值（可以用 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 的浮点数来表示），而离散变量只能取某些值（可以用 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 的整数来表示）。正态分布是一种典型的连续变量分布。</p>
-<p>请注意，前图中 <code class="docutils literal notranslate"><span class="pre">ytick</span></code> 被省略了；这是故意为之，而不是 <code class="docutils literal notranslate"><span class="pre">bug</span></code>。省略的原因是，这些值不会添加太多相关信息，但可能会让人感到困惑。解释一下：<span class="math notranslate nohighlight">\(y\)</span> 轴上的实际数字其实并不重要，重要的是它们之间的相对值。如果从 <span class="math notranslate nohighlight">\(x\)</span> 中取两个值，比方说 <span class="math notranslate nohighlight">\(x_i\)</span> 和 <span class="math notranslate nohighlight">\(x_j\)</span> ，并且有 <span class="math notranslate nohighlight">\(p(x_i)=2p(x_j)\)</span> （在曲线图中高出两倍），你可以确切地说，<span class="math notranslate nohighlight">\(x_i\)</span> 取值的概率是<span class="math notranslate nohighlight">\(x_j\)</span> 概率的两倍。在处理连续分布时，最棘手的是 <span class="math notranslate nohighlight">\(y\)</span> 轴上的值不是概率，而是概率密度。为得到一个合适的概率，你必须在给定区间内积分。也就是说，必须计算该区间曲线下方的面积。虽然概率不能大于 1，但概率密度可以，不过概率密度曲线下的总面积限制为 1。从数学角度理解概率和概率密度之间的差异是至关重要的。</p>
+<p>请注意，前图中 <code class="docutils literal notranslate"><span class="pre">ytick</span></code> 被省略了；这是故意为之，而不是 <code class="docutils literal notranslate"><span class="pre">bug</span></code>。省略的原因是，这些值不会添加太多相关信息，但可能会让人感到困惑。解释一下：<span class="math notranslate nohighlight">\(y\)</span> 轴上的实际数字其实并不重要，重要的是它们之间的相对值。如果从 <span class="math notranslate nohighlight">\(x\)</span> 中取两个值，比方说 <span class="math notranslate nohighlight">\(x_i\)</span> 和 <span class="math notranslate nohighlight">\(x_j\)</span> ，并且有 <span class="math notranslate nohighlight">\(p(x_i)=2p(x_j)\)</span> （在曲线图中高出两倍），你可以确切地说，<span class="math notranslate nohighlight">\(x_i\)</span> 取值的概率是<span class="math notranslate nohighlight">\(x_j\)</span> 概率的两倍。在处理连续分布时，最棘手的是 <span class="math notranslate nohighlight">\(y\)</span> 轴上的值不是概率，而是概率密度。为得到一个合适的概率，你必须在给定区间内积分。也就是说，必须计算该区间曲线下方的面积。虽然概率不能大于 1，但概率密度可以，不过概率密度曲线下的总面积限制为 1。不管怎么说，从数学角度理解概率和概率密度之间的差异是至关重要的。</p>
 </div>
-<div class="section" id="id9">
-<h4>（2）独立同分布变量<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
-<p>许多模型假设不同随机变量的值来自于同一分布中的抽样，但这些随机变量的取值之间彼此独立。此情况通常其为独立同分布（简称iid）变量。 相互独立在数学记数法上可表示为 <span class="math notranslate nohighlight">\(p(x,y)=p(x)p(y)\)</span> ，即对于 <span class="math notranslate nohighlight">\(x\)</span> 和 <span class="math notranslate nohighlight">\(y\)</span> 的每个值，两个变量是独立的。</p>
-<p>非iid变量的常见案例是时间序列，其中随机变量间的时间依赖性是需要考虑的关键特征。例如，以下数据来自 <a class="reference external" href="http://cdiac.esd.ornl.gov">http://cdiac.esd.ornl.gov</a> 。该数据记录了从1959年到1997年的大气二氧化碳水平。加载数据并绘制它得到：</p>
+<div class="section" id="i-i-d">
+<h4>（2）独立同分布变量（ I.I.D. ）<a class="headerlink" href="#i-i-d" title="Permalink to this headline">¶</a></h4>
+<p>许多模型假设不同随机变量的取值抽取自同一概率分布，只不过这些取值之间彼此独立。此情况通常被称为独立同分布（简称 i.i.d. ）变量。常见的 i.i.d. 情况是假设不同样本点之间相互独立。</p>
+<blockquote>
+<div><p>相互独立在数学记数法上可表示为 <span class="math notranslate nohighlight">\(p(x,y)=p(x)p(y)\)</span> ，即对于 <span class="math notranslate nohighlight">\(x\)</span> 和 <span class="math notranslate nohighlight">\(y\)</span> 的每个值，两个变量是独立的。</p>
+</div></blockquote>
+<p>非 i.i.d. 的常见案例是时间序列，其中随机变量间的时间依赖性是必须要考虑的关键特征。例如，以下数据来自 <a class="reference external" href="http://cdiac.esd.ornl.gov">http://cdiac.esd.ornl.gov</a> 。该数据记录了从1959年到1997年的大气二氧化碳水平。加载数据并绘制它得到：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s1">&#39;../data/mauna_loa_CO2.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
@@ -652,17 +657,17 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$CO_2$ (ppmv)&#39;)
 </pre></div>
 </div>
-<img alt="_images/chapter01-ThinkingProbabilistically_6_1.png" src="_images/chapter01-ThinkingProbabilistically_6_1.png" />
+<img alt="_images/chapter01-ThinkingProbabilistically_5_1.png" src="_images/chapter01-ThinkingProbabilistically_5_1.png" />
 </div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210524144726a0.webp" /></p>
-<p>图 1.2</p>
+<p><strong>图 1.2 不同季节和年份的二氧化碳浓度之间存在相关性</strong></p>
 </center>
 <p>图中每个数据点为一个变量，对应当月测得的大气二氧化碳水平，可以很容易看出每个月的测量数据之间并不独立，数据点之间存在时间依赖性。事实上，图中呈现有两种趋势：一是季节性趋势(与植被的生长和衰退周期有关)，另一种是全球趋势，表明大气中的二氧化碳浓度越来越高。</p>
 </div>
-<div class="section" id="id10">
-<h4>（3）贝叶斯定理<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id9">
+<h4>（3）贝叶斯定理<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <p>到目前为止，我们已经学习了一些统计学中的基本概念和词汇，接下来看看神奇的贝叶斯定理：</p>
 <div class="math notranslate nohighlight">
 \[p(\theta \mid y)=\frac{p(y \mid \theta) p(\theta)}{p(y)}\tag{式1.4} \label{式1.4}\]</div>
@@ -678,45 +683,47 @@
 \[p ( \theta | y ) p ( y ) = p ( y | \theta ) p ( \theta )\tag{式1.7} \label{式1.7}\]</div>
 <p>对上式调整下顺序，便得到了公式 1.4 的贝叶斯定理。</p>
 <p>现在，看看该式的含义及重要性。首先，上式表明 <span class="math notranslate nohighlight">\(p(\theta|y)\)</span> 和 <span class="math notranslate nohighlight">\(p(y|\theta)\)</span> 不一定相等，日常分析中即使系统学习过统计学和概率论的人也很容易忽略这点。举个简单例子来说明为什么二者不一定相等：“有两条腿的动物就是人” 的概率和 “人有两条腿” 的概率显然不同。几乎所有人都有两条腿，但是有两条腿的动物很多不是人类，比如鸟类。</p>
-<p>在贝叶斯定理中，如果将 <span class="math notranslate nohighlight">\(\theta\)</span> 理解为<strong>假设</strong>，将 <span class="math notranslate nohighlight">\(y\)</span> 理解为<strong>数据</strong>，那么贝叶斯定理告诉我们的就是，在给定数据的条件下如何计算假设成立的概率。那么如何把假设融入贝叶斯定理中去呢？答案是概率分布。换句话说，此处假设是一种狭义上的假设，我们所做的实际上是寻找模型的参数（更准确地说是参数的分布）。</p>
-<p>贝叶斯定理是贝叶斯统计的核心，正如我们将在第二章中看到的那样，使用  <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>  等工具进行概率编程使我们不必在每次构建贝叶斯模型时显式编写贝叶斯定理。尽管如此，知道各部分名称还是很重要得，因为我们将不断引用它们，理解每个部分的含义也很重要，因为这将帮助我们概念化模型，所以定义：</p>
+<p>在贝叶斯定理中，如果将 <span class="math notranslate nohighlight">\(\theta\)</span> 理解为<strong>假设</strong>，将 <span class="math notranslate nohighlight">\(y\)</span> 理解为<strong>数据</strong>，那么<strong>贝叶斯定理</strong>告诉我们的就是：<strong>在给定数据的条件下如何计算假设成立的概率</strong>。</p>
+<p>那么如何把假设融入贝叶斯定理中去呢？答案是概率分布。换句话说，此处假设是一种狭义上的假设，我们所做的实际上是寻找模型的参数（更准确地说是模型参数的概率分布）。</p>
+<p>贝叶斯定理是贝叶斯统计的核心，正如将在第二章中看到的那样，使用  <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 等工具进行概率编程使我们不必在每次构建贝叶斯模型时显式编写贝叶斯定理。尽管如此，知道各部分名称还是很重要的，因为后文中将不断引用这些名词。理解每个部分的含义也很重要，因为这将帮助我们概念化模型，所以定义：</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(p(\theta)\)</span>：先验分布，简称（Prior）；</p></li>
-<li><p><span class="math notranslate nohighlight">\(p(y|\theta)\)</span> ：似然（Likelihood）；</p></li>
-<li><p><span class="math notranslate nohighlight">\(p(\theta|y)\)</span>：后验分布，简称（Posterior）；</p></li>
-<li><p><span class="math notranslate nohighlight">\(p(y)\)</span>：证据或边缘似然（Marginal likelihood）。</p></li>
+<li><p><span class="math notranslate nohighlight">\(p(\theta)\)</span> ：先验分布，简称先验（Prior）；</p></li>
+<li><p><span class="math notranslate nohighlight">\(p(y|\theta)\)</span> ：似然函数，简称似然（Likelihood）；</p></li>
+<li><p><span class="math notranslate nohighlight">\(p(\theta|y)\)</span>：后验分布，简称后验（Posterior）；</p></li>
+<li><p><span class="math notranslate nohighlight">\(p(y)\)</span>：边缘似然或证据（Marginal likelihood）。</p></li>
 </ul>
-<p>先验分布反映的是在观测到数据之前我们对参数的了解，如果对参数一无所知，可以用一个不包含太多信息的分布（如均匀分布）来表示。由于引入了先验，有些人会认为贝叶斯统计是偏主观的，但实际上先验不过是构建模型时得一些假设罢了，其主观性跟似然差不多。</p>
-<p>似然是指如何在实验分析中引入观测数据，<strong>反映的是在给定参数下得到某组观测数据的可信度</strong>。</p>
-<p>后验分布是贝叶斯分析的结果，**反映的是在给定数据和模型条件下我们对问题的全部认知。**需要注意，后验指的是模型中参数的概率分布而不是单个值，该分布正比于先验乘以似然。</p>
-<p>曾经有这么个笑话：<strong>贝叶斯学派就像是这样一类人，心里隐约期待着一匹马，偶然间瞥见了一头驴，结果坚信他看到的是一头骡子</strong>。当然，如果要刻意纠正该笑话的话，在先验和似然都比较含糊的情况下，我们会得到一个（模糊的）“骡子”的后验。不过，该笑话也讲出了一个道理：后验其实是对先验和似然的某种折中。</p>
-<p>从概念上讲，<strong>后验可以看做是在观测到数据之后对先验的更新</strong>。事实上，某一次分析的后验，在收集到新数据之后，也可以视为下一次分析中的先验。这使得贝叶斯分析特别适合于序列化数据分析，比如：通过实时处理来自气象站和卫星的数据提前预警灾害，感兴趣的读者可以阅读 “在线机器学习” 方面的算法。</p>
-<p>最后一个概念是证据，也称作边缘似然。证据是在模型参数取遍所有可能值的条件下得到指定观测值的概率平均。不过，本书大部分内容不关心该概念，可以简单地视其为归一化系数。我们更关心参数的相对值而非绝对值。把证据这一项忽略掉之后，贝叶斯定理可以表示成如下正比形式：</p>
+<p><strong>先验分布反映的是在观测到数据之前我们对参数的了解</strong>，如果对参数一无所知，可以用一个不包含太多信息的分布（如均匀分布）来表示。由于引入了先验，频率主义学派会认为贝叶斯统计偏主观，但实际上先验仅仅是构建模型时的一些假设而已，其主观性跟似然相似。既然似然能够主观设计，为什么先验不行呢？</p>
+<p><strong>似然函数反映的是在给定参数条件下得到某组观测数据的可信度</strong>。这里需要注意的是：由于在给定参数时，模型、参数和观测数据都是确定的，因此似然仅仅是一个输入为参数值，输出为可信度值的函数而已，并不是一个概率分布。</p>
+<p><strong>后验分布反映的是在给定数据和模型条件下我们对问题的全部认知，是贝叶斯分析（更新）的结果</strong>。需要注意，后验分布是一个概率分布，代表了在数据支撑下模型中所有参数的可能取值和概率。后验分布正比于先验分布和似然函数的乘积。</p>
+<blockquote>
+<div><p>曾经有这么个笑话：<strong>贝叶斯学派就像是这样一类人，心里隐约期待着一匹马，偶然间瞥见了一头驴，结果坚信他看到的是一头骡子</strong>。当然，如果要刻意纠正该笑话的话，在先验和似然都比较含糊的情况下，我们会得到一个（模糊的）“骡子”的后验。不过，该笑话也讲出了一个真实道理：后验其实是对先验和似然的某种折中。</p>
+<p>从概念上讲，<strong>后验可以看做是在观测到数据之后对先验的更新</strong>。事实上，某一次分析的后验，在收集到新数据之后，也可以视为下一次分析中的先验。这使得贝叶斯分析特别适合于序列化数据分析，比如：通过实时处理来自气象站和卫星的数据提前预警灾害，感兴趣的读者可以阅读 “<em>在线机器学习</em>” 方面的算法。</p>
+</div></blockquote>
+<p><strong>边缘似然（也称证据）是在模型参数取遍所有可能值的条件下，得到指定观测值的平均概率。正是基于这一点，边缘似然通常被视为模型选择时的基本度量。</strong> 不过本书大部分内容不涉及该概念，可以简单地视其为归一化系数。我们更关心参数的相对值而非绝对值。把证据这一项忽略掉之后，贝叶斯定理可以表示成如下正比形式：</p>
 <div class="math notranslate nohighlight">
 \[p(\theta \mid y) \propto p(y \mid \theta) p(\theta) \tag{式1.8} \label{式1.8}\]</div>
 <p>理解其中每个概念可能需要时间和更多例子，本书也将围绕这些内容展开。</p>
 </div>
 </div>
 </div>
-<div class="section" id="id11">
-<h2>1.3 以单参数的贝叶斯推断为例<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id10">
+<h2>1.3 以单参数的贝叶斯推断为例<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
 <p>前面学习了几个重要概念，其中有两个是贝叶斯统计的核心概念，在此再重新强调下：</p>
-<ol class="simple">
-<li><p><strong>概率是用来衡量我们对参数的不确定性的。</strong></p></li>
-<li><p><strong>贝叶斯定理是根据新数据正确更新这些概率的机制，有望减少不确定性。</strong></p></li>
-</ol>
+<p><strong>第一，概率是用来衡量我们对参数的不确定性的。</strong></p>
+<p><strong>第二，贝叶斯定理是根据新数据正确更新这些概率的机制，有望减少不确定性。</strong></p>
 <p>接下来从简单例子入手，通过推断单个未知参数来学习如何进行贝叶斯统计。</p>
-<div class="section" id="id12">
-<h3>（1）抛硬币问题<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3>（1）抛硬币问题<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>抛硬币是统计学中的经典问题，其描述如下：随机抛一枚硬币，重复一定次数，记录正面朝上和反面朝上的次数，根据数据回答诸如这枚硬币是否公平，以及更进一步这枚硬币有多不公平等问题。抛硬币是学习贝叶斯统计非常好的例子，一方面是因为几乎人人都熟悉抛硬币的过程，另一方面是因为该模型很简单，可以很容易计算并解决该问题。此外，许多真实问题都包含两个互斥的结果，例如 0 或 1、正或负、奇数或偶数、垃圾邮件或正常邮件、安全或不安全、健康或不健康等。因此，尽管我们讨论的是硬币，该模型也同样适用于前面这些问题。</p>
 <p>为了用贝叶斯学派理论估计硬币的偏差，需要数据和一个概率模型。对于抛硬币问题，假设已试验了一定次数并且记录了正面朝上的次数，也就是说数据部分已具备，剩下就是模型部分了。考虑到这是第一个模型，我们会列出所有必要的数学公式，并且一步一步推导。下一章中，我们会重新回顾该问题，并借用  <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>  从数值上解决它（也就是说那部分不需要手动推导，而是利用  <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code>  和计算机来完成）。</p>
 </div>
-<div class="section" id="id13">
-<h3>（2）通用模型<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
-<p>首先抽象出一个概念：“偏差”。我们称，如果一枚硬币总是正面朝上，那么其偏差 1，反之，如果总是反面朝上，那么其偏差是 0，如果正面朝上和反面朝上的次数各占一半，那么其偏差是 0.5。这里用参数 <span class="math notranslate nohighlight">\(θ\)</span> 来表示偏差，用 <span class="math notranslate nohighlight">\(y\)</span> 表示 <span class="math notranslate nohighlight">\(N\)</span> 次抛硬币实验中正面朝上的次数。根据贝叶斯定理，需要指定先验 <span class="math notranslate nohighlight">\(p(\theta)\)</span> 和似然 <span class="math notranslate nohighlight">\(p(y|\theta)\)</span> 分别是什么。先从似然开始。</p>
+<div class="section" id="id12">
+<h3>（2）贝叶斯框架<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>首先抽象出一个概念：“偏好”。我们称，如果一枚硬币总是正面朝上，那么其偏好为 1，反之，如果总是反面朝上，那么其偏好为 0，如果正面朝上和反面朝上的次数各占一半，那么其偏好为 0.5。这里用参数 <span class="math notranslate nohighlight">\(θ\)</span> 来表示偏好，用 <span class="math notranslate nohighlight">\(y\)</span> 表示 <span class="math notranslate nohighlight">\(N\)</span> 次抛硬币实验中正面朝上的次数。</p>
+<p>根据贝叶斯定理，需要指定先验 <span class="math notranslate nohighlight">\(p(\theta)\)</span> 和似然 <span class="math notranslate nohighlight">\(p(y|\theta)\)</span> 分别是什么。</p>
 </div>
-<div class="section" id="id14">
-<h3>（3）选择似然<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h3>（3）选择似然<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>假设多次抛硬币的结果之间相互没有影响，也就是说每次抛硬币都是独立的实验，同时假设结果只有两种可能：正面朝上或反面朝上。基于该假设可以看出，二项分布是不错的似然候选：</p>
 <div class="math notranslate nohighlight">
 \[p(y \mid \theta, N)=\frac{N !}{y !(N-y) !} \theta^{y}(1-\theta)^{N-y} \tag{式1.9} \label{式1.9}\]</div>
@@ -745,18 +752,20 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/chapter01-ThinkingProbabilistically_8_0.png" src="_images/chapter01-ThinkingProbabilistically_8_0.png" />
+<img alt="_images/chapter01-ThinkingProbabilistically_7_0.png" src="_images/chapter01-ThinkingProbabilistically_7_0.png" />
 </div>
 </div>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505153120_1a.webp" style="zoom:67%;" />
-<p>图1.2</p>
+<blockquote>
+<div><p><strong>图 1.3 不同参数时的二项分布。</strong> 注意，此图仅为了向读者展示不同参数情况下二项分布的形状，并非为了展示似然函数。实际上，由于观测数据是确定的（即每个图中的 <span class="math notranslate nohighlight">\(y\)</span> 仅能选一个点），所以在给定参数的情况下，似然函数值也是确定的。</p>
+</div></blockquote>
 </center>
 <p>二项分布是似然的一个合理选择，直观上看，<span class="math notranslate nohighlight">\(θ\)</span> 可以看作抛一次硬币时正面朝上的可能性，并且该过程发生了 <span class="math notranslate nohighlight">\(y\)</span> 次。类似地，可以把 <span class="math notranslate nohighlight">\(1−θ\)</span> 看作抛一次硬币时反面朝上的概率，并且该过程发生了 <span class="math notranslate nohighlight">\(N−y\)</span> 次。</p>
 <p>假如知道了 <span class="math notranslate nohighlight">\(θ\)</span>，就可以从二项分布得出硬币正面朝上的分布。如果不知道 <span class="math notranslate nohighlight">\(θ\)</span> 也别灰心，在贝叶斯统计中，当不知道某个参数的时候，就对其赋予一个先验。</p>
 </div>
-<div class="section" id="id15">
-<h3>（4）选择先验<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3>（4）选择先验<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>此处选用贝叶斯统计中最常见的贝塔分布作为先验，其数学形式如下：</p>
 <div class="math notranslate nohighlight">
 \[p(\theta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \Gamma(\beta)} \theta^{\alpha-1}(1-\theta)^{\beta-1} \tag{式1.10} \label{式1.10}\]</div>
@@ -789,37 +798,42 @@
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.07, 0.5, &#39;p(θ)&#39;)
 </pre></div>
 </div>
-<img alt="_images/chapter01-ThinkingProbabilistically_10_1.png" src="_images/chapter01-ThinkingProbabilistically_10_1.png" />
+<img alt="_images/chapter01-ThinkingProbabilistically_9_1.png" src="_images/chapter01-ThinkingProbabilistically_9_1.png" />
 </div>
 </div>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505153642_8f.webp" style="zoom:67%;" />
-<p>图1.3</p>
+<blockquote>
+<div><p><strong>图1.4 不同参数情况下的贝塔分布。</strong></p>
+</div></blockquote>
 </center>
-<p>为什么要在模型中使用贝塔分布呢？原因之一是：贝塔分布的范围限制在 0 到 1 之间，跟我们的参数一样；另一原因是其通用性，从前图可看出，该分布有多种形状，包括均匀分布、类高斯分布、U 型分布等。第三个原因是：贝塔分布是二项分布的共轭先验。对于贝叶斯定理，似然的共轭先验是指：将该先验与似然组合在一起后，得到的后验与先验分布的表达形式是一样的。简单说，就是用贝塔分布作为先验、二项分布作为似然时，我们会得到一个贝塔分布形式的后验。</p>
-<p>除贝塔分布之外还有许多其他共轭先验，例如：高斯分布的共轭先验就是高斯分布。共轭确保了后验的数学可处理性，这一点非常重要，因为贝叶斯统计学中常见的问题是很难或无法解析地计算得到后验分布。在MCMC、变分法等现代后验计算方法出现之前，共轭先验是贝叶斯统计的一项重大突破。不过从第二章概率编程开始，将主要介绍如何使用现代计算方法来解决贝叶斯问题。</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>有关共轭先验的知识，参见相关文献。共轭先验是 MCMC、变分等数值推断方法出现前，解决后验概率推断问题的主要方法。</p>
+<p>为什么要在模型中使用贝塔分布呢？</p>
+<ul class="simple">
+<li><p><strong>原因一：</strong> 贝塔分布的范围限制在 0 到 1 之间，符合我们对偏好参数的需要；</p></li>
+<li><p><strong>原因二：</strong> 贝塔分布具有通用性，从图中可以看出，其有多种可选择的形状，包括均匀分布、类高斯分布、U 型分布等。</p></li>
+<li><p><strong>原因三：贝塔分布是二项分布的共轭先验。</strong> 什么是共轭先验，又为什么选择共轭先验呢？对于贝叶斯定理，似然的共轭先验是指：将该先验与似然组合在一起后，得到的后验与先验分布具有相同的表达形式。简单说，就是用贝塔分布作为先验、二项分布作为似然时，通过数学推导可以得到一个表达形式与贝塔分布相同的后验。<strong>共轭先验的优势在于：可以通过数学方式得到后验分布的封闭形式解，进而可以直接计算后验概率值。</strong> 但事实上，大多数情况下后验分布非常复杂，能够给出共轭先验的场景非常少。因此，共轭先验的研究多活跃在 MCMC、变分等推断方法出现之前，是当时针对特殊问题解决后验概率推断问题的主要方法。</p></li>
+</ul>
+<blockquote>
+<div><p><strong>注意：</strong> 除贝塔分布之外，还有许多其他似然与共轭先验组合的情况，例如：高斯似然的共轭先验就是高斯分布。共轭确保了后验的数学可处理性，这一点非常重要，因为贝叶斯统计学中常见的问题是很难或无法解析地计算得到后验分布。在MCMC、变分法等现代后验计算方法出现之前，共轭先验是贝叶斯统计的一项重大突破。不过从第二章概率编程开始，我们将主要介绍如何使用现代计算方法来解决贝叶斯问题。</p>
+</div></blockquote>
 </div>
-</div>
-<div class="section" id="id16">
-<h3>（5）计算后验<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
-<p>首先回忆贝叶斯定理：后验正比于似然乘以先验。对于抛硬币问题，须将二项分布和贝塔分布相乘：</p>
+<div class="section" id="id15">
+<h3>（5）计算后验<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>首先回忆贝叶斯定理：后验正比于似然乘以先验。对于抛硬币问题，须将二项分布（似然）和贝塔分布（先验）相乘，得到分子项：</p>
 <div class="math notranslate nohighlight">
 \[p(\theta \mid y) \propto \frac{N !}{y !(N-y) !} \theta^{y}(1-\theta)^{N-y} \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \Gamma(\beta)} \theta^{\alpha-1}(1-\theta)^{\beta-1}\tag{式1.11} \label{式1.11}\]</div>
-<p>可以简化该表达式。为了实际考虑，可以去掉所有不依赖的元素，结果仍然有效。相应地，可以写为：</p>
+<p>为简化表达，去掉所有不依赖的元素，可以写为：</p>
 <div class="math notranslate nohighlight">
 \[p(\theta \mid y) \propto \theta^{y}(1-\theta)^{N-y} \theta^{\alpha-1}(1-\theta)^{\beta-1}\tag{式1.12} \label{式1.12}\]</div>
 <p>重新整理之后得到：</p>
 <div class="math notranslate nohighlight">
 \[p(\theta \mid y) \propto \theta^{y+\alpha-1}(1-\theta)^{N-y+\beta-1}\tag{式1.13} \label{式1.13}\]</div>
-<p>如果注意会发现，上述表达式与贝塔分布具有相同的函数形式（除了归一化项），其中参数 <span class="math notranslate nohighlight">\(\alpha_{\text {posterior }}=\alpha_{\text {prior }}+y\)</span>  ， 参数 <span class="math notranslate nohighlight">\(\beta_{\text {posterior}}=\beta_{\text {prior }}+N-y\)</span> 。事实上，问题的后验分布依然是贝塔分布：</p>
+<p>注意，除了归一化项外，式（ 1.13 ）实际上与贝塔分布具有相同的表达形式，其中参数 <span class="math notranslate nohighlight">\(\alpha_{\text {posterior }}=\alpha_{\text {prior }}+y\)</span> ，参数 <span class="math notranslate nohighlight">\(\beta_{\text {posterior}}=\beta_{\text {prior }}+N-y\)</span> 。这就是共轭先验的好处，通过数学推导可以得到形式上相同的后验解析表达式。事实上，该模型的后验分布依然是一个贝塔分布：</p>
 <div class="math notranslate nohighlight">
 \[p(\theta \mid y) \propto \operatorname{Beta}\left(\alpha_{\text {prior }}+y, \beta_{\text {prior }}+N-y\right)\tag{式1.14} \label{式1.14}\]</div>
 </div>
-<div class="section" id="id17">
-<h3>（6）后验诊断<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id16">
+<h3>（6）后验诊断<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <p>现在有了后验表达式，可以用 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 对其计算并画出结果。下面代码中，其实只有一行是用来计算后验结果的，其余代码都是用来画图的：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -852,79 +866,102 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2205/1624850749.py:25: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1785/2262948828.py:25: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
   plt.tight_layout()
 </pre></div>
 </div>
-<img alt="_images/chapter01-ThinkingProbabilistically_12_1.png" src="_images/chapter01-ThinkingProbabilistically_12_1.png" />
+<img alt="_images/chapter01-ThinkingProbabilistically_11_1.png" src="_images/chapter01-ThinkingProbabilistically_11_1.png" />
 </div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505154649_0f.webp" /></p>
-<p>图1.4</p>
+<blockquote>
+<div><p><strong>图1.5 三种参数不同的贝塔先验，在不同观测值时的后验表现。</strong> 其中蓝色为均匀先验及其对应的后验，橙色为类高斯钟形先验及其对应的后验，绿色为下降曲线先验及其对应的后验。</p>
+</div></blockquote>
 </center>
-<p>在图 1.4 第一行中，实验次数为 0，因此第一个图中的曲线描绘的是先验分布，其中有 3 条曲线，每条曲线分别表示一种先验。</p>
+<p>在图 1.5 第一行中，实验次数为 0，此时曲线描绘的是先验分布，其中 3 条不同颜色的曲线分别表示一种先验。</p>
 <ul class="simple">
-<li><p>蓝色的线是一个均匀分布先验，其含义是：偏差的所有可能取值是等概率的。</p></li>
-<li><p>红色的线与均匀分布有点类似，其含义是：偏差等于 0 或者 1 的概率要比其他值更大一些。</p></li>
-<li><p>绿色的线集中在中间值 0.5 附近，其含义是：硬币正面朝上和反面朝上的概率大致差不多。</p></li>
+<li><p>蓝色曲线为均匀分布先验，其含义是：偏好的所有可能取值是等概率的。</p></li>
+<li><p>绿色曲线与均匀分布有点类似，其含义是：偏好等于 0 的概率比其他值更大一些。</p></li>
+<li><p>橙色曲线集中在中间值 0.5 附近，其含义是：硬币正面朝上和反面朝上的概率大致相同。</p></li>
 </ul>
-<p>剩余子图描绘了后续实验的后验分布，回想一下，后验可看做在给定数据之后更新了的先验。实验次数和正面朝上的次数分别标注在每个子图中。此外每个子图中在横轴 0.35 附近还有一个黑色的竖线，表示的是真实 <span class="math notranslate nohighlight">\(θ\)</span> 。当然在真实情况下，我们并不知道该值，在此标识出来只是为了方便理解。从这幅图中可以学到很多贝叶斯分析方面的知识：</p>
-<ol class="simple">
-<li><p>贝叶斯分析的结果是后验分布而不是某个值，该分布描述了根据给定数据和模型得到的不同数值的可能性。</p></li>
-<li><p>后验最可能的值是根据后验分布的形态决定的，也就是后验分布的峰值。</p></li>
-<li><p>后验分布的分散程度与我们对参数的不确定性相关；分布越分散，说明不确定性越大。尽管 1/2 = 4/8 = 0.5，但由图可知，前者不确定性要大于后者。因为我们有了更多数据来支撑推断，该直觉也同时反映在后验分布上。</p></li>
-<li><p>在给定足够多数据时，两个或多个不同先验的贝叶斯模型会趋近于收敛到相同的后验结果。极限情况下，如果有无限多数据，不论使用什么样的先验，最终都会得到相同后验。注意：此处无限多是指某种程度而非某个具体数量，也就是说，从实际使用角度，某些情况下无限多数据可以通过比较少量的数据近似。</p></li>
-<li><p>不同后验收敛到相同分布的速度取决于数据和模型。从图中可看出，蓝色和红色的后验在经过 8 次实验后就很难看出区别了，而红色曲线则一直到 150 次实验之后才与另外两个后验看起来比较接近。</p></li>
-<li><p>有一点从图中不太容易看出来：如果一步一步地更新后验，最后得到的结果跟一次性计算得到的结果是一样的。换句话说，可以对后验分 150 次计算，每次增加一个新的观测数据并将得到的后验作为下一次计算的先验，也可以在得到 150 次抛硬币的结果之后一次性计算出后验，而这两种计算方式得到的结果完全一样。该特点非常有意义，当我们获得新数据时，这会导致我们以一种自然的方式更新估计，这种情况在许多数据分析问题中都很常见。</p></li>
-</ol>
+<p>剩余子图描绘了后续实验得到观测数据后的后验分布，回想一下，后验可看做在给定数据之后更新了的先验。实验次数和正面朝上的次数分别标注在每个子图中。此外每个子图中在横轴 0.35 附近还有一个黑色的竖线，表示 <span class="math notranslate nohighlight">\(θ\)</span> 的真值。当然在真实情况下，我们并不知道该值，在此标识出来只是为了方便理解。</p>
+<p>从该图中可以学到很多贝叶斯分析方面的知识：</p>
+<ul class="simple">
+<li><p><strong>贝叶斯分析的结果是一个分布而不是某个确切的值</strong>。该分布描述了根据给定数据和模型得到的不同确切值的可能性。</p></li>
+<li><p><strong>后验最可能的值是由后验分布的峰值决定的</strong>。由于不同模型的后验分布形态不同，特别是有些后验分布表现为多变量联合的多峰形态，此时情况会非常复杂。</p></li>
+<li><p><strong>后验分布随着证据（观测数据）增加而越来越聚集，对参数的确定性就越高</strong>。从信息论角度出发，概率分布形态上越分散，说明越不确定。观察图中第二行和第三行中间的后验分布图，尽管 <span class="math notranslate nohighlight">\(1/2\)</span> 和 <span class="math notranslate nohighlight">\(4/8\)</span> 在数值上都等于 <span class="math notranslate nohighlight">\(0.5\)</span> ，但从图中的表现来看，前者不确定性要大于后者，因为前者的后验分布更分散（宽）。究其原因应当是由于后者有更多数据来支撑推断，而这种直觉直观地在后验分布上得到了反映。</p></li>
+<li><p><strong>在观测数据足够多时，所有先验都将逐步趋近于相同的后验结果</strong>。极限情况下，如果有无限多数据，不论使用什么样的先验，最终都会得到相同后验。注意：此处无限多是指某种程度而非某个具体数量，也就是说，从实际使用角度，某些情况下无限多数据可以通过比较少量的数据近似。</p></li>
+<li><p><strong>不同后验的收敛趋同速度，主要取决于观测数据和所选择的模型（先验）</strong>。从图中可看出，蓝色和绿色的后验在经过 32 次实验后就很难看出区别了，而橙色曲线则一直到 150 次实验之后才与另外两个后验看起来比较接近。</p></li>
+<li><p><strong>按照每次试验逐步更新后验得到的结果，与一次性计算得到的结果相同</strong>。这一点从图中不太容易看出来。换句话说，可以对后验分 150 次做更新，每次更新增加一个新的观测点并将得到的后验作为下一次计算的先验，也可以在得到 150 次抛硬币的结果之后一次性计算出后验，这两种贝叶斯更新计算方式最终得到的结果完全一样。这个特点非常有意义，这意味着，当我们获得新数据时，能够以一种自然的方式更新估计，而这种情况在许多数据分析问题中都很常见。</p></li>
+</ul>
 </div>
-<div class="section" id="id18">
-<h3>（7）先验的影响以及选择<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
-<p>从前例可清楚地看出，先验可以影响推断。贝叶斯分析的新手或批评者通常对如何选择先验感到不适，因为他们不想让先验充当一个不让数据说话的审查员！这样的想法没有错，但必须记住，数据并不能真正说话，只有在模型（包括数学模型和心理模型）的上下文中，数据才有意义。在科学史上，同样的数据导致人们对相同主题有不同思考的例子很多，即使你的观点建立在正式模型上，这种情况也可能发生。</p>
-<p>有些人青睐于使用没有信息量的先验（也称作均匀的、含糊的或者发散的先验）。此类先验对分析过程的影响最小。本书将遵循 Gelman、McElreath 和 Kruschke 三人的建议，倾向于使用带有较弱信息量的先验。在许多问题中，我们对参数可取的值一般都会有些了解（比如，参数只能是正数，或者知道参数近似的取值范围，又或是希望该值接近 0 或大于/小于某值）。此情况下，可以给模型加入一些微弱的先验信息而不必担心该先验会掩盖数据本身的信息。由于此类先验会让后验近似位于某一合理边界内，因此也被称作<strong>正则化先验</strong>。</p>
-<p>当然，使用带有较多信息量的强先验也是可以的。根据问题不同，有可能很容易或者很难找到此类先验。例如在作者工作的领域（结构生物信息学）中，人们会尽可能地利用先验信息，通过贝叶斯或者非贝叶斯方式来了解和预测蛋白质的结构。如此做是合理的，因为我们是在数十年间从上千次精心设计的实验中收集的数据，因而有大量可供使用的可信先验信息。如果你有可信的先验信息，没有理由不去使用。试想下，如果汽车工程师每次设计新车时，都要重新发明内燃机、轮子乃至整个汽车，显然不是正确的打开方式。</p>
-<p>现在知道了先验有许多种，但缓解不了我们选择先验时的焦虑。或许，最好是没有先验，这样事情就简单了。但不论是否基于贝叶斯，模型都在某种程度上拥有先验，即使先验并没有明确表示出来。事实上，许多频率统计学方面的结果可以看做是贝叶斯模型在一定条件下的特例（常见如均匀先验）。仔细看看前面那幅图，可以看到蓝色后验分布的峰值与频率学派分析中 <span class="math notranslate nohighlight">\(θ\)</span> 的期望值是一致的（此处暗示最大后验估计和最大似然估计在某种先验假设下，得到等价的结果）：</p>
+<div class="section" id="id17">
+<h3>（7）先验的影响以及选择<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>从前例可清楚地看出，先验可以影响推断。贝叶斯分析的新手或批评者通常对如何选择先验感到不适，因为他们不想让先验充当一个不让数据说话的审查员！这样的想法没有错，但必须记住，数据并不会真正说话，只有在模型（包括数学模型和心理模型，即主观性）的上下文中，数据才有意义。在科学史上，同样的数据导致人们对相同主题有不同思考的例子很多，即使你的观点建立在正式模型上，这种情况也可能发生。</p>
+<p>有些人青睐于使用无信息先验（也称作均匀先验、模糊先验或发散先验）。此类先验对分析过程的影响最小。本书遵循 Gelman、McElreath 和 Kruschke 三人书中的建议，倾向于使用带有较弱信息量的先验。特别是在许多问题中，通常我们对参数可取的值都会或多或少有些了解（比如：参数只能是正数、参数大致的取值范围、参数值接近零、参数值大于/小于某个值等）。此时可以给模型加入一些微弱的先验信息而不必担心该先验会掩盖数据本身的信息。</p>
+<p>由于此类先验会导致后验位于某一合理边界内，因此也被称作<strong>正则化先验</strong>。</p>
+<p>当然，也可以使用带较多信息量的强先验。不过根据问题不同，有可能很容易或很难找到此类先验。例如：在本人工作的结构生物信息学领域中，人们会尽可能地利用先验信息，通过贝叶斯或者非贝叶斯方式来了解和预测蛋白质的结构。这么做具有合理性，因为我们是在数十年间，从上千次精心设计的实验中收集的数据，因而有大量可供参考的可信先验信息。如果你有可信的先验信息，没有理由不去使用它。试想下，如果汽车工程师每次设计新车时，都要重新发明内燃机、轮子乃至整个汽车，显然不是正确的打开方式。</p>
+<p>虽然知道了先验有许多种，但缓解不了选择先验的焦虑。或许最好没有先验，这样事情就简单了。但不论是否基于贝叶斯，模型都在某种程度上都拥有先验，即使其先验并没有显式地表达出来。事实上，许多频率主义的成果可以看做是贝叶斯模型在一定条件下的特例（常见如均匀先验）。</p>
+<p>如果仔细观察图 1.5 ，你会发现蓝色均匀先验对应的后验分布中，其峰值与频率主义分析中 <span class="math notranslate nohighlight">\(θ\)</span> 的期望值是相同的。这意味着贝叶斯主义的最大后验估计（MAP），在某种特定先验假设下，会得到和频率主义的最大似然估计（ MLE ）等价的结果：</p>
 <div class="math notranslate nohighlight">
 \[\hat \theta = \frac { y } { N }\tag{式1.15} \label{式1.15}\]</div>
-<p>注意，此处 <span class="math notranslate nohighlight">\(\hat \theta\)</span>是点估计而非后验分布。由此看出，很难完全避免先验，但明确在分析中引入先验，会得到概率分布而不只是最可能的单个值。</p>
-<p>明确引入先验的另一个好处是，我们会得到更透明的模型（此处可理解为可解释性）。这意味着更容易评判、调试以及优化。构建模型是一个循序渐进的过程，有时可能只需几分钟，有时候则需要数年；有时候整个过程可能只有你自己参与，有时候则可能包含你不认识的人。而且模型的可复现性很重要，而模型中透明的假设能有助于复现。</p>
-<p>在特定分析任务中，如果对某个先验或者似然不确定，可以自由使用多个先验或者似然进行尝试。模型构建过程中的一个环节就是质疑假设，而先验就是被质疑的对象之一。不同的假设会得到不同的模型，根据数据和专业领域知识，可以对多个模型进行比较以期得到相对最好的模型，本书第 5 章模型比较部分会深入讨论该内容。</p>
-<p>先验是贝叶斯统计中的核心内容之一，如果在这里你感到疑惑，也不用太担心，因为在后面遇到新问题时，我们还会反复讨论它。而且要知道人们在该问题上已经困惑了数十年并且相关的讨论一直在继续。</p>
+<p>请注意，此处 <span class="math notranslate nohighlight">\(\hat \theta\)</span> 是点估计而非后验分布。</p>
+<p>由此看出，实际上我们很难完全避免先验。贝叶斯主义明确在分析中引入先验，其好处是能够得到体现不确定性的概率分布，而不只是最可能的某个确切值。</p>
+<p>明确引入先验的另一个好处是：我们会得到更透明的、可解释性的模型。这意味着更容易评判、调试以及优化。构建模型是一个循序渐进的过程，有时可能只需几分钟，有时候则需要数年；有时候整个过程可能只有你自己参与，有时候则可能包含你不认识的人。而且模型的可复现性很重要，贝叶斯主义模型中开放的假设将有助于他人复现。</p>
+<p>在特定分析任务中，如果对先验或者似然尚难以确定，则可以自由使用多个先验或者似然进行尝试。模型构建过程中的一个环节就是质疑假设，而先验就是被质疑的对象之一。不同假设会得到不同的模型，科学家可以根据数据和专业领域知识，对多个模型进行比较以期得到相对而言最好的那个模型，本书第 5 章会深入讨论该话题。</p>
+<p>先验是贝叶斯统计核心内容之一，如果在这里你感到疑惑，也不用太担心，因为在后面遇到新问题时，将会反复讨论它。要知道，人们在该问题上已经困惑了数十年并且相关的讨论一直在继续。</p>
 </div>
 </div>
+<div class="section" id="id18">
+<h2>1.4 贝叶斯分析方法中的沟通交流<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
+<p><strong>生成数据汇总并与他人沟通交流</strong>，是在完成一次贝叶斯分析后必不可少的工作，也是统计和数据科学实践的核心。本节先简要讨论贝叶斯模型中的一些关键点。在后面的章节中，将继续看有关此重要问题的示例。</p>
 <div class="section" id="id19">
-<h2>1.4 贝叶斯分析方法的沟通交流<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
-<p>创建摘要和交流结果是统计和数据科学实践的核心。本节将简要讨论使用贝叶斯模型时的一些特点。在接下来章节中，我们将继续看有关这一重要问题的例子。</p>
-<div class="section" id="id20">
-<h3>1.4.1 模型的概念表示和图形化表示<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
-<p><strong>（1）概念表示</strong></p>
-<p>根据受众不同，你可能在交流分析结果同时还需要交流模型。以下是一种简单表示概率模型的常见方式：</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
-\theta &amp;\sim \operatorname{Beta}(\alpha, \beta) \notag \\
-y &amp;\sim \operatorname{Bin}(n=1, p=\theta) \tag{式1.16} \label{式1.16}
-\end{align*}\]</div>
-<p>这是抛硬币例子用到的模型。符号 <code class="docutils literal notranslate"><span class="pre">～</span></code> 表示左边随机变量服从右边的分布形式，也就是说，这里 <span class="math notranslate nohighlight">\(θ\)</span> 服从于参数为 <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 的贝塔分布，而 <span class="math notranslate nohighlight">\(y\)</span> 服从于参数为 <span class="math notranslate nohighlight">\(n=1\)</span> 和 <span class="math notranslate nohighlight">\(p=θ\)</span> 的二项分布。</p>
-<p><strong>（2）图形化表示</strong></p>
-<p>该模型还可以表示成 Kruschke 图的形式：</p>
+<h3>1.4.1 如何表示贝叶斯模型？<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>解决沟通交流问题首先要解决的问题，就是如何准确表达你的模型。此处先介绍两种比较容易理解的方法： <code class="docutils literal notranslate"><span class="pre">数学表示法</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Kruschke</span> <span class="pre">图表示法</span></code> 。</p>
+<p><strong>（1）数学表示法</strong></p>
+<p>数学表示法采用统计学中的一些概念和数学符号来表达概率模型。以下是表示一种简单概率模型的方式：</p>
+<div class="math notranslate nohighlight">
+\[
+\theta \sim \operatorname{Beta}(\alpha, \beta) 
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y \sim \operatorname{Bin}(n=1, p=\theta) \tag{式1.16} 
+\]</div>
+<p>上式为抛硬币示例中使用到的模型。符号 <code class="docutils literal notranslate"><span class="pre">～</span></code> 表示左边随机变量服从右边的分布形式，也就是说，这里 <span class="math notranslate nohighlight">\(θ\)</span> 服从于参数为 <span class="math notranslate nohighlight">\(α\)</span> 和 <span class="math notranslate nohighlight">\(β\)</span> 的贝塔分布，而 <span class="math notranslate nohighlight">\(y\)</span> 服从于参数为 <span class="math notranslate nohighlight">\(n=1\)</span> 和 <span class="math notranslate nohighlight">\(p=θ\)</span> 的二项分布。</p>
+<p><strong>（2）Kruschke 图表示法</strong></p>
+<p>上述模型还可以表示成 Kruschke 图的形式：</p>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505155942_31.webp" style="zoom:67%;" />
-<p>图1.5</p>
+<blockquote>
+<div><p><strong>图1.5 抛硬币示例的 Kruschke 图表示法</strong></p>
+</div></blockquote>
 </center>
-<p>图中第一层为先验，中间层为似然，第三层为数据。该图可以反映数据生成的过程：首先根据第一层的先验生成中间层的 <span class="math notranslate nohighlight">\(θ\)</span> 和似然，然后根据 <span class="math notranslate nohighlight">\(θ\)</span> 和似然生成第三层的数据 <span class="math notranslate nohighlight">\(y\)</span> 。图中箭头表示变量间的依赖关系，符号 <code class="docutils literal notranslate"><span class="pre">～</span></code> 表示变量的随机性。本书中所有 Kruschke 图都是使用 Rasmus Bååth 提供的<a class="reference external" href="http://www.sumsar.net/blog/2013/10/diy-kruschke-style-diagrams/">模板</a>制作的。</p>
+<p>图中第一层为先验，中间层为似然，第三层为数据。该图可以反映数据生成的过程：</p>
+<ul class="simple">
+<li><p>首先根据第一层的先验生成中间层的 <span class="math notranslate nohighlight">\(θ\)</span> 和似然 ；</p></li>
+<li><p>然后根据 <span class="math notranslate nohighlight">\(θ\)</span> 和似然生成第三层的数据 <span class="math notranslate nohighlight">\(y\)</span> 。</p></li>
+</ul>
+<p>图中箭头表示变量间的依赖关系，符号 <code class="docutils literal notranslate"><span class="pre">～</span></code> 表示变量的随机性。本书中所有 Kruschke 图都是使用 <a class="reference external" href="http://www.sumsar.net/blog/2013/10/diy-kruschke-style-diagrams/">Rasmus Bååth 提供的模板</a>制作的。</p>
 </div>
-<div class="section" id="id21">
-<h3>1.4.2 总结后验<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
-<p>贝叶斯分析的结果是后验分布，它包含了在给定数据和模型时有关参数的所有信息。从最基础的角度看，将最终的后验分布展示给观众似乎就已经可以了，但通常会同时给出后验分布的一些统计量。例如：给出后验的均值（或者众数、中位数）以让大家了解后验分布的中心位置、或给出标准差以让大家对后验的离散程度和不确定性有大致了解。</p>
-<p><strong>（1）最高后验密度</strong></p>
-<p>不过用标准差衡量类似正态分布的后验比较合适，但对一些其他类型的分布（如偏态分布）可能会得出误导性结论，因此，还可以采用 <code class="docutils literal notranslate"><span class="pre">最高后验密度（Highest</span> <span class="pre">Posterior</span> <span class="pre">Density，HPD）区间</span></code> 做衡量。</p>
-<p>一个 HPD 区间是指包含一定比例概率密度的最小区间，常见的比例包括 <code class="docutils literal notranslate"><span class="pre">95%</span> <span class="pre">HPD</span></code> 或 <code class="docutils literal notranslate"><span class="pre">50%</span> <span class="pre">HPD</span></code> 等。如果说某个分析的 <code class="docutils literal notranslate"><span class="pre">95%</span> <span class="pre">HPD</span> <span class="pre">区间</span></code> 是 [2,5]，其含义一般是指：根据模型和数据，模型参数位于 2～5 的概率是 0.95。</p>
+<div class="section" id="id20">
+<h3>1.4.2 如何对后验分布做汇总分析？<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p>贝叶斯分析的结果是后验分布，它包含了在给定数据和模型时有关参数的所有信息。从最基础的角度看，将最终的后验分布展示给观众似乎就已经可以了，但通常会同时给出后验分布的一些统计量。例如：</p>
+<ul class="simple">
+<li><p>给出后验的均值（或者众数、中位数）以让大家了解后验分布的中心位置</p></li>
+<li><p>给出标准差以让大家对后验的离散程度和不确定性有大致了解</p></li>
+<li><p>给出给定概率质量时的中位数区间估计（即该质量两边的质量分布相等）</p></li>
+</ul>
+<p><strong>（1）最高后验密度区间（ HPDI ）</strong></p>
+<p>对后验分布进行汇总分析通常会给出多个类似上述的统计量，而其中一个使用比较频繁的统计量是<strong>最高后验密度区间</strong> 。我们知道，标准差用于衡量类似正态分布这种对称形式的后验比较合适，但对更一般的分布（如偏态分布），采用标准差却可能会得出误导性结论。此时，可以采用 <code class="docutils literal notranslate"><span class="pre">最高后验密度区间（Highest</span> <span class="pre">Posterior</span> <span class="pre">Density</span> <span class="pre">Interval，HPDI）</span></code> 做衡量。</p>
+<p><code class="docutils literal notranslate"><span class="pre">HPDI</span></code> 指包含一定比例概率质量的最小区间，常见的比例包括 <code class="docutils literal notranslate"><span class="pre">95%</span> <span class="pre">HPDI</span></code> 或 <code class="docutils literal notranslate"><span class="pre">50%</span> <span class="pre">HPDI</span></code> 等。如果说某个分析的 <code class="docutils literal notranslate"><span class="pre">95%</span> <span class="pre">HPDI</span></code> 是 [2,5]，其含义一般是指：根据模型和数据，参数位于 [2,5] 的概率是 0.95。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>这是一个非常直观的解释，以至于人们经常会将频率学派中的置信区间与贝叶斯方法中的可信区间弄混淆。如果你对频率学派比较熟悉，请注意这两种区间的区别。贝叶斯学派告诉我们的是 “参数取值区间的概率” ，这在频率学派的框架中是不可能的，因为频率学派中的参数是确切值，频率学派的置信区间只包含参数的确切取值。在继续深入前需要注意：选择 <code class="docutils literal notranslate"><span class="pre">95%</span></code> 还是 <code class="docutils literal notranslate"><span class="pre">50%</span></code> 作为 <code class="docutils literal notranslate"><span class="pre">HPD区间</span></code> 的概率密度比例没有什么特殊的地方，只不过是经常使用或约定俗成的值罢了。 其实完全可以选用比例为 <code class="docutils literal notranslate"><span class="pre">91.37%</span></code> 的 <code class="docutils literal notranslate"><span class="pre">HPD区间</span></code>。如果你选的是 <code class="docutils literal notranslate"><span class="pre">95%</span></code> 也完全没问题，究竟选择多大比例需要具体问题具体分析。</p>
+<p>这是一个非常直观的解释，以至于人们经常会将频率学派中的置信区间与贝叶斯方法中的可信区间弄混淆。如果你对频率学派比较熟悉，请注意这两种区间的区别。贝叶斯学派告诉我们的是 “参数取值区间的概率” ，这在频率学派的框架中是不可能的，因为频率学派中的参数是确切值，频率学派的置信区间只包含参数的确切取值。在继续深入前需要注意：选择 <code class="docutils literal notranslate"><span class="pre">95%</span></code> 还是 <code class="docutils literal notranslate"><span class="pre">50%</span></code> 作为 <code class="docutils literal notranslate"><span class="pre">HPDI</span></code> 的概率质量比例只是约定俗成的值，并没有特殊的原因。你完全可以选用比例为 <code class="docutils literal notranslate"><span class="pre">91.37%</span></code> 的 <code class="docutils literal notranslate"><span class="pre">HPDI</span></code>，究竟选择多大比例需要具体问题具体分析。</p>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 是一个 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 包，用于贝叶斯模型的探索性数据分析。<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 有许多函数可以帮助我们总结后验结果，例如，az.plot_posterior 可以用来生成具有分布平均值和 HPD 的曲线图。在下例中，我们从贝塔分布生成随机样本，而不是真实分析的后验结果。注意图中摘要的 <code class="docutils literal notranslate"><span class="pre">HPD区间</span></code> 为 <code class="docutils literal notranslate"><span class="pre">94%</span></code> 。<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 每次计算和报告 HPD 时，默认情况下使用 0.94（对应于 <code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">HPD区间</span></code> )。可通过向 trusted_interval 参数传递值来更改此设置。</p>
+<p><strong>（2）后验的图形化表示工具</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 是一个 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 包，用于贝叶斯模型的探索性数据分析。<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 有许多函数可以帮助我们总结后验结果，例如，<code class="docutils literal notranslate"><span class="pre">az.plot_posterior</span></code> 可以用来生成具有<code class="docutils literal notranslate"><span class="pre">平均值</span></code>和 <code class="docutils literal notranslate"><span class="pre">HPDI</span></code> 标识的后验分布曲线图。在下例中，我们以贝塔分布生成的随机样本作为假想的后验分布样本，来展示其汇总分析的图形化方法。注意图中数据汇总的 <code class="docutils literal notranslate"><span class="pre">HPDI</span></code> 为 <code class="docutils literal notranslate"><span class="pre">94%</span></code> 。<code class="docutils literal notranslate"><span class="pre">ArviZ</span></code> 每次计算和报告 <code class="docutils literal notranslate"><span class="pre">HPDI</span></code> 时，默认情况下采用 <code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">HPDI</span></code>。可通过向 <code class="docutils literal notranslate"><span class="pre">trusted_interval</span></code> 参数传递新值来更改此设置。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -936,21 +973,23 @@ y &amp;\sim \operatorname{Bin}(n=1, p=\theta) \tag{式1.16} \label{式1.16}
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:title={&#39;center&#39;:&#39;θ&#39;}&gt;
 </pre></div>
 </div>
-<img alt="_images/chapter01-ThinkingProbabilistically_14_1.png" src="_images/chapter01-ThinkingProbabilistically_14_1.png" />
+<img alt="_images/chapter01-ThinkingProbabilistically_13_1.png" src="_images/chapter01-ThinkingProbabilistically_13_1.png" />
 </div>
 </div>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505160529_37.webp" style="zoom:67%;" />
-<p>图1.6</p>
+<blockquote>
+<div><p><strong>图 1.6 后验分布的图形化分析和展示</strong></p>
+</div></blockquote>
 </center>
 </div>
 </div>
+<div class="section" id="id21">
+<h2>1.5 后验预测检验<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
+<p>获取特定模型的后验分布后，可以用来模拟生成基于该分布的新数据。这有助于评估模型是否提供了有效预测，以对未来事件进行推断。这些模拟可用于多种目的，其中之一就是：通过对比观测数据和模拟数据的核密度估计值，来检验模拟数据是否与观测数据相似。在评估模型是否与数据生成机制有较好拟合时，需要更正式的后验预测检验方法。任何依赖于参数的统计或差异都可用于后验预测检验。这与先验预测检验的使用方式类似，但在对比观测数据和模拟数据时要更加严苛。</p>
 <div class="section" id="id22">
-<h2>1.5 后验预测检验<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
-<p>获取特定模型的后验分布后，可以用来模拟生成基于该分布的新数据。这有助于评估模型是否提供了有效预测，以对未来事件进行推断。这些模拟可用于多种目的，其中之一就是：通过对比观测数据和模拟数据的核密度估计值，来检验模拟数据是否类似于观测数据。在评估模型是否与数据生成机制有较好拟合时，需要更正式的后验预测检验方法。任何依赖于参数的统计或差异都可用于后验预测检验。这与先验预测检验的使用方式类似，但在对比观测数据和模拟数据时要更加严苛。</p>
-<div class="section" id="id23">
-<h3>（1） 后验预测性分布<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
-<p>贝叶斯方法的一个优势是：一旦得到了后验分布 <span class="math notranslate nohighlight">\(p(\theta|y)\)</span> ，就可根据该后验生成未来的数据 <span class="math notranslate nohighlight">\(\hat y\)</span> ，即用来做预测。而后验预测性分布是条件预测相对于后验分布的平均值。</p>
+<h3>（1） 后验预测分布<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<p>贝叶斯方法的一个优势是：一旦得到了后验分布 <span class="math notranslate nohighlight">\(p(\theta|y)\)</span> ，就可根据该后验生成未来的数据 <span class="math notranslate nohighlight">\(\hat y\)</span> ，即用来做后验预测。后验预测的本质是基于后验分布 <span class="math notranslate nohighlight">\(p(\theta \mid y)\)</span> ，求概率分布 <span class="math notranslate nohighlight">\(p(\hat y \mid \theta)\)</span> ，其中每一个可能的 <span class="math notranslate nohighlight">\(\hat y\)</span> ， 其概率均来自于对后验分布的边缘化（即求期望或平均值）。</p>
 <div class="math notranslate nohighlight">
 \[p(\hat{y} \mid y)=\int p(\hat{y} \mid \theta) p(\theta \mid y) d \theta \tag{式1.17} \label{式1.17}\]</div>
 <p>从概念和计算上，我们将此积分 1.17 近似为迭代的两步过程：</p>
@@ -958,29 +997,30 @@ y &amp;\sim \operatorname{Bin}(n=1, p=\theta) \tag{式1.16} \label{式1.16}
 <li><p>第一步，从后验 <span class="math notranslate nohighlight">\(p(\theta|y)\)</span>  取样 <span class="math notranslate nohighlight">\(\theta\)</span> 值；</p></li>
 <li><p>第二步，将 <span class="math notranslate nohighlight">\(\theta\)</span> 值馈给似然，获得一个数据点 <span class="math notranslate nohighlight">\(\hat y\)</span> 。</p></li>
 </ul>
-<p>请注意该过程如何组合两个不确定性来源：参数不确定性（由后验捕获）；以及采样不确定性（由似然捕获）。</p>
+<p>请注意该过程如何组合两个不确定性来源：（1）参数的不确定性（由后验捕获）；（2）采样的不确定性（由似然捕获）。</p>
 </div>
-<div class="section" id="id24">
-<h3>（2）后验预测检验<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id23">
+<h3>（2）后验预测检查<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
 <p>当需要进行预测时，可以根据上面两个过程获得预测。当然，也可以用其来比较观测数据和预测数据，进而对模型做出评判，以找出两组数据间的差异，此即为后验预测检验，检验的主要目标是两者的一致性。</p>
 <p>生成数据和观测数据应该看起来差不多，否则有可能是建模出了问题或者输入数据到模型时出了问题。不过就算没有出错，两个集合仍然可能出现不同。尝试去理解其中的偏差有助于改进模型，或者至少能知道模型的极限。</p>
-<p>即使不知道如何改进模型，能够理解模型或数据捕获（或未捕获）的问题也非常有价值。模型也许能够捕获到均值但无法预测异常值，这或许是个问题，但当我们只关心均值时，模型还是可用的。</p>
-<p>换句话说，通常贝叶斯统计分析的总体目标不是宣布某个模型是错误的，而是想了解模型哪一部分是可信任的，并尝试检验该模型是否适合特定目的。一个人对一个模型有多大信心，在不同学科间肯定不一样。物理学可以使用高级理论在高度受控条件下研究系统，因此模型通常被视为对现实的很好描述；而其他学科研究复杂的、难以孤立的系统时，模型常具有较弱认识论地位。尽管如此，无论从事哪个学科，都应始终对模型做检验，后验预测性检查和探索性数据分析的想法是检验模型的好方法。</p>
+<p>即使不知道如何改进模型，能够理解模型或数据捕获（或未能捕获）的问题也非常有价值。模型也许能够捕获到均值但无法预测异常值，这或许是个问题，但当我们只关心均值时，模型还是可用的。</p>
+<p>换句话说，通常贝叶斯统计分析的总体目标不是宣布某个模型是错误的，而是想了解模型哪一部分是可信的，并尝试检验该模型是否适合特定目的。一个人对一个模型有多大信心，在不同学科间肯定不一样。物理学可以使用高级理论在高度受控条件下研究系统，因此模型通常被视为对现实的很好描述；而其他学科研究复杂的、难以孤立的系统时，模型常具有较弱认识论地位。尽管如此，无论从事哪个学科，都应始终对模型做检验，后验预测性检查和探索性数据分析的想法是检验模型的好方法。</p>
 </div>
 </div>
-<div class="section" id="id25">
-<h2>1.6 总结<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
-<p>我们的贝叶斯之旅首先围绕统计建模、概率论和贝叶斯定理做了一些简短讨论，然后用抛硬币的例子介绍了贝叶斯建模和数据分析，借用该经典例子传达了贝叶斯统计中的一些重要思想，比如用概率分布构建模型并用概率分布表示不确定性。此外我们尝试揭示了如何选择先验，并将其与数据分析中的一些其他问题置于同等地位（怎么选择似然，为什么要解决该问题等）。本章最后讨论了如何解释和报告贝叶斯分析的结果。我们对贝叶斯分析的一些主要方面做了简要总结，后面还会重新回顾这些内容，从而充分理解和吸收，并为后面理解更高级的内容打下基础。</p>
+<div class="section" id="id24">
+<h2>1.6 总结<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
+<p>我们的贝叶斯之旅首先围绕统计建模、概率论和贝叶斯定理做了一些简短讨论，然后用抛硬币的例子介绍了贝叶斯建模和数据分析，借用该经典示例传达了贝叶斯统计中的一些重要思想，比如用概率分布构建模型并用概率分布表示不确定性。此外我们尝试揭示了如何选择先验，并将其与数据分析中的一些其他问题置于同等地位（怎么选择似然，为什么要解决该问题等）。本章最后讨论了如何解释和报告贝叶斯分析的结果。我们对贝叶斯分析的一些主要方面做了简要总结，后面还会重新回顾这些内容，从而充分理解和吸收，并为后面理解更高级的内容打下基础。</p>
 <p>下图以渡边住友的工作流程为基础，总结本章所述的贝叶斯工作流程：</p>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505163234_92.webp" style="zoom:67%;" />
 <p>图1.7</p>
 </center>
-<p>我们假设存在一个总体未知的真分布，从该分布中可以通过实验、调查、观察或模拟获得有限样本。为了从真分布中学到一些东西，假设我们只观察到一个样本，建立了一个概率模型。概率模型由两个部分组成：先验和似然。我们使用模型和样本进行贝叶斯推断，得到一个后验分布；该分布封装了给定模型和数据的所有关于问题的信息。从贝叶斯的角度来看，后验分布是主要感兴趣的对象，其他一切都是从它衍生出来的，包括后验预测分布形式的预测。由于后验分布（以及由此得出的任何其他量）是模型和数据的结果，因此贝叶斯推断的有用性受到模型和数据质量的限制。评估模型的一种方法是将后验预测分布与之前获得的有限样本进行比较。请注意，后验分布是模型中参数的分布（以观测样本为条件），而后验预测分布是预测样本的分布（在后验分布上平均）。模型验证过程至关重要，不是因为想要确保拥有正确模型，而是因为我们知道几乎从来没有正确的模型。我们检查模型以评估它们在特定上下文中是否足够有用，如果不是，则深入了解如何改进它们。</p>
+<p>我们假设存在一个总体未知的真分布，从该分布中可以通过实验、调查、观察或模拟获得有限样本。为了从真分布中学到一些东西，假设我们只观察到一个样本，建立了一个概率模型。概率模型由两个部分组成：先验和似然。我们使用模型和样本进行贝叶斯推断，得到一个后验分布；该分布封装了给定模型和数据的所有关于问题的信息。从贝叶斯角度来看，后验分布是主要感兴趣的对象，其他一切都是从它衍生出来的，包括以后验预测分布形式表达的预测结果。</p>
+<p>由于后验分布（以及由此得出的任何其他量）是模型和数据的结果，因此贝叶斯推断的可用性受到模型和数据质量的限制。评估模型的一种方法是将后验预测分布与之前获得的有限样本进行比较。请注意，后验分布是模型中参数的分布（以观测样本为条件），而后验预测分布是预测样本的分布（在后验分布上边缘化或求平均值）。模型验证过程至关重要，不是因为想要确保拥有正确模型，而是因为我们知道几乎从来没有正确的模型。我们检查模型以评估它们在特定上下文中是否足够有用，如果不是，则深入了解如何改进它们。</p>
 <p>在本章中，我们简要总结了进行贝叶斯数据分析的主要方面。在本书的其余部分，我们将重新审视这些想法，以便真正吸收它们，并将它们用作更高级概念的脚手架。在下一章中，我们将介绍  <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> ，这是一个用于贝叶斯建模和概率机器学习的 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 库，以及 <code class="docutils literal notranslate"><span class="pre">ArviZ</span></code>，它是一个用于贝叶斯模型探索性分析的 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 库。</p>
 </div>
-<div class="section" id="id26">
-<h2>1.7 习题<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id25">
+<h2>1.7 习题<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
 <p>我们尚不清楚大脑是如何运作的，是按照贝叶斯方式？还是类似贝叶斯的某种方式？又或许是进化过程中形成的某种启发式的方式？不管如何，我们至少知道自己是通过数据、例子和练习来学习的，尽管你可能对此有不同的意见，不过我仍然强烈建议你完成以下练习。</p>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505165349_d4.webp" />
@@ -1011,31 +1051,22 @@ y &amp;\sim \operatorname{Bin}(n=1, p=\theta) \tag{式1.16} \label{式1.16}
               </div>
               
         
-            
-
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="preface.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">封面</p>
-            </div>
-        </a>
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="preface.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">封面</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="chapter02-ProgrammingProbabilistically.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">第 2 章 概率编程</p>
     </div>
-     <div id="next">
-        <a class="right-next" href="chapter02-ProgrammingProbabilistically.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">第 2 章 概率编程</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
         
         </div>
@@ -1056,8 +1087,7 @@ y &amp;\sim \operatorname{Bin}(n=1, p=\theta) \tag{式1.16} \label{式1.16}
       </div>
     </div>
   
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 
-  
   </body>
 </html>

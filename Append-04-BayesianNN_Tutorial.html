@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>附录 D：贝叶斯神经网络概述 &#8212; Python贝叶斯分析(中文)</title>
     
-  <link href="_static/css/theme.css" rel="stylesheet" />
-  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -42,7 +42,7 @@
     <script src="_static/copybutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script>
@@ -56,7 +56,10 @@
     <link rel="next" title="附录 E：贝叶斯深度学习综述" href="Append-05-BayesianDeepLearning_Tutorial.html" />
     <link rel="prev" title="附录 C： 高斯过程" href="Append-03-GaussianProcessTutorial.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="docsearch:language" content="en" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
     
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
@@ -95,7 +98,7 @@
   </a>
  </li>
 </ul>
-<p class="caption" role="heading">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   书籍正文
  </span>
@@ -113,7 +116,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter03-ModellingwithLinearRegression.html">
-   第 3 章 线性回归模型的贝叶斯视角
+   第 3 章 线性回归模型
   </a>
  </li>
  <li class="toctree-l1">
@@ -147,7 +150,7 @@
   </a>
  </li>
 </ul>
-<p class="caption" role="heading">
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   文献阅读
  </span>
@@ -742,8 +745,8 @@ P\left(\mathcal{H}_{i} \mid \mathcal{D}\right) \propto P\left(\mathcal{D} \mid \
 <h5>（4）直接求解边缘似然的早期尝试<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h5>
 <p>很多现代方法（如：MCMC 和变分法）通常都巧妙地规避了边缘似然的计算问题，但在该早期论文中，却实实在在提出了一种近似计算边缘似然的解决方案，虽然该方案基本已经无人使用。</p>
 <p>该论文假设边缘似然呈高斯分布，并提出了边缘似然的拉普拉斯近似：</p>
-<div class="amsmath math notranslate nohighlight" id="equation-fe98e2cc-018c-4c23-bb8f-bf05398049f6">
-<span class="eqno">(1)<a class="headerlink" href="#equation-fe98e2cc-018c-4c23-bb8f-bf05398049f6" title="Permalink to this equation">¶</a></span>\[\begin{align} 
+<div class="amsmath math notranslate nohighlight" id="equation-b04fe7f7-93a2-422b-ac30-08fe80e5ce57">
+<span class="eqno">(1)<a class="headerlink" href="#equation-b04fe7f7-93a2-422b-ac30-08fe80e5ce57" title="Permalink to this equation">¶</a></span>\[\begin{align} 
 P\left(\mathcal{D} \mid \mathcal{H}_{i}\right) &amp;=\int P\left(\mathcal{D} \mid \boldsymbol{\omega}, \mathcal{H}_{i}\right) P\left(\boldsymbol{\omega} \mid \mathcal{H}_{i}\right) d \boldsymbol{\omega} \\ 
 &amp; \approx P\left(\mathcal{D} \mid \boldsymbol{\omega}_{\mathrm{MAP}}, \mathcal{H}_{i}\right)\left[P\left(\boldsymbol{\omega}_{\mathrm{MAP}} \mid \mathcal{H}_{i}\right) \Delta \omega\right]' \\ 
 &amp;=P\left(\mathcal{D} \mid \boldsymbol{\omega}_{\mathrm{MAP}}, \mathcal{H}_{i}\right)\left[P\left(\boldsymbol{\omega}_{\mathrm{MAP}} \mid \mathcal{H}_{i}\right)(2 \pi)^{\frac{k}{2}} \mathrm{det}^{-\frac{1}{2}} \mathbf{A}\right] \\ 
@@ -791,8 +794,8 @@ P\left(\mathcal{D} \mid \mathcal{H}_{i}\right) &amp;=\int P\left(\mathcal{D} \mi
 <div><p>注6：根据定义， KL 散度不符合交换律，即 <span class="math notranslate nohighlight">\(KL(p \| q) \neq KL(q \| p)\)</span>。</p>
 </div></blockquote>
 <p>对于变分推断，可将式 16 用作参数 <span class="math notranslate nohighlight">\(\theta\)</span> 的目标函数，将推断问题转变成 <span class="math notranslate nohighlight">\(\theta\)</span> 的最优化求解问题。式 16 可进一步扩展为：</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d88fdf68-acf1-4f2e-ae96-28d23cd6024e">
-<span class="eqno">(2)<a class="headerlink" href="#equation-d88fdf68-acf1-4f2e-ae96-28d23cd6024e" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-30f39591-aec7-4494-bf3d-d2e5bc2ef66e">
+<span class="eqno">(2)<a class="headerlink" href="#equation-30f39591-aec7-4494-bf3d-d2e5bc2ef66e" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \mathrm{KL}\left(q_{\boldsymbol{\theta}}(\boldsymbol{\omega}) \| p(\boldsymbol{\omega} \mid \mathcal{D})\right)&amp;= \mathbb{E}_{q}\left[\log \frac{q_{\boldsymbol{\theta}}(\boldsymbol{\omega})}{p(\boldsymbol{\omega})}-\log p(\mathcal{D} \mid \boldsymbol{\omega})\right]+\log p(\mathcal{D})\\ 
 &amp;=\mathrm{KL}\left(q_{\boldsymbol{\theta}}(\boldsymbol{\omega}) \| p(\boldsymbol{\omega})\right)-\mathbb{E}_{q}[\log p(\mathcal{D} \mid \boldsymbol{\omega})]+\log p(\mathcal{D})\\
 &amp;=-\mathcal{F}\left[q_{\theta}\right]+\log p(\mathcal{D})
@@ -1000,8 +1003,8 @@ v_{i}(t+\epsilon)=v_{i}\left(t+\frac{\epsilon}{2}\right)+\frac{\epsilon}{2} \fra
 \frac{\partial}{\partial \theta} p(x \mid \theta)=p(x \mid \theta) \frac{\partial}{\partial \theta} \log p(x \mid \theta) \tag{36}
 \]</div>
 <p>利用该性质，可形成对期望导数的蒙特卡洛估计，这在变分推断中经常使用：</p>
-<div class="amsmath math notranslate nohighlight" id="equation-23002152-3879-4ce5-ace6-486f30c4f577">
-<span class="eqno">(3)<a class="headerlink" href="#equation-23002152-3879-4ce5-ace6-486f30c4f577" title="Permalink to this equation">¶</a></span>\[\begin{align} 
+<div class="amsmath math notranslate nohighlight" id="equation-30ad6658-95f1-4955-89fd-b33d8fe2dbe3">
+<span class="eqno">(3)<a class="headerlink" href="#equation-30ad6658-95f1-4955-89fd-b33d8fe2dbe3" title="Permalink to this equation">¶</a></span>\[\begin{align} 
 \nabla_{\theta} \mathbb{E}_{q}[f(\omega)] &amp;=\int f(\omega) \nabla_{\theta} q_{\theta}(\omega) \partial \omega \\
  &amp;=\int f(\omega) q_{\theta}(\omega) \nabla_{\theta} \log \left(q_{\theta}(\omega)\right) \partial \omega \\ 
  &amp; \approx \frac{1}{L} \sum_{i=1}^{L} f\left(\omega_{i}\right) \nabla_{\theta} \log \left(q_{\theta}\left(\omega_{i}\right)\right) 
@@ -1048,8 +1051,8 @@ v_{i}(t+\epsilon)=v_{i}\left(t+\frac{\epsilon}{2}\right)+\frac{\epsilon}{2} \fra
 <p>应用重参数化技巧获得相对于网络参数的偏导数，然后形成 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 并执行反向传播以最大化下界。蒙特卡洛积分被用来逼近解析上难以处理的对数似然。通过用两个小方差高斯分布的混合模型来近似伯努利后验，得到 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 中近似后验与先验分布之间的 KL 散度。</p>
 <p>在上述工作同时，<code class="docutils literal notranslate"><span class="pre">Kingma</span></code> 等人 <code class="docutils literal notranslate"><span class="pre">[71]</span></code> 也发现了 <code class="docutils literal notranslate"><span class="pre">Dropout</span></code> 和其在变分框架中的应用潜力。与 <code class="docutils literal notranslate"><span class="pre">Dropout</span></code> 引入的典型伯努利分布随机变量相比，<code class="docutils literal notranslate"><span class="pre">[71]</span></code> 将注意力集中在引入高斯随机变量 <code class="docutils literal notranslate"><span class="pre">[72]</span></code> 。文中表明在选择与参数无关的适当先验情况下，使用 <code class="docutils literal notranslate"><span class="pre">Dropout</span></code> 的神经网络可被视为近似推断。</p>
 <p><code class="docutils literal notranslate"><span class="pre">Kingma</span></code> 等人还希望使用改进的局部重参数化来降低随机梯度中的方差。这不是在应用仿射变换之前从权重分布进行采样，而是在之后执行采样。例如，考虑 <code class="docutils literal notranslate"><span class="pre">MFVB</span></code> 的情况，其中假设每个权重是独立的高斯 $<span class="math notranslate nohighlight">\(W_{ij}∼N(µ_{ij},σ^2_{ij})\)</span><span class="math notranslate nohighlight">\( 。在仿射变换 \)</span><span class="math notranslate nohighlight">\(\phi_j=\sum_{i=1}^{N_1}(x_iρ_i)w_{ij}\)</span><span class="math notranslate nohighlight">\( 之后， \)</span>\phi_j$ 的条件后验分布也将是因子分解的高斯形式：</p>
-<div class="amsmath math notranslate nohighlight" id="equation-24acffd4-c867-40b0-ae8e-34f3c0bcad6f">
-<span class="eqno">(4)<a class="headerlink" href="#equation-24acffd4-c867-40b0-ae8e-34f3c0bcad6f" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e578054d-a5d5-41ba-8480-b7a0ed01adfc">
+<span class="eqno">(4)<a class="headerlink" href="#equation-e578054d-a5d5-41ba-8480-b7a0ed01adfc" title="Permalink to this equation">¶</a></span>\[\begin{align}
 q\left(\phi_{j} \mid \mathbf{x}\right) &amp;=\mathcal{N}\left(\gamma_{j}, \delta_{j}^{2}\right) \\
 \gamma_{j} &amp;=\sum_{i=1}^{N} x_{i} \mu_{i, j} \\
 \delta_{j}^{2} &amp;=\sum_{i=1}^{N} x_{i}^{2} \sigma_{i, j}^{2}
@@ -1399,31 +1402,22 @@ computation, vol. 1, no. 4, pp. 541–551, 1989.</p></li>
               </div>
               
         
-            
-
-
-
-<div class='prev-next-bottom'>
-    
-    <div id="prev">
-        <a class="left-prev" href="Append-03-GaussianProcessTutorial.html" title="previous page">
-            <i class="prevnext-label fas fa-angle-left"></i>
-            <div class="prevnext-info">
-                <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">附录 C： 高斯过程</p>
-            </div>
-        </a>
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="Append-03-GaussianProcessTutorial.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">附录 C： 高斯过程</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Append-05-BayesianDeepLearning_Tutorial.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">附录 E：贝叶斯深度学习综述</p>
     </div>
-     <div id="next">
-        <a class="right-next" href="Append-05-BayesianDeepLearning_Tutorial.html" title="next page">
-            <div class="prevnext-info">
-                <p class="prevnext-label">next</p>
-                <p class="prevnext-title">附录 E：贝叶斯深度学习综述</p>
-            </div>
-            <i class="prevnext-label fas fa-angle-right"></i>
-        </a>
-     </div>
-
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
         
         </div>
@@ -1444,8 +1438,7 @@ computation, vol. 1, no. 4, pp. 541–551, 1989.</p></li>
       </div>
     </div>
   
-  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 
-  
   </body>
 </html>
