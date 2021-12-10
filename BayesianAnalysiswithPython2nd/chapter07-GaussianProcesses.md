@@ -5,13 +5,12 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.12.0
+    jupytext_version: 1.11.5
 kernelspec:
   display_name: Python 3
-  language: ipython3
+  language: python3
   name: python3
 ---
-
 
  #  第 7 章 高斯过程
 
@@ -32,11 +31,11 @@ kernelspec:
 在第3章 “线性回归建模” 和 第4章 “广义线性回归模型” 中，介绍了如何构建一般形式的模型：
 
 
-```{math}
-\theta=\psi(\phi(X) \beta) \tag{式7.1} \label{式7.1}
-```
+$$
+\theta=\psi(\phi(X) \beta) \tag{式7.1} 
+$$
 
- $\eqref{式7.1}$ 中， $\theta$ 是因变量概率分布的某个参数，如高斯分布的平均值 $\mu$ 、二项式的参数 $p$、泊松分布的比率 $\lambda$ 等。$\psi$ 为逆连接函数，$\phi$ 是平方根或多项式函数，$\beta$ 为线性回归的权重参数。对于最简单的一元线性回归情况，$\psi$ 为恒等函数。
+ 式 7.1 中， $\theta$ 是因变量概率分布的某个参数，如高斯分布的平均值 $\mu$ 、二项式的参数 $p$、泊松分布的比率 $\lambda$ 等。$\psi$ 为逆连接函数，$\phi$ 是平方根或多项式函数，$\beta$ 为线性回归的权重参数。对于最简单的一元线性回归情况，$\psi$ 为恒等函数。
 
 对上述贝叶斯模型的拟合可以视为通过推断得到权重参数 $\beta$ 的后验分布，因此，被称为估计的`权重视角（Weight View）`。以多项式回归为例，通过设计非线性函数 $\phi$ ，可将输入映射到特征空间，然后在特征空间中拟合一个在实际空间中非线性的线性关系。理论上通过使用适当阶次的多项式，总是可以完美拟合任何函数。但除非应用一定形式的正则化（如使用强先验），否则多项式回归很容易导致过拟合，进而模型泛化能力变差。
 
@@ -50,9 +49,9 @@ kernelspec:
 
  我们将首先描述一种将函数表示为概率对象的方法，以开始对高斯过程的讨论。可以把函数 $f$ 看作是从一组输入 $x$ 到一组输出 $y$ 的映射。因此，可以这样写：
 
-```{math}
-y=f(x) \tag{式7.2} \label{式7.2}
-```
+$$
+y=f(x) \tag{式7.2} 
+$$
 
 表示函数的一种方式是为每个值 $x_i$ 列出其相应值 $y_i$ 。事实上，你可能还记得小时候这种函数的表示方式：
 
@@ -70,7 +69,7 @@ y=f(x) \tag{式7.2} \label{式7.2}
 
 为了使讨论具体化，让我们使用一些 Python 代码来构建和绘制这类函数的两个示例：
 
-```{code-cell} ipython3
+```{code-cell}
 import matplotlib.pyplot as plt
 import scipy.stats as stats
 import numpy as np
@@ -82,7 +81,7 @@ import arviz as az
 az.style.use('arviz-darkgrid')
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 np.random.seed(42)
 # 曲线1：10个预测变量，10个高斯采样的结果变量
 x = np.linspace(0, 1, 10)
@@ -126,21 +125,21 @@ plt.legend()
 
 在众多可用核函数中，指数族二次核是比较常用的一种：
 
-```{math}
-K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left\|x-x^{\prime}\right\|^{2}}{2 \ell^{2}}\right) \tag{式7.3} \label{式7.3}
-```
+$$
+K\left(x, x^{\prime}\right)=\exp \left(-\frac{\left\|x-x^{\prime}\right\|^{2}}{2 \ell^{2}}\right) \tag{式7.3} 
+$$
 
 此处， $x,x'$是随机变量的值， $\left\|x-x^{\prime}\right\|^{2}$ 为平方欧氏距离：
 
-```{math}
-\left\|x-x^{\prime}\right\|^{2}=\left(x_{1}-x_{1}^{\prime}\right)^{2}+\left(x_{2}-x_{2}^{\prime}\right)^{2}+\cdots+\left(x_{n}-x_{n}^{\prime}\right)^{2} \tag{式7.4} \label{式7.4}
-```
+$$
+\left\|x-x^{\prime}\right\|^{2}=\left(x_{1}-x_{1}^{\prime}\right)^{2}+\left(x_{2}-x_{2}^{\prime}\right)^{2}+\cdots+\left(x_{n}-x_{n}^{\prime}\right)^{2} \tag{式7.4} 
+$$
 
 乍一看可能不明显，但指数族二次核具有与高斯分布类似的公式（见表达式 1.3）。因此，有人将此核称为高斯核。 $\ell$ 为长度尺度（或带宽、方差），用于控制核的宽度。
 
 为更好地理解核的作用，定义一个 Python 函数来计算指数族二次核：
 
-```{code-cell} ipython3
+```{code-cell}
 def exp_quad_kernel(x, knots, ℓ=1):
     """exponentiated quadratic kernel"""
     return np.array([np.exp(-(x-k)**2 / (2*ℓ**2)) for k in knots])
@@ -148,7 +147,7 @@ def exp_quad_kernel(x, knots, ℓ=1):
 
 以下代码和图 7.2 旨在展示了一个 $4 \times 4$ 协方差矩阵。此处选择的输入相当简单，由值 [-1，0，1，2] 组成。
 
-```{code-cell} ipython3
+```{code-cell}
 data = np.array([-1, 0, 1, 2])
 cov = exp_quad_kernel(data, data, 1)
 _, ax = plt.subplots(1, 2, figsize=(12, 5))
@@ -183,7 +182,7 @@ ax[1].xaxis.tick_top()
 
 综上所述，可以使用具有给定协方差的多维高斯分布对函数建模，而使用核函数对协方差建模，如下例中，使用 `exp_quad_kernel` 函数定义了一个多维高斯分布的协方差矩阵，然后使用该分布中的样本来表示函数：
 
-```{code-cell} ipython3
+```{code-cell}
 np.random.seed(24)
 test_points = np.linspace(0, 10, 200)
 fig, ax = plt.subplots(2, 2, figsize=(12, 6), sharex=True,
@@ -226,45 +225,49 @@ fig.text(-0.03, 0.5, 'f(x)', fontsize=16)
 
 假设可以将 $y$ 建模为一个关于 $x$ 的函数 $f（x）$ 和加性噪声的高斯分布：
 
-```{math}
-y \sim \mathcal{N}(\mu=f(x), \sigma=\epsilon) \tag{式7.5} \label{式7.5}
-```
+$$
+y \sim \mathcal{N}(\mu=f(x), \sigma=\epsilon) \tag{式7.5} 
+$$
 
 此处 $\epsilon \sim \mathcal{N}\left(0, \sigma_{\epsilon}\right)$
 
 这类似于第 3 章“线性回归模型”中做出的假设。此处的主要区别在于，我们将在 $f$ 上设置先验以体现相邻的函数值之间的某些依赖关系，而高斯过程正适合做这个工作：
 
-```{math}
-f(x) \sim \mathcal{GP}(\mu_x, K(x, x')) \tag{式7.6} \label{式7.6}
-```
+$$
+f(x) \sim \mathcal{GP}(\mu_x, K(x, x')) \tag{式7.6}
+$$
 
 $\mathcal{GP}$ 表示高斯过程分布， $\mu_x$ 为均值函数， $K(x,x')$ 为核函数或协方差函数。注意我们使用 `函数` 这个词汇，表示在数学上均值和协方差都是无限的对象，尽管实践中总是作为有限对象来处理的。
 
 如果先验是高斯过程分布，似然是正态分布，那么根据共轭先验的知识，后验分布也应当是一个高斯过程分布，并且可以解析地计算如下公式：
 
-```{math}
-\begin{align*} 
-p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) &\sim \mathcal{N}(\mu, \Sigma) \tag{式7.7}  \label{式7.7}\\
-\mu&=K_{*}^{T} K^{-1} y \tag{式7.8} \label{式7.8}\\
-\Sigma &=K_{* *}-K_{*}^{T} K^{-1} K_{*} \notag
-\end{align*}
-```
+$$
+p\left(f\left(X_{*}\right) \mid X_{*}, X, y\right) \sim \mathcal{N}(\mu, \Sigma) \tag{式7.7} 
+$$
+
+$$
+\mu=K_{*}^{T} K^{-1} y \tag{式7.8} 
+$$
+
+$$
+\Sigma =K_{* *}-K_{*}^{T} K^{-1} K_{*} 
+$$
 
 此处：
 
-```{math}
+$$
 \begin{align*}
 &\text { - } K=K(X, X) \\
 &\text { - } K_{*}=K\left(X_{*}, X\right) \\
 &\text { - } K_{* *}=K\left(X_{*}, X_{*}\right)
 \end{align*}
-```
+$$
 
 $X$ 是观察到的数据点，$X_*$ 表示测试点；也就是我们希望推断得出新点的函数值。
 
 像往常一样，PyMC3 会自动完成整个高斯过程的推断过程。让我们继续创建一些数据，然后构建一个 PyMC3 模型：
 
-```{code-cell} ipython3
+```{code-cell}
 np.random.seed(42)
 x = np.random.uniform(0, 10, size=15)
 y = np.random.normal(np.sin(x), 0.1)
@@ -283,7 +286,7 @@ plt.ylabel('f(x)', rotation=0)
 
 高斯过程在 PyMC3 中实现为一系列 Python 类，与以前的模型略有不同；然而，代码仍然非常 `PyMC3 风格`。我在以下代码中添加了一些注释，以指导您完成使用 PyMC3 定义高斯过程的关键步骤：
 
-```{code-cell} ipython3
+```{code-cell}
 # A one dimensional column vector of inputs.
 X = x[:, None]
 
@@ -303,15 +306,15 @@ with pm.Model() as model_reg:
 
 这里使用的并非（式 7.7 ）中预期的正态似然，而是采用了 `gp.marginal_likelihood` 函数。在第一章 “概率思维” 的（式 1.1）和第五章 “模型比较” 的（式 5.13) 中，边缘似然是似然和先验乘积的积分：
 
-```{math}
-p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) df \tag{式7.9} \label{式7.9}
-```
+$$
+p(y \mid X, \theta) \sim \int p(y \mid f, X, \theta) p(f \mid X, \theta) df \tag{式7.9}
+$$
 
 与往常一样，$\theta$ 代表所有未知参数，$X$ 是预测变量，$y$ 是结果变量。注意，我们正在对函数 $f$ 的值进行边缘化。对于高斯过程先验和正态似然，可以解析地得到边缘化结果。
 
 根据 PyMC3 的核心开发者、GP 模块的主要贡献者 Bill Engels 的说法，尽量避免对核宽度参数 $\ell$ 设置零先验效果会更好。$\ell$ 非常有用的默认设置是 `pm.Gamma(2，0.5)`。你可以从 [Stan team](https://github.com/stan-dev/stan/wiki/Prior-ChoiceRecommendations) 阅读更多关于默认先验的建议。
 
-```{code-cell} ipython3
+```{code-cell}
 az.plot_trace(trace_reg)
 ```
 
@@ -319,7 +322,7 @@ az.plot_trace(trace_reg)
 
 现在已经找到 $\ell$ 和 $\epsilon$ 的值，我们可能想要从高斯过程分布的后验中获取样本；即已与数据拟合的函数的样本。通过使用 `gp.conditional` 条件函数计算新输入位置的条件分布来实现这一点：
 
-```{code-cell} ipython3
+```{code-cell}
 X_new = np.linspace(np.floor(x.min()), np.ceil(x.max()), 100)[:,None]
 with model_reg:
     f_pred = gp.conditional('f_pred', X_new)
@@ -327,14 +330,14 @@ with model_reg:
 
 结果得到了一个新的 PyMC3 随机变量 f_pred，可以使用它从后验预测分布中获取样本（基于 X_new 值计算）：
 
-```{code-cell} ipython3
+```{code-cell}
 with model_reg:
     pred_samples = pm.sample_posterior_predictive(trace_reg, vars=[f_pred],samples=82)
 ```
 
 现在可以在原始数据上绘制拟合函数图，以直观检查其与数据的拟合程度以及预测中的不确定性：
 
-```{code-cell} ipython3
+```{code-cell}
 _, ax = plt.subplots(figsize=(12,5))
 ax.plot(X_new, pred_samples['f_pred'].T, 'C1-', alpha=0.3)
 ax.plot(X, y, 'ko')
@@ -345,7 +348,7 @@ ax.set_xlabel('X')
 
 或者，可以使用 `pm.gp.util.plot_gp_dist` 函数来获得一些图形。每个图代表一个百分位数，范围从 51（浅色）到 99（深色）：
 
-```{code-cell} ipython3
+```{code-cell}
 _, ax = plt.subplots(figsize=(12,5))
 pm.gp.util.plot_gp_dist(ax, pred_samples['f_pred'], X_new,
 palette='viridis', plot_samples=False);
@@ -358,7 +361,7 @@ ax.set_ylabel('f(x)', rotation=0, labelpad=15)
 
 另一种选择是计算在参数空间中给定点估计的条件分布的平均向量和标准差。在下面示例中，使用 $\ell$ 和 $\epsilon$ 的平均值（在迹的样本上）。我们可以使用 `gp.predict` 函数计算平均值和方差。之所以能做到这一点，是因为 PyMC3 已经解析地计算了后验结果：
 
-```{code-cell} ipython3
+```{code-cell}
 _, ax = plt.subplots(figsize=(12,5))
 point = {'ℓ': trace_reg['ℓ'].mean(), 'ϵ': trace_reg['ϵ'].mean()}
 mu, var = gp.predict(X_new, point=point, diag=True)
@@ -390,7 +393,7 @@ ax.set_xlabel('X')
 
 我们通过读取本书附带的 `island_dist.csv` 文件来访问以千公里为单位表示的距离矩阵：
 
-```{code-cell} ipython3
+```{code-cell}
 islands_dist = pd.read_csv('../data/islands_dist.csv',sep=',', index_col=0)
 islands_dist.round(1)
 ```
@@ -403,7 +406,7 @@ islands_dist.round(1)
 
 主对角线上填满了零,因为岛屿社会自身距离为零。矩阵是对称的，表示从 $A$ 点到 $B$ 点的距离。工具数量和人口规模存储在另一个文件 `islands.csv` 中，该文件也随书一起分发：
 
-```{code-cell} ipython3
+```{code-cell}
 islands = pd.read_csv('../data/islands.csv', sep=',')
 islands.head().round(1)
 ```
@@ -416,7 +419,7 @@ islands.head().round(1)
 
 表中只列出和使用了 culture, total_tools, lat, lon2 和 logpop 列:
 
-```{code-cell} ipython3
+```{code-cell}
 islands_dist_sqr = islands_dist.values**2
 culture_labels = islands.culture.values
 index = islands.index.values
@@ -427,13 +430,17 @@ x_data = [islands.lat.values[:, None], islands.lon.values[:, None]]
 
 我们要构建的模型是：
 
-```{math}
-\begin{align*} 
-f &\sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \tag{式7.10} \label{式7.10}\\
-\mu &\sim \exp (\alpha+\beta x+f) \tag{式7.11} \label{式7.11}\\
-y &\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
-\end{align*}
-```
+$$
+f \sim \mathcal{G P}\left([0, \cdots, 0], K\left(x, x^{\prime}\right)\right) \tag{式7.10} 
+$$
+
+$$
+\mu \sim \exp (\alpha+\beta x+f) \tag{式7.11} 
+$$
+
+$$
+y \sim \operatorname{Poisson}(\mu) \tag{式7.12}
+$$
 
 此处省略了 $\alpha$ 和 $\beta$ 的前缀，以及核的超先验。 $x$ 是对数人口， $y$ 是工具总数。
 
@@ -441,7 +448,7 @@ y &\sim \operatorname{Poisson}(\mu)\tag{式7.12} \label{式7.12}
 
 此模型（包括之前的模型）类似于 PyMC3 中的以下代码：
 
-```{code-cell} ipython3
+```{code-cell}
 with pm.Model() as model_islands:
     η = pm.HalfCauchy('η', 1)
     ℓ = pm.HalfCauchy('ℓ', 1)
@@ -458,7 +465,7 @@ with pm.Model() as model_islands:
 
 为理解协方差函数的后验分布，可以根据后验分布绘制一些样本：
 
-```{code-cell} ipython3
+```{code-cell}
 trace_η = trace_islands['η']
 trace_ℓ = trace_islands['ℓ']
 _, ax = plt.subplots(1, 1, figsize=(8, 5))
@@ -481,7 +488,7 @@ ax.set_ylabel('covariance')
 
 根据我们的模型，现在继续探索岛屿之间的社会联系有多强。为此，必须将协方差矩阵转换为相关矩阵：
 
-```{code-cell} ipython3
+```{code-cell}
 # compute posterior median covariance among societies
 Σ = np.median(trace_η) * (np.exp(-np.median(trace_ℓ) * islands_dist_sqr))
 # convert to correlation matrix
@@ -498,7 +505,7 @@ columns=islands_dist.columns)
 
 现在使用纬度和经度信息来绘制 `岛屿-社会` 的相对位置：
 
-```{code-cell} ipython3
+```{code-cell}
 # scale point size to logpop
 logpop = np.copy(log_pop)
 logpop /= logpop.max()
@@ -541,7 +548,7 @@ ax[1].set_ylim(10, 73)
 
 高斯过程不限于回归，也可以用于分类。正如第 4 章 “广义线性模型” 中所述，通过使用 Logistic 逆连接函数的伯努利似然，将线性模型转化为适合分类的模型。对于 iris 数据集，本节将尝试重述第 4 章中的 model_0，不过这次使用高斯过程而不是线性模型。
 
-```{code-cell} ipython3
+```{code-cell}
 iris = pd.read_csv('../data/iris.csv')
 iris.head()
 ```
@@ -554,7 +561,7 @@ iris.head()
 
 我们从最简单的分类问题开始，类别只有两类：山鸢尾（`setosa`）和变色鸢尾（`versicolor`）；预测变量只有一个：萼片长度（`sepal_length`）。使用数字 `0` 和 `1` 对山鸢尾（`setosa`）和变色鸢尾（`versicolor`）进行编码：
 
-```{code-cell} ipython3
+```{code-cell}
 df = iris.query("species == ('setosa', 'versicolor')")
 y = pd.Categorical(df['species']).codes
 x_1 = df['sepal_length'].values
@@ -563,7 +570,7 @@ X_1 = x_1[:, None]
 
 对于此模型，我们不使用 `pm.gp.Marginal` 类实例化高斯过程先验，而是使用 `pm.gp.Latent` 类。前者仅限于高斯似然，而后者更通用些，可与任何似然一起使用（不过高斯过程先验与高斯似然结合通过共轭先验得到解析推断结果，具有更高效率）：
 
-```{code-cell} ipython3
+```{code-cell}
 with pm.Model() as model_iris:
     ℓ = pm.Gamma('ℓ', 2, 0.5)
     cov = pm.gp.cov.ExpQuad(1, ℓ)
@@ -577,7 +584,7 @@ with pm.Model() as model_iris:
 
 现在找到了 $\ell$ 的值 ，想要从高斯过程后验获取样本。与 `marginal_gp_model` 函数一样，可借助 `gp.conditional` 函数计算一组新输入位置上的条件分布，如以下代码所示：
 
-```{code-cell} ipython3
+```{code-cell}
 X_new = np.linspace(np.floor(x_1.min()), np.ceil(x_1.max()), 200)[:, None]
 with model_iris:
     f_pred = gp.conditional('f_pred', X_new)
@@ -587,7 +594,7 @@ with model_iris:
 
 为显示此模型结果，创建一个类似于图 4.4 的图。我们将使用以下函数直接从 `f_pred` 计算决策边界，而不是解析地获得决策边界：
 
-```{code-cell} ipython3
+```{code-cell}
 def find_midpoint(array1, array2, value):
     """
     This should be a proper docstring :-)
@@ -602,7 +609,7 @@ def find_midpoint(array1, array2, value):
 
 以下代码与第 4 章 “广义线性模型” 中用于生成图 4.4 的代码非常相似：
 
-```{code-cell} ipython3
+```{code-cell}
 _, ax = plt.subplots(figsize=(10, 6))
 fp = logistic(pred_samples['f_pred'])
 fp_mean = np.mean(fp, 0)
@@ -628,13 +635,13 @@ ax.set_ylabel('θ', rotation=0)
 
 以下模型 （`model_iris2`） 与 `model_iris` 相同，不同之处在于协方差矩阵，来自三个核的组合：
 
-```{code-cell} ipython3
+```{code-cell}
 cov = K_{ExpQuad} + K_{Linear} + K_{whitenoise}(1E-5)
 ```
 
 通过添加线性核修复了尾部问题，如图 7.12 所示。白噪声核只是一个稳定协方差矩阵计算的技巧。对高斯过程的核进行限制，确保得到的协方差矩阵为正定的。但数字误差可能会导致违反此条件，其表现是在计算拟合函数的后验预测样本时会出现无效值（NaN）。通过添加一点噪声来稳定计算能够减轻此问题。其实 PyMC3 已经在幕后做到了这一点，但有时需要更多噪声，如以下代码所示：
 
-```{code-cell} ipython3
+```{code-cell}
 with pm.Model() as model_iris2:
     ℓ = pm.Gamma('ℓ', 2, 0.5)
     c = pm.Normal('c', x_1.min())
@@ -651,7 +658,7 @@ with pm.Model() as model_iris2:
 
 现在为先前生成的 `X_new` 值生成 `model_iris2` 的后验预测样本：
 
-```{code-cell} ipython3
+```{code-cell}
 with model_iris2:
     f_pred = gp.conditional('f_pred', X_new)
     pred_samples = pm.sample_posterior_predictive(trace_iris2,
@@ -684,7 +691,7 @@ ax.set_ylabel('θ', rotation=0)
 
 实践中，使用高斯过程对只能用 Logistic 回归来解决的问题进行建模没有太大意义。相反，我们希望使用高斯过程来建模更复杂的数据，而这些数据使用灵活性较低的模型很难捕获。例如，假设想要将患病概率建模为年龄的函数。事实证明，非常年轻和非常年长的人比中年人有更高风险。数据集 `space_flu.csv` 是受前面描述启发的假数据集。
 
-```{code-cell} ipython3
+```{code-cell}
 df_sf = pd.read_csv('../data/space_flu.csv')
 age = df_sf.age.values[:, None]
 space_flu = df_sf.space_flu
@@ -702,7 +709,7 @@ ax.set_yticklabels(['healthy', 'sick'])
 
 以下模型与 `model_iris` 基本相同：
 
-```{code-cell} ipython3
+```{code-cell}
 with pm.Model() as model_space_flu:
     ℓ = pm.HalfCauchy('ℓ', 1)
     cov = pm.gp.cov.ExpQuad(1, ℓ) + pm.gp.cov.WhiteNoise(1E-5)
@@ -715,7 +722,7 @@ with pm.Model() as model_space_flu:
 
 现在，为 `model_space_flu` 生成后验预测样本，然后绘制结果：
 
-```{code-cell} ipython3
+```{code-cell}
 X_new = np.linspace(0, 80, 200)[:, None]
 with model_space_flu:
     f_pred = gp.conditional('f_pred', X_new)
@@ -748,7 +755,7 @@ ax.set_xlabel('age')
 
 第一个例子是煤矿灾难。该案例包括英国从 1851 年到 1962 年的煤矿灾难记录。灾难数量被认为受到安全法规变化的影响。我们希望将灾害率建模为时间的函数，数据集只有一列，每个条目都对应灾难发生的时间。让我们加载数据并查看它的一些值：
 
-```{code-cell} ipython3
+```{code-cell}
 coal_df = pd.read_csv('../data/coal.csv', header=None)
 coal_df.head()
 ```
@@ -761,16 +768,16 @@ coal_df.head()
 
 我们用来拟合上表 `coal_df` 中数据的模型是：
 
-```{math}
+$$
 \begin{align*}
-f(x)  &\sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.13} \label{式7.13} \\
-y  &\sim \operatorname{Poisson}(f(x)) \tag{式7.14} \label{式7.14}
+f(x)  &\sim \mathcal{G P}\left(\mu_{x}, K\left(x, x^{\prime}\right)\right) \tag{式7.13}  \\
+y  &\sim \operatorname{Poisson}(f(x)) \tag{式7.14} 
 \end{align*}
-```
+$$
 
 公式 $(7.13)$ 、$(7.14)$ 是一个泊松回归问题。你可能会想，如果只有灾难发生日期这一列，将如何执行回归？答案是将数据离散化，就像正在构建直方图一样。我们使用抽屉的中心值作为自变量 $x$ , 每个抽屉内的计数作为因变量 $y$：
 
-```{code-cell} ipython3
+```{code-cell}
 # discretize data
 years = int(coal_df.max().values - coal_df.min().values)
 bins = years // 4
@@ -785,7 +792,7 @@ y_data = hist / 4
 
 现在用 PyMC3 定义并求解该模型：
 
-```{code-cell} ipython3
+```{code-cell}
 with pm.Model() as model_coal:
     ℓ = pm.HalfNormal('ℓ', x_data.std())
     cov = pm.gp.cov.ExpQuad(1, ls=ℓ) + pm.gp.cov.WhiteNoise(1E-5)
@@ -798,7 +805,7 @@ with pm.Model() as model_coal:
 
 绘制结果图：
 
-```{code-cell} ipython3
+```{code-cell}
 _, ax = plt.subplots(figsize=(10, 6))
 f_trace = np.exp(trace_coal['f'])
 rate_median = np.median(f_trace, axis=0)
@@ -823,7 +830,7 @@ ax.set_ylabel('rate')
 
 像往常一样，我们加载数据并绘制它：
 
-```{code-cell} ipython3
+```{code-cell}
 rw_df = pd.read_csv('../data/redwood.csv', header=None)
 _, ax = plt.subplots(figsize=(8, 8))
 ax.plot(rw_df[0], rw_df[1], 'C0.')
@@ -835,7 +842,7 @@ ax.set_ylabel('x2 coordinate')
 
 同煤矿灾难示例类似，需要对数据进行离散化：
 
-```{code-cell} ipython3
+```{code-cell}
 # discretize spatial data
 bins = 20
 hist, x1_edges, x2_edges = np.histogram2d(
@@ -851,7 +858,7 @@ y_data = hist.flatten()
 
 请注意，我们将 x1 和 x2 数据视为分开的数据，而不是mesh网格。这允许我们为每个坐标构建协方差矩阵，从而减小计算高斯过程所需矩阵的大小。在使用 `LatentKron` 类定义高斯过程时，需要注意，这不是一个数字技巧，而是这类矩阵结构的数学属性，因此我们不会在模型中引入任何近似或误差，而只是用一种更快的计算方式来表达它：
 
-```{code-cell} ipython3
+```{code-cell}
 with pm.Model() as model_rw:
     ℓ = pm.HalfNormal('ℓ',  rw_df.std().values, shape=2)
     cov_func1 = pm.gp.cov.ExpQuad(1, ls=ℓ[0])
@@ -865,7 +872,7 @@ with pm.Model() as model_rw:
 
 最后，绘制结果图：
 
-```{code-cell} ipython3
+```{code-cell}
 rate = np.exp(np.mean(trace_rw['f'], axis=0).reshape((bins, -1)))
 fig, ax = plt.subplots(figsize=(6, 6))
 ims = ax.imshow(rate, origin='lower')

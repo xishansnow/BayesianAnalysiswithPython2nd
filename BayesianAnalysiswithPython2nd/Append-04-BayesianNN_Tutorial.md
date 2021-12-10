@@ -5,14 +5,14 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.12.0
+    jupytext_version: 1.11.5
 kernelspec:
   display_name: Python 3
   language: python3
   name: python3
 ---
 
-#  附录 D：贝叶斯神经网络概述
+#  附录 D：贝叶斯神经网络
 
 【原文】Goan, E., & Fookes, C. (2020). Bayesian Neural Networks: An Introduction and Survey. https://arxiv.org/abs/2006.12024
 

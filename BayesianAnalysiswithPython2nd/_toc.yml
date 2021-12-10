@@ -16,7 +16,7 @@ parts:
     chapters: 
     - file: Append-01-MCMC_Tutorial
     - file: Append-02-VariationalInference_Tutorial
-    - file: Append-03-GaussianProcessTutorial
+    - file: Append-03-GaussianProcessTutorial_01    
     - file: Append-04-BayesianNN_Tutorial
     - file: Append-05-BayesianDeepLearning_Tutorial
     - file: Append-06-BayesianDeepLearningPymc3

@@ -5,10 +5,10 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.12.0
+    jupytext_version: 1.11.5
 kernelspec:
   display_name: Python 3
-  language: ipython3
+  language: python3
   name: python3
 ---
 
@@ -20,7 +20,7 @@ kernelspec:
 
 本章将讨论以下内容：
 
-- 后验预测性检查
+- 后验预测检查
 - 奥卡姆剃刀---简单性和准确性
 - 过拟合和欠拟合
 - 信息准则
@@ -31,11 +31,11 @@ kernelspec:
 
 ## 5.1 最直观的模型比较方法 -- 后验预测分布
 
-`第一章 概率思维`介绍了后验预测性检查的概念，本章将用它来评估拟合出的模型对相同数据的解释程度。如前所述，所有的模型都是错误的，因此后验预测性检查的目的并非判定某个模型是否错误，而是希望通过后验预测性检查更好地把握模型的局限性，以做出适当改进。模型不会再现所有问题，但这并不是问题，因为构建模型都有特定目的，后验预测性检查则是在该目的背景下评估模型的一种方式；因此当考虑了多个模型时，可使用后验预测性检查来对它们进行比较。
+`第一章 概率思维`介绍了后验预测检查的概念，本章将用它来评估拟合出的模型对相同数据的解释程度。如前所述，所有的模型都是错误的，因此后验预测检查的目的并非判定某个模型是否错误，而是希望通过后验预测检查更好地把握模型的局限性，以做出适当改进。模型不会再现所有问题，但这并不是问题，因为构建模型都有特定目的，后验预测检查则是在该目的背景下评估模型的一种方式；因此当考虑了多个模型时，可使用后验预测检查来对它们进行比较。
 
 让我们读取并绘制一个简单的数据集：
 
-```{code-cell} ipython3
+```{code-cell}
 import matplotlib.pyplot as plt
 import scipy.stats as stats
 import numpy as np
@@ -47,7 +47,7 @@ import arviz as az
 az.style.use('arviz-darkgrid')
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 dummy_data = np.loadtxt('../data/dummy.csv')
 x_1 = dummy_data[:, 0]
 y_1 = dummy_data[:, 1]
@@ -69,7 +69,7 @@ plt.ylabel('y')
 
 现在，用两个略有不同的模型来拟合数据，第一个是线性模型，第二个是二阶多项式模型：
 
-```{code-cell} ipython3
+```{code-cell}
 with pm.Model() as model_l:
     α = pm.Normal('α', mu=0, sd=1)
     β = pm.Normal('β', mu=0, sd=10)
@@ -91,7 +91,7 @@ with pm.Model() as model_p:
 
 现在绘制这两个模型的平均拟合曲线：
 
-```{code-cell} ipython3
+```{code-cell}
 x_new = np.linspace(x_1s[0].min(), x_1s[0].max(), 100)
 α_l_post = trace_l['α'].mean()
 β_l_post = trace_l['β'].mean(axis=0)
@@ -121,14 +121,14 @@ plt.legend()
 
 图中二阶模型似乎做得更好，但线性模型也并没有那么糟糕。此时可以使用 PyMC3 来获得两个模型的后验预测样本，并执行检查：
 
-```{code-cell} ipython3
+```{code-cell}
 y_l = pm.sample_posterior_predictive(trace_l, 2000, model=model_l)['y_pred']
 y_p = pm.sample_posterior_predictive(trace_p, 2000, model=model_p)['y_pred']
 ```
 
-正如已经看到的，后验预测性检查通常使用可视化方式来执行，如下例所示：
+正如已经看到的，后验预测检查通常使用可视化方式来执行，如下例所示：
 
-```{code-cell} ipython3
+```{code-cell}
 plt.figure(figsize=(8, 3))
 data = [y_1s, y_l, y_p]
 labels = ['data', 'linear model', 'order 2']
@@ -150,8 +150,7 @@ for i, d in enumerate(data):
 
 图 5.3 显示了数据、线性模型和二次多项式模型的均值和四分位数范围。该图对各模型的后验预测样本做了平均，而且两个模型的均值都复现得很好，分位数范围也不是很差。不过在实际问题中，一些小差异可能是值得注意的。可以尝试做更多不同曲线图来探索后验预测分布。例如，绘制均值和四分位数间相对于数据真实值的离散度。下图就是一个例子：
 
-```{code-cell} ipython3
-
+```{code-cell}
 fig, ax = plt.subplots(1, 2, figsize=(10, 3), constrained_layout=True)
 
 def iqr(x, a=0):
@@ -180,20 +179,20 @@ for idx, func in enumerate([np.mean, iqr]):
 图 5.4 中黑色虚线表示根据真实数据计算的平均值和四分位数（因来自真实数据，为确切值而非分布）。图中曲线（与图 5.3 相同颜色代码）表示根据后验预测样本计算得出的均值分布（左图）或四分位数范围分布（右图）。图 5.4 还包括 `p-value` 值，该值来自于预测数据与实际数据的比较和计算。对于两个预测数据集合，我们计算了其平均值和四分位数范围，然后计算了两个统计量等于或大于根据实际数据统计量的比例。**一般而言，如果真实数据和预测结果一致，预期 `p-value` 值在 0.5 左右，否则将处于有偏的后验预测分布**。
 
 ```{tip}
-贝叶斯 p 值只是一种衡量后验预测性检查拟合度的数字方法。
+贝叶斯 p 值只是一种衡量后验预测检查拟合度的数字方法。
 ```
 
 贝叶斯 `p-value` 与频率派的 `p-value` 名字相似，定义基本上也相同：
 
-```{math}
-\text{Bayesian p-value}\triangleq p\left(T_{s i m} \geq T_{o b s} \mid y \right) \tag{式 5.1}  \label{式 5.1}
-```
+$$
+\text{Bayesian p-value}\triangleq p\left(T\_{sim} \geq T_{o b s} \mid y \right) \tag{式 5.1}
+$$
 
 可以解释为：从模拟数据中获得与观测数据相同或更高统计量值的概率。$T$ 几乎可以是数据的任意统计量。在图 5.4 中，统计量是左侧的平均值和右侧的四分位数范围。通常 $T$ 应该在最初定义推断任务时就选择好。
 
 这些 `p-value` 是贝叶斯的，因为其采样自后验预测分布。需要注意的是：贝叶斯的 `p-value` 不需要频率主义的任何零假设作为条件；事实上，我们拥有基于观测数据的整个后验分布。此外，贝叶斯也没有使用类似置信度的任何预定义阈值来声明统计显著性，当然也没有执行假设检验。这里只是试图计算一个数字来评估后验预测分布与数据集的拟合度。
 
-无论使用曲线图还是数据摘要（如贝叶斯 `p-value` ），或是两者组合，后验预测性检查都是非常灵活的。该概念可让分析师思考不同方法来探索后验预测分布，并使用合适的方法来讲述一个数据驱动的故事，包括但不限于模型比较。
+无论使用曲线图还是数据摘要（如贝叶斯 `p-value` ），或是两者组合，后验预测检查都是非常灵活的。该概念可让分析师思考不同方法来探索后验预测分布，并使用合适的方法来讲述一个数据驱动的故事，包括但不限于模型比较。
 
 在接下来几节中，我们探索一些其他模型比较的方法。
 
@@ -205,7 +204,7 @@ for idx, func in enumerate([np.mean, iqr]):
 
 直觉上，似乎最好选择准确度高且简单的模型。但如果简单模型准确度最差，该怎么办？如何才能平衡这两种要素呢？为简化问题，此处引入一个例子来帮助理解如何平衡准确性与简约性。为了更形象些，该例使用一系列逐渐复杂的多项式来拟合同一个简单数据集，并且未采用贝叶斯方法，而是采用最小二乘估计来建模。当然，最小二乘估计其实可转化成带均匀先验的贝叶斯模型，因此，将其理解成贝叶斯方法也没问题。
 
-```{code-cell} ipython3
+```{code-cell}
 x = np.array([4., 5., 6., 9., 12, 14.])
 y = np.array([4.2, 6., 6., 9., 10, 10.])
 plt.figure(figsize=(10, 5))
@@ -317,9 +316,9 @@ plt.ylabel('y', rotation=0)
 
 一种衡量模型对数据的拟合程度的方法是计算模型预测结果与真实数据之间的均方差：
 
-```{math}
-\frac{1}{N} \sum_{i=1}^{N}\left(y_{i}-\mathrm{E}\left(y_{i} \mid \theta\right)\right)^{2}  \tag{式 5.2}  \label{式 5.2}
-```
+$$
+\frac{1}{N} \sum_{i=1}^{N}\left(y_{i}-\mathrm{E}\left(y_{i} \mid \theta\right)\right)^{2}  \tag{式 5.2} 
+$$
 
 其中，$E(y_i|\theta)$ 是根据估计的参数值计算得到的预测值。
 
@@ -327,15 +326,15 @@ plt.ylabel('y', rotation=0)
 
 一种更通用的方法是计算 log 似然：
 
-```{math}
-\sum_{i=1}^{N} \log p\left(y_{i} \mid \theta\right)  \tag{式 5.3}  \label{式 5.3}
-```
+$$
+\sum_{i=1}^{N} \log p\left(y_{i} \mid \theta\right)  \tag{式 5.3} 
+$$
 
 当似然服从正态分布时，已经证明 log 似然与二次均方误差成正比。由于历史原因，实践中人们通常不直接使用 log 似然，而是使用一个称作 `离差（deviance）` 的量：
 
-```{math}
--2 \sum_{i=1}^{N} \log p\left(y_{i} \mid \theta\right)  \tag{式 5.4}  \label{式 5.4}
-```
+$$
+-2 \sum_{i=1}^{N} \log p\left(y_{i} \mid \theta\right)  \tag{式 5.4}  
+$$
 
 离差在贝叶斯方法和非贝叶斯方法中类似，区别在于：贝叶斯框架中 $θ$ 来自后验的采样。而在非贝叶斯方法中，$θ$ 是一个点估计。在使用离差时，需注意以下两点：
 
@@ -348,9 +347,9 @@ plt.ylabel('y', rotation=0)
 
 AIC 信息准则（Akaike Information Criterion）是一个广泛应用的信息准则，其定义如下：
 
-```{math}
-\text{AIC} = -2\sum_{i=1}^{n} \log p\left(y_{i} \mid \hat{\theta}_{m l e}\right)+2 \text{pAIC}  \tag{式 5.5}  \label{式 5.5}
-```
+$$
+\text{AIC} = -2\sum_{i=1}^{n} \log p\left(y_{i} \mid \hat{\theta}_{m l e}\right)+2 \text{pAIC}  \tag{式 5.5} 
+$$
 
 其中，$pAIC$ 表示参数的个数， $\hat{\theta}_{m l e}$ 为 $\theta$ 的最大似然估计。最大似然估计在非贝叶斯方法中经常用到，等价于贝叶斯方法中基于均匀先验的最大后验估计。注意这里 $\hat{\theta}_{mle}$ 是点估计而不是分布。
 
@@ -362,9 +361,9 @@ AIC 对非贝叶斯方法来说很有用，但对贝叶斯方法可能会有些�
 
 `通用信息准则（Widely Available Information Criterion， WAIC）` 是 `AIC` 的完全贝叶斯版本。与 `AIC` 一样， `WAIC` 有两个项：一项衡量模型对数据的拟合效果；另外一项衡量模型的复杂程度。
 
-```{math}
+$$
 \text{ `WAIC` }=-2 \times lppd + 2 \times p_{WAIC} \tag{5.5}
-```
+$$
 
 如果您想更好地理解这两个术语是什么，请阅读后面的 `深入 WAIC` 部分。从应用角度看，只需要知道我们更喜欢较低的值。
 
@@ -389,7 +388,7 @@ AIC 对非贝叶斯方法来说很有用，但对贝叶斯方法可能会有些�
 
 采用 `ArviZ` 进行模型比较想像起来容易得多！
 
-```{code-cell} ipython3
+```{code-cell}
 waic_l = az.waic(trace_l)
 waic_l
 ```
@@ -406,12 +405,12 @@ waic_l
 ```{note}
 在计算 `WAIC` 或 `LOO` 时，可能会收到一些警告消息，指出计算的结果可能不可靠。此警告是根据经验确定的阈值提出的（请参阅相关文献资料）。虽然这不一定是错误，但可能表明这些度量计算存在问题。 `WAIC` 和 `LOO` 相对较新，或许需要开发更好的方法来获得其可靠性。
 
-无论如何，如果出现警告的情况，首先应当确保有足够样本，并且是一个混合良好、可靠的样本（参见第 8 章，推断引擎）。如果仍然接收到警告， `LOO` 方法的提出者建议使用更健壮的模型，如使用学生 t 分布而不是高斯分布。如果上述建议都不起作用，那么可能需要考虑使用另一种方法，例如直接执行 `K-折交叉验证`。 `WAIC` 和 `LOO` 只能帮助你在一组给定的模型中进行选择，但不能帮助你决定一个模型是否真的是解决特定问题的好方法。因此， `WAIC` 和 `LOO` 应该得到后验预测性检查以及任何其他信息和测试的补充，这些信息和测试可以帮助我们根据待解决的特定问题和领域知识来设置模型和数据。
+无论如何，如果出现警告的情况，首先应当确保有足够样本，并且是一个混合良好、可靠的样本（参见第 8 章，推断引擎）。如果仍然接收到警告， `LOO` 方法的提出者建议使用更健壮的模型，如使用学生 t 分布而不是高斯分布。如果上述建议都不起作用，那么可能需要考虑使用另一种方法，例如直接执行 `K-折交叉验证`。 `WAIC` 和 `LOO` 只能帮助你在一组给定的模型中进行选择，但不能帮助你决定一个模型是否真的是解决特定问题的好方法。因此， `WAIC` 和 `LOO` 应该得到后验预测检查以及任何其他信息和测试的补充，这些信息和测试可以帮助我们根据待解决的特定问题和领域知识来设置模型和数据。
 ```
 
 由于 `WAIC` 和 `LOO` 总是以相对的方式进行解释，`ArviZ` 提供了两个辅助函数来简化比较。第一个是 `az.compare` ：
 
-```{code-cell} ipython3
+```{code-cell}
 cmp_df = az.compare({'model_l':trace_l, 'model_p':trace_p}, method='BB-pseudo-BMA')
 cmp_df
 ```
@@ -430,7 +429,7 @@ cmp_df
 
 我们还可以通过使用 `az.plot_compare` 函数可视化上述信息。该函数接受 `az.compare` 的输出，并以 `Richard McElreath` 的《统计反思》一书中使用的样式生成汇总图：
 
-```{code-cell} ipython3
+```{code-cell}
 az.plot_compare(cmp_df)
 ```
 
@@ -457,23 +456,23 @@ az.plot_compare(cmp_df)
 
 在贝叶斯世界中，评估和比较模型的一种常见方式是 `贝叶斯因子（Bayes factor, BF）` 。 为理解什么是贝叶斯因子，让我们重温一遍贝叶斯定理：
 
-```{math}
-p(\theta \mid \mathcal{D})=\frac{p(\mathcal{D} \mid \theta) p(\theta)}{p(\mathcal{D})} \tag{式 5.9}  \label{式 5.9}
-```
+$$
+p(\theta \mid \mathcal{D})=\frac{p(\mathcal{D} \mid \theta) p(\theta)}{p(\mathcal{D})} \tag{式 5.9} 
+$$
 
 这里，$\mathcal{D}$ 表示数据。我们可以显式地基于给定模型 $M$ 计算条件概率关系：
 
-```{math}
-p\left(\theta \mid \mathcal{D}, M_{k}\right)=\frac{p\left(\mathcal{D} \mid \theta, M_{k}\right) p\left(\theta \mid M_{k}\right)}{p\left(\mathcal{D} \mid M_{k}\right)}\tag{式 5.10}   \label{式 5.10}
-```
+$$
+p\left(\theta \mid \mathcal{D}, M_{k}\right)=\frac{p\left(\mathcal{D} \mid \theta, M_{k}\right) p\left(\theta \mid M_{k}\right)}{p\left(\mathcal{D} \mid M_{k}\right)}\tag{式 5.10}  
+$$
 
 第一章中曾经介绍过，分母中的术语为边缘似然（或证据），可视为一个归一化常数。在进行单模型推断时，通常不需要真实计算它，而是基于一个常数因子来计算后验（如： MCMC 和 VI 方法都巧妙地规避了边缘似然的计算）。但对于模型比较和模型平均来说，边缘似然却是不得不计算的重要量。
 
 如果主要目标是从 $k$ 个模型中选择一个最好的模型，我们可以只选择边缘似然 $p(\mathcal{D}|M_k)$ 最大的那个（因此被成为证据，可以证明哪个模型更能解释数据集）。一般来说， $p(\mathcal{D}|M_k)$ 值的大小本身并不能告诉我们太多信息，重要的是不同模型之间的相对值。因此，实践中经常计算两个边缘似然的比率，这个比率被称为贝叶斯因子：
 
-```{math}
-B F=\frac{p\left(\mathcal{D} \mid M_{0}\right)}{p\left(\mathcal{D} \mid M_{1}\right)} \tag{式 5.11}  \label{式 5.11}
-```
+$$
+B F=\frac{p\left(\mathcal{D} \mid M_{0}\right)}{p\left(\mathcal{D} \mid M_{1}\right)} \tag{式 5.11} 
+$$
 
 当 $BF（M_0,M_1） > 1$ 时，模型 0 比模型 1 更好地解释了数据。
 
@@ -491,17 +490,17 @@ B F=\frac{p\left(\mathcal{D} \mid M_{0}\right)}{p\left(\mathcal{D} \mid M_{1}\ri
 
 如果假设所有模型都具有相同先验概率，则使用 $p(\mathcal{D}|M_k)$ 来比较模型完全没有问题。否则，必须计算后验赔率：
 
-```{math}
-\underbrace{\frac{p\left(M_{0} \mid \mathcal{D}\right)}{p\left(M_{1} \mid \mathcal{D}\right)}}_{\text {posterior odds }}=\underbrace{\frac{p\left(\mathcal{D}\mid M_{0}\right)}{p\left(\mathcal{D} \mid M_{1}\right)}}_{\text {Bayes factors}} \underbrace{\frac{p\left(M_{0}\right)}{p\left(M_{1}\right)}}_{\text{prior odds} } \tag{式 5.12}  \label{式 5.12}
-```
+$$
+\underbrace{\frac{p\left(M_{0} \mid \mathcal{D}\right)}{p\left(M_{1} \mid \mathcal{D}\right)}}_{\text {posterior odds }}=\underbrace{\frac{p\left(\mathcal{D}\mid M_{0}\right)}{p\left(\mathcal{D} \mid M_{1}\right)}}_{\text {Bayes factors}} \underbrace{\frac{p\left(M_{0}\right)}{p\left(M_{1}\right)}}_{\text{prior odds} } \tag{式 5.12}  
+$$
 
 ### 5.5.1 一些讨论
 
 现在简要讨论有关边缘似然的一些关键事实。通过仔细检查定义，可以理解边缘似然的性质和应用效果：
 
-```{math}
-p\left(\mathcal{D} \mid M_{k}\right)=\int_{\theta_{k}} p\left(\mathcal{D} \mid \theta_{k}, M_{k}\right) p\left(\theta_{k}, M_{k}\right) d \theta_{k} \tag{式 5.13}  \label{式 5.13}
-```
+$$
+p\left(\mathcal{D} \mid M_{k}\right)=\int_{\theta_{k}} p\left(\mathcal{D} \mid \theta_{k}, M_{k}\right) p\left(\theta_{k}, M_{k}\right) d \theta_{k} \tag{式 5.13}  
+$$
 
 - **好处**：参数多的模型比参数少的模型具有更大惩罚。贝叶斯因子内置奥卡姆剃刀，因为参数数量越多，先验分布相对于似然就越宽。结合贝叶斯因子公式，越宽的先验积分（质量）越大，而越聚集的先验积分（质量）越小，从而间接实现了对参数数量的惩罚。
 - **缺点**：计算边缘似然是艰巨的任务，因为要计算高维参数空间上的多变量函数积分，需要使用复杂方法进行数值求解。
@@ -527,7 +526,7 @@ p\left(\mathcal{D} \mid M_{k}\right)=\int_{\theta_{k}} p\left(\mathcal{D} \mid \
 
 让我们创建一些数据，以便在示例中使用：
 
-```{code-cell} ipython3
+```{code-cell}
 coins = 30
 heads = 9
 y_d = np.repeat([0, 1], [coins-heads, heads])
@@ -535,7 +534,7 @@ y_d = np.repeat([0, 1], [coins-heads, heads])
 
 现在，来看一下 `PyMC3` 模型。为在之前的代码之间切换，我们使用了 `pm.math.switch` 函数。如果此函数的第一个参数的计算结果为 `true`，则返回第二个参数，否则返回第三个参数。请注意，还使用 `pm.math.eq` 函数来检查 `model_index` 变量是否等于 0 ：
 
-```{code-cell} ipython3
+```{code-cell}
 with pm.Model() as model_BF:
     p = np.array([0.5, 0.5])
     model_index = pm.Categorical('model_index', p=p)
@@ -562,7 +561,7 @@ az.plot_trace(trace_BF)
 
 现在，需要通过计算 `model_index` 变量来计算贝叶斯因子。请注意，我们已经包括了每个模型的先验值：
 
-```{code-cell} ipython3
+```{code-cell}
 pM1 = trace_BF['model_index'].mean()
 pM0 = 1 - pM1
 BF = (pM0 / pM1) * (p[1] / p[0])
@@ -584,7 +583,7 @@ BF = (pM0 / pM1) * (p[1] / p[0])
 
 另一种计算贝叶斯因子的方法是使用 `序贯蒙特卡罗 (SMC) 采样方法`。我们将在 `第 8 章-推断引擎` 中学习此方法的详细信息。现在只需要知道这个采样器计算的边缘似然估计是一个副产品，可以直接使用它来计算贝叶斯因子。要在 `PyMC3` 中使用 `SMC`，需将 `pm.SMC()` 传递给 `sample` 的 `step` 参数：
 
-```{code-cell} ipython3
+```{code-cell}
 with pm.Model() as model_BF_0:
     θ = pm.Beta('θ', 4, 8)
     y = pm.Bernoulli('y', θ, observed=y_d)
@@ -606,7 +605,7 @@ model_BF_0.marginal_likelihood / model_BF_1.marginal_likelihood
 
 此前说过，贝叶斯因子对先验过于敏感。这在执行推断时会导致本来不相关的差异，在计算贝叶斯因子时被证明为非常重要。现在我们来看一个例子，它将有助于阐明贝叶斯因子在做什么，信息准则在做什么，以及它们如何在相似的情况下专注于两个不同的方面。回到抛硬币例子的数据定义，现在设置 300 枚硬币和 90 个正面；这与以前的比例相同，但数据多了 10 倍。然后，分别运行每个模型：
 
-```{code-cell} ipython3
+```{code-cell}
 traces = []
 waics = []
 for coins, heads in [(30, 9), (300, 90)]:
@@ -634,7 +633,7 @@ for coins, heads in [(30, 9), (300, 90)]:
 
 现在，比较一下 `WAIC` 告诉我们的内容（参见图 5.13）。模型 0 的 `WAIC` 是 368.4，模型 1 的是 368.6，直觉上差别不大。比实际差异更重要的是，如果重新计算数据的信息准则，也就是 30 枚硬币和 9 个正面，你会得到模型 0 的 38.1 和模型 1 的 39.4 。也就是说，在增加数据时，相对差异变得越小，$\theta$ 的估计值越相近，与信息准则估计出的预测准确度的值就越相似。如果你用 `LOO` 代替 `WAIC` ，会发现本质上是一样的：
 
-```{code-cell} ipython3
+```{code-cell}
 fig, ax = plt.subplots(1, 2, sharey=True)
 labels = model_names
 indices = [0, 0, 1, 1]
@@ -672,7 +671,7 @@ fig.text(0.5, 0, 'Deviance', ha='center', fontsize=14)
 - 能够解释数据集的模型很多，模型比较方法试图从其中选择一个最优的，而模型平均方法则认为所有模型的加权平均可能是最好的估计。
 ```
 
-一种变通的方案是在执行模型选择时，报告和讨论不同模型的信息准则值、标准差等统计量以及后验预测性检查情况。将所有这些数字和检查放在问题上下文中很重要，只有这样相关人士才能更好地感受到模型可能存在的局限性和缺点。在学术界中，可以使用该方法在论文、演示文稿等的讨论部分添加相关要素。
+一种变通的方案是在执行模型选择时，报告和讨论不同模型的信息准则值、标准差等统计量以及后验预测检查情况。将所有这些数字和检查放在问题上下文中很重要，只有这样相关人士才能更好地感受到模型可能存在的局限性和缺点。在学术界中，可以使用该方法在论文、演示文稿等的讨论部分添加相关要素。
 
 除了上述对各模型均做出报告和讨论的方法外，还有一种做法是充分利用模型比较中的出现的不确定性，执行模型平均。
 
@@ -686,9 +685,9 @@ fig.text(0.5, 0, 'Deviance', ha='center', fontsize=14)
 
 本方法使用每个模型的加权平均值来生成 `元模型（meta-model）` 和 `元预测（meta-predictions）` 。基于某些信息准则值（如 `WAIC`）计算不同模型的权重，公式如下：
 
-```{math}
-w_{i}=\frac{e^{\frac{1}{2} d E_{i}}}{\sum_{j=1}^{M} e^{-\frac{1}{2} d E_{j}}} \tag{式 5.7}  \label{式 5.7}
-```
+$$
+w_{i}=\frac{e^{\frac{1}{2} d E_{i}}}{\sum_{j=1}^{M} e^{-\frac{1}{2} d E_{j}}} \tag{式 5.7}  
+$$
 
 这里 $dE_i$ 是第 $i$ 个模型相对于最佳模型（`WAIC`值最小的模型）的 `WAIC` 相对差值。除 `WAIC` 外，此处也可以使用其他信息准则值，如 `AIC` 或 `LOO` 等。此公式是根据 `WAIC` 值计算各模型相对概率的启发式方法。分母为归一化因子，`第 4 章 广义线性模型`中有过类似的表达式。
 
@@ -700,9 +699,9 @@ w_{i}=\frac{e^{\frac{1}{2} d E_{i}}}{\sum_{j=1}^{M} e^{-\frac{1}{2} d E_{j}}} \t
 
 另一种计算平均模型权重的方法被称为 `预测性分布堆叠（stacking of predictive distributions）` 。这在 `PyMC3` 中通过将 `method=‘stacking’` 传递给 `az.compare` 实现。其基本思想是通过最小化元模型和真实生成模型之间的差异，将多个模型组合到一个元模型中。当使用对数打分规则时，这等价于：
 
-```{math}
-\max _{n} \frac{1}{n} \sum_{i=1}^{n} \log \sum_{k=1}^{K} w_{k} p\left(y_{i} \mid y_{-i}, M_{k}\right) \tag{式 5.8}  \label{式 5.8}
-```
+$$
+\max _{n} \frac{1}{n} \sum_{i=1}^{n} \log \sum_{k=1}^{K} w_{k} p\left(y_{i} \mid y_{-i}, M_{k}\right) \tag{式 5.8}  
+$$
 
 这里，$n$ 是数据点的数量，$k$ 是模型的数量。为了强制实施方案，我们将 $w$ 约束为 $w_k \geq 0$ 并且 $\sum w_k =1$。量 $p(y_i|y_{-i},M_k)$ 是模型 $M_k$ 的留一预测性分布。根据留一法，计算需要拟合每个模型 $n$ 次，每次遗留一个数据点。幸运的是，`PyMC3` 可以使用 `WAIC` 或 `LOO` 来近似留一预测性分布。
 
@@ -721,7 +720,7 @@ w_{i}=\frac{e^{\frac{1}{2} d E_{i}}}{\sum_{j=1}^{M} e^{-\frac{1}{2} d E_{j}}} \t
 
 以下只是如何从 `PyMC3` 获得加权后验预测样本的一个模拟示例。在这里，我们使用的是 `pm.sample_posterior_predictive_w` 函数（注意函数名称末尾的 `w` ）。`pm.sample_posterior_predictive` 和`pm.sample_posterior_predictive_w` 之间的区别在于，后者接受多个迹和模型，以及权重列表（默认值为所有模型的权重相同）。您可以通过 `az.compare` 或其他来源获取这些权重：
 
-```{code-cell} ipython3
+```{code-cell}
 w = 0.5
 y_lp = pm.sample_posterior_predictive_w([trace_l, trace_p],
                                         samples=1000,
@@ -770,9 +769,9 @@ plt.legend()
 
 如果展开公式 5.5，会得到以下结果：
 
-```{math}
-\text{WAIC}=-2 \sum_{i}^{n} \log \left(\frac{1}{S} \sum_{s=1}^{S} p\left(y_{i} \mid \theta^{s}\right)\right)+2 \sum_{i}^{n}\left(\text{V}_{s=1}^{S}\left(\log p\left(y_{i} \mid \theta^{s}\right)\right)\right. \tag{式 5.14}  \label{式 5.14}
-```
+$$
+\text{WAIC}=-2 \sum_{i}^{n} \log \left(\frac{1}{S} \sum_{s=1}^{S} p\left(y_{i} \mid \theta^{s}\right)\right)+2 \sum_{i}^{n}\left(\text{V}_{s=1}^{S}\left(\log p\left(y_{i} \mid \theta^{s}\right)\right)\right. \tag{式 5.14}  
+$$
 
 该表达式中的两项看起来非常相似。第一项是式 5.5 中的`对数点预测密度（lppd）`，计算的是后验样本集 $S$ 的平均似然。我们对每个数据点都先求平均似然，然后取对数，最后对所有数据点求和。请将这一项与公式 5.3 和 5.4 进行比较。其实该项就是考虑了后验的样本内离差（deviance）。因此，如果我们认为计算对数似然是衡量模型适合性的好方法，那么在贝叶斯方法中，从后验计算对数似然就顺理成章。观测数据的 lddp 是对未来数据 lppd 的高估（此处意指样本内离差通常小于样本外离差），因此引入第二项来修正这种过高的估计。第二项计算后验样本的对数似然方差，我们对每个数据点执行此方差计算，然后对所有数据点进行汇总。为什么方差会给出惩罚条件？这与贝叶斯因子内置奥卡姆剃须刀的原理相似。有效参数越多，后验分布越大。当向模型添加结构时（如具有信息性/正则化的先验或分层依赖），与非正则化的模型相比，我们约束了后验，进而减少了有效参数的数量。
 
@@ -782,13 +781,13 @@ plt.legend()
 
 从数学上讲，熵定义为：
 
-```{math}
-H(p)=-\sum_{i} p_i\text{log} (p_i) \tag{式 5.15}  \label{式 5.15}
-```
+$$
+H(p)=-\sum_{i} p_i\text{log} (p_i) \tag{式 5.15}  
+$$
 
 直观地说，分布越分散，其熵越大。通过运行以下代码并查看图 5.15，可以看到这一点：
 
-```{code-cell} ipython3
+```{code-cell}
 np.random.seed(912)
 x = range(0, 10)
 q = stats.binom(10, 0.75)
@@ -833,23 +832,23 @@ for idx, (dist, label) in enumerate(zip([true_distribution, q_pmf, r_pmf], ['tru
 
 现在简单谈谈 `Kullback-Leibler(KL) 散度`，或简称 `KL 散度`。这是在阅读统计学、机器学习、信息论或统计力学文献时经常遇到的概念。你或许会说，`KL 散度`、`熵`、`边缘似然`等概念反复出现的原因很简单，因为所有这些学科都在讨论同一组问题，只是观点略有不同。`KL 散度` 非常有用，因为**它是衡量两个分布接近程度的一种方法**，其定义如下：
 
-```{math}
-D_{K L}(p \| q)=\sum_{i} p_{i} \log \frac{p_{i}}{q_{i}} \tag{式 5.16}  \label{式 5.16}
-```
+$$
+D_{K L}(p \| q)=\sum_{i} p_{i} \log \frac{p_{i}}{q_{i}} \tag{式 5.16} 
+$$
 
 上式可读为 $q$ 到 $p$ 的 `Kullback-Leibler 散度`（两者顺序不能相反，因为 `KL 散度` 不符合交换率），其中 $p$ 和 $q$ 是两个概率分布。对于连续变量应该计算积分而非求和，但主要思想相同。
 
 可以将 $D_{KL}({p||q})$ 散度解释为 **”通过使用概率分布 $q$ 来近似真实分布 $p$ 而引入的额外熵或不确定性“**。事实上，`KL 散度` 是两个熵之间的差值：
 
-```{math}
-D_{K L}(p \| q)=\underbrace{\sum_{i} p_{i} \log p_{i}}_{\text {entropy of p }}-\underbrace{\sum_{i} p_{i} \log q_{i}}_{\text {crossentropy of p,q }}=\sum_{i} p_{i}\left(\log p_{i}-\log q_{i}\right) \tag{式 5.17}  \label{式 5.17}
-```
+$$
+D_{K L}(p \| q)=\underbrace{\sum_{i} p_{i} \log p_{i}}_{\text {entropy of p }}-\underbrace{\sum_{i} p_{i} \log q_{i}}_{\text {crossentropy of p,q }}=\sum_{i} p_{i}\left(\log p_{i}-\log q_{i}\right) \tag{式 5.17} 
+$$
 
 利用对数性质，可以重新排列式 5.17 以恢复式 5.16。从式 5.17 的角度来看，也可以将 $D_{KL}({p||q})$ 理解为 $p$ 相对于 $q$ 的相对熵（这一次顺着念）。
 
 作为一个简单例子，我们可以使用 KL 散度来评估哪个分布（ $q$ 或 $r$ ）更接近真实分布。使用 Scipy，可以计算 $D_{KL}({真实分布||q})$  和 $D_{KL}({真实分布||r})$ ：
 
-```{code-cell} ipython3
+```{code-cell}
 stats.entropy(true_distribution, q_pmf), stats.entropy(true_distribution,r_pmf)
 ```
 
@@ -857,7 +856,7 @@ stats.entropy(true_distribution, q_pmf), stats.entropy(true_distribution,r_pmf)
 
 您可能很想将 KL 散度描述为距离，但它是不对称的，因此不是真实距离。如果运行下面代码，将获得 $\approx 2.7,\approx 0.7$ 。由此可见，结果数字是不同的。在此例中，可以看到 $r$ 是 $q$ 的更好近似，但反之可能不成立：
 
-```{code-cell} ipython3
+```{code-cell}
 stats.entropy(r_pmf, q_pmf), stats.entropy(q_pmf, r_pmf)
 ```
 
@@ -865,18 +864,19 @@ stats.entropy(r_pmf, q_pmf), stats.entropy(q_pmf, r_pmf)
 
 我们也可以使用 KL 散度来比较模型，因为它将给出哪个模型更接近真实分布的后验。但问题是我们并不知道真实分布。因此，KL 散度不能直接适用，但可用它作为论据来修正离差（式 5.3）。如果假设真实分布存在（如下式所示），则其应当独立于任何模型和常数，并以同样方式影响 KL 散度，而与用于近似真实分布的后验分布无关。因此，可以使用离差（依赖于每个模型的部分）来估计我们离真实分布相对有多近，即使我们不知道它。对于公式 5.17 ，通过使用一些代数，可以得到：
 
-```{math}
-\begin{align} 
-D_{K L}(p \| q)-D_{K L}(p \| r) &=\left(\sum_{i} p_{i} \log p_{i}-\sum_{i} p_{i} \log q_{i}\right)-\left(\sum_{i} p_{i} \log p_{i}-\sum_{i} p_{i} \log r_{i}\right) \tag{式 5.18}  \label{式 5.18}\\
- &=\sum_{i} p_{i} \log q_{i}-\sum_{i} p_{i} \log r_{i} \notag
-end{align}
-``` 
+$$
+D_{K L}(p \| q)-D_{K L}(p \| r) =\left(\sum_{i} p_{i} \log p_{i}-\sum_{i} p_{i} \log q_{i}\right)-\left(\sum_{i} p_{i} \log p_{i}-\sum_{i} p_{i} \log r_{i}\right) \tag{式 5.18}  
+$$
+
+$$
+=\sum_{i} p_{i} \log q_{i}-\sum_{i} p_{i} \log r_{i}
+$$
 
 即使不知道 $p$，我们也可以得出结论，具有更大对数似然（或离差）的分布就是在 KL 散度中更接近真实分布的分布。实践中对数似然（或离差）是从有限样本拟合的模型中获得的。因此，还必须增加一个惩罚项，以纠正对离差的高估，这就引出了 `WAIC` 等信息准则。
 
 ## 5.8 总结
 
-后验预测性检查是一个通用概念和实践，它可以帮助我们了解模型捕获数据的能力，以及模型捕获我们感兴趣问题的各个方面的能力。我们可以只用一个模型进行后验预测性检查，也可以用多个模型进行后验预测性检查，因此也可以用它作为模型比较的一种方法。后验预测性检查大多是通过可视化完成的，但像 `贝叶斯 p-value` 类似的数字摘要也很有帮助。
+后验预测检查是一个通用概念和实践，它可以帮助我们了解模型捕获数据的能力，以及模型捕获我们感兴趣问题的各个方面的能力。我们可以只用一个模型进行后验预测检查，也可以用多个模型进行后验预测检查，因此也可以用它作为模型比较的一种方法。后验预测检查大多是通过可视化完成的，但像 `贝叶斯 p-value` 类似的数字摘要也很有帮助。
 
 好的模型在复杂性和预测准确性之间有很好的平衡。我们用多项式回归的经典例子来说明这一特征。我们讨论了两种在不留数据的情况下估计样本外准确度的方法：交叉验证法和信息准则法。我们集中讨论了后者。从实践角度来看，信息准则是一系列平衡两种贡献的方法：一种是衡量模型与数据的拟合程度，另一种是惩罚复杂的模型。在众多可用信息准则中， `WAIC` 是贝叶斯模型中最有用的。另一个有用的方法是 `PSIS-LOO-CV` （或 `LOO` ），它在实践中提供了与 `WAIC` 非常相似的结果。 `WAIC` 和 `LOO` 可用于模型选择，也可用于模型平均。模型平均不是选择单个最佳模型，而是通过对所有可用模型进行加权平均来组合所有可用模型。
 

@@ -5,10 +5,10 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.12.0
+    jupytext_version: 1.11.5
 kernelspec:
   display_name: Python 3
-  language: ipython3
+  language: python3
   name: python3
 ---
 
@@ -152,7 +152,7 @@ p(A, B)=p(A \mid B) p(B) \tag{式1.1} \label{式1.1}
 
 让我们看一个使用 `Python` 的示例：真实概率分布是均值 $\mu=0$ 和方差 $\sigma=1$ 的正态（或高斯）分布；这两个参数完全明确地定义了正态分布。使用 SciPy，可以通过编写 `stats.Norm(μ，σ)` 来定义随机变量，并且使用 `rvs` （random variates 的缩写）方法生成一个实例（或样本） $x$ 。而下面示例中，代码要求提供三个值：
 
-```{code-cell} ipython3
+```{code-cell}
 import matplotlib.pyplot as plt
 import scipy.stats as stats
 import numpy as np
@@ -200,7 +200,7 @@ p(x \mid \mu, \sigma)=\frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{(x-\mu)^{2}}{2 \si
 
 数学公式简明扼要并且不存在二义性。但第一次遇到它会让人害怕，特别是对数学不太感兴趣的人；打破僵局的一个好方法是使用 `Python` 来探索它们：
 
-```{code-cell} ipython3
+```{code-cell}
 mu_params = [-1, 0, 1]
 sd_params = [0.5, 1, 1.5]
 x = np.linspace(-7, 7, 200)
@@ -242,7 +242,7 @@ ax[1,0].set_yticks([])
 
 非 i.i.d. 的常见案例是时间序列，其中随机变量间的时间依赖性是必须要考虑的关键特征。例如，以下数据来自 http://cdiac.esd.ornl.gov 。该数据记录了从1959年到1997年的大气二氧化碳水平。加载数据并绘制它得到：
 
-```{code-cell} ipython3
+```{code-cell}
 data = np.genfromtxt('../data/mauna_loa_CO2.csv', delimiter=',')
 plt.plot(data[:,0], data[:,1])
 plt.xlabel('year')
@@ -353,7 +353,7 @@ p(y \mid \theta, N)=\frac{N !}{y !(N-y) !} \theta^{y}(1-\theta)^{N-y} \tag{式1.
 
 二项分布是一个离散分布，表示给定某个参数值 $\theta$ ， $N$ 次抛硬币实验中 $y$ 次正面朝上的概率（或者更通俗地描述是，$N$ 次实验中，$y$ 次成功的概率）。
 
-```{code-cell} ipython3
+```{code-cell}
 n_params = [1, 2, 4]  # Number of trials
 p_params = [0.25, 0.5, 0.75]  # Probability of success
 x = np.arange(0, max(n_params)+1)
@@ -395,7 +395,7 @@ p(\theta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha) \Gamma(\beta)} \theta^{\alp
 
 仔细观察上式可看出，除 $\Gamma$ 部分之外，贝塔分布和二项分布看起来很像。 $\Gamma$ 表示伽马函数。现在只需知道，用分数表示的第一项是一个标准化常量，用来保证该分布的积分为 1，此外，$\alpha$ 和 $\beta$ 两个参数用来控制分布形态。贝塔分布是到目前为止的第 3 个分布，利用下面的代码，可以深入了解其形态：
 
-```{code-cell} ipython3
+```{code-cell}
 params = [0.5, 1, 2, 3]
 x = np.linspace(0, 1, 100)
 f, ax = plt.subplots(len(params), len(params), sharex=True,
@@ -462,7 +462,7 @@ p(\theta \mid y) \propto \operatorname{Beta}\left(\alpha_{\text {prior }}+y, \be
 
 现在有了后验表达式，可以用 `Python` 对其计算并画出结果。下面代码中，其实只有一行是用来计算后验结果的，其余代码都是用来画图的：
 
-```{code-cell} ipython3
+```{code-cell}
 plt.figure(figsize=(10, 8))
 n_trials = [0, 1, 2, 3, 4, 8, 16, 32, 50, 150]
 data = [0, 1, 1, 1, 1, 4, 6, 9, 13, 48]
@@ -612,7 +612,7 @@ $$
 
 `ArviZ` 是一个 `Python` 包，用于贝叶斯模型的探索性数据分析。`ArviZ` 有许多函数可以帮助我们总结后验结果，例如，`az.plot_posterior` 可以用来生成具有`平均值`和 `HPDI` 标识的后验分布曲线图。在下例中，我们以贝塔分布生成的随机样本作为假想的后验分布样本，来展示其汇总分析的图形化方法。注意图中数据汇总的 `HPDI` 为 `94%` 。`ArviZ` 每次计算和报告 `HPDI` 时，默认情况下采用 `94% HPDI`。可通过向 `trusted_interval` 参数传递新值来更改此设置。
 
-```{code-cell} ipython3
+```{code-cell}
 np.random.seed(1)
 az.plot_posterior({'θ':stats.beta.rvs(5, 11, size=1000)})
 ```
@@ -651,7 +651,7 @@ p(\hat{y} \mid y)=\int p(\hat{y} \mid \theta) p(\theta \mid y) d \theta \tag{式
 
 即使不知道如何改进模型，能够理解模型或数据捕获（或未能捕获）的问题也非常有价值。模型也许能够捕获到均值但无法预测异常值，这或许是个问题，但当我们只关心均值时，模型还是可用的。
 
-换句话说，通常贝叶斯统计分析的总体目标不是宣布某个模型是错误的，而是想了解模型哪一部分是可信的，并尝试检验该模型是否适合特定目的。一个人对一个模型有多大信心，在不同学科间肯定不一样。物理学可以使用高级理论在高度受控条件下研究系统，因此模型通常被视为对现实的很好描述；而其他学科研究复杂的、难以孤立的系统时，模型常具有较弱认识论地位。尽管如此，无论从事哪个学科，都应始终对模型做检验，后验预测性检查和探索性数据分析的想法是检验模型的好方法。
+换句话说，通常贝叶斯统计分析的总体目标不是宣布某个模型是错误的，而是想了解模型哪一部分是可信的，并尝试检验该模型是否适合特定目的。一个人对一个模型有多大信心，在不同学科间肯定不一样。物理学可以使用高级理论在高度受控条件下研究系统，因此模型通常被视为对现实的很好描述；而其他学科研究复杂的、难以孤立的系统时，模型常具有较弱认识论地位。尽管如此，无论从事哪个学科，都应始终对模型做检验，后验预测检查和探索性数据分析的想法是检验模型的好方法。
 
 ## 1.6 总结
 
