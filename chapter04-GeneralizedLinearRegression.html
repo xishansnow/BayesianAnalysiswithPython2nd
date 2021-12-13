@@ -158,27 +158,27 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Append-01-MCMC_Tutorial.html">
-   附录 A： MCMC 随机性推断
+   附录 A： MCMC 推断
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Append-02-VariationalInference_Tutorial.html">
-   附录 B： 变分法确定性推断
+   附录 B： 变分法推断
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Append-03-GaussianProcessTutorial.html">
+  <a class="reference internal" href="Append-03-GaussianProcessTutorial_01.html">
    附录 C： 高斯过程
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Append-04-BayesianNN_Tutorial.html">
-   附录 D：贝叶斯神经网络概述
+   附录 D：贝叶斯神经网络
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Append-05-BayesianDeepLearning_Tutorial.html">
-   附录 E：贝叶斯深度学习综述
+   附录 E：贝叶斯深度学习
   </a>
  </li>
  <li class="toctree-l1">
@@ -311,29 +311,73 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#logistic">
-   4.2 面向二分类的一元 Logistic 回归
+   4.2 二分类问题：一元
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     Logistic
+    </span>
+    <span class="pre">
+     回归
+    </span>
+   </code>
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id3">
-     （1）Logistic 模型
+     （1）Logistic 回归模型
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#iris">
-     （2）关于 Iris 数据集
+     （2）关于
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Iris
+      </span>
+      <span class="pre">
+       数据集
+      </span>
+     </code>
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#logistic-iris">
-     （3）将 Logistic 回归模型应用到 Iris 数据集
+     （3）将
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Logistic
+      </span>
+      <span class="pre">
+       回归
+      </span>
+     </code>
+     模型应用到
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Iris
+      </span>
+      <span class="pre">
+       数据集
+      </span>
+     </code>
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id4">
-   4.3 面向二分类的多元 Logistic 回归
+   4.3 二分类问题：
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     多元
+    </span>
+    <span class="pre">
+     Logistic
+    </span>
+    <span class="pre">
+     回归
+    </span>
+   </code>
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -348,7 +392,16 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id7">
-     4.3.3 关于 Logistic 回归系数的解释
+     4.3.3 关于
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Logistic
+      </span>
+      <span class="pre">
+       回归
+      </span>
+     </code>
+     系数的解释
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -370,12 +423,20 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#softmax">
-   4.4 面向多分类的 Softmax 回归
+   4.4 多分类问题：
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     Softmax
+    </span>
+    <span class="pre">
+     回归
+    </span>
+   </code>
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id11">
-   4.5 面向计数问题的泊松回归
+   4.5 计数型变量回归问题：泊松回归
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -397,7 +458,15 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id15">
-   4.6 稳健 Logistic 回归
+   4.6 稳健
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     Logistic
+    </span>
+    <span class="pre">
+     回归
+    </span>
+   </code>
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -429,51 +498,169 @@
   <div class="tex2jax_ignore mathjax_ignore section" id="id1">
 <h1>第 4 章 广义线性回归模型<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <style>p{text-indent:2em;2}</style>
-<p>在上一章中，使用自变量的线性组合来预测因变量的平均值，其中假设因变量为高斯分布。在许多情况下都可以使用高斯分布，但对于其他许多情况，选择其他分布可能更明智。例如：使用学生 <span class="math notranslate nohighlight">\(t\)</span> 分布替换高斯分布时，可有效解决异常值问题，使推断更为稳健。本章将介绍更多使其他分布的例子。此外，正如即将介绍的，存在一个通用的模式，可将线性模型推广到许多问题中。</p>
+<p>在上一章中，使用预测变量的线性组合来预测结果变量的平均值，其中假设结果变量为高斯分布。在许多情况下都可以使用高斯分布，但对于其他许多情况，选择其他分布可能更明智。例如：使用学生 <span class="math notranslate nohighlight">\(t\)</span> 分布替换高斯分布时，可有效解决异常值问题，使推断更为稳健。本章将介绍更多使其他分布的例子。此外，正如即将介绍的，存在一个通用的模式，可将线性模型推广到许多问题中。</p>
 <p>本章将会讨论以下内容：</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">广义线性模型</span></code></p></li>
-<li><p>Logistic 回归和<code class="docutils literal notranslate"><span class="pre">逆连接函数</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">简单</span> <span class="pre">Logistic</span> <span class="pre">回归</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>和<code class="docutils literal notranslate"><span class="pre">逆连接函数</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">一元</span> </code>Logistic 回归``</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">多元</span> <span class="pre">Logistic</span> <span class="pre">回归</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Softmax</span> <span class="pre">函数</span></code>和 <code class="docutils literal notranslate"><span class="pre">多分类</span> <span class="pre">Logistic</span> <span class="pre">回归</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Softmax</span> <span class="pre">函数</span></code>和 <code class="docutils literal notranslate"><span class="pre">多分类</span> </code>Logistic 回归``</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">泊松回归</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">零膨胀泊松回归</span></code></p></li>
 </ul>
 <hr class="docutils" />
 <div class="section" id="id2">
 <h2>4.1 广义线性回归<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>本章的核心思想相当简单：<code class="docutils literal notranslate"><span class="pre">为预测因变量的平均值，可以对自变量的线性组合应用任意函数</span></code>。</p>
+<p>本章的核心思想相当简单：<code class="docutils literal notranslate"><span class="pre">为预测结果变量的平均值，可以对预测变量的线性组合应用任意函数</span></code>。</p>
 <div class="math notranslate nohighlight">
 \[
 \mu = f ( \alpha + X \beta ) \tag{式4.1}
 \]</div>
-<p>其中， <span class="math notranslate nohighlight">\(f\)</span> 称作<code class="docutils literal notranslate"><span class="pre">逆连接函数</span></code>。为什么这里把 <span class="math notranslate nohighlight">\(f\)</span> 称作 『逆连接函数』 而不是 『连接函数』 ？ 原因是传统上人们认为 『连接函数』 是用来连结因变量和线性模型的。而在构建贝叶斯模型时，反过来思考（即连接线性模型和因变量）可能更容易理解一些。因此，为避免疑惑本文统称 『逆连接函数』。前一章中所有线性模型其实都包含一个逆连接函数，不过书写时省略了，因为它其实是一个恒等函数（函数的返回值和输入值相同）。恒等函数在此没什么用，但有助于让我们用更一般的形式思考模型。</p>
-<p>希望使用逆连接函数的一种情况是处理离散型的定类变量，例如：颜色名称、性别、生物物种、政党/从属关系等。它们都无法用高斯分布建模，因为高斯函数仅适用于实数集上的连续变量。可以考虑调整数据的分布，不过这需要改变建模方法，例如：如果使用二项分布，就需要一个因变量分布的平均值在 <span class="math notranslate nohighlight">\([0, 1]\)</span> 区间内的模型。要实现这种模型，可以保留原先的线性模型，但使用逆连接函数将输出限制在所需区间内。当然，此技巧并不局限于离散变量，例如：实践中可能只对取正值的数据建模，因此希望将线性模型限制为因变量分布的平均值为正值，例如伽马或指数分布。</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>请注意：某些变量可以被编码为定量的，也可以编码成定性的。这需要根据所研究问题的上下文做出决定。例如：在讨论颜色名称时，既可以采用取值为 『红色』 或 『绿色』 的定性变量，也可以使用取值为 『650』 nm 和 『510』 nm 的定量变量。</p>
+<p>其中， <span class="math notranslate nohighlight">\(f\)</span> 称作<code class="docutils literal notranslate"><span class="pre">逆连接函数</span></code>。为什么这里把 <span class="math notranslate nohighlight">\(f\)</span> 称作 『逆连接函数』 而不是 『连接函数』 ？ 原因很简单：传统上人们认为 『连接函数』 是用来连结结果变量和线性模型的，即式 <span class="math notranslate nohighlight">\(g(\mu)= \alpha + X \beta\)</span> 中的 <span class="math notranslate nohighlight">\(g\)</span> 才是传统意义上的『连接函数』。但在构建贝叶斯模型时，反过来思考问题（即连接线性模型和结果变量）可能更容易理解一些。因此，为避免疑惑，本文统称 <span class="math notranslate nohighlight">\(f\)</span> 为『逆连接函数』。</p>
+<p>与此同时，大家应该能够想到，前一章中所有线性模型其实都包含一个逆连接函数，只是书写时省略了而已，因为它其实是一个恒等函数（函数的返回值和输入值相同）。恒等函数在此没什么用，但有助于让我们用更一般的形式思考模型。</p>
+<p>希望使用逆连接函数的一种常见情况是处理离散型的结果变量，例如：颜色名称、性别、物种、政党、从属关系等。此类变量无法用高斯分布建模，因为高斯函数仅适用于实数集上的连续变量。<strong>如果我们需要更改用于数据建模的分布，则应当同步更改对该分布参数的建模方式</strong>。 例如：如果使用二项分布对数据进行建模，就需要调整其<code class="docutils literal notranslate"><span class="pre">均值</span></code>参数的建模方式，将其限制为输出值域为 <span class="math notranslate nohighlight">\([0, 1]\)</span> 的线性模型。要实现这种需求，一种最常见的方法是：<em>在上一章介绍的普通线性模型基础上，使用一个逆连接函数将其输出限制在所需区间内</em>。</p>
+<p><strong>需要注意的是：</strong> 此技巧并不局限于离散变量，还适用于很多其他场景。例如：当结果变量只能取正值时，可以在普通线性模型基础上，选用伽马函数或指数函数作为逆连接函数，将其输出值域限制为正数。本章后面部分将分别介绍其中：</p>
+<ul class="simple">
+<li><p>输出为二分类变量的广义线性回归模型</p>
+<ul>
+<li><p>一元模型（ 见 4.2 节 ）</p></li>
+<li><p>多元模型（ 见 4.3 节 ）</p></li>
+</ul>
+</li>
+<li><p>输出为多分类变量的广义线性回归模型（ 见 4.4 节 ）</p></li>
+<li><p>输出为计数型变量的广义线性回归模型（ 见 4.5 节 ）</p></li>
+</ul>
+<blockquote>
+<div><p><strong>关于变量类型的划分</strong></p>
+<p>本章根据输出变量的类型分章节介绍了不同的广义线性回归模型。因此，需要首先补充一些关于变量类型的知识。通常根据变量的统计学含义和数据类型等的不同，有不同的划分方式，但常见以下三种划分方式：</p>
+<hr class="docutils" />
+<p><strong>（1）按照统计含义划分：计量型和计数型</strong></p>
+<ul class="simple">
+<li><p><strong>计数型变量</strong>：指先将观察对象按其性质或类别分组，然后清点各组中观察单位个数所得的资料。因此通常面向下文提到的<em>定类</em>和<em>定序</em>变量，主要用于研究不同类别或属性中频数的多少或频率大小。其主要特点：</p>
+<ul>
+<li><p>只研究分组或分类中的数量预测变量，对分组或分类自身不感兴趣。</p></li>
+<li><p>主要用于建立相对的统计指标。如：百分比、构成比和相对比等。</p></li>
+<li><p>能够用于估计相对数指标的可信区间以及假设检验。如：某百分比的 <span class="math notranslate nohighlight">\(95%\)</span> 可信区间估计、卡方检验等。</p></li>
+<li><p>常见的概率分布有：</p>
+<ul>
+<li><p>二项分布、泊松分布、几何分布、负二项分布、类别分布等。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>计量型变量</strong>：由数值变量组成的、通过测定观察指标数值大小所获得的资料，一般都有单位。因此，主要体现为下文提到的<strong>定距</strong>变量和<strong>定比</strong>变量。其主要特点：</p>
+<ul>
+<li><p>通常比较关心中心位置和离散程度</p></li>
+<li><p>主要用于建立分布规律及数量的统计指标，如：均值、标准差等</p></li>
+<li><p>可以用于估计分布律指标的可信区间以及假设检验，如：均数 <span class="math notranslate nohighlight">\(95%\)</span> 的可信区间估计、<span class="math notranslate nohighlight">\(t\)</span> 检验、方差分析等</p></li>
+<li><p>常见的概率分布有：</p>
+<ul>
+<li><p>高斯（正态）分布、均匀分布、指数分布、伽玛分布、贝塔分布等。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p><strong>（2）按照计量方式划分：定类、定序、定距和定比四种</strong></p>
+<p>依据数据的计量方式不同，可将变量划分为四种： 定类、定序、定距、定比，并且<em>四种类型是从低到高的递进关系，高级类型可以使用低级类型的分析方法，而反过来却不行</em>。其中：</p>
+</div></blockquote>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>定类变量</strong>：用于对研究对象进行分类，只支持 “ <span class="math notranslate nohighlight">\(=\)</span> ” 和 “ <span class="math notranslate nohighlight">\(\neq\)</span> ” 两种数学计算。</p>
+<ul>
+<li><p>例如:性别分为男/女两类；动物分为哺乳类/爬行类等。</p></li>
+<li><p>特点：</p>
+<ul>
+<li><p><em>类与类之间互斥</em>，如不存在既是男又是女的对象；</p></li>
+<li><p><em>每个对象都必须属于其中某一个类别</em>，就像每个动物都有纲目科属种等分类。
+<br></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>定序变量</strong>：用于区分同一类别中对象之间的等级次序，除支持 “ <span class="math notranslate nohighlight">\(=\)</span> ” 和 “ <span class="math notranslate nohighlight">\(\neq\)</span> ” 运算外，还支持 “ <span class="math notranslate nohighlight">\(&gt;\)</span> ” 和 “ <span class="math notranslate nohighlight">\(&lt;\)</span> ” 等比较运算 。</p>
+<ul>
+<li><p>例如： 文化程度分为大学、高中、初中、小学；年龄分为老、中、青等</p></li>
+<li><p>特点：</p>
+<ul>
+<li><p>定序变量的值之间没有确切的间隔距离。</p></li>
+<li><p>即只能决定 “ <span class="math notranslate nohighlight">\(&gt;\)</span> ” 和 “ <span class="math notranslate nohighlight">\(&lt;\)</span> ” 的性质，无法反映 “ <span class="math notranslate nohighlight">\(&gt;\)</span> ” 和 “ <span class="math notranslate nohighlight">\(&lt;\)</span> ” 的具体数量或距离</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>定距变量</strong>：用于区分同一类别中对象之间的等次次序和距离，除支持 “ <span class="math notranslate nohighlight">\(=\)</span> ” 、 “ <span class="math notranslate nohighlight">\(\neq\)</span> ” 、“<span class="math notranslate nohighlight">\(&gt;\)</span>” 和 “ <span class="math notranslate nohighlight">\(&lt;\)</span> ”等运算外，还支持 “ <span class="math notranslate nohighlight">\(+\)</span> ” 和 “ <span class="math notranslate nohighlight">\(-\)</span> ” 等运算 。</p>
+<ul>
+<li><p>例如： 温度中的 <span class="math notranslate nohighlight">\(40\)</span> 度比 <span class="math notranslate nohighlight">\(30\)</span> 度高 <span class="math notranslate nohighlight">\(10\)</span> 度；甲地区的第三产业占比 <span class="math notranslate nohighlight">\(35%\)</span> 比乙地区的 <span class="math notranslate nohighlight">\(20%\)</span> 高 <span class="math notranslate nohighlight">\(15%\)</span> 等</p></li>
+<li><p>特点：</p>
+<ul>
+<li><p><em>该类变量不存在真正的零点，或者说零点可以不固定。</em>
+-如：温度的华氏和摄氏具有不同的零值，但都能表示温度，也就是说，温度这个变量没有真正有意义的零点。</p></li>
+<li><p>乘除或倍率等计算不存在有意义的解释。如：</p>
+<ul>
+<li><p>空气温度值 <span class="math notranslate nohighlight">\(40\)</span> 摄氏度在数值上是 <span class="math notranslate nohighlight">\(20\)</span> 摄氏度的 <span class="math notranslate nohighlight">\(2\)</span> 倍，但我们不能将其解释为前者的温度是后者的 <span class="math notranslate nohighlight">\(2\)</span> 倍，因为换做华氏时，这种关系不存在；</p></li>
+<li><p>智商数 <span class="math notranslate nohighlight">\(100\)</span> 和 <span class="math notranslate nohighlight">\(50\)</span> 在数值上有 <span class="math notranslate nohighlight">\(2\)</span> 倍关系，但不能被解释为前者的智商是后者的两倍。
+<br></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>定比变量</strong>：也用于区分同一类别中对象之间的等次次序和距离，但相对于定距变量而言，具有真正的零点，因此额外地支持 <span class="math notranslate nohighlight">\(\times\)</span> 和 <span class="math notranslate nohighlight">\(\div\)</span> 运算 。</p>
+<ul>
+<li><p>例如： 月薪 <span class="math notranslate nohighlight">\(10000\)</span> 元和 <span class="math notranslate nohighlight">\(5000\)</span> 元，<span class="math notranslate nohighlight">\(0\)</span> 元月薪具有明确意义，因此 “前者是后者的两倍” 存在有意义的解释；</p></li>
+<li><p>特点：</p>
+<ul>
+<li><p>具有真正意义上的零点，即零点是绝对的。如：月薪收入为 <span class="math notranslate nohighlight">\(0\)</span> 可解释为没有收入。</p></li>
+<li><p>乘除和倍率等计算有可解释的含义。 如：A 的收入为 <span class="math notranslate nohighlight">\(500\)</span> 美元，B 的收入是 A 的两倍具有明确含义。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p><strong>（3）按照数据类型划分 ：定性的和定量的</strong></p>
+<p>按照数据类型不同，数据可以被分为<em>定量</em>和<em>定性</em>两种常见的类型：</p>
+<ul class="simple">
+<li><p><strong>定性的数据</strong>：编码类型，描述的主要是品质预测变量，如性别分男/女；</p></li>
+<li><p><strong>定量的数据</strong>：数值类型，描述可以量化的数值预测变量，如身高体重等。根据数值类型不同，可进一步划分为：<strong>离散型</strong> 和 <strong>连续型</strong> 。</p></li>
+</ul>
+</div></blockquote>
 </div>
-</div>
+<hr class="docutils" />
 <div class="section" id="logistic">
-<h2>4.2 面向二分类的一元 Logistic 回归<a class="headerlink" href="#logistic" title="Permalink to this headline">¶</a></h2>
-<p>回归任务在给定一个或多个自变量的值的情况下，预测因变量的连续值。与此不同，分类任务在给定一些自变量的值时，将某些离散值赋给因变量。两种情况的核心任务都是<code class="docutils literal notranslate"><span class="pre">获得一个能够正确模拟因变量与自变量间映射的模型</span></code>。为此需要具有正确的 『因变量–自变量』 样本集。从机器学习视角看，回归任务和分类任务都属于监督学习。</p>
-<p>Logistic 回归虽然名字中带有 『回归』 字眼，但其实际解决的是分类问题。 Logistic 回归模型是线性回归模型的扩展。其模型是将 <code class="docutils literal notranslate"><span class="pre">式</span> <span class="pre">4.1</span></code> 中的逆连接函数设定为 Logistic 函数而形成， Logistic 函数形式以下：</p>
+<h2>4.2 二分类问题：一元 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code><a class="headerlink" href="#logistic" title="Permalink to this headline">¶</a></h2>
+<p>上一章中的线性回归任务，是在给定一个或多个预测变量值的情况下，预测结果变量的连续值。与此不同，分类任务在给定一些预测变量值时，将某些离散值赋给结果变量。虽然有一些差别，但两种情况的核心任务都是：<strong>获得一个能够正确拟合结果变量与预测变量之间映射的模型</strong>。为此，都需要具有正确 &lt; 结果变量，预测变量 &gt; 值对的样本集。也因此，机器学习领域认为<strong>回归任务和分类任务都是监督学习</strong>。</p>
+<p>本节为了实现二分类的结果变量，将采用 Logistic 作为逆连接函数，由于一些历史原因，很多人将其称为 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>。 但大家要清楚，虽然名字中包含 『回归』字眼，但其实际是一个分类模型。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">函数</span></code>形式以下：</p>
 <div class="math notranslate nohighlight">
-\[\operatorname{logistic}(z)=\frac{1} { 1 + e ^ { - z } } \tag{式4.2} \label{式4.2}\]</div>
-<p>从分类角度看， Logistic 函数最重要的特点是不论输入参数 <span class="math notranslate nohighlight">\(z\)</span> 值为多少，其输出总是介于 0 到 1 之间。因此，该函数可以将整个实轴压缩到了区间 <span class="math notranslate nohighlight">\([ 0,1 ]\)</span> 内。 Logistic 函数也称作 <code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">型函数（sigmoid</span> <span class="pre">function）</span></code>，因为其形状看起来像 S 。</p>
-<p>下面代码绘制了 S 型函数的图形：</p>
+\[
+\operatorname{logistic}(z)=\frac{1} { 1 + e ^ { - z } } \tag{式4.2} 
+\]</div>
+<p>从分类角度看， <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">函数</span></code>最重要的特点是不论输入参数 <span class="math notranslate nohighlight">\(z\)</span> 值为多少，其输出总是介于 0 到 1 之间。因此，该函数可以将 <em>普通线性模型输出域的整个实轴</em> 压缩到 <span class="math notranslate nohighlight">\([ 0,1 ]\)</span> 区间内。 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">函数</span></code>也称作 <code class="docutils literal notranslate"><span class="pre">S</span> <span class="pre">型函数（sigmoid</span> <span class="pre">function）</span></code>，因为其形状看起来像 <span class="math notranslate nohighlight">\(S\)</span> 。</p>
+<p>下面代码绘制了 <span class="math notranslate nohighlight">\(S\)</span> 型函数的图形：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
-<span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import matplotlib.pyplot as plt
+import scipy.stats as stats
+import numpy as np
+import pandas as pd
+import `seaborn` as sns
+import pymc3 as pm
+import arviz as az
 
-<span class="n">az</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;arviz-darkgrid&#39;</span><span class="p">)</span>
+az.style.use(&#39;arviz-darkgrid&#39;)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>  File &quot;/tmp/ipykernel_2863/2723275846.py&quot;, line 5
+    import `seaborn` as sns
+           ^
+SyntaxError: invalid syntax
 </pre></div>
 </div>
 </div>
@@ -487,41 +674,39 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;logistic(z)&#39;)
-</pre></div>
-</div>
-<img alt="_images/chapter04-GeneralizedLinearRegression_2_1.png" src="_images/chapter04-GeneralizedLinearRegression_2_1.png" />
-</div>
 </div>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505115639_54.webp" style="zoom:67%;" />
 <p>图 4.1</p>
 </center>
 <div class="section" id="id3">
-<h3>（1）Logistic 模型<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>至此我们已经具备了将简单线性回归转化为简单 Logistic 回归的所有要素。</p>
-<p>先从简单问题开始，假设因变量取值只有两类，比如正常邮件/垃圾邮件、安全/不安全、阴天/晴天、健康/生病等。首先对类别进行编码，假设变量 <span class="math notranslate nohighlight">\(y\)</span> 只能有两个值 0 或 1 。 这样表述就有点类似抛硬币问题了。我们可以使用在<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">2</span> <span class="pre">章</span></code>的抛硬币问题中曾采用伯努利分布作为似然，来建模此处的二分类问题。与抛硬币问题不同的是：<span class="math notranslate nohighlight">\(\theta\)</span> 来自于一个简单线性模型，而非从贝塔分布中生成。</p>
-<p>由于简单线性模型能够返回实轴上任意值，而伯努利分布的输入值限定在 <span class="math notranslate nohighlight">\([ 0,1 ]\)</span> 区间内。因此，可以使用 Logistic 函数作为逆连接函数，将线性模型的返回值映射到适合伯努利分布的区间内，从而将线性回归模型转换成分类模型：</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*} \tag{式 4.3} \\label{式4.3}
-\theta &amp;=\operatorname{logistic}(\alpha+x \beta) \\
- y &amp;= \operatorname{Bern}(\theta) 
-\end{align*}\]</div>
-<p>下面的 Kruschke 图显示了 Logistic 回归模型。注意与简单线性回归模型的区别是：</p>
+<h3>（1）Logistic 回归模型<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>至此我们已经具备了将简单线性回归转化为简单 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code> 的所有要素。</p>
+<p>假设结果变量只有两种取值，如：正常邮件/垃圾邮件、安全/不安全、阴天/晴天、健康/生病等。则我们首先对类别进行编码，假设变量 <span class="math notranslate nohighlight">\(y\)</span> 只能有两个值 0 或 1 。这样表述就类似抛硬币问题了。因此可以使用<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">2</span> <span class="pre">章</span></code>中抛硬币问题曾采用的伯努利分布作为似然，来建模此处的二分类问题。只是与抛硬币问题不同的是：现在的 <span class="math notranslate nohighlight">\(\theta\)</span> 将来自于一个简单线性模型，而非来自于贝塔分布的采样。</p>
+<p>由于简单线性模型能够返回实轴上任意值，而伯努利分布的输入值限定在 <span class="math notranslate nohighlight">\([ 0,1 ]\)</span> 区间内。因此，可以使用 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">函数</span></code>作为逆连接函数，将线性模型的返回值映射到适合伯努利分布的区间内，从而将线性回归模型转换成一个分类模型：</p>
+<div class="math notranslate nohighlight">
+\[ 
+\theta =\operatorname{logistic}(\alpha+x \beta)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+y = \operatorname{Bern}(\theta) \tag{式 4.3}
+\]</div>
+<p>下面的 <code class="docutils literal notranslate"><span class="pre">Kruschke</span> <span class="pre">图</span></code>显示了 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>模型。注意其与简单线性回归模型的区别是：</p>
 <ul class="simple">
-<li><p>为适合离散型变量建模，因变量采用了伯努利分布，而不是高斯分布（或者学生 <span class="math notranslate nohighlight">\(t\)</span> 分布）</p></li>
-<li><p>为适合于使用伯努利分布，逆连接函数使用了 Logistic 函数生成 <span class="math notranslate nohighlight">\([ 0,1 ]\)</span> 区间内的 <span class="math notranslate nohighlight">\(θ\)</span> 参数值，而非恒等函数。</p></li>
+<li><p>为适合离散型变量建模，结果变量采用了伯努利分布，而不是高斯分布（或者学生 <span class="math notranslate nohighlight">\(t\)</span> 分布）</p></li>
+<li><p>为适合于使用伯努利分布，逆连接函数使用了 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">函数</span></code>生成 <span class="math notranslate nohighlight">\([ 0,1 ]\)</span> 区间内的 <span class="math notranslate nohighlight">\(θ\)</span> 参数值，而非恒等函数。</p></li>
 </ul>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210429224141_27.webp" style="zoom:50%;" />
 </center>
 </div>
 <div class="section" id="iris">
-<h3>（2）关于 Iris 数据集<a class="headerlink" href="#iris" title="Permalink to this headline">¶</a></h3>
-<p>我们将 Logistic 回归应用到 Iris 数据集上。在构建模型之前先了解下该数据集。</p>
-<p>Iris 数据集是经典数据集，包含有 <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> 、 <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Virginica</span></code> 3 个种类，这 3 个类别标签就是要预测的量，即因变量。其中每个种类包含 50 个数据，每个数据包含 4 种变量（或称为特征），这 4 种变量就是待分析的自变量，分别是：花瓣长度、花瓣宽度、花萼长度和花萼宽度。花萼有点类似小叶，在花还是芽时包围着花，有保护作用。</p>
-<p>seaborn 软件包中包含 Iris 数据集，可以用如下代码将其导入成 <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> 的 <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>：</p>
+<h3>（2）关于 <code class="docutils literal notranslate"><span class="pre">Iris</span> <span class="pre">数据集</span></code><a class="headerlink" href="#iris" title="Permalink to this headline">¶</a></h3>
+<p>我们将 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>应用到 <code class="docutils literal notranslate"><span class="pre">Iris</span> <span class="pre">数据集</span></code>上。在构建模型之前先了解下该数据集。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Iris</span> <span class="pre">数据集</span></code>是经典数据集，包含有 <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> 、 <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Virginica</span></code> <span class="math notranslate nohighlight">\(3\)</span> 个类别，这 <span class="math notranslate nohighlight">\(3\)</span> 个类别标签就是要预测的结果变量。其中每个类别包含 <span class="math notranslate nohighlight">\(50\)</span> 个数据点，每个数据点包含 <span class="math notranslate nohighlight">\(4\)</span> 种预测变量（或称为预测变量），这 <span class="math notranslate nohighlight">\(4\)</span> 种变量分别是：花瓣长度（<code class="docutils literal notranslate"><span class="pre">sepal_length</span></code>）、花瓣宽度（<code class="docutils literal notranslate"><span class="pre">sepal_width</span></code>）、花萼长度（<code class="docutils literal notranslate"><span class="pre">petal_length</span></code>）和花萼宽度（<code class="docutils literal notranslate"><span class="pre">petal_width</span></code>）。花萼有点类似小叶，在花还是芽的时候包围着花，有保护作用。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211212140430-a36c.webp" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">seaborn</span></code> 软件包中有 <code class="docutils literal notranslate"><span class="pre">Iris</span> <span class="pre">数据集</span></code>，可以用如下代码将其导入成 <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> 的 <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/iris.csv&#39;</span><span class="p">)</span>
@@ -529,127 +714,42 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>sepal_length</th>
-      <th>sepal_width</th>
-      <th>petal_length</th>
-      <th>petal_width</th>
-      <th>species</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>5.1</td>
-      <td>3.5</td>
-      <td>1.4</td>
-      <td>0.2</td>
-      <td>setosa</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>4.9</td>
-      <td>3.0</td>
-      <td>1.4</td>
-      <td>0.2</td>
-      <td>setosa</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>4.7</td>
-      <td>3.2</td>
-      <td>1.3</td>
-      <td>0.2</td>
-      <td>setosa</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>4.6</td>
-      <td>3.1</td>
-      <td>1.5</td>
-      <td>0.2</td>
-      <td>setosa</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>5.0</td>
-      <td>3.6</td>
-      <td>1.4</td>
-      <td>0.2</td>
-      <td>setosa</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210429224345_c1.webp" /></p>
 </center>
-<p>现在，可以使用 seaborn 软件包中的 <code class="docutils literal notranslate"><span class="pre">stripplot</span></code> 函数绘制这三个物种与 <code class="docutils literal notranslate"><span class="pre">stepal_length</span></code> 的关系图：</p>
+<p>现在可以用 <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> 软件包中的 <code class="docutils literal notranslate"><span class="pre">stripplot</span></code> 函数绘制这三个物种与 <code class="docutils literal notranslate"><span class="pre">stepal_length</span></code> 的关系图：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;species&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;sepal_length&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">iris</span><span class="p">,</span> <span class="n">jitter</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;species&#39;, ylabel=&#39;sepal_length&#39;&gt;
-</pre></div>
-</div>
-<img alt="_images/chapter04-GeneralizedLinearRegression_6_1.png" src="_images/chapter04-GeneralizedLinearRegression_6_1.png" />
-</div>
 </div>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210429224514_92.webp" style="zoom:67%;" />
-<p>图 4.2</p>
+<blockquote>
+<div><p><strong>图 4.2 三个物种的花瓣长度分布预测变量</strong></p>
+</div></blockquote>
 </center>
-<p>上图中 <span class="math notranslate nohighlight">\(y\)</span> 轴是连续的，而 <span class="math notranslate nohighlight">\(x\)</span> 轴是离散的；图中在 <span class="math notranslate nohighlight">\(x\)</span> 轴上散布的点并没有什么实际意义，只是一个画图技巧而已，通过将 <code class="docutils literal notranslate"><span class="pre">jitter</span></code> 参数设为 <code class="docutils literal notranslate"><span class="pre">True</span></code>，避免所有点都重叠在一条直线上。你可以尝试将 <code class="docutils literal notranslate"><span class="pre">jitter</span></code> 参数设为 <code class="docutils literal notranslate"><span class="pre">False</span></code>。这里唯一重要的是 <span class="math notranslate nohighlight">\(x\)</span> 轴的含义，分别代表 <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> 、 <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Virginica</span></code> 三个类别。还可以用 seaborn 软件包中其他绘图函数（如 <code class="docutils literal notranslate"><span class="pre">violinplot</span></code> ）来画这些点，只需要一行代码就能完成。</p>
-<p>此外可以使用 <code class="docutils literal notranslate"><span class="pre">pairplot</span></code> 函数画出散点图矩阵，用该函数可以得到一个 4×4 网格（因为有 4 种特征）。网格是对称的，上三角和下三角表示同样的信息。由于对角线上的散点图其实是变量本身，因此用一个特征的 KDE 图代替了散点图。可以看到，每个子图中分别用 3 种颜色表示 3 种不同的类别标签，与前面图中的表示方法一致。</p>
+<p>上图中 <span class="math notranslate nohighlight">\(y\)</span> 轴是连续的， <span class="math notranslate nohighlight">\(x\)</span> 轴是离散的；图中 <span class="math notranslate nohighlight">\(x\)</span> 轴上散布的点没有什么实际意义，只是为了避免所有点都重叠在一条直线上而采用的一个画图技巧，在 <code class="docutils literal notranslate"><span class="pre">python</span></code> 中只需将 <code class="docutils literal notranslate"><span class="pre">jitter</span></code> 参数设为 <code class="docutils literal notranslate"><span class="pre">True</span></code>即可实现。你可以尝试将 <code class="docutils literal notranslate"><span class="pre">jitter</span></code> 参数设为 <code class="docutils literal notranslate"><span class="pre">False</span></code> 看看有何效果。<span class="math notranslate nohighlight">\(x\)</span> 轴上真正有含义的表示是三种颜色的点集，分别表示 <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> 、 <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Virginica</span></code> 三个类别。 读者还可以用 <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> 软件包中的其他绘图函数（如 <code class="docutils literal notranslate"><span class="pre">violinplot</span></code> ）来分析数据，只需要一行代码就能完成。</p>
+<p>此外可以使用 <code class="docutils literal notranslate"><span class="pre">pairplot</span></code> 函数画出预测变量两两之间的散点图矩阵，图 4.3 是用该函数得到的一个 <span class="math notranslate nohighlight">\(4×4\)</span> 矩阵。该矩阵是对称矩阵，由于对角线上的散点图是关于变量自身的，因此用该预测变量的 <code class="docutils literal notranslate"><span class="pre">KDE</span></code> 图代替了散点图。可以看到，每个子图中都用 <span class="math notranslate nohighlight">\(3\)</span> 种颜色表示 <span class="math notranslate nohighlight">\(3\)</span> 种不同的类别。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">iris</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">,</span> <span class="n">diag_kind</span><span class="o">=</span><span class="s1">&#39;kde&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/axisgrid.py:88: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
-  self._figure.tight_layout(*args, **kwargs)
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.PairGrid at 0x7f7155920e80&gt;
-</pre></div>
-</div>
-<img alt="_images/chapter04-GeneralizedLinearRegression_8_2.png" src="_images/chapter04-GeneralizedLinearRegression_8_2.png" />
-</div>
 </div>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210429224656_78.webp" style="zoom:67%;" />
-<p>图 4.3</p>
+<p><strong>图 4.3 四种预测变量之间的散点图</strong></p>
 </center>
-<p>在深入学习之前，花点时间分析下前面这幅图，进一步熟悉该数据集并了解变量与分类标签之间的关系。</p>
+<p>在深入学习之前，花点时间分析下图 4.3，熟悉一下该数据集，并了解变量与分类标签之间的关系。</p>
 </div>
 <div class="section" id="logistic-iris">
-<h3>（3）将 Logistic 回归模型应用到 Iris 数据集<a class="headerlink" href="#logistic-iris" title="Permalink to this headline">¶</a></h3>
-<p>先从一个简单的问题开始：用花萼长度这一特征（自变量）来区分 <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> 两个种类。</p>
-<p>和前面一样，这里用 0 和 1 对因变量 <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> 进行编码，利用 <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> 可以这么做：</p>
+<h3>（3）将 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>模型应用到 <code class="docutils literal notranslate"><span class="pre">Iris</span> <span class="pre">数据集</span></code><a class="headerlink" href="#logistic-iris" title="Permalink to this headline">¶</a></h3>
+<p>先从一个简单的问题开始：用花萼长度这一个预测变量来区分 <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> 两个物种。和前面一样，这里用 <span class="math notranslate nohighlight">\(0\)</span> 和 <span class="math notranslate nohighlight">\(1\)</span> 对结果变量 <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> 进行编码，利用 <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> 可以这么做：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;species == (&#39;Setosa&#39;, &#39;Versicolour&#39;)&quot;</span><span class="p">)</span>
@@ -660,17 +760,9 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2550/2603014128.py:5: RuntimeWarning: Mean of empty slice.
-  x_c = x_0 - x_0.mean()
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/numpy/core/_methods.py:189: RuntimeWarning: invalid value encountered in double_scalars
-  ret = ret.dtype.type(ret / rcount)
-</pre></div>
 </div>
-</div>
-</div>
-<p>现在数据已经表示成了合适的格式，可以用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 建模了。留意下面代码中的第一部分与线性回归模型的相似之处。此外留意两个确定变量： <span class="math notranslate nohighlight">\(\theta\)</span> 和 <code class="docutils literal notranslate"><span class="pre">bd</span></code> 。 <span class="math notranslate nohighlight">\(\theta\)</span> 是对变量 <span class="math notranslate nohighlight">\(\mu\)</span> 应用 Logistic 函数之后的值（ 位于 <span class="math notranslate nohighlight">\([ 0,1 ]\)</span> 区间内），<code class="docutils literal notranslate"><span class="pre">bd</span></code> 是决策边界的值，用于确定分类结果，至于为何会选择 <span class="math notranslate nohighlight">\(bd = -\alpha / \beta\)</span> 稍后会做详细讨论。</p>
-<p>此外，除了像下面写出 Logistic 函数的完整形式外，还可以使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中现成的 <code class="docutils literal notranslate"><span class="pre">pm.math.sigmoid</span></code> 函数，该函数是 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 中 <code class="docutils literal notranslate"><span class="pre">sigmoid</span></code> 函数的别名。</p>
+<p>现在数据经过转换，已经表示成合适的格式，可以用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 建模了。留意下面代码中的第一部分与线性回归模型的相似之处。此外留意其中的两个确定性变量： <span class="math notranslate nohighlight">\(\theta\)</span> 和 <code class="docutils literal notranslate"><span class="pre">bd</span></code> 。 <span class="math notranslate nohighlight">\(\theta\)</span> 是对变量 <span class="math notranslate nohighlight">\(\mu\)</span> 应用 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">函数</span></code>之后的值，位于 <span class="math notranslate nohighlight">\([ 0,1 ]\)</span> 区间内；<code class="docutils literal notranslate"><span class="pre">bd</span></code> 是决策边界值，用于确定分类结果，至于为何会选择 <code class="docutils literal notranslate"><span class="pre">bd</span></code> 为 <span class="math notranslate nohighlight">\(-\alpha / \beta\)</span> ，我们在稍后会做详细讨论。</p>
+<p>此外，除了写出 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">函数</span></code> 的完整形式外，还可以使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中现成的函数 <code class="docutils literal notranslate"><span class="pre">pm.math.sigmoid</span></code> 。该函数是 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 中 <code class="docutils literal notranslate"><span class="pre">sigmoid</span></code> 函数的别名。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_0</span><span class="p">:</span>
@@ -685,473 +777,8 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: TensorConstant{[]}
-</pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: TensorConstant{[]}
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: Elemwise{ge,no_inplace}.0
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: Elemwise{le,no_inplace}.0
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: θ
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: Elemwise{add,no_inplace}.0
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: Elemwise{add,no_inplace}.0
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: TensorConstant{[]}
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: TensorConstant{[]}
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2550/751116805.py:9: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
-  trace_0 = pm.sample(1000)
-Auto-assigning NUTS sampler...
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Initializing NUTS using jitter+adapt_diag...
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: TensorConstant{[]}
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: TensorConstant{[]}
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: Elemwise{ge,no_inplace}.0
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: Elemwise{le,no_inplace}.0
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: θ
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: Elemwise{add,no_inplace}.0
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: Elemwise{add,no_inplace}.0
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: TensorConstant{[]}
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: TensorConstant{[]}
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: TensorConstant{[]}
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: TensorConstant{[]}
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: Elemwise{ge,no_inplace}.0
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: Elemwise{le,no_inplace}.0
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: θ
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: Elemwise{add,no_inplace}.0
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: Elemwise{add,no_inplace}.0
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: TensorConstant{[]}
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING (theano.tensor.opt): Cannot construct a scalar test value from a test value with no size: TensorConstant{[]}
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
-KeyboardInterrupt                         Traceback (most recent call last)
-/tmp/ipykernel_2550/751116805.py in &lt;module&gt;
-      7    yl = pm.Bernoulli(&#39;yl&#39;, p=θ, observed=y_0)
-      8 
-----&gt; 9    trace_0 = pm.sample(1000)
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/sampling.py in sample(draws, step, init, n_init, start, trace, chain_idx, chains, cores, tune, progressbar, model, random_seed, discard_tuned_samples, compute_convergence_checks, callback, jitter_max_retries, return_inferencedata, idata_kwargs, mp_ctx, pickle_backend, **kwargs)
-    494             # By default, try to use NUTS
-    495             _log.info(&quot;Auto-assigning NUTS sampler...&quot;)
---&gt; 496             start_, step = init_nuts(
-    497                 init=init,
-    498                 chains=chains,
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/sampling.py in init_nuts(init, chains, n_init, model, random_seed, progressbar, jitter_max_retries, **kwargs)
-   2185         raise ValueError(f&quot;Unknown initializer: {init}.&quot;)
-   2186 
--&gt; 2187     step = pm.NUTS(potential=potential, model=model, **kwargs)
-   2188 
-   2189     return start, step
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/step_methods/hmc/nuts.py in __init__(self, vars, max_treedepth, early_max_treedepth, **kwargs)
-    166         `pm.sample` to the desired number of tuning steps.
-    167         &quot;&quot;&quot;
---&gt; 168         super().__init__(vars, **kwargs)
-    169 
-    170         self.max_treedepth = max_treedepth
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/step_methods/hmc/base_hmc.py in __init__(self, vars, scaling, step_scale, is_cov, model, blocked, potential, dtype, Emax, target_accept, gamma, k, t0, adapt_step_size, step_rand, **theano_kwargs)
-     86         vars = inputvars(vars)
-     87 
----&gt; 88         super().__init__(vars, blocked=blocked, model=model, dtype=dtype, **theano_kwargs)
-     89 
-     90         self.adapt_step_size = adapt_step_size
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/step_methods/arraystep.py in __init__(self, vars, model, blocked, dtype, logp_dlogp_func, **theano_kwargs)
-    252 
-    253         if logp_dlogp_func is None:
---&gt; 254             func = model.logp_dlogp_function(vars, dtype=dtype, **theano_kwargs)
-    255         else:
-    256             func = logp_dlogp_func
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/model.py in logp_dlogp_function(self, grad_vars, tempered, **kwargs)
-   1002         varnames = [var.name for var in grad_vars]
-   1003         extra_vars = [var for var in self.free_RVs if var.name not in varnames]
--&gt; 1004         return ValueGradFunction(costs, grad_vars, extra_vars, **kwargs)
-   1005 
-   1006     @property
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/model.py in __init__(self, costs, grad_vars, extra_vars, dtype, casting, compute_grads, **kwargs)
-    689 
-    690         if compute_grads:
---&gt; 691             grad = tt.grad(self._cost_joined, self._vars_joined)
-    692             grad.name = &quot;__grad&quot;
-    693             outputs = [self._cost_joined, grad]
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in grad(cost, wrt, consider_constant, disconnected_inputs, add_names, known_grads, return_disconnected, null_gradients)
-    637             assert g.type.dtype in theano.tensor.float_dtypes
-    638 
---&gt; 639     rval = _populate_grad_dict(var_to_app_to_idx, grad_dict, wrt, cost_name)
-    640 
-    641     for i in range(len(rval)):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in _populate_grad_dict(var_to_app_to_idx, grad_dict, wrt, cost_name)
-   1438         return grad_dict[var]
-   1439 
--&gt; 1440     rval = [access_grad_cache(elem) for elem in wrt]
-   1441 
-   1442     return rval
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1438         return grad_dict[var]
-   1439 
--&gt; 1440     rval = [access_grad_cache(elem) for elem in wrt]
-   1441 
-   1442     return rval
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1218                             )
-   1219 
--&gt; 1220                 input_grads = node.op.L_op(inputs, node.outputs, new_output_grads)
-   1221 
-   1222                 if input_grads is None:
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in L_op(self, inputs, outs, ograds)
-    562 
-    563         # compute grad with respect to broadcasted input
---&gt; 564         rval = self._bgrad(inputs, outs, ograds)
-    565 
-    566         # TODO: make sure that zeros are clearly identifiable
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in _bgrad(self, inputs, outputs, ograds)
-    666                 ret.append(None)
-    667                 continue
---&gt; 668             ret.append(transform(scalar_igrad))
-    669 
-    670         return ret
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
-    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
-    658 
---&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
-    660             return new_r
-    661 
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in &lt;listcomp&gt;(.0)
-    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
-    658 
---&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
-    660             return new_r
-    661 
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
-    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
-    658 
---&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
-    660             return new_r
-    661 
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py in __call__(self, *inputs, **kwargs)
-    251 
-    252         if config.compute_test_value != &quot;off&quot;:
---&gt; 253             compute_test_value(node)
-    254 
-    255         if self.default_output is not None:
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py in compute_test_value(node)
-    124 
-    125     # Create a thunk that performs the computation
---&gt; 126     thunk = node.op.make_thunk(node, storage_map, compute_map, no_recycling=[])
-    127     thunk.inputs = [storage_map[v] for v in node.inputs]
-    128     thunk.outputs = [storage_map[v] for v in node.outputs]
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py in make_thunk(self, node, storage_map, compute_map, no_recycling, impl)
-    632             )
-    633             try:
---&gt; 634                 return self.make_c_thunk(node, storage_map, compute_map, no_recycling)
-    635             except (NotImplementedError, MethodNotDefined):
-    636                 # We requested the c code, so don&#39;t catch the error.
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py in make_c_thunk(self, node, storage_map, compute_map, no_recycling)
-    598                 print(f&quot;Disabling C code for {self} due to unsupported float16&quot;)
-    599                 raise NotImplementedError(&quot;float16&quot;)
---&gt; 600         outputs = cl.make_thunk(
-    601             input_storage=node_input_storage, output_storage=node_output_storage
-    602         )
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py in make_thunk(self, input_storage, output_storage, storage_map)
-   1201         &quot;&quot;&quot;
-   1202         init_tasks, tasks = self.get_init_tasks()
--&gt; 1203         cthunk, module, in_storage, out_storage, error_storage = self.__compile__(
-   1204             input_storage, output_storage, storage_map
-   1205         )
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py in __compile__(self, input_storage, output_storage, storage_map)
-   1136         input_storage = tuple(input_storage)
-   1137         output_storage = tuple(output_storage)
--&gt; 1138         thunk, module = self.cthunk_factory(
-   1139             error_storage,
-   1140             input_storage,
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py in cthunk_factory(self, error_storage, in_storage, out_storage, storage_map)
-   1632             for node in self.node_order:
-   1633                 node.op.prepare_node(node, storage_map, None, &quot;c&quot;)
--&gt; 1634             module = get_module_cache().module_from_key(key=key, lnk=self)
-   1635 
-   1636         vars = self.inputs + self.outputs + self.orphans
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in module_from_key(self, key, lnk)
-   1189             try:
-   1190                 location = dlimport_workdir(self.dirname)
--&gt; 1191                 module = lnk.compile_cmodule(location)
-   1192                 name = module.__file__
-   1193                 assert name.startswith(location)
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py in compile_cmodule(self, location)
-   1541             try:
-   1542                 _logger.debug(f&quot;LOCATION {location}&quot;)
--&gt; 1543                 module = c_compiler.compile_str(
-   1544                     module_name=mod.code_hash,
-   1545                     src_code=src_code,
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in compile_str(module_name, src_code, location, include_dirs, lib_dirs, libs, preargs, py_module, hide_symbols)
-   2494 
-   2495         try:
--&gt; 2496             p_out = output_subprocess_Popen(cmd)
-   2497             compile_stderr = p_out[1].decode()
-   2498         except Exception:
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/utils.py in output_subprocess_Popen(command, **params)
-    252     # we need to use communicate to make sure we don&#39;t deadlock around
-    253     # the stdout/stderr pipe.
---&gt; 254     out = p.communicate()
-    255     return out + (p.returncode,)
-    256 
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/subprocess.py in communicate(self, input, timeout)
-   1026 
-   1027             try:
--&gt; 1028                 stdout, stderr = self._communicate(input, endtime, timeout)
-   1029             except KeyboardInterrupt:
-   1030                 # https://bugs.python.org/issue25942
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/subprocess.py in _communicate(self, input, endtime, orig_timeout)
-   1866                             &#39;failed to raise TimeoutExpired.&#39;)
-   1867 
--&gt; 1868                     ready = selector.select(timeout)
-   1869                     self._check_timeout(endtime, orig_timeout, stdout, stderr)
-   1870 
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/selectors.py in select(self, timeout)
-    413         ready = []
-    414         try:
---&gt; 415             fd_event_list = self._selector.poll(timeout)
-    416         except InterruptedError:
-    417             return ready
-
-KeyboardInterrupt: 
-</pre></div>
-</div>
-</div>
-</div>
-<p>为节省页数，同时避免对同一类型图件反复出现感到厌烦，将省略迹图和其他类似的摘要图，但鼓励您制作自己的迹图和摘要，以进一步探索本书中的例子。我们将直接跳到如何生成下图，这是一个数据曲线图，以及拟合的 <code class="docutils literal notranslate"><span class="pre">sigmoid</span></code> 曲线和决策边界：</p>
+<p>为节省篇幅，本章将省略部分轨迹图和摘要展示，但鼓励读者制作自己的轨迹图和摘要，以进一步探索书中的例子。我们将直接跳到如何生成下图，这是一个数据曲线图，以及拟合的 <code class="docutils literal notranslate"><span class="pre">sigmoid</span></code> 曲线和决策边界：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">theta</span> <span class="o">=</span> <span class="n">trace_0</span><span class="p">[</span><span class="s1">&#39;θ&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -1174,30 +801,38 @@ KeyboardInterrupt:
 </div>
 <center>
 <img src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210429225650_74.webp" style="zoom:67%;" />
-<p>图 4.4</p>
+<blockquote>
+<div><p><strong>图 4.4 花瓣长度与两个物种之间的二分类模型。</strong> 绿色的 <span class="math notranslate nohighlight">\(S\)</span> 型表示 <code class="docutils literal notranslate"><span class="pre">sigmoid</span></code> 函数输出的结果变量及其可信区间；灰色的垂直条表示决策边界及其 <code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">HDI</span></code> 。</p>
+</div></blockquote>
 </center>
-<p>前面这张图表示了花萼长度与花种类（ <code class="docutils literal notranslate"><span class="pre">Setosa</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">Versicolour</span> <span class="pre">=</span> <span class="pre">1</span></code>）之间的关系。绿色的 <span class="math notranslate nohighlight">\(S\)</span> 型曲线表示 <span class="math notranslate nohighlight">\(\theta\)</span> 的均值，这条线可以解释为：在知道花萼长度的情况下花的种类是 <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> 的概率，即半透明的绿色区间是 <code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">hdi</span> <span class="pre">区间</span></code>。边界判定用一条（黑色）垂直线表示，其 94%的 hdi 为半透明带。根据边界判定，左侧的值（在本例中为萼片长度）对应于 类 0 （ <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> ），右侧的值对应于类 1 （ <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> ）。</p>
-<p>决策边界由 <span class="math notranslate nohighlight">\(y=0.5\)</span> 时的 <span class="math notranslate nohighlight">\(x\)</span> 取值定义，可以证明其结果为 <span class="math notranslate nohighlight">\(-\frac{\alpha}{\beta}\)</span> ，推导过程如下：</p>
-<p>根据模型的定义，有如下关系：</p>
+<p>前面这张图表示了花萼长度与花种类（ <code class="docutils literal notranslate"><span class="pre">Setosa</span> <span class="pre">=</span> <span class="pre">0,</span> <span class="pre">Versicolour</span> <span class="pre">=</span> <span class="pre">1</span></code>）之间的关系。绿色的 <span class="math notranslate nohighlight">\(S\)</span> 型曲线表示 <span class="math notranslate nohighlight">\(\theta\)</span> 的均值，这条线可以解释为：在知道花萼长度的情况下花的种类是 <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> 的概率，绿色的半透明区域是其 <code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">HDPI</span></code> 。 边界判定用一条（黑色）垂直线表示，灰色半透明区域表示其 <code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">HDPI</span></code> 。根据边界判定，左侧的萼片长度值对应于 <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> 类，右侧的萼片长度值对应于 <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> 类。</p>
+<p>决策边界由 <span class="math notranslate nohighlight">\(y=0.5\)</span> 时的 <span class="math notranslate nohighlight">\(x\)</span> 取值定义，可以证明其结果为 <span class="math notranslate nohighlight">\(-{\alpha}/{\beta}\)</span> ，推导过程如下。根据模型的定义，有如下关系：</p>
 <div class="math notranslate nohighlight">
-\[\theta=\operatorname{logistic}(\alpha+x \beta) \tag{式4.4} \label{式4.4}\]</div>
-<p>根据 Logistic 函数的定义，当 <span class="math notranslate nohighlight">\(\theta=0.5\)</span> 时，对应的输入为 0 点，因此有：</p>
+\[
+\theta=\operatorname{logistic}(\alpha+x \beta) \tag{式4.4} 
+\]</div>
+<p>根据 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">函数</span></code>的定义，当 <span class="math notranslate nohighlight">\(\theta=0.5\)</span> 时，对应的输入为 <span class="math notranslate nohighlight">\(0\)</span> 点，因此有：</p>
 <div class="math notranslate nohighlight">
-\[0.5=\operatorname{logistic}\left(\alpha+x_{i} \beta\right) \Leftrightarrow 0=\alpha+x_{i} \beta \tag{式4.5} \label{式4.5}\]</div>
+\[
+0.5=\operatorname{logistic}\left(\alpha+x_{i} \beta\right) \Leftrightarrow 0=\alpha+x_{i} \beta \tag{式4.5} 
+\]</div>
 <p>移项后可以得出，当 <span class="math notranslate nohighlight">\(\theta=0.5\)</span> 时，决策边界对应为：</p>
 <div class="math notranslate nohighlight">
-\[x_{i}=-\frac{\alpha}{\beta} \tag{式4.6} \label{式4.6}\]</div>
+\[
+x_{i}=-\frac{\alpha}{\beta} \tag{式4.6} 
+\]</div>
 <p>值得一提的是：</p>
 <ul class="simple">
-<li><p>通常 <span class="math notranslate nohighlight">\(\theta\)</span> 的值是 <span class="math notranslate nohighlight">\(y\)</span> 属于类别 1 的概率 <span class="math notranslate nohighlight">\(p(y=1|x)\)</span> 。从这点上来说， Logistic 回归是一种真正的回归；关键细节是，在给定特征的线性组合的情况下，回归的是数据点属于类别 1 的概率。</p></li>
-<li><p>我们拟合的是一个二值变量的平均值，即 <span class="math notranslate nohighlight">\([0,1]\)</span> 区间内的一个数字。然后引入一种规则（此处为伯努利），将该数字转化为二分类赋值。通常，如果 <span class="math notranslate nohighlight">\(p(y=1)&gt;=0.5\)</span> ，分配类 1 ，否则分配类 0 。</p></li>
-<li><p>上述选取的 0.5 并不是指定的特殊值，根据问题上下文，你完全可以选择其他 0 到 1 之间的值。本例中，只有当我们认为将标签 0（ <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> ）错误地标为标签 1（ <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code>）时的代价，与反过来将标签 1（ <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> ）错误地标为标签 0（ <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> ）时的代价相同时，选取 0.5 作为决策边界才是可行的。不过大多数情况下，分类出错的代价并不对称。</p></li>
+<li><p>通常 <span class="math notranslate nohighlight">\(\theta\)</span> 值是 <span class="math notranslate nohighlight">\(y\)</span> 属于类别 <span class="math notranslate nohighlight">\(1\)</span> 的概率 <span class="math notranslate nohighlight">\(p(y=1|x)\)</span> ，即在给定预测变量的线性组合的情况下，模型回归的是数据点属于类别 <span class="math notranslate nohighlight">\(1\)</span> 的概率。从这点上来说， <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>确实是一种回归。</p></li>
+<li><p>我们拟合的是一个二值随机变量的平均值，即 <span class="math notranslate nohighlight">\([0,1]\)</span> 区间内的一个数字。然后引入一种规则（此处为伯努利），将该数字转化为二分类的赋值。通常，如果 <span class="math notranslate nohighlight">\(p(y=1)&gt;=0.5\)</span> ，分配类 <span class="math notranslate nohighlight">\(1\)</span> ，否则分配类 <span class="math notranslate nohighlight">\(0\)</span> 。</p></li>
+<li><p>上述 <span class="math notranslate nohighlight">\(0.5\)</span> 的选择并非指定的特殊值，你完全可以根据问题上下文，选择能够体现你偏好的任何 <span class="math notranslate nohighlight">\(0\)</span> 到 <span class="math notranslate nohighlight">\(1\)</span> 之间的值。在本例中，选取 0.5 作为决策边界，代表了如下偏好：<strong>将标签 <span class="math notranslate nohighlight">\(0\)</span> 错误地标为标签 <span class="math notranslate nohighlight">\(1\)</span> 时的代价，与将标签 <span class="math notranslate nohighlight">\(1\)</span> 错误地标为标签 <span class="math notranslate nohighlight">\(0\)</span> 时的代价相同</strong>。在大多数情况下，分类出错的代价并不对称，此时可能需要选取其他决策边界。</p></li>
 </ul>
 </div>
 </div>
 <div class="section" id="id4">
-<h2>4.3 面向二分类的多元 Logistic 回归<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<p>与多元线性回归类似，<code class="docutils literal notranslate"><span class="pre">多元</span> <span class="pre">Logistic</span> <span class="pre">回归</span></code> 使用多个自变量。这里举例将花萼长度与花萼宽度结合在一起，注意需要对数据做一些预处理。</p>
+<h2>4.3 二分类问题：<code class="docutils literal notranslate"><span class="pre">多元</span> <span class="pre">Logistic</span> <span class="pre">回归</span></code><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>上一节中只选用了一个预测变量来构建回归模型，但实践中这种情况非常少。本节将进一步考虑添加新的预测变量来构建稍微复杂一些的模型 — <code class="docutils literal notranslate"><span class="pre">多元</span> <span class="pre">Logistic</span> <span class="pre">回归</span></code> 。</p>
+<p>与多元线性回归类似，<code class="docutils literal notranslate"><span class="pre">多元</span> <span class="pre">Logistic</span> <span class="pre">回归</span></code> 使用了多个预测变量。这里举例将花萼长度与花萼宽度结合在一起，注意需要对数据做一些预处理。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;species == (&#39;setosa&#39;, &#39;versicolor&#39;)&quot;</span><span class="p">)</span>
@@ -1210,22 +845,28 @@ KeyboardInterrupt:
 </div>
 <div class="section" id="id5">
 <h3>4.3.1 高维空间的决策边界<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<p>如果你对如何推导决策边界不感兴趣的话，可以略过这个部分直接跳到模型实现部分。 根据模型，我们有：</p>
+<p>如果你对如何推导决策边界不感兴趣的话，可以略过这个部分直接跳到模型实现部分。 根据模型，有：</p>
 <div class="math notranslate nohighlight">
-\[\theta=\operatorname{logistic}\left(\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}\right) \tag{式4.7} \label{式4.7}\]</div>
-<p>从 Logistic 函数的定义出发，当 Logistic 回归的自变量为零时，有 <span class="math notranslate nohighlight">\(\theta=0.5\)</span> 。对应：</p>
+\[
+\theta=\operatorname{logistic}\left(\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}\right) \tag{式4.7} 
+\]</div>
+<p>从 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">函数</span></code>的定义出发，当 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code> 的预测变量为零时，有 <span class="math notranslate nohighlight">\(\theta=0.5\)</span> 。对应：</p>
 <div class="math notranslate nohighlight">
-\[0.5=\operatorname{logistic}\left(\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}\right) \Leftrightarrow 0=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \tag{式4.8} \label{式4.8}\]</div>
+\[
+0.5=\operatorname{logistic}\left(\alpha+\beta_{1} x_{1}+\beta_{2} x_{2}\right) \Leftrightarrow 0=\alpha+\beta_{1} x_{1}+\beta_{2} x_{2} \tag{式4.8} 
+\]</div>
 <p>通过移项，我们找到 <span class="math notranslate nohighlight">\(\theta=0.5\)</span> 时 <span class="math notranslate nohighlight">\(x_2\)</span> 的值：</p>
 <div class="math notranslate nohighlight">
-\[x_{2}=-\frac{\alpha}{\beta_{2}}+\left(-\frac{\beta_{1}}{\beta_{2}} x_{1}\right) \tag{式4.9} \label{式4.9}\]</div>
-<p>这个决策边界的表达式与直线的表达式在数学形式上是一样的，其中第 1 项表示截距，第 2 项表示斜率，这里的括号只是为了表达上更清晰，如果你愿意的话完全可以去掉。</p>
+\[
+x_{2}=-\frac{\alpha}{\beta_{2}}+\left(-\frac{\beta_{1}}{\beta_{2}} x_{1}\right) \tag{式4.9}
+\]</div>
+<p>没错，读者看到该式时的感觉是对的，该表达式在数学形式上与直线的表达式一致。也就是说，<strong>二元预测变量的<code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code> 决策边界是一条直线</strong>，其中第 1 项表示截距，第 2 项表示斜率。</p>
 <p>为什么决策边界是直线呢？</p>
-<p>想想看，如果我们只有一个特征，也就是在一维数据空间，可以用一个点将数据分成两组；如果有两个特征，也就是在二维数据空间，可以用一条直线将数据分为两组；对于三维的情况，边界应当是一个平面；而对于更高维度，边界应当是一个超平面。实际上超平面是一个通用概念，可以大致定义为 <span class="math notranslate nohighlight">\(n\)</span> 维空间中的 <span class="math notranslate nohighlight">\(n-1\)</span> 维子空间，因此在涉及高维问题时，一般将决策边界统一称为超平面。</p>
+<p>想想看，如果我们只有一个预测变量，也就是在一维数据空间，可以用一个点将数据分成两组；如果有两个预测变量，也就是在二维数据空间，可以用一条直线将数据分为两组；对于三维的情况，边界应当是一个平面；而对于更高维度，边界应当是一个超平面。实际上超平面是一个通用概念，可以大致定义为 <span class="math notranslate nohighlight">\(n\)</span> 维空间中的 <span class="math notranslate nohighlight">\(n-1\)</span> 维子空间，因此在涉及高维问题时，一般将决策边界统一称为超平面。</p>
 </div>
 <div class="section" id="id6">
 <h3>4.3.2 模型实现<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<p>如果要用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 写出多元 Logistic 回归模型，可以借助其向量化表示的优势，只需对单参数 Logistic 回归模型做一些简单修改即可。</p>
+<p>如果要用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 写出<code class="docutils literal notranslate"><span class="pre">多元</span> <span class="pre">Logistic</span> <span class="pre">回归</span></code>模型，可以借助其向量化表示的优势，只需对单参数 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>模型做一些简单修改即可。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_1</span><span class="p">:</span>
@@ -1264,25 +905,35 @@ KeyboardInterrupt:
 </center>
 </div>
 <div class="section" id="id7">
-<h3>4.3.3 关于 Logistic 回归系数的解释<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<p>在解释 Logistic 回归的 <span class="math notranslate nohighlight">\(\beta\)</span> 系数时，必须非常小心。因为解释并不像<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">3</span> <span class="pre">章『线性回归模型』</span></code>中讨论线性模型时那样简单。此处使用 Logistic 逆连接函数引入了非线性。如果 <span class="math notranslate nohighlight">\(\beta\)</span> 为正，则增加 <span class="math notranslate nohighlight">\(x\)</span> 会增加一些 <span class="math notranslate nohighlight">\(p(y=1)\)</span> 的量，但该量值不是 <span class="math notranslate nohighlight">\(x\)</span> 的线性函数，而是非线性地依赖于 <span class="math notranslate nohighlight">\(x\)</span> 值。可以在上面一系列图中直观地看到这一事实；我们看到的不是具有恒定斜率的直线，而是随 <span class="math notranslate nohighlight">\(x\)</span> 值变化而不断调整斜率的 <span class="math notranslate nohighlight">\(S\)</span> 形曲线。代数知识可以让我们更深入地了解 <span class="math notranslate nohighlight">\(p(y=1)\)</span> 如何随 <span class="math notranslate nohighlight">\(\beta\)</span> 变化。基础模型是：</p>
+<h3>4.3.3 关于 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>系数的解释<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>在解释 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code> 的 <span class="math notranslate nohighlight">\(\beta\)</span> 系数时，必须非常小心。因为解释并不像<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">3</span> <span class="pre">章『线性回归模型』</span></code>中讨论线性模型时那样简单。此处使用 Logistic 逆连接函数引入了非线性。如果 <span class="math notranslate nohighlight">\(\beta\)</span> 为正，则增加 <span class="math notranslate nohighlight">\(x\)</span> 会增加一些 <span class="math notranslate nohighlight">\(p(y=1)\)</span> 的量，但该量值不是 <span class="math notranslate nohighlight">\(x\)</span> 的线性函数，而是非线性地依赖于 <span class="math notranslate nohighlight">\(x\)</span> 值。可以在上面一系列图中直观地看到这一事实；我们看到的不是具有恒定斜率的直线，而是随 <span class="math notranslate nohighlight">\(x\)</span> 值变化而不断调整斜率的 <span class="math notranslate nohighlight">\(S\)</span> 形曲线。代数知识可以让我们更深入地了解 <span class="math notranslate nohighlight">\(p(y=1)\)</span> 如何随 <span class="math notranslate nohighlight">\(\beta\)</span> 变化。基础模型是：</p>
 <div class="math notranslate nohighlight">
-\[\theta=\operatorname{logistic}(\alpha+X \beta) \tag{式4.10} \label{式4.10}\]</div>
-<p>Logistic 函数的逆函数是 <code class="docutils literal notranslate"><span class="pre">logit</span> <span class="pre">函数</span></code>，它是：</p>
+\[
+\theta=\operatorname{logistic}(\alpha+X \beta) \tag{式4.10} 
+\]</div>
+<p><code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">函数</span></code>的逆函数是 <code class="docutils literal notranslate"><span class="pre">logit</span> <span class="pre">函数</span></code>，它是：</p>
 <div class="math notranslate nohighlight">
-\[\operatorname{logit}(z)=\log \left(\frac{z}{1-z}\right) \tag{式4.11} \label{式4.11}\]</div>
+\[
+\operatorname{logit}(z)=\log \left(\frac{z}{1-z}\right) \tag{式4.11} 
+\]</div>
 <p>因此，如果在<code class="docutils literal notranslate"><span class="pre">式</span> <span class="pre">4.11</span> </code>两边同时取<code class="docutils literal notranslate"><span class="pre">logit</span> <span class="pre">函数</span></code> ，会得到：</p>
 <div class="math notranslate nohighlight">
-\[\operatorname{logit}(\theta)=\alpha+X \beta \tag{式4.12} \label{式4.12}\]</div>
+\[
+\operatorname{logit}(\theta)=\alpha+X \beta \tag{式4.12} 
+\]</div>
 <p>或等价的：</p>
 <div class="math notranslate nohighlight">
-\[\log \left(\frac{\theta}{1-\theta}\right)=\alpha+X \beta \tag{式4.13}  \label{式4.13}\]</div>
+\[
+\log \left(\frac{\theta}{1-\theta}\right)=\alpha+X \beta \tag{式4.13}  
+\]</div>
 <p>记住模型中的 <span class="math notranslate nohighlight">\(\theta\)</span> 定义为 <span class="math notranslate nohighlight">\(y=1\)</span> 的概率 <span class="math notranslate nohighlight">\(p(y=1)\)</span> ：</p>
 <div class="math notranslate nohighlight">
-\[\log \left(\frac{p(y=1)}{1-p(y=1)}\right)=\alpha+X \beta \tag{式4.14} \label{式4.14}\]</div>
+\[
+\log \left(\frac{p(y=1)}{1-p(y=1)}\right)=\alpha+X \beta \tag{式4.14} 
+\]</div>
 <p><span class="math notranslate nohighlight">\(\frac{p(y=1)}{1-p(y=1)}\)</span> 的量值被称为赔率。</p>
 <p>成功的赔率被定义为成功概率与不成功概率之比。虽然掷一个公平骰子得到 2 的概率是 1/6 ，但同一事件的赔率是 <span class="math notranslate nohighlight">\(\frac{1/6}{5/6}=0.2\)</span> 或 1 个有利事件对 5 个不利事件。赌徒经常使用赔率，因为在考虑下注方式时，赔率作为相对值，提供了一种比原始概率更直观的工具。</p>
-<p>在 Logistic 回归模型中，系数 <span class="math notranslate nohighlight">\(\beta\)</span> 编码了赔率对数随变量 <span class="math notranslate nohighlight">\(x\)</span> 单位变化而变化的情况。</p>
+<p>在 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>模型中，系数 <span class="math notranslate nohighlight">\(\beta\)</span> 编码了赔率对数随变量 <span class="math notranslate nohighlight">\(x\)</span> 单位变化而变化的情况。</p>
 <p>概率到赔率的转换具有单调性，意味着赔率随概率的增加而增加，随概率的减少而减少。概率被限制在 <span class="math notranslate nohighlight">\([0, 1]\)</span> 区间，而赔率则在 <span class="math notranslate nohighlight">\([0，∞)\)</span> 区间内。对数运算也是单调变换，赔率对数在 <span class="math notranslate nohighlight">\((-∞，+∞)\)</span> 区间内。</p>
 <p>下图用不同颜色的曲线，显示了概率与赔率、概率与赔率对数之间的关系：</p>
 <center>
@@ -1317,7 +968,12 @@ KeyboardInterrupt:
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210429234020_01.webp" /></p>
 </center>
 <p>理解模型的一种非常实用的方法是更改参数，看看会发生什么。</p>
-<p>在下面的代码块中，首先计算支持杂色的赔率对数 <span class="math notranslate nohighlight">\(\text{log_odds_versicolor_i}=\alpha+\beta_1x_1+\beta_2x_2\)</span> ，然后用 Logistic 函数计算杂色的概率。然后，固定 <span class="math notranslate nohighlight">\(x_2\)</span> 同时让 <span class="math notranslate nohighlight">\(x_1\)</span> 加 1 重复做一次计算：</p>
+<p>在下面的代码块中，首先计算支持杂色的赔率对数</p>
+<div class="math notranslate nohighlight">
+\[
+\text{log\_odds\_versicolor\_i}= \alpha + \beta_1 x_1+ \beta_2 x_2
+\]</div>
+<p>并用 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">函数</span></code>计算杂色的概率。然后，固定 <span class="math notranslate nohighlight">\(x_2\)</span> 同时让 <span class="math notranslate nohighlight">\(x_1\)</span> 加 1 重复做一次计算：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x_1</span> <span class="o">=</span> <span class="mf">4.5</span> <span class="c1"># sepal_length</span>
@@ -1343,7 +999,7 @@ KeyboardInterrupt:
 <div class="section" id="id8">
 <h3>4.3.4 处理相关变量<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>在<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">3</span> <span class="pre">章『线性回归模型』</span></code>中曾探讨过，当变量间存在（高度）相关时，会存在一些棘手的问题。此时，相关变量转化为能够解释数据的更广泛的系数组合，或者从互补角度来看，相关的变量对模型的约束能力变小。即使在类完全可分时（在给定变量的线性组合的情况下，类之间没有重叠），也会出现类似问题。</p>
-<p>使用 Iris 数据集，可以尝试运行 <code class="docutils literal notranslate"><span class="pre">model_1</span></code>，但这一次使用 <code class="docutils literal notranslate"><span class="pre">petal_width</span></code> 和 <code class="docutils literal notranslate"><span class="pre">petal_length</span></code> 变量。您会发现 <span class="math notranslate nohighlight">\(\beta\)</span> 系数比以前更宽了，而且图中 <code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">hdi区间</span></code> 也更宽了：</p>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">Iris</span> <span class="pre">数据集</span></code>，可以尝试运行 <code class="docutils literal notranslate"><span class="pre">model_1</span></code>，但这一次使用 <code class="docutils literal notranslate"><span class="pre">petal_width</span></code> 和 <code class="docutils literal notranslate"><span class="pre">petal_length</span></code> 变量。您会发现 <span class="math notranslate nohighlight">\(\beta\)</span> 系数比以前更宽了，而且图中 <code class="docutils literal notranslate"><span class="pre">94%</span> <span class="pre">hdi区间</span></code> 也更宽了：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corr</span> <span class="o">=</span> <span class="n">iris</span><span class="p">[</span><span class="n">iris</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;virginica&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
@@ -1366,12 +1022,14 @@ KeyboardInterrupt:
 <li><p>三是只有弱信息先验时，<a class="reference external" href="https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations">Andrew Gelman 和 Stan 的开发团队</a> 建议将所有非二值变量都尺度变换至均值为 0，而后使用学生 <span class="math notranslate nohighlight">\(t\)</span> 分布作为先验：</p></li>
 </ul>
 <div class="math notranslate nohighlight">
-\[\beta \sim \operatorname{Student} T(0, \nu, s d) \tag{式4.15} \label{式4.15}\]</div>
+\[
+ \beta \sim \operatorname{Student} T(0, \nu, s d) \tag{式4.15} 
+ \]</div>
 <p>这里 <span class="math notranslate nohighlight">\(sd\)</span> 的取值可以根据期望的尺度引入弱信息，正态参数 <span class="math notranslate nohighlight">\(\nu\)</span> 的值为 3 到 7 附近。该先验的含义是：我们期望参数比较小，并且具有重尾，从而得到一个比高斯分布更稳健的模型（参见前两章中有关稳健模型的部分）。</p>
 </div>
 <div class="section" id="id9">
 <h3>4.3.5 处理类别不平衡的数据<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p>Iris 数据集的一个优点是：不同类别的样本量是均衡的， <code class="docutils literal notranslate"><span class="pre">Setosas</span></code>、<code class="docutils literal notranslate"><span class="pre">Versicolours</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Virginicas</span></code> 各有 50 个。 Iris 数据集的流行归功于<code class="docutils literal notranslate"><span class="pre">费舍尔（</span> <span class="pre">Fisher</span> <span class="pre">）</span></code>，当然，费舍尔还让另一个东西也流行了，那就是引起比较大争议的 <span class="math notranslate nohighlight">\(p\)</span> 值。实践中许多数据集中的类别都不平衡，其中某一类的数据量远多于其他类别。当发生这种情况时， Logistic 回归会遇到一些问题。总体来说就是：相比数据平衡的情况， Logistic 回归得到的边界没有那么准确了。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Iris</span> <span class="pre">数据集</span></code>的一个优点是：不同类别的样本量是均衡的， <code class="docutils literal notranslate"><span class="pre">Setosas</span></code>、<code class="docutils literal notranslate"><span class="pre">Versicolours</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Virginicas</span></code> 各有 50 个。 <code class="docutils literal notranslate"><span class="pre">Iris</span> <span class="pre">数据集</span></code>的流行归功于<code class="docutils literal notranslate"><span class="pre">费舍尔（</span> <span class="pre">Fisher</span> <span class="pre">）</span></code>，当然，费舍尔还让另一个东西也流行了，那就是引起比较大争议的 <span class="math notranslate nohighlight">\(p\)</span> 值。实践中许多数据集中的类别都不平衡，其中某一类的数据量远多于其他类别。当发生这种情况时， <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>会遇到一些问题。总体来说就是：相比数据平衡的情况， <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>得到的边界没有那么准确了。</p>
 <p>现在看个实际例子，我们随机从 <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> 类别中去掉一些数据点：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1384,7 +1042,7 @@ KeyboardInterrupt:
 </div>
 </div>
 </div>
-<p>运行多元 Logistic 回归模型：</p>
+<p>运行<code class="docutils literal notranslate"><span class="pre">多元</span> <span class="pre">Logistic</span> <span class="pre">回归</span></code>模型：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_3</span><span class="p">:</span>
@@ -1399,7 +1057,7 @@ KeyboardInterrupt:
 </div>
 </div>
 </div>
-<p>如<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">4.8</span> </code>所示，决策边界向样本量更少的类别偏移了，而且不确定性也比以前更大了。这是 Logistic 回归在处理不均衡数据时的常见表现。在一些数据中，类别之间的间隔可能不像这个例子中这么完美，此时用 Logistic 回归分类得到的结果中类别重叠的现象更严重。不过，你很有可能会觉得不确定性变大是数据总量变少造成的，而不是因为 <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> 类别的数据比 <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> 更少。当然存在这样的可能，你可以通过习题部分的第 2 题，体验一下为什么不确定性变大是数据不平衡造成的。</p>
+<p>如<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">4.8</span> </code>所示，决策边界向样本量更少的类别偏移了，而且不确定性也比以前更大了。这是 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>在处理不均衡数据时的常见表现。在一些数据中，类别之间的间隔可能不像这个例子中这么完美，此时用 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>分类得到的结果中类别重叠的现象更严重。不过，你很有可能会觉得不确定性变大是数据总量变少造成的，而不是因为 <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> 类别的数据比 <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> 更少。当然存在这样的可能，你可以通过习题部分的第 2 题，体验一下为什么不确定性变大是数据不平衡造成的。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">x_3</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
@@ -1426,15 +1084,15 @@ KeyboardInterrupt:
 </div>
 <div class="section" id="id10">
 <h3>4.3.6 关于判别式分类器和生成式分类器<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
-<p>目前为止，我们讨论的模型都是直接计算 <span class="math notranslate nohighlight">\(p(y | x)\)</span> ，也就是说，在知道 <span class="math notranslate nohighlight">\(x\)</span> 的条件下，计算出类别 <span class="math notranslate nohighlight">\(y\)</span> 的概率值。换句话说，直接对自变量到因变量之间的关系进行建模，然后用一个阈值对得到的概率值进行评判，从而得到分类结果。</p>
-<p>这种方法不是唯一的，另一种方法是先对 <span class="math notranslate nohighlight">\(p(x | y)\)</span> 建模，即依据不同类别计算特征的分布，然后再进行分类。由于这种模型能够从每个类别中单独生成样本，因此被称为生成式分类器。</p>
+<p>目前为止，我们讨论的模型都是直接计算 <span class="math notranslate nohighlight">\(p(y | x)\)</span> ，也就是说，在知道 <span class="math notranslate nohighlight">\(x\)</span> 的条件下，计算出类别 <span class="math notranslate nohighlight">\(y\)</span> 的概率值。换句话说，直接对预测变量到结果变量之间的关系进行建模，然后用一个阈值对得到的概率值进行评判，从而得到分类结果。</p>
+<p>这种方法不是唯一的，另一种方法是先对 <span class="math notranslate nohighlight">\(p(x | y)\)</span> 建模，即依据不同类别计算预测变量的分布，然后再进行分类。由于这种模型能够从每个类别中单独生成样本，因此被称为生成式分类器。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>生成式模型主要用于数据补漏、数据模拟、数据仿真等可以用机器生成模拟样本的应用场景。</p>
 </div>
-<p>根据上述定义， Logistic 回归属于判别式分类器，因为它只能判断一个样本是否属于某一类别，但无法为每个类别生成样本。</p>
+<p>根据上述定义， <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>属于判别式分类器，因为它只能判断一个样本是否属于某一类别，但无法为每个类别生成样本。</p>
 <p>本章不打算深入探讨生成式分类器，不过可以通过一个例子来说明此类模型用于分类的核心思想。</p>
-<p>示例只使用两个类别和一个特征。下面的代码用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 实现了一个生成式分类器，从代码中可以看出，现在决策边界被定义为估计的两个类别的高斯均值之间的平均值。当分布为正态分布且标准差相同时，此决策边界是正确的。非常著名的<code class="docutils literal notranslate"><span class="pre">线性判别分析（Linear</span> <span class="pre">Discriminant</span> <span class="pre">Analysis，LDA）</span></code>模型就是一种做出了该假设的模型。尽管该模型名字中包含『判别式（Discriminant）』字眼，但实际上是一个生成式模型。</p>
+<p>示例只使用两个类别和一个预测变量。下面的代码用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 实现了一个生成式分类器，从代码中可以看出，现在决策边界被定义为估计的两个类别的高斯均值之间的平均值。当分布为正态分布且标准差相同时，此决策边界是正确的。非常著名的<code class="docutils literal notranslate"><span class="pre">线性判别分析（Linear</span> <span class="pre">Discriminant</span> <span class="pre">Analysis，LDA）</span></code>模型就是一种做出了该假设的模型。尽管该模型名字中包含『判别式（Discriminant）』字眼，但实际上是一个生成式模型。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">lda</span><span class="p">:</span>
@@ -1477,23 +1135,27 @@ KeyboardInterrupt:
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210505143145_a2.webp" /></p>
 </center>
-<p>可以看到 LDA 模型得到了与 Logistic 回归类似的结果。 LDA 模型也可以使用多元高斯分布对类别建模，从而扩展到超过多个特征的情况。此外，还可以对等方差假设进行放松，进而得到 <code class="docutils literal notranslate"><span class="pre">二次判别分析（Quadratic</span> <span class="pre">Linear</span> <span class="pre">Discriminant，QDA）</span></code> 模型，此时决策边界不再是线性的，而是二次的。</p>
-<p>通常，当特征基本符合高斯分布时，LDA 或 QDA 的效果要比 Logistic 回归更好。如果高斯分布的假设不成立， Logistic 回归的效果要更好一些。</p>
+<p>可以看到 LDA 模型得到了与 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>类似的结果。 LDA 模型也可以使用多元高斯分布对类别建模，从而扩展到超过多个预测变量的情况。此外，还可以对等方差假设进行放松，进而得到 <code class="docutils literal notranslate"><span class="pre">二次判别分析（Quadratic</span> <span class="pre">Linear</span> <span class="pre">Discriminant，QDA）</span></code> 模型，此时决策边界不再是线性的，而是二次的。</p>
+<p>通常，当预测变量基本符合高斯分布时，LDA 或 QDA 的效果要比 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>更好。如果高斯分布的假设不成立， <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code> 的效果要更好一些。</p>
 <p>使用判别式分类模型的好处是：在模型中融合先验更容易，例如：可以将数据均值和方差信息融入到模型中。</p>
-<p>需要注意：</p>
-<p>LDA 和 QDA 的决策边界是封闭式的，对于两个类别和一个特征的情况，应用 LDA 时只需要分别计算出每个类别分布的均值，然后再求二者的平均值就可以得到决策边界。在前面的模型中，采用了更贝叶斯的方式；估计出两个高斯分布的参数，然后将这些估计融入公式中，不过公式是怎么来的呢？这里不深入更细节的内容，只需要知道要得到该公式，需要假设数据符合高斯分布，因此 LDA 只有在数据分布接近高斯分布的时候更有效。显然，在某些问题中，当我们想放松对变量的正态性假设时（比如假设为学生 <span class="math notranslate nohighlight">\(t\)</span> 分布或者多元学生 <span class="math notranslate nohighlight">\(t\)</span> 分布），就不能再使用 LDA 或 QDA了，不过此时仍然可以用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 从数值上计算出决策边界。</p>
+<blockquote>
+<div><p>需要注意：</p>
+<p>LDA 和 QDA 的决策边界是封闭式的，对于两个类别和一个预测变量的情况，应用 LDA 时只需要分别计算出每个类别分布的均值，然后再求二者的平均值就可以得到决策边界。在前面的模型中，采用了更贝叶斯的方式；估计出两个高斯分布的参数，然后将这些估计融入公式中，不过公式是怎么来的呢？这里不深入更细节的内容，只需要知道要得到该公式，需要假设数据符合高斯分布，因此 LDA 只有在数据分布接近高斯分布的时候更有效。显然，在某些问题中，当我们想放松对变量的正态性假设时（比如假设为学生 <span class="math notranslate nohighlight">\(t\)</span> 分布或者多元学生 <span class="math notranslate nohighlight">\(t\)</span> 分布），就不能再使用 LDA 或 QDA了，不过此时仍然可以用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 从数值上计算出决策边界。</p>
+</div></blockquote>
 </div>
 </div>
 <div class="section" id="softmax">
-<h2>4.4 面向多分类的 Softmax 回归<a class="headerlink" href="#softmax" title="Permalink to this headline">¶</a></h2>
-<p>现在知道了如何处理二分类问题，接下来的内容推广到多分类问题。一种做法是使用多项 Logistic 回归，该模型也被称作 <code class="docutils literal notranslate"><span class="pre">Softmax</span> <span class="pre">回归</span></code> ，原因是这里使用的是 <code class="docutils literal notranslate"><span class="pre">Softmax</span> <span class="pre">函数</span></code> 而非 Logistic 函数，Softmax 函数的形式如下：</p>
+<h2>4.4 多分类问题： <code class="docutils literal notranslate"><span class="pre">Softmax</span> <span class="pre">回归</span></code><a class="headerlink" href="#softmax" title="Permalink to this headline">¶</a></h2>
+<p>现在知道了如何处理二分类问题，接下来的内容推广到多分类问题。一种做法是使用多项 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>，该模型也被称作 <code class="docutils literal notranslate"><span class="pre">Softmax</span> <span class="pre">回归</span></code> ，原因是这里使用的是 <code class="docutils literal notranslate"><span class="pre">Softmax</span> <span class="pre">函数</span></code> 而非 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">函数</span></code>，Softmax 函数的形式如下：</p>
 <div class="math notranslate nohighlight">
-\[\operatorname{Softmax}_{i}(\mu)=\frac{\exp \left(\mu_{i}\right)}{\sum \exp \left(\mu_{k}\right)} \tag{式4.16} \label{式4.16}\]</div>
-<p>要计算向量 <span class="math notranslate nohighlight">\(\mu\)</span> 中第 <span class="math notranslate nohighlight">\(i\)</span> 个元素对应的 Softmax 输出，需要将该元素的指数除以向量 <span class="math notranslate nohighlight">\(\mu\)</span> 中每个元素的指数之和。Softmax 函数保证了输出值为正数而且和为 1。当 <span class="math notranslate nohighlight">\(k=2\)</span> 时，Softmax 函数就变成了 Logistic 函数。</p>
+\[
+\operatorname{Softmax}_{i}(\mu)=\frac{\exp \left(\mu_{i}\right)}{\sum \exp \left(\mu_{k}\right)} \tag{式4.16} 
+\]</div>
+<p>要计算向量 <span class="math notranslate nohighlight">\(\mu\)</span> 中第 <span class="math notranslate nohighlight">\(i\)</span> 个元素对应的 Softmax 输出，需要将该元素的指数除以向量 <span class="math notranslate nohighlight">\(\mu\)</span> 中每个元素的指数之和。Softmax 函数保证了输出值为正数而且和为 1。当 <span class="math notranslate nohighlight">\(k=2\)</span> 时，Softmax 函数就变成了 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">函数</span></code>。</p>
 <p>另外，Softmax 函数与物理统计学中的玻尔兹曼分布形式一致。玻尔兹曼分布是物理学中用来描述分子系统中概率分布的一个强大分支。在玻尔兹曼分布中有一个温度参数（ <span class="math notranslate nohighlight">\(T\)</span> ），在数学形式上前面式子中的 <span class="math notranslate nohighlight">\(\mu\)</span> 变成了 <span class="math notranslate nohighlight">\(μ/T\)</span> ，当 <span class="math notranslate nohighlight">\(T→∞\)</span> 时，概率分布变得非常均匀，所有状态都是等可能输出；当 <span class="math notranslate nohighlight">\(T→0\)</span> 时，只有最可能的状态会输出，这种表现有点像 max 函数，因此取名 Softmax 。</p>
-<p>Softmax 回归模型与 Logistic 回归模型的另一个区别是：伯努利分布换成了类别分布，因为类别分布是伯努利分布推广到两个以上输出时的一般形式。</p>
+<p>Softmax 回归模型与 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>模型的另一个区别是：伯努利分布换成了类别分布，因为类别分布是伯努利分布推广到两个以上输出时的一般形式。</p>
 <p>对于二分类问题，伯努利分布（抛一次硬币）是二项分布（抛多次硬币）的一种特殊情况。与此对应的，类别分布（掷一次骰子）是多项分布（掷多次骰子）的特殊情况。</p>
-<p>为验证 Softmax 多分类模型，继续使用 Iris 数据集，不过使用了全部 3 个类别标签（ <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> 、<code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> 及 <code class="docutils literal notranslate"><span class="pre">Virginica</span></code> ）和 4 个特征（花萼长度、花萼宽度、花瓣长度及花瓣宽度）。示例同时对数据进行归一化处理，以获得更高的采样效率。</p>
+<p>为验证 Softmax 多分类模型，继续使用 <code class="docutils literal notranslate"><span class="pre">Iris</span> <span class="pre">数据集</span></code>，不过使用了全部 3 个类别标签（ <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> 、<code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> 及 <code class="docutils literal notranslate"><span class="pre">Virginica</span></code> ）和 4 个预测变量（花萼长度、花萼宽度、花瓣长度及花瓣宽度）。示例同时对数据进行归一化处理，以获得更高的采样效率。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;iris&#39;</span><span class="p">)</span>
@@ -1505,7 +1167,7 @@ KeyboardInterrupt:
 </div>
 </div>
 </div>
-<p>从 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的代码可以看出， Logistic 回归模型与 Softmax 回归模型之间的变化很小，留意 <span class="math notranslate nohighlight">\(\alpha\)</span> 系数和 <span class="math notranslate nohighlight">\(\beta\)</span> 系数的形状。这段代码中用到了 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 中的 Softmax 函数 ，根据 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 开发者的惯例，按 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">theano.tensor</span> <span class="pre">as</span> <span class="pre">tt</span></code> 方式导入 <code class="docutils literal notranslate"><span class="pre">Theano</span></code>。</p>
+<p>从 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 的代码可以看出， <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>模型与 Softmax 回归模型之间的变化很小，留意 <span class="math notranslate nohighlight">\(\alpha\)</span> 系数和 <span class="math notranslate nohighlight">\(\beta\)</span> 系数的形状。这段代码中用到了 <code class="docutils literal notranslate"><span class="pre">Theano</span></code> 中的 Softmax 函数 ，根据 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 开发者的惯例，按 <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">theano.tensor</span> <span class="pre">as</span> <span class="pre">tt</span></code> 方式导入 <code class="docutils literal notranslate"><span class="pre">Theano</span></code>。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_s</span><span class="p">:</span>
@@ -1531,7 +1193,7 @@ KeyboardInterrupt:
 </div>
 </div>
 <p>分类结果显示准确率约为 98%，也就是说，只错分了 3 个样本。不过，真正要评估模型效果需要使用模型没有见过的数据，否则，可能会高估模型对其他数据的泛化能力。下一章我们会详细讨论该主题。</p>
-<p>也许你已经注意到了，后验（或者更准确地说，每个参数的边缘分布）看起来分布得很宽；事实上，它们与先验分布得一样宽。尽管能做出正确预测，但这看起来并不令人满意。在前面的线性 Logistic 回归问题中，对于有相关性的数据或者可以完美分割的数据，我们也遇到过类似不可识别的问题。</p>
+<p>也许你已经注意到了，后验（或者更准确地说，每个参数的边缘分布）看起来分布得很宽；事实上，它们与先验分布得一样宽。尽管能做出正确预测，但这看起来并不令人满意。在前面的线性 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>问题中，对于有相关性的数据或者可以完美分割的数据，我们也遇到过类似不可识别的问题。</p>
 <p>在这个例子中，后验分布较广是因为受到了所有概率之和为 1 的限制。在这种情况下，用到的参数个数比实际定义模型所需要的参数个数更多。简单来说就是，假如 10 个数的和为 1，你只需要知道 9 个数就可以了，剩下的 1 个数可以用 1 减去这 9 个数之和算出来。</p>
 <p>解决该问题的办法是将额外的参数固定为某个值（比如 0）。下面的代码展示了如何用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 来实现。</p>
 <div class="cell docutils container">
@@ -1551,7 +1213,7 @@ KeyboardInterrupt:
 </div>
 </div>
 <div class="section" id="id11">
-<h2>4.5 面向计数问题的泊松回归<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<h2>4.5 计数型变量回归问题：泊松回归<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
 <p>另一个非常流行的广义线性模型是泊松回归。此模型假设数据是按泊松分布的。泊松分布对于很多计数场景非常有用，例如：放射性原子核衰变、每对夫妇的孩子数量、推特上关注者的数量等。其共同点是：通常使用离散的非负数 <span class="math notranslate nohighlight">\(\{0，1，2，3，...\}\)</span> 对事件建模。此类变量被称为 <code class="docutils literal notranslate"><span class="pre">计数变量</span></code>。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1562,7 +1224,9 @@ KeyboardInterrupt:
 <p>泊松分布用于描述在固定的时间/空间间隔内发生指定数量事件的概率，因此，泊松分布假定事件以固定的时间和/或空间间隔彼此独立地发生。这种离散分布仅用一个参数 <span class="math notranslate nohighlight">\(\mu\)</span> 即可参数化（ <span class="math notranslate nohighlight">\(\mu\)</span> 为速率，通常也用希腊字母 <span class="math notranslate nohighlight">\(\lambda\)</span> 表示）进行参数化。<span class="math notranslate nohighlight">\(\mu\)</span> 对应了泊松分布的平均值和方差。</p>
 <p>泊松分布的概率质量函数如下：</p>
 <div class="math notranslate nohighlight">
-\[f(x \mid \mu)=\frac{e^{-\mu} \mu^{x}}{x !} \tag{式4.17} \label{式4.17}\]</div>
+\[
+f(x \mid \mu)=\frac{e^{-\mu} \mu^{x}}{x !} \tag{式4.17} 
+\]</div>
 <p>方程式描述如下：</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\mu\)</span> 是单位时间（或空间）内，事件发生的平均数量</p></li>
@@ -1591,22 +1255,34 @@ KeyboardInterrupt:
 <p>注意： <span class="math notranslate nohighlight">\(\mu\)</span> 可以是浮点数（定义了分布的形状），但泊松分布的真实输出（即每次实验的真实计数）始终是整数。图中的点表示分布的值，而连续线条帮助我们掌握分布的形状。所以切记，泊松分布是离散分布。</p>
 <p>泊松分布可以看作是当试验次数 <span class="math notranslate nohighlight">\(n\)</span> 很多、但成功概率 <span class="math notranslate nohighlight">\(p\)</span> 很低时的二项分布。在不涉及太多数学细节的情况下，让我们试着澄清这一说法。以某条街道上单位时间内通过的红色汽车数量为例，我们可以确认要么看到了红色汽车，要么没有看到，因此可以使用二项分布。在这种情况下，有：</p>
 <div class="math notranslate nohighlight">
-\[x \sim \operatorname{Bin}(n, p) \tag{式4.18} \label{式4.18}\]</div>
+\[
+x \sim \operatorname{Bin}(n, p) \tag{式4.18} 
+\]</div>
 <p>根据二项分布的性质，其平均值是：</p>
 <div class="math notranslate nohighlight">
-\[\mathbf{E}[x]=n p \tag{式4.19} \label{式4.19}\]</div>
+\[
+\mathbf{E}[x]=n p \tag{式4.19} 
+\]</div>
 <p>方差为：</p>
 <div class="math notranslate nohighlight">
-\[\mathbf{V}[x]=n p(1-p) \tag{式4.20}  \label{式4.20}\]</div>
+\[
+\mathbf{V}[x]=n p(1-p) \tag{式4.20} 
+\]</div>
 <p>但即便在一条非常繁忙的大道上，看到红色汽车的机会与城市中的汽车总数相比也是非常小的，由此：</p>
 <div class="math notranslate nohighlight">
-\[n&gt;&gt;p \Rightarrow n p \simeq n p(1-p) \tag{式4.21}  \label{式4.21}\]</div>
+\[
+n&gt;&gt;p \Rightarrow n p \simeq n p(1-p) \tag{式4.21}  
+\]</div>
 <p>因此，可以做如下近似：</p>
 <div class="math notranslate nohighlight">
-\[\mathbf{V}[x]=np \tag{式4.22}  \label{式4.22}\]</div>
+\[
+\mathbf{V}[x]=np \tag{式4.22}  
+\]</div>
 <p>现在，均值和方差由相同的数字表示，可以很有把握地认为，变量服从泊松分布：</p>
 <div class="math notranslate nohighlight">
-\[x \sim \operatorname{Poisson}(\mu=n p) \tag{式4.23} \label{式4.23}\]</div>
+\[
+x \sim \operatorname{Poisson}(\mu=n p) \tag{式4.23} 
+\]</div>
 </div>
 <div class="section" id="id13">
 <h3>4.5.2 零膨胀泊松分布<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
@@ -1618,9 +1294,13 @@ KeyboardInterrupt:
 <p>这就是<code class="docutils literal notranslate"><span class="pre">零膨胀泊松</span> <span class="pre">(ZIP)</span> <span class="pre">分布</span></code>。在有些文献中，符号 <span class="math notranslate nohighlight">\(\psi\)</span> 的含义可能和本书相反，但这不影响我们对模型的理解和使用。</p>
 <p>零膨胀泊松分布的基本形式是：</p>
 <div class="math notranslate nohighlight">
-\[p\left(y_{j}=0\right)=1-\psi+(\psi) e^{-\mu} \tag{式4.24} \label{式4.24}\]</div>
+\[
+p\left(y_{j}=0\right)=1-\psi+(\psi) e^{-\mu} \tag{式4.24} 
+\]</div>
 <div class="math notranslate nohighlight">
-\[p\left(y_{j}=k_{i}\right)=\psi \frac{\mu^{x_{i}} e^{-\mu}}{x_{i} !} \tag{式4.25} \label{式4.25}\]</div>
+\[
+p\left(y_{j}=k_{i}\right)=\psi \frac{\mu^{x_{i}} e^{-\mu}}{x_{i} !} \tag{式4.25} 
+\]</div>
 <p>其中 <span class="math notranslate nohighlight">\(1-\psi\)</span> 是产生额外零的概率。</p>
 <p>为举例说明零膨胀泊松分布，可以创建一些人工合成的数据：</p>
 <div class="cell docutils container">
@@ -1655,9 +1335,11 @@ KeyboardInterrupt:
 </div>
 <div class="section" id="id14">
 <h3>4.5.3 泊松回归和零膨胀泊松回归<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
-<p>零膨胀泊松模型可能看起来有点乏味，但有时需要估计类似的简单分布（泊松分布、零膨胀泊松分布、高斯分布等）。无论如何，可以将泊松分布或零膨胀泊松分布作为线性模型的一部分。就像 Logistic 回归和 Softmax 回归一样，可以使用一个逆连接函数将线性模型结果转换为另外一个满足值域区间要求的变量，并作为参数输入到泊松分布或零膨胀泊松分布中，生成因变量的计数值。使用指数函数作为逆连接函数是一种常见选择，以确保线性模型返回的值始终为正值：</p>
+<p>零膨胀泊松模型可能看起来有点乏味，但有时需要估计类似的简单分布（泊松分布、零膨胀泊松分布、高斯分布等）。无论如何，可以将泊松分布或零膨胀泊松分布作为线性模型的一部分。就像 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>和 Softmax 回归一样，可以使用一个逆连接函数将线性模型结果转换为另外一个满足值域区间要求的变量，并作为参数输入到泊松分布或零膨胀泊松分布中，生成结果变量的计数值。使用指数函数作为逆连接函数是一种常见选择，以确保线性模型返回的值始终为正值：</p>
 <div class="math notranslate nohighlight">
-\[\theta=e^{(\alpha+X \beta)} \tag{式4.26} \label{式4.26}\]</div>
+\[
+\theta=e^{(\alpha+X \beta)} \tag{式4.26} 
+\]</div>
 <p>为举例说明零膨胀泊松回归模型，将使用来自数字研究和教育研究所的 <a class="reference external" href="http://www.ats.ucla.edu/stat/data">数据集</a>。该数据集包含 250 组游客参观公园的数据。以下是每组的部分数据：</p>
 <ul class="simple">
 <li><p>他们捕到的鱼的数量 ( count )</p></li>
@@ -1686,7 +1368,7 @@ KeyboardInterrupt:
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">camper</span></code> 是一个二值变量，值为 0 表示未带露营车，1 表示带了露营车。指示属性存在/不存在的变量通常被表示为哑变量或指示变量。请注意，当 <code class="docutils literal notranslate"><span class="pre">camper</span></code> 取值为 0 时，所涉及的 <span class="math notranslate nohighlight">\(\beta_1\)</span> 项也将为 0 ，模型将退化为具有单个自变量的回归。</p>
+<p><code class="docutils literal notranslate"><span class="pre">camper</span></code> 是一个二值变量，值为 0 表示未带露营车，1 表示带了露营车。指示属性存在/不存在的变量通常被表示为哑变量或指示变量。请注意，当 <code class="docutils literal notranslate"><span class="pre">camper</span></code> 取值为 0 时，所涉及的 <span class="math notranslate nohighlight">\(\beta_1\)</span> 项也将为 0 ，模型将退化为具有单个预测变量的回归。</p>
 <p>为了更好地理解推断结果，让我们做一个图：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1723,8 +1405,9 @@ KeyboardInterrupt:
 </div>
 </div>
 <div class="section" id="id15">
-<h2>4.6 稳健 Logistic 回归<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
-<p>我们刚刚了解了如何修复多余的零，而无需直接对生成它们的因素进行建模。Kruschke 建议的类似方法可以用于执行更健壮版本的 Logistic 回归。请记住，在 Logistic 回归中，我们将数据建模为二项式，即 0 和 1 。因此，可能会发现具有不寻常的 0 和/或 1 的数据集。以我们已经看到的 iris 数据集为例，但添加了一些入侵者：</p>
+<h2>4.6 稳健 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<p>我们刚刚了解了如何修复多余的零，而无需直接对生成它们的因素进行建模。Kruschke 建议的类似方法可以用于执行更健壮版本的 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>。请记住，在 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code> 中，我们将数据建模为二值变量，即 <span class="math notranslate nohighlight">\(0\)</span> 和 <span class="math notranslate nohighlight">\(1\)</span> 。因此，可能会发现具有不寻常的 <span class="math notranslate nohighlight">\(0\)</span> 和/或 <span class="math notranslate nohighlight">\(1\)</span> 的数据集。</p>
+<p>以 <code class="docutils literal notranslate"><span class="pre">Iris</span> <span class="pre">数据集</span></code>为例，我们可以添加了一些扰动数据点：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;iris&quot;</span><span class="p">)</span>
@@ -1740,10 +1423,12 @@ KeyboardInterrupt:
 </div>
 </div>
 </div>
-<p>在这里，有一些萼片长度非常短的 <code class="docutils literal notranslate"><span class="pre">Versicolor(1s)</span></code>。我们可以用混合模型来解决这个问题。我们会说，因变量来自随机猜测的概率为 <span class="math notranslate nohighlight">\(\pi\)</span> ，或者来自 Logistic 回归模型的概率为 <span class="math notranslate nohighlight">\(1-\pi\)</span> 。从数学上讲，我们有：</p>
+<p>在这里，有一些萼片长度非常短的 <code class="docutils literal notranslate"><span class="pre">Versicolor(1s)</span></code>。我们可以用混合模型来解决这个问题。我们会说，结果变量来自随机猜测的概率为 <span class="math notranslate nohighlight">\(\pi\)</span> ，或者来自 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code> 模型的概率为 <span class="math notranslate nohighlight">\(1-\pi\)</span> 。从数学上讲，有：</p>
 <div class="math notranslate nohighlight">
-\[p=\pi 0.5+(1-\pi) \operatorname{logistic}(\alpha+X \beta) \tag{式4.27}  \label{式4.27}\]</div>
-<p>当 <span class="math notranslate nohighlight">\(\pi=1\)</span> 时，我们得到 <span class="math notranslate nohighlight">\(p=0.5\)</span> ，并且对于 <span class="math notranslate nohighlight">\(\pi=0\)</span> ，我们恢复了 Logistic 回归的表达式。实施此模型是对本章第一个模型的直接修改：</p>
+\[
+p=\pi 0.5+(1-\pi) \operatorname{logistic}(\alpha+X \beta) \tag{式4.27}  
+\]</div>
+<p>当 <span class="math notranslate nohighlight">\(\pi=1\)</span> 时，我们得到 <span class="math notranslate nohighlight">\(p=0.5\)</span> ，并且对于 <span class="math notranslate nohighlight">\(\pi=0\)</span> ，我们恢复了 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code> 的表达式。实施此模型是对本章第一个模型的直接修改：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model_rlg</span><span class="p">:</span>
@@ -1769,7 +1454,7 @@ KeyboardInterrupt:
 </div>
 <div class="section" id="glm">
 <h2>4.7 GLM 模块<a class="headerlink" href="#glm" title="Permalink to this headline">¶</a></h2>
-<p>线性模型是非常有用的统计工具。因此，<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 包含一个方便创建线性模型的 GLM 模块。使用该模块，简单的线性回归将如下所示：</p>
+<p>线性模型是非常有用的统计工具。因此，<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 包含一个方便创建线性模型的 <code class="docutils literal notranslate"><span class="pre">GLM</span></code> 模块。使用该模块，简单的线性回归将如下所示：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
@@ -1779,28 +1464,29 @@ KeyboardInterrupt:
 </div>
 </div>
 </div>
-<p>前面代码的第二行负责添加截距和斜率的先验。默认情况下，为截距指定平坦的先验，为斜率指定 <span class="math notranslate nohighlight">\(N(0,1 \times 10^6)\)</span> 先验。注意默认模型的最大后验概率 (MAP) 基本上等同于使用普通最小二乘法获得的结果。这些作为默认线性回归是完全可以的；可以使用 priors 参数来调整先验。默认情况下，GLM 模块还会默认添加高斯似然。可以使用 family 参数调整它；可选的似然函数包括：正态分布（默认）、学生 <span class="math notranslate nohighlight">\(t\)</span> 分布、二项分布、泊松分布或负二项分布。</p>
-<p>为了描述统计模型，GLM 模块使用了 <a class="reference external" href="https://patsy.readthedocs.io/en/latest/index.html">Patsy</a>。它是提供了一种公式微语言语法的 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 库，其灵感来自 <code class="docutils literal notranslate"><span class="pre">R</span></code> 和 <code class="docutils literal notranslate"><span class="pre">S</span></code> 中的语法。在前面的代码块中，<span class="math notranslate nohighlight">\(y~x\)</span> 指定了有一个因变量 <span class="math notranslate nohighlight">\(y\)</span> ，我们希望将其估计为 <span class="math notranslate nohighlight">\(x\)</span> 的线性函数。</p>
+<p>前面代码的第二行负责添加截距和斜率的先验。默认情况下，为截距指定平坦的先验，为斜率指定 <span class="math notranslate nohighlight">\(N(0,1 \times 10^6)\)</span> 先验。注意默认模型的最大后验概率 (<code class="docutils literal notranslate"><span class="pre">MAP</span></code>) 基本上等同于使用普通最小二乘法获得的结果。这些作为默认线性回归是完全可以的；可以使用 priors 参数来调整先验。默认情况下，<code class="docutils literal notranslate"><span class="pre">GLM</span></code> 模块还会默认添加高斯似然。可以使用 <code class="docutils literal notranslate"><span class="pre">family</span></code> 参数调整它；可选的似然函数包括：正态分布（默认）、学生 <span class="math notranslate nohighlight">\(t\)</span> 分布、二项分布、泊松分布或负二项分布。</p>
+<p>为了描述统计模型，<code class="docutils literal notranslate"><span class="pre">GLM</span></code> 模块使用了 <a class="reference external" href="https://patsy.readthedocs.io/en/latest/index.html"><code class="docutils literal notranslate"><span class="pre">Patsy</span></code></a>。它是一个提供了公式微语言语法的 <code class="docutils literal notranslate"><span class="pre">Python</span></code> 库，其灵感来自 <code class="docutils literal notranslate"><span class="pre">R</span></code> 和 <code class="docutils literal notranslate"><span class="pre">S</span></code> 中的语法。在前面的代码块中，<span class="math notranslate nohighlight">\(y \sim x\)</span> 指定了有一个结果变量 <span class="math notranslate nohighlight">\(y\)</span> ，我们将其估计为 <span class="math notranslate nohighlight">\(x\)</span> 的线性函数。</p>
 </div>
 <div class="section" id="id16">
 <h2>4.8 总结<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
-<p>本章讨论的主要思想非常简单：为预测因变量的平均值，可以对自变量的线性组合应用任意函数。我们称这个任意函数为逆连接函数。在选择此函数时的唯一限制是：输出必须足够用作待采样分布的参数。我们想要使用逆连接函数的一种情况是处理分类问题，另一种情况是数据只能取正值时，还有一种情况是我们需要 <span class="math notranslate nohighlight">\([0, 1]\)</span> 区间内的变量。所有这些不同变体形成了不同的模型；其中许多模型被用作统计工具，并对其应用和统计特性进行了研究。</p>
-<p>Logistic 回归是上一章线性回归模型的推广，可用于二分类问题。 Logistic 回归的显著特点是使用 Logistic 函数作为逆连接函数，使用伯努利分布作为似然函数。逆连接函数的使用引入了非线性，在解释 Logistic 回归系数时应该考虑到这一点。该系数编码赔率对数随变量 <span class="math notranslate nohighlight">\(x\)</span> 单位增加而增加的值。</p>
-<p>将 Logistic 回归推广到两个以上类别的方法是使用 Softmax 回归，其逆连接函数是 Softmax 函数，它是 Logistic 函数在多值分类上的推广，并使用类别分布作为似然。</p>
-<p>Logistic 和 Softmax 都是判别式模型的例子；我们试图在没有显式模型 <span class="math notranslate nohighlight">\(p(x)\)</span> 的情况下建立 <span class="math notranslate nohighlight">\(p(y|x)\)</span> 的模型。而生成式分类模型将首先建模 <span class="math notranslate nohighlight">\(p(x|y)\)</span> ，即对每个类 <span class="math notranslate nohighlight">\(y\)</span> 下 <span class="math notranslate nohighlight">\(x\)</span> 的分布建模，然后对类进行分配。这种模型被称为生成式分类器，因为我们创建的模型，可以为每个类别生成新样本。</p>
-<p>我们使用 Iris 数据集演示了上述模型，并简要讨论了相关变量、完全可分离类、不平衡数据等问题。</p>
-<p>另一种流行的广义线性模型是泊松回归。该模型假设数据服从泊松分布，逆连接函数为指数函数。泊松回归对计数数据进行建模很有用，即只取非负整数的数据，这些数据来自计数而不是排名（排名属于定序变量）。随着讨论的深入，我们会发现大多数概率分布之间存在着相互联系，例如高斯分布和学生 <span class="math notranslate nohighlight">\(t\)</span> 分布。另一个例子是当试验次数很多但成功概率很低时，泊松分布可以被视为二项分布的特例。</p>
-<p>零膨胀泊松分布是对泊松分布的扩展，主要用于解决模型零计数不足的问题。可以将零膨胀泊松分布看作是泊松分布（用于计数建模）和二值分布（用于对额外的零建模）的混合。负二项分布也可以被解释为多个泊松分布的混合，其中 rate( <span class="math notranslate nohighlight">\(\mu\)</span> ) 是服从伽马分布的随机变量。当数据过度分散时，负二项分布是泊松分布的一种有效替代方法，负二项分布适用于建模方差大于平均值的数据。</p>
+<p>本章讨论的主要思想非常简单：为预测结果变量的平均值，可以对预测变量的线性组合应用任意函数。我们称这个任意函数为逆连接函数。在选择此函数时的唯一限制是：输出必须足够用作待采样分布的参数。我们想要使用逆连接函数的一种情况是处理分类问题，另一种情况是数据只能取正值时，还有一种情况是我们需要 <span class="math notranslate nohighlight">\([0, 1]\)</span> 区间内的变量。所有这些不同变体形成了不同的模型；其中许多模型被用作统计工具，并对其应用和统计特性进行了研究。</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code></strong> 是上一章线性回归模型的推广，可用于二分类问题。 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code> 的显著特点是使用 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">函数</span></code> 作为逆连接函数，使用伯努利分布作为似然函数。逆连接函数的使用引入了非线性，在解释 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code> 的系数时应该考虑到这一点。</p>
+<p>将 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code> 推广到两个以上类别的方法是使用 <strong><code class="docutils literal notranslate"><span class="pre">Softmax</span> <span class="pre">回归</span></code></strong>，其逆连接函数是 <code class="docutils literal notranslate"><span class="pre">Softmax</span> <span class="pre">函数</span></code> ，它是 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">函数</span></code> 在多值分类上的推广，并使用<code class="docutils literal notranslate"><span class="pre">类别分布</span></code>作为似然函数。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Logistic</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Softmax</span></code> 都是<strong>判别式分类模型</strong>的例子；我们试图在没有显式模型 <span class="math notranslate nohighlight">\(p(x)\)</span> 的情况下建立 <span class="math notranslate nohighlight">\(p(y|x)\)</span> 的模型。而<strong>生成式分类模型</strong>将首先建模 <span class="math notranslate nohighlight">\(p(x|y)\)</span> ，即对每个类 <span class="math notranslate nohighlight">\(y\)</span> 下 <span class="math notranslate nohighlight">\(x\)</span> 的分布建模，然后对类进行分配。此模型又被称为生成式分类器，因为我们创建的模型，可以为每个类别生成新样本。</p>
+<p>我们使用 <code class="docutils literal notranslate"><span class="pre">Iris</span> <span class="pre">数据集</span></code> 演示了上述模型，并简要讨论了相关变量、完全可分离类、不平衡数据等问题。</p>
+<p>另一种流行的广义线性模型是<strong>泊松回归</strong>。该模型假设数据服从泊松分布，逆连接函数为指数函数。泊松回归对于计数型数据（即只取非负整数的数据）的建模很有用。随着讨论的深入，我们会发现大多数概率分布之间存在着相互联系，例如高斯分布和学生 <span class="math notranslate nohighlight">\(t\)</span> 分布。另一个例子是泊松分布可以被视为当试验次数很多但成功概率很低时的一个二项分布特例。</p>
+<p><strong>零膨胀泊松分布</strong>是对泊松分布的扩展，主要用于解决模型零计数不足的问题。可以将零膨胀泊松分布看作是泊松分布（用于计数型数据建模）和二值分布（用于对额外的零值数据建模）的混合。</p>
+<p><strong>负二项分布</strong>也可以被解释为多个泊松分布的混合，其中 <code class="docutils literal notranslate"><span class="pre">rate</span></code> ( <span class="math notranslate nohighlight">\(\mu\)</span> ) 是服从伽马分布的随机变量。当数据过度分散时，负二项分布是泊松分布的一种有效替代方法，负二项分布适用于建模方差大于平均值的数据。</p>
 </div>
 <div class="section" id="id17">
 <h2>4.10 习题<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
 <p>（1）使用花瓣长度和花瓣宽度作为变量重跑第一个模型。二者的结果有何区别？两种情况下的 95%hdi 区间分别是多少？</p>
 <p>（2）重跑练习（1），这次使用 <span class="math notranslate nohighlight">\(t\)</span> 分布作为弱先验信息。尝试使用不同的正态参数 <span class="math notranslate nohighlight">\(\nu\)</span> 。</p>
-<p>（3）回到第 1 个例子中，用 Logistic 回归根据花萼长度判断属于 <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> 还是 <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> 。尝试用第 1 章中的单参数回归模型来解决这个问题，线性回归的结果相比 Logistic 回归的效果如何？线性回归的结果能解释为概率吗？提示：检查 <span class="math notranslate nohighlight">\(y\)</span> 值是否位于 <span class="math notranslate nohighlight">\([ 0,1 ]\)</span> 区间内。</p>
+<p>（3）回到第 1 个例子中，用 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code>根据花萼长度判断属于 <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> 还是 <code class="docutils literal notranslate"><span class="pre">Versicolour</span></code> 。尝试用第 1 章中的单参数回归模型来解决这个问题，线性回归的结果相比 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code> 的效果如何？线性回归的结果能解释为概率吗？提示：检查 <span class="math notranslate nohighlight">\(y\)</span> 值是否位于 <span class="math notranslate nohighlight">\([ 0,1 ]\)</span> 区间内。</p>
 <p>（4）假设我们不用 <code class="docutils literal notranslate"><span class="pre">Softmax</span></code> 回归，而是用单参数线性模型，并将类别编码为 <code class="docutils literal notranslate"><span class="pre">Setosa</span></code> =0,Versicolour =1, <code class="docutils literal notranslate"><span class="pre">Virginica</span></code> =2。在单参数线性回归模型中，如果我们交换类别的编码方式会发生什么？结果会保持一样还是会有所不同？</p>
 <p>（5）在处理不均衡数据的例子中，将 df=df[45:] 改为 df[22:78]，这样做得到的数据点个数几乎没变，不过现在类别变</p>
 <p>得均衡了，试比较这两种情况的结果，哪种情况得到的结果与使用完整数据集得到的结果更相似呢？</p>
-<p>（6）比较 Logistic 回归 模型与 LDA 模型的似然，用函数 sample_ppc 生成预测数据并比较，确保理解其中的不同。</p>
+<p>（6）比较 <code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">回归</span></code> 模型与 LDA 模型的似然，用函数 sample_ppc 生成预测数据并比较，确保理解其中的不同。</p>
 </div>
 </div>
 

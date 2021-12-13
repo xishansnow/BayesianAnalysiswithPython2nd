@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>附录 E：贝叶斯深度学习综述 &#8212; Python贝叶斯分析(中文)</title>
+    <title>附录 E：贝叶斯深度学习 &#8212; Python贝叶斯分析(中文)</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -54,7 +54,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="附录 F：贝叶斯深度学习编程初步" href="Append-06-BayesianDeepLearningPymc3.html" />
-    <link rel="prev" title="附录 D：贝叶斯神经网络概述" href="Append-04-BayesianNN_Tutorial.html" />
+    <link rel="prev" title="附录 D：贝叶斯神经网络" href="Append-04-BayesianNN_Tutorial.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -158,27 +158,27 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Append-01-MCMC_Tutorial.html">
-   附录 A： MCMC 随机性推断
+   附录 A： MCMC 推断
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Append-02-VariationalInference_Tutorial.html">
-   附录 B： 变分法确定性推断
+   附录 B： 变分法推断
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Append-03-GaussianProcessTutorial.html">
+  <a class="reference internal" href="Append-03-GaussianProcessTutorial_01.html">
    附录 C： 高斯过程
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Append-04-BayesianNN_Tutorial.html">
-   附录 D：贝叶斯神经网络概述
+   附录 D：贝叶斯神经网络
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   附录 E：贝叶斯深度学习综述
+   附录 E：贝叶斯深度学习
   </a>
  </li>
  <li class="toctree-l1">
@@ -377,7 +377,7 @@
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id14">
-     6.1 噪声标签和半监督学习
+     6.1 含噪声标签和半监督学习
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -502,7 +502,7 @@
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="e">
-<h1>附录 E：贝叶斯深度学习综述<a class="headerlink" href="#e" title="Permalink to this headline">¶</a></h1>
+<h1>附录 E：贝叶斯深度学习<a class="headerlink" href="#e" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://arxiv.org/abs/2007.06823">原文</a></p>
 <p>[作者]</p>
 <ul class="simple">
@@ -780,9 +780,9 @@ p\left(\theta \mid D_{\boldsymbol{x}}\right) \propto p(\theta) \exp \left(-\frac
 <p>到目前为止，所提出的架构主要集中在贝叶斯神经网络在监督学习环境中的使用。然而，在现实世界的应用中，获得地面真实标签可能是昂贵的，因此应该采用新的学习策略 [72]。我们现在介绍如何使贝叶斯神经网络适应不同程度的监督。在这样做的同时，我们还展示了 PGM（主要是贝叶斯信念网络）如何有助于设计或解释学习策略。</p>
 <p>特别是，贝叶斯后验的表述，是由下面介绍的不同的 PGM 得出的（图 8、9 和 10），可以用来（第 5.3 节）获得一个合适的损失函数，用于在点估计神经网络足以满足所考虑的使用情况下的最大后验估计器。</p>
 <div class="section" id="id14">
-<h3>6.1 噪声标签和半监督学习<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<h3>6.1 含噪声标签和半监督学习<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>训练集的输入可能是不确定的，要么是因为标签 Dyare 被噪声破坏 [61]，要么是因为一些点没有标签，即半监督学习方法的设置</p>
-<p>在有噪声标签的情况下，我们应该扩展 BBN，为噪声标签增加一个新的变量–以 y 为条件（图 7a）。由于噪声水平本身往往是未知的，所以添加一个变量σ来描述噪声是很常见的。Frenay 和 Veleysen[16] 提出了在 PGM 中集成σ的不同方法的分类法（图 8），他们区分了三种情况：完全随机噪声（NCAR）；随机噪声（NAR）；非随机噪声（NNAR）模型。在 NCAR 模型中，σ是独立于任何其他变量的，根据定义，噪声是同调的。在 NAR 模型中，σ依赖于真实标签，但仍然独立于特征，而 NNAC 模型也考虑了特征 x 的影响，例如，如果图像中的噪声水平增加了图像被误标的机会。NAR 和 NNAC 模型都表示异方差（即同方差的反义词）噪声。</p>
+<p>在有噪声标签的情况下，我们应该扩展 BBN，为含噪声标签增加一个新的变量–以 y 为条件（图 7a）。由于噪声水平本身往往是未知的，所以添加一个变量σ来描述噪声是很常见的。Frenay 和 Veleysen[16] 提出了在 PGM 中集成σ的不同方法的分类法（图 8），他们区分了三种情况：完全随机噪声（NCAR）；随机噪声（NAR）；非随机噪声（NNAR）模型。在 NCAR 模型中，σ是独立于任何其他变量的，根据定义，噪声是同调的。在 NAR 模型中，σ依赖于真实标签，但仍然独立于特征，而 NNAC 模型也考虑了特征 x 的影响，例如，如果图像中的噪声水平增加了图像被误标的机会。NAR 和 NNAC 模型都表示异方差（即同方差的反义词）噪声。</p>
 <p>这些模型比第 4 节中介绍的纯监督贝叶斯神经网络稍微复杂一些，但可以用类似的方式来处理，即从 PGM 中推导出后验公式（公式 12）并应用所选择的推断算法。我们在此介绍 NNAR 模型的程序，这是最通用的一种。后验成为</p>
 <p>在预测阶段，对于从后验中取样的每个元组 (y,σ,θ)，y 和σ可以不被考虑。</p>
 <p>在部分标记数据的情况下，也被称为半监督学习，（图 7b），数据集 D 被分成标记的 L 和未标记的 U 的例子。理论上，这种 PGM 可以被认为等同于图 6a 中描述的监督学习情况，但在这种情况下，未观察到的数据 U 不会带来任何信息。未标记的数据的额外信息来自于先验，也只有先验。在传统的机器学习中，最常见实施半监督学习的方法要么使用某种数据驱动的正则化 [86]，要么依赖伪标签 [82]，贝叶斯学习也不例外。</p>
@@ -1218,7 +1218,7 @@ on Knowl. and Data Eng., 28(12):3395–3408, December 2016. ISSN 1041–4347.
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">附录 D：贝叶斯神经网络概述</p>
+            <p class="prev-next-title">附录 D：贝叶斯神经网络</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="Append-06-BayesianDeepLearningPymc3.html" title="next page">

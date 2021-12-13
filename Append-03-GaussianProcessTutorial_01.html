@@ -1,0 +1,1419 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>附录 C： 高斯过程 &#8212; Python贝叶斯分析(中文)</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="附录 D：贝叶斯神经网络" href="Append-04-BayesianNN_Tutorial.html" />
+    <link rel="prev" title="附录 B： 变分法推断" href="Append-02-VariationalInference_Tutorial.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Python贝叶斯分析(中文)</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="preface.html">
+   封面
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  书籍正文
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter01-ThinkingProbabilistically.html">
+   第 1 章 概率思维
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter02-ProgrammingProbabilistically.html">
+   第 2 章 概率编程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter03-ModellingwithLinearRegression.html">
+   第 3 章 线性回归模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter04-GeneralizedLinearRegression.html">
+   第 4 章 广义线性回归模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter05-ModelComparison.html">
+   第 5 章 模型比较
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter06-MixtureModels.html">
+   第 6 章 混合模型
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter07-GaussianProcesses.html">
+   第 7 章 高斯过程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter08-InterefenceEngine.html">
+   第 8 章 推断引擎
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="chapter09-WheretoGoNext.html">
+   第 9 章 下一步去哪儿？
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  文献阅读
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-01-MCMC_Tutorial.html">
+   附录 A： MCMC 推断
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-02-VariationalInference_Tutorial.html">
+   附录 B： 变分法推断
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   附录 C： 高斯过程
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-04-BayesianNN_Tutorial.html">
+   附录 D：贝叶斯神经网络
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-05-BayesianDeepLearning_Tutorial.html">
+   附录 E：贝叶斯深度学习
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-06-BayesianDeepLearningPymc3.html">
+   附录 F：贝叶斯深度学习编程初步
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-07-ModelSelectAndAveraging.html">
+   附录 G：模型选择与模型平均
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="_sources/Append-03-GaussianProcessTutorial_01.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/Append-03-GaussianProcessTutorial_01.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd/issues/new?title=Issue%20on%20page%20%2FAppend-03-GaussianProcessTutorial_01.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=lab/tree/Append-03-GaussianProcessTutorial_01.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=lab/tree/BayesianAnalysiswithPython2nd/Append-03-GaussianProcessTutorial_01.md&branch=master"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
+                data-placement="left"><img class="jupyterhub-button-logo"
+                    src="_static/images/logo_jupyterhub.svg"
+                    alt="Interact on JupyterHub">JupyterHub</button></a>
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   1 引言
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   2 数学基础
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     2.1 高斯分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     2.2 多元高斯分布（多元高斯分布）
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     2.3 核函数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     2.4 非参数模型
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   3 高斯过程
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   4 简单的实现案例
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     4.1 超参数的优化
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     4.2 高斯过程软件包
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id11">
+   5 总结和讨论
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     题外话
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id13">
+   参考文献
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#appendix-a">
+   Appendix A
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="c">
+<h1>附录 C： 高斯过程<a class="headerlink" href="#c" title="Permalink to this headline">¶</a></h1>
+ <style>p{text-indent:2em;2}</style>
+<p>【原文】Jie Wang (2020). An Intuitive Tutorial to Gaussian Processes Regression. <a class="reference external" href="https://arxiv.org/abs/2009.10862">https://arxiv.org/abs/2009.10862</a></p>
+<p>【摘要】本教程旨在提供对高斯过程回归（Gaussian processes regression,高斯过程回归）的直观理解。高斯过程回归模型因其表达方式的灵活性和内涵的不确定性预测能力而广泛用于机器学习应用中。本文首先解释了构建高斯过程的基本概念，包括多元正态分布、核、非参数模型、联合和条件概率等。然后，简明描述了高斯过程回归以及标准高斯过程回归算法的实现。除了标准高斯过程回归，本文还审查了目前最先进的高斯过程算法软件包。</p>
+<hr class="docutils" />
+<style>p{text-indent:2em;2}</style><div class="section" id="id1">
+<h2>1 引言<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>高斯过程模型是一种概率监督机器学习框架，已广泛用于回归和分类任务。高斯过程回归（高斯过程回归）模型可以结合先验知识（核）进行预测，并提供预测的不确定性度量 [1]。高斯过程模型是由计算机科学和统计学界开发的一种监督学习方法。具有工程背景的研究人员经常发现很难清楚地了解它。要理解高斯过程回归，即使只有基础知识也需要了解多元正态分布、核、非参数模型以及联合和条件概率。</p>
+<p>在本教程中，我们将提供高斯过程回归的简洁易懂的解释。我们首先回顾了高斯过程回归模型所基于的数学概念，以确保读者有足够的基础知识。为了提供对高斯过程回归的直观理解，图表被积极使用。为生成绘图而开发的代码在 <a class="reference external" href="https://github.com/jwangjie/Gaussian-Processes-Regression-Tutorial">https://github.com/jwangjie/Gaussian-Processes-Regression-Tutorial</a> 处提供。</p>
+<p>在开始之前，首先要了解为什么要用高斯过程做回归。回归是一项常见的机器学习任务，可以描述为给定一些观测到的数据点（训练数据集），找到一个尽可能接近地表示数据集的函数，然后使用该函数对新数据点进行预测。可以使用多种函数形式进行回归，并且通常有不止一种可能的函数可以拟合观测到的数据。除了通过函数获得预测结果之外，我们还想知道这些预测的确定性程度。量化不确定性对于实现高效的学习过程非常有价值，应该更多地探索低确定性的领域。而高斯过程不仅可用于对新数据点进行预测，并可以告诉我们这些预测的不确定性程度。</p>
+<img src="https://github.com/jwangjie/Gaussian-Process-be-comfortable-using-it/blob/master/img/gpr_animation_wide.gif?raw=1" width="1000"/> 
+<p>高斯过程的动画示意图 [10]</p>
+</div>
+<div class="section" id="id2">
+<h2>2 数学基础<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>本节回顾理解高斯过程回归所需的基本概念。从高斯（正态）分布开始，然后解释多元高斯分布、核、非参数模型的概念，尤其是多元高斯分布的边缘概率和条件概率公式。在回归任务中，给定一些观测到的数据点，我们的目的是拟合一个函数来表示这些数据点，然后使用该函数对新数据点进行预测。例如：对于 <code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">1(a)</span></code> 所示的一组观测数据点，理论上存在无数个能够拟合这些数据点的函数。<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">1（b）</span></code> 示例性地展示了其中五个可能的函数。在高斯过程回归中，高斯过程正是通过定义这无限个函数的分布，来处理回归问题的 [12]。</p>
+<div id="image-table">
+    <table>
+	    <tr>
+    	    <td style="padding:10px">
+        	    <img src="https://github.com/jwangjie/Gaussian-Process-be-comfortable-using-it/blob/master/img/regression1.png?raw=1" width="400"/> 
+      	    </td>
+            <td style="padding:10px">
+            	<img src="https://github.com/jwangjie/Gaussian-Process-be-comfortable-using-it/blob/master/img/regression2.png?raw=1" width="550"/>
+            </td>
+        </tr>
+    </table>
+</div> 
+<p>图 1 回归任务示例：(a) 观测数据点，(b) 拟合观测数据点的五个函数样本。[2]</p>
+<div class="section" id="id3">
+<h3>2.1 高斯分布<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>当某个随机变量 <span class="math notranslate nohighlight">\(X\)</span> 的概率密度函数为下述公式时，称其服从均值为 <span class="math notranslate nohighlight">\(μ\)</span> 、方差为 <span class="math notranslate nohighlight">\(σ^2\)</span> 的高斯分布[13]：</p>
+<div class="math notranslate nohighlight">
+\[
+P_X(x) = \frac{1}{\sqrt{2 \pi} \sigma} exp{\left(-\frac{{\left(x - \mu \right)}^{2}}{2 \sigma^{2}}\right)}
+\]</div>
+<p>其中， <span class="math notranslate nohighlight">\(X\)</span> 表示随机变量， <span class="math notranslate nohighlight">\(x\)</span> 表示变量实值。<span class="math notranslate nohighlight">\(X\)</span> 的高斯（或正态）分布通常表示为 <span class="math notranslate nohighlight">\( P(x) ~ \sim\mathcal{N}(\mu, \sigma^2)\)</span> 。</p>
+<p>下图为一维（单变量）高斯密度函数。我们从该分布中随机采样了 <code class="docutils literal notranslate"><span class="pre">1000</span></code> 个样本点，并将其绘制在 <span class="math notranslate nohighlight">\(x\)</span> 轴上。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;savefig.format&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;pdf&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+
+<span class="c1"># Plot 1-D gaussian</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>         <span class="c1"># n number of independent 1-D gaussian </span>
+<span class="n">m</span><span class="o">=</span> <span class="mi">1000</span>       <span class="c1"># m points in 1-D gaussian </span>
+<span class="n">f_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span> 
+<span class="c1"># more information about &#39;size&#39;: https://www.sharpsightlabs.com/blog/numpy-random-normal/ </span>
+<span class="c1">#print(f_random.shape)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="c1">#sns.distplot(f_random[i], hist=True, rug=True, vertical=True, color=&quot;orange&quot;)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">distplot</span><span class="p">(</span><span class="n">f_random</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">hist</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">rug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">vertical</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1">#plt.title(&#39;1000 random samples by a 1-D Gaussian&#39;)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$P_X(x)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># plt.show()</span>
+<span class="c1"># plt.savefig(&#39;1d_random.png&#39;, bbox_inches=&#39;tight&#39;, dpi=600)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;1d_random&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
+  warnings.warn(msg, FutureWarning)
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2103: FutureWarning: The `axis` variable is no longer used and will be removed. Instead, assign variables directly to `x` or `y`.
+  warnings.warn(msg, FutureWarning)
+</pre></div>
+</div>
+<img alt="_images/Append-03-GaussianProcessTutorial_01_8_1.png" src="_images/Append-03-GaussianProcessTutorial_01_8_1.png" />
+</div>
+</div>
+<p>图 2 1000 个高斯分布的数据点被绘制在 x 轴上（红色垂直条），这些数据点的概率密度函数（PDF）被绘制为二维钟形曲线</p>
+<p>我们生成的数据点遵循正态分布。另一方面，我们可以对数据点进行建模，假设这些点是高斯的，建模为一个函数，并利用它做回归。如上所示，对生成的点进行了核密度和直方图的估计。由于有大量的<code class="docutils literal notranslate"><span class="pre">(m=1000)</span></code> 观测点来得到这个看起来像高斯的PDF，核密度估计看起来是一个正态分布。在贝叶斯概率回归方法中，即使没有那么多的观测数据，如果假设高斯先验，也可以将数据建模为一个遵循正态分布的函数。</p>
+<p>这些随机生成的数据点可以表示为向量 <span class="math notranslate nohighlight">\(x_1= [x^1_1,x^2_1, . . . ,x^n_1]\)</span> 的形式。此时做些坐标空间上转换，将向量 <span class="math notranslate nohighlight">\(x_1\)</span> 绘制在 <span class="math notranslate nohighlight">\(Y=0\)</span> 的新 <span class="math notranslate nohighlight">\(Y\)</span> 轴上，即将点 <span class="math notranslate nohighlight">\([x^1_1,x^2_1, . . . ,x^n_1]\)</span> 投影到了 <code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">3</span></code> 所示的另一个空间。在该空间中，我们只在特定的 <span class="math notranslate nohighlight">\(Y\)</span> 值上, 按照垂直方向绘制向量 <span class="math notranslate nohighlight">\(x_1\)</span> 中的点。例如，可以在 <span class="math notranslate nohighlight">\(Y=1\)</span> 处绘制另一个独立的高斯向量 <span class="math notranslate nohighlight">\(x_2= [x^1_2,x^2_2, . . . ,x^n_2]\)</span> 。 注意，此时心里应当清楚， <span class="math notranslate nohighlight">\(x_1\)</span> 和 <span class="math notranslate nohighlight">\(x_2\)</span> 均为图 2 所示的一维高斯分布。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">1</span>         <span class="c1"># n number of independent 1-D gaussian </span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">1000</span>       <span class="c1"># m points in 1-D gaussian  </span>
+<span class="n">f_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+
+<span class="n">Xshow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># n number test points in the range of (0, 1)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Xshow</span><span class="p">,</span> <span class="n">f_random</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">markeredgewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$X$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$f(X)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Append-03-GaussianProcessTutorial_01_12_0.png" src="_images/Append-03-GaussianProcessTutorial_01_12_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>          
+<span class="n">m</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">f_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+
+<span class="n">Xshow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># n number test points in the range of (0, 1)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Xshow</span><span class="p">,</span> <span class="n">f_random</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">markeredgewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$Y$&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># plt.show()</span>
+<span class="c1"># plt.savefig(&#39;1d_random.png&#39;, bbox_inches=&#39;tight&#39;, dpi=600)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;2gaussian&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Append-03-GaussianProcessTutorial_01_13_0.png" src="_images/Append-03-GaussianProcessTutorial_01_13_0.png" />
+</div>
+</div>
+<p>图 3：在 <span class="math notranslate nohighlight">\(Y-X\)</span> 坐标空间中垂直绘制了两个独立的一维高斯向量点集合。</p>
+<img src="https://github.com/jwangjie/Gaussian-Process-be-comfortable-using-it/blob/master/img/2gaussian.png?raw=1" width="500"/><p>接下来，我们分别在向量 <span class="math notranslate nohighlight">\(x_1\)</span> 和 <span class="math notranslate nohighlight">\(x_2\)</span> 中随机选择 10 个点，并按线顺序连接这 10 个点，如 <code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">4（a）</span></code> 所示。这些连接线看起来像跨越 <span class="math notranslate nohighlight">\([0, 1]\)</span> 区间的线性函数。如果新数据点在（或足够接近）这些直线上，则可以使用这些函数对回归任务进行预测。然而，在大多数情况下，“新数据点总是在连接的线上” 这个假设并不成立。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>          
+<span class="n">m</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">f_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+
+<span class="n">Xshow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># n number test points in the range of (0, 1)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Xshow</span><span class="p">,</span> <span class="n">f_random</span><span class="p">,</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">markeredgewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$Y$&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># plt.show()</span>
+<span class="c1"># plt.savefig(&#39;1d_random.png&#39;, bbox_inches=&#39;tight&#39;, dpi=600)</span>
+<span class="c1"># plt.savefig(&#39;random_x1_x2&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$x$&#39;)
+</pre></div>
+</div>
+<img alt="_images/Append-03-GaussianProcessTutorial_01_16_1.png" src="_images/Append-03-GaussianProcessTutorial_01_16_1.png" />
+</div>
+</div>
+<p>图 4a 在两个向量 <span class="math notranslate nohighlight">\(x_1\)</span> 和 <span class="math notranslate nohighlight">\(x_2\)</span> 中随机选取 10 个点，并连接成线，形成 10 个可能的函数。</p>
+<p>重新考虑回归问题，对于每对点，上述直线看起来像是某个函数。另一方面，即使每条线上只有两个点，该图也看起来很像正在使用 10 个线性函数对 <span class="math notranslate nohighlight">\([0, 1]\)</span> 区间进行采样。从采样角度来看，<span class="math notranslate nohighlight">\([0, 1]\)</span> 区间是进行回归的兴趣区域。如果按轴顺序生成更多独立的高斯向量和连接点，则这种采样看起来会更加清晰。例如，在 <span class="math notranslate nohighlight">\([0,1]\)</span> 区间内，随机生成 20 个向量 <span class="math notranslate nohighlight">\(x_1\)</span>,<span class="math notranslate nohighlight">\(x_2\)</span>,…,<span class="math notranslate nohighlight">\(x_{20}\)</span>，并将每个向量中的 10 个随机样本点按顺序连接为折线，则可以得到<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">4（b）</span></code> 所示的 10 条新的折线，这些折线看起来更像 <span class="math notranslate nohighlight">\([0, 1]\)</span> 区间上的函数了。但此时我们仍然无法使用这些线来做预测，因为它们太杂乱了。原则上，我们希望这些线代表的函数应当更平滑一些，这也意味着彼此接近的输入点应该具有相似的输出值。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">20</span>          
+<span class="n">m</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">f_random</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+
+<span class="n">Xshow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># n number test points in the range of (0, 1)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Xshow</span><span class="p">,</span> <span class="n">f_random</span><span class="p">,</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">markeredgewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$Y$&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">)</span>
+
+<span class="c1"># plt.show()</span>
+<span class="c1"># plt.savefig(&#39;1d_random.png&#39;, bbox_inches=&#39;tight&#39;, dpi=600)</span>
+<span class="c1"># plt.savefig(&#39;random_x1_x20&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;$x$&#39;)
+</pre></div>
+</div>
+<img alt="_images/Append-03-GaussianProcessTutorial_01_19_1.png" src="_images/Append-03-GaussianProcessTutorial_01_19_1.png" />
+</div>
+</div>
+<p>图 4b 在 20 个向量 <span class="math notranslate nohighlight">\(x_1\)</span>, <span class="math notranslate nohighlight">\(x_2\)</span>,…,<span class="math notranslate nohighlight">\(x_{20}\)</span> 中随机选取 10 个样本点，并连接成线，形成 10 个可能的函数</p>
+<p>图 4 两例说明，通过连接独立的高斯向量点生成的 “函数”， 对于回归任务来说不够平滑。造成这种不平滑的主要原因是 20 个高斯向量（本质上每个向量代表了在 Y 处的一个随机变量抽取的样本集合）所抽取的样本点之间，彼此相互独立。因此，如果要保持某种程度的平滑，就需要 20 个相邻的样本点之间存在一定程度的相关性（距离越接近，则样本的值越接近）。从数学上，20 个随机变量的高斯分布，可以等价地视为一个 20 维的多元高斯分布，而多元高斯分布具备很多成熟而有价值的数学定理，能够用于预测概率的求解。</p>
+</div>
+<div class="section" id="id4">
+<h3>2.2 多元高斯分布（多元高斯分布）<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>一个系统通常由相互关联的多个特征变量 <span class="math notranslate nohighlight">\((x_1，x_2，...，x_D)\)</span> 描述。如果想将所有 <span class="math notranslate nohighlight">\(D\)</span> 个变量统一建模为一个高斯模型，就要使用多元高斯分布[13]。具有 <span class="math notranslate nohighlight">\(D\)</span> 维的多元高斯分布具有如下概率密度函数：</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x})=\frac{1}{(2 \pi)^{D / 2}|\Sigma|^{1 / 2}} \exp \left\{-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^{T} \Sigma^{-1}(\mathbf{x}-\boldsymbol{\mu})\right\}
+\]</div>
+<p>其中：<span class="math notranslate nohighlight">\(D\)</span> 为维度数量，<span class="math notranslate nohighlight">\(X\)</span> 为变量（向量形式），<span class="math notranslate nohighlight">\(\boldsymbol{\mu} \quad\)</span> 为均值向量，<span class="math notranslate nohighlight">\(\Sigma\)</span> 为协方差矩阵。</p>
+<p>当 Dimension = 1 时，上式等价于一维高斯分布：</p>
+<div class="math notranslate nohighlight">
+\[
+p(x)=\frac{1}{\sqrt{2 \pi} \sigma} \exp \left\{-\frac{(x-\mu)^{2}}{2 \sigma^{2}}\right\}
+\]</div>
+<p>为简化问题，我们以二元高斯分布 （BVN） 分布为例来理解多元高斯分布理论。 二元高斯分布在三维（3-d）空间中，可描述为钟形曲面（图 5a ），其中高度表示概率密度 <span class="math notranslate nohighlight">\(P\)</span> 。图 5b 是三维空间投影到 <span class="math notranslate nohighlight">\(x_1,x_2\)</span> 平面上的结果，概率密度用等值线表示，其中椭圆的形状显示了两个维度 <span class="math notranslate nohighlight">\(x_1\)</span> 和 <span class="math notranslate nohighlight">\(x_2\)</span> 之间的相关性，即一个变量 <span class="math notranslate nohighlight">\(x_1\)</span> 与另一个变量 <span class="math notranslate nohighlight">\(x_2\)</span> 的相关程度。 <span class="math notranslate nohighlight">\(P(x_1,x_2)\)</span> 是 <span class="math notranslate nohighlight">\(x_1\)</span> 和 <span class="math notranslate nohighlight">\(x_2\)</span> 的<a class="reference external" href="https://en.wikipedia.org/wiki/Joint_probability_distribution#Density_function_or_mass_function">联合概率分布</a>。</p>
+<p>对于二元高斯分布，均值向量 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span> 是二维向量 <span class="math notranslate nohighlight">\(\left[\begin{array}{l}\mu_{1} \\ \mu_{2}\end{array}\right]\)</span>，其中 <span class="math notranslate nohighlight">\(μ_1\)</span> 和 <span class="math notranslate nohighlight">\(μ_2\)</span> 分别是随机变量 <span class="math notranslate nohighlight">\(x_1\)</span> 和 <span class="math notranslate nohighlight">\(x_2\)</span> 的均值。协方差矩阵为 <span class="math notranslate nohighlight">\(\left[\begin{array}{ll}\sigma_{11} &amp; \sigma_{12} \\ \sigma_{21} &amp; \sigma_{22}\end{array}\right]\)</span>，其中对角元素 <span class="math notranslate nohighlight">\(\sigma_{11}\)</span> 和 <span class="math notranslate nohighlight">\(\sigma_{22}\)</span> 分别是随机变量 <span class="math notranslate nohighlight">\(x_1\)</span> 和 <span class="math notranslate nohighlight">\(x_2\)</span> 各自的方差。非对角线项 <span class="math notranslate nohighlight">\(\sigma_{12}\)</span> 和 <span class="math notranslate nohighlight">\(\sigma_{21}\)</span> 表示 <span class="math notranslate nohighlight">\(x_1\)</span> 和 <span class="math notranslate nohighlight">\(x_2\)</span> 之间的相关性。</p>
+<p>基于上述前提，二元高斯分布可以形式化地表示为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\left[\begin{array}{l}
+x_{1} \\
+x_{2}
+\end{array}\right] \sim \mathcal{N}\left(\left[\begin{array}{l}
+\mu_{1} \\
+\mu_{2}
+\end{array}\right],\left[\begin{array}{ll}
+\sigma_{11} &amp; \sigma_{12} \\
+\sigma_{21} &amp; \sigma_{22}
+\end{array}\right]\right) \sim \mathcal{N}(\mu, \Sigma)
+\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+
+<span class="c1"># Our 2-dimensional distribution will be over variables X and Y</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+
+<span class="c1"># Mean vector and covariance matrix</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">])</span>
+<span class="n">Sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="mf">1.</span> <span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span>  <span class="mf">1.</span><span class="p">]])</span>
+
+<span class="c1"># Pack X and Y into a single 3-dimensional array</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span><span class="p">,))</span>
+<span class="n">pos</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span>
+<span class="n">pos</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Y</span>
+
+<span class="k">def</span> <span class="nf">multivariate_gaussian</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the multivariate Gaussian distribution on array pos.</span>
+
+<span class="sd">    pos is an array constructed by packing the meshed arrays of variables</span>
+<span class="sd">    x_1, x_2, x_3, ..., x_k into its _last_ dimension.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">mu</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">Sigma_det</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">Sigma</span><span class="p">)</span>
+    <span class="n">Sigma_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">Sigma</span><span class="p">)</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="n">n</span> <span class="o">*</span> <span class="n">Sigma_det</span><span class="p">)</span>
+    <span class="c1"># This einsum call calculates (x-mu)T.Sigma-1.(x-mu) in a vectorized</span>
+    <span class="c1"># way across all the input variables.</span>
+    <span class="n">fac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;...k,kl,...l-&gt;...&#39;</span><span class="p">,</span> <span class="n">pos</span><span class="o">-</span><span class="n">mu</span><span class="p">,</span> <span class="n">Sigma_inv</span><span class="p">,</span> <span class="n">pos</span><span class="o">-</span><span class="n">mu</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">fac</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">N</span>
+
+<span class="c1"># The distribution on the variables X, Y packed into pos.</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">multivariate_gaussian</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">)</span>
+
+<span class="c1"># Create a surface plot and projected filled contour plot under it.</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">cstride</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">)</span>
+
+<span class="n">cset</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">zdir</span><span class="o">=</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="n">offset</span><span class="o">=-</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">)</span>
+
+<span class="c1"># Adjust the limits, ticks and view angle</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">view_init</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x_1$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x_2$&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$P(x_1, x_2)$&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;mean, cov = [0., 1.], [(1., 0.8), (0.8, 1.)]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;2d_gaussian3D_0.8.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2017/2438433875.py:43: MatplotlibDeprecationWarning: Calling gca() with keyword arguments was deprecated in Matplotlib 3.4. Starting two minor releases later, gca() will take no keyword arguments. The gca() function should only be used to get the current axes, or if no axes exist, create new axes with default keyword arguments. To create a new axes with non-default arguments, use plt.axes() or plt.subplot().
+  ax = fig.gca(projection=&#39;3d&#39;)
+</pre></div>
+</div>
+<img alt="_images/Append-03-GaussianProcessTutorial_01_27_1.png" src="_images/Append-03-GaussianProcessTutorial_01_27_1.png" />
+</div>
+</div>
+<p>图 5(a) 具有高度的 3-d 钟形曲面，高度代表概率密度</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="n">mean</span><span class="p">,</span> <span class="n">cov</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span> <span class="p">[(</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.6</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x1&quot;</span><span class="p">,</span> <span class="s2">&quot;x2&quot;</span><span class="p">])</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="s2">&quot;x1&quot;</span><span class="p">,</span> <span class="s2">&quot;x2&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;kde&quot;</span><span class="p">)</span>
+
+<span class="c1">#(sns.jointplot(&quot;x1&quot;, &quot;x2&quot;, data=df).plot_joint(sns.kdeplot))</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">plot_joint</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">)</span>
+
+<span class="c1">#g.ax_joint.collections[0].set_alpha(0)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">set_axis_labels</span><span class="p">(</span><span class="s2">&quot;$x1$&quot;</span><span class="p">,</span> <span class="s2">&quot;$x2$&quot;</span><span class="p">);</span>
+
+<span class="c1">#g.ax_joint.legend_.remove()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variables as keyword args: x, y. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="_images/Append-03-GaussianProcessTutorial_01_29_1.png" src="_images/Append-03-GaussianProcessTutorial_01_29_1.png" />
+</div>
+</div>
+<p>图 5(b) 二元高斯分布的平面投影，椭圆轮廓投影显示随机变量 <span class="math notranslate nohighlight">\(x_1\)</span> 和 <span class="math notranslate nohighlight">\(x_2\)</span> 的样本点之间的相关关系</p>
+<p>对于回归任务而言，除了上述联合概率分布 <span class="math notranslate nohighlight">\(P\)</span> 外，我们更需要条件概率分布，如图 5 所示，在三维钟形曲面上切开一个切片，得到图 6 所示的条件概率分布 <span class="math notranslate nohighlight">\(P(x_1|x_2)\)</span>。此外，根据多元高斯分布理论，该条件分布也是高斯分布[11]。</p>
+<div id="image-table">
+    <table>
+	    <tr>
+    	    <td style="padding:10px">
+        	    <img src="https://github.com/jwangjie/Gaussian-Process-be-comfortable-using-it/blob/master/img/2d_gaussian_conditional3D.png?raw=1" width="400"/>
+            </td>
+            <td style="padding:10px">
+            	<img src="https://github.com/jwangjie/Gaussian-Process-be-comfortable-using-it/blob/master/img/2d_gaussian_conditional.png?raw=1" width="300"/>
+            </td>
+        </tr>
+    </table>
+</div> 
+<p>图 6 二元高斯分布的条件概率分布</p>
+<p>对于 <span class="math notranslate nohighlight">\(N\)</span> 维高斯分布，不同之处仅在于：协方差矩阵 <span class="math notranslate nohighlight">\(\Sigma\)</span> 是 <span class="math notranslate nohighlight">\(N×N\)</span> 的，并且其第 <span class="math notranslate nohighlight">\((i,j)\)</span> 个维度之间的相关性 <span class="math notranslate nohighlight">\(\Sigma_{ij}=cov(y_i,y_j)\)</span>， 协方差矩阵 <span class="math notranslate nohighlight">\(\Sigma\)</span> 是一个对称矩阵，保存了所有维度随机变量之间的两两协方差。</p>
+<p>有关多元高斯分布的更多可视化示例，可以参见<a class="reference external" href="https://www.cs.toronto.edu/~guerzhoy/411/lec/W08/MoG.html">Multivariante Gaussians and Mixtures of Gaussians (MoG)</a> 。</p>
+</div>
+<div class="section" id="id5">
+<h3>2.3 核函数<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>根据前述分析（见图 4）， 我们希望高斯过程分布的函数样本足够平滑，解决办法就是为相邻的随机变量定义合适的协方差关系，而协方差函数是定义协方差关系的有力工具。在高斯过程回归中，协方差函数是唯一能够反映我们所建模函数形式的先验知识。在回归任务中，当两个输入彼此接近时，函数的输出值也应该相似。</p>
+<p>一种可能的方程形式是点积 <span class="math notranslate nohighlight">\(A \cdot B=\|A\|\|B\| \cos \theta\)</span>，其中 <span class="math notranslate nohighlight">\(\theta\)</span> 表示两个输入向量的夹角。 两个输入向量越相似，则它们点积的输出值越高。</p>
+<p>当一个算法仅根据输入空间中的内积 <span class="math notranslate nohighlight">\(&lt;x,x'&gt;\)</span> 即可定义时，则通过某个函数 <span class="math notranslate nohighlight">\(k(x,x')\)</span> 对内积 <span class="math notranslate nohighlight">\(&lt;x,x'&gt;\)</span> 进行替换，就可以将该算法转换到特征空间中，进而在特征空间中使问题得到简化和解决。此时称函数 <span class="math notranslate nohighlight">\(k(\bullet,\bullet)\)</span> 为核函数 [1]。最广泛使用的核函数（或协方差函数）是平方指数核函数。它是高斯过程事实上的默认内核，因为其普遍性质可以对大多数你需要的函数进行积分，而且其先验中的每个函数都有无限多导数。平方指数核函数也被称为径向基函数 (RBF) 或高斯核函数，其不含超参数的简化定义为：</p>
+<div class="math notranslate nohighlight">
+\[
+cov(x_i, x_j)=\exp\left(-~\frac{(x_i-x_j)^2}{2}\right)
+\]</div>
+<p>在 <code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">4(b)</span></code> 中，我们曾经绘制了 20 个独立高斯向量（各向量由随机抽样的 10 个样本构成），并通过连接相邻向量间样本点的方式，构造了 10 条折线。此处，我们换一种做法，不再从 20 个独立高斯变量中分别抽取各自的 10 个样本， 而是如 <code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">7(a)</span></code> 所示，在一个协方差矩阵为单位矩阵的 20 维高斯分布中抽取 10 个样本。由于不同维度之间相关性为 0， 即不同高斯随机变量之间没有相关性，所以其与图 4(b) 相同，也显得非常杂乱。但当使用径向基函数作为协方差函数时，则可以得到<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">7(b)</span></code> 所示的平滑曲线。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">20</span> 
+<span class="n">m</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="n">f_prior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+
+<span class="c1">#plt.plot(Xshow, f_prior, &#39;-o&#39;)</span>
+<span class="n">Xshow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># n number test points in the range of (0, 1)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Xshow</span><span class="p">,</span> <span class="n">f_prior</span><span class="p">,</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+<span class="c1"># plt.title(&#39;10 samples of the 20-D gaussian prior&#39;)</span>
+<span class="c1"># plt.show()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;20d_gaussian_prior&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Append-03-GaussianProcessTutorial_01_37_0.png" src="_images/Append-03-GaussianProcessTutorial_01_37_0.png" />
+</div>
+</div>
+<p>图 7a 采用单位协方差矩阵抽取的 10 组样本，每组样本构成一个可能的函数，由于不同维度之间相关性为 0，所以函数曲线依然显得很杂乱</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the kernel</span>
+<span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">sqdist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">b</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="c1"># np.sum( ,axis=1) means adding all elements columnly; .reshap(-1, 1) add one dimension to make (n,) become (n,1)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">.5</span> <span class="o">*</span> <span class="n">sqdist</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">20</span>  
+<span class="n">m</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">Xshow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># n number test points in the range of (0, 1)</span>
+
+<span class="n">K_</span> <span class="o">=</span> <span class="n">kernel</span><span class="p">(</span><span class="n">Xshow</span><span class="p">,</span> <span class="n">Xshow</span><span class="p">)</span>                  <span class="c1"># k(x_star, x_star)        </span>
+
+<span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="n">f_prior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">K_</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+
+<span class="n">Xshow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># n number test points in the range of (0, 1)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Xshow</span><span class="p">,</span> <span class="n">f_prior</span><span class="p">,</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+<span class="c1"># plt.title(&#39;10 samples of the 20-D gaussian kernelized prior&#39;)</span>
+<span class="c1"># plt.show()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;20d_gaussian_kernel_prior&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Append-03-GaussianProcessTutorial_01_40_0.png" src="_images/Append-03-GaussianProcessTutorial_01_40_0.png" />
+</div>
+</div>
+<p>图 7b 采用径向基函数作为协方差函数抽取的 10 组样本，由于不同维度之间设置了相关关系，使得函数曲线显得较为平滑</p>
+<p>图 7 表明，通过添加协方差函数，我们可以获得更平滑的线条，使其看起来更像函数的样子了。因此，进一步考虑增加高斯多元分布的维度就显得很自然了。此处的维数是指多元高斯分布中随机变量的个数，所以当多元高斯分布的维数变大时，兴趣区域内就会被更多点填满，而当维度变为无穷大时，任何可能的输入就都能找到一个点来代表。</p>
+<p>通过使用无限维的多元高斯分布，理论上可以拟合具有无穷多参数的任意复杂函数，并在兴趣区域内的任何地方执行预测任务。图 8 绘制了一个 200 维高斯分布的 200 个样本，以感性认识具有无穷多参数的函数（意即样本数量可以有无穷个，而我们仅抽取了其中 200 个）。这些函数被称为<code class="docutils literal notranslate"><span class="pre">核化先验函数</span></code>，因为此时尚未引入样本点。所有抽取的函数样本都是在引入任何样本点之前，由结合了核函数的多元高斯分布作为先验随机生成的。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">200</span>         
+<span class="n">m</span> <span class="o">=</span> <span class="mi">200</span>
+
+<span class="n">Xshow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>   
+
+<span class="n">K_</span> <span class="o">=</span> <span class="n">kernel</span><span class="p">(</span><span class="n">Xshow</span><span class="p">,</span> <span class="n">Xshow</span><span class="p">)</span>                    <span class="c1"># k(x_star, x_star)        </span>
+
+<span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+<span class="n">f_prior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">K_</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+<span class="c1">#plt.plot(Xshow, f_prior, &#39;-o&#39;)</span>
+<span class="n">Xshow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># n number test points in the range of (0, 1)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Xshow</span><span class="p">,</span> <span class="n">f_prior</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markeredgewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;200 samples of the 200-D gaussian kernelized prior&#39;</span><span class="p">)</span>
+<span class="c1">#plt.axis([0, 1, -3, 3])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#plt.savefig(&#39;priorT.png&#39;, bbox_inches=&#39;tight&#39;, dpi=300)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 3600x2400 with 0 Axes&gt;
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2017</span><span class="o">/</span><span class="mf">1931245098.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;200 samples of the 200-D gaussian kernelized prior&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="c1">#plt.axis([0, 1, -3, 3])</span>
+<span class="ne">---&gt; </span><span class="mi">23</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="c1">#plt.savefig(&#39;priorT.png&#39;, bbox_inches=&#39;tight&#39;, dpi=300)</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/pyplot.py</span> in <span class="ni">show</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">366</span>     <span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">367</span><span class="sd">     _warn_if_gui_out_of_main_thread()</span>
+<span class="ne">--&gt; </span><span class="mi">368</span><span class="sd">     return _backend_mod.show(*args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">369</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">370</span><span class="sd"> </span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib_inline/backend_inline.py</span> in <span class="ni">show</span><span class="nt">(close, block)</span>
+<span class="g g-Whitespace">     </span><span class="mi">39</span><span class="sd">     try:</span>
+<span class="g g-Whitespace">     </span><span class="mi">40</span><span class="sd">         for figure_manager in Gcf.get_all_fig_managers():</span>
+<span class="ne">---&gt; </span><span class="mi">41</span><span class="sd">             display(</span>
+<span class="g g-Whitespace">     </span><span class="mi">42</span><span class="sd">                 figure_manager.canvas.figure,</span>
+<span class="g g-Whitespace">     </span><span class="mi">43</span><span class="sd">                 metadata=_fetch_figure_metadata(figure_manager.canvas.figure)</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/IPython/core/display.py</span> in <span class="ni">display</span><span class="nt">(include, exclude, metadata, transient, display_id, *objs, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">318</span><span class="sd">             publish_display_data(data=obj, metadata=metadata, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">319</span><span class="sd">         else:</span>
+<span class="ne">--&gt; </span><span class="mi">320</span><span class="sd">             format_dict, md_dict = format(obj, include=include, exclude=exclude)</span>
+<span class="g g-Whitespace">    </span><span class="mi">321</span><span class="sd">             if not format_dict:</span>
+<span class="g g-Whitespace">    </span><span class="mi">322</span><span class="sd">                 # nothing to display (e.g. _ipython_display_ took over)</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/IPython/core/formatters.py</span> in <span class="ni">format</span><span class="nt">(self, obj, include, exclude)</span>
+<span class="g g-Whitespace">    </span><span class="mi">178</span><span class="sd">             md = None</span>
+<span class="g g-Whitespace">    </span><span class="mi">179</span><span class="sd">             try:</span>
+<span class="ne">--&gt; </span><span class="mi">180</span><span class="sd">                 data = formatter(obj)</span>
+<span class="g g-Whitespace">    </span><span class="mi">181</span><span class="sd">             except:</span>
+<span class="g g-Whitespace">    </span><span class="mi">182</span><span class="sd">                 # FIXME: log the exception</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/decorator.py</span> in <span class="ni">fun</span><span class="nt">(*args, **kw)</span>
+<span class="g g-Whitespace">    </span><span class="mi">230</span><span class="sd">             if not kwsyntax:</span>
+<span class="g g-Whitespace">    </span><span class="mi">231</span><span class="sd">                 args, kw = fix(args, kw, sig)</span>
+<span class="ne">--&gt; </span><span class="mi">232</span><span class="sd">             return caller(func, *(extras + args), **kw)</span>
+<span class="g g-Whitespace">    </span><span class="mi">233</span><span class="sd">     fun.__name__ = func.__name__</span>
+<span class="g g-Whitespace">    </span><span class="mi">234</span><span class="sd">     fun.__doc__ = func.__doc__</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/IPython/core/formatters.py</span> in <span class="ni">catch_format_error</span><span class="nt">(method, self, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">222</span><span class="sd">     &quot;&quot;&quot;</span><span class="n">show</span> <span class="n">traceback</span> <span class="n">on</span> <span class="n">failed</span> <span class="nb">format</span> <span class="n">call</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">223</span><span class="s2">     try:</span>
+<span class="ne">--&gt; </span><span class="mi">224</span><span class="s2">         r = method(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">225</span><span class="s2">     except NotImplementedError:</span>
+<span class="g g-Whitespace">    </span><span class="mi">226</span><span class="s2">         # don&#39;t warn on NotImplementedErrors</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/IPython/core/formatters.py</span> in <span class="ni">__call__</span><span class="nt">(self, obj)</span>
+<span class="g g-Whitespace">    </span><span class="mi">339</span><span class="s2">                 pass</span>
+<span class="g g-Whitespace">    </span><span class="mi">340</span><span class="s2">             else:</span>
+<span class="ne">--&gt; </span><span class="mi">341</span><span class="s2">                 return printer(obj)</span>
+<span class="g g-Whitespace">    </span><span class="mi">342</span><span class="s2">             # Finally look for special method names</span>
+<span class="g g-Whitespace">    </span><span class="mi">343</span><span class="s2">             method = get_real_method(obj, self.print_method)</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/IPython/core/pylabtools.py</span> in <span class="ni">print_figure</span><span class="nt">(fig, fmt, bbox_inches, base64, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">149</span><span class="s2">         FigureCanvasBase(fig)</span>
+<span class="g g-Whitespace">    </span><span class="mi">150</span><span class="s2"> </span>
+<span class="ne">--&gt; </span><span class="mi">151</span><span class="s2">     fig.canvas.print_figure(bytes_io, **kw)</span>
+<span class="g g-Whitespace">    </span><span class="mi">152</span><span class="s2">     data = bytes_io.getvalue()</span>
+<span class="g g-Whitespace">    </span><span class="mi">153</span><span class="s2">     if fmt == &#39;svg&#39;:</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/backend_bases.py</span> in <span class="ni">print_figure</span><span class="nt">(self, filename, dpi, facecolor, edgecolor, orientation, format, bbox_inches, pad_inches, bbox_extra_artists, backend, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2317</span><span class="s2">                 # force the figure dpi to 72), so we need to set it again here.</span>
+<span class="g g-Whitespace">   </span><span class="mi">2318</span><span class="s2">                 with cbook._setattr_cm(self.figure, dpi=dpi):</span>
+<span class="ne">-&gt; </span><span class="mi">2319</span><span class="s2">                     result = print_method(</span>
+<span class="g g-Whitespace">   </span><span class="mi">2320</span><span class="s2">                         filename,</span>
+<span class="g g-Whitespace">   </span><span class="mi">2321</span><span class="s2">                         facecolor=facecolor,</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/backend_bases.py</span> in <span class="ni">wrapper</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1646</span><span class="s2">             kwargs.pop(arg)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1647</span><span class="s2"> </span>
+<span class="ne">-&gt; </span><span class="mi">1648</span><span class="s2">         return func(*args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1649</span><span class="s2"> </span>
+<span class="g g-Whitespace">   </span><span class="mi">1650</span><span class="s2">     return wrapper</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/_api/deprecation.py</span> in <span class="ni">wrapper</span><span class="nt">(*inner_args, **inner_kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">410</span><span class="s2">                          else deprecation_addendum,</span>
+<span class="g g-Whitespace">    </span><span class="mi">411</span><span class="s2">                 **kwargs)</span>
+<span class="ne">--&gt; </span><span class="mi">412</span><span class="s2">         return func(*inner_args, **inner_kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">413</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">414</span><span class="s2">     DECORATORS[wrapper] = decorator</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/backends/backend_agg.py</span> in <span class="ni">print_png</span><span class="nt">(self, filename_or_obj, metadata, pil_kwargs, *args)</span>
+<span class="g g-Whitespace">    </span><span class="mi">538</span><span class="s2">             *metadata*, including the default &#39;Software&#39; key.</span>
+<span class="g g-Whitespace">    </span><span class="mi">539</span><span class="s2">         &quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">540</span>         <span class="n">FigureCanvasAgg</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">541</span>         <span class="n">mpl</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">542</span>             <span class="n">filename_or_obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer_rgba</span><span class="p">(),</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;upper&quot;</span><span class="p">,</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/backends/backend_agg.py</span> in <span class="ni">draw</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">434</span>              <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toolbar</span><span class="o">.</span><span class="n">_wait_cursor_for_draw_cm</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">toolbar</span>
+<span class="g g-Whitespace">    </span><span class="mi">435</span>               <span class="k">else</span> <span class="n">nullcontext</span><span class="p">()):</span>
+<span class="ne">--&gt; </span><span class="mi">436</span>             <span class="bp">self</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">renderer</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">437</span>             <span class="c1"># A GUI class may be need to update a window using this draw, so</span>
+<span class="g g-Whitespace">    </span><span class="mi">438</span>             <span class="c1"># don&#39;t forget to call the superclass.</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/artist.py</span> in <span class="ni">draw_wrapper</span><span class="nt">(artist, renderer, *args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">71</span>     <span class="nd">@wraps</span><span class="p">(</span><span class="n">draw</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">72</span>     <span class="k">def</span> <span class="nf">draw_wrapper</span><span class="p">(</span><span class="n">artist</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">73</span>         <span class="n">result</span> <span class="o">=</span> <span class="n">draw</span><span class="p">(</span><span class="n">artist</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">74</span>         <span class="k">if</span> <span class="n">renderer</span><span class="o">.</span><span class="n">_rasterizing</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">75</span>             <span class="n">renderer</span><span class="o">.</span><span class="n">stop_rasterizing</span><span class="p">()</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/artist.py</span> in <span class="ni">draw_wrapper</span><span class="nt">(artist, renderer)</span>
+<span class="g g-Whitespace">     </span><span class="mi">48</span>                 <span class="n">renderer</span><span class="o">.</span><span class="n">start_filter</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">49</span> 
+<span class="ne">---&gt; </span><span class="mi">50</span>             <span class="k">return</span> <span class="n">draw</span><span class="p">(</span><span class="n">artist</span><span class="p">,</span> <span class="n">renderer</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">51</span>         <span class="k">finally</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">52</span>             <span class="k">if</span> <span class="n">artist</span><span class="o">.</span><span class="n">get_agg_filter</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/figure.py</span> in <span class="ni">draw</span><span class="nt">(self, renderer)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2808</span> 
+<span class="g g-Whitespace">   </span><span class="mi">2809</span>             <span class="bp">self</span><span class="o">.</span><span class="n">patch</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">renderer</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">2810</span>             <span class="n">mimage</span><span class="o">.</span><span class="n">_draw_list_compositing_images</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">2811</span>                 <span class="n">renderer</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">artists</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">suppressComposite</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2812</span> 
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/image.py</span> in <span class="ni">_draw_list_compositing_images</span><span class="nt">(renderer, parent, artists, suppress_composite)</span>
+<span class="g g-Whitespace">    </span><span class="mi">130</span>     <span class="k">if</span> <span class="n">not_composite</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">has_images</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">131</span>         <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">artists</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">132</span>             <span class="n">a</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">renderer</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">133</span>     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">134</span>         <span class="c1"># Composite any adjacent images together</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/artist.py</span> in <span class="ni">draw_wrapper</span><span class="nt">(artist, renderer)</span>
+<span class="g g-Whitespace">     </span><span class="mi">48</span>                 <span class="n">renderer</span><span class="o">.</span><span class="n">start_filter</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">49</span> 
+<span class="ne">---&gt; </span><span class="mi">50</span>             <span class="k">return</span> <span class="n">draw</span><span class="p">(</span><span class="n">artist</span><span class="p">,</span> <span class="n">renderer</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">51</span>         <span class="k">finally</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">52</span>             <span class="k">if</span> <span class="n">artist</span><span class="o">.</span><span class="n">get_agg_filter</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/axes/_base.py</span> in <span class="ni">draw</span><span class="nt">(self, renderer)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3080</span>             <span class="n">renderer</span><span class="o">.</span><span class="n">stop_rasterizing</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">3081</span> 
+<span class="ne">-&gt; </span><span class="mi">3082</span>         <span class="n">mimage</span><span class="o">.</span><span class="n">_draw_list_compositing_images</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">3083</span>             <span class="n">renderer</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">artists</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">suppressComposite</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">3084</span> 
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/image.py</span> in <span class="ni">_draw_list_compositing_images</span><span class="nt">(renderer, parent, artists, suppress_composite)</span>
+<span class="g g-Whitespace">    </span><span class="mi">130</span>     <span class="k">if</span> <span class="n">not_composite</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">has_images</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">131</span>         <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">artists</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">132</span>             <span class="n">a</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">renderer</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">133</span>     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">134</span>         <span class="c1"># Composite any adjacent images together</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/artist.py</span> in <span class="ni">draw_wrapper</span><span class="nt">(artist, renderer)</span>
+<span class="g g-Whitespace">     </span><span class="mi">48</span>                 <span class="n">renderer</span><span class="o">.</span><span class="n">start_filter</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">49</span> 
+<span class="ne">---&gt; </span><span class="mi">50</span>             <span class="k">return</span> <span class="n">draw</span><span class="p">(</span><span class="n">artist</span><span class="p">,</span> <span class="n">renderer</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">51</span>         <span class="k">finally</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">52</span>             <span class="k">if</span> <span class="n">artist</span><span class="o">.</span><span class="n">get_agg_filter</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/lines.py</span> in <span class="ni">draw</span><span class="nt">(self, renderer)</span>
+<span class="g g-Whitespace">    </span><span class="mi">840</span>                     <span class="c1"># Don&#39;t scale for pixels, and don&#39;t stroke them</span>
+<span class="g g-Whitespace">    </span><span class="mi">841</span>                     <span class="n">marker_trans</span> <span class="o">=</span> <span class="n">marker_trans</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">842</span>                 <span class="n">renderer</span><span class="o">.</span><span class="n">draw_markers</span><span class="p">(</span><span class="n">gc</span><span class="p">,</span> <span class="n">marker_path</span><span class="p">,</span> <span class="n">marker_trans</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">843</span>                                       <span class="n">subsampled</span><span class="p">,</span> <span class="n">affine</span><span class="o">.</span><span class="n">frozen</span><span class="p">(),</span>
+<span class="g g-Whitespace">    </span><span class="mi">844</span>                                       <span class="n">fc_rgba</span><span class="p">)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+<p>图 8 从 200 维高斯分布中抽取的 200 个核化先验函数（即200条曲线）</p>
+<p>根据上图可知，当多元高斯分布推广到无限维时，我们可以在兴趣区内对所有可能的点进行采样。</p>
+<p>一个非常好的展示动画，分别展示了二个样本点和四个样本点时的协方差[10].</p>
+<img src="https://github.com/jwangjie/Gaussian-Process-be-comfortable-using-it/blob/master/img/2points_covariance.gif?raw=1" width="600"/>
+<img src="https://github.com/jwangjie/Gaussian-Process-be-comfortable-using-it/blob/master/img/4points_covariance.gif?raw=1" width="600"/></div>
+<hr class="docutils" />
+<div class="section" id="id6">
+<h3>2.4 非参数模型<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>本节解释参数和非参数模型的概念 [13]。</p>
+<p><strong>（1）参数模型</strong></p>
+<p>参数模型假设数据的分布可以用一组有限数量的参数进行建模。在回归任务中，给定一些数据点，我们想用新的 <span class="math notranslate nohighlight">\(x\)</span> 对函数 <span class="math notranslate nohighlight">\(y=f(x)\)</span> 的值进行预测。如果假设是线性回归模型，<span class="math notranslate nohighlight">\(y=θ_1+θ_2x\)</span>，则需要找到参数 <span class="math notranslate nohighlight">\(θ_1\)</span> 和 <span class="math notranslate nohighlight">\(θ_2\)</span> 来定义函数。在很多情况下，线性模型假设不成立，则需要一个参数更多的模型，比如多项式模型 <span class="math notranslate nohighlight">\(y=θ_1+θ_2x+θ_3x^2\)</span>。</p>
+<p>我们使用具有 <span class="math notranslate nohighlight">\(n\)</span> 个样本点的训练数据集 <span class="math notranslate nohighlight">\(D\)</span> （ <span class="math notranslate nohighlight">\(D= [(x_i,y_i)|i=1, . . . ,n] \)</span>） 来训练模型，即通过函数 <span class="math notranslate nohighlight">\(f(x)\)</span> 建立 <span class="math notranslate nohighlight">\(x\)</span> 到 <span class="math notranslate nohighlight">\(y\)</span> 的映射。在完成训练后，假设数据的所有信息都已经被参数所捕获，则预测可以独立于训练数据集 <span class="math notranslate nohighlight">\(D\)</span> 进行。这种情况可表示为 <span class="math notranslate nohighlight">\(P(f_∗|X_∗,`,D) =P(f_∗|X_∗,`)\)</span>，其中 <span class="math notranslate nohighlight">\(f_∗\)</span> 是在新的数据点 <span class="math notranslate nohighlight">\(X_∗\)</span> 上做出的预测。</p>
+<p>根据参数模型的定义可知，当使用参数模型作回归时，模型的复杂性（或灵活性）会受到参数数量的限制。</p>
+<p><strong>（2）非参数模型</strong></p>
+<p>如果模型的参数数量不固定，会随着样本数据集的大小而变化，则该模型是一个非参数模型。根据概念，非参数模型并非指模型没有参数，而是指模型的参数数量不固定，甚至可能是无限个参数。</p>
+<hr class="docutils" />
+<p>注意：为生成具有相关性的高斯分布样本，你可以先生成独立样本（即不相关），然后与矩阵 <span class="math notranslate nohighlight">\(L\)</span> 相乘， <span class="math notranslate nohighlight">\(LL^T = K\)</span>， 其中 <span class="math notranslate nohighlight">\(K\)</span> 是期望的协方差矩阵，而 <span class="math notranslate nohighlight">\(L\)</span> 则可以用 <span class="math notranslate nohighlight">\(K\)</span> 的 Cholesky 分解生成。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="mi">20</span>      
+<span class="n">m</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">Xshow</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># n number test points in the range of (0, 1)</span>
+
+<span class="n">K_</span> <span class="o">=</span> <span class="n">kernel</span><span class="p">(</span><span class="n">Xshow</span><span class="p">,</span> <span class="n">Xshow</span><span class="p">)</span>                
+
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">K_</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+
+
+<span class="n">f_prior</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">m</span><span class="p">)))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Xshow</span><span class="p">,</span> <span class="n">f_prior</span><span class="p">,</span> <span class="s1">&#39;-o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;10 samples of the 20-D gaussian kernelized prior&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="id7">
+<h2>3 高斯过程<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>在解释高斯过程之前，先快速回顾一下之前涵盖的基本概念。在回归任务中，在给定训练数据集 <span class="math notranslate nohighlight">\(D\)</span> 时，我们期望对函数 <span class="math notranslate nohighlight">\(f\)</span> 建模。传统的非线性回归方法通常会给出一个被认为最适合数据集的函数。然而，这样的函数可能不止一个。而在上一节中，我们看到，当多元高斯分布是无限维时，可以用无限数量的函数对任意点作出预测。根据先验假设，这些函数就是多元高斯分布。</p>
+<p>通俗的说，这些无穷多函数的先验分布就是多元高斯分布。先验分布表示在没有观测到任何数据的情况下，输入 <span class="math notranslate nohighlight">\(x\)</span> 后 <span class="math notranslate nohighlight">\(f\)</span> 的预期输出。实践中，当开始观测时，我们只保留适合观测数据点的函数，而并非无限数量的函数。于是就有了后验，也就是用观测数据更新的先验。当有新观测时，在将当前后验作为先验，并使用新观测的数据点来获得新的后验。</p>
+<p>这样，我们就有了高斯过程的定义： 高斯过程模型是能够拟合一组点的所有可能函数的概率分布。</p>
+<p>因为有了关于所有可能函数的概率分布，我们就可以计算均值来作为函数，计算方差来表明预测的可信度。关键点总结为：</p>
+<p>（1）函数（后验）随着新观测值更新；</p>
+<p>（2）高斯过程模型是可能函数的概率分布，并且函数的任何有限个样本服从联合高斯分布；</p>
+<p>（3）通过可能函数的后验分布计算得到的均值函数，才是最终用于预测的函数。</p>
+<p><em><strong>A Gaussian process is a probability distribution over possible functions that fit a set of points.</strong></em></p>
+<p>现在是时候描述标准的高斯过程模型了。所有参数定义均遵循经典教科书[1]。除了基本概念外，特别建议阅读[1]的附录 <code class="docutils literal notranslate"><span class="pre">A.1</span></code> 和 <code class="docutils literal notranslate"><span class="pre">A.2</span></code> 。由多元高斯模型建模的回归函数为：</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{f} \, \lvert\, \mathbf{X}) = \mathcal{N}(\mathbf{f} \, \lvert\, \boldsymbol\mu, \mathbf{K})
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\mathbf{X}=[x_1,...,x_n]\)</span>， <span class="math notranslate nohighlight">\(\mathbf{f} = [f(\mathbf{x}_1),...,f(\mathbf{x}_n)]\)</span>， <span class="math notranslate nohighlight">\(\boldsymbol\mu = [m(\mathbf{x}_1),...,m(\mathbf{x}_n)]\)</span> 且 <span class="math notranslate nohighlight">\(K_{ij} = \kappa(\mathbf{x}_i,\mathbf{x}_j)\)</span>。 <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> 为观测数据点，<span class="math notranslate nohighlight">\(m\)</span> 代表均值函数，<span class="math notranslate nohighlight">\(\kappa\)</span> 代表正定核函数。在没有观测数据的情况下，均值函数默认为 <span class="math notranslate nohighlight">\(m(\mathbf{X}) = 0\)</span> （因为数据通常会作归一化处理，均值为零）。高斯过程模型是函数的分布，其形状（平滑度）由 <span class="math notranslate nohighlight">\(\kappa\)</span> 定义。 因此如果点 <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span> 和 <span class="math notranslate nohighlight">\(\mathbf{x}_j\)</span> 被核认为相似，则两个点处的 <span class="math notranslate nohighlight">\(f(x_i)\)</span> 和 <span class="math notranslate nohighlight">\(f(x_j)\)</span> 函数的输出应该也相似。</p>
+<p>高斯过程模型进行回归的过程如<code class="docutils literal notranslate"><span class="pre">图</span> <span class="pre">9</span></code> 所示： 给定观测数据（红点）和由这些观测数据估计的平均函数 <span class="math notranslate nohighlight">\(\mathbf{f}\)</span>（蓝线），对于新的一些点 <span class="math notranslate nohighlight">\(\mathbf{X}_*\)</span>，我们的任务是预测 <span class="math notranslate nohighlight">\(f(\mathbf{X}_*)\)</span> 。</p>
+<img src="https://github.com/jwangjie/Gaussian-Process-be-comfortable-using-it/blob/master/img/mvn.png?raw=1" width="250"/> 
+<p>图9：高斯过程回归的说明性过程。红点为观测数据，蓝线表示观测数据点估计的均值函数，在新的蓝点处进行预测。</p>
+<p>如果进行预测呢？</p>
+<p>根据前述介绍，可以将 <span class="math notranslate nohighlight">\(\mathbf{f}\)</span> 和 <span class="math notranslate nohighlight">\(\mathbf{f}_*\)</span> 的联合分布建模为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+ \begin{pmatrix}\mathbf{f} \\ \mathbf{f}_*\end{pmatrix} \sim\mathcal{N}\left(\begin{pmatrix}m(\mathbf{X})\\ m(\mathbf{X}_*)\end{pmatrix}, \begin{pmatrix}\mathbf{K} &amp; \mathbf{K}_* \\ \mathbf{K}_*^T &amp; \mathbf{K}_{**}\end{pmatrix}\right) 
+\end{split}\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\mathbf{K}=\kappa(\mathbf{X}, \mathbf{X})\)</span>, <span class="math notranslate nohighlight">\(\mathbf{K}_* = \kappa(\mathbf{X}, \mathbf{X}_*)\)</span> 且 <span class="math notranslate nohighlight">\(\mathbf{K}_{**}=\kappa(\mathbf{X}_*, \mathbf{X}_*)\)</span>。此外， <span class="math notranslate nohighlight">\(\begin{pmatrix}m(\mathbf{X})\\ m(\mathbf{X}_*)\end{pmatrix} = \mathbf{0}\)</span>。</p>
+<p>这是在 <span class="math notranslate nohighlight">\(\mathbf{f}\)</span> 和 <span class="math notranslate nohighlight">\(\mathbf{f}_*\)</span> 上的联合概率分布公式 <span class="math notranslate nohighlight">\(p(\mathbf{f}, \mathbf{f}_* \, \vert \, \mathbf{X}, \mathbf{X}_*)\)</span>, 但是，回归任务只需要获得 <span class="math notranslate nohighlight">\(\mathbf{f}_*\)</span> 上的条件概率分布 <span class="math notranslate nohighlight">\(p(\mathbf{f}_* \, \vert \, \mathbf{f}, \mathbf{X}, \mathbf{X}_*)\)</span> 即可。从联合概率分布 <span class="math notranslate nohighlight">\(p(\mathbf{f}, \mathbf{f}_* \, \vert \, \mathbf{X}, \mathbf{X}_*)\)</span> 推导条件概率分布 <span class="math notranslate nohighlight">\(p(\mathbf{f}_* \, \vert \, \mathbf{f}, \mathbf{X}, \mathbf{X}_*)\)</span> 可以使用<strong>多元高斯分布的边缘概率和条件概率公式</strong>[5]。</p>
+<hr class="docutils" />
+<p>定理：多元高斯分布的边缘和条件概率公式</p>
+<p>假设 <span class="math notranslate nohighlight">\(X=\left(x_{1}, x_{2}\right)\)</span> 为联合高斯分布，其参数为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mu=\left(\begin{array}{l}
+\mu_{1} \\
+\mu_{2}
+\end{array}\right), \boldsymbol{\Sigma}=\left(\begin{array}{cc}
+\Sigma_{11} &amp; \Sigma_{12} \\
+\Sigma_{21} &amp; \Sigma_{22}
+\end{array}\right), \Lambda=\boldsymbol{\Sigma}^{-1}=\left(\begin{array}{ll}
+\boldsymbol{\Lambda}_{11} &amp; \boldsymbol{\Lambda}_{12} \\
+\boldsymbol{\Lambda}_{21} &amp; \boldsymbol{A}_{22}
+\end{array}\right)
+\end{split}\]</div>
+<p>则 <span class="math notranslate nohighlight">\(x_1\)</span> 和 <span class="math notranslate nohighlight">\(x_2\)</span> 的边缘分布为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+&amp;p\left(x_{1}\right)=\mathcal{N}\left(x_{1} \mid \mu_{1}, \boldsymbol{\Sigma}_{11}\right) \\
+&amp;p\left(\boldsymbol{x}_{2}\right)=\mathcal{N}\left(x_{2} \mid \boldsymbol{\mu}_{2}, \boldsymbol{\Sigma}_{22}\right)
+\end{aligned}
+\end{split}\]</div>
+<p>并且后验条件概率为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+p\left(x_{1} \mid x_{2}\right) &amp;=\mathcal{N}\left(x_{1} \mid \mu_{1 \mid 2}, \Sigma_{1 \mid 2}\right) \\
+\mu_{1 \mid 2} &amp;=\mu_{1}+\Sigma_{12} \Sigma_{22}^{-1}\left(x_{2}-\mu_{2}\right) \\
+&amp;=\mu_{1}-\Lambda_{11}^{-1} \Lambda_{12}\left(x_{2}-\mu_{2}\right) \\
+&amp;=\Sigma_{1 \mid 2}\left(\Lambda_{11} \mu_{1}-\Lambda_{12}\left(x_{2}-\mu_{2}\right)\right) \\
+\Sigma_{1 \mid 2} &amp;=\Sigma_{11}-\Sigma_{12} \Sigma_{22}^{-1} \Sigma_{21}=\Lambda_{11}^{-1}
+\end{aligned}
+\end{split}\]</div>
+<hr class="docutils" />
+<p>由此，我们可以得到如下条件公式 [1] ：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{f}_* \, \vert \, \mathbf{f}, \mathbf{X}, \mathbf{X}_* \sim \mathcal{N} (\mathbf{K}_*^T \mathbf{K}^{-1} \mathbf{f}, \: \mathbf{K}_{**}-\mathbf{K}_*^T \mathbf{K}^{-1} \mathbf{K}_*) 
+\]</div>
+<p>在更现实的情况下，我们无法访问真正的函数值 <span class="math notranslate nohighlight">\(f(x)\)</span>，但可以获得其含噪声版本 <span class="math notranslate nohighlight">\(y = f(x) + \epsilon\)</span>。假设存在具有方差为 <span class="math notranslate nohighlight">\(\sigma_n^2\)</span> 的加性独立同分布高斯噪声，则带噪声观测的先验变为 <span class="math notranslate nohighlight">\(cov(y) = \mathbf{K} + \sigma_n^2\mathbf{I}\)</span> 。观测值与新测试点的函数值的联合分布变为：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{pmatrix}\mathbf{y} \\ \mathbf{f}_*\end{pmatrix} \sim\mathcal{N}\left(\mathbf{0}, \begin{pmatrix}\mathbf{K} + \sigma_n^2\mathbf{I} &amp; \mathbf{K}_* \\ \mathbf{K}_*^T &amp; \mathbf{K}_{**}\end{pmatrix}\right) 
+\end{split}\]</div>
+<p>通过使用多元高斯分布的条件分布公式，可以得到高斯过程回归的预测方程为：</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{\bar{f}_*} \, \vert \, \mathbf{X}, \mathbf{y}, \mathbf{X}_* \sim \mathcal{N} \left(\mathbf{\bar{f}_*}, cov(\mathbf{f}_*)\right) 
+\]</div>
+<p>其中：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{\bar{f}_*} \overset{\Delta}{=} \mathbb{E} [\mathbf{\bar{f}_*} \, \vert \, \mathbf{X}, \mathbf{y}, \mathbf{X}_*] \\= \mathbf{K}_*^T [\mathbf{K} + \sigma_y^2\mathbf{I}]^{-1} \mathbf{y} 
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[
+cov(\mathbf{f}_*) = \mathbf{K}_{**} - \mathbf{K}_*^T [\mathbf{K} + \sigma_y^2\mathbf{I}]^{-1} \mathbf{K}_* 
+\]</div>
+<p>分析方差函数 <span class="math notranslate nohighlight">\(cov(f_∗)\)</span> ，可以注意到方差不依赖于观察到的输出 <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>，而只依赖于输入 <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> 和 <span class="math notranslate nohighlight">\(\mathbf{X}_∗\)</span>。这是高斯分布的一个性质[13]。</p>
+</div>
+<div class="section" id="id8">
+<h2>4 简单的实现案例<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>本节展示一个标准的高斯过程回归实现。该示例遵循[11]中第 19 页的算法：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+L &amp;=\operatorname{cholesky}\left(K+\sigma_{n}^{2} I\right) \\
+\alpha &amp;=L^{\top} \backslash(L \backslash \mathbf{y}) \\
+\bar{f}_{*} &amp;=\mathbf{k}_{*}^{\top} \boldsymbol{\alpha} \\
+\mathbf{v} &amp;=L \backslash \mathbf{k}_{*} \\
+\mathbb{V}\left[f_{*}\right] &amp;=k\left(\mathbf{x}_{*}, \mathbf{x}_{*}\right)-\mathbf{v}^{\top} \mathbf{v} . \\
+\log p(\mathbf{y} \mid X) &amp;=-\frac{1}{2} \mathbf{y}^{\top}\left(K+\sigma_{n}^{2} I\right)^{-1} \mathbf{y}-\frac{1}{2} \log \operatorname{det}\left(K+\sigma_{n}^{2} I\right)-\frac{n}{2} \log 2 \pi \\
+\hline
+\end{aligned}
+\end{split}\]</div>
+<p>算法输入是 <span class="math notranslate nohighlight">\(X\)</span>（样本输入）、<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>（样本输出）、<span class="math notranslate nohighlight">\(k\)</span>（协方差函数）、<span class="math notranslate nohighlight">\(\sigma_{n}^{2}\)</span>（加性噪声的水平）和 <span class="math notranslate nohighlight">\(\mathbf{x}_∗\)</span>（测试输入）。 算法输出是̄ <span class="math notranslate nohighlight">\(f_∗\)</span>（平均值）、<span class="math notranslate nohighlight">\(\mathcal{V}[f_∗]\)</span>（方差）和 <span class="math notranslate nohighlight">\(logp（\mathbf{y}|X）\)</span>（对数边缘似然）。</p>
+<p>如图 10 所示。我们在感兴趣的 [-5, 5] 区间内进行了回归。观察到的数据点（训练数据集）是从 -5 和 5 之间的均匀分布中生成的。这意味着在给定区间 [-5,5] 内的任意一个点的值都有可能被均匀抽取。这些函数将在 -5 和 5 之间的 <code class="docutils literal notranslate"><span class="pre">n</span></code> 个均匀间隔点处进行评估。这样做是为了在感兴趣的区域 [-5, 5] 中显示用于回归的连续函数。这是一个做高斯过程回归的简单例子，它假定高斯过程先验均值为零。此处代码大量借鉴了 Nando de Freitas 博士的<a class="reference external" href="https://youtu.be/4vGiHC35j9s">非线性回归高斯过程</a> 。回归函数由高斯过程回归模型估计的平均值组成，图中还会绘制了 <span class="math notranslate nohighlight">\(3μ\)</span> 方差内的 20 个后验均值函数的样本。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is the true unknown function we are trying to approximate</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">0.9</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="c1">#f = lambda x: (0.25*(x**2)).flatten()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the kernel</span>
+<span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">kernelParameter_l</span> <span class="o">=</span> <span class="mf">0.1</span>
+    <span class="n">kernelParameter_sigma</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">sqdist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">b</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="c1"># np.sum( ,axis=1) means adding all elements columnly; .reshap(-1, 1) add one dimension to make (n,) become (n,1)</span>
+    <span class="k">return</span> <span class="n">kernelParameter_sigma</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">.5</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">kernelParameter_l</span><span class="p">)</span> <span class="o">*</span> <span class="n">sqdist</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>我们使用通用的平方指数核，也称径向基函数或高斯核：</p>
+<div class="math notranslate nohighlight">
+\[
+\kappa(\mathbf{x}_i,\mathbf{x}_j) = \sigma_f^2 \exp(-\frac{1}{2l^2}
+  (\mathbf{x}_i - \mathbf{x}_j)^T
+  (\mathbf{x}_i - \mathbf{x}_j))
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\sigma_f\)</span> 和 <span class="math notranslate nohighlight">\(l\)</span> 为超参数。有关超参数的更多信息，可在代码后找到。</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sample some input points and noisy versions of the function evaluated at</span>
+<span class="c1"># these points. </span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">20</span>         <span class="c1"># number of existing observation points (training points).</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">200</span>        <span class="c1"># number of test points.</span>
+<span class="n">s</span> <span class="o">=</span> <span class="mf">0.00005</span>    <span class="c1"># noise variance.</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>     <span class="c1"># N training points </span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="n">s</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+
+<span class="n">K</span> <span class="o">=</span> <span class="n">kernel</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">K</span> <span class="o">+</span> <span class="n">s</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>     <span class="c1"># line 1 </span>
+
+<span class="c1"># points we&#39;re going to make predictions at.</span>
+<span class="n">Xtest</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># compute the mean at our test points.</span>
+<span class="n">Lk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">kernel</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Xtest</span><span class="p">))</span>   <span class="c1"># k_star = kernel(X, Xtest), calculating v := l\k_star</span>
+<span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Lk</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>    <span class="c1"># \alpha = np.linalg.solve(L, y) </span>
+
+<span class="c1"># compute the variance at our test points.</span>
+<span class="n">K_</span> <span class="o">=</span> <span class="n">kernel</span><span class="p">(</span><span class="n">Xtest</span><span class="p">,</span> <span class="n">Xtest</span><span class="p">)</span>                  <span class="c1"># k(x_star, x_star)        </span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">K_</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Lk</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>   
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+
+<span class="c1"># PLOTS:</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;k+&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Xtest</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">Xtest</span><span class="p">),</span> <span class="s1">&#39;b-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">Xtest</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">mu</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="n">mu</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#dddddd&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Xtest</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1">#plt.savefig(&#39;predictive.png&#39;, bbox_inches=&#39;tight&#39;, dpi=300)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Mean predictions plus 2 st.deviations&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#plt.axis([-5, 5, -3, 3])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># draw samples from the posterior at our test points.</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">K_</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Lk</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">Lk</span><span class="p">))</span>
+<span class="n">f_post</span> <span class="o">=</span> <span class="n">mu</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="mi">40</span><span class="p">)))</span>  <span class="c1"># size=(n, m), m shown how many posterior  </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">clf</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;k+&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">markeredgewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Xtest</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Xtest</span><span class="p">,</span> <span class="n">f_post</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;40 samples from the高斯过程posterior, mean prediction function and observation points&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#plt.axis([-5, 5, -3, 3])</span>
+<span class="c1">#plt.savefig(&#39;post.png&#39;, bbox_inches=&#39;tight&#39;, dpi=600)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>图 10： 标准高斯过程回归的说明性示例。图中已观测的数据点绘制为黑色十字（样本数据集），根据这些数据点，可以获得无限个可能的后验函数。我们用排序的颜色绘制了其中 <code class="docutils literal notranslate"><span class="pre">m=40</span></code> 个函数样本。红色虚线为均值函数，由上述 20 个样本函数及其概率分布计算获得。可以清晰地看到，所有后验函数样本在已观测点处都是收缩的。</p>
+<div class="section" id="id9">
+<h3>4.1 超参数的优化<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>我们解释了高斯过程回归的基础知识并实现了一个简单的例子。虽然不切实际，但高斯过程回归模型比它更复杂。核函数在高斯过程回归中发挥着重要作用。核函数的选择决定了高斯过程模型的几乎所有泛化特性 [4]。根据您的具体问题，有许多协方差函数可供选择或为高斯过程创建自己的协方差函数。这些标准包括模型是否平滑、是否稀疏、是否可以剧烈变化以及是否需要可微[ 5]。有关为高斯过程选择 kernel/协方差函数的更多深度信息，请参见 [5]。在内核中，超参数优化是必不可少的。这里我们将使用最广泛使用的内核 RBF 作为例子来解释超参数优化。一般的 RBF 函数由下式给出：</p>
+<div class="math notranslate nohighlight">
+\[
+k\left(\mathbf{x}_{i}, \mathbf{x}_{j}\right)=\sigma_{f}^{2} \exp \left(-\frac{1}{2 l}\left(\mathbf{x}_{i}-\mathbf{x}_{j}\right)^{\top}\left(\mathbf{x}_{i}-\mathbf{x}_{j}\right)\right)
+\]</div>
+<p>其中 <span class="math notranslate nohighlight">\(\sigma_{f}\)</span> 和 <span class="math notranslate nohighlight">\(l\)</span> 为超参数[5]。垂直标度 <span class="math notranslate nohighlight">\(\sigma_{f}\)</span> 描述了函数在垂直方向的范围。水平标度 <span class="math notranslate nohighlight">\(l\)</span> 表示两点之间的相关关系随着距离增加而下降的速度。 <span class="math notranslate nohighlight">\(l\)</span> 的效果如图 11 所示。较高的 <span class="math notranslate nohighlight">\(l\)</span> 提供更平滑的函数，较小的 <span class="math notranslate nohighlight">\(l\)</span> 提供更摆动的函数。</p>
+<img src="https://github.com/jwangjie/Gaussian-Process-be-comfortable-using-it/blob/master/img/hyperparameter.png?raw=1" width="700"/>
+<p>图 11  超参数水平标度对函数平滑度的影响</p>
+<p>优化的超参数 <span class="math notranslate nohighlight">\(Θ^*\)</span> （对径向基函数而言, 超参数 <span class="math notranslate nohighlight">\(\mathbf{\Theta} = [\sigma_f, l]\)</span>） 通过最大化对数边缘似然[11]确定：</p>
+<div class="math notranslate nohighlight">
+\[
+ \mathbf{\Theta^*} = \arg\max\limits_{\Theta} \log p(y \, \vert \, \mathbf{X}, \mathbf{\Theta}) 
+\]</div>
+<p>因此，考虑到超参数，在新测试点的更一般的预测方程是 [2]</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{\bar{f}_*} \, \vert \, \mathbf{X}, \mathbf{y}, \mathbf{X}_*,  \mathbf{\theta} \sim \mathcal{N} \left(\mathbf{\bar{f}_*}, cov(\mathbf{f}_*)\right) 
+\]</div>
+<p>请注意，在学习/调整超参数后，预测方差 <span class="math notranslate nohighlight">\(cov(\mathbf{f}_*)\)</span> 不仅取决于样本和测试输入 <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> 和 <span class="math notranslate nohighlight">\(\mathbf{X}^*\)</span>, 还取决于样本输出 <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> [1]。优化后的超参数 <span class="math notranslate nohighlight">\(σ_f=0.0067\)</span> 和 <span class="math notranslate nohighlight">\(l=0.0967\)</span>， 图 11 中观测数据点的回归结果见图 12 。</p>
+<p>更多有关超参数估计的直观例子，可以通过运行经过作者修改的高斯过程回归教程给出。其中， <a class="reference external" href="https://github.com/jwangjie/gpytorch/blob/master/examples/01_Exact_GPs/Simple_GP_Regression.ipynb">基于 GPyTorch 的示例教程</a> 和 <a class="reference external" href="https://github.com/jwangjie/gpytorch/blob/master/examples/01_Exact_GPs/Simple_GP_Regression_GPflow.ipynb">基于 GPflow 的示例教程</a>.</p>
+<p>核函数的选择依赖于具体任务。有关如何为高斯过程选择核函数（或协方差函数）的更多信息，可以参见 D. Duvenaud 的 <a class="reference external" href="https://www.cs.toronto.edu/~duvenaud/cookbook/">The Kernel Cookbook</a> 。</p>
+</div>
+<div class="section" id="id10">
+<h3>4.2 高斯过程软件包<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>目前有多个包或框架可用于进行高斯过程回归。在本节中，我将在尝试使用几个 Python 软件包，并总结对它们的初步印象。</p>
+<p>一个轻量级的软件包是<a class="reference external" href="https://scikit-learn.org/stable/modules/gaussian_process.html">sklearn.gaussian_process</a>，按照其上的例子做简单的实现就可以快速运行。但如果想通过这些简单例子对高斯过程有更多的理解，就有点难度了。该软件包对于理解高斯过程理论过于模糊了。</p>
+<p>高斯过程回归 在高维空间（特征超过几十个）中的计算成本很高，因为它使用整个样本/特征来进行预测。观察越多，预测所需的计算就越多。因此，包含最先进算法的软件包是实现复杂高斯过程回归任务的首选。</p>
+<p><a class="reference external" href="https://sheffieldml.github.io/GPy/">GPy</a> 是最著名的高斯过程框架之一。 GPy 已经开发得相当成熟，并有详细的文档说明。 GPy 使用 NumPy 来执行所有计算。对于不需要大量计算或最新算法实现的任务，GPy 基本足够了，而且非常稳定。</p>
+<p>如果需要完成更大计算量的高斯过程回归任务，首选 GPU 加速。 <a class="reference external" href="https://www.gpflow.org/">GPflow 软件包</a> 起源于 GPy，很多接口都类似。 GPflow 利用 <strong>TensorFlow</strong> 作为其计算后端。 GPy 和 GPflow 框架之间的更多技术区别是 <a class="reference external" href="https://gpflow.readthedocs.io/en/master/intro.html#what-s-the-difference-between-gpy-and-gpflow">here</a>。</p>
+<p><a class="reference external" href="https://gpytorch.ai/">GPyTorch</a> 是通过 <strong>PyTorch</strong> 提供 GPU 加速的另一个框架。它包含很多 Up-to-date的高斯过程算法。与 GPflow 类似，GPyTorch 提供自动梯度计算能力，因此可以轻松地开发复杂模型，例如在高斯过程模型中嵌入深度神经网络。</p>
+<p>在快速浏览文档并实现高斯回归的基本教程 <a class="reference external" href="https://github.com/jwangjie/gpytorch/blob/master/examples/01_Exact_GPs/Simple_GP_Regression.ipynb">GPyTorch</a> 和 [GPflow](<a class="reference external" href="https://github">https://github</a>. com/jwangjie/gpytorch/blob/master/examples/01_Exact_GPs/Simple_GP_Regression_GPflow.ipynb）后，个人印象是 GPyTorch 更自动化， 而 GPflow 有更多控制。这也符合 TensorFlow 和 PyTorch 的使用体验。</p>
+</div>
+</div>
+<div class="section" id="id11">
+<h2>5 总结和讨论<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<p>高斯过程是可以拟合一组点的所有可能函数的概率分布 [11]。高斯过程回归模型是能够直接对函数建模的非参数模型，因此可以提供预测值的概率分布（含不确定性估计），而不仅仅是一个预测值。在机器人学习中，量化不确定性对于实现高效学习过程非常有价值。未来应该探索最不确定的领域，这正是贝叶斯优化背后的主要思想。此外，可以通过选择不同的核函数来添加关于模型形状的先验知识和设计。可以根据一些指标来指定先验，如模型是否平滑、是否稀疏、是否能够剧烈变化、是否需要可微等。</p>
+<div class="section" id="id12">
+<h3>题外话<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>（ 1 ）出于简单和理解的原因，我忽略了许多数学和技术讨论。建议深入阅读 “机器学习中的高斯过程” 教科书的前两章，以深入了解高斯过程回归。</p>
+<p>（ 2 ）高斯过程中最棘手的部分之一是理解 <strong>空间</strong> 之间的映射投影。从输入空间到隐（特征）空间，再回到输出空间。您可以阅读 <a class="reference external" href="https://towardsdatascience.com/understanding-latent-space-in-machine-learning-de5a7c687d8d"><code class="docutils literal notranslate"><span class="pre">autoencoder</span></code></a> 以加强对空间的理解。</p>
+<p>（ 3 ）教程中的高斯过程回归模型是最普通的高斯过程[6]。它有两个主要约束条件：</p>
+<ul class="simple">
+<li><p>总体计算复杂度为 <span class="math notranslate nohighlight">\(O(N^3)\)</span>，其中 <span class="math notranslate nohighlight">\(N\)</span> 是协方差矩阵 <span class="math notranslate nohighlight">\(K\)</span> 的维数。</p></li>
+<li><p>内存消耗是二次方的。</p></li>
+</ul>
+<p>由于计算复杂性和内存消耗，当 CPU 环境下超过 5000 个数据点，GPU 环境下超过 13000 个数据点时，标准高斯过程会很快受到影响。</p>
+<p>（ 4 ）根据第三条，对于大型数据集，往往会使用稀疏高斯过程（Sparse GP）来降低计算复杂度 [9]。</p>
+</div>
+</div>
+<div class="section" id="id13">
+<h2>参考文献<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<p>[1]	C. E. Rasmussen and C. K. I. Williams, Gaussian processes for machine learning. MIT Press, 2006.</p>
+<p>[2] R. Turner, “ML Tutorial: Gaussian Processes - YouTube,” 2017. [Online]. Available: <a class="reference external" href="https://www.youtube.com/watch?v=92-98SYOdlY&amp;feature=emb_title">https://www.youtube.com/watch?v=92-98SYOdlY&amp;feature=emb_title</a>.</p>
+<p>[3] A. Ng, “Multivariate Gaussian Distribution - Stanford University | Coursera,” 2015. [Online]. Available: <a class="reference external" href="https://www.coursera.org/learn/machine-learning/lecture/Cf8DF/multivariate-gaussian-distribution">https://www.coursera.org/learn/machine-learning/lecture/Cf8DF/multivariate-gaussian-distribution</a>.</p>
+<p>[4]	D. Lee, “Multivariate Gaussian Distribution - University of Pennsylvania | Coursera,” 2017. [Online]. Available: <a class="reference external" href="https://www.coursera.org/learn/robotics-learning/lecture/26CFf/1-3-1-multivariate-gaussian-distribution">https://www.coursera.org/learn/robotics-learning/lecture/26CFf/1-3-1-multivariate-gaussian-distribution</a>.</p>
+<p>[5]	F. Dai, Machine Learning Cheat Sheet: Classical equations and diagrams in machine learning. 2017.</p>
+<p>[6]	N. de Freitas, “Machine learning - Introduction to Gaussian processes - YouTube,” 2013. [Online]. Available: <a class="reference external" href="https://www.youtube.com/watch?v=4vGiHC35j9s&amp;t=1424s">https://www.youtube.com/watch?v=4vGiHC35j9s&amp;t=1424s</a>.</p>
+<p>[7]	Y. Shi, “Gaussian Process, not quite for dummies,” 2019. [Online]. Available: <a class="reference external" href="https://yugeten.github.io/posts/2019/09/GP/">https://yugeten.github.io/posts/2019/09/GP/</a>.</p>
+<p>[8]	D. Duvenaud, “Kernel Cookbook,” 2014. [Online]. Available: <a class="reference external" href="https://www.cs.toronto.edu/~duvenaud/cookbook/">https://www.cs.toronto.edu/~duvenaud/cookbook/</a>.</p>
+<p>[9]	Y. Gal, “What my deep model doesn’t know.,” 2015. [Online]. Available: <a class="reference external" href="http://mlg.eng.cam.ac.uk/yarin/blog_3d801aa532c1ce.html">http://mlg.eng.cam.ac.uk/yarin/blog_3d801aa532c1ce.html</a>.</p>
+<p>[10] J. Hensman, “Gaussians.” 2019. [Online]. Available: <a class="reference external" href="https://github.com/mlss-2019/slides/blob/master/gaussian_processes/presentation_links.md">https://github.com/mlss-2019/slides/blob/master/gaussian_processes/presentation_links.md</a>.</p>
+<p>[11] Z. Dai, “GPSS2019 - Computationally efficient GPs” 2019. [Online]. Available: <a class="reference external" href="https://www.youtube.com/watch?list=PLZ_xn3EIbxZHoq8A3-2F4_rLyy61vkEpU&amp;v=7mCfkIuNHYw">https://www.youtube.com/watch?list=PLZ_xn3EIbxZHoq8A3-2F4_rLyy61vkEpU&amp;v=7mCfkIuNHYw</a>.</p>
+<p>[12] Zoubin Ghahramani.  A Tutorial on Gaussian Processes (or why I don’t useSVMs). InMachine Learning Summer School (MLSS), 2011
+[13] Kevin P Murphy.Machine Learning: A Probabilistic Perspective. The MIT Press,2012</p>
+</div>
+<div class="section" id="appendix-a">
+<h2>Appendix A<a class="headerlink" href="#appendix-a" title="Permalink to this headline">¶</a></h2>
+<p>Visualizing 3D plots of a <span class="math notranslate nohighlight">\(2-D\)</span> Gaussian by <a class="reference external" href="https://scipython.com/blog/visualizing-the-bivariate-gaussian-distribution/">Visualizing the bivariate Gaussian distribution</a>.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="Append-02-VariationalInference_Tutorial.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">附录 B： 变分法推断</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Append-04-BayesianNN_Tutorial.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">附录 D：贝叶斯神经网络</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Osvaldo Martin<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

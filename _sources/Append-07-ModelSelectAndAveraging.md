@@ -5,13 +5,12 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.12.0
+    jupytext_version: 1.11.5
 kernelspec:
   display_name: Python 3
-  language: ipython3
+  language: python3
   name: python3
 ---
-
 
 # 附录 G：模型选择与模型平均
 
@@ -22,4 +21,3 @@ kernelspec:
 1. 在模型之间作出选择
 
 2. 获取众家之长
-

@@ -158,27 +158,27 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="Append-01-MCMC_Tutorial.html">
-   附录 A： MCMC 随机性推断
+   附录 A： MCMC 推断
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Append-02-VariationalInference_Tutorial.html">
-   附录 B： 变分法确定性推断
+   附录 B： 变分法推断
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Append-03-GaussianProcessTutorial.html">
+  <a class="reference internal" href="Append-03-GaussianProcessTutorial_01.html">
    附录 C： 高斯过程
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Append-04-BayesianNN_Tutorial.html">
-   附录 D：贝叶斯神经网络概述
+   附录 D：贝叶斯神经网络
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Append-05-BayesianDeepLearning_Tutorial.html">
-   附录 E：贝叶斯深度学习综述
+   附录 E：贝叶斯深度学习
   </a>
  </li>
  <li class="toctree-l1">
@@ -866,7 +866,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2010/2262948828.py:25: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2174/2262948828.py:25: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
   plt.tight_layout()
 </pre></div>
 </div>
@@ -1004,7 +1004,7 @@ y \sim \operatorname{Bin}(n=1, p=\theta) \tag{式1.16}
 <p>当需要进行预测时，可以根据上面两个过程获得预测。当然，也可以用其来比较观测数据和预测数据，进而对模型做出评判，以找出两组数据间的差异，此即为后验预测检验，检验的主要目标是两者的一致性。</p>
 <p>生成数据和观测数据应该看起来差不多，否则有可能是建模出了问题或者输入数据到模型时出了问题。不过就算没有出错，两个集合仍然可能出现不同。尝试去理解其中的偏差有助于改进模型，或者至少能知道模型的极限。</p>
 <p>即使不知道如何改进模型，能够理解模型或数据捕获（或未能捕获）的问题也非常有价值。模型也许能够捕获到均值但无法预测异常值，这或许是个问题，但当我们只关心均值时，模型还是可用的。</p>
-<p>换句话说，通常贝叶斯统计分析的总体目标不是宣布某个模型是错误的，而是想了解模型哪一部分是可信的，并尝试检验该模型是否适合特定目的。一个人对一个模型有多大信心，在不同学科间肯定不一样。物理学可以使用高级理论在高度受控条件下研究系统，因此模型通常被视为对现实的很好描述；而其他学科研究复杂的、难以孤立的系统时，模型常具有较弱认识论地位。尽管如此，无论从事哪个学科，都应始终对模型做检验，后验预测性检查和探索性数据分析的想法是检验模型的好方法。</p>
+<p>换句话说，通常贝叶斯统计分析的总体目标不是宣布某个模型是错误的，而是想了解模型哪一部分是可信的，并尝试检验该模型是否适合特定目的。一个人对一个模型有多大信心，在不同学科间肯定不一样。物理学可以使用高级理论在高度受控条件下研究系统，因此模型通常被视为对现实的很好描述；而其他学科研究复杂的、难以孤立的系统时，模型常具有较弱认识论地位。尽管如此，无论从事哪个学科，都应始终对模型做检验，后验预测检查和探索性数据分析的想法是检验模型的好方法。</p>
 </div>
 </div>
 <div class="section" id="id24">
