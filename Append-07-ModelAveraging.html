@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>附录 G：模型集成 &#8212; Python贝叶斯分析(中文)</title>
+    <title>附录 G：模型平均 &#8212; Python贝叶斯分析(中文)</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -53,6 +53,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="附录 H：模型集成" href="Append-08-ModelEnsembling.html" />
     <link rel="prev" title="附录 F：贝叶斯深度学习编程初步" href="Append-06-BayesianDeepLearningPymc3.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -125,7 +126,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="chapter05-ModelComparison.html">
-   第 5 章 模型比较
+   第 5 章 模型比较与模型平均
   </a>
  </li>
  <li class="toctree-l1">
@@ -187,7 +188,17 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   附录 G：模型集成
+   附录 G：模型平均
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-08-ModelEnsembling.html">
+   附录 H：模型集成
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-09-WorkFlow.html">
+   附录 J：贝叶斯工作流程
   </a>
  </li>
 </ul>
@@ -230,11 +241,11 @@
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
         <a class="dropdown-buttons"
-            href="_sources/Append-07-ModelSelectAndAveraging.ipynb"><button type="button"
+            href="_sources/Append-07-ModelAveraging.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/Append-07-ModelSelectAndAveraging.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/Append-07-ModelAveraging.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -254,7 +265,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd/issues/new?title=Issue%20on%20page%20%2FAppend-07-ModelSelectAndAveraging.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd/issues/new?title=Issue%20on%20page%20%2FAppend-07-ModelAveraging.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -275,14 +286,14 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=lab/tree/Append-07-ModelSelectAndAveraging.md"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=lab/tree/Append-07-ModelAveraging.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
                     alt="Interact on binder">Binder</button></a>
         
         
-        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=lab/tree/BayesianAnalysiswithPython2nd/Append-07-ModelSelectAndAveraging.md&branch=master"><button type="button"
+        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=lab/tree/BayesianAnalysiswithPython2nd/Append-07-ModelAveraging.md&branch=master"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
                 data-placement="left"><img class="jupyterhub-button-logo"
                     src="_static/images/logo_jupyterhub.svg"
@@ -305,7 +316,7 @@
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id1">
-   1 为什么做模型集成？
+   1 为什么做模型平均？
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -325,21 +336,26 @@
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id4">
-       2.2.1 后验模型概率
+       2.2.1 基本框架
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id5">
-       2.2.2 先验的选择
+       2.2.2 模型的后验概率
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       2.2.3 先验的选择
       </a>
       <ul class="nav section-nav flex-column">
        <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id6">
+        <a class="reference internal nav-link" href="#id7">
          （1）模型的先验
         </a>
        </li>
        <li class="toc-h5 nav-item toc-entry">
-        <a class="reference internal nav-link" href="#id7">
+        <a class="reference internal nav-link" href="#id8">
          （2）模型参数的先验
         </a>
        </li>
@@ -348,7 +364,7 @@
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id8">
+    <a class="reference internal nav-link" href="#id9">
      2.3 基于预测的 BMA
     </a>
     <ul class="nav section-nav flex-column">
@@ -369,7 +385,7 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id9">
+      <a class="reference internal nav-link" href="#id10">
        2.3.2 贝叶斯堆叠
       </a>
      </li>
@@ -378,22 +394,22 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id10">
+  <a class="reference internal nav-link" href="#id11">
    3 频率主义模型平均
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id11">
+    <a class="reference internal nav-link" href="#id12">
      3.1 简介
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id12">
+    <a class="reference internal nav-link" href="#id13">
      3.2 点估计中的模型平均
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id13">
+      <a class="reference internal nav-link" href="#id14">
        3.2.1 信息准则法
       </a>
      </li>
@@ -403,14 +419,14 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id14">
+      <a class="reference internal nav-link" href="#id15">
        3.2.3 最优权重法
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id15">
+    <a class="reference internal nav-link" href="#id16">
      3.3 区间估计中的模型平均
     </a>
     <ul class="nav section-nav flex-column">
@@ -426,49 +442,49 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id16">
+      <a class="reference internal nav-link" href="#id17">
        3.3.2 分位数自助区间
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id17">
+      <a class="reference internal nav-link" href="#id18">
        3.3.3 模型平均的尾部区间
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id18">
+    <a class="reference internal nav-link" href="#id19">
      3.4 讨论
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id19">
+      <a class="reference internal nav-link" href="#id20">
        3.4.1 尺度的选择
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id20">
+      <a class="reference internal nav-link" href="#id21">
        3.4.2 模型集的选择
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id21">
+      <a class="reference internal nav-link" href="#id22">
        3.4.3 置信区间
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id22">
+      <a class="reference internal nav-link" href="#id23">
        3.4.4 混合模型
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id23">
+      <a class="reference internal nav-link" href="#id24">
        3.4.5 缺失数据
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id24">
+      <a class="reference internal nav-link" href="#id25">
        3.4.6 模型权重求和
       </a>
      </li>
@@ -477,17 +493,17 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id25">
+  <a class="reference internal nav-link" href="#id26">
    4 总结和未来方向
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id26">
+    <a class="reference internal nav-link" href="#id27">
      4.1 要点总结
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id27">
+    <a class="reference internal nav-link" href="#id28">
      4.2 未来方向
     </a>
    </li>
@@ -505,132 +521,161 @@
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="g">
-<h1>附录 G：模型集成<a class="headerlink" href="#g" title="Permalink to this headline">¶</a></h1>
-<p>【摘要】贝叶斯模型平均(贝叶斯模型平均) 提供了一种连贯且系统的机制来解释模型的不确定性。它可以看作是贝叶斯推理在模型选择、组合估计和预测问题上的直接应用。贝叶斯模型平均产生了一个简单的模型选择标准和风险较低的预测。然而，贝叶斯模型平均的应用并不总是直截了当的，导致对其不同方面的不同假设和情境选择。</p>
+<h1>附录 G：模型平均<a class="headerlink" href="#g" title="Permalink to this headline">¶</a></h1>
+<p>【摘要】<code class="docutils literal notranslate"><span class="pre">模型平均</span></code>是一种允许估计模型不确定性的方法，它可以提供比<code class="docutils literal notranslate"><span class="pre">模型选择</span></code>更好的估计和更可靠的置信区间。本文通过基于真实数据的示例来说明了 <code class="docutils literal notranslate"><span class="pre">模型平均</span></code> 的使用，讨论了其何时可能有用，并比较了频率主义和贝叶斯方法的区别。</p>
 <p>【原文】Fletcher, David. Why Model Averaging? SpringerBriefs in Statistics. 2018.</p>
 <style>p{text-indent:2em;2}</style>
 <div class="section" id="id1">
-<h2>1 为什么做模型集成？<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>1 为什么做模型平均？<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>模型平均是一种在估计中允许模型不确定性的方法，它可以提供比模型选择更好的估计和更可靠的置信区间。其应用领域非常广泛，涉及经济、药理、气象、水文等诸多领域。选择模型平均方法的原因在于：</p>
 <p><strong>（1）模型选择及点估计方法容易产生过于自信的模型。</strong></p>
 <p>在许多经典统计推断的理论中，参数估计通常面向单个模型，该模型大多是从一组候选模型中选择出来的最佳模型。在解释数据时，选择该最佳模型的过程经常会被忽略，很容易导致点估计偏差和精度高估。这种现象被称为 “无声的丑闻”，而许多研究人员仍然没有意识到这个问题。</p>
 <p><strong>（2）模型平均是一种可以考虑模型不确定性的估计方法。</strong></p>
 <ul class="simple">
-<li><p>在频率主义框架中，模型平均通常来自于每候选模型估计值的加权平均，其中权重反映了模型估计的潜力值。模型权重可能基于 <code class="docutils literal notranslate"><span class="pre">Akaike</span> <span class="pre">信息准则</span> <span class="pre">(AIC)</span></code>、<code class="docutils literal notranslate"><span class="pre">交叉验证</span></code>或感兴趣参数估计的<code class="docutils literal notranslate"><span class="pre">均方误差</span> <span class="pre">(MSE)</span></code>。</p></li>
-<li><p>在贝叶斯框架中，模型权重要么是模型为真的后验概率，要么是基于预测样本来确定，例如 <code class="docutils literal notranslate"><span class="pre">Watanabe-Akaike</span> <span class="pre">信息准则</span> <span class="pre">(WAIC)</span></code> 或<code class="docutils literal notranslate"><span class="pre">交叉验证</span></code>。通常模型权重被限制在单位单纯形上，即非负且总和为 1。</p></li>
+<li><p>在频率主义框架中，模型平均通常来自于对每个候选模型估计值的加权平均，其中权重反映了模型估计的潜力值。模型权重可能基于 <code class="docutils literal notranslate"><span class="pre">Akaike</span> <span class="pre">信息准则</span> <span class="pre">(AIC)</span></code>、<code class="docutils literal notranslate"><span class="pre">交叉验证</span></code> 或<code class="docutils literal notranslate"><span class="pre">均方误差</span> <span class="pre">(MSE)</span></code>。</p></li>
+<li><p>在贝叶斯框架中，模型权重要么是模型为『真』的后验概率，要么是基于预测样本来确定，例如 <code class="docutils literal notranslate"><span class="pre">Watanabe-Akaike</span> <span class="pre">信息准则</span> <span class="pre">(WAIC)</span></code>  或 <code class="docutils literal notranslate"><span class="pre">交叉验证</span></code> 。</p></li>
+<li><p>通常模型权重被限制在单位单纯形上，即非负且总和为 1。</p></li>
 </ul>
 <p><strong>（3）模型平均也可以被视为一种平衡估计偏差和方差的手段。</strong></p>
 <p>从频率主义角度来看，就像模型选择一样，较小的模型通常会提供具有较大偏差的估计，而较大的模型会导致估计值具有较高的方差。因此，模型平均在计算置信区间时考虑了模型不确定性，从而产生了比模型选择方法更宽、更可靠的区间。有趣的是，频率主义的一些作者只专注于实现模型平均估计的偏差和方差之间的平衡，而其他人则认为模型平均仅仅是一个允许模型不确定性的手段而已。</p>
 <blockquote>
 <div><p><strong>模型选择、模型集成、模型组合和模型平均的区别：</strong></p>
 <ul class="simple">
-<li><p><strong>模型选择</strong>指从若干模型中选择出人们认为最优的那个模型，由于评判方法、数据集等原因，模型选择很容易造成对模型过高的自信。</p></li>
-<li><p><strong>模型集成</strong>采用某种方式融合多个已经训练好的模型，进而达到 “取长补短”、提高模型泛化能力的效果。模型集成方法通常在几个模型差异性较大、相关性较小的情境下效果更加明显。常用的集成方法有：投票法(voting)、平均法(averaging)、 堆叠法(Stacking)、混合法(Blending)、状态法（Bagging）、自助法（Boosting）等。</p></li>
-<li><p><strong>模型组合</strong>是一种极易与模型集成混淆的方法，因为它也会组合多个模型，但与集成方法不同之处在于，模型组合指在预测变量的不同子空间上选择使用不同模型。也就是说，组合方法中的每一个模型只作用在预测变量的部分空间上，而集成方法中的所有模型都会作用于整个预测变量空间。</p></li>
-<li><p><strong>模型平均</strong>是最基础的模型集成方法之一，其基本原理是对多个模型计算的结果进行加权平均，以得到最终结果，在回归问题及含阈值调节的场景中使用更多一些。</p></li>
+<li><p><strong>模型选择</strong>指从若干模型中选择出人们认为最优的那个模型，可视为对模型的点估计。由于评判方法、数据集等原因，模型选择很容易造成对模型过高的自信。</p></li>
+<li><p><strong>模型平均</strong>是为了避免单个模型过于自信的问题，对多个模型计算的结果进行加权平均以得到最终结果的方法，从其意义上来看，模型平均其实可视为下面 <code class="docutils literal notranslate"><span class="pre">模型集成</span></code> 方法之一。</p></li>
+<li><p><strong>模型集成</strong>采用某种方式融合多个已经训练好的模型，进而达到 “取长补短”、提高模型泛化能力的效果。模型集成方法通常在各模型差异性较大、相关性较小的情境下效果更加明显。常用的集成方法有：投票法(voting)、平均法(averaging)、 堆叠法(Stacking)、混合法(Blending)、装袋法（Bagging）、自助法（Boosting）等。</p></li>
+<li><p><strong>模型组合</strong>是一种极易与模型集成混淆的方法，因为它也会组合多个模型，但与集成方法不同之处在于，模型组合通常在预测变量的不同子空间上选择使用不同模型。也就是说，组合方法中的每一个模型只作用在预测变量的部分空间上，而集成方法中的所有模型都会作用于预测变量的完整空间。</p></li>
 </ul>
 </div></blockquote>
+<p>下面分别从贝叶斯框架（ 第 2 节 ）和频率主义框架（第 3 节）角度对模型平均方法做一综述，第 4 节为总结和展望。</p>
 </div>
 <div class="section" id="id2">
 <h2>2 贝叶斯模型平均<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
 <h3>2.1 概述<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>原则上，贝叶斯模型平均 (BMA) 是非常自然的，因为用于数据分析的贝叶斯框架可以很容易地结合参数不确定性和模型不确定性 [73, 87]。我们不是基于单个模型计算参数的后验分布，而是计算来自不同模型的后验分布的加权组合。</p>
-<p>在 BMA 的经典版本中，模型的权重是它为真的后验概率，因为我们假设其中一个模型为真。最近，[181] 提出了一个明确的基于预测的 BMA 版本。这使用交叉验证来确定一组最佳权重，并且是称为堆叠的频率论方法的贝叶斯版本（第 3.2.3 节）。 1</p>
-<p>经典 BMA 关注模型一致性（真实模型的识别） ，而基于预测的 BMA 具有直接与估计相关的优势。我们最初关注经典 BMA，因为它在 BMA 文献中受到了绝大多数关注。</p>
+<p>原理上，贝叶斯模型平均 ( BMA ) 是非常自然的，因为用于数据分析的贝叶斯框架可以很容易地结合参数不确定性和模型不确定性 [73, 87]。贝叶斯模型平均不是计算单个模型参数的后验分布，而是计算不同模型后验的加权组合。</p>
+<blockquote>
+<div><p>注解： 作者在此处是想表达三层意思：（1）贝叶斯框架擅长于处理不确定性；（2）这种不确定性既包括参数的不确定性（对于单个模型而言，每个参数都存在不确定性），也包括模型的不确定性（对于一组模型而言，不同的模型有不同的为真概率）；（3）贝叶斯模型平均针对的是模型的不确定性。</p>
+</div></blockquote>
+<p>在贝叶斯模型平均的经典版本中，一个模型的权重是其为『真』的后验概率，其有一个基础前提假设，即所有模型中仅有一个为『真』。最近，Yao 等人提出了一个显式的、基于预测结果的贝叶斯模型平均版本 <code class="docutils literal notranslate"><span class="pre">[181]</span></code>。该方法中使用交叉验证结果来确定一组最佳权重，是频率主义堆叠方法（见第 3.2.3 节）的的贝叶斯版本。</p>
+<p>经典贝叶斯模型平均关注模型的合理性（即对真模型的识别） ，而基于预测结果的贝叶斯模型平均则具有直接与估计关联的优势。下面的第 2.2 节将重点放在经典贝叶斯模型平均上，因为它在贝叶斯模型平均文献中曾经受到过绝大多数关注； 第 2.3 节将重点讨论根据预测结果实现贝叶斯模型平均的方法。</p>
 </div>
 <div class="section" id="bma">
 <h3>2.2 经典 BMA<a class="headerlink" href="#bma" title="Permalink to this headline">¶</a></h3>
-<p>Once the priors are specified for both the models and the parameters in each model, classical BMA involves a well-defined procedure for obtaining the model-averaged posterior for any parameter of interest. As with other Bayesian methods, the apparent simplicity of classical BMA can bely difficulties in its implementation <span class="math notranslate nohighlight">\([8,32]\)</span>. The choice of priors can be problematic, as can the computations required to obtain the model-averaged posterior.</p>
-<p>Suppose <span class="math notranslate nohighlight">\(y=\left(y_{1}, \ldots, y_{n}\right)^{\top}\)</span> contains the values of the response variable, and we wish to average over a set of <span class="math notranslate nohighlight">\(M\)</span> nested models, with <span class="math notranslate nohighlight">\(\beta_{m}\)</span> being the vector of <span class="math notranslate nohighlight">\(p_{m}\)</span> parameters in model <span class="math notranslate nohighlight">\(m\)</span>. As the notation implies, <span class="math notranslate nohighlight">\(\beta_{m}\)</span> will often be a set of regression coefficients, but it may include other types of parameter, such as the error variance in a normal linear model. <span class="math notranslate nohighlight">\({ }^{2}\)</span> Suppose we are interested in estimating a scalar parameter <span class="math notranslate nohighlight">\(\theta\)</span>. The model-averaged posterior for <span class="math notranslate nohighlight">\(\theta\)</span> is given by</p>
+<div class="section" id="id4">
+<h4>2.2.1 基本框架<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>一旦为各模型和模型中的参数指定了先验，经典贝叶斯模型平均就像其他贝叶斯方法一样，包含了一个明确定义的、用于获得任意参数<code class="docutils literal notranslate"><span class="pre">模型平均后验</span></code>的过程。与其他贝叶斯方法类似，经典贝叶斯模型平均的简洁性会掩盖其实现上的难度 <code class="docutils literal notranslate"><span class="pre">[8,32]</span></code>，而其中<code class="docutils literal notranslate"><span class="pre">先验选择</span></code>和<code class="docutils literal notranslate"><span class="pre">后验计算</span></code>，依旧是需要面临的最主要的问题。</p>
+<blockquote>
+<div><p>注：</p>
+<p>经过模型平均后得到的后验概率，其英文 Model-Averaged Posterior 很容易理解，但翻译成中文容易引起歧义，在本文中，统一采用直译 <strong>模型平均后验</strong> 作为其专有名词。</p>
+</div></blockquote>
+<p><strong>（1）参数的模型平均后验</strong></p>
+<p>假设向量 <span class="math notranslate nohighlight">\(y=\left(y_{1}, \ldots, y_{n}\right)^{\top}\)</span> 包含一组结果变量的值，我们希望对 <span class="math notranslate nohighlight">\(M\)</span> 个嵌套的模型求平均值，其中 <span class="math notranslate nohighlight">\(\beta_{m}\)</span> 是第 <span class="math notranslate nohighlight">\(m\)</span>  个模型中对应的参数向量。正如符号所暗示的那样，<span class="math notranslate nohighlight">\(\beta_{m}\)</span> 通常是一组回归系数，但也可能是其他类型的参数，例如在正态线性模型中误差方差。假设我们现在对估计一个标量类型的参数 <span class="math notranslate nohighlight">\(\theta\)</span> 感兴趣，则  <span class="math notranslate nohighlight">\(\theta\)</span> 的模型平均后验由下式给出：</p>
 <div class="math notranslate nohighlight">
 \[
-p(\theta \mid y)=\sum_{m=1}^{M} p(m \mid y) p(\theta \mid y, m),
+p(\theta \mid y)=\sum_{m=1}^{M} p(m \mid y) p(\theta \mid y, m) \tag{2.1}
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(p(m \mid y)\)</span> is the posterior probability that model <span class="math notranslate nohighlight">\(m\)</span> is true, and <span class="math notranslate nohighlight">\(p(\theta \mid y, m)\)</span> is the posterior for <span class="math notranslate nohighlight">\(\theta\)</span> when we assume model <span class="math notranslate nohighlight">\(m\)</span> is true. <span class="math notranslate nohighlight">\({ }^{3}\)</span> Thus <span class="math notranslate nohighlight">\(p(\theta \mid y)\)</span> is a weighted combination of the posterior distributions obtained from the different models, the weights being the posterior model probabilities. Using Bayes’ theorem, the posterior probability for model <span class="math notranslate nohighlight">\(m\)</span> is given by</p>
+<p>其中 <span class="math notranslate nohighlight">\(p(m \mid y)\)</span> 是模型  <span class="math notranslate nohighlight">\(m\)</span> 为真的后验概率，  <span class="math notranslate nohighlight">\(p(\theta \mid y, m)\)</span> 是当我们假设模型 <span class="math notranslate nohighlight">\(m\)</span> 为真时，参数  <span class="math notranslate nohighlight">\(\theta\)</span> 的后验。因此， <span class="math notranslate nohighlight">\(p(\theta \mid y)\)</span> 是不同模型后验分布的加权组合，权值为<code class="docutils literal notranslate"><span class="pre">模型后验概率</span></code> <span class="math notranslate nohighlight">\(p(m \mid y)\)</span> 。使用贝叶斯定理，模型 <span class="math notranslate nohighlight">\(m\)</span> 的后验概率为：</p>
 <div class="math notranslate nohighlight">
 \[
-p(m \mid y) \propto p(m) p(y \mid m),
+p(m \mid y) \propto p(m) p(y \mid m) \tag{2.2}
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(p(m)\)</span> and <span class="math notranslate nohighlight">\(p(y \mid m)\)</span> are the prior probability, and the marginal (integrated) likelihood, for model <span class="math notranslate nohighlight">\(m\)</span>, with</p>
+<p>其中， <span class="math notranslate nohighlight">\(p(m)\)</span> 和 <span class="math notranslate nohighlight">\(p(y \mid m)\)</span> 分别为模型 <span class="math notranslate nohighlight">\(m\)</span> 的先验概率和边缘似然。</p>
+<p>根据单模型的贝叶斯定理，边缘似然为该模型参数空间上的积分项：</p>
 <div class="math notranslate nohighlight">
 \[
-p(y \mid m)=\int p\left(y \mid \beta_{m}, m\right) p\left(\beta_{m} \mid m\right) d \beta_{m},
+p(y \mid m)=\int p\left(y \mid \beta_{m}, m\right) p\left(\beta_{m} \mid m\right) d \beta_{m} \tag{2.3}
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(p\left(\beta_{m} \mid m\right)\)</span> is the prior for <span class="math notranslate nohighlight">\(\beta_{m}\)</span> and <span class="math notranslate nohighlight">\(p\left(y \mid \beta_{m}, m\right)\)</span> is the likelihood under model <span class="math notranslate nohighlight">\(m\)</span>. When the support of <span class="math notranslate nohighlight">\(\beta_{m}\)</span> is discrete, the integral in (2.3) is replaced by a summation.</p>
-<p>The posterior probability for model <span class="math notranslate nohighlight">\(m\)</span> can also be written as</p>
+<p>其中 <span class="math notranslate nohighlight">\(p\left(\beta_{m} \mid m\right)\)</span> 为参数 <span class="math notranslate nohighlight">\(\beta_{m}\)</span> 的先验分布， <span class="math notranslate nohighlight">\(p\left(y \mid \beta_{m}, m\right)\)</span> 为模型 <span class="math notranslate nohighlight">\(m\)</span> 的似然函数。当参数 <span class="math notranslate nohighlight">\(\beta_{m}\)</span> 为离散型时，式  (2.3) 中的积分改为求和。</p>
+<blockquote>
+<div><p>注解： 在单个模型的贝叶斯定理中，分母项被称为边缘似然，表示模型解释数据的能力，通常边缘似然越大，解释数据的能力越强。但对贝叶斯推断任务了解的读者应该知道，边缘似然的计算通常是难以处理的，需要一些近似计算的方法。</p>
+</div></blockquote>
+<p><strong>（2）模型后验概率的改进</strong></p>
+<p>模型 <span class="math notranslate nohighlight">\(m\)</span> 的后验概率也可以写为：</p>
 <div class="math notranslate nohighlight">
 \[
-p(m \mid y) \propto p(m) B_{m},
+p(m \mid y) \propto p(m) B_{m} 
 \]</div>
-<p>where</p>
+<p>其中</p>
 <div class="math notranslate nohighlight">
 \[
 B_{m}=\frac{p(y \mid m)}{p(y \mid 1)}
 \]</div>
-<p>is the Bayes factor for comparing model <span class="math notranslate nohighlight">\(m\)</span> and model 1 , the latter being an arbitrary reference model <span class="math notranslate nohighlight">\([114,146]\)</span>. It is well known that Bayes factors can be sensitive to the prior distributions for the parameters, even when <span class="math notranslate nohighlight">\(n\)</span> is large <span class="math notranslate nohighlight">\([8,97]\)</span>. An extreme case arises when one or more of the priors is improper, as this can lead to the marginal likelihood in (2.3) not being well defined [73, 161].</p>
-<p>Two natural summaries of the model-averaged posterior for <span class="math notranslate nohighlight">\(\theta\)</span> are the mean and variance, given by</p>
+<p>是比较模型  <span class="math notranslate nohighlight">\(m\)</span> 和模型 <span class="math notranslate nohighlight">\(1\)</span>得到的贝叶斯因子 ，模型 <span class="math notranslate nohighlight">\(1\)</span> 可以是任意一个参考模型 <code class="docutils literal notranslate"><span class="pre">[114,146]</span></code>。众所周知，贝叶斯因子对参数的先验分布非常敏感， 即便 <span class="math notranslate nohighlight">\(n\)</span> 很大时也一样 <code class="docutils literal notranslate"><span class="pre">[8,97]</span></code>。当一个或多个先验不合适时会导致的极端情况，就是式（2.3）中的边缘似然无法被很好的定义<code class="docutils literal notranslate"><span class="pre">[73,</span> <span class="pre">161]</span></code>。</p>
+<p><strong>（3）参数的模型平均后验：常用统计量</strong></p>
+<p>关于 <span class="math notranslate nohighlight">\(\theta\)</span> 模型平均后验的统计量是其<code class="docutils literal notranslate"><span class="pre">均值</span></code>和<code class="docutils literal notranslate"><span class="pre">方差</span></code>，由下式定义：</p>
 <div class="math notranslate nohighlight">
 \[
-\mathrm{E}(\theta \mid y)=\sum_{m=1}^{M} p(m \mid y) \mathrm{E}(\theta \mid y, m)
+\mathrm{E}(\theta \mid y)=\sum_{m=1}^{M} p(m \mid y) \mathrm{E}(\theta \mid y, m)  \tag{2.4}
 \]</div>
-<p>and</p>
 <div class="math notranslate nohighlight">
 \[
-\operatorname{var}(\theta \mid y)=\sum_{m=1}^{M} p(m \mid y)\left[\operatorname{var}(\theta \mid y, m)+\{\mathrm{E}(\theta \mid y, m)-\mathrm{E}(\theta \mid y)\}^{2}\right]
+\operatorname{var}(\theta \mid y)=\sum_{m=1}^{M} p(m \mid y)\left[\operatorname{var}(\theta \mid y, m)+\{\mathrm{E}(\theta \mid y, m)-\mathrm{E}(\theta \mid y)\}^{2}\right]  \tag{2.5}
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathrm{E}(\theta \mid y, m)\)</span> and <span class="math notranslate nohighlight">\(\operatorname{var}(\theta \mid y, m)\)</span> are the posterior mean and variance for <span class="math notranslate nohighlight">\(\theta\)</span> under model <span class="math notranslate nohighlight">\(m\)</span>. Thus the model-averaged posterior variance is influenced by both the parameter uncertainty associated with each model and the between-model variability in the posterior mean.</p>
-<p>We can also use the model-averaged posterior to calculate a central <span class="math notranslate nohighlight">\(100(1-2 \alpha) \%\)</span> credible interval for <span class="math notranslate nohighlight">\(\theta\)</span>, given by <span class="math notranslate nohighlight">\(\left[\theta_{L}, \theta_{U}\right]\)</span>, where</p>
+<p>其中 <span class="math notranslate nohighlight">\(\mathrm{E}(\theta \mid y, m)\)</span> 和 <span class="math notranslate nohighlight">\(\operatorname{var}(\theta \mid y, m)\)</span>  分别是模型 <span class="math notranslate nohighlight">\(m\)</span> 的参数 <span class="math notranslate nohighlight">\(\theta\)</span>  的后验分布的均值和方差。因此，模型平均后验的方差会受到与每个模型有关的参数不确定性影响，也会受到后验均值在模型间的变化性影响。</p>
+<p>我们可以使用模型平均后验去计算 <span class="math notranslate nohighlight">\(\theta\)</span> 的 <span class="math notranslate nohighlight">\(100(1-2 \alpha) \%\)</span> 的中心可信区间，用  <span class="math notranslate nohighlight">\(\left[\theta_{L}, \theta_{U}\right]\)</span> 来表示：</p>
 <div class="math notranslate nohighlight">
 \[
-\int_{-\infty}^{\theta_{L}} p(\theta \mid y) d \theta=\int_{\theta_{U}}^{\infty} p(\theta \mid y) d \theta=\alpha .
+\int_{-\infty}^{\theta_{L}} p(\theta \mid y) d \theta=\int_{\theta_{U}}^{\infty} p(\theta \mid y) d \theta=\alpha  \tag{2.6}
 \]</div>
-<p>An alternative choice would be to use the highest posterior density <span class="math notranslate nohighlight">\(100(1-2 \alpha) \%\)</span> credible region, i.e. the region of values for <span class="math notranslate nohighlight">\(\theta\)</span> that contain <span class="math notranslate nohighlight">\(100(1-2 \alpha) \%\)</span> of the posterior probability and for which the posterior density is never lower than outside the region. However, the central credible interval is easier to compute than the highest posterior density region, and has the advantage that the limits can be interpreted as quantiles of the posterior. In the examples we therefore use central credible intervals.</p>
-<p>A by-product of classical BMA is the ability to calculate a posterior inclusionprobability (PIP) for each predictor variable, i.e. the sum of the posterior probabilities for all the models that include that variable <span class="math notranslate nohighlight">\([7,12,36]\)</span>. Some authors have suggested that these provide a useful summary of the relative importance of each predictor variable. However, as they are influenced by the choice of model set, the importance of a predictor variable can be exaggerated by including many models containing that variable [66]. In addition, a more useful summary of relative importance can be obtained by comparing model-averaged posterior distributions for the expected value of the response variable for a suitable set of values of the predictor variables (Sect. 1.4). An analogous issue arises with the use of summed model weights in frequentist model averaging (Sect. 3.7). <span class="math notranslate nohighlight">\({ }^{4}\)</span></p>
-<div class="section" id="id4">
-<h4>2.2.1 后验模型概率<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
-<p>When calculating the posterior model probabilities, it can be difficult to determine the marginal likelihood in (2.3). In some settings, such as GLMs with conjugate priors for the parameters, the marginal likelihood can be expressed analytically [98], but in general we need to use an approximation. The most well-known approximation, which does not require specification of the priors for the parameters, is</p>
+<p>此外，也可以使用最高后验密度可信区间 <span class="math notranslate nohighlight">\(100(1-2 \alpha) \%\)</span> 。不过，中心可信区间相较最高密度区间计算更为容易有些，并且其极限可以被解释为后验的中位数。在本文实例中，我们均使用中心可信区间。</p>
+<p>经典贝叶斯模型平均的一个副产品是可以计算每个预测变量的后验包含概率 （ Posterior Inclusion Probability, PIP ），即所有包含该预测变量的模型后验概率之和  <code class="docutils literal notranslate"><span class="pre">[7,12,36]</span></code> 。这提供了对每个预测变量的相对重要性的有用总结。然而，后验包含概率会受到模型集选择的影响，尤其是预测变量的重要性可能会由于参与了更多模型而被夸大 [66]。此外，通过比较一组预测变量值对应的结果变量期望值的模型平均后验分布，可以获得更有用的相对重要性总结（第 1.4 节）。在频率主义的模型平均（第 3.7 节）中使用加权求和模型会出现类似的效果。</p>
+</div>
+<div class="section" id="id5">
+<h4>2.2.2 模型的后验概率<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><p>注意：</p>
+<p>原文中的 Posterior Model Probability 可以被理解为 Model’s Posterior Probility，即模型后验概率。需要与模型参数的后验概率区分开来。</p>
+</div></blockquote>
+<p>在计算模型后验概率时，很难确定式（2.3）中的边缘似然。在某些设置中（ 例如具有共轭先验参数的 GLM ），边缘似然可以有解析表达式 [98]，但更一般的情况是根本无法得到解析表达，只能采用近似值。其中最有名的边缘似然近似是（无需指定参数的先验）：</p>
 <div class="math notranslate nohighlight">
 \[
-p(y \mid m) \approx \exp \left(-\mathrm{BIC}_{m} / 2\right)
+p(y \mid m) \approx \exp \left(-\mathrm{BIC}_{m} / 2\right) \tag{2.7}
 \]</div>
-<p>where</p>
+<p>其中</p>
 <div class="math notranslate nohighlight">
 \[
-\mathrm{BIC}_{m}=-2 \log p\left(y \mid \widehat{\beta}_{m}, m\right)+p_{m} \log n,
+\mathrm{BIC}_{m}=-2 \log p\left(y \mid \widehat{\beta}_{m}, m\right)+p_{m} \log n \tag{2.8}
 \]</div>
-<p>and <span class="math notranslate nohighlight">\(\widehat{\beta}_{m}\)</span> is the maximum likelihood estimate of <span class="math notranslate nohighlight">\(\beta_{m}\)</span>. The expression in (2.8) is the Bayesian information criterion for model <span class="math notranslate nohighlight">\(m[91,98,114,157] .{ }^{5}\)</span> The first term in (2.8) is influenced by the fit of the model, while the second can be thought of as a correction for overfitting which penalises more complex models.</p>
-<p>Use of (2.7) in (2.2) leads to the approximation</p>
+<p><span class="math notranslate nohighlight">\(\widehat{\beta}_{m}\)</span> 是 <span class="math notranslate nohighlight">\(\beta_{m}\)</span> 的最大似然估计。式 (2.8)  就是模型 <span class="math notranslate nohighlight">\(m\)</span> 的贝叶斯信息准则（ Bayesian Information Criterion）<code class="docutils literal notranslate"><span class="pre">[91,98,114,157]</span></code> 。其中第一项受模型拟合的影响，第二项可以被视为一个用于惩罚复杂模型的过拟合修正项。</p>
+<p>在式 (2.2) 中引入式 (2.7) 可得到如下对模型后验概率的近似：</p>
 <div class="math notranslate nohighlight">
 \[
-p(m \mid y) \propto p(m) \exp \left(-\mathrm{BIC}_{m} / 2\right),
+p(m \mid y) \propto p(m) \exp \left(-\mathrm{BIC}_{m} / 2\right) \tag{2.9}
 \]</div>
-<p>which is sometimes referred to as the generalised BIC weight [114]. When we calculate the expression on the right-hand side of (2.9), <span class="math notranslate nohighlight">\(\mathrm{BIC}_{m}\)</span> is often replaced by</p>
+<p>这个近似有时被称为<code class="docutils literal notranslate"><span class="pre">广义</span> <span class="pre">BIC</span> <span class="pre">权重</span> </code> <code class="docutils literal notranslate"><span class="pre">[114]</span></code>。当我们计算式（2.9）右边的表达式时，<span class="math notranslate nohighlight">\(\mathrm{BIC}_{m}\)</span> 经常被替换为</p>
 <div class="math notranslate nohighlight">
 \[
 \mathrm{BIC}_{m}-\min _{k} \mathrm{BIC}_{k},
 \]</div>
-<p>in order to avoid large arguments in the exponential function [32]. <span class="math notranslate nohighlight">\({ }^{6}\)</span></p>
-<p>Care is needed in specifying the value of <span class="math notranslate nohighlight">\(n\)</span> in (2.8). For a normal linear model, it is simply the number of observations. For a binomial model it is the total number of Bernoulli trials. When using a log-linear model to analyse a contingency table it is the sum of the counts rather than the number of cells in the table <span class="math notranslate nohighlight">\([98,145]\)</span>. In the context of survival analysis, [171] suggested setting <span class="math notranslate nohighlight">\(n\)</span> equal to the number of uncensored observations. For a hierarchical model, the choice of <span class="math notranslate nohighlight">\(n\)</span> depends on the focus of the analysis <span class="math notranslate nohighlight">\([37,98,138,139,188]\)</span>. For modelling survey data, [117] proposed a version of BIC that takes into account the design effect.</p>
-<p>A higher-order approximation to the posterior model probabilities requires the priors for the parameters and their observed Fisher information matrix <span class="math notranslate nohighlight">\([96,98,116\)</span>, 183]. It is similar in spirit to TIC, Takeuchi’s information criterion, which has been suggested as an alternative to <span class="math notranslate nohighlight">\(\mathrm{AIC}\)</span> in the frequentist setting [32] (Sect.3.2.1).</p>
-<p>Other approaches to approximating the posterior model probabilities have been proposed, involving marginal likelihoods <span class="math notranslate nohighlight">\([26,28,40,41,121,132,151]\)</span> or Markov chain Monte Carlo (MCMC) methods [5, 9, 19, 23, 24, 29, 34, 37, 50, 71, 74, <span class="math notranslate nohighlight">\(75,79,82,121,142,147,179]\)</span>. One conceptually-appealing method is reversiblejump MCMC (RJMCMC), in which we sample the parameter-space and model-space simultaneously [80]. However, RJMCMC can be prone to performance issues and be challenging to implement <span class="math notranslate nohighlight">\([8,9,37]\)</span>, to the extent that <span class="math notranslate nohighlight">\([83]\)</span> recommend use of the approximation in (2.9). Recently, [8] have developed an approach which has the advantage of using the MCMC output obtained from fitting each model separately, and which exploits the relationships between parameters from different models [151].</p>
+<p>以避免指数函数中出现过大的参数 <code class="docutils literal notranslate"><span class="pre">[32]</span></code> 。</p>
+<p>在式 (2.8) 中指定 <span class="math notranslate nohighlight">\(n\)</span> 的值时需要小心。对于正态线性模型，它只是观测的数量；对于二项式模型，它是伯努利试验的总数。当使用对数线性模型来分析联列表时，它是计数总和，而不是表中的单元格数 <code class="docutils literal notranslate"><span class="pre">[98,145]</span></code> 。在生存分析的背景下，[171] 建议将 <span class="math notranslate nohighlight">\(n\)</span> 设置为等于未经审查的观测数。对于分层模型，<span class="math notranslate nohighlight">\(n\)</span> 的选择取决于分析的重点 <code class="docutils literal notranslate"><span class="pre">[37,98,138,139,188]</span></code>。为了建模调查数据，<code class="docutils literal notranslate"><span class="pre">[117]</span></code> 提出了一个考虑设计效果的 <code class="docutils literal notranslate"><span class="pre">BIC</span></code> 版本。</p>
+<p>模型后验概率的高阶近似需要参数的先验及其观测后 Fisher 信息矩阵 <code class="docutils literal notranslate"><span class="pre">[96,98,116$,</span> <span class="pre">183]</span></code>。它在思想上类似于<code class="docutils literal notranslate"> <span class="pre">Takeuchi</span> <span class="pre">信息准则（</span> <span class="pre">TIC</span> <span class="pre">）</span></code>，在频率主义设置中，<code class="docutils literal notranslate"><span class="pre">TIC</span></code> 被建议作为 <code class="docutils literal notranslate"><span class="pre">AIC</span></code> 的替代方案[32]（第 3.2.1 节）。</p>
+<p>已经提出了逼近模型后验概率的其他方法，包括边缘似然 <code class="docutils literal notranslate"><span class="pre">[26,28,40,41,121,132,151]</span></code> 或马尔可夫链蒙特卡罗 (MCMC) 方法 <code class="docutils literal notranslate"><span class="pre">[5,</span> <span class="pre">9,</span> <span class="pre">19,</span> <span class="pre">23,</span> <span class="pre">24,</span> <span class="pre">29,</span> <span class="pre">34,</span> <span class="pre">37,</span> <span class="pre">50,</span> <span class="pre">71,</span> <span class="pre">74,</span> <span class="pre">75,79,82,121,142,147,179]</span></code>。一种在概念上比较有吸引力的方法是可逆跳跃 MCMC（RJMCMC），在该方法中，我们同时对参数空间和模型空间进行采样 [80]。然而，RJMCMC 可能容易出现性能问题，并且在实现方面具有挑战性 <code class="docutils literal notranslate"><span class="pre">[8,9,37]</span></code> ，以至于 [83] 建议使用式 (2.9) 中的近似值。最近，[8] 开发了一种方法，该方法使用分别拟合每模型获得的 MCMC 输出，并利用来自不同模型的参数之间的关系 [151]。</p>
 </div>
-<div class="section" id="id5">
-<h4>2.2.2 先验的选择<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
 <div class="section" id="id6">
-<h5>（1）模型的先验<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h5>
-<p>A natural and common choice for the prior model probabilities is the uniform prior, in which <span class="math notranslate nohighlight">\(p(m)=1 / M\)</span>. The approximation to the posterior model probability in (2.9) then simplifies to the well-known BIC weight, given by</p>
+<h4>2.2.3 先验的选择<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id7">
+<h5>（1）模型的先验<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h5>
+<p>先验模型概率的一个自然而常见的选择是均匀先验，其中 <span class="math notranslate nohighlight">\(p(m)=1 / M\)</span>。此时，式 ( 2.9 ) 中的模型后验概率就近似简化为众所周知的 <code class="docutils literal notranslate"><span class="pre">BIC</span></code> 权重，由下式给出：</p>
 <div class="math notranslate nohighlight">
 \[
-p(m \mid y) \propto \exp \left(-\mathrm{BIC}_{m} / 2\right) .
+p(m \mid y) \propto \exp \left(-\mathrm{BIC}_{m} / 2\right) \tag{2.10}
 \]</div>
-<p>However, use of the uniform model-prior can have hidden implications. For example, if some of the possible predictor variables are highly correlated, we may have modelredundancy, in that some models will provide very similar estimates of <span class="math notranslate nohighlight">\(\theta\)</span>. Use of a uniform prior will then dilute the prior probability allocated to any model which is not similar to the others <span class="math notranslate nohighlight">\([18,57,66,76]\)</span>. A method for dealing with this problem was proposed by [170], who suggested specifying prior model probabilities using the concept of the worth of a model, which is based on quantifying what we would expect to lose if we removed it from the model set when it is the true model. Another alternative is use of a Bernoulli prior in which each predictor variable has the same probability <span class="math notranslate nohighlight">\(p\)</span> of being included, independently of the others. The uniform prior is a special case, with <span class="math notranslate nohighlight">\(p=0.5\)</span>, and therefore corresponds to a prior expectation that half the predictor variables will be included [37]. In order to have a less informative prior on model size, we might use a beta-prior for <span class="math notranslate nohighlight">\(p[37,105,158]\)</span>.</p>
-<p>Other approaches to specifying the model-prior involve empirical Bayes [37]; allowance for predictor variables being related, such as when some of the models include interaction terms [30]; and use of lower weights for models that are similar to others [66].</p>
-<p>In order to allow for the possibility that the choice of model-prior may affect the form of the model-averaged posterior, [43] proposed use of credal model averaging, in which more than one model-prior is considered. This effectively allows one to preform a sensitivity analysis, in order to assess the extent to which the modelaveraged posterior is influenced by the choice of model-prior. Further examples of the use of credal model averaging can be found in [44-46, 185].</p>
+<blockquote>
+<div><p>注： 与模型后验概率一样，给关于模型的先验概率分布定义一个专有名词：<strong>先验模型概率</strong>。</p>
+</div></blockquote>
+<p>但使用均匀模型先验可能会产生隐含的影响。例如，如果某些预测变量高度相关，则可能会有模型冗余，因为某些模型可能会提供非常相似的参数估计值。使用均匀先验将会稀释<code class="docutils literal notranslate"><span class="pre">那些不相似模型</span></code>应有的先验概率 <code class="docutils literal notranslate"><span class="pre">[18,57,66,76]</span></code> 。 Villa 等提出了一种处理该问题的方法<code class="docutils literal notranslate"><span class="pre">[170]</span></code> ，他建议使用<code class="docutils literal notranslate"><span class="pre">模型价值</span></code>的概念来指定<code class="docutils literal notranslate"><span class="pre">先验模型概率</span></code>，模型价值基于对以下问题的量化：当某个模型是真模型时，如果将其从模型集中剔除，我们预期会失去什么？</p>
+<p>另一种选择是为每个预测变量设置独立于其他变量的、被包含概率为 <span class="math notranslate nohighlight">\(p\)</span> 的伯努利先验 。这样的话，均匀先验是其中 <span class="math notranslate nohighlight">\(p=0.5\)</span> 时的一种特殊情况，对应于包括一半预测变量的先验期望<code class="docutils literal notranslate"> <span class="pre">[37]</span></code>。为了有一个关于模型大小的低信息量先验，可以对 <span class="math notranslate nohighlight">\(p\)</span> 使用贝塔先验 <code class="docutils literal notranslate"><span class="pre">[37,105,158]</span></code>。</p>
+<blockquote>
+<div><p>注：关于此处稀释的理解。此处指如果某些预测变量高度相关，则与其相关的模型必然相似，因此，均匀的先验模型概率隐含地会提升相似模型的概率（将所有相似的模型视为同一个模型可能更好理解），而相对地压低其他不相似模型的概率。例如，假设共有 10 个模型，其中 3 个模型比较相似，则均匀先验会隐含地将该模型的概率提升到 <span class="math notranslate nohighlight">\(3/10\)</span> ，而其他不相似的模型概率依然为 <span class="math notranslate nohighlight">\(1/10\)</span> 。</p>
+</div></blockquote>
+<p>其他指定模型先验的方法还包括：（1）经验贝叶斯法 [37]；（2）允许预测变量相关，例如当某些模型包含交互项时 [30]；（3）对具有相似性的模型使用较低权重[66]等。</p>
+<p>此外，为了使<code class="docutils literal notranslate"><span class="pre">模型先验选择</span></code>能够对<code class="docutils literal notranslate"><span class="pre">模型平均后验（Model-Averaged</span> <span class="pre">Posterior）</span></code>的形式产生影响，[43] 建议使用<code class="docutils literal notranslate"><span class="pre">可信模型平均</span></code>，其中考虑了多个模型先验。这有效地允许人们进行敏感性分析，以评估<code class="docutils literal notranslate"><span class="pre">模型平均后验</span></code>受<code class="docutils literal notranslate"><span class="pre">模型先验选择</span></code>影响的程度。在<code class="docutils literal notranslate"> <span class="pre">[44-46,</span> <span class="pre">185]</span></code> 中可以找到使用可信模型平均的更多示例。</p>
 </div>
-<div class="section" id="id7">
-<h5>（2）模型参数的先验<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h5>
-<p>The posterior model probabilities can be sensitive to the choice of prior distribution for the parameters in a model, even if this prior would be regarded as non-informative in the single-model setting <span class="math notranslate nohighlight">\([8,35,93]\)</span>. In particular, as mentioned in Sect. <span class="math notranslate nohighlight">\(2.2\)</span>, the use of improper priors can lead to the Bayes factors, and hence the posterior model probabilities, not being well defined <span class="math notranslate nohighlight">\([10,82,93,161]\)</span>. It is also possible for apparently sensible priors for the parameters to cause the models to have conflicting implicit prior distributions for <span class="math notranslate nohighlight">\(\theta\)</span> [85].</p>
+<div class="section" id="id8">
+<h5>（2）模型参数的先验<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h5>
+<p>模型后验概率对模型中参数的先验选择非常敏感，即使该先验在单模型方法中属于非信息先验 <code class="docutils literal notranslate"><span class="pre">[8,35,93]</span></code>。 In particular, as mentioned in Sect. <span class="math notranslate nohighlight">\(2.2\)</span>, the use of improper priors can lead to the Bayes factors, and hence the posterior model probabilities, not being well defined <span class="math notranslate nohighlight">\([10,82,93,161]\)</span>. It is also possible for apparently sensible priors for the parameters to cause the models to have conflicting implicit prior distributions for <span class="math notranslate nohighlight">\(\theta\)</span> [85].</p>
 <p>In the normal linear model setting, Zellner’s g-prior has been used extensively, as it has several desirable properties, including computational convenience <span class="math notranslate nohighlight">\([37,154]\)</span>. It involves centring the predictor variables at zero, in order to remove any dependence between the intercept and the regression coefficients, and then specifying a joint prior for the intercept and error variance, plus a joint prior for the regression coefficients given the error variance. For model <span class="math notranslate nohighlight">\(m\)</span>, this leads to</p>
 <div class="math notranslate nohighlight">
 \[
@@ -670,8 +715,8 @@ p(m \mid y) \propto \exp \left(-\mathrm{CIC}_{m} / 2\right)
 </div>
 </div>
 </div>
-<div class="section" id="id8">
-<h3>2.3 基于预测的 BMA<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id9">
+<h3>2.3 基于预测的 BMA<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>As mentioned in Sect. 2.1, classical BMA focusses attention on identification of the true model. Recently, several authors have considered use of prediction-based BMA <span class="math notranslate nohighlight">\([39,102,181]\)</span>. In addition to being a more natural approach to model averaging, this has the distinct advantages of not requiring a prior for the models, being less sensitive to the priors for the parameters, and only requiring the usual MCMC output for each individual model.</p>
 <p>There are currently two types of prediction-based BMA. The first involves a criterion based on a measure of the within-sample prediction error plus a correction term which allows for overfitting. The second uses cross validation and is therefore based on the error associated with prediction of observation <span class="math notranslate nohighlight">\(i\)</span> having fitted the model to all the data except that observation <span class="math notranslate nohighlight">\((i=1, \ldots, n)\)</span>. The only difference between these approaches and classical BMA is that we combine posterior distributions using model weights that are not posterior model probabilities.</p>
 <div class="section" id="dic-waic">
@@ -707,8 +752,8 @@ As with DIC, the posterior mean in \)</span>(2.17)<span class="math notranslate 
 <p>WAIC weights can be calculated using (2.10), with <span class="math notranslate nohighlight">\(\mathrm{BIC}_{m}\)</span> replaced by <span class="math notranslate nohighlight">\(\mathrm{WAIC}_{m} .\)</span> As DIC and WAIC are focussed on prediction, we would expect weights based on these criteria to be preferable to BIC weights, which are more focussed on identification of a true model [72]. As WAIC is more Bayesian than DIC, WAIC weights are based on a more reliable assessment of the prediction-uncertainty associated with each model. WAIC is also invariant to transformation of the parameters, whereas DIC will not be if we use (2.13), as the posterior mean is not transformation-invariant [159]. <span class="math notranslate nohighlight">\({ }^{9}\)</span> In addition, use of a pointwise-approach means that <span class="math notranslate nohighlight">\(p_{m}^{W A I C}\)</span> will be more stable than <span class="math notranslate nohighlight">\(p_{m}^{D I C}[73] .\)</span></p>
 <p>As with BIC, when assessing the fit of a hierarchical model the exact form of DIC and WAIC will depend upon the focus of the analysis, as this will determine what we mean by prediction of a new observation [72, 122]; a similar issues arises when using AIC in the frequentist setting (Sect. 3.6.4).</p>
 </div>
-<div class="section" id="id9">
-<h4>2.3.2 贝叶斯堆叠<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id10">
+<h4>2.3.2 贝叶斯堆叠<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
 <p>Stacking is a cross-validation-based approach to model averaging that has a long history in the frequentist setting [164] (Sect.3.2.3). Like the frequentist version, Bayesian stacking [181] uses a measure of out-of-sample prediction error, which does not require a correction for overfitting. If a logarithmic scoring rule is used to summarise the prediction performance <span class="math notranslate nohighlight">\([78,137]\)</span>, the model weights are chosen to be those that maximise the function
 $<span class="math notranslate nohighlight">\(
 \sum_{i=1}^{n} \log \sum_{m=1}^{M} w_{m} p\left(y_{i} \mid y_{-i}, m\right)
@@ -726,61 +771,61 @@ where the posterior mean on the right-hand side is now with respect to \)</span>
 </div>
 </div>
 </div>
-<div class="section" id="id10">
-<h2>3 频率主义模型平均<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id11">
-<h3>3.1 简介<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-</div>
+<h2>3 频率主义模型平均<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id12">
-<h3>3.2 点估计中的模型平均<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<h3>3.1 简介<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+</div>
 <div class="section" id="id13">
-<h4>3.2.1 信息准则法<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<h3>3.2 点估计中的模型平均<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h4>3.2.1 信息准则法<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
 </div>
 <div class="section" id="bagging">
 <h4>3.2.2 装袋法（Bagging）<a class="headerlink" href="#bagging" title="Permalink to this headline">¶</a></h4>
 </div>
-<div class="section" id="id14">
-<h4>3.2.3 最优权重法<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
-</div>
-</div>
 <div class="section" id="id15">
-<h3>3.3 区间估计中的模型平均<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<h4>3.2.3 最优权重法<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="id16">
+<h3>3.3 区间估计中的模型平均<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="wald">
 <h4>3.3.1 <code class="docutils literal notranslate"><span class="pre">Wald</span></code> 区间<a class="headerlink" href="#wald" title="Permalink to this headline">¶</a></h4>
 </div>
-<div class="section" id="id16">
-<h4>3.3.2 分位数自助区间<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
-</div>
 <div class="section" id="id17">
-<h4>3.3.3 模型平均的尾部区间<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
-</div>
+<h4>3.3.2 分位数自助区间<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
 </div>
 <div class="section" id="id18">
-<h3>3.4 讨论<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id19">
-<h4>3.4.1 尺度的选择<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<h4>3.3.3 模型平均的尾部区间<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
 </div>
+</div>
+<div class="section" id="id19">
+<h3>3.4 讨论<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id20">
-<h4>3.4.2 模型集的选择<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<h4>3.4.1 尺度的选择<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
 </div>
 <div class="section" id="id21">
-<h4>3.4.3 置信区间<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
+<h4>3.4.2 模型集的选择<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
 </div>
 <div class="section" id="id22">
-<h4>3.4.4 混合模型<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<h4>3.4.3 置信区间<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
 </div>
 <div class="section" id="id23">
-<h4>3.4.5 缺失数据<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
+<h4>3.4.4 混合模型<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
 </div>
 <div class="section" id="id24">
-<h4>3.4.6 模型权重求和<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
-</div>
-</div>
+<h4>3.4.5 缺失数据<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
 </div>
 <div class="section" id="id25">
-<h2>4 总结和未来方向<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
+<h4>3.4.6 模型权重求和<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+</div>
 <div class="section" id="id26">
-<h3>4.1 要点总结<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<h2>4 总结和未来方向<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id27">
+<h3>4.1 要点总结<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
 <p><strong>（1）估计而不是识别</strong></p>
 <p>模型平均是一种估计工具，因此与识别真实模型没有直接关系。在许多设置中，评估该估计对模型选择的敏感性也将很有用。</p>
 <p><strong>（2）感兴趣的参数</strong></p>
@@ -798,12 +843,12 @@ where the posterior mean on the right-hand side is now with respect to \)</span>
 <p><strong>（8）模型集的选择</strong></p>
 <p>使用一组单例模型，每个模型都涉及一个预测器，当有许多预测器时，这似乎是一种很有前途的方法。</p>
 <p><strong>（9）贝叶斯学派的选择</strong></p>
-<p>使用 WAIC 或 BSP 权重比经典 BMA 更可取，因为重点是预测而不是识别真实模型。使用这些权重还避免了后验模型概率的计算以及这些概率对参数先验的敏感性的问题。</p>
+<p>使用 WAIC 或 BSP 权重比经典 BMA 更可取，因为重点是预测而不是识别真实模型。使用这些权重还避免了模型后验概率的计算以及这些概率对参数先验的敏感性的问题。</p>
 <p><strong>（10）频率学派的选择</strong></p>
 <p>如果计算量不是问题，堆叠是一个不错的选择。 AIC(w) 是大 n 的一个很好的替代方案，但鲁棒性较差。这两种方法在元模型方面也有很好的解释</p>
 </div>
-<div class="section" id="id27">
-<h3>4.2 未来方向<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id28">
+<h3>4.2 未来方向<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
 <p><strong>（1）置信区间</strong></p>
 <p>需要研究计算模型平均置信区间的最佳方法。这可能涉及在区间覆盖和宽度方面最佳的权重，如贝叶斯设置中的 [2] 所建议的那样。还需要评估何时仅使用最大模型的置信区间最佳。</p>
 <p><strong>（2）置信分布</strong></p>
@@ -847,6 +892,13 @@ where the posterior mean on the right-hand side is now with respect to \)</span>
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">附录 F：贝叶斯深度学习编程初步</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="Append-08-ModelEnsembling.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">附录 H：模型集成</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
         
