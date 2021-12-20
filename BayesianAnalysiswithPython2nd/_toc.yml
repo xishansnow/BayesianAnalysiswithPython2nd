@@ -20,7 +20,9 @@ parts:
     - file: Append-04-BayesianNN_Tutorial
     - file: Append-05-BayesianDeepLearning_Tutorial
     - file: Append-06-BayesianDeepLearningPymc3
-    - file: Append-07-ModelSelectAndAveraging
+    - file: Append-07-ModelAveraging
+    - file: Append-08-ModelEnsembling
+    - file: Append-09-WorkFlow
   #- caption: 参考文献
     #- file: 
 
