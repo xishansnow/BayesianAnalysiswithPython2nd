@@ -197,8 +197,8 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Append-09-WorkFlow.html">
-   附录 J：贝叶斯工作流程
+  <a class="reference internal" href="Append-10-WorkFlow.html">
+   附录 K：贝叶斯工作流程
   </a>
  </li>
 </ul>
@@ -321,7 +321,7 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id3">
-   5.2 好模型应当具备的特征 – 兼具
+   5.2 好模型的特征 –
    <code class="docutils literal notranslate">
     <span class="pre">
      准确性
@@ -354,7 +354,7 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id7">
-   5.3 常用度量方法 — 交叉验证与信息准则
+   5.3 频率主义的模型比较
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -464,75 +464,80 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id9">
-   5.4 模型平均
+   5.4 贝叶斯框架下的模型比较
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id10">
-     5.4.1 基于信息准则值计算权重
+     5.4.1 基本概念
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id11">
-     5.4.2 基于后验预测分布计算权重
+     5.4.2 一些讨论
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id12">
-     5.4.3 其他模型平均方法
+     5.4.3 贝叶斯因子的计算
     </a>
    </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id13">
-   5.5 浅谈贝叶斯模型比较
-  </a>
-  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id13">
+     5.4.4 计算贝叶斯因子时的常见问题
+    </a>
+   </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id14">
-     5.5.1 基本概念
+     5.4.5 用序贯蒙特卡罗方法计算贝叶斯因子
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id15">
-     5.5.2 一些讨论
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id16">
-     5.5.3 贝叶斯因子的计算
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id17">
-     5.5.4 计算贝叶斯因子时的常见问题
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id18">
-     5.5.5 用序贯蒙特卡罗方法计算贝叶斯因子
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id19">
-     5.5.6 贝叶斯因子与信息准则
+     5.4.6 贝叶斯因子与信息准则
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id20">
+  <a class="reference internal nav-link" href="#id16">
+   5.5 模型平均
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id17">
+     5.5.1 基于信息准则值计算权重
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id18">
+     5.5.2 基于后验预测分布计算权重
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id19">
+     5.5.3 其他模型平均方法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id20">
+     5.5.4 模型平均后验预测示例
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id21">
    5.6 其他
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id21">
+    <a class="reference internal nav-link" href="#id22">
      5.6.1 正则先验
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id22">
+    <a class="reference internal nav-link" href="#id23">
      5.6.2 深入探讨
      <code class="docutils literal notranslate">
       <span class="pre">
@@ -542,17 +547,17 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id23">
+    <a class="reference internal nav-link" href="#id24">
      5.6.3 熵与最大熵原理
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id24">
+      <a class="reference internal nav-link" href="#id25">
        （1） 熵与方差
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id25">
+      <a class="reference internal nav-link" href="#id26">
        （2） 最大熵原理
       </a>
      </li>
@@ -570,12 +575,12 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id26">
+  <a class="reference internal nav-link" href="#id27">
    5.7 总结
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id27">
+  <a class="reference internal nav-link" href="#id28">
    5.8 习题
   </a>
  </li>
@@ -678,7 +683,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2723/2666850247.py:8: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2597/2666850247.py:8: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_l = pm.sample(2000)
 Auto-assigning NUTS sampler...
 </pre></div>
@@ -686,33 +691,191 @@ Auto-assigning NUTS sampler...
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Initializing NUTS using jitter+adapt_diag...
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sequential sampling (2 chains in 1 job)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>NUTS: [ϵ, β, α]
-</pre></div>
-</div>
-<div class="output text_html">
-<div>
-    <style>
-        /* Turns off some styling */
-        progress {
-            /* gets rid of default border in Firefox and Opera. */
-            border: none;
-            /* Needs to be in here for Safari polyfill so background images work as expected. */
-            background-size: auto;
-        }
-        .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
-            background: #F44336;
-        }
-    </style>
-  <progress value='2376' class='' max='3000' style='width:300px; height:20px; vertical-align: middle;'></progress>
-  79.20% [2376/3000 00:01<00:00 Sampling chain 0, 0 divergences]
-</div>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sampling 1 chain for 1_000 tune and 1_444 draw iterations (1_000 + 1_444 draws total) took 2 seconds.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Only one chain was sampled, this makes it impossible to run some convergence checks
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
+KeyboardInterrupt                         Traceback (most recent call last)
+/tmp/ipykernel_2597/2666850247.py in &lt;module&gt;
+      6     y_pred = pm.Normal(&#39;y_pred&#39;, mu=μ, sd=ϵ, observed=y_1s)
+      7 
+----&gt; 8     trace_l = pm.sample(2000)
+      9 
+     10 with pm.Model() as model_p:
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/sampling.py in sample(draws, step, init, n_init, start, trace, chain_idx, chains, cores, tune, progressbar, model, random_seed, discard_tuned_samples, compute_convergence_checks, callback, jitter_max_retries, return_inferencedata, idata_kwargs, mp_ctx, pickle_backend, **kwargs)
+    494             # By default, try to use NUTS
+    495             _log.info(&quot;Auto-assigning NUTS sampler...&quot;)
+--&gt; 496             start_, step = init_nuts(
+    497                 init=init,
+    498                 chains=chains,
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/sampling.py in init_nuts(init, chains, n_init, model, random_seed, progressbar, jitter_max_retries, **kwargs)
+   2185         raise ValueError(f&quot;Unknown initializer: {init}.&quot;)
+   2186 
+-&gt; 2187     step = pm.NUTS(potential=potential, model=model, **kwargs)
+   2188 
+   2189     return start, step
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/step_methods/hmc/nuts.py in __init__(self, vars, max_treedepth, early_max_treedepth, **kwargs)
+    166         `pm.sample` to the desired number of tuning steps.
+    167         &quot;&quot;&quot;
+--&gt; 168         super().__init__(vars, **kwargs)
+    169 
+    170         self.max_treedepth = max_treedepth
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/step_methods/hmc/base_hmc.py in __init__(self, vars, scaling, step_scale, is_cov, model, blocked, potential, dtype, Emax, target_accept, gamma, k, t0, adapt_step_size, step_rand, **theano_kwargs)
+     86         vars = inputvars(vars)
+     87 
+---&gt; 88         super().__init__(vars, blocked=blocked, model=model, dtype=dtype, **theano_kwargs)
+     89 
+     90         self.adapt_step_size = adapt_step_size
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/step_methods/arraystep.py in __init__(self, vars, model, blocked, dtype, logp_dlogp_func, **theano_kwargs)
+    252 
+    253         if logp_dlogp_func is None:
+--&gt; 254             func = model.logp_dlogp_function(vars, dtype=dtype, **theano_kwargs)
+    255         else:
+    256             func = logp_dlogp_func
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/model.py in logp_dlogp_function(self, grad_vars, tempered, **kwargs)
+   1002         varnames = [var.name for var in grad_vars]
+   1003         extra_vars = [var for var in self.free_RVs if var.name not in varnames]
+-&gt; 1004         return ValueGradFunction(costs, grad_vars, extra_vars, **kwargs)
+   1005 
+   1006     @property
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/model.py in __init__(self, costs, grad_vars, extra_vars, dtype, casting, compute_grads, **kwargs)
+    697         inputs = [self._vars_joined]
+    698 
+--&gt; 699         self._theano_function = theano.function(inputs, outputs, givens=givens, **kwargs)
+    700 
+    701     def set_weights(self, values):
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/compile/function/__init__.py in function(inputs, outputs, mode, updates, givens, no_default_updates, accept_inplace, name, rebuild_strict, allow_input_downcast, profile, on_unused_input)
+    335         # note: pfunc will also call orig_function -- orig_function is
+    336         #      a choke point that all compilation must pass through
+--&gt; 337         fn = pfunc(
+    338             params=inputs,
+    339             outputs=outputs,
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/compile/function/pfunc.py in pfunc(params, outputs, mode, updates, givens, no_default_updates, accept_inplace, name, rebuild_strict, allow_input_downcast, profile, on_unused_input, output_keys)
+    522         inputs.append(si)
+    523 
+--&gt; 524     return orig_function(
+    525         inputs,
+    526         cloned_outputs,
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/compile/function/types.py in orig_function(inputs, outputs, mode, accept_inplace, name, profile, on_unused_input, output_keys)
+   1979         )
+   1980         with config.change_flags(compute_test_value=&quot;off&quot;):
+-&gt; 1981             fn = m.create(defaults)
+   1982     finally:
+   1983         t2 = time.time()
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/compile/function/types.py in create(self, input_storage, trustme, storage_map)
+   1834 
+   1835         with config.change_flags(traceback__limit=config.traceback__compile_limit):
+-&gt; 1836             _fn, _i, _o = self.linker.make_thunk(
+   1837                 input_storage=input_storage_lists, storage_map=storage_map
+   1838             )
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/basic.py in make_thunk(self, input_storage, output_storage, storage_map)
+    264 
+    265     def make_thunk(self, input_storage=None, output_storage=None, storage_map=None):
+--&gt; 266         return self.make_all(
+    267             input_storage=input_storage,
+    268             output_storage=output_storage,
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/vm.py in make_all(self, profiler, input_storage, output_storage, storage_map)
+   1129                 # no_recycling here.
+   1130                 thunks.append(
+-&gt; 1131                     node.op.make_thunk(node, storage_map, compute_map, [], impl=impl)
+   1132                 )
+   1133                 linker_make_thunk_time[node] = time.time() - thunk_start
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py in make_thunk(self, node, storage_map, compute_map, no_recycling, impl)
+    632             )
+    633             try:
+--&gt; 634                 return self.make_c_thunk(node, storage_map, compute_map, no_recycling)
+    635             except (NotImplementedError, MethodNotDefined):
+    636                 # We requested the c code, so don&#39;t catch the error.
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py in make_c_thunk(self, node, storage_map, compute_map, no_recycling)
+    598                 print(f&quot;Disabling C code for {self} due to unsupported float16&quot;)
+    599                 raise NotImplementedError(&quot;float16&quot;)
+--&gt; 600         outputs = cl.make_thunk(
+    601             input_storage=node_input_storage, output_storage=node_output_storage
+    602         )
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py in make_thunk(self, input_storage, output_storage, storage_map)
+   1201         &quot;&quot;&quot;
+   1202         init_tasks, tasks = self.get_init_tasks()
+-&gt; 1203         cthunk, module, in_storage, out_storage, error_storage = self.__compile__(
+   1204             input_storage, output_storage, storage_map
+   1205         )
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py in __compile__(self, input_storage, output_storage, storage_map)
+   1136         input_storage = tuple(input_storage)
+   1137         output_storage = tuple(output_storage)
+-&gt; 1138         thunk, module = self.cthunk_factory(
+   1139             error_storage,
+   1140             input_storage,
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py in cthunk_factory(self, error_storage, in_storage, out_storage, storage_map)
+   1632             for node in self.node_order:
+   1633                 node.op.prepare_node(node, storage_map, None, &quot;c&quot;)
+-&gt; 1634             module = get_module_cache().module_from_key(key=key, lnk=self)
+   1635 
+   1636         vars = self.inputs + self.outputs + self.orphans
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in module_from_key(self, key, lnk)
+   1189             try:
+   1190                 location = dlimport_workdir(self.dirname)
+-&gt; 1191                 module = lnk.compile_cmodule(location)
+   1192                 name = module.__file__
+   1193                 assert name.startswith(location)
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py in compile_cmodule(self, location)
+   1541             try:
+   1542                 _logger.debug(f&quot;LOCATION {location}&quot;)
+-&gt; 1543                 module = c_compiler.compile_str(
+   1544                     module_name=mod.code_hash,
+   1545                     src_code=src_code,
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in compile_str(module_name, src_code, location, include_dirs, lib_dirs, libs, preargs, py_module, hide_symbols)
+   2494 
+   2495         try:
+-&gt; 2496             p_out = output_subprocess_Popen(cmd)
+   2497             compile_stderr = p_out[1].decode()
+   2498         except Exception:
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/utils.py in output_subprocess_Popen(command, **params)
+    252     # we need to use communicate to make sure we don&#39;t deadlock around
+    253     # the stdout/stderr pipe.
+--&gt; 254     out = p.communicate()
+    255     return out + (p.returncode,)
+    256 
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/subprocess.py in communicate(self, input, timeout)
+   1026 
+   1027             try:
+-&gt; 1028                 stdout, stderr = self._communicate(input, endtime, timeout)
+   1029             except KeyboardInterrupt:
+   1030                 # https://bugs.python.org/issue25942
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/subprocess.py in _communicate(self, input, endtime, orig_timeout)
+   1866                             &#39;failed to raise TimeoutExpired.&#39;)
+   1867 
+-&gt; 1868                     ready = selector.select(timeout)
+   1869                     self._check_timeout(endtime, orig_timeout, stdout, stderr)
+   1870 
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/selectors.py in select(self, timeout)
+    413         ready = []
+    414         try:
+--&gt; 415             fd_event_list = self._selector.poll(timeout)
+    416         except InterruptedError:
+    417             return ready
+
+KeyboardInterrupt: 
 </pre></div>
 </div>
 </div>
@@ -831,7 +994,7 @@ Auto-assigning NUTS sampler...
 <p>在接下来几节中，我们探索一些其他模型比较的方法。</p>
 </div>
 <div class="section" id="id3">
-<h2>5.2 好模型应当具备的特征 – 兼具 <code class="docutils literal notranslate"><span class="pre">准确性</span></code>与<code class="docutils literal notranslate"><span class="pre">简约性</span></code><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2>5.2 好模型的特征 –  <code class="docutils literal notranslate"><span class="pre">准确性</span></code>与<code class="docutils literal notranslate"><span class="pre">简约性</span></code><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>假如对同一个问题（或数据）有两个模型，二者对数据解释得同样好，应该选哪个模型呢？有一个基本准则叫做<strong>奥卡姆剃刀</strong>，即<strong>如果对同一现象有两种不同假说，应选用比较简单的那一种</strong>。</p>
 <p>关于奥卡姆剃刀的论证很多，其中一种说法与波普尔的可证伪性有关，还有一种说法是从实用角度提出的，因为简单模型相比复杂模型更容易理解，此外还有一种论证是基于贝叶斯统计的。这里不深入讨论该准则的论证细节，只将该准则当做一个有用而合理的常识。</p>
 <p>在比较模型时，既要考虑<strong>简约型</strong>，也需要同时考虑<strong>准确性</strong>（ 即模型对数据拟合得如何 ）。之前章节已出现过一些度量准确性的指标，如： <span class="math notranslate nohighlight">\(R^2\)</span> 系数可视为线性回归中可解释方差的比例。但**如果有两个模型，其中一个对数据的解释比另一个更准确，是否应该选更准确率的模型呢？**直觉上，似乎最好选择准确度高且简单的模型。但如果简单模型准确度最差，该怎么办？如何才能平衡这两种要素呢？</p>
@@ -913,7 +1076,7 @@ Auto-assigning NUTS sampler...
 </div>
 </div>
 <div class="section" id="id7">
-<h2>5.3 常用度量方法 — 交叉验证与信息准则<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<h2>5.3 频率主义的模型比较<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>在上例中，很容易看出 <span class="math notranslate nohighlight">\(0\)</span> 阶模型非常简单，而 <span class="math notranslate nohighlight">\(5\)</span> 阶模型相对数据过于复杂，但其他两个模型呢？要回答该问题，需要一种原则性的方式，在考虑准确性同时，兼顾考虑简约性。要做到这一点，需要引入几个新概念：</p>
 <ul class="simple">
 <li><p><strong>样本内精度</strong>：基于拟合模型的样本数据测量得到的模型精度。</p></li>
@@ -1063,112 +1226,28 @@ Auto-assigning NUTS sampler...
 </div>
 </div>
 <div class="section" id="id9">
-<h2>5.4 模型平均<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
-<p>通过交叉验证、信息准则等方法对众多模型进行比较，然后做出模型选择的策略，实践起来比较简单。但大家心里应当清楚，<strong>当我们在选择模型的时候，也正在抛弃有关模型的不确定性信息</strong> 。这种情况有些类似于计算了完整的后验分布，但最后只保留了后验均值。这会造成我们对模型过于自信。</p>
-<p>一种变通的方案是在执行模型选择时，报告和讨论不同模型的信息准则值、标准差等统计量以及后验预测检查情况。将所有这些数字和检查放在问题上下文中很重要，只有这样，相关人士才能更好地感受到模型可能存在的局限性和缺点。在学术界中，这种作法比较常见，在很多论文、演示文稿的讨论部分中，能够找到大量的相关案例。</p>
-<p>除了上述对各模型均做出报告和讨论的方法外，还有一种做法是充分利用模型比较中的出现的不确定性，执行模型平均。其原理可以理解为：假设有 <span class="math notranslate nohighlight">\(S\)</span> 个模型（或者 <span class="math notranslate nohighlight">\(S\)</span> 种估计方法），每个模型得出了一个预测值，可记为 <span class="math notranslate nohighlight">\(\tilde\mu_i\)</span>， 其中 <span class="math notranslate nohighlight">\(i \in \{1...S\}\)</span> ，那么模型平均方法得到的最终估计值为：</p>
-<div class="math notranslate nohighlight">
-\[
-\tilde \mu = \tilde W_1\tilde\mu_1 + \tilde W_2\tilde\mu_2 + ... + \tilde W_s\tilde\mu_S
-\]</div>
-<p>从公式中不难看出，模型平均中比较重要的是权重，该权重是数据依赖的。模型平均是处理模型不确定性和提高预测效果的方法，其核心研究内容是权重选择以及不确定性的衡量。</p>
-<blockquote>
-<div><p><strong>注解：</strong></p>
-<ul class="simple">
-<li><p>之前讨论的重点是参数的不确定性问题，此处为模型的不确定性。</p></li>
-<li><p>能够解释数据集的模型很多，<strong>模型比较</strong>试图从其中选择一个最优的，而<strong>模型平均</strong>则认为所有模型的加权平均可能是最好的估计。</p></li>
-<li><p>从广义上理解，模型平均是集成方法的一种。</p></li>
-<li><p>有必要将<strong>模型平均</strong>与<strong>模型组合</strong>区分开，模型组合通常对预测变量的不同空间采用不同的模型，常见方法是<strong>决策树</strong>。 在模型平均中整个数据集由单一的模型生成，而在模型组合中，数据集里的不同数据点可能由不同模型生成。</p></li>
-</ul>
-</div></blockquote>
-<p>下面介绍其中几种比较常用的模型平均方法：</p>
-<div class="section" id="id10">
-<h3>5.4.1 基于信息准则值计算权重<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
-<p>本方法使用每个模型的加权平均值来生成 <code class="docutils literal notranslate"><span class="pre">元模型（meta-model）</span></code> 和 <code class="docutils literal notranslate"><span class="pre">元预测（meta-predictions）</span></code> 。基于某些信息准则值（如 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code>）计算不同模型的权重，公式如下：</p>
-<div class="math notranslate nohighlight">
-\[
-w_{i}=\frac{e^{\frac{1}{2} d E_{i}}}{\sum_{j=1}^{M} e^{-\frac{1}{2} d E_{j}}} \tag{式 5.7}  
-\]</div>
-<p>这里 <span class="math notranslate nohighlight">\(dE_i\)</span> 是第 <span class="math notranslate nohighlight">\(i\)</span> 个模型相对于最佳模型（<code class="docutils literal notranslate"><span class="pre">WAIC</span></code>值最小的模型）的 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 相对差值。除 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 外，此处也可以使用其他信息准则值，如 <code class="docutils literal notranslate"><span class="pre">AIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 等。此公式是根据 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 值计算各模型相对概率的启发式方法。分母为归一化因子，第 4 章中有过类似的表达式。</p>
-<p>采用式 5.7 的权重对模型进行加权平均称为 <code class="docutils literal notranslate"><span class="pre">伪贝叶斯模型平均</span></code> 。真正的贝叶斯模型平均应当使用边缘似然，而非 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 。不过尽管边缘似然在理论上很有吸引力，但在模型比较和模型平均中使用很少。大多还是选择 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 而非边缘似然。在后续 <code class="docutils literal notranslate"><span class="pre">贝叶斯因子</span></code> 一节中，会有更多此方面的讨论。</p>
-<blockquote>
-<div><p><strong>注解：</strong> 边缘似然是模型解释数据的能力体现，理论上边缘似然越大赋予的权重也应当越大。</p>
-</div></blockquote>
-<p>使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> ，可以通过将 <code class="docutils literal notranslate"><span class="pre">method=‘pseudo-BMA’</span></code> （伪贝叶斯模型平均）参数传递给 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 函数来计算式 5.7 的权重。其问题是未考虑计算 <span class="math notranslate nohighlight">\(E_i\)</span> 时的不确定性。通过高斯近似可以计算每一个 <span class="math notranslate nohighlight">\(E_i\)</span> 的标准差。这也是函数 <code class="docutils literal notranslate"><span class="pre">az.waic</span></code>、<code class="docutils literal notranslate"><span class="pre">az.loo</span></code> 和 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 在传递 <code class="docutils literal notranslate"><span class="pre">method=‘pseudo-BMA’</span></code> 参数时返回的误差值。此外，还可以使用 <code class="docutils literal notranslate"><span class="pre">贝叶斯自举（Bayesian</span> <span class="pre">bootstrapping）法</span></code> 来估计不确定性。这是一种比高斯近似更可靠的方法。通过将 <code class="docutils literal notranslate"><span class="pre">method=‘BB-pseudo-BMA’</span></code> 传递给 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 函数即可实现。</p>
-</div>
-<div class="section" id="id11">
-<h3>5.4.2 基于后验预测分布计算权重<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
-<p>另一种计算平均模型权重的方法被称为 <code class="docutils literal notranslate"><span class="pre">预测分布堆叠（stacking</span> <span class="pre">of</span> <span class="pre">predictive</span> <span class="pre">distributions）</span></code> 。这在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中通过将 <code class="docutils literal notranslate"><span class="pre">method=‘stacking’</span></code> 传递给 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 实现。其基本思想是通过最小化元模型和真实生成模型之间的差异，将多个模型组合到一个元模型中。当使用对数打分规则时，这等价于：</p>
-<div class="math notranslate nohighlight">
-\[
-\max _{n} \frac{1}{n} \sum_{i=1}^{n} \log \sum_{k=1}^{K} w_{k} p\left(y_{i} \mid y_{-i}, M_{k}\right) \tag{式 5.8}  
-\]</div>
-<p>这里，<span class="math notranslate nohighlight">\(n\)</span> 是数据点的数量，<span class="math notranslate nohighlight">\(k\)</span> 是模型的数量。为了强制实施方案，我们将 <span class="math notranslate nohighlight">\(w\)</span> 约束为 <span class="math notranslate nohighlight">\(w_k \geq 0\)</span> 并且 <span class="math notranslate nohighlight">\(\sum w_k =1\)</span>。量 <span class="math notranslate nohighlight">\(p(y_i|y_{-i},M_k)\)</span> 是模型 <span class="math notranslate nohighlight">\(M_k\)</span> 的留一预测分布。根据留一法，计算需要拟合每个模型 <span class="math notranslate nohighlight">\(n\)</span> 次，每次遗留一个数据点。幸运的是，<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 可以使用 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 来近似留一预测分布。</p>
-</div>
-<div class="section" id="id12">
-<h3>5.4.3 其他模型平均方法<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
-<p>还有其他方法来平均模型，例如，显式构建包括所有感兴趣模型作为子模型的元模型。可以构建这样一个模型：我们对每个子模型的参数进行推断，同时计算每个模型的相对概率（有关此方面的示例，请参阅 <code class="docutils literal notranslate"><span class="pre">贝叶斯因子</span></code> 一节）。</p>
-<p>除了对离散的模型求平均之外，有时候还可以将模型视为连续的。一个简单的示例就是，假设我们有一个抛硬币问题以及两个不同的模型，其中之一的先验偏向正面朝上，另一个偏向于反面朝上。则我们可以按照离散的模型平均方式，用两个模型去拟合并用 <code class="docutils literal notranslate"><span class="pre">dIC</span></code> 权重求平均；但也可以构建一个分层模型估计先验分布，而此时构建的不再是两个离散的模型了，而是一个连续模型，其中包含两个离散的模型作为特例。</p>
-<p>哪种方法更好呢？还是要具体问题具体分析，最终使用哪一个取决于实际问题是更适合用离散模型还是连续模型去描述。</p>
-<ul class="simple">
-<li><p>我们是否真的有很好的理由考虑离散模型，或者我们的问题更好地表示为连续模型？</p></li>
-<li><p>对于问题来说，挑出一个模型很重要，因为我们是从相互竞争的解释角度思考的，或者平均是更好的想法，因为我们对预测更感兴趣，或者真的可以将流程生成过程视为子流程的平均吗？</p></li>
-</ul>
-<p>所有这些问题都不是由统计数据来回答的，而是由领域知识背景下的统计数据来提供信息的。</p>
-<p>以下只是如何从 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 获得加权后验预测样本的一个模拟示例。在这里，我们使用的是 <code class="docutils literal notranslate"><span class="pre">pm.sample_posterior_predictive_w</span></code> 函数（注意函数名称末尾的 <code class="docutils literal notranslate"><span class="pre">w</span></code> ）。<code class="docutils literal notranslate"><span class="pre">pm.sample_posterior_predictive</span></code> 和<code class="docutils literal notranslate"><span class="pre">pm.sample_posterior_predictive_w</span></code> 之间的区别在于，后者接受多个模型的轨迹和模型，以及相应权重列表（默认值权重相同）。你可以通过 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 或其他来源获取这些权重：</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span> <span class="o">=</span> <span class="mf">0.5</span>
-<span class="n">y_lp</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive_w</span><span class="p">([</span><span class="n">trace_l</span><span class="p">,</span> <span class="n">trace_p</span><span class="p">],</span>
-                                        <span class="n">samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-                                        <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="n">model_l</span><span class="p">,</span> <span class="n">model_p</span><span class="p">],</span>
-                                        <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">w</span><span class="p">])</span>
-<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">az</span><span class="o">.</span><span class="n">plot_kde</span><span class="p">(</span><span class="n">y_l</span><span class="p">,</span> <span class="n">plot_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;C1&#39;</span><span class="p">},</span>
-            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;linear model&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">az</span><span class="o">.</span><span class="n">plot_kde</span><span class="p">(</span><span class="n">y_p</span><span class="p">,</span> <span class="n">plot_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;C2&#39;</span><span class="p">},</span>
-            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;order 2 model&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">az</span><span class="o">.</span><span class="n">plot_kde</span><span class="p">(</span><span class="n">y_lp</span><span class="p">[</span><span class="s1">&#39;y_pred&#39;</span><span class="p">],</span> <span class="n">plot_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;C3&#39;</span><span class="p">},</span>
-           <span class="n">label</span><span class="o">=</span><span class="s1">&#39;weighted model&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y_1s</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">y_1s</span><span class="p">),</span> <span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;observed data&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</div>
-<center>
-<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210524232628_ac.webp" /></p>
-<blockquote>
-<div><p><strong>图 5.9 对一阶和二阶多项式模型做模型平均</strong>。 橙色为一阶模型的预测曲线，绿色为二阶模型的预测曲线，中间的粉色为模型平均后的预测曲线。</p>
-</div></blockquote>
-</center>
-<p>前面提到这是一个虚拟示例，因为与线性模型相比，二次多项式模型的 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 值非常低，第一个模型的权重基本上是 1 ，而后者权重基本上是 0 ，为生成图 5.9 ，我假设了这两个模型具有相同的权重 <span class="math notranslate nohighlight">\(0.5\)</span> 。</p>
-</div>
-</div>
-<div class="section" id="id13">
-<h2>5.5 浅谈贝叶斯模型比较<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<h2>5.4 贝叶斯框架下的模型比较<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><p><strong>背景：</strong></p>
 <p>零假设显著性检验（ <code class="docutils literal notranslate"><span class="pre">NHST</span></code> ）是频率主义进行数据分析的主要工具。但在统计学领域，<code class="docutils literal notranslate"><span class="pre">NHST</span></code> 受到了广泛批评。越来越多的统计学者提倡使用贝叶斯方法检验研究假设，在实证研究中也有越来越多的学者使用贝叶斯因子进行数据分析。</p>
 </div></blockquote>
-<div class="section" id="id14">
-<h3>5.5.1 基本概念<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h3>5.4.1 基本概念<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>在贝叶斯世界中，评估和比较模型的一种常见方式是 <code class="docutils literal notranslate"><span class="pre">贝叶斯因子（Bayes</span> <span class="pre">factor,</span> <span class="pre">BF）</span></code> 。 为理解什么是贝叶斯因子，让我们重温一遍贝叶斯定理：</p>
 <div class="math notranslate nohighlight">
 \[
-p(\theta \mid \mathcal{D})=\frac{p(\mathcal{D} \mid \theta) p(\theta)}{p(\mathcal{D})} \tag{式 5.9} 
+p(\theta \mid \mathcal{D})=\frac{p(\mathcal{D} \mid \theta) p(\theta)}{p(\mathcal{D})} \tag{式 5.6} 
 \]</div>
 <p>这里，<span class="math notranslate nohighlight">\(\mathcal{D}\)</span> 表示数据，由于通常模型是默认的，所以被隐藏了。这里为了区分不同的模型，可以显式地将模型 <span class="math notranslate nohighlight">\(M_k\)</span> 加入到条件概率公式中：</p>
 <div class="math notranslate nohighlight">
 \[
-p\left(\theta \mid \mathcal{D}, M_{k}\right)=\frac{p\left(\mathcal{D} \mid \theta, M_{k}\right) p\left(\theta \mid M_{k}\right)}{p\left(\mathcal{D} \mid M_{k}\right)}\tag{式 5.10}  
+p\left(\theta \mid \mathcal{D}, M_{k}\right)=\frac{p\left(\mathcal{D} \mid \theta, M_{k}\right) p\left(\theta \mid M_{k}\right)}{p\left(\mathcal{D} \mid M_{k}\right)}\tag{式 5.7}  
 \]</div>
 <p>第一章中曾经介绍过，分母中的术语为边缘似然（或证据），可视为一个归一化常数。在进行单模型推断时，通常不需要真实计算它，而是基于一个常数因子来计算后验（如： <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 和 <code class="docutils literal notranslate"><span class="pre">变分推断</span></code> 方法都巧妙地规避了边缘似然的计算）。但对于模型比较和模型平均来说，边缘似然是不得不计算的重要量。</p>
 <p>前面曾经提到过，<strong>模型选择</strong>的主要目标是从 <span class="math notranslate nohighlight">\(k\)</span> 个模型中选择一个最好的模型，理论上我们应当选择边缘似然 <span class="math notranslate nohighlight">\(p(\mathcal{D}|M_k)\)</span> 最大的那个（<code class="docutils literal notranslate"><span class="pre">边缘似然</span></code>之所以又被称为<code class="docutils literal notranslate"><span class="pre">证据</span></code>，就是因为它可以证明哪个模型更能解释数据集）。一般来说， <span class="math notranslate nohighlight">\(p(\mathcal{D}|M_k)\)</span> 的绝对数值本身并不能告诉我们太多信息，重要的是在不同模型之间的相对值。因此，实践中经常计算两个边缘似然的比率，这个比率就是著名的<strong>贝叶斯因子</strong>：</p>
 <div class="math notranslate nohighlight">
 \[
-B F=\frac{p\left(\mathcal{D} \mid M_{0}\right)}{p\left(\mathcal{D} \mid M_{1}\right)} \tag{式 5.11} 
+B F=\frac{p\left(\mathcal{D} \mid M_{0}\right)}{p\left(\mathcal{D} \mid M_{1}\right)} \tag{式 5.8} 
 \]</div>
 <p>当 <span class="math notranslate nohighlight">\(BF（M_0,M_1） &gt; 1\)</span> 时，表明模型 <span class="math notranslate nohighlight">\(0\)</span> 比模型 <span class="math notranslate nohighlight">\(1\)</span> 更好地解释了数据。</p>
 <p>一些研究者为了简化对 <span class="math notranslate nohighlight">\(BF\)</span> 的解释，设计了带有范围的表格。例如，下面的列表显示了 “支持模式 <span class="math notranslate nohighlight">\(0\)</span> 而不支持模式 <span class="math notranslate nohighlight">\(1\)</span> ” 的证据强度：</p>
@@ -1201,15 +1280,15 @@ B F=\frac{p\left(\mathcal{D} \mid M_{0}\right)}{p\left(\mathcal{D} \mid M_{1}\ri
 <p>此时就要对贝叶斯定理和贝叶斯因子做进一步的推广，必须计算模型的后验赔率：</p>
 <div class="math notranslate nohighlight">
 \[
-\underbrace{\frac{p\left(M_{0} \mid \mathcal{D}\right)}{p\left(M_{1} \mid \mathcal{D}\right)}}_{\text {posterior odds }}=\underbrace{\frac{p\left(\mathcal{D}\mid M_{0}\right)}{p\left(\mathcal{D} \mid M_{1}\right)}}_{\text {Bayes factors}} \underbrace{\frac{p\left(M_{0}\right)}{p\left(M_{1}\right)}}_{\text{prior odds} } \tag{式 5.12}  
+\underbrace{\frac{p\left(M_{0} \mid \mathcal{D}\right)}{p\left(M_{1} \mid \mathcal{D}\right)}}_{\text {posterior odds }}=\underbrace{\frac{p\left(\mathcal{D}\mid M_{0}\right)}{p\left(\mathcal{D} \mid M_{1}\right)}}_{\text {Bayes factors}} \underbrace{\frac{p\left(M_{0}\right)}{p\left(M_{1}\right)}}_{\text{prior odds} } \tag{式 5.9}  
 \]</div>
 </div>
-<div class="section" id="id15">
-<h3>5.5.2 一些讨论<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3>5.4.2 一些讨论<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <p>现在简要讨论有关边缘似然的一些关键事实。通过仔细检查定义，可以理解边缘似然的性质和应用效果：</p>
 <div class="math notranslate nohighlight">
 \[
-p\left(\mathcal{D} \mid M_{k}\right)=\int_{\theta_{k}} p\left(\mathcal{D} \mid \theta_{k}, M_{k}\right) p\left(\theta_{k}, M_{k}\right) d \theta_{k} \tag{式 5.13}  
+p\left(\mathcal{D} \mid M_{k}\right)=\int_{\theta_{k}} p\left(\mathcal{D} \mid \theta_{k}, M_{k}\right) p\left(\theta_{k}, M_{k}\right) d \theta_{k} \tag{式 5.10}  
 \]</div>
 <ul class="simple">
 <li><p><strong>好处</strong>：参数多的模型比参数少的模型具有更大惩罚。贝叶斯因子内置奥卡姆剃刀，因为参数数量越多，先验分布相对于似然就越宽。结合贝叶斯因子公式，越宽的先验积分（质量）越大，而越聚集的先验积分（质量）越小，从而间接实现了对参数数量的惩罚。</p></li>
@@ -1219,9 +1298,9 @@ p\left(\mathcal{D} \mid M_{k}\right)=\int_{\theta_{k}} p\left(\mathcal{D} \mid \
 <p>使用边缘似然来比较模型是一个好主意，因为复杂模型的惩罚已经包括在内。但同时先验信息的变化会影响边缘似然的计算，其中关键词是 ”敏感“ 。也就是说先验的微小变化，可能会对边缘似然的值产生巨大影响。在前例中，标准差为 <span class="math notranslate nohighlight">\(100\)</span> 的正态先验与标准差为 <span class="math notranslate nohighlight">\(1000\)</span> 的正态先验变化很小，但相应的贝叶斯因子受这些变化却产生了较大变化。</p>
 <p>另一个相关的批评是，贝叶斯因子可以被用作进行假设检验的贝叶斯统计方法。这种批评本身没错，但许多文章指出，推断方法比假设检验方法（无论是否为贝叶斯方法）更适合于大多数问题。</p>
 </div>
-<div class="section" id="id16">
-<h3>5.5.3 贝叶斯因子的计算<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
-<p>贝叶斯因子的计算可以被视为一个分层模型，其中超参数是分配给每个模型并从<code class="docutils literal notranslate"><span class="pre">类别分布</span></code>中采样的索引值（ <code class="docutils literal notranslate"><span class="pre">index</span></code> ）。换句话说，我们同时对多个相互竞争的模型进行推断，并使用在模型间跳跃的离散变量。我们花在每个模型上的采样时间与 <span class="math notranslate nohighlight">\(p(M_k|\mathcal{D})\)</span> 成正比。然后，应用公式 5.10 求出贝叶斯因子。</p>
+<div class="section" id="id12">
+<h3>5.4.3 贝叶斯因子的计算<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>贝叶斯因子的计算可以被视为一个分层模型，其中超参数是分配给每个模型并从<code class="docutils literal notranslate"><span class="pre">类别分布</span></code>中采样的索引值（ <code class="docutils literal notranslate"><span class="pre">index</span></code> ）。换句话说，我们同时对多个相互竞争的模型进行推断，并使用在模型间跳跃的离散变量。我们花在每个模型上的采样时间与 <span class="math notranslate nohighlight">\(p(M_k|\mathcal{D})\)</span> 成正比。然后，应用公式 5.9 求出贝叶斯因子。</p>
 <p>为举例说明贝叶斯因子的计算，我们再来一次抛硬币：</p>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210525130312_77.webp" /></p>
@@ -1274,17 +1353,20 @@ p\left(\mathcal{D} \mid M_{k}\right)=\int_{\theta_{k}} p\left(\mathcal{D} \mid \
 </div>
 <p>结果，我们得到的值为<span class="math notranslate nohighlight">\(≈11\)</span>，这意味着模型 <span class="math notranslate nohighlight">\(0\)</span> 比模型 <span class="math notranslate nohighlight">\(1\)</span> 高出一个数量级。这非常有意义，因为数据的正面值比预期的 <span class="math notranslate nohighlight">\(\theta=0.5\)</span> 要少，两个模型之间的唯一区别是模型 <span class="math notranslate nohighlight">\(0\)</span> 的先验更兼容 <span class="math notranslate nohighlight">\(\theta&lt;0.5\)</span> （背面比正面多），模型 <span class="math notranslate nohighlight">\(1\)</span> 更兼容 <span class="math notranslate nohighlight">\(\theta&gt;0.5\)</span> （正面比背面多）。</p>
 </div>
-<div class="section" id="id17">
-<h3>5.5.4 计算贝叶斯因子时的常见问题<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h3>5.4.4 计算贝叶斯因子时的常见问题<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>用我们定义的方式计算贝叶斯因子会有一些问题，比如当其中一个模型比另一个模型更好时，根据定义，我们会对更好的这个模型采样次数更多，这可能会导致我们对另外一个模型欠采样。另外，第一个问题是：即使某些参数没有用于拟合数据，也会更新。也就是说，当模型 <span class="math notranslate nohighlight">\(0\)</span> 被选择时，模型 <span class="math notranslate nohighlight">\(1\)</span> 中的参数也会更新，不过由于这部分参数并没有用于解释数据，值受限于先验。如果先验太模糊，有可能当我们选到模型 <span class="math notranslate nohighlight">\(1\)</span> 时，参数值距离上一次被接受的值太远了，因而该步被拒绝，从而导致采样会出现问题。</p>
+<blockquote>
+<div><p>此处关于模型平均时的参数更新问题，可以参考 <code class="docutils literal notranslate"><span class="pre">附录</span> <span class="pre">G</span></code> 。</p>
+</div></blockquote>
 <p>如果遇到此类问题，可以对模型进行两个调整以改进采样：</p>
 <ul class="simple">
 <li><p>理想情况下，如果两个模型都访问相同次数，我们会得到一个更好的采样，因此我们对模型的先验做出调整（前一个模型中的 <span class="math notranslate nohighlight">\(p\)</span> 值），从而向原来访问频次较低的模型倾斜。这个过程对贝叶斯因子的计算不会有多大影响，因为我们在计算过程中包含了先验。</p></li>
 <li><p>根据 Kruschke 以及其他人的建议，可以使用伪先验，其思想很简单：当没被选择的模型的参数出现自由漂移时，可以尝试手动限制它们，不过是在这个模型没被使用的时候。您可以找到一个在 <code class="docutils literal notranslate"><span class="pre">Kruschke</span></code> 书中使用的模型示例，我将该模型移植到了 <a class="reference external" href="https:///%E2%80%8B/%E2%80%8Bgithub.%E2%80%8Bcom/%E2%80%8Baloctavodia/%E2%80%8BDoing_%E2%80%8Bbayesian_%E2%80%8Bdata_%E2%80%8Banalysis"><code class="docutils literal notranslate"><span class="pre">PyMC3</span></code></a> 中。</p></li>
 </ul>
 </div>
-<div class="section" id="id18">
-<h3>5.5.5 用序贯蒙特卡罗方法计算贝叶斯因子<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3>5.4.5 用序贯蒙特卡罗方法计算贝叶斯因子<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>另一种计算贝叶斯因子的方法是使用 <code class="docutils literal notranslate"><span class="pre">序贯蒙特卡罗</span> <span class="pre">(SMC)</span> <span class="pre">采样方法</span></code>。我们将在 <code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">8</span> <span class="pre">章-推断引擎</span></code> 中学习此方法的详细信息。现在只需要知道这个采样器计算的边缘似然估计是一个副产品，可以直接使用它来计算贝叶斯因子。要在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中使用 <code class="docutils literal notranslate"><span class="pre">SMC</span></code>，需将 <code class="docutils literal notranslate"><span class="pre">pm.SMC()</span></code> 传递给 <code class="docutils literal notranslate"><span class="pre">sample</span></code> 的 <code class="docutils literal notranslate"><span class="pre">step</span></code> 参数：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1305,8 +1387,8 @@ p\left(\mathcal{D} \mid M_{k}\right)=\int_{\theta_{k}} p\left(\mathcal{D} \mid \
 </div>
 <p>根据 <code class="docutils literal notranslate"><span class="pre">SMC</span> <span class="pre">方法</span></code>，贝叶斯因子也在 11 左右，如果你想用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 计算贝叶斯因子，我强烈推荐使用 <code class="docutils literal notranslate"><span class="pre">SMC</span> <span class="pre">方法</span></code>。本书中提出的另一种方法在计算上更加繁琐，需要更多手动调整，主要是因为模型间的跳跃需要用户通过反复试验进行更多调整。从这点上来说，<code class="docutils literal notranslate"><span class="pre">SMC</span></code> 是一种自动化程度更高的方法。</p>
 </div>
-<div class="section" id="id19">
-<h3>5.5.6 贝叶斯因子与信息准则<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id15">
+<h3>5.4.6 贝叶斯因子与信息准则<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p>如果对贝叶斯因子求对数，可以将两个边缘似然的比值转换成求差，这样比较边缘似然就与比较信息准则类似了。但衡量模型的数据拟合程度项以及惩罚项去哪儿了呢？前者包含在了似然部分，而后者包含在对先验取平均的部分。参数越多，先验空间相比似然就越大，因而平均之后似然就会较低，而且参数越多，先验就会越分散，因而在计算证据的时候惩罚越大。这也是为什么人们说贝叶斯理论会很自然地惩罚更复杂的模型，或者称贝叶斯理论自带奥卡姆剃刀。</p>
 <p>此前说过，贝叶斯因子对先验过于敏感。这在执行推断时会导致本来不相关的差异，在计算贝叶斯因子时被证明为非常重要。现在我们来看一个示例，它将有助于阐明贝叶斯因子在做什么，信息准则在做什么，以及它们如何在相似的情况下专注于两个不同的方面。回到抛硬币示例的数据定义，现在设置 <span class="math notranslate nohighlight">\(300\)</span> 枚硬币和 <span class="math notranslate nohighlight">\(90\)</span> 个正面；这与以前的比例相同，但数据多了 <span class="math notranslate nohighlight">\(10\)</span> 倍。然后，分别运行每个模型：</p>
 <div class="cell docutils container">
@@ -1359,20 +1441,117 @@ p\left(\mathcal{D} \mid M_{k}\right)=\int_{\theta_{k}} p\left(\mathcal{D} \mid \
 <p><strong>贝叶斯因子关注的是哪个模型更好，而 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> （和 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> ) 关注的是哪个模型能给出更好的预测。</strong> 如果检查公式 5.5 和 5.11，你就会看到这些不同。 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 和其他信息准则一样，以这样或那样的方式使用对数似然，先验并不直接作为计算的一部分。先验只间接参与，辅助我们估计。取而代之的是，贝叶斯因子直接使用先验，因为我们需要对先验值的整个范围内的似然进行平均。</p>
 </div>
 </div>
+<div class="section" id="id16">
+<h2>5.5 模型平均<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>注：关于本节更详细的信息，参见 <code class="docutils literal notranslate"><span class="pre">附录</span> <span class="pre">G</span></code> 。</p>
+</div></blockquote>
+<p>通过交叉验证、信息准则、贝叶斯因子等方法对众多模型进行比较，然后做出模型选择的策略，实践起来比较简单。但大家心里应当清楚，<strong>当我们在选择模型的时候，也正在抛弃有关模型的不确定性信息</strong> 。这种情况有些类似于计算了完整的后验分布，但最后只保留了后验均值。这会造成我们对模型过于自信。</p>
+<p>一种变通的方案是在执行模型选择时，报告和讨论不同模型的信息准则值、标准差等统计量以及后验预测检查情况。将所有这些数字和检查放在问题上下文中很重要，只有这样，相关人士才能更好地感受到模型可能存在的局限性和缺点。在学术界中，这种作法比较常见，在很多论文、演示文稿的讨论部分中，能够找到大量的相关案例。</p>
+<p>除了上述对各模型均做出报告和讨论的方法外，还有一种做法是充分利用模型比较中的出现的不确定性，执行模型平均。其原理可以理解为：假设有 <span class="math notranslate nohighlight">\(S\)</span> 个模型（或者 <span class="math notranslate nohighlight">\(S\)</span> 种估计方法），每个模型得出了一个预测值，可记为 <span class="math notranslate nohighlight">\(\tilde\mu_i\)</span>， 其中 <span class="math notranslate nohighlight">\(i \in \{1...S\}\)</span> ，那么模型平均方法得到的最终估计值为：</p>
+<div class="math notranslate nohighlight">
+\[
+\tilde \mu = \tilde W_1\tilde\mu_1 + \tilde W_2\tilde\mu_2 + ... + \tilde W_s\tilde\mu_S
+\]</div>
+<p>从公式中不难看出，模型平均中比较重要的是权重，该权重是数据依赖的。模型平均是处理模型不确定性和提高预测效果的方法，其核心研究内容是权重选择以及不确定性的衡量。</p>
+<blockquote>
+<div><p><strong>注解：</strong></p>
+<ul class="simple">
+<li><p>之前讨论的重点是参数的不确定性问题，此处为模型的不确定性。</p></li>
+<li><p>能够解释数据集的模型很多，<strong>模型比较</strong>试图从其中选择一个最优的，而<strong>模型平均</strong>则认为所有模型的加权平均可能是最好的估计。</p></li>
+<li><p>从广义上理解，模型平均是集成方法的一种。</p></li>
+<li><p>有必要将<strong>模型平均</strong>与<strong>模型组合</strong>区分开，模型组合通常对预测变量的不同空间采用不同的模型，常见方法是<strong>决策树</strong>。 在模型平均中整个数据集由单一的模型生成，而在模型组合中，数据集里的不同数据点可能由不同模型生成。</p></li>
+</ul>
+</div></blockquote>
+<p>下面介绍其中几种比较常用的模型平均方法：</p>
+<div class="section" id="id17">
+<h3>5.5.1 基于信息准则值计算权重<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>本方法使用每个模型的加权平均值来生成 <code class="docutils literal notranslate"><span class="pre">元模型（meta-model）</span></code> 和 <code class="docutils literal notranslate"><span class="pre">元预测（meta-predictions）</span></code> 。基于某些信息准则值（如 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code>）计算不同模型的权重，公式如下：</p>
+<div class="math notranslate nohighlight">
+\[
+w_{i}=\frac{e^{\frac{1}{2} d E_{i}}}{\sum_{j=1}^{M} e^{-\frac{1}{2} d E_{j}}} \tag{式 5.11}  
+\]</div>
+<p>这里 <span class="math notranslate nohighlight">\(dE_i\)</span> 是第 <span class="math notranslate nohighlight">\(i\)</span> 个模型相对于最佳模型（<code class="docutils literal notranslate"><span class="pre">WAIC</span></code>值最小的模型）的 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 相对差值。除 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 外，此处也可以使用其他信息准则值，如 <code class="docutils literal notranslate"><span class="pre">AIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 等。此公式是根据 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 值计算各模型相对概率的启发式方法。分母为归一化因子，第 4 章中有过类似的表达式。</p>
+<p>采用式 5.11 的权重对模型进行加权平均称为 <code class="docutils literal notranslate"><span class="pre">伪贝叶斯模型平均</span></code> 。真正的贝叶斯模型平均应当使用边缘似然，而非 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 。不过尽管边缘似然在理论上很有吸引力，但在模型比较和模型平均中使用很少。大多还是选择 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 而非边缘似然。</p>
+<blockquote>
+<div><p><strong>注解：</strong> 边缘似然是模型解释数据的能力体现，理论上边缘似然越大赋予的权重也应当越大。</p>
+</div></blockquote>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> ，可以通过将 <code class="docutils literal notranslate"><span class="pre">method=‘pseudo-BMA’</span></code> （伪贝叶斯模型平均）参数传递给 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 函数来计算式 5.7 的权重。其问题是未考虑计算 <span class="math notranslate nohighlight">\(E_i\)</span> 时的不确定性。通过高斯近似可以计算每一个 <span class="math notranslate nohighlight">\(E_i\)</span> 的标准差。这也是函数 <code class="docutils literal notranslate"><span class="pre">az.waic</span></code>、<code class="docutils literal notranslate"><span class="pre">az.loo</span></code> 和 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 在传递 <code class="docutils literal notranslate"><span class="pre">method=‘pseudo-BMA’</span></code> 参数时返回的误差值。此外，还可以使用 <code class="docutils literal notranslate"><span class="pre">贝叶斯自举（Bayesian</span> <span class="pre">bootstrapping）法</span></code> 来估计不确定性。这是一种比高斯近似更可靠的方法。通过将 <code class="docutils literal notranslate"><span class="pre">method=‘BB-pseudo-BMA’</span></code> 传递给 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 函数即可实现。</p>
+</div>
+<div class="section" id="id18">
+<h3>5.5.2 基于后验预测分布计算权重<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>另一种计算平均模型权重的方法被称为 <code class="docutils literal notranslate"><span class="pre">预测分布堆叠（stacking</span> <span class="pre">of</span> <span class="pre">predictive</span> <span class="pre">distributions）</span></code> 。这在 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 中通过将 <code class="docutils literal notranslate"><span class="pre">method=‘stacking’</span></code> 传递给 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 实现。其基本思想是通过最小化元模型和真实生成模型之间的差异，将多个模型组合到一个元模型中。当使用对数打分规则时，这等价于：</p>
+<div class="math notranslate nohighlight">
+\[
+\max _{n} \frac{1}{n} \sum_{i=1}^{n} \log \sum_{k=1}^{K} w_{k} p\left(y_{i} \mid y_{-i}, M_{k}\right) \tag{式 5.12}  
+\]</div>
+<p>这里，<span class="math notranslate nohighlight">\(n\)</span> 是数据点的数量，<span class="math notranslate nohighlight">\(k\)</span> 是模型的数量。为了强制实施方案，我们将 <span class="math notranslate nohighlight">\(w\)</span> 约束为 <span class="math notranslate nohighlight">\(w_k \geq 0\)</span> 并且 <span class="math notranslate nohighlight">\(\sum w_k =1\)</span>。量 <span class="math notranslate nohighlight">\(p(y_i|y_{-i},M_k)\)</span> 是模型 <span class="math notranslate nohighlight">\(M_k\)</span> 的留一预测分布。根据留一法，计算需要拟合每个模型 <span class="math notranslate nohighlight">\(n\)</span> 次，每次遗留一个数据点。幸运的是，<code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 可以使用 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 来近似留一预测分布。</p>
+</div>
+<div class="section" id="id19">
+<h3>5.5.3 其他模型平均方法<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p><strong>（1）经典贝叶斯模型平均法</strong></p>
+<p>在上述基于预测能力的模型平均方法之外，还有一种最为经典的模型平均方法，该方法显式构建包括所有感兴趣模型作为子模型的元模型。可以构建这样一个模型：我们对每个子模型的参数进行推断，同时计算每个模型的相对概率（有关此方面的示例，请参阅 <code class="docutils literal notranslate"><span class="pre">贝叶斯因子</span></code> 一节 和 <code class="docutils literal notranslate"><span class="pre">附录</span> <span class="pre">G</span></code> 的<code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">2.2</span> <span class="pre">节</span></code>）。</p>
+<p><strong>（2）连续贝叶斯模型平均</strong></p>
+<p>除了对离散的模型求平均之外，有时候还可以将模型视为连续的。一个简单的示例就是，假设我们有一个抛硬币问题以及两个不同的模型，其中之一的先验偏向正面朝上，另一个偏向于反面朝上。则我们可以按照离散的模型平均方式，用两个模型去拟合并用 <code class="docutils literal notranslate"><span class="pre">dIC</span></code> 权重求平均；但也可以构建一个分层模型估计先验分布，而此时构建的不再是两个离散的模型了，而是一个连续模型，其中包含两个离散的模型作为特例。</p>
+<p>哪种方法更好呢？还是要具体问题具体分析，最终使用哪一个取决于实际问题是更适合用离散模型还是连续模型去描述。</p>
+<ul class="simple">
+<li><p>我们是否真的有很好的理由考虑离散模型，或者我们的问题更好地表示为连续模型？</p></li>
+<li><p>对于问题来说，挑出一个模型很重要，因为我们是从相互竞争的解释角度思考的，或者平均是更好的想法，因为我们对预测更感兴趣，或者真的可以将流程生成过程视为子流程的平均吗？</p></li>
+</ul>
+<p>所有这些问题都不是由统计数据来回答的，而是由领域知识背景下的统计数据来提供信息的。</p>
+</div>
 <div class="section" id="id20">
-<h2>5.6 其他<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<h3>5.5.4 模型平均后验预测示例<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p>以下只是如何从 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 获得加权后验预测样本的一个模拟示例。在这里，我们使用的是 <code class="docutils literal notranslate"><span class="pre">pm.sample_posterior_predictive_w</span></code> 函数（注意函数名称末尾的 <code class="docutils literal notranslate"><span class="pre">w</span></code> ）。<code class="docutils literal notranslate"><span class="pre">pm.sample_posterior_predictive</span></code> 和<code class="docutils literal notranslate"><span class="pre">pm.sample_posterior_predictive_w</span></code> 之间的区别在于，后者接受多个模型的轨迹和模型，以及相应权重列表（默认值权重相同）。你可以通过 <code class="docutils literal notranslate"><span class="pre">az.compare</span></code> 或其他来源获取这些权重：</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">y_lp</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample_posterior_predictive_w</span><span class="p">([</span><span class="n">trace_l</span><span class="p">,</span> <span class="n">trace_p</span><span class="p">],</span>
+                                        <span class="n">samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                                        <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="n">model_l</span><span class="p">,</span> <span class="n">model_p</span><span class="p">],</span>
+                                        <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="n">w</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">w</span><span class="p">])</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">az</span><span class="o">.</span><span class="n">plot_kde</span><span class="p">(</span><span class="n">y_l</span><span class="p">,</span> <span class="n">plot_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;C1&#39;</span><span class="p">},</span>
+            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;linear model&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">az</span><span class="o">.</span><span class="n">plot_kde</span><span class="p">(</span><span class="n">y_p</span><span class="p">,</span> <span class="n">plot_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;C2&#39;</span><span class="p">},</span>
+            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;order 2 model&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">az</span><span class="o">.</span><span class="n">plot_kde</span><span class="p">(</span><span class="n">y_lp</span><span class="p">[</span><span class="s1">&#39;y_pred&#39;</span><span class="p">],</span> <span class="n">plot_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;C3&#39;</span><span class="p">},</span>
+           <span class="n">label</span><span class="o">=</span><span class="s1">&#39;weighted model&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y_1s</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">y_1s</span><span class="p">),</span> <span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;observed data&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<center>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210524232628_ac.webp" /></p>
+<blockquote>
+<div><p><strong>图 5.9 对一阶和二阶多项式模型做模型平均</strong>。 橙色为一阶模型的预测曲线，绿色为二阶模型的预测曲线，中间的粉色为模型平均后的预测曲线。</p>
+</div></blockquote>
+</center>
+<p>前面提到这是一个虚拟示例，因为与线性模型相比，二次多项式模型的 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 值非常低，第一个模型的权重基本上是 1 ，而后者权重基本上是 0 ，为生成图 5.9 ，我假设了这两个模型具有相同的权重 <span class="math notranslate nohighlight">\(0.5\)</span> 。</p>
+</div>
+</div>
 <div class="section" id="id21">
-<h3>5.6.1 正则先验<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
-<p>使用强信息和弱信息先验是在模型中引入偏差的一种方式，如果操作得当，这可能是一个非常好的方法，因为偏差可以防止过拟合，从而有助于模型做出泛化性能更好的预测。在不影响模型建模能力的情况下，添加偏差以减少泛化误差的想法称为正则化。这种正则化通常采用对模型参数数量的较大值实施惩罚的形式。正则先验是一种减少模型所能表示信息的方法，从而降低了模型捕获噪声而不是信号的机会。</p>
-<p>正则化思想如此强大和有用，以至于本书中已经出现了很多次。在非贝叶斯统计中，正则化思想表现为对最小二乘法的两种修正： <code class="docutils literal notranslate"><span class="pre">岭回归</span></code> 和 <code class="docutils literal notranslate"><span class="pre">套索回归</span></code> 。从贝叶斯观点来看，岭回归可解释为 <code class="docutils literal notranslate"><span class="pre">对线性模型的贝塔系数采用标准差趋近于</span> <span class="pre">0</span> <span class="pre">的正态分布，使该系数趋向于零</span></code>。从该意义上说，我们一直在为本书中的每一个线性模型做类似岭回归的事情。另一方面，套索回归可以从贝叶斯的观点解释为 <code class="docutils literal notranslate"><span class="pre">从贝塔系数具有</span> <span class="pre">Laplace</span> <span class="pre">先验的模型计算出的后验分布图</span></code>。拉普拉斯分布看起来类似于高斯分布，但它的一阶导数在零处没有定义，因为它在零处有一个非常尖锐的峰值（参见图 5.14）。与正态分布相比，拉普拉斯分布使其概率质量更接近于零。使用这种先验的出发点是提供 <code class="docutils literal notranslate"><span class="pre">正则化</span></code> 的同时实现 <code class="docutils literal notranslate"><span class="pre">变量选择</span></code>。其思路是，由于峰值为零，预计先验会导致稀疏性，也就是说，我们创建了一个具有许多参数的模型，先验将自动使大多数参数为零，只保留对模型输出有贡献的相关变量。不幸的是，贝叶斯套索不是这样工作的，基本上是为了有很多参数，拉普拉斯先验迫使非零参数变小。幸运的是，并不是所有东西都丢失了 – 有一些贝叶斯模型可以用来诱导稀疏性和执行变量选择。</p>
+<h2>5.6 其他<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id22">
+<h3>5.6.1 正则先验<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<p>使用强信息和弱信息先验是在模型中引入偏差的一种方式，如果操作得当，这可能是一个非常好的方法，因为偏差可以防止过拟合，从而有助于模型做出泛化性能更好的预测。在不影响模型建模能力的情况下，添加偏差以减少泛化误差的想法称为正则化。这种正则化通常采用对模型参数数量的较大值实施惩罚的形式。</p>
+<p>正则先验是一种减少模型所能表示信息的方法，能够降低了型捕获噪声而不是信号的机会。</p>
+<p>正则化思想如此强大和有用，以至于本书中已经出现了很多次。在非贝叶斯统计中，正则化思想表现为对最小二乘法的两种修正： 岭回归 和套索回归 。从贝叶斯观点来看：</p>
+<ul class="simple">
+<li><p><strong>岭回归</strong>：可解释为『对线性模型的 <span class="math notranslate nohighlight">\(\beta\)</span> 系数采用了标准差趋近于 0 的正态分布作为先验』，使该系数趋向于零。</p></li>
+<li><p><strong>套索回归</strong>：可解释为『对线性模型的  <span class="math notranslate nohighlight">\(\beta\)</span> 系数采用了拉普拉斯先验分布』。拉普拉斯分布看起来类似于高斯分布，但其一阶导数在零处没有定义，因为它在零处有一个非常尖锐的峰值（参见图 5.14）。与正态分布相比，拉普拉斯分布使其概率质量更接近于零。使用这种先验的出发点是提供 <code class="docutils literal notranslate"><span class="pre">正则化</span></code> 的同时实现 <code class="docutils literal notranslate"><span class="pre">变量选择</span></code>。其思路是，由于峰值为零，预计先验会导致稀疏性，也就是说，我们创建了一个具有许多参数的模型，先验将自动使大多数参数为零，只保留对模型输出有贡献的相关变量。不幸的是，贝叶斯套索不是这样工作的，基本上是为了有很多参数，拉普拉斯先验迫使非零参数变小。幸运的是，并不是所有东西都丢失了 – 有一些贝叶斯模型可以用来诱导稀疏性和执行变量选择。</p></li>
+</ul>
 <p>值得注意的是，经典版本的岭回归和套索回归对应于点估计，而贝叶斯版本则给出了完整的后验分布结果：</p>
 <center>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210524233016_7c.webp" /></p>
 <p>图 5.14</p>
 </center>
 </div>
-<div class="section" id="id22">
-<h3>5.6.2 深入探讨 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id23">
+<h3>5.6.2 深入探讨 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
 <p>如果展开公式 5.5，会得到以下结果：</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1380,8 +1559,8 @@ p\left(\mathcal{D} \mid M_{k}\right)=\int_{\theta_{k}} p\left(\mathcal{D} \mid \
 \]</div>
 <p>该表达式中的两项看起来非常相似。第一项是式 5.5 中的<code class="docutils literal notranslate"><span class="pre">对数点预测密度（lppd）</span></code>，计算的是后验样本集 <span class="math notranslate nohighlight">\(S\)</span> 的平均似然。我们对每个数据点都先求平均似然，然后取对数，最后对所有数据点求和。请将这一项与公式 5.3 和 5.4 进行比较。其实该项就是考虑了后验的样本内离差（deviance）。因此，如果我们认为计算对数似然是衡量模型适合性的好方法，那么在贝叶斯方法中，从后验计算对数似然就顺理成章。观测数据的 lddp 是对未来数据 lppd 的高估（此处意指样本内离差通常小于样本外离差），因此引入第二项来修正这种过高的估计。第二项计算后验样本的对数似然方差，我们对每个数据点执行此方差计算，然后对所有数据点进行汇总。为什么方差会给出惩罚条件？这与贝叶斯因子内置奥卡姆剃须刀的原理相似。有效参数越多，后验分布越大。当向模型添加结构时（如具有信息性/正则化的先验或分层依赖），与非正则化的模型相比，我们约束了后验，进而减少了有效参数的数量。</p>
 </div>
-<div class="section" id="id23">
-<h3>5.6.3 熵与最大熵原理<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id24">
+<h3>5.6.3 熵与最大熵原理<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
 <p>从数学上讲，熵定义为：</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1413,12 +1592,12 @@ H(p)=-\sum_{i} p_i\text{log} (p_i) \tag{式 5.15}
 <p>图 5.15</p>
 </center>
 <p>如图所示，图中的分布 <span class="math notranslate nohighlight">\(r\)</span> 是三种分布中较广的一个，也是熵最大的一个。建议使用代码并探索熵是如何变化的（参见练习 10）。</p>
-<div class="section" id="id24">
-<h4>（1） 熵与方差<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id25">
+<h4>（1） 熵与方差<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
 <p>熵和方差概念上相关，以至于很多人将其声明为度量 ”数据分布的方差“ 的一种特殊形式。不过尽管两个概念相关，但本质上并不相同。在某些情况下，熵增加意味着方差增加，例如高斯分布。然而，也存在方差增加但熵不变的示例。例如混合了两个高斯分布的混合模型，当增加两个高斯分布的众数之间距离的时候，导致大部分点到平均值的距离增加了，即方差增大了。但此时，熵受到的影响极小，因为随着众数之间距离的增加，众数之间的点的概率越来越小，因此它们对总熵的贡献逐步可以忽略不计。从熵的角度来看，如果从两个重叠的高斯开始，将一个相对于另一个移动，则在某个点上，将有两个分离的高斯。</p>
 </div>
-<div class="section" id="id25">
-<h4>（2） 最大熵原理<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id26">
+<h4>（2） 最大熵原理<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h4>
 <p>熵与信息及其不确定性也有关。事实上，更分散或更平坦的先验是弱信息先验。这不仅直观上是正确的，而且有熵的理论支撑。事实上，在贝叶斯学派中有一个群体，在用熵来证明弱信息先验或正则化先验是合理的。这就是<code class="docutils literal notranslate"><span class="pre">最大熵原理</span></code>：<strong>我们总是期望在问题定义的约束下找到具有最大可能熵的分布</strong>。这是一个可用数学方法解决的优化问题，但本书不讲解细节。下面仅列出一些常见约束条件下的最大熵分布：</p>
 <ul class="simple">
 <li><p>无约束：均匀分布（连续或离散，取决于变量类型）</p></li>
@@ -1473,15 +1652,15 @@ D_{K L}(p \| q)-D_{K L}(p \| r) =\left(\sum_{i} p_{i} \log p_{i}-\sum_{i} p_{i} 
 <p>即使不知道 <span class="math notranslate nohighlight">\(p\)</span>，我们也可以得出结论，具有更大对数似然（或离差）的分布就是在 <span class="math notranslate nohighlight">\(KL\)</span> 散度中更接近真实分布的分布。实践中对数似然（或离差）是从有限样本拟合的模型中获得的。因此，还必须增加一个惩罚项，以纠正对离差的高估，这就引出了 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 等信息准则。</p>
 </div>
 </div>
-<div class="section" id="id26">
-<h2>5.7 总结<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
-<p><strong>（1）后验预测检查是一个通用概念和实践。</strong> 它可以帮助我们了解模型捕获数据的能力，以及模型捕获我们感兴趣问题的各个方面的能力。我们可以只用一个模型进行后验预测检查，也可以用多个模型进行后验预测检查，因此也可以用它作为模型比较的一种方法。后验预测检查大多是通过可视化完成的，但像 <code class="docutils literal notranslate"><span class="pre">贝叶斯</span> <span class="pre">p-value</span></code> 类似的数字摘要也很有帮助。</p>
-<p><strong>（2）好的模型在复杂性和预测准确性之间有很好的平衡。</strong> 我们用多项式回归的经典示例来说明这一特征。我们讨论了两种在不留数据的情况下估计样本外准确度的方法：<strong>交叉验证法和信息准则法</strong>。我们集中讨论了后者。从实践角度来看，信息准则是一系列平衡两种贡献的方法：一种是衡量模型与数据的拟合程度，另一种是惩罚复杂的模型。在众多可用信息准则中， <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 是贝叶斯模型中最有用的。另一个有用的方法是 <code class="docutils literal notranslate"><span class="pre">PSIS-LOO-CV</span></code> （或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> ），它在实践中提供了与 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 非常相似的结果。 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 和 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 可用于模型选择，也可用于模型平均。模型平均不是选择单个最佳模型，而是通过对所有可用模型进行加权平均来组合所有可用模型。</p>
-<p><strong>（3）模型比较和模型平均的贝叶斯方法是贝叶斯因子，它是两个模型的边缘似然之比。</strong> 贝叶斯因子的计算很有挑战性。本章介绍了使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 计算它们的两种方法：一种是直接尝试使用离散 index 估计每个模型的相对概率的分层模型，另一种是称为 <code class="docutils literal notranslate"><span class="pre">序贯蒙特卡罗（Sequential</span> <span class="pre">Monte</span> <span class="pre">Carlo，SMC）采样方法</span></code> ，我们建议使用后者。</p>
-<p><strong>（4）贝叶斯因子对先验非常敏感，存在计算上的挑战性，同时存在健壮性问题</strong>。我们比较了贝叶斯因子和信息准则，并通过示例证明，两者解决的是相关但不相同的问题：贝叶斯因子侧重于确定正确的模型，而信息准则侧重于实现最佳预测或更低的泛化损失。所有这些方法都或多或少存在问题，但 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 和 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 在实践中相对要健壮得多。</p>
-</div>
 <div class="section" id="id27">
-<h2>5.8 习题<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h2>
+<h2>5.7 总结<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h2>
+<p><strong>（1）后验预测检查是一个通用的概念和实践工具。</strong> 它可以帮助我们直观地了解模型捕获数据的能力，以及模型捕获我们感兴趣问题的能力。我们既可以只用一个模型进行后验预测检查，也可以用多个模型进行后验预测检查，因此可以把它作为模型比较的一种最基础方法。后验预测检查大多是通过可视化完成的，但类似 <code class="docutils literal notranslate"><span class="pre">贝叶斯</span> <span class="pre">p-value</span></code> 的数字总结也很有帮助。</p>
+<p><strong>（2）好的模型在复杂性和准确性之间有好的平衡。</strong> 我们用多项式回归的经典示例来说明这一特征。我们讨论了两种估计样本外准确度的方法：<strong>交叉验证法和信息准则法</strong>，并集中讨论了后者。从实践角度来看，信息准则是一系列平衡<code class="docutils literal notranslate"><span class="pre">数据拟合度</span></code>和<code class="docutils literal notranslate"><span class="pre">模型复杂度</span></code>的方法。在众多可用信息准则中， <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 是贝叶斯模型中最有用的。另一个有用的方法是 <code class="docutils literal notranslate"><span class="pre">PSIS-LOO-CV</span></code> （或 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> ），它在实践中提供了与 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 非常相似的结果。 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 和 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 既可用于模型选择，也可用于计算模型平均的权重。模型平均不是选择单个最佳模型，而是通过对所有可用模型进行加权平均来组合所有可用模型。</p>
+<p><strong>（3）<code class="docutils literal notranslate"><span class="pre">贝叶斯因子</span></code>是两个模型的边缘似然之比，是贝叶斯框架下进行<code class="docutils literal notranslate"><span class="pre">模型比较</span></code>和<code class="docutils literal notranslate"><span class="pre">模型平均</span></code> 的重要测度</strong>。  贝叶斯因子的计算很有挑战性。本章介绍了使用 <code class="docutils literal notranslate"><span class="pre">PyMC3</span></code> 计算贝叶斯因子的两种方法：一种是直接尝试使用离散 <code class="docutils literal notranslate"><span class="pre">index</span></code> 估计每个模型的相对概率的分层模型，另一种是称为 <code class="docutils literal notranslate"><span class="pre">序贯蒙特卡罗（Sequential</span> <span class="pre">Monte</span> <span class="pre">Carlo，SMC）采样方法</span></code> ，建议使用后者。</p>
+<p><strong>（4）贝叶斯因子对先验非常敏感而且有计算上的挑战性，同时也存在健壮性问题</strong>。我们比较了贝叶斯因子和信息准则，通过示例表明，两者解决的是相关但不相同的问题：贝叶斯因子侧重于确定正确的模型，而信息准则侧重于实现<code class="docutils literal notranslate"><span class="pre">最佳预测</span></code>或<code class="docutils literal notranslate"><span class="pre">更低的泛化损失</span></code>。所有这些方法都或多或少存在问题，但 <code class="docutils literal notranslate"><span class="pre">WAIC</span></code> 和 <code class="docutils literal notranslate"><span class="pre">LOO</span></code> 在实践中相对要健壮得多。</p>
+</div>
+<div class="section" id="id28">
+<h2>5.8 习题<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/spatialPresent_20210525214039_d1.webp" /></p>
 </div>
 </div>

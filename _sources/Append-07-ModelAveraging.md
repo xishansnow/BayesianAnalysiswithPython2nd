@@ -62,7 +62,7 @@ kernelspec:
 
 经典贝叶斯模型平均关注模型的合理性（即对真模型的识别） ，而基于预测结果的贝叶斯模型平均则具有直接与估计关联的优势。下面的第 2.2 节将重点放在经典贝叶斯模型平均上，因为它在贝叶斯模型平均文献中曾经受到过绝大多数关注； 第 2.3 节将重点讨论根据预测结果实现贝叶斯模型平均的方法。
 
-### 2.2 经典 BMA
+### 2.2 经典的贝叶斯模型平均
 
 #### 2.2.1 基本框架
 
@@ -96,7 +96,7 @@ $$
 
 其中 $p\left(\beta_{m} \mid m\right)$ 为参数 $\beta_{m}$ 的先验分布， $p\left(y \mid \beta_{m}, m\right)$ 为模型 $m$ 的似然函数。当参数 $\beta_{m}$ 为离散型时，式  (2.3) 中的积分改为求和。
 
-> 注解： 在单个模型的贝叶斯定理中，分母项被称为边缘似然，表示模型解释数据的能力，通常边缘似然越大，解释数据的能力越强。但对贝叶斯推断任务了解的读者应该知道，边缘似然的计算通常是难以处理的，需要一些近似计算的方法。
+> 注解： 在单个模型的贝叶斯定理中，分母项被称为边缘似然，表示模型解释数据的能力，通常边缘似然越大，解释数据的能力越强。但对贝叶斯推断任务了解的读者应该知道，边缘似然的计算通常是难以处理的，需要一些近似计算的方法。本文第 2.2.2 节真是针对此问题的解释。
 
 **（2）模型后验概率的改进**
 
@@ -144,7 +144,7 @@ $$
 >
 > 原文中的 Posterior Model Probability 可以被理解为 Model’s Posterior Probility，即模型后验概率。需要与模型参数的后验概率区分开来。
 
-在计算模型后验概率时，很难确定式（2.3）中的边缘似然。在某些设置中（ 例如具有共轭先验参数的 GLM ），边缘似然可以有解析表达式 [98]，但更一般的情况是根本无法得到解析表达，只能采用近似值。其中最有名的边缘似然近似是（无需指定参数的先验）：
+在计算模型后验概率时，很难确定式（2.3）中的边缘似然。在某些设置中（ 例如具有共轭先验参数的 GLM ），边缘似然可以有解析表达式 [98]，但更一般的情况是根本无法得到解析表达，只能采用近似值。其中最有名的边缘似然近似是采用`贝叶斯信息准则（BIC）`：
 
 $$
 p(y \mid m) \approx \exp \left(-\mathrm{BIC}_{m} / 2\right) \tag{2.7}
@@ -249,7 +249,7 @@ $$
 
 which has the same form as (2.11). The right-hand side of (2.12) is known as the CIC weight; the BIC weight in $(2.10)$ is a special case, corresponding to $c_{m}=n$.
 
-### 2.3 基于预测的 BMA
+### 2.3 基于预测的贝叶斯模型平均
 
 As mentioned in Sect. 2.1, classical BMA focusses attention on identification of the true model. Recently, several authors have considered use of prediction-based BMA $[39,102,181]$. In addition to being a more natural approach to model averaging, this has the distinct advantages of not requiring a prior for the models, being less sensitive to the priors for the parameters, and only requiring the usual MCMC output for each individual model.
 
