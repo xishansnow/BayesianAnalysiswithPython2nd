@@ -23,6 +23,8 @@ parts:
     - file: Append-07-ModelAveraging
     - file: Append-08-ModelEnsembling
     - file: Append-09-WorkFlow
+    - file: Append-10-WorkFlow
+    
   #- caption: 参考文献
     #- file: 
 
