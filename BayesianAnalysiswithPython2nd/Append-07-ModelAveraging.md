@@ -62,7 +62,7 @@ kernelspec:
 
 经典贝叶斯模型平均关注模型对数据的可解释性（ 合理性，或对『真』模型的识别 ），而基于预测结果的贝叶斯模型平均则具有直接与估计能力相关联的优势。下面的第 2.2 节将重点放在经典贝叶斯模型平均上，因为它在贝叶斯模型平均文献中曾经受到过绝大多数关注； 第 2.3 节将重点讨论根据预测能力实现贝叶斯模型平均的方法。
 
-### 2.2 经典 BMA
+### 2.2 经典的贝叶斯模型平均
 
 #### 2.2.1 基本框架
 
@@ -109,7 +109,7 @@ $$
 
 此处将标量类型的参数 $\theta$ 扩展到了参数向量 $\beta_m$ 。 式中 $p\left(\beta_{m} \mid m\right)$ 为模型 $m$ 中参数的先验分布， $p\left(y \mid \beta_{m}, m\right)$ 为模型 $m$ 的似然函数。当参数 $\beta_{m}$ 为离散型时，式  (2.3) 中的积分改为求和。
 
-> 注解： 在单个模型的贝叶斯定理中，分母项被称为边缘似然，表示模型解释数据的能力，通常边缘似然越大，解释数据的能力越强。但对贝叶斯推断任务了解的读者应该知道，边缘似然的计算通常是难以处理的，需要一些近似计算的方法。
+> 注解： 在单个模型的贝叶斯定理中，分母项被称为边缘似然，表示模型解释数据的能力，通常边缘似然越大，解释数据的能力越强。但对贝叶斯推断任务了解的读者应该知道，边缘似然的计算通常是难以处理的，需要一些近似计算的方法。本文第 2.2.2 节真是针对此问题的解释。
 
 **（3）贝叶斯因子：模型后验概率的改写**
 
@@ -264,7 +264,7 @@ $$
 
 which has the same form as (2.11). The right-hand side of (2.12) is known as the CIC weight; the BIC weight in $(2.10)$ is a special case, corresponding to $c_{m}=n$.
 
-### 2.3 基于预测的 BMA
+### 2.3 基于预测的贝叶斯模型平均
 
 As mentioned in Sect. 2.1, classical BMA focusses attention on identification of the true model. Recently, several authors have considered use of prediction-based BMA $[39,102,181]$. In addition to being a more natural approach to model averaging, this has the distinct advantages of not requiring a prior for the models, being less sensitive to the priors for the parameters, and only requiring the usual MCMC output for each individual model.
 
