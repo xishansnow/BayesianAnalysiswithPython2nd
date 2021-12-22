@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>附录 K：贝叶斯工作流程 &#8212; Python贝叶斯分析(中文)</title>
+    <title>附录 J：贝叶斯优化 &#8212; Python贝叶斯分析(中文)</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -53,7 +53,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="附录 J：贝叶斯优化" href="Append-09-BayesianOptimization.html" />
+    <link rel="next" title="附录 K：贝叶斯工作流程" href="Append-10-WorkFlow.html" />
+    <link rel="prev" title="附录 H：模型集成" href="Append-08-ModelEnsembling.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -195,13 +196,13 @@
    附录 H：模型集成
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="Append-09-BayesianOptimization.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    附录 J：贝叶斯优化
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Append-10-WorkFlow.html">
    附录 K：贝叶斯工作流程
   </a>
  </li>
@@ -245,11 +246,11 @@
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
         <a class="dropdown-buttons"
-            href="_sources/Append-10-WorkFlow.ipynb"><button type="button"
+            href="_sources/Append-09-BayesianOptimization.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/Append-10-WorkFlow.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/Append-09-BayesianOptimization.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -269,7 +270,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd/issues/new?title=Issue%20on%20page%20%2FAppend-10-WorkFlow.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/xishansnow/BayesianAnalysiswithPython2nd/issues/new?title=Issue%20on%20page%20%2FAppend-09-BayesianOptimization.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -290,14 +291,14 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=lab/tree/Append-10-WorkFlow.md"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/xishansnow/BayesianAnalysiswithPython2nd/master?urlpath=lab/tree/Append-09-BayesianOptimization.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="_static/images/logo_binder.svg"
                     alt="Interact on binder">Binder</button></a>
         
         
-        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=lab/tree/BayesianAnalysiswithPython2nd/Append-10-WorkFlow.md&branch=master"><button type="button"
+        <a class="jupyterhub-button" href="https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https://github.com/xishansnow/BayesianAnalysiswithPython2nd&urlpath=lab/tree/BayesianAnalysiswithPython2nd/Append-09-BayesianOptimization.md&branch=master"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch JupyterHub" data-toggle="tooltip"
                 data-placement="left"><img class="jupyterhub-button-logo"
                     src="_static/images/logo_jupyterhub.svg"
@@ -325,7 +326,7 @@
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id2">
-     1.1.从贝叶斯推理到贝叶斯工作流
+     1.1.从贝叶斯推断到贝叶斯工作流
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -713,17 +714,17 @@
         
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="k">
-<h1>附录 K：贝叶斯工作流程<a class="headerlink" href="#k" title="Permalink to this headline">¶</a></h1>
-<p>【摘要】贝叶斯数据分析方法为使用概率论处理所有观测、模型参数和模型结构中的不确定性提供了一种强大的方法。概率编程语言使指定和拟合贝叶斯模型变得更加容易，但这仍然给我们留下了许多关于构建、评估和使用这些模型的选择，以及许多计算方面的挑战。使用贝叶斯推理解决实际问题不仅需要统计技能、学科知识和编程，还需要在数据分析过程中做出决策。所有这些方面都可以理解为应用贝叶斯统计的复杂工作流程的组成部分。除了推断以外，工作流还包括迭代模型构建、模型检查、计算问题的验证及故障排除、模型理解和模型比较。本文在几个示例背景下，回顾了工作流的各个方面。需要提醒读者：在实际工作中，应当为任何给定的问题拟合多个模型，即使最终可能只有非常有限的子集能够与结论相关。
+  <div class="tex2jax_ignore mathjax_ignore section" id="j">
+<h1>附录 J：贝叶斯优化<a class="headerlink" href="#j" title="Permalink to this headline">¶</a></h1>
+<p>【摘要】贝叶斯数据分析方法为使用概率论处理所有观测、模型参数和模型结构中的不确定性提供了一种强大的方法。概率编程语言使指定和拟合贝叶斯模型变得更加容易，但这仍然给我们留下了许多关于构建、评估和使用这些模型的选择，以及许多计算方面的挑战。使用贝叶斯推断解决实际问题不仅需要统计技能、学科知识和编程，还需要在数据分析过程中做出决策。所有这些方面都可以理解为应用贝叶斯统计的复杂工作流程的组成部分。除了推断以外，工作流还包括迭代模型构建、模型检查、计算问题的验证及故障排除、模型理解和模型比较。本文在几个示例背景下，回顾了工作流的各个方面。需要提醒读者：在实际工作中，应当为任何给定的问题拟合多个模型，即使最终可能只有非常有限的子集能够与结论相关。
 【原文见文末】</p>
 <style>p{text-indent:2em;2}</style>
 <div class="section" id="id1">
 <h2>1 概述<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id2">
-<h3>1.1.从贝叶斯推理到贝叶斯工作流<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3>1.1.从贝叶斯推断到贝叶斯工作流<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>如果数理统计是『关于如何应用统计学』的理论，那么任何对贝叶斯方法的认真讨论都需要明确其在实践中的使用方式。特别是，我们需要明确地<strong>将贝叶斯推断与贝叶斯数据分析的概念分开，特别是将其与完整的贝叶斯工作流程分开</strong>。</p>
-<p>贝叶斯推理只是条件概率或概率密度 <span class="math notranslate nohighlight">\(p(θ|y) ∝p(θ)p(y|θ)\)</span> 的形式化和计算，可视为一种计算工具。而贝叶斯工作流则包括<strong>模型构建</strong>、<strong>统计推断</strong>和<strong>模型检查/改进</strong> 三个步骤，以及不同<strong>模型之间的比较</strong>（ 这种比较不仅仅是为了模型选择或模型平均，更是为了深入理解这些模型）。例如：为何某些模型无法预测数据的某些方面？ 或者一些重要参数的不确定性估计为什么会因模型而不同？ 即使我们有一个非常喜欢的模型，将其与更简单和更复杂模型推断进行比较，对于理解模型也是很有用的。图 1 提供了一个贝叶斯工作流程的概要。扩展的贝叶斯工作流应当还包括（在收集数据和测量数据前的）试验设计以及推断完成后的决策制定，不过本文重点在于对数据进行建模。</p>
+<p>贝叶斯推断只是条件概率或概率密度 <span class="math notranslate nohighlight">\(p(θ|y) ∝p(θ)p(y|θ)\)</span> 的形式化和计算，可视为一种计算工具。而贝叶斯工作流则包括<strong>模型构建</strong>、<strong>统计推断</strong>和<strong>模型检查/改进</strong> 三个步骤，以及不同<strong>模型之间的比较</strong>（ 这种比较不仅仅是为了模型选择或模型平均，更是为了深入理解这些模型）。例如：为何某些模型无法预测数据的某些方面？ 或者一些重要参数的不确定性估计为什么会因模型而不同？ 即使我们有一个非常喜欢的模型，将其与更简单和更复杂模型推断进行比较，对于理解模型也是很有用的。图 1 提供了一个贝叶斯工作流程的概要。扩展的贝叶斯工作流应当还包括（在收集数据和测量数据前的）试验设计以及推断完成后的决策制定，不过本文重点在于对数据进行建模。</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211210110642-1649.webp" /></p>
 <blockquote>
 <div><p><strong>图 1：在贝叶斯工作流中考虑的主要步骤。</strong> 括号中的数字对应本文中讨论相应步骤的章节。该图旨在显示单个贝叶斯分析可能经历的步骤和路径，当然同时应该理解任何特定分析都不太可能涉及所有这些步骤。我们研究工作流程的目标之一是掌握这些想法是如何组合在一起的，以便更系统地应用它们。</p>
@@ -824,9 +825,9 @@
 </div>
 <div class="section" id="id12">
 <h3>2.5 生成式和部分生成式模型<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
-<p>完全贝叶斯数据分析需要一个生成模型——即所有数据和参数的联合概率分布。这一点很微妙：贝叶斯推理实际上并不需要生成模型；它所需要的只是数据的似然性，不同的生成模型可以具有相同的似然性。但是贝叶斯数据分析要求生成模型能够进行预测模拟和模型检查（第 2.4、4.1、4.2、6.1 和 6.2 节），而贝叶斯工作流会考虑一系列生成模型。</p>
-<p>举一个简单的例子，假设我们有数据 y ∼ binomial(n,θ)，其中 n 和 y 是观察到的，我们希望对 θ 进行推断。就贝叶斯推理而言，数据是用固定 n 采样（二项式采样）还是采样直到出现指定数量的成功（负二项式采样）是无关紧要的：这两个似然对于估计 θ 的目的是等效的，因为它们不同仅通过一个取决于 y 和 n 但不取决于 θ 的乘法因子。然而，如果我们想模拟来自预测模型的新数据，这两个模型是不同的，因为二项式模型产生具有固定值 n 的重复项，而负二项式模型产生具有固定 y 值的重复项。在这两种不同的生成模型下，先验和后验预测检查（第 2.4 和 6.1 节）看起来会有所不同。</p>
-<p>这并不是说贝叶斯方法一定更好；生成模型的假设可以提高推理效率，但也可能出错，这激发了我们的大部分工作流程。</p>
+<p>完全贝叶斯数据分析需要一个生成模型——即所有数据和参数的联合概率分布。这一点很微妙：贝叶斯推断实际上并不需要生成模型；它所需要的只是数据的似然性，不同的生成模型可以具有相同的似然性。但是贝叶斯数据分析要求生成模型能够进行预测模拟和模型检查（第 2.4、4.1、4.2、6.1 和 6.2 节），而贝叶斯工作流会考虑一系列生成模型。</p>
+<p>举一个简单的例子，假设我们有数据 y ∼ binomial(n,θ)，其中 n 和 y 是观察到的，我们希望对 θ 进行推断。就贝叶斯推断而言，数据是用固定 n 采样（二项式采样）还是采样直到出现指定数量的成功（负二项式采样）是无关紧要的：这两个似然对于估计 θ 的目的是等效的，因为它们不同仅通过一个取决于 y 和 n 但不取决于 θ 的乘法因子。然而，如果我们想模拟来自预测模型的新数据，这两个模型是不同的，因为二项式模型产生具有固定值 n 的重复项，而负二项式模型产生具有固定 y 值的重复项。在这两种不同的生成模型下，先验和后验预测检查（第 2.4 和 6.1 节）看起来会有所不同。</p>
+<p>这并不是说贝叶斯方法一定更好；生成模型的假设可以提高推断效率，但也可能出错，这激发了我们的大部分工作流程。</p>
 <p>It is common in Bayesian analysis to use models that are not fully generative. For example, in regression we will typically model an outcome y given predictors x without a generative model for x. Another example is survival data with censoring, where the censoring process is not usually modeled. When performing predictive checks for such models, we either need to condition on the observed predictors or else extend the model to allow new values of the predictors to be sampled. It is also possible that there is no stochastic generative process for some parts of the model, for example if x has been chosen by a deterministic design of experiment.</p>
 <p>在贝叶斯分析中使用不完全生成的模型是很常见的。例如，在回归中，我们通常会对给定预测变量 x 的结果 y 建模，而没有 x 的生成模型。另一个例子是带有删失的生存数据，其中删失过程通常不建模。在对此类模型执行预测检查时，我们要么需要以观察到的预测变量为条件，要么扩展模型以允许对预测变量的新值进行采样。模型的某些部分也可能没有随机生成过程，例如，如果 x 是通过确定性的实验设计选择的。</p>
 <p>从生成模型的角度思考可以帮助阐明可以从观察中学到的东西的局限性。例如，我们可能想对具有复杂自相关结构的时间过程建模，但如果我们的实际数据在时间上相距很远，我们可能无法将该模型与具有几乎独立误差的更简单过程区分开来。</p>
@@ -840,11 +841,11 @@
 <h2>3 拟合一个模型<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
 <p>Traditionally, Bayesian computation has been performed using a combination of analytic calculation and normal approximation. Then in the 1990s, it became possible to perform Bayesian inference  for a wide range of models using Gibbs and Metropolis algorithms (Robert and Casella, 2011). The current state of the art algorithms for fitting open-ended Bayesian models include variational inference (Blei and Kucukelbir, 2017), sequential Monte Carlo (Smith, 2013), and Hamiltonian
 Monte Carlo (HMC; Neal, 2011, Betancourt, 2017a). Variational inference is a generalization of the expectation-maximization (EM) algorithm and can, in the Bayesian context, be considered as providing a fast but possibly inaccurate approximation to the posterior distribution. Variational inference is the current standard for computationally intensive models such as deep neural networks. Sequential Monte Carlo is a generalization of the Metropolis algorithm that can be applied to any Bayesian computation, and HMC is a different generalization of Metropolis that uses gradient computation to move efficiently through continuous probability spaces.</p>
-<p>传统上，贝叶斯计算是使用解析计算和正态近似的组合来执行的。然后在 1990 年代，使用 Gibbs 和 Metropolis 算法对各种模型执行贝叶斯推理成为可能（Robert 和 Casella，2011）。当前用于拟合开放式贝叶斯模型的最先进算法包括变分推理（Blei 和 Kucukelbir，2017）、顺序蒙特卡罗（Smith，2013）和 HamiltonianMonte Carlo（HMC；Neal，2011，Betancourt，2017a）。变分推理是对期望最大化 (EM) 算法的概括，在贝叶斯上下文中，可以被视为提供了对后验分布的快速但可能不准确的近似。变分推理是计算密集型模型（例如深度神经网络）的当前标准。 Sequential Monte Carlo 是 Metropolis 算法的推广，可以应用于任何贝叶斯计算，而 HMC 是 Metropolis 的不同推广，它使用梯度计算在连续概率空间中高效移动。</p>
+<p>传统上，贝叶斯计算是使用解析计算和正态近似的组合来执行的。然后在 1990 年代，使用 Gibbs 和 Metropolis 算法对各种模型执行贝叶斯推断成为可能（Robert 和 Casella，2011）。当前用于拟合开放式贝叶斯模型的最先进算法包括变分推断（Blei 和 Kucukelbir，2017）、顺序蒙特卡罗（Smith，2013）和 HamiltonianMonte Carlo（HMC；Neal，2011，Betancourt，2017a）。变分推断是对期望最大化 (EM) 算法的概括，在贝叶斯上下文中，可以被视为提供了对后验分布的快速但可能不准确的近似。变分推断是计算密集型模型（例如深度神经网络）的当前标准。 Sequential Monte Carlo 是 Metropolis 算法的推广，可以应用于任何贝叶斯计算，而 HMC 是 Metropolis 的不同推广，它使用梯度计算在连续概率空间中高效移动。</p>
 <p>In the present article we focus on fitting Bayesian models using HMC and its variants, as implemented in Stan and other probabilistic programming languages. While similar principles should apply also to other software and other algorithms, there will be differences in the details.</p>
 <p>在本文中，我们专注于使用 HMC 及其变体拟合贝叶斯模型，如在 Stan 和其他概率编程语言中实现的。虽然类似的原则也适用于其他软件和其他算法，但细节上会有差异。</p>
 <p>To safely use an inference algorithm in Bayesian workflow, it is vital that the algorithm provides strong diagnostics to determine when the computation is unreliable. In the present paper we discuss such diagnostics for HMC.</p>
-<p>要在贝叶斯工作流中安全地使用推理算法，算法必须提供强大的诊断功能来确定计算何时不可靠。在本文中，我们讨论了 HMC 的此类诊断。</p>
+<p>要在贝叶斯工作流中安全地使用推断算法，算法必须提供强大的诊断功能来确定计算何时不可靠。在本文中，我们讨论了 HMC 的此类诊断。</p>
 <div class="section" id="id14">
 <h3>3.1 初值、适应和预热<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 </div>
@@ -891,7 +892,7 @@ Monte Carlo (HMC; Neal, 2011, Betancourt, 2017a). Variational inference is a gen
 <div class="section" id="id27">
 <h3>5.5 堆叠以重新加权混合不良的链条<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
 <p>在实践中，通常我们的 MCMC 算法混合得很好。其他时候，模拟会快速移动到参数空间的不合理区域，表明可能存在模型错误指定、信息不足或信息不足的观察，或者只是几何困难</p>
-<p>但在中间情况下也很常见，其中多个链混合起来很慢，但它们在一般合理的范围内。在这种情况下，我们可以使用堆叠来组合模拟，使用交叉验证为不同的链分配权重（Yao、Vehtari 和 Gelman，2020）。这将具有丢弃卡在目标分布的偏僻低概率模式中的链的近似效果。 stacking的结果不一定等价，甚至是渐近地等价于完全贝叶斯推理，但它服务于许多相同的目标，特别适合在模型探索阶段，让我们向前迈进，花更多的时间和精力在其他部分贝叶斯工作流，而不会被完全拟合一个特定模型所困扰。此外，当与跟踪图和其他诊断工具一起使用时，非均匀堆叠权重可以帮助我们以迭代方式了解将精力集中在哪里</p>
+<p>但在中间情况下也很常见，其中多个链混合起来很慢，但它们在一般合理的范围内。在这种情况下，我们可以使用堆叠来组合模拟，使用交叉验证为不同的链分配权重（Yao、Vehtari 和 Gelman，2020）。这将具有丢弃卡在目标分布的偏僻低概率模式中的链的近似效果。 stacking的结果不一定等价，甚至是渐近地等价于完全贝叶斯推断，但它服务于许多相同的目标，特别适合在模型探索阶段，让我们向前迈进，花更多的时间和精力在其他部分贝叶斯工作流，而不会被完全拟合一个特定模型所困扰。此外，当与跟踪图和其他诊断工具一起使用时，非均匀堆叠权重可以帮助我们以迭代方式了解将精力集中在哪里</p>
 </div>
 <div class="section" id="id28">
 <h3>5.6 具有多峰和其他困难几何形状的后验分布<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
@@ -900,7 +901,7 @@ Monte Carlo (HMC; Neal, 2011, Betancourt, 2017a). Variational inference is a gen
 <li><p>有效分离后验体积，其中除了一种模式外，所有模式的质量都接近于零。一个例子出现在第 11 节。在这些问题中，可以通过明智地选择模拟初始值、添加先验信息或参数的硬约束来避免次要模式，或者可以通过近似估计每个模式的质量来修剪它们。</p></li>
 <li><p>有效地分离微对称的高概率质量的后验体积，例如混合模型中的标签切换。这里的标准做法是以某种方式限制模型以识别感兴趣的模式；参见例如 Bafumi 等人。 (2005) 和贝当古 (2017b)。</p></li>
 <li><p>有效地分离不同的高概率质量的后验体积。例如，在基因调控模型 (Modrák, 2018) 中，一些数据承认两种不同的调控机制具有相反的效应符号，而接近于零的效应具有低得多的后验密度。这个问题更具挑战性。在某些情况下，我们可以使用堆叠（预测模型平均）作为近似解决方案，认识到这并不完全通用，因为它需要定义感兴趣的预测量。一种更完整的贝叶斯替代方法是通过引入强混合先验将模型分成几部分，然后在给定先验的每个组件的情况下分别拟合模型。其他时候，可以使用具有排除某些可能模式的效果的强先验来解决问题。</p></li>
-<li><p>具有算术不稳定尾部的高概率质量的单个后验体积。如果您在分布的质量附近初始化，则大多数推理应该不会出现问题。如果对极其罕见的事件特别感兴趣，那么无论如何都应该重新参数化问题，因为从几百到几千的通常默认有效样本大小中可以学到的东西是有限的。</p></li>
+<li><p>具有算术不稳定尾部的高概率质量的单个后验体积。如果您在分布的质量附近初始化，则大多数推断应该不会出现问题。如果对极其罕见的事件特别感兴趣，那么无论如何都应该重新参数化问题，因为从几百到几千的通常默认有效样本大小中可以学到的东西是有限的。</p></li>
 </ul>
 </div>
 <div class="section" id="id29">
@@ -964,11 +965,11 @@ Monte Carlo (HMC; Neal, 2011, Betancourt, 2017a). Variational inference is a gen
 <h3>9.1 版本控制使与他人和您过去自己的协作顺利进行<a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h3>
 <p>版本控制软件，例如 Git，应该是项目的第一个基础设施。学习版本控制似乎是一项巨大的投资，但能够键入单个命令以恢复到以前的工作版本或获取当前版本和旧版本之间的差异是非常值得的。当您需要与他人共享工作时甚至是在纸上共享工作时效果更好 - 工作可以独立完成然后自动合并。虽然版本控制会跟踪一个模型中较小的更改，但将明显不同的模型保存在不同的文件中以方便比较模型是很有用的。版本控制还有助于记录迭代模型构建中的发现和决策，从而提高过程的透明度。版本控制不仅仅针对代码。它也适用于报告、图表和数据。</p>
 <p>版本控制不仅仅针对代码。它也适用于报告、图表和数据。版本控制是确保所有这些组件同步的关键部分，更重要的是，可以将项目回滚到以前的状态。版本控制特别有用，因为它能够打包和标记与里程碑报告和出版物相对应的模型和数据的“候选发布”版本，并将它们存储在同一目录中，而无需求助于可怕的 _final_final_161020.pdf 样式命名约定。</p>
-<p>在处理用于指导政策决策制定的模型时，公共版本控制存储库提高了特定报告使用了哪些模型、数据、推理参数和脚本的透明度。一个很好的例子是帝国理工学院的模型和脚本存储库，用于估计 COVID-19 的死亡和病例数（Flaxman 等人，2020 年）。</p>
+<p>在处理用于指导政策决策制定的模型时，公共版本控制存储库提高了特定报告使用了哪些模型、数据、推断参数和脚本的透明度。一个很好的例子是帝国理工学院的模型和脚本存储库，用于估计 COVID-19 的死亡和病例数（Flaxman 等人，2020 年）。</p>
 </div>
 <div class="section" id="id49">
 <h3>9.2 边走边测试<a class="headerlink" href="#id49" title="Permalink to this headline">¶</a></h3>
-<p>理想情况下，软件设计从最终用户的目标到实现它所需的技术机制自上而下地进行。对于贝叶斯统计模型，自上而下的设计至少涉及数据输入格式、数据的概率模型和先验，但也可能涉及模拟器和模型测试，如基于模拟的校准或后验预测检查。理想情况下，软件开发从经过良好测试的基础功能到更大的功能模块自下而上地工作。这样，开发将通过一系列经过充分测试的步骤进行，在每个阶段都只在经过测试的部分上进行构建。与构建大型程序然后调试它相比，以这种方式工作的优势与增量模型开发相同——更容易跟踪开发出错的地方，并且您在使用经过良好测试的基础工作的每一步都更有信心。无论是初始开发还是修改代码，计算开发的关键是模块化。大杂乱的功能难以记录、难以阅读、异常难以调试，并且几乎不可能维护或修改。模块化意味着从较小的可信部分构建更大的部分，例如低级功能。每当代码片段重复时，都应该将它们封装为函数。这导致代码更易于阅读和维护。作为低级函数的示例，可以通过实施标准化 z(v) = (v −mean(v))/sd(v) 为广义线性模型重新调整预测变量。虽然这个函数看起来很简单，但从 sd 函数开始，它有时被定义为 sd(v) =√∑ni=1(vi −mean(v))2/n，有时被定义为 sd(v) = √ ∑ni=1(vi -mean(v))2/(n -1)。如果在标准化函数层面不解决这个问题，在推理过程中会产生神秘的偏差。不依赖于 sd() 函数的简单测试将在函数开发过程中解决这个问题。如果选择是除以 n -1 的估计值，则需要决定当 v 是长度为 1 的向量时要做什么。在存在非法输入的情况下，在输入-输出例程中进行检查会有所帮助让用户知道什么时候出现问题，而不是让错误渗透到以后神秘的除以零错误。微分方程的三次样条或欧拉求解器的实现是高级函数的一个示例，应在使用前对其进行测试。随着函数变得越来越复杂，由于边界条件组合学的问题、更一般的输入（例如要积分的函数）、数值不稳定性或不精确性，其域的区域可能会或可能不会接受，因此它们变得更难测试，这取决于应用程序，需要稳定的衍生品等。</p>
+<p>理想情况下，软件设计从最终用户的目标到实现它所需的技术机制自上而下地进行。对于贝叶斯统计模型，自上而下的设计至少涉及数据输入格式、数据的概率模型和先验，但也可能涉及模拟器和模型测试，如基于模拟的校准或后验预测检查。理想情况下，软件开发从经过良好测试的基础功能到更大的功能模块自下而上地工作。这样，开发将通过一系列经过充分测试的步骤进行，在每个阶段都只在经过测试的部分上进行构建。与构建大型程序然后调试它相比，以这种方式工作的优势与增量模型开发相同——更容易跟踪开发出错的地方，并且您在使用经过良好测试的基础工作的每一步都更有信心。无论是初始开发还是修改代码，计算开发的关键是模块化。大杂乱的功能难以记录、难以阅读、异常难以调试，并且几乎不可能维护或修改。模块化意味着从较小的可信部分构建更大的部分，例如低级功能。每当代码片段重复时，都应该将它们封装为函数。这导致代码更易于阅读和维护。作为低级函数的示例，可以通过实施标准化 z(v) = (v −mean(v))/sd(v) 为广义线性模型重新调整预测变量。虽然这个函数看起来很简单，但从 sd 函数开始，它有时被定义为 sd(v) =√∑ni=1(vi −mean(v))2/n，有时被定义为 sd(v) = √ ∑ni=1(vi -mean(v))2/(n -1)。如果在标准化函数层面不解决这个问题，在推断过程中会产生神秘的偏差。不依赖于 sd() 函数的简单测试将在函数开发过程中解决这个问题。如果选择是除以 n -1 的估计值，则需要决定当 v 是长度为 1 的向量时要做什么。在存在非法输入的情况下，在输入-输出例程中进行检查会有所帮助让用户知道什么时候出现问题，而不是让错误渗透到以后神秘的除以零错误。微分方程的三次样条或欧拉求解器的实现是高级函数的一个示例，应在使用前对其进行测试。随着函数变得越来越复杂，由于边界条件组合学的问题、更一般的输入（例如要积分的函数）、数值不稳定性或不精确性，其域的区域可能会或可能不会接受，因此它们变得更难测试，这取决于应用程序，需要稳定的衍生品等。</p>
 <p>###9.3 使其基本上可重现</p>
 <p>任何项目的一个崇高目标是使其完全可重现，因为另一台机器上的另一个人可以重新创建最终报告。这不是科学领域考虑的可重复性类型，科学领域希望确保影响得到未来新数据的证实（现在通常称为“可重复性”，以便更好地区分不同概念）。相反，这是确保始终如一地完成一项特定分析的更有限（但仍然至关重要）的目标。特别是，我们希望能够生成与原始文档基本相同的分析和图表。位级可再现性可能是不可能的，但我们仍然会在实际水平上将等效性进行比较。如果这种类型的复制改变了论文的结果，我们会争辩说原始结果不是特别可靠。</p>
 <p>与其在运行模型时在命令行上输入命令（或直接将命令输入到 R 或 Python 等交互式编程语言中），不如编写脚本来通过模型运行数据并生成您需要的任何后验分析。可以为 shell、R、Python 或任何其他编程语言编写脚本。</p>
@@ -1264,12 +1265,19 @@ year    = {2020}
         
             <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="Append-09-BayesianOptimization.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="Append-08-ModelEnsembling.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">附录 J：贝叶斯优化</p>
+            <p class="prev-next-title">附录 H：模型集成</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="Append-10-WorkFlow.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">附录 K：贝叶斯工作流程</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
         

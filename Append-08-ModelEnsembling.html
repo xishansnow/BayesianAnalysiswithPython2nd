@@ -53,7 +53,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="附录 K：贝叶斯工作流程" href="Append-10-WorkFlow.html" />
+    <link rel="next" title="附录 J：贝叶斯优化" href="Append-09-BayesianOptimization.html" />
     <link rel="prev" title="附录 G：模型平均" href="Append-07-ModelAveraging.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -197,6 +197,11 @@
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="Append-09-BayesianOptimization.html">
+   附录 J：贝叶斯优化
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="Append-10-WorkFlow.html">
    附录 K：贝叶斯工作流程
   </a>
@@ -321,48 +326,105 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
-   <strong>
-    2 主要集成学习方法
-   </strong>
+   2 监督分类任务中的主要集成学习方法
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bagging">
+     2.1 装袋法（
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Bagging
+      </span>
+     </code>
+     ）
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#boosting">
+     2.2  提升法（
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Boosting
+      </span>
+     </code>
+     ）
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#stacking">
+     2.3 堆叠法（
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       Stacking
+      </span>
+     </code>
+     ）
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     2.4 半监督分类任务
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#bagging">
-   <strong>
-    3 装袋法（
-    <code class="docutils literal notranslate">
-     <span class="pre">
-      Bagging
-     </span>
-    </code>
-    ）
-   </strong>
+  <a class="reference internal nav-link" href="#id4">
+   3 聚簇任务中的模型集成
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     3.1
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     3.2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     3.3
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#boosting">
-   4  提升法（
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     Boosting
-    </span>
-   </code>
-   ）
+  <a class="reference internal nav-link" href="#id8">
+   4 深度集成
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     4.1 一般性的深度集成
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#snapshot">
+     4.1 快照法（ Snapshot ）
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fast-geometric-ensembling-fge">
+     4.2 快速几何集成法（ fast geometric ensembling, FGE ）
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#stochastic-weight-averaging-swa">
+     4.3 随机权重平均法（ stochastic weight averaging, SWA ）
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lomifoss">
+     4.4 LoMiFoSS
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#stacking">
-   5 堆叠法（
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     Stacking
-    </span>
-   </code>
-   ）
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
+  <a class="reference internal nav-link" href="#id10">
    6 总结
   </a>
  </li>
@@ -391,7 +453,7 @@ Understanding the key concepts of ensemble learning</a>; Apr 23, 2019</p>
 <p>注：在其余的95个样本中，假设根据投票规则均能分类正确</p>
 </div>
 <div class="section" id="id2">
-<h2><strong>2 主要集成学习方法</strong><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2>2 监督分类任务中的主要集成学习方法<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>在机器学习中，基于这种组合思想来提高模型精度的方法被称为<strong>集成学习（ensemble learning）</strong>。俗话说”三个臭皮匠，赛过诸葛亮“，这句话完美的阐述了集成学习的潜在思想——通过将多个弱的模型结合在一起来提高最终结果的预测精度。</p>
 <p>常见的集成模型主要包括以下三种：</p>
 <ul class="simple">
@@ -400,18 +462,17 @@ Understanding the key concepts of ensemble learning</a>; Apr 23, 2019</p>
 <li><p><strong>堆叠法（ <code class="docutils literal notranslate"><span class="pre">Stacking</span></code> ）</strong>： <code class="docutils literal notranslate"><span class="pre">Stacking</span></code> 的核心思想为<strong>并行地训练一组各自独立的异构弱学习器</strong>，然后通过训练一个元模型（meta-model）来将各弱学习器组合起来。</p></li>
 </ul>
 <p>我们可以粗略地说<code class="docutils literal notranslate"><span class="pre">装袋法</span></code>主要专注于获得方差小于其组件的集成模型（过拟合场景）；而<code class="docutils literal notranslate"><span class="pre">提升法</span></code>和<code class="docutils literal notranslate"><span class="pre">堆叠法</span></code>主要尝试生成比其组件偏差更少的强模型（欠拟合场景）。</p>
-<p><img alt="" src="https://miro.medium.com/max/798/1*5pA6iY-qDP2JIsLoyfje-Q&#64;2x.png" /></p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211221222031-9431.webp" /></p>
 <p>可以组合弱学习器以获得性能更好的模型。组合基础模型的方式应该适应它们的类型。低偏差和高方差弱模型应该以一种使强模型更健壮的方式组合，而低方差和高偏差基础模型最好以一种使集成模型更少偏差的方式组合。</p>
-</div>
 <div class="section" id="bagging">
-<h2><strong>3 装袋法（ <code class="docutils literal notranslate"><span class="pre">Bagging</span></code> ）</strong><a class="headerlink" href="#bagging" title="Permalink to this headline">¶</a></h2>
+<h3>2.1 装袋法（ <code class="docutils literal notranslate"><span class="pre">Bagging</span></code> ）<a class="headerlink" href="#bagging" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">装袋法（</span> <span class="pre">Bagging</span> <span class="pre">）</span></code>的全称为 <code class="docutils literal notranslate"><span class="pre">自举/聚合（</span> <span class="pre">bootstrap</span> <span class="pre">aggregation</span> <span class="pre">）</span></code>，这两个单词分别代表了装袋法在执行过程中的两个步骤：① 自举样本（bootstrap samples）；② 聚合输出（ aggregate outputs）。也就是装袋法首先从原始数据集中随机抽取多组包含若干数量样本点的子训练集；然后基于这些子训练集分别得到不同的基模型；最后对各基模型预测的结果进行聚合输出。</p>
 <div class="math notranslate nohighlight">
 \[
 y=\frac{1}{M}\sum_{m=1}^Mf_m(x)\tag{1}
 \]</div>
 <p>其中 <span class="math notranslate nohighlight">\(M\)</span> 表示基模型的数量，<span class="math notranslate nohighlight">\(f_m(x)\)</span> 表示不同的基模型。</p>
-<p><img alt="" src="https://upload-images.jianshu.io/upload_images/4893123-313efa728430df54.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/617/format/webp" /></p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211221222045-0c29.webp" /></p>
 <p>由于装袋法的策略是取所有基模型的”平均“值作为最终模型的输出结果，因此能够很好的降低模型的高方差（过拟合）状况。通常在使用装袋法时，尽量使每个基模型都出现过拟合的现象。</p>
 <p><strong>（1） sklearn 中的装袋法</strong></p>
 <p>下面以 <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> 中实现的<code class="docutils literal notranslate"><span class="pre">BaggingClassifier</span></code>为例，并对其中的参数进行简单的说明一下。在 <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> 中，可以通过<code class="docutils literal notranslate"><span class="pre">from</span>&#160; <span class="pre">sklearn.ensemble</span> <span class="pre">import</span> <span class="pre">BaggingClassifier</span></code>来导入 <code class="docutils literal notranslate"><span class="pre">bagging</span></code> 集成方法。</p>
@@ -430,7 +491,7 @@ y=\frac{1}{M}\sum_{m=1}^Mf_m(x)\tag{1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;/tmp/ipykernel_1947/4221000938.py&quot;</span><span class="gt">, line </span><span class="mi">9</span>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">  File</span><span class="nn"> &quot;/tmp/ipykernel_1901/4221000938.py&quot;</span><span class="gt">, line </span><span class="mi">9</span>
     <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
                <span class="o">^</span>
 <span class="ne">SyntaxError</span>: unexpected EOF while parsing
@@ -461,7 +522,7 @@ y=\frac{1}{M}\sum_{m=1}^Mf_m(x)\tag{1}
 <p><strong>（2） 随机森林</strong></p>
 <p>正如上面说到，在装袋法方法进行模型集成的时候，基模型可以是任意模型，自然而然也也可以是决策树了。由于对决策树使用装袋法方法是一个较为受欢迎的研究方向，因此也给它取了另外一个名字<strong>随机森林（random forests）</strong>。根据装袋法的思想来看，随机森林这个名字也很贴切，一系列的树模型就变成了森林。因此在 <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> 中，如果是通过<code class="docutils literal notranslate"><span class="pre">BaggingClassifier</span></code>来实现装袋法集成，当 <code class="docutils literal notranslate"><span class="pre">base_estimator=None</span></code> 时，默认就会采用决策树作为基模型。</p>
 <p><img alt="" src="https://pic2.zhimg.com/v2-0775c793de4b55e0077edfcc953f2b4d_b.jpg" /></p>
-<p><img alt="" src="https://pic2.zhimg.com/80/v2-0775c793de4b55e0077edfcc953f2b4d_720w.jpg" /></p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211221222054-f0d1.webp" /></p>
 <p>上图为随机采样后生成的若干决策树模型，可以看到，在不同子样本集中训练的决策树中，同一个样本所归属的节点不同，甚至连类别也可能不同。这充分体现了集成模型的优点，通过 『平均』 来降低误差。如下所示代码为基于决策树的装袋法集成方法在 <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> 中的两种实现方式：</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -490,13 +551,13 @@ if __name__ == &#39;__main__&#39;:
 </div>
 </div>
 <div class="section" id="boosting">
-<h2>4  提升法（<code class="docutils literal notranslate"><span class="pre">Boosting</span></code> ）<a class="headerlink" href="#boosting" title="Permalink to this headline">¶</a></h2>
+<h3>2.2  提升法（<code class="docutils literal notranslate"><span class="pre">Boosting</span></code> ）<a class="headerlink" href="#boosting" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">提升法</span></code>同<code class="docutils literal notranslate"><span class="pre">装袋法</span></code>一样，都用于提高模型的泛化能力。不同的是：<code class="docutils literal notranslate"><span class="pre">提升法</span></code>通过训练一系列串行的模型来达到这一目的。在提升法的一些串行的基模型中，每个基模型都是对前一个基模型输出结果的改善。如果前一个基模型对某些样本进行了错误分类，那么后一个基模型就会针对该错误结果做改善。在经过一系列串行的基模型拟合之后，最终会得到一个更加准确的结果。因此，<strong>提升法经常被用于改善模型高偏差的情况（欠拟合现象）</strong>。</p>
 <p><code class="docutils literal notranslate"><span class="pre">提升法</span></code>的工作原理与装袋法相同：构建一系列基模型，然后将这些基模型聚合在一起以获得性能更好的强学习器。然而，与旨在减少方差（过拟合）的装袋法不同，提升法是一种非常适应性的方式串行拟合多个弱学习器的方法：拟合序列中的每个基模型都更加重视数据集中被之前的基模型错误处理的观测数据。直观地说，每个新模型都将精力集中在迄今为止最难拟合的观测数据上，以便在串行过程结束时获得一个具有较低偏差的强学习器。提升法即可用于回归任务，也可用于分类任务。</p>
 <p>由于提升法主要专注于减少偏差，因此被考虑用于提升的基模型通常具有低方差和高偏差。例如：如果想使用树作为基模型，我们大多数时候会选择只有很少深度的浅层决策树。另一个促使使用此类弱学习器的重要原因是，这些模型的拟合计算量通常较少。事实上，由于拟合不同模型的计算不能并行完成（与装袋不同），顺序拟合多个复杂模型的代价可能会变得过于昂贵。</p>
 <p>选择了弱学习器后，仍然需要定义按照何种顺序拟合（即：我们在拟合当前模型时考虑了来自先前模型的哪些信息？）以及按照什么方式聚合（我们如何聚合当前模型到以前的？）的问题。下面介绍两个重要的提升算法：<code class="docutils literal notranslate"><span class="pre">自适应提升法（Adaboost）</span></code> 和<code class="docutils literal notranslate"><span class="pre">梯度提升法（</span> <span class="pre">Gradient</span> <span class="pre">Boosting）</span></code>。</p>
 <p>这两种元算法在顺序过程中创建和聚合弱学习器的方式不同。<code class="docutils literal notranslate"><span class="pre">自适应提升法</span></code>更新附加到每个训练集中观测样本点上的权重，而<code class="docutils literal notranslate"><span class="pre">梯度提升法</span></code>更新这些观测样本的值。这个主要区别来自于两种方法解决优化问题方式的不同。</p>
-<p><img alt="" src="https://miro.medium.com/max/2000/1*VGSoqefx3Rz5Pws6qpLwOQ&#64;2x.png" /></p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211221222102-3bec.webp" /></p>
 <blockquote>
 <div><p>提升法迭代地拟合弱学习器，将其聚合到集成模型并“更新”训练数据集，以便在拟合下一个基本模式时更好地考虑当前集成模型的优势和劣势。</p>
 </div></blockquote>
@@ -514,7 +575,7 @@ if __name__ == &#39;__main__&#39;:
 <p>重复这些步骤，我们依次构建我们的 L 个模型并将它们聚合成一个简单的线性组合，由表示每个学习器性能的系数加权。请注意，存在初始 adaboost 算法的变体，例如 LogitBoost（分类）或 L2Boost（回归），其主要区别在于它们选择的损失函数。</p>
 </div>
 <div class="section" id="stacking">
-<h2>5 堆叠法（  <code class="docutils literal notranslate"><span class="pre">Stacking</span></code> ）<a class="headerlink" href="#stacking" title="Permalink to this headline">¶</a></h2>
+<h3>2.3 堆叠法（  <code class="docutils literal notranslate"><span class="pre">Stacking</span></code> ）<a class="headerlink" href="#stacking" title="Permalink to this headline">¶</a></h3>
 <p>与<code class="docutils literal notranslate"><span class="pre">装袋法</span></code>和<code class="docutils literal notranslate"><span class="pre">提升法</span></code>中采用同质基模型的思路不同，堆叠法采用异质基模型。首先通过训练得到多个基于不同算法的基模型，然后再通过训练一个<code class="docutils literal notranslate"><span class="pre">元模型</span></code>来对其它模型的输出结果进行融合。例如：可以选择逻辑回归、朴素贝叶斯和 <code class="docutils literal notranslate"><span class="pre">KNN</span></code> 作为基模型，以决策树作为元模型。 堆叠法首先训练得到前三个基模型；然后再以基模型的输出作为决策树的输入，继续训练元模型；最后以决策树的输出作为最终分类结果。</p>
 <p>下代码所示为 <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> 中实现上述过程的部分代码：</p>
 <div class="cell docutils container">
@@ -536,7 +597,41 @@ if __name__ == &#39;__main__&#39;:
 </div>
 </div>
 <div class="section" id="id3">
-<h2>6 总结<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h3>2.4 半监督分类任务<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>3 聚簇任务中的模型集成<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h3>3.1<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id6">
+<h3>3.2<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id7">
+<h3>3.3<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>4 深度集成<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h3>4.1 一般性的深度集成<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="snapshot">
+<h3>4.1 快照法（ Snapshot ）<a class="headerlink" href="#snapshot" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="fast-geometric-ensembling-fge">
+<h3>4.2 快速几何集成法（ fast geometric ensembling, FGE ）<a class="headerlink" href="#fast-geometric-ensembling-fge" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="stochastic-weight-averaging-swa">
+<h3>4.3 随机权重平均法（ stochastic weight averaging, SWA ）<a class="headerlink" href="#stochastic-weight-averaging-swa" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="lomifoss">
+<h3>4.4 LoMiFoSS<a class="headerlink" href="#lomifoss" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>6 总结<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
 <p>在这篇文章中， 笔者首先通过一个引例大致介绍了什么是集成模型；然后再分别介绍了三种常见的集成模型：装袋法、提升法和 堆叠法，其中对于装袋法和 堆叠法两种集成模型还列举了 <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> 中的示例用法。本次内容就到此结束，感谢阅读！</p>
 </div>
 </div>
@@ -573,10 +668,10 @@ if __name__ == &#39;__main__&#39;:
             <p class="prev-next-title">附录 G：模型平均</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="Append-10-WorkFlow.html" title="next page">
+    <a class='right-next' id="next-link" href="Append-09-BayesianOptimization.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">附录 K：贝叶斯工作流程</p>
+        <p class="prev-next-title">附录 J：贝叶斯优化</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

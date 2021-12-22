@@ -197,6 +197,11 @@
   </a>
  </li>
  <li class="toctree-l1">
+  <a class="reference internal" href="Append-09-BayesianOptimization.html">
+   附录 J：贝叶斯优化
+  </a>
+ </li>
+ <li class="toctree-l1">
   <a class="reference internal" href="Append-10-WorkFlow.html">
    附录 K：贝叶斯工作流程
   </a>
@@ -316,23 +321,12 @@
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id2">
-   5.1 后验预测分布：一种最直接的模型比较方法
+   5.1 后验预测分布
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id3">
-   5.2 好模型的特征 –
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     准确性
-    </span>
-   </code>
-   与
-   <code class="docutils literal notranslate">
-    <span class="pre">
-     简约性
-    </span>
-   </code>
+   5.2 好模型应当具备的特征
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -612,7 +606,7 @@
 </ul>
 <hr class="docutils" />
 <div class="section" id="id2">
-<h2>5.1 后验预测分布：一种最直接的模型比较方法<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2>5.1 后验预测分布<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">第</span> <span class="pre">1</span> <span class="pre">章</span></code>介绍了 <strong>后验预测检查</strong> 的概念，实际上它作为一种度量，可以被用来评估 <em>根据同一数据拟合出的不同模型</em> 对该数据的<strong>解释程度</strong> 。</p>
 <p>如前所述，所有的模型都是错误的，因此后验预测检查的目的并非判定模型是否正确或错误，而是希望通过后验预测检查更好地把握模型的局限性，以便做出适当改进。通常模型不会再现数据中的所有问题，但这本身并不是问题，因为构建模型都是为了特定目的。后验预测检查本身就是在特定目的背景下评估模型的一种方式，因此在考虑多个模型的时候，可以使用后验预测检查来对其进行比较。</p>
 <p>让我们读取并绘制一个简单的数据集：</p>
@@ -683,7 +677,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2597/2666850247.py:8: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2587/2666850247.py:8: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_l = pm.sample(2000)
 Auto-assigning NUTS sampler...
 </pre></div>
@@ -693,7 +687,7 @@ Auto-assigning NUTS sampler...
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
 KeyboardInterrupt                         Traceback (most recent call last)
-/tmp/ipykernel_2597/2666850247.py in &lt;module&gt;
+/tmp/ipykernel_2587/2666850247.py in &lt;module&gt;
       6     y_pred = pm.Normal(&#39;y_pred&#39;, mu=μ, sd=ϵ, observed=y_1s)
       7 
 ----&gt; 8     trace_l = pm.sample(2000)
@@ -994,7 +988,7 @@ KeyboardInterrupt:
 <p>在接下来几节中，我们探索一些其他模型比较的方法。</p>
 </div>
 <div class="section" id="id3">
-<h2>5.2 好模型的特征 –  <code class="docutils literal notranslate"><span class="pre">准确性</span></code>与<code class="docutils literal notranslate"><span class="pre">简约性</span></code><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2>5.2 好模型应当具备的特征<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>假如对同一个问题（或数据）有两个模型，二者对数据解释得同样好，应该选哪个模型呢？有一个基本准则叫做<strong>奥卡姆剃刀</strong>，即<strong>如果对同一现象有两种不同假说，应选用比较简单的那一种</strong>。</p>
 <p>关于奥卡姆剃刀的论证很多，其中一种说法与波普尔的可证伪性有关，还有一种说法是从实用角度提出的，因为简单模型相比复杂模型更容易理解，此外还有一种论证是基于贝叶斯统计的。这里不深入讨论该准则的论证细节，只将该准则当做一个有用而合理的常识。</p>
 <p>在比较模型时，既要考虑<strong>简约型</strong>，也需要同时考虑<strong>准确性</strong>（ 即模型对数据拟合得如何 ）。之前章节已出现过一些度量准确性的指标，如： <span class="math notranslate nohighlight">\(R^2\)</span> 系数可视为线性回归中可解释方差的比例。但**如果有两个模型，其中一个对数据的解释比另一个更准确，是否应该选更准确率的模型呢？**直觉上，似乎最好选择准确度高且简单的模型。但如果简单模型准确度最差，该怎么办？如何才能平衡这两种要素呢？</p>
