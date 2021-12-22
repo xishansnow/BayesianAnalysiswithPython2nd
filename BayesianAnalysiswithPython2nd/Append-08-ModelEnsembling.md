@@ -32,7 +32,7 @@ Understanding the key concepts of ensemble learning](https://towardsdatascience.
 注：在其余的95个样本中，假设根据投票规则均能分类正确
 
 
-## **2 主要集成学习方法**
+## 2 监督分类任务中的主要集成学习方法
 
 在机器学习中，基于这种组合思想来提高模型精度的方法被称为**集成学习（ensemble learning）**。俗话说”三个臭皮匠，赛过诸葛亮“，这句话完美的阐述了集成学习的潜在思想——通过将多个弱的模型结合在一起来提高最终结果的预测精度。
 
@@ -44,11 +44,11 @@ Understanding the key concepts of ensemble learning](https://towardsdatascience.
 
 我们可以粗略地说`装袋法`主要专注于获得方差小于其组件的集成模型（过拟合场景）；而`提升法`和`堆叠法`主要尝试生成比其组件偏差更少的强模型（欠拟合场景）。
 
-![](https://miro.medium.com/max/798/1*5pA6iY-qDP2JIsLoyfje-Q@2x.png)
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211221222031-9431.webp)
 
 可以组合弱学习器以获得性能更好的模型。组合基础模型的方式应该适应它们的类型。低偏差和高方差弱模型应该以一种使强模型更健壮的方式组合，而低方差和高偏差基础模型最好以一种使集成模型更少偏差的方式组合。
 
-## **3 装袋法（ `Bagging` ）**
+### 2.1 装袋法（ `Bagging` ）
 
 
 `装袋法（ Bagging ）`的全称为 `自举/聚合（ bootstrap aggregation ）`，这两个单词分别代表了装袋法在执行过程中的两个步骤：① 自举样本（bootstrap samples）；② 聚合输出（ aggregate outputs）。也就是装袋法首先从原始数据集中随机抽取多组包含若干数量样本点的子训练集；然后基于这些子训练集分别得到不同的基模型；最后对各基模型预测的结果进行聚合输出。
@@ -59,7 +59,7 @@ $$
 
 其中 $M$ 表示基模型的数量，$f_m(x)$ 表示不同的基模型。
 
-![](https://upload-images.jianshu.io/upload_images/4893123-313efa728430df54.png?imageMogr2/auto-orient/strip|imageView2/2/w/617/format/webp)
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211221222045-0c29.webp)
 
 由于装袋法的策略是取所有基模型的”平均“值作为最终模型的输出结果，因此能够很好的降低模型的高方差（过拟合）状况。通常在使用装袋法时，尽量使每个基模型都出现过拟合的现象。
 
@@ -104,7 +104,7 @@ if __name__ == '__main__':
 
 ![](https://pic2.zhimg.com/v2-0775c793de4b55e0077edfcc953f2b4d_b.jpg)
 
-![](https://pic2.zhimg.com/80/v2-0775c793de4b55e0077edfcc953f2b4d_720w.jpg)
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211221222054-f0d1.webp)
 
 上图为随机采样后生成的若干决策树模型，可以看到，在不同子样本集中训练的决策树中，同一个样本所归属的节点不同，甚至连类别也可能不同。这充分体现了集成模型的优点，通过 『平均』 来降低误差。如下所示代码为基于决策树的装袋法集成方法在 `sklearn` 中的两种实现方式：
 
@@ -130,7 +130,7 @@ if __name__ == '__main__':
     print(rfc.score(x_test,y_test))
 ```
 
-## 4  提升法（`Boosting` ）
+### 2.2  提升法（`Boosting` ）
 
  `提升法`同`装袋法`一样，都用于提高模型的泛化能力。不同的是：`提升法`通过训练一系列串行的模型来达到这一目的。在提升法的一些串行的基模型中，每个基模型都是对前一个基模型输出结果的改善。如果前一个基模型对某些样本进行了错误分类，那么后一个基模型就会针对该错误结果做改善。在经过一系列串行的基模型拟合之后，最终会得到一个更加准确的结果。因此，**提升法经常被用于改善模型高偏差的情况（欠拟合现象）**。
 
@@ -142,7 +142,7 @@ if __name__ == '__main__':
 
 这两种元算法在顺序过程中创建和聚合弱学习器的方式不同。`自适应提升法`更新附加到每个训练集中观测样本点上的权重，而`梯度提升法`更新这些观测样本的值。这个主要区别来自于两种方法解决优化问题方式的不同。
 
-![](https://miro.medium.com/max/2000/1*VGSoqefx3Rz5Pws6qpLwOQ@2x.png)
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211221222102-3bec.webp)
 
 > 提升法迭代地拟合弱学习器，将其聚合到集成模型并“更新”训练数据集，以便在拟合下一个基本模式时更好地考虑当前集成模型的优势和劣势。
 
@@ -169,7 +169,7 @@ if __name__ == '__main__':
 重复这些步骤，我们依次构建我们的 L 个模型并将它们聚合成一个简单的线性组合，由表示每个学习器性能的系数加权。请注意，存在初始 adaboost 算法的变体，例如 LogitBoost（分类）或 L2Boost（回归），其主要区别在于它们选择的损失函数。
 
 
-## 5 堆叠法（  `Stacking` ）
+### 2.3 堆叠法（  `Stacking` ）
 
 与`装袋法`和`提升法`中采用同质基模型的思路不同，堆叠法采用异质基模型。首先通过训练得到多个基于不同算法的基模型，然后再通过训练一个`元模型`来对其它模型的输出结果进行融合。例如：可以选择逻辑回归、朴素贝叶斯和 `KNN` 作为基模型，以决策树作为元模型。 堆叠法首先训练得到前三个基模型；然后再以基模型的输出作为决策树的输入，继续训练元模型；最后以决策树的输出作为最终分类结果。
 
@@ -188,6 +188,32 @@ if __name__ == '__main__':
     acc = stacking.score(x_test, y_test)
     print(acc)
 ```
+### 2.4 半监督分类任务
+
+
+## 3 聚簇任务中的模型集成
+
+### 3.1 
+
+### 3.2 
+
+
+### 3.3 
+
+## 4 深度集成
+
+### 4.1 一般性的深度集成
+
+### 4.1 快照法（ Snapshot ）
+
+
+### 4.2 快速几何集成法（ fast geometric ensembling, FGE ）
+
+
+### 4.3 随机权重平均法（ stochastic weight averaging, SWA ）
+
+### 4.4 LoMiFoSS
+
 
 ## 6 总结
 
