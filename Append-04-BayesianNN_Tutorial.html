@@ -760,8 +760,8 @@ P\left(\mathcal{H}_{i} \mid \mathcal{D}\right) \propto P\left(\mathcal{D} \mid \
 <h5>（4）直接求解边缘似然的早期尝试<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h5>
 <p>很多现代方法（如：MCMC 和变分法）通常都巧妙地规避了边缘似然的计算问题，但在该早期论文中，却实实在在提出了一种近似计算边缘似然的解决方案，虽然该方案基本已经无人使用。</p>
 <p>该论文假设边缘似然呈高斯分布，并提出了边缘似然的拉普拉斯近似：</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7616b746-4e0b-47e1-8220-41a0ebecbd97">
-<span class="eqno">(1)<a class="headerlink" href="#equation-7616b746-4e0b-47e1-8220-41a0ebecbd97" title="Permalink to this equation">¶</a></span>\[\begin{align} 
+<div class="amsmath math notranslate nohighlight" id="equation-6a8f1ee1-4c13-4823-b747-e0aa3c8b6ad5">
+<span class="eqno">(1)<a class="headerlink" href="#equation-6a8f1ee1-4c13-4823-b747-e0aa3c8b6ad5" title="Permalink to this equation">¶</a></span>\[\begin{align} 
 P\left(\mathcal{D} \mid \mathcal{H}_{i}\right) &amp;=\int P\left(\mathcal{D} \mid \boldsymbol{\omega}, \mathcal{H}_{i}\right) P\left(\boldsymbol{\omega} \mid \mathcal{H}_{i}\right) d \boldsymbol{\omega} \\ 
 &amp; \approx P\left(\mathcal{D} \mid \boldsymbol{\omega}_{\mathrm{MAP}}, \mathcal{H}_{i}\right)\left[P\left(\boldsymbol{\omega}_{\mathrm{MAP}} \mid \mathcal{H}_{i}\right) \Delta \omega\right]' \\ 
 &amp;=P\left(\mathcal{D} \mid \boldsymbol{\omega}_{\mathrm{MAP}}, \mathcal{H}_{i}\right)\left[P\left(\boldsymbol{\omega}_{\mathrm{MAP}} \mid \mathcal{H}_{i}\right)(2 \pi)^{\frac{k}{2}} \mathrm{det}^{-\frac{1}{2}} \mathbf{A}\right] \\ 
@@ -809,8 +809,8 @@ P\left(\mathcal{D} \mid \mathcal{H}_{i}\right) &amp;=\int P\left(\mathcal{D} \mi
 <div><p>注6：根据定义， KL 散度不符合交换律，即 <span class="math notranslate nohighlight">\(KL(p \| q) \neq KL(q \| p)\)</span>。</p>
 </div></blockquote>
 <p>对于变分推断，可将式 16 用作参数 <span class="math notranslate nohighlight">\(\theta\)</span> 的目标函数，将推断问题转变成 <span class="math notranslate nohighlight">\(\theta\)</span> 的最优化求解问题。式 16 可进一步扩展为：</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8a3395ba-a0c9-4bbb-96bf-5799e6f62cc0">
-<span class="eqno">(2)<a class="headerlink" href="#equation-8a3395ba-a0c9-4bbb-96bf-5799e6f62cc0" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c12e19ed-8fe5-4ba1-84b1-f49d20ae5ca2">
+<span class="eqno">(2)<a class="headerlink" href="#equation-c12e19ed-8fe5-4ba1-84b1-f49d20ae5ca2" title="Permalink to this equation">¶</a></span>\[\begin{align}
 \mathrm{KL}\left(q_{\boldsymbol{\theta}}(\boldsymbol{\omega}) \| p(\boldsymbol{\omega} \mid \mathcal{D})\right)&amp;= \mathbb{E}_{q}\left[\log \frac{q_{\boldsymbol{\theta}}(\boldsymbol{\omega})}{p(\boldsymbol{\omega})}-\log p(\mathcal{D} \mid \boldsymbol{\omega})\right]+\log p(\mathcal{D})\\ 
 &amp;=\mathrm{KL}\left(q_{\boldsymbol{\theta}}(\boldsymbol{\omega}) \| p(\boldsymbol{\omega})\right)-\mathbb{E}_{q}[\log p(\mathcal{D} \mid \boldsymbol{\omega})]+\log p(\mathcal{D})\\
 &amp;=-\mathcal{F}\left[q_{\theta}\right]+\log p(\mathcal{D})
@@ -1018,8 +1018,8 @@ v_{i}(t+\epsilon)=v_{i}\left(t+\frac{\epsilon}{2}\right)+\frac{\epsilon}{2} \fra
 \frac{\partial}{\partial \theta} p(x \mid \theta)=p(x \mid \theta) \frac{\partial}{\partial \theta} \log p(x \mid \theta) \tag{36}
 \]</div>
 <p>利用该性质，可形成对期望导数的蒙特卡洛估计，这在变分推断中经常使用：</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1b832072-fb89-4569-a8b2-97e1da909c52">
-<span class="eqno">(3)<a class="headerlink" href="#equation-1b832072-fb89-4569-a8b2-97e1da909c52" title="Permalink to this equation">¶</a></span>\[\begin{align} 
+<div class="amsmath math notranslate nohighlight" id="equation-3246a82c-650b-4da4-82df-7148777a39fd">
+<span class="eqno">(3)<a class="headerlink" href="#equation-3246a82c-650b-4da4-82df-7148777a39fd" title="Permalink to this equation">¶</a></span>\[\begin{align} 
 \nabla_{\theta} \mathbb{E}_{q}[f(\omega)] &amp;=\int f(\omega) \nabla_{\theta} q_{\theta}(\omega) \partial \omega \\
  &amp;=\int f(\omega) q_{\theta}(\omega) \nabla_{\theta} \log \left(q_{\theta}(\omega)\right) \partial \omega \\ 
  &amp; \approx \frac{1}{L} \sum_{i=1}^{L} f\left(\omega_{i}\right) \nabla_{\theta} \log \left(q_{\theta}\left(\omega_{i}\right)\right) 
@@ -1066,8 +1066,8 @@ v_{i}(t+\epsilon)=v_{i}\left(t+\frac{\epsilon}{2}\right)+\frac{\epsilon}{2} \fra
 <p>应用重参数化技巧获得相对于网络参数的偏导数，然后形成 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 并执行反向传播以最大化下界。蒙特卡洛积分被用来逼近解析上难以处理的对数似然。通过用两个小方差高斯分布的混合模型来近似伯努利后验，得到 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 中近似后验与先验分布之间的 KL 散度。</p>
 <p>在上述工作同时，<code class="docutils literal notranslate"><span class="pre">Kingma</span></code> 等人 <code class="docutils literal notranslate"><span class="pre">[71]</span></code> 也发现了 <code class="docutils literal notranslate"><span class="pre">Dropout</span></code> 和其在变分框架中的应用潜力。与 <code class="docutils literal notranslate"><span class="pre">Dropout</span></code> 引入的典型伯努利分布随机变量相比，<code class="docutils literal notranslate"><span class="pre">[71]</span></code> 将注意力集中在引入高斯随机变量 <code class="docutils literal notranslate"><span class="pre">[72]</span></code> 。文中表明在选择与参数无关的适当先验情况下，使用 <code class="docutils literal notranslate"><span class="pre">Dropout</span></code> 的神经网络可被视为近似推断。</p>
 <p><code class="docutils literal notranslate"><span class="pre">Kingma</span></code> 等人还希望使用改进的局部重参数化来降低随机梯度中的方差。这不是在应用仿射变换之前从权重分布进行采样，而是在之后执行采样。例如，考虑 <code class="docutils literal notranslate"><span class="pre">MFVB</span></code> 的情况，其中假设每个权重是独立的高斯 $<span class="math notranslate nohighlight">\(W_{ij}∼N(µ_{ij},σ^2_{ij})\)</span><span class="math notranslate nohighlight">\( 。在仿射变换 \)</span><span class="math notranslate nohighlight">\(\phi_j=\sum_{i=1}^{N_1}(x_iρ_i)w_{ij}\)</span><span class="math notranslate nohighlight">\( 之后， \)</span>\phi_j$ 的条件后验分布也将是因子分解的高斯形式：</p>
-<div class="amsmath math notranslate nohighlight" id="equation-18015cdc-fc03-4901-b713-2fbd29094dce">
-<span class="eqno">(4)<a class="headerlink" href="#equation-18015cdc-fc03-4901-b713-2fbd29094dce" title="Permalink to this equation">¶</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-be5ab9b8-7963-42af-8684-260511855c1e">
+<span class="eqno">(4)<a class="headerlink" href="#equation-be5ab9b8-7963-42af-8684-260511855c1e" title="Permalink to this equation">¶</a></span>\[\begin{align}
 q\left(\phi_{j} \mid \mathbf{x}\right) &amp;=\mathcal{N}\left(\gamma_{j}, \delta_{j}^{2}\right) \\
 \gamma_{j} &amp;=\sum_{i=1}^{N} x_{i} \mu_{i, j} \\
 \delta_{j}^{2} &amp;=\sum_{i=1}^{N} x_{i}^{2} \sigma_{i, j}^{2}
