@@ -437,10 +437,27 @@
      4.3 随机变分推断（ SVI ）：自然梯度与 SGD 的结合
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#svi">
+     4.4 随机变分推断（ SVI ）中的一些技巧
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id22">
+       4.4.1 自适应学习率
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id23">
+       4.4.2 方差减少策略
+      </a>
+     </li>
+    </ul>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id22">
+  <a class="reference internal nav-link" href="#id24">
    5 提升通用性 — 黑盒变分推断
   </a>
   <ul class="nav section-nav flex-column">
@@ -450,24 +467,51 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id23">
-     5.2 使用打分梯度的 BBVI
+    <a class="reference internal nav-link" href="#id25">
+     5.2 使用评分梯度的 BBVI
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id24">
+    <a class="reference internal nav-link" href="#id26">
      5.3 使用重参数化梯度的 BBVI
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id27">
+     5.4 方差减少策略
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id25">
+  <a class="reference internal nav-link" href="#id28">
    6 提升准确性 —  新的目标函数和结构化变分近似
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id29">
+     6.1 平均长变分的起源和局限性
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id30">
+     6.2 采用新的散度做变分推断
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id31">
+     6.3 结构化变分推断
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id32">
+     6.4 其他非标准的变分推断方法
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id26">
+  <a class="reference internal nav-link" href="#id33">
    7 摊销式变分推断与深度学习
   </a>
   <ul class="nav section-nav flex-column">
@@ -482,41 +526,41 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id27">
+    <a class="reference internal nav-link" href="#id34">
      7.3 更灵活的 VAE
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id28">
+      <a class="reference internal nav-link" href="#id35">
        7.3.1 标准化流 VAE
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id29">
+      <a class="reference internal nav-link" href="#id36">
        7.3.2 重要性加权 VAE
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id30">
+    <a class="reference internal nav-link" href="#id37">
      7.4  结构化 VAE
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id31">
+      <a class="reference internal nav-link" href="#id38">
        7.4.1 结构化 VAE
       </a>
      </li>
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id32">
+    <a class="reference internal nav-link" href="#id39">
      7.5 解决僵尸单元的问题
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id33">
+      <a class="reference internal nav-link" href="#id40">
        7.5.1 有损 VAE
       </a>
      </li>
@@ -525,34 +569,34 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id34">
+  <a class="reference internal nav-link" href="#id41">
    8 讨论
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id35">
+    <a class="reference internal nav-link" href="#id42">
      8.1 变分推断理论方面
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id36">
+    <a class="reference internal nav-link" href="#id43">
      8.2 变分推断和深度学习
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id37">
+    <a class="reference internal nav-link" href="#id44">
      8.3 变分推断和策略梯度
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id38">
+    <a class="reference internal nav-link" href="#id45">
      8.4 自动变分推断
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id39">
+  <a class="reference internal nav-link" href="#id46">
    9 总结
   </a>
  </li>
@@ -569,6 +613,7 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="b">
 <h1>附录 B： 变分法推断<a class="headerlink" href="#b" title="Permalink to this headline">¶</a></h1>
+<p>【原文】Zhang Cheng， Butepage Judith，Kjellstrom Hedvig，Mandt Stephan； Advances in Variational Inference，2018</p>
 <style>p{text-indent:2em;2}</style>
 <div class="section" id="id1">
 <h2>1 问题提出<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
@@ -646,9 +691,9 @@
 </div>
 <div class="section" id="id8">
 <h4>2.2.4 变分推断是一个优化问题<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
-<p>变分推断是一个优化问题，其最直观的优化目标是最小化 <span class="math notranslate nohighlight">\(KL\)</span> 散度，但实际可操作的优化目标是最大化证据下界 <span class="math notranslate nohighlight">\(ELBO\)</span> 。</p>
-<p>直观地理解，变分推断的优化目标很明确，就是最小化 <span class="math notranslate nohighlight">\(q\)</span> 和 <span class="math notranslate nohighlight">\(p\)</span> 之间的差距，而信息论为我们提供了一个量化两个分布之间差距的工具 <span class="math notranslate nohighlight">\(KL\)</span> 散度。但不幸的是，<span class="math notranslate nohighlight">\(KL\)</span> 散度的计算并不简单，其计算表达式中同样存在难以处理的边缘似然积分项（边缘似然也称证据，在一般化的数学形式中也被成为配分函数）。为此，有人提出了可操作的优化目标 — 证据下界 <span class="math notranslate nohighlight">\(ELBO\)</span> （见 2.4 节）。</p>
-<p>在证据下界 <span class="math notranslate nohighlight">\(ELBO\)</span> 的计算表达式中，只包括联合分布  <span class="math notranslate nohighlight">\(p(\mathbf{z, x})\)</span>  和变分分布 <span class="math notranslate nohighlight">\(q(\mathbf{z}; \boldsymbol{\nu})\)</span> ，摆脱了难以处理的边缘似然积分项。并且在给定观测数据后，最大化 <span class="math notranslate nohighlight">\(ELBO\)</span> 等价于最小化 <span class="math notranslate nohighlight">\(KL\)</span> 。 也就是说，<span class="math notranslate nohighlight">\(ELBO\)</span> 的最大化过程结束时，获得的输出 <span class="math notranslate nohighlight">\(q(\mathbf{z}; \boldsymbol{\nu^\star})\)</span>就是我们寻求的最终变分分布。</p>
+<p>变分推断是一个优化问题，其最直观的优化目标是最小化 <span class="math notranslate nohighlight">\(KL\)</span> 散度，但实际可操作的优化目标是最大化证据下界 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 。</p>
+<p>直观地理解，变分推断的优化目标很明确，就是最小化 <span class="math notranslate nohighlight">\(q\)</span> 和 <span class="math notranslate nohighlight">\(p\)</span> 之间的差距，而信息论为我们提供了一个量化两个分布之间差距的工具 <span class="math notranslate nohighlight">\(KL\)</span> 散度。但不幸的是，<span class="math notranslate nohighlight">\(KL\)</span> 散度的计算并不简单，其计算表达式中同样存在难以处理的边缘似然积分项（边缘似然也称证据，在一般化的数学形式中也被成为配分函数）。为此，有人提出了可操作的优化目标 — 证据下界 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> （见 2.4 节）。</p>
+<p>在证据下界 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的计算表达式中，只包括联合分布  <span class="math notranslate nohighlight">\(p(\mathbf{z, x})\)</span>  和变分分布 <span class="math notranslate nohighlight">\(q(\mathbf{z}; \boldsymbol{\nu})\)</span> ，摆脱了难以处理的边缘似然积分项。并且在给定观测数据后，最大化 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 等价于最小化 <span class="math notranslate nohighlight">\(KL\)</span> 。 也就是说，<code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的最大化过程结束时，获得的输出 <span class="math notranslate nohighlight">\(q(\mathbf{z}; \boldsymbol{\nu^\star})\)</span>就是我们寻求的最终变分分布。</p>
 </div>
 <div class="section" id="id9">
 <h4>2.2.5 变分推断的形象化解释<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
@@ -763,7 +808,7 @@ J(q) &amp;= \sum_x q(x) \log \frac{q(x)} {\tilde p(x)} \\
 \log Z(\theta) = KL(q\|p) - J(q) \geq -J(q)
 \]</div>
 <p>该式表明，<span class="math notranslate nohighlight">\(-J(q)\)</span> 是对数配分函数 <span class="math notranslate nohighlight">\(\log Z(\theta)\)</span> 的下界。</p>
-<p>在大多数应用场景中， 对配分函数 <span class="math notranslate nohighlight">\(Z(\theta)\)</span> 都有特别的解释。例如，在给定观测数据 <span class="math notranslate nohighlight">\(D\)</span> 的情况下，我们可能想计算随机变量 <span class="math notranslate nohighlight">\(x\)</span> 的边缘概率 <span class="math notranslate nohighlight">\(p(x \mid D) = p(x,D) / p(D)\)</span> 。在这种情况下，最小化 <span class="math notranslate nohighlight">\(J(q)\)</span> 等价于最大化对数边缘似然 <span class="math notranslate nohighlight">\(\log p(D)\)</span>  的下界。正是因为如此， <span class="math notranslate nohighlight">\(-J(q)\)</span> 被称为变分下界或证据下界（ <span class="math notranslate nohighlight">\(ELBO\)</span> ），这种下界关系经常以如下不公式形式表示：</p>
+<p>在大多数应用场景中， 对配分函数 <span class="math notranslate nohighlight">\(Z(\theta)\)</span> 都有特别的解释。例如，在给定观测数据 <span class="math notranslate nohighlight">\(D\)</span> 的情况下，我们可能想计算随机变量 <span class="math notranslate nohighlight">\(x\)</span> 的边缘概率 <span class="math notranslate nohighlight">\(p(x \mid D) = p(x,D) / p(D)\)</span> 。在这种情况下，最小化 <span class="math notranslate nohighlight">\(J(q)\)</span> 等价于最大化对数边缘似然 <span class="math notranslate nohighlight">\(\log p(D)\)</span>  的下界。正是因为如此， <span class="math notranslate nohighlight">\(-J(q)\)</span> 被称为变分下界或证据下界（ <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> ），这种下界关系经常以如下不公式形式表示：</p>
 <div class="math notranslate nohighlight">
 \[
 \log Z(\theta) \geq \mathbb{E}_{q(x)} [ \log \tilde p(x) - \log q(x) ]
@@ -791,8 +836,8 @@ KL(q\|p) = \sum_x q(x) \log \frac{q(x)}{p(x)}
 <p>小结：</p>
 <ul class="simple">
 <li><p>由于配分函数 <span class="math notranslate nohighlight">\(Z\)</span> 的存在，使得直接计算 <span class="math notranslate nohighlight">\(KL\)</span> 散度难以处理</p></li>
-<li><p>采用等价的最大化 <span class="math notranslate nohighlight">\(ELBO\)</span> 来代替最小化 <span class="math notranslate nohighlight">\(KL\)</span> 散度作为新的优化目标</p></li>
-<li><p><span class="math notranslate nohighlight">\(ELBO\)</span> 中只包含变分分布 <span class="math notranslate nohighlight">\(q\)</span> 和目标分布的分子项 <span class="math notranslate nohighlight">\(\tilde p\)</span> ，并且两者都可计算，进而可以作为真正的优化目标</p></li>
+<li><p>采用等价的最大化 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 来代替最小化 <span class="math notranslate nohighlight">\(KL\)</span> 散度作为新的优化目标</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 中只包含变分分布 <span class="math notranslate nohighlight">\(q\)</span> 和目标分布的分子项 <span class="math notranslate nohighlight">\(\tilde p\)</span> ，并且两者都可计算，进而可以作为真正的优化目标</p></li>
 <li><p><span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 和 <span class="math notranslate nohighlight">\(KL(p\|q)\)</span> 虽然都是散度，也都可以作为优化目标，但作为目标时两者达到的效果截然不同。对于多峰后验，前者倾向于选择能够覆盖其中某个峰的变分分布，而后者倾向于选择能够覆盖多个峰的变分分布。</p></li>
 </ul>
 </div>
@@ -808,8 +853,8 @@ KL(q\|p) = \sum_x q(x) \log \frac{q(x)}{p(x)}
 \[
 q(\mathbf{z};\boldsymbol{\lambda}) = \prod_{i=1}^N q(z_i ; \lambda_i)
 \]</div>
-<p>为了符号简单，我们在本节的其余部分省略了变分参数 <span class="math notranslate nohighlight">\(λ\)</span> 。我们现在回顾如何在平均场假设下最大化公式（ 3 ）中定义的 <span class="math notranslate nohighlight">\(ELBO\)</span> 。</p>
-<p>完全分解的变分分布允许通过简单的迭代更新来优化。为了看到这一点，我们专注于更新与隐变量 <span class="math notranslate nohighlight">\(z_j\)</span> 相关的变分参数 <span class="math notranslate nohighlight">\(λ_j\)</span> 。将平均场分布插入公式（ 3 ）允许我们表达 <span class="math notranslate nohighlight">\(ELBO\)</span> 如下：</p>
+<p>为了符号简单，我们在本节的其余部分省略了变分参数 <span class="math notranslate nohighlight">\(λ\)</span> 。我们现在回顾如何在平均场假设下最大化公式（ 3 ）中定义的 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 。</p>
+<p>完全分解的变分分布允许通过简单的迭代更新来优化。为了看到这一点，我们专注于更新与隐变量 <span class="math notranslate nohighlight">\(z_j\)</span> 相关的变分参数 <span class="math notranslate nohighlight">\(λ_j\)</span> 。将平均场分布插入公式（ 3 ）允许我们表达 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 如下：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
@@ -852,7 +897,7 @@ q^{*}\left(z_{j}\right) &amp; \propto \exp \left(\mathbb{E}_{q\left(z_{\neg j}\r
 <blockquote>
 <div><p>图 9：完全因子分解后的平均场变分族</p>
 </div></blockquote>
-<p>在这种因子分解形式的近似中，完全因子分解是使用最广泛的一种构造形式，即每个隐变量有自己独立的分布，与其他隐变量无关，数学形式为： <span class="math notranslate nohighlight">\(q(z) = q_1(z_1) q_2(z_2) \cdots q_n(z_n) \)</span>，其中所有的 <span class="math notranslate nohighlight">\(q_i(z_i)\)</span> 都是一元离散变量上的类别分布（Catalogical Distribution），可描述为一维表形式。</p>
+<p>在这种因子分解形式的近似中，完全因子分解是使用最广泛的一种构造形式，即每个隐变量有自己独立的分布，与其他隐变量无关，数学形式为： <span class="math notranslate nohighlight">\(q(z) = q_1(z_1) q_2(z_2) \cdots q_n(z_n) \)</span>，其中所有的 <span class="math notranslate nohighlight">\(q_i(z_i)\)</span> 都是一元离散变量上的类别分布（ <code class="docutils literal notranslate"><span class="pre">Catalogical</span> <span class="pre">Distribution</span></code> ），可描述为一维表形式。</p>
 <p>事实表明，对于 <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span> 的这种选择很容易优化，并且工作地出奇得好。在优化变分下界时，这种因子分解的方法也许是目前最流行的一种选择。</p>
 <p>这种采用完全因子分解方法的变分推断，被称为<strong>平均场近似推断</strong>。此方法包含以下需要解决的优化问题：</p>
 <div class="math notranslate nohighlight">
@@ -967,12 +1012,21 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <p>既然给出了目标函数的最速梯度方向，那么与 4.1 节的随机梯度下降相结合就成为一种非常自然的想法。大家都知道， SGD 是小批量梯度下降的特例，由于每次仅随机地使用一个样本（这也是取名为随机梯度下降的原因），因此会引入较大的方差，但总体趋向于最优解。以下算法 2 为<strong>随机变分变分推断算法</strong>， 其基本思想是：在每一轮迭代中，随机抽取一个样本数据点并计算最优局部参数，然后根据自然梯度公式更新全局参数，直至收敛。</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108163233-7872.webp" /></p>
 </div>
-</div>
+<div class="section" id="svi">
+<h3>4.4 随机变分推断（ SVI ）中的一些技巧<a class="headerlink" href="#svi" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id22">
-<h2>5 提升通用性 — 黑盒变分推断<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+<h4>4.4.1 自适应学习率<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="id23">
+<h4>4.4.2 方差减少策略<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+</div>
+<div class="section" id="id24">
+<h2>5 提升通用性 — 黑盒变分推断<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="bbvi">
 <h3>5.1 为何要做黑盒变分推断（BBVI）？<a class="headerlink" href="#bbvi" title="Permalink to this headline">¶</a></h3>
-<p>上面章节中，我们针对特定模型做出变分推断，其中大家应该已经注意到了，在 <span class="math notranslate nohighlight">\(ELBO\)</span> 的计算表达式中，需要人为设定 <span class="math notranslate nohighlight">\(q\)</span> ，并给出其数学期望的解析表达式（事实上，<a class="reference external" href="http://www.nowpublishers.com/article/Details/MAL-001">文献</a> 表明，该方法只适用于<strong>条件共轭指数族分布</strong>）。考虑到现实世界中可能存在无数种模型，而且大部分可能是非共轭的，即便符合条件共轭假设，为每一个模型设计一种变分方案显然也是不可接受的。</p>
+<p>上面章节中，我们针对特定模型做出变分推断，其中大家应该已经注意到了，在 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的计算表达式中，需要人为设定 <span class="math notranslate nohighlight">\(q\)</span> ，并给出其数学期望的解析表达式（事实上，<a class="reference external" href="http://www.nowpublishers.com/article/Details/MAL-001">文献</a> 表明，该方法只适用于<strong>条件共轭指数族分布</strong>）。考虑到现实世界中可能存在无数种模型，而且大部分可能是非共轭的，即便符合条件共轭假设，为每一个模型设计一种变分方案显然也是不可接受的。</p>
 <p>因此，人们自然而然在思考：是否存在一个不需特定于某种模型的通用解决方案 ？这个解决方案最好将像黑匣子一样，只需输入模型和海量数据，然后就自动输出变分分布（或变分参数）。事实表明，这是有可能的，此类推断方法被称为<strong>黑盒变分推断（BBVI）</strong>。</p>
 <blockquote>
 <div><p>黑盒变分推断的概念最早出现在文献 <a class="reference external" href="https://arxiv.org/pdf/1401.0118">Ranganath et al., 2014</a> 中和 <a class="reference external" href="https://arxiv.org/pdf/1401.1022">Sal-imans 和 Knowles，2014</a>; <a class="reference external" href="https://arxiv.org/abs/1312.6114v10">Kingma and Welling, 2014</a> 和 <a class="reference external" href="https://arxiv.org/abs/1401.4082">Rezende et al., 2014</a> 提出了利用重参数化技巧实现反向传播和优化的方法；<a class="reference external" href="https://arxiv.org/abs/1505.05770">Rezende and Mohamed, 2015</a> 提出了归一化流的 BBVI 方案、<a class="reference external" href="https://arxiv.org/abs/158.06499">Tran et al.,2016</a> 提出了变分高斯过程的 BBVI 方案，均提升了变分推断的精度；<a class="reference external" href="https://arxiv.org/abs/1603.00788">Alp Kucukelbir et al, 2016</a> 提出自动微分变分推断方法（ ADVI ）；<a class="reference external" href="https://arxiv.org/abs/1505.00519">Yuri Burda et al., 2016</a> 在 VAE 基础上，提出了重要性加权变分自编码器；<a class="reference external" href="https://arxiv.org/abs/1807.09034">J Domke and D Sheldon, 2018</a> 对其进行了泛化，提出了重要性加权变分推断。</p>
@@ -985,25 +1039,25 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 </div></blockquote>
 <p>BBVI 大致分为两种类型：</p>
 <ul class="simple">
-<li><p><strong>基于打分梯度</strong>的黑盒变分推断（ BBVI ）</p></li>
+<li><p><strong>基于评分梯度</strong>的黑盒变分推断（ BBVI ）</p></li>
 <li><p><strong>基于重参数化梯度</strong>的黑盒变分推断（ BBVI ）</p></li>
 </ul>
 <p>后者是变分自编码器 (VAE) 的基础。</p>
 </div>
-<div class="section" id="id23">
-<h3>5.2 使用打分梯度的 BBVI<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
-<p>考虑如下概率模型，其中  <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>  是观测变量， <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 是隐变量，其变分分布为 <span class="math notranslate nohighlight">\(q(\mathbf{z} \mid \lambda)\)</span> 。变分下界 (ELBO) 为：</p>
+<div class="section" id="id25">
+<h3>5.2 使用评分梯度的 BBVI<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<p>考虑如下概率模型，其中  <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>  是观测变量， <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 是隐变量，其变分分布为 <span class="math notranslate nohighlight">\(q(\mathbf{z} \mid \lambda)\)</span> 。变分下界 (<code class="docutils literal notranslate"><span class="pre">ELBO</span></code>) 为：</p>
 <div class="math notranslate nohighlight">
 \[
 \mathcal{L}(\lambda) \triangleq \mathbb{E}_{q_{\lambda}(\mathbf{z})}[\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda)] \tag{9}
 \]</div>
-<p>ELBO 关于 <span class="math notranslate nohighlight">\(\lambda\)</span> 的梯度为：</p>
+<p><code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 关于 <span class="math notranslate nohighlight">\(\lambda\)</span> 的梯度为：</p>
 <div class="math notranslate nohighlight">
 \[
 \nabla_{\lambda} \mathcal{L}=\mathbb{E}_{q}\left[\nabla_{\lambda} \log q(\mathbf{z} \mid \lambda)(\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda))\right] \tag{10}
 \]</div>
-<p>其中 <span class="math notranslate nohighlight">\(\nabla_{\lambda} \log q(\mathbf{z} \mid \lambda)\)</span> 被称为打分函数。</p>
-<p>使用式（ 10 ） 中的打分梯度，就可以利用蒙特卡罗的优势，用变分分布的样本来计算 <span class="math notranslate nohighlight">\(ELBO\)</span> 的含噪声无偏梯度：</p>
+<p>其中 <span class="math notranslate nohighlight">\(\nabla_{\lambda} \log q(\mathbf{z} \mid \lambda)\)</span> 被称为评分函数。</p>
+<p>使用式（ 10 ） 中的评分梯度，就可以利用蒙特卡罗的优势，用变分分布的样本来计算 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的含噪声无偏梯度：</p>
 <div class="math notranslate nohighlight">
 \[
 \nabla_\lambda \approx \frac{1}{S} \sum_{S=1}^{S} \nabla_\lambda \log q(z_S \mid \lambda)(\log p(\mathbf{x},z_S) - \log q(z_S \mid \lambda))
@@ -1018,9 +1072,9 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 </div></blockquote>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\nabla_{\lambda} q_{\lambda}(\mathbf{z})=\frac{1}{q_{\lambda}(\mathbf{z})} \nabla_{\lambda} q_{\lambda}(\mathbf{z})=q_{\lambda}(\mathbf{z}) \nabla_{\lambda} q_{\lambda}(\mathbf{z})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathbb{E}_{q}\left[\nabla_{\lambda} \log q_{\lambda}(\mathbf{z})\right]=0\)</span> ， 即对数似然梯度（打分函数）的期望为零。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbb{E}_{q}\left[\nabla_{\lambda} \log q_{\lambda}(\mathbf{z})\right]=0\)</span> ， 即对数似然梯度（评分函数）的期望为零。</p></li>
 </ul>
-<p>基于这两个事实，可以推导出 <span class="math notranslate nohighlight">\(ELBO\)</span> 的打分梯度：</p>
+<p>基于这两个事实，可以推导出 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的评分梯度：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
@@ -1034,9 +1088,9 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 \end{split}\]</div>
 </div>
 <hr class="docutils" />
-<div class="section" id="id24">
-<h3>5.3 使用重参数化梯度的 BBVI<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
-<p>依然采用上节中的模型，变分下界为（为方便重复式 9）：</p>
+<div class="section" id="id26">
+<h3>5.3 使用重参数化梯度的 BBVI<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<p>依然采用上节中的模型，变分下界 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 为（为方便重复式 9）：</p>
 <div class="math notranslate nohighlight">
 \[
 \mathcal{L}(\lambda) \triangleq \mathbb{E}_{q_{\lambda}(\mathbf{z})}[\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda)]
@@ -1057,73 +1111,114 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 &amp;\mathrm{z}=\mu + \epsilon \cdot \sigma
 \end{aligned} \Leftrightarrow \quad \mathrm{z} \sim \mathcal{N}\left(\mu, \sigma^{2}\right)
 \end{split}\]</div>
-<p>另外假设 <span class="math notranslate nohighlight">\(\log p(\mathbf{x},\mathbf{z})\)</span> 和 <span class="math notranslate nohighlight">\(\log q(\mathbf{z})\)</span> 关于 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 可微，则可以得到 <span class="math notranslate nohighlight">\(ELBO\)</span> 关于 <span class="math notranslate nohighlight">\(\lambda\)</span> 的重参数化的梯度：</p>
+<p>另外假设 <span class="math notranslate nohighlight">\(\log p(\mathbf{x},\mathbf{z})\)</span> 和 <span class="math notranslate nohighlight">\(\log q(\mathbf{z})\)</span> 关于 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 可微，则可以得到 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 关于 <span class="math notranslate nohighlight">\(\lambda\)</span> 的重参数化的梯度：</p>
 <div class="math notranslate nohighlight">
 \[
 \nabla_{\lambda} \mathcal{L}=\mathbb{E}_{S(\epsilon)} \left[\nabla_{\mathbf{z}} \left [ (\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} )\right ] \nabla_\lambda t(\epsilon,\lambda)\right] \tag{10}
 \]</div>
 <p>进而可以使用自动微分来获取梯度，但并不是所有的分布都可以重参数化。</p>
 <blockquote>
-<div><p>此部分最经典案例见 <a class="reference external" href="http://www.cs.columbia.edu/~blei/fogm/2018F/materials/KingmaWelling2013.pdf">变分自编码器</a></p>
+<div><p>注解：</p>
+<p>(1) 此部分最经典案例见 <a class="reference external" href="http://www.cs.columbia.edu/~blei/fogm/2018F/materials/KingmaWelling2013.pdf">变分自编码器</a></p>
+<p>(2) 可微性是重参数化技巧使用的重要条件，这意味着其适用范围不如评分函数方法。</p>
 </div></blockquote>
+<p>BBVI 的方差减少：BBVI 需要一套与第 3.2 节中审查的 SVI 不同的方差减少技术。与 SVI 的噪声来自有限数据点集的二次采样不同，BBVI 噪声来自可能具有无限支持的随机变量。在这种情况下，诸如 SVRG 之类的技术不适用，因为完整梯度不是有限多项的总和，并且无法保存在内存中。因此，BBVI 涉及一组不同的控制变量和其他方法，这里将简要回顾一下从梯度估计器中减去得分函数的蒙特卡罗期望：</p>
+</div>
+<div class="section" id="id27">
+<h3>5.4 方差减少策略<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<p>Variance Reduction for BBVI: BBVI requires a
+different set of techniques for variance reduction than those reviewed for SVI in Section 3.2. In contrast to SVI where the noise resulted from subsampling from a finite set of data points, the BBVI noise originates
+from random variables with possibly infinite support. In this case, techniques such as SVRG are not applicable, since the full gradient is not a sum over finitely many terms and cannot be kept in memory. Hence, BBVI involves a different set of control variates and other methods which shall briefly be reviewed here one subtracts a Monte Carlo expectation of the score function from the gradient estimator:</p>
+<p>As required, the score function control variate has
+expectation zero under the variational distribution. The
+weight w is selected such that it minimizes the variance
+of the gradient.
+While the original BBVI paper introduces both
+Rao-Blackwellization and control variates, [194] points
+out that good choices for control variates might be
+model-dependent. They further elaborate on local expectation gradients, which take only the Markov blanket of each variable into account. A different approach
+is presented by [167], which introduces overdispersed
+importance sampling. By sampling from a proposal distribution that belongs to an overdispersed exponential
+family and that places high mass on the tails of the
+variational distribution, the variance of the gradient is
+reduced</p>
 </div>
 </div>
-<div class="section" id="id25">
-<h2>6 提升准确性 —  新的目标函数和结构化变分近似<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id28">
+<h2>6 提升准确性 —  新的目标函数和结构化变分近似<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id29">
+<h3>6.1 平均长变分的起源和局限性<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
 </div>
-<div class="section" id="id26">
-<h2>7 摊销式变分推断与深度学习<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id30">
+<h3>6.2 采用新的散度做变分推断<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id31">
+<h3>6.3 结构化变分推断<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id32">
+<h3>6.4 其他非标准的变分推断方法<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="id33">
+<h2>7 摊销式变分推断与深度学习<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h2>
+<p>考虑第 <span class="math notranslate nohighlight">\(4\)</span> 节的设置，其中每个数据点 <span class="math notranslate nohighlight">\(x_i\)</span> 由其具有变分参数 <span class="math notranslate nohighlight">\(ξ_i\)</span> 的隐变量 <span class="math notranslate nohighlight">\(z_i\)</span> 控制。传统的变分推断需要为每个数据点 <span class="math notranslate nohighlight">\(x_i\)</span> 优化 <span class="math notranslate nohighlight">\(ξ_i\)</span>，这在计算上过于昂贵，特别是当这种优化嵌入到全局参数的更新循环时。摊销推断背后的基本思想是使用强大的预测器根据 <span class="math notranslate nohighlight">\(x_i\)</span> 的特征来预测最优 <span class="math notranslate nohighlight">\(z_i\)</span>，即 <span class="math notranslate nohighlight">\(z_i = f(x_i)\)</span> 。这样，局部变分参数就被数据的函数替换，而函数中的参数在所有数据点之间共享，即推断被摊销了。我们在 7.1 节详细介绍了这种方法背后的主要思想，并在 7.2 和 7.3 节中展示了如何以变分自动编码器的形式应用它。</p>
 <div class="section" id="amortized-variational-families">
 <h3>7.1 摊销变分推断（Amortized Variational Families）<a class="headerlink" href="#amortized-variational-families" title="Permalink to this headline">¶</a></h3>
+<p>术语『摊销推断』指利用来自过去计算的推断来支持未来的计算 <code class="docutils literal notranslate"><span class="pre">[36]、[50]</span></code>。对于变分推断，摊销推断通常是指对局部变量的推断。与为每个数据点近似单独的隐变量不同，如图 2(a) 所示，摊销变分推断假设局部变分参数可以通过数据的函数进行预测。因此，一旦估计了该函数，就可以通过该函数传递新数据点来获取潜在变量，如图 2(b) 所示。这种情况下使用的深度神经网络也被称为推断网络。因此，具有推断网络的摊销变分推断将概率建模与深度学习的表示能力结合到了一起。</p>
+<p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211223113610-8a74.webp" /></p>
+<blockquote>
+<div><p>图 2. 随机变分推断的概率图表示 (a)，和变分自编码器 (b)，其中虚线线条表示对变分的近似</p>
+</div></blockquote>
+<p>例如，摊销推断已应用于<code class="docutils literal notranslate"><span class="pre">深度高斯过程</span> <span class="pre">(DGP)</span></code> <code class="docutils literal notranslate"><span class="pre">[35]</span></code>。 该模型中的推断难以处理，作者就将平均场变分推断与诱导点一起应用（参见 <code class="docutils literal notranslate"><span class="pre">[35]</span></code> 第 3.3 节)。进一步，<code class="docutils literal notranslate"><span class="pre">[34]</span></code> 建议将这些隐变量估计为推断网络的函数，而不是单独估计这些隐变量，从而允许深度高斯过程扩展到更大的数据集并加速收敛。另外，还可以通过将摊销误差反馈到推断模型中来迭代摊销 <code class="docutils literal notranslate"><span class="pre">[116]</span></code>。</p>
 </div>
 <div class="section" id="vae">
 <h3>7.2 变分自编码器 （VAE）<a class="headerlink" href="#vae" title="Permalink to this headline">¶</a></h3>
 </div>
-<div class="section" id="id27">
-<h3>7.3 更灵活的 VAE<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id28">
-<h4>7.3.1 标准化流 VAE<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h4>
-</div>
-<div class="section" id="id29">
-<h4>7.3.2 重要性加权 VAE<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h4>
-</div>
-</div>
-<div class="section" id="id30">
-<h3>7.4  结构化 VAE<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id31">
-<h4>7.4.1 结构化 VAE<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h4>
-</div>
-</div>
-<div class="section" id="id32">
-<h3>7.5 解决僵尸单元的问题<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id33">
-<h4>7.5.1 有损 VAE<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h4>
-</div>
-</div>
-</div>
 <div class="section" id="id34">
-<h2>8 讨论<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h2>
-<p>下面是一些活跃的研究方向和开放性问题：</p>
+<h3>7.3 更灵活的 VAE<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id35">
-<h3>8.1 变分推断理论方面<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h3>
-<p>尽管在建模和推断方面取得了进展，但很少有作者讨论 VI  的理论方面 [95]、[133]、[213]。一个重要方向是量化变分分布替换真实后验时的近似误差 [133]。与此相关的一个问题是预测误差，例如，使用 VI 近似来做贝叶斯预测分布的边缘化计算。我们还推测 VI 理论可以从与信息论的联系中受益。这已经在 [186]、[187] 中举例说明。信息论还激发了新模型和推断方案的发展 [2]、[13]、[193]。例如，信息瓶颈 [193] 最近推动了深度变分信息瓶颈 [2]。我们期望融合这两条研究线会产生更多有趣的结果。</p>
+<h4>7.3.1 标准化流 VAE<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h4>
 </div>
 <div class="section" id="id36">
-<h3>8.2 变分推断和深度学习<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
-<p>尽管最近在各领域取得了成功，但深度学习仍然缺乏原则性的不确定性估计、缺乏其特征表示的可解释性，并且难以包含先验知识。贝叶斯方法（例如贝叶斯神经网络 [137] 和变分自动编码器）正在改进这些方面。最近的工作旨在使用可解释性概率模型作为 VAE 的先验 [38]、[77]、[91]、[168]。在此类模型中，变分推断是必不可少的组成部分。在贝叶斯深度架构中，如何使变分推断计算更为高效且易于实现，正在成为一个重要研究方向 [48]</p>
+<h4>7.3.2 重要性加权 VAE<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h4>
+</div>
 </div>
 <div class="section" id="id37">
-<h3>8.3 变分推断和策略梯度<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h3>
+<h3>7.4  结构化 VAE<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id38">
+<h4>7.4.1 结构化 VAE<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+<div class="section" id="id39">
+<h3>7.5 解决僵尸单元的问题<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id40">
+<h4>7.5.1 有损 VAE<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+</div>
+<div class="section" id="id41">
+<h2>8 讨论<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h2>
+<p>下面是一些活跃的研究方向和开放性问题：</p>
+<div class="section" id="id42">
+<h3>8.1 变分推断理论方面<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h3>
+<p>尽管在建模和推断方面取得了进展，但很少有作者讨论 VI  的理论方面 [95]、[133]、[213]。一个重要方向是量化变分分布替换真实后验时的近似误差 [133]。与此相关的一个问题是预测误差，例如，使用 VI 近似来做贝叶斯预测分布的边缘化计算。我们还推测 VI 理论可以从与信息论的联系中受益。这已经在 [186]、[187] 中举例说明。信息论还激发了新模型和推断方案的发展 [2]、[13]、[193]。例如，信息瓶颈 [193] 最近推动了深度变分信息瓶颈 [2]。我们期望融合这两条研究线会产生更多有趣的结果。</p>
+</div>
+<div class="section" id="id43">
+<h3>8.2 变分推断和深度学习<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
+<p>尽管最近在各领域取得了成功，但深度学习仍然缺乏原则性的不确定性估计、缺乏其特征表示的可解释性，并且难以包含先验知识。贝叶斯方法（例如贝叶斯神经网络 [137] 和变分自动编码器）正在改进这些方面。最近的工作旨在使用可解释性概率模型作为 VAE 的先验 [38]、[77]、[91]、[168]。在此类模型中，变分推断是必不可少的组成部分。在贝叶斯深度架构中，如何使变分推断计算更为高效且易于实现，正在成为一个重要研究方向 [48]</p>
+</div>
+<div class="section" id="id44">
+<h3>8.3 变分推断和策略梯度<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h3>
 <p>策略梯度估计对于强化学习 (RL)[183]​​ 和随机控制很重要。这些应用中的技术挑战与变分推断非常相似 [98]、[99]、[110]、[173]、[211] 。例如，SVGD 已作为 Steinpolicy 梯度被应用于 RL 设置 [110]。 变分推断在强化学习中的应用目前是一个活跃的研究领域。</p>
 </div>
-<div class="section" id="id38">
-<h3>8.4 自动变分推断<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id45">
+<h3>8.4 自动变分推断<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h3>
 <p>概率编程允许从业者快速实现和修改模型，而不必担心推断问题。用户只需要指定模型，推断引擎就会自动进行推断。流行的概率编程工具包括但不限于：Stan[28]，涵盖了大量的高级 VI 和 MCMC 推断方法； Net[126] 基于变分消息传递和 EP；Automatic Statistician[52] 和 Anglican[198] 主要依靠采样方法；Ed-ward[200] 支持 BBVI 和 MonteCarlo 采样 ； Zhusuan[176]的特点是用于贝叶斯深度学习的 VI 。这些工具的长期目标是改变概率建模的研究方法，使用户能够快速修改和改进模型，并使其他受众可以访问它们。</p>
 <p>尽管目前努力使从业者更容易使用 VI，但对于非专家来说，其使用仍然不简单。例如，人工识别后验的对称性并打破这些对称性是 <a class="reference external" href="http://Infer.Net">Infer.Net</a> 所必需的。此外，诸如控制变量等减少方差的方法可以极大地加速收敛，但需要模型进行特定设计才能获得最佳性能。在撰写本文时，当前的概率编程工具箱尚未解决此类问题。我们相信这些方向对于推进概率建模在科学和技术中的影响非常重要。</p>
 </div>
 </div>
-<div class="section" id="id39">
-<h2>9 总结<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id46">
+<h2>9 总结<a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>概率机器学习是将领域知识与数据联系起来的机器学习方法</p></li>
 <li><p>它提供了一种用于分析数据的计算方法</p></li>
