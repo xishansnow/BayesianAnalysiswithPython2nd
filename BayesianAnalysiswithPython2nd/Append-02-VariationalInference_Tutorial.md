@@ -14,6 +14,8 @@ kernelspec:
 
 # 附录 B： 变分法推断
 
+【原文】Zhang Cheng， Butepage Judith，Kjellstrom Hedvig，Mandt Stephan； Advances in Variational Inference，2018
+
 <style>p{text-indent:2em;2}</style>
 
 ## 1 问题提出
@@ -100,11 +102,11 @@ kernelspec:
 
 ####  2.2.4 变分推断是一个优化问题
 
-变分推断是一个优化问题，其最直观的优化目标是最小化 $KL$ 散度，但实际可操作的优化目标是最大化证据下界 $ELBO$ 。
+变分推断是一个优化问题，其最直观的优化目标是最小化 $KL$ 散度，但实际可操作的优化目标是最大化证据下界 `ELBO` 。
 
-直观地理解，变分推断的优化目标很明确，就是最小化 $q$ 和 $p$ 之间的差距，而信息论为我们提供了一个量化两个分布之间差距的工具 $KL$ 散度。但不幸的是，$KL$ 散度的计算并不简单，其计算表达式中同样存在难以处理的边缘似然积分项（边缘似然也称证据，在一般化的数学形式中也被成为配分函数）。为此，有人提出了可操作的优化目标 --- 证据下界 $ELBO$ （见 2.4 节）。
+直观地理解，变分推断的优化目标很明确，就是最小化 $q$ 和 $p$ 之间的差距，而信息论为我们提供了一个量化两个分布之间差距的工具 $KL$ 散度。但不幸的是，$KL$ 散度的计算并不简单，其计算表达式中同样存在难以处理的边缘似然积分项（边缘似然也称证据，在一般化的数学形式中也被成为配分函数）。为此，有人提出了可操作的优化目标 --- 证据下界 `ELBO` （见 2.4 节）。
 
-在证据下界 $ELBO$ 的计算表达式中，只包括联合分布  $p(\mathbf{z, x})$  和变分分布 $q(\mathbf{z}; \boldsymbol{\nu})$ ，摆脱了难以处理的边缘似然积分项。并且在给定观测数据后，最大化 $ELBO$ 等价于最小化 $KL$ 。 也就是说，$ELBO$ 的最大化过程结束时，获得的输出 $q(\mathbf{z}; \boldsymbol{\nu^\star})$就是我们寻求的最终变分分布。
+在证据下界 `ELBO` 的计算表达式中，只包括联合分布  $p(\mathbf{z, x})$  和变分分布 $q(\mathbf{z}; \boldsymbol{\nu})$ ，摆脱了难以处理的边缘似然积分项。并且在给定观测数据后，最大化 `ELBO` 等价于最小化 $KL$ 。 也就是说，`ELBO` 的最大化过程结束时，获得的输出 $q(\mathbf{z}; \boldsymbol{\nu^\star})$就是我们寻求的最终变分分布。
 
 #### 2.2.5 变分推断的形象化解释
 
@@ -236,7 +238,7 @@ $$
 
 该式表明，$-J(q)$ 是对数配分函数 $\log Z(\theta)$ 的下界。
 
-在大多数应用场景中， 对配分函数 $Z(\theta)$ 都有特别的解释。例如，在给定观测数据 $D$ 的情况下，我们可能想计算随机变量 $x$ 的边缘概率 $p(x \mid D) = p(x,D) / p(D)$ 。在这种情况下，最小化 $J(q)$ 等价于最大化对数边缘似然 $\log p(D)$  的下界。正是因为如此， $-J(q)$ 被称为变分下界或证据下界（ $ELBO$ ），这种下界关系经常以如下不公式形式表示：
+在大多数应用场景中， 对配分函数 $Z(\theta)$ 都有特别的解释。例如，在给定观测数据 $D$ 的情况下，我们可能想计算随机变量 $x$ 的边缘概率 $p(x \mid D) = p(x,D) / p(D)$ 。在这种情况下，最小化 $J(q)$ 等价于最大化对数边缘似然 $\log p(D)$  的下界。正是因为如此， $-J(q)$ 被称为变分下界或证据下界（ `ELBO` ），这种下界关系经常以如下不公式形式表示：
 
 $$
 \log Z(\theta) \geq \mathbb{E}_{q(x)} [ \log \tilde p(x) - \log q(x) ]
@@ -277,8 +279,8 @@ $$
 小结：
 
 - 由于配分函数 $Z$ 的存在，使得直接计算 $KL$ 散度难以处理
-- 采用等价的最大化 $ELBO$ 来代替最小化 $KL$ 散度作为新的优化目标
-- $ELBO$ 中只包含变分分布 $q$ 和目标分布的分子项 $\tilde p$ ，并且两者都可计算，进而可以作为真正的优化目标
+- 采用等价的最大化 `ELBO` 来代替最小化 $KL$ 散度作为新的优化目标
+- `ELBO` 中只包含变分分布 $q$ 和目标分布的分子项 $\tilde p$ ，并且两者都可计算，进而可以作为真正的优化目标
 - $KL(q\|p)$ 和 $KL(p\|q)$ 虽然都是散度，也都可以作为优化目标，但作为目标时两者达到的效果截然不同。对于多峰后验，前者倾向于选择能够覆盖其中某个峰的变分分布，而后者倾向于选择能够覆盖多个峰的变分分布。
 
 ## 3 经典方法 --- 平均场、指数族与坐标上升算法
@@ -296,9 +298,9 @@ q(\mathbf{z};\boldsymbol{\lambda}) = \prod_{i=1}^N q(z_i ; \lambda_i)
 $$
 
 
-为了符号简单，我们在本节的其余部分省略了变分参数 $λ$ 。我们现在回顾如何在平均场假设下最大化公式（ 3 ）中定义的 $ELBO$ 。
+为了符号简单，我们在本节的其余部分省略了变分参数 $λ$ 。我们现在回顾如何在平均场假设下最大化公式（ 3 ）中定义的 `ELBO` 。
 
-完全分解的变分分布允许通过简单的迭代更新来优化。为了看到这一点，我们专注于更新与隐变量 $z_j$ 相关的变分参数 $λ_j$ 。将平均场分布插入公式（ 3 ）允许我们表达 $ELBO$ 如下：
+完全分解的变分分布允许通过简单的迭代更新来优化。为了看到这一点，我们专注于更新与隐变量 $z_j$ 相关的变分参数 $λ_j$ 。将平均场分布插入公式（ 3 ）允许我们表达 `ELBO` 如下：
 
 $$
 \begin{aligned}
@@ -352,7 +354,7 @@ $$
 
 > 图 9：完全因子分解后的平均场变分族
 
-在这种因子分解形式的近似中，完全因子分解是使用最广泛的一种构造形式，即每个隐变量有自己独立的分布，与其他隐变量无关，数学形式为： $q(z) = q_1(z_1) q_2(z_2) \cdots q_n(z_n) $，其中所有的 $q_i(z_i)$ 都是一元离散变量上的类别分布（Catalogical Distribution），可描述为一维表形式。
+在这种因子分解形式的近似中，完全因子分解是使用最广泛的一种构造形式，即每个隐变量有自己独立的分布，与其他隐变量无关，数学形式为： $q(z) = q_1(z_1) q_2(z_2) \cdots q_n(z_n) $，其中所有的 $q_i(z_i)$ 都是一元离散变量上的类别分布（ `Catalogical Distribution` ），可描述为一维表形式。
 
 事实表明，对于 $\mathcal{Q}$ 的这种选择很容易优化，并且工作地出奇得好。在优化变分下界时，这种因子分解的方法也许是目前最流行的一种选择。
 
@@ -496,12 +498,18 @@ $$
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108163233-7872.webp)
 
+### 4.4 随机变分推断（ SVI ）中的一些技巧
+
+#### 4.4.1 自适应学习率
+
+#### 4.4.2 方差减少策略
+
 
 ## 5 提升通用性 --- 黑盒变分推断
 
 ### 5.1 为何要做黑盒变分推断（BBVI）？
 
-上面章节中，我们针对特定模型做出变分推断，其中大家应该已经注意到了，在 $ELBO$ 的计算表达式中，需要人为设定 $q$ ，并给出其数学期望的解析表达式（事实上，[文献](http://www.nowpublishers.com/article/Details/MAL-001) 表明，该方法只适用于**条件共轭指数族分布**）。考虑到现实世界中可能存在无数种模型，而且大部分可能是非共轭的，即便符合条件共轭假设，为每一个模型设计一种变分方案显然也是不可接受的。
+上面章节中，我们针对特定模型做出变分推断，其中大家应该已经注意到了，在 `ELBO` 的计算表达式中，需要人为设定 $q$ ，并给出其数学期望的解析表达式（事实上，[文献](http://www.nowpublishers.com/article/Details/MAL-001) 表明，该方法只适用于**条件共轭指数族分布**）。考虑到现实世界中可能存在无数种模型，而且大部分可能是非共轭的，即便符合条件共轭假设，为每一个模型设计一种变分方案显然也是不可接受的。
 
 因此，人们自然而然在思考：是否存在一个不需特定于某种模型的通用解决方案 ？这个解决方案最好将像黑匣子一样，只需输入模型和海量数据，然后就自动输出变分分布（或变分参数）。事实表明，这是有可能的，此类推断方法被称为**黑盒变分推断（BBVI）**。
 
@@ -513,29 +521,29 @@ $$
 
 BBVI 大致分为两种类型：
 
-- **基于打分梯度**的黑盒变分推断（ BBVI ）
+- **基于评分梯度**的黑盒变分推断（ BBVI ）
 
 - **基于重参数化梯度**的黑盒变分推断（ BBVI ）
 
 后者是变分自编码器 (VAE) 的基础。
 
-### 5.2 使用打分梯度的 BBVI
+### 5.2 使用评分梯度的 BBVI
 
-考虑如下概率模型，其中  $\mathbf{x}$  是观测变量， $\mathbf{z}$ 是隐变量，其变分分布为 $q(\mathbf{z} \mid \lambda)$ 。变分下界 (ELBO) 为：
+考虑如下概率模型，其中  $\mathbf{x}$  是观测变量， $\mathbf{z}$ 是隐变量，其变分分布为 $q(\mathbf{z} \mid \lambda)$ 。变分下界 (`ELBO`) 为：
 
 $$
 \mathcal{L}(\lambda) \triangleq \mathbb{E}_{q_{\lambda}(\mathbf{z})}[\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda)] \tag{9}
 $$
 
-ELBO 关于 $\lambda$ 的梯度为：
+`ELBO` 关于 $\lambda$ 的梯度为：
 
 $$
 \nabla_{\lambda} \mathcal{L}=\mathbb{E}_{q}\left[\nabla_{\lambda} \log q(\mathbf{z} \mid \lambda)(\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda))\right] \tag{10}
 $$
 
-其中 $\nabla_{\lambda} \log q(\mathbf{z} \mid \lambda)$ 被称为打分函数。
+其中 $\nabla_{\lambda} \log q(\mathbf{z} \mid \lambda)$ 被称为评分函数。
 
-使用式（ 10 ） 中的打分梯度，就可以利用蒙特卡罗的优势，用变分分布的样本来计算 $ELBO$ 的含噪声无偏梯度：
+使用式（ 10 ） 中的评分梯度，就可以利用蒙特卡罗的优势，用变分分布的样本来计算 `ELBO` 的含噪声无偏梯度：
 
 $$
 \nabla_\lambda \approx \frac{1}{S} \sum_{S=1}^{S} \nabla_\lambda \log q(z_S \mid \lambda)(\log p(\mathbf{x},z_S) - \log q(z_S \mid \lambda))
@@ -552,9 +560,9 @@ $$
 与推导出式（10）需要两个基本事实：
 - $\nabla_{\lambda} q_{\lambda}(\mathbf{z})=\frac{1}{q_{\lambda}(\mathbf{z})} \nabla_{\lambda} q_{\lambda}(\mathbf{z})=q_{\lambda}(\mathbf{z}) \nabla_{\lambda} q_{\lambda}(\mathbf{z})$
 
-- $\mathbb{E}_{q}\left[\nabla_{\lambda} \log q_{\lambda}(\mathbf{z})\right]=0$ ， 即对数似然梯度（打分函数）的期望为零。
+- $\mathbb{E}_{q}\left[\nabla_{\lambda} \log q_{\lambda}(\mathbf{z})\right]=0$ ， 即对数似然梯度（评分函数）的期望为零。
 
-基于这两个事实，可以推导出 $ELBO$ 的打分梯度：
+基于这两个事实，可以推导出 `ELBO` 的评分梯度：
 
 $$
 \begin{aligned}
@@ -571,7 +579,7 @@ $$
 
 ### 5.3 使用重参数化梯度的 BBVI 
 
-依然采用上节中的模型，变分下界为（为方便重复式 9）：
+依然采用上节中的模型，变分下界 `ELBO` 为（为方便重复式 9）：
 
 $$
 \mathcal{L}(\lambda) \triangleq \mathbb{E}_{q_{\lambda}(\mathbf{z})}[\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda)]
@@ -595,7 +603,7 @@ $$
 \end{aligned} \Leftrightarrow \quad \mathrm{z} \sim \mathcal{N}\left(\mu, \sigma^{2}\right)
 $$
 
-另外假设 $\log p(\mathbf{x},\mathbf{z})$ 和 $\log q(\mathbf{z})$ 关于 $\mathbf{z}$ 可微，则可以得到 $ELBO$ 关于 $\lambda$ 的重参数化的梯度：
+另外假设 $\log p(\mathbf{x},\mathbf{z})$ 和 $\log q(\mathbf{z})$ 关于 $\mathbf{z}$ 可微，则可以得到 `ELBO` 关于 $\lambda$ 的重参数化的梯度：
 
 $$
 \nabla_{\lambda} \mathcal{L}=\mathbb{E}_{S(\epsilon)} \left[\nabla_{\mathbf{z}} \left [ (\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} )\right ] \nabla_\lambda t(\epsilon,\lambda)\right] \tag{10}
@@ -603,13 +611,63 @@ $$
 
 进而可以使用自动微分来获取梯度，但并不是所有的分布都可以重参数化。
 
-> 此部分最经典案例见 [变分自编码器](http://www.cs.columbia.edu/~blei/fogm/2018F/materials/KingmaWelling2013.pdf)
+> 注解：
+>
+> (1) 此部分最经典案例见 [变分自编码器](http://www.cs.columbia.edu/~blei/fogm/2018F/materials/KingmaWelling2013.pdf)
+> 
+> (2) 可微性是重参数化技巧使用的重要条件，这意味着其适用范围不如评分函数方法。
+
+
+BBVI 的方差减少：BBVI 需要一套与第 3.2 节中审查的 SVI 不同的方差减少技术。与 SVI 的噪声来自有限数据点集的二次采样不同，BBVI 噪声来自可能具有无限支持的随机变量。在这种情况下，诸如 SVRG 之类的技术不适用，因为完整梯度不是有限多项的总和，并且无法保存在内存中。因此，BBVI 涉及一组不同的控制变量和其他方法，这里将简要回顾一下从梯度估计器中减去得分函数的蒙特卡罗期望：
+
+### 5.4 方差减少策略
+
+Variance Reduction for BBVI: BBVI requires a
+different set of techniques for variance reduction than those reviewed for SVI in Section 3.2. In contrast to SVI where the noise resulted from subsampling from a finite set of data points, the BBVI noise originates
+from random variables with possibly infinite support. In this case, techniques such as SVRG are not applicable, since the full gradient is not a sum over finitely many terms and cannot be kept in memory. Hence, BBVI involves a different set of control variates and other methods which shall briefly be reviewed here one subtracts a Monte Carlo expectation of the score function from the gradient estimator:
+
+As required, the score function control variate has
+expectation zero under the variational distribution. The
+weight w is selected such that it minimizes the variance
+of the gradient.
+While the original BBVI paper introduces both
+Rao-Blackwellization and control variates, [194] points
+out that good choices for control variates might be
+model-dependent. They further elaborate on local expectation gradients, which take only the Markov blanket of each variable into account. A different approach
+is presented by [167], which introduces overdispersed
+importance sampling. By sampling from a proposal distribution that belongs to an overdispersed exponential
+family and that places high mass on the tails of the
+variational distribution, the variance of the gradient is
+reduced
+
+
 
 ## 6 提升准确性 ---  新的目标函数和结构化变分近似
 
+### 6.1 平均长变分的起源和局限性
+
+### 6.2 采用新的散度做变分推断
+
+### 6.3 结构化变分推断
+
+### 6.4 其他非标准的变分推断方法
+
+
+
 ## 7 摊销式变分推断与深度学习
 
+考虑第 $4$ 节的设置，其中每个数据点 $x_i$ 由其具有变分参数 $ξ_i$ 的隐变量 $z_i$ 控制。传统的变分推断需要为每个数据点 $x_i$ 优化 $ξ_i$，这在计算上过于昂贵，特别是当这种优化嵌入到全局参数的更新循环时。摊销推断背后的基本思想是使用强大的预测器根据 $x_i$ 的特征来预测最优 $z_i$，即 $z_i = f(x_i)$ 。这样，局部变分参数就被数据的函数替换，而函数中的参数在所有数据点之间共享，即推断被摊销了。我们在 7.1 节详细介绍了这种方法背后的主要思想，并在 7.2 和 7.3 节中展示了如何以变分自动编码器的形式应用它。
+
 ### 7.1 摊销变分推断（Amortized Variational Families） 
+
+术语『摊销推断』指利用来自过去计算的推断来支持未来的计算 `[36]、[50]`。对于变分推断，摊销推断通常是指对局部变量的推断。与为每个数据点近似单独的隐变量不同，如图 2(a) 所示，摊销变分推断假设局部变分参数可以通过数据的函数进行预测。因此，一旦估计了该函数，就可以通过该函数传递新数据点来获取潜在变量，如图 2(b) 所示。这种情况下使用的深度神经网络也被称为推断网络。因此，具有推断网络的摊销变分推断将概率建模与深度学习的表示能力结合到了一起。
+
+![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211223113610-8a74.webp)
+
+> 图 2. 随机变分推断的概率图表示 (a)，和变分自编码器 (b)，其中虚线线条表示对变分的近似
+
+例如，摊销推断已应用于`深度高斯过程 (DGP)` `[35]`。 该模型中的推断难以处理，作者就将平均场变分推断与诱导点一起应用（参见 `[35]` 第 3.3 节)。进一步，`[34]` 建议将这些隐变量估计为推断网络的函数，而不是单独估计这些隐变量，从而允许深度高斯过程扩展到更大的数据集并加速收敛。另外，还可以通过将摊销误差反馈到推断模型中来迭代摊销 `[116]`。
+
 
 ### 7.2 变分自编码器 （VAE）
 
