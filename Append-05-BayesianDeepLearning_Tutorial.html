@@ -382,33 +382,28 @@
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id12">
-   5 监督的程度和先验知识的替代形式
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id13">
    6 监督程度和先验知识的替代形式
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id14">
+    <a class="reference internal nav-link" href="#id13">
      6.1 含噪声标签和半监督学习
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id15">
+    <a class="reference internal nav-link" href="#id14">
      6.2 数据增强
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id16">
+    <a class="reference internal nav-link" href="#id15">
      6.3 元学习、转移学习和自我监督学习
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id17">
+  <a class="reference internal nav-link" href="#id16">
    7 贝叶斯推断算法
   </a>
   <ul class="nav section-nav flex-column">
@@ -418,24 +413,24 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id18">
+    <a class="reference internal nav-link" href="#id17">
      7.2 变分推断
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id19">
+    <a class="reference internal nav-link" href="#id18">
      7.3 反向传播贝叶斯
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id20">
+    <a class="reference internal nav-link" href="#id19">
      7.4 学习先验
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id21">
+  <a class="reference internal nav-link" href="#id20">
    8 将贝叶斯方法用于深度学习
   </a>
   <ul class="nav section-nav flex-column">
@@ -445,7 +440,7 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id22">
+    <a class="reference internal nav-link" href="#id21">
      8.2 通过随机梯度下降实现贝叶斯
     </a>
     <ul class="nav section-nav flex-column">
@@ -467,41 +462,41 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id23">
+    <a class="reference internal nav-link" href="#id22">
      8.4 贝叶斯教师法
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id24">
+  <a class="reference internal nav-link" href="#id23">
    9 评估贝叶斯神经网络的性能
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id25">
+  <a class="reference internal nav-link" href="#id24">
    10 贝叶斯深度学习编程框架
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id26">
+    <a class="reference internal nav-link" href="#id25">
      10.1 概率编程语言
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id27">
+    <a class="reference internal nav-link" href="#id26">
      10.2 深度学习框架下的概率编程
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id28">
+  <a class="reference internal nav-link" href="#id27">
    11 结论
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id29">
+  <a class="reference internal nav-link" href="#id28">
    参考文献
   </a>
  </li>
@@ -787,15 +782,11 @@ p\left(\theta \mid D_{\boldsymbol{x}}\right) \propto p(\theta) \exp \left(-\frac
 </div>
 </div>
 <div class="section" id="id12">
-<h2>5 监督的程度和先验知识的替代形式<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
-<p>到目前为止介绍的架构主要集中在贝叶斯神经网络在监督学习环境中的使用。然而，在现实世界的应用中，获得地面真实标签可能是昂贵的，因此应该采用新的学习策略 [72]。我们现在介绍如何使贝叶斯神经网络适应不同程度的监督。在这样做的同时，我们还展示了贝叶斯后验的表述，它来自于下面介绍的不同的贝叶斯后验（图 8、9 和 10），可以用来（第 5.3 节）获得一个合适的最大后验估计器的损失函数，在这种情况下，一个点估计神经网络足以满足所考虑的使用情况。</p>
-</div>
-<div class="section" id="id13">
-<h2>6 监督程度和先验知识的替代形式<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<h2>6 监督程度和先验知识的替代形式<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
 <p>到目前为止，所提出的架构主要集中在贝叶斯神经网络在监督学习环境中的使用。然而，在现实世界的应用中，获得地面真实标签可能是昂贵的，因此应该采用新的学习策略 [72]。我们现在介绍如何使贝叶斯神经网络适应不同程度的监督。在这样做的同时，我们还展示了 PGM（主要是贝叶斯信念网络）如何有助于设计或解释学习策略。</p>
 <p>特别是，贝叶斯后验的表述，是由下面介绍的不同的 PGM 得出的（图 8、9 和 10），可以用来（第 5.3 节）获得一个合适的损失函数，用于在点估计神经网络足以满足所考虑的使用情况下的最大后验估计器。</p>
-<div class="section" id="id14">
-<h3>6.1 含噪声标签和半监督学习<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h3>6.1 含噪声标签和半监督学习<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>训练集的输入可能是不确定的，要么是因为标签 Dyare 被噪声破坏 [61]，要么是因为一些点没有标签，即半监督学习方法的设置</p>
 <p>在有噪声标签的情况下，我们应该扩展 BBN，为含噪声标签增加一个新的变量–以 y 为条件（图 7a）。由于噪声水平本身往往是未知的，所以添加一个变量σ来描述噪声是很常见的。Frenay 和 Veleysen[16] 提出了在 PGM 中集成σ的不同方法的分类法（图 8），他们区分了三种情况：完全随机噪声（NCAR）；随机噪声（NAR）；非随机噪声（NNAR）模型。在 NCAR 模型中，σ是独立于任何其他变量的，根据定义，噪声是同调的。在 NAR 模型中，σ依赖于真实标签，但仍然独立于特征，而 NNAC 模型也考虑了特征 x 的影响，例如，如果图像中的噪声水平增加了图像被误标的机会。NAR 和 NNAC 模型都表示异方差（即同方差的反义词）噪声。</p>
 <p>这些模型比第 4 节中介绍的纯监督贝叶斯神经网络稍微复杂一些，但可以用类似的方式来处理，即从 PGM 中推导出后验公式（公式 12）并应用所选择的推断算法。我们在此介绍 NNAR 模型的程序，这是最通用的一种。后验成为</p>
@@ -810,8 +801,8 @@ p(θ|D)∝p(Ly|Lx,θ)p(θ|U),(30)
 <p>这两种方法都有类似的效果，选择哪种方法取决于建立模型时喜欢的数学公式。</p>
 <p>半监督学习策略也可以被重新表述为有一个弱预测，能够给出一些伪标签～y，有时还具有一定的置信度。许多用于半监督学习的算法使用一个初始版本的模型，用已标记的例子来训练 [51]，以产生伪标签～y，并用这些标签来训练最终模型。这对贝叶斯神经网络来说是有问题的，因为如果预测的不确定性被计算在内，那么，就不可能减少与未标记数据相关的不确定性，至少在先验中没有额外的假设。使用更简单的模型 [53] 来获得伪标签，即使在实践中不太现实，也可以帮助缓解这个问题。</p>
 </div>
-<div class="section" id="id15">
-<h3>6.2 数据增强<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3>6.2 数据增强<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>数据增强是一种策略，可以大大增加可用于训练深度模型的数据的多样性，而无需实际收集新的数据。它依赖于在不改变标签的情况下，生成一个增强的数据集 A(D)，例如，在图像中应用旋转、翻转或添加噪音。数据增强现在是图像处理 [82] 和越来越多的自然语言处理 [3] 中最先进技术的前沿。</p>
 <p>从贝叶斯的角度来看，额外的信息是由增强过程的知识带来的，而不是实际的额外数据。A(D) 可以包含初始数据集的无限可能的变体，例如，当使用连续变换，如旋转或额外的噪声时。在实践中，A(D) 是在训练过程中不断采样的，而不是事先在训练集中缓存所有可能的增强。在训练点估计神经网络时，这个过程是直接的，但在应用贝叶斯统计学时有一些微妙的地方。主要的问题是，感兴趣的后验是 p(φ|D,Auд)，其中 Auд代表关于增强的一些知识，而不是 p(φ|A(D),D)。这意味着，从贝叶斯的角度来看，数据增强不应该，或者至少不应该仅仅被视为额外的数据，而应该被视为模型的隐性转换，以其他方式说明，作为先验。此外，在传统的统计学背景下，数据增殖的概念反而与缺失值的建模有关 [84]，这是一个相关但不同的问题</p>
 <p>增加更多的数据点或多次计算类似的数据点的效果将是使后验更加集中在 MAP 点估计值周围，即假设一个模型具有给定的似然 p(y|x,θ)，计算相同的数据点相当于将似然改为。</p>
@@ -825,8 +816,8 @@ p(θ|D)∝p(Ly|Lx,θ)p(θ|U),(30)
 <p>Axc 可以包含少至一个元素，只要它在每次优化迭代中被重新采样即可。这大大简化了方程（36），特别是当指数家族的分布被用于建立随机模型时。</p>
 <p>这种方法的一个延伸是在半监督学习的背景下，加入一个训练成本，以鼓励增强下的预测的一致性 [82,95]，其中未标记的数据被用来建立一致性项的样本。请注意，这并不是给未标记的例子添加标签。它增加了一个术语来鼓励无标签数据的标签和其增强的一致性。</p>
 </div>
-<div class="section" id="id16">
-<h3>6.3 元学习、转移学习和自我监督学习<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id15">
+<h3>6.3 元学习、转移学习和自我监督学习<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p>广义的元学习 [33]，是指使用机器学习算法来协助其他机器学习模型的训练和优化。通过元学习获得的元知识可以区别于标准知识，因为它适用于一组相关的任务，而不是单一的任务。</p>
 <p>转移学习指的是在给定问题上获得的一些中间知识被重新用于解决一个不同的问题的方法。在深度学习中，它主要用于领域适应，当标记的数据可用时，在与感兴趣的领域有某种相似的丰富的数据，而在感兴趣的领域却很稀缺 [67]。另外，一些预训练的模型 [73] 也是一种解决方案，用于研究架构，以至于从头开始多次训练在实践中变得很不方便。</p>
 <p>自监督学习是一种由数据本身提供标签的学习策略 [36]。由于数据直接获得的标签与感兴趣的任务不匹配，所以问题被当作元学习来处理，在感兴趣的任务之外还有一个借口（或代理）任务。使用自我监督的产品现在被普遍认为是某些领域的必要步骤。例如，在自然语言处理中，大多数先进的方法都使用这些预训练的模型 [73] 。</p>
@@ -838,8 +829,8 @@ p(θ|D)∝p(Ly|Lx,θ)p(θ|U),(30)
 <p>自我监督学习可以分两步实现，首先学习预言任务，然后使用转移学习。这可能被认为是过于复杂，但如果预设任务具有较高的计算复杂性（例如，自然语言处理中的 BERT 模型 [73]），则可能需要这样做。最近的贡献表明，联合学习预设任务和最终任务（图 10b）可以改善自我监督学习中获得的结果 [4]。这种方法更接近于 hierarchical Bayes，也允许一次性设置先验，同时仍然保留了自我监督学习的优点。</p>
 </div>
 </div>
-<div class="section" id="id17">
-<h2>7 贝叶斯推断算法<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id16">
+<h2>7 贝叶斯推断算法<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
 <p>先验地，使用贝叶斯神经网络时不必经历学习阶段，只需对后验进行抽样并进行模型平均化（见公式（4）和（6））。但在一般情况下，对后验进行采样并不容易。如果数据的条件概率 P(D|H) 和模型的概率 P(H) 是由我们的先验和模型给出的，那么证据项∫HP(D|H′)P(H′)dH′的积分可能就很难计算。对于非微观模型，即使已经计算了证据，也很难直接对后验进行采样，由于高维度的抽样空间和均匀随机变量的样本的非微妙的转变。不使用传统的方法对后验进行抽样，如反转抽样或拒绝抽样，而是使用专门的算法。最流行的是马尔科夫链蒙特卡洛方法，这是一种对后验进行精确采样的算法系列，或者是变分推断，这是一种学习后验近似值的方法（图 4）。本节回顾这些方法</p>
 <div class="section" id="mcmc">
 <h3>7.1 MCMC 方法<a class="headerlink" href="#mcmc" title="Permalink to this headline">¶</a></h3>
@@ -860,8 +851,8 @@ p(θ|D)∝p(Ly|Lx,θ)p(θ|U),(30)
 <p>现在的问题是选择提议分布 Q(v) 和积分时间 T。Q(v) 通常被选择为正态分布 N(0,Σ)。对Σ最明显的选择是σ2I.σ2 可以增加，以提高对远离先前样本的新点的采样几率。如果它太短，那么连续的样本就有可能是自相关的。如果它太大，那么哈密顿路径可能会循环，大量的时间将被浪费在反复积分相同的东西上。</p>
 <p>有人提出了对经典 HMC 算法的改进，以自动调整积分时间 [31]，称为 No-U-Turn 采样器（简称 NUTS），大多数贝叶斯统计软件包都实现了这一点。</p>
 </div>
-<div class="section" id="id18">
-<h3>7.2 变分推断<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id17">
+<h3>7.2 变分推断<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <p>MCMC 算法是贝叶斯统计学中从精确后验中取样的得力工具。然而，由于深度学习中通常考虑的模型规模巨大，其缺乏可扩展性。尽管该问题在某种程度上可以得到缓解，但在贝叶斯深度学习领域中还是不太受欢迎。变分推断 [6] 比 MCMC 算法的扩展性更好，因此更受欢迎。不过变分推断并不是一种精确推断方法，其想法是有一个分布 <span class="math notranslate nohighlight">\(q_φ(H)\)</span>，由一组参数 <span class="math notranslate nohighlight">\(φ\)</span> 来描述，称为变分分布。然后推断或学习参数 <span class="math notranslate nohighlight">\(φ\)</span> 的值，使变分分布 <span class="math notranslate nohighlight">\(q_φ(H)\)</span> 尽可能地接近精确后验 <span class="math notranslate nohighlight">\(P(H|D)\)</span> 。该接近程度最常使用的测度是 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>，它是两个概率分布函数之间近似度的测量，是 <span class="math notranslate nohighlight">\(φ\)</span> 的函数。</p>
 <div class="math notranslate nohighlight">
 \[
@@ -881,8 +872,8 @@ E L B O=\int_{H} q_{\phi}\left(H^{\prime}\right) \log \left(\frac{P\left(H^{\pri
 </div>
 <p>在传统机器学习和统计中，<span class="math notranslate nohighlight">\(q_ϕ(H)\)</span> 大多是由指数族分布构造的，例如多元正态分布 [26]、Gamma 分布 和 Dirichlet 分布。ELBO 可以被戏剧性地简化为组件 [23]，从而导致期望最大化（EM）算法的推广。为考虑大量参数之间的存在相关性，可以进行某些近似，例如使用块对角线协方差矩阵 [75]，或者低秩加对角线协方差矩阵 [55]。</p>
 </div>
-<div class="section" id="id19">
-<h3>7.3 反向传播贝叶斯<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id18">
+<h3>7.3 反向传播贝叶斯<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <p>变分推断为贝叶斯推断提供了很好的数学工具，但它需要进一步适应深度学习。主要问题是：随机性限制了反向传播对网络内部节点发挥作用 [9]。已经提出了解决方多种方案来缓解此问题，比如：<code class="docutils literal notranslate"><span class="pre">概率反向传播</span></code> [29] 或<code class="docutils literal notranslate"><span class="pre">后向贝叶斯</span></code> [7]。这两种方法服务于相同目标，但<code class="docutils literal notranslate"><span class="pre">后向贝叶斯</span></code>可能对深度学习从业者来说更熟悉，因此重点关注它。<code class="docutils literal notranslate"><span class="pre">后向贝叶斯</span></code>是<code class="docutils literal notranslate"><span class="pre">变分推断</span></code>与<code class="docutils literal notranslate"><span class="pre">重新参数化技巧</span></code> [42] 相结合的一种实现，可以确保反向传播能够照常工作。</p>
 <p>其思想是使用某些随机变量 <span class="math notranslate nohighlight">\(ε∼q(ε)\)</span> 作为噪声的非变分来源。<span class="math notranslate nohighlight">\(θ\)</span> 的采样不是直接进行的，而是通过确定性变换 <span class="math notranslate nohighlight">\(t(ε，ϕ)\)</span> 获得的，使得 <span class="math notranslate nohighlight">\(θ=t(ε，ϕ)\)</span> 跟随 <span class="math notranslate nohighlight">\(q_ϕ(θ).ε\)</span> 被采样，即使每次迭代时都在改变，但仍然可被视为相对于其他变量的一个常数。所有其他变换都是非随机的，对于变分参数 <span class="math notranslate nohighlight">\(ϕ\)</span>，反向传播照常工作。此时 ELBO 的一般公式转变为：</p>
 <div class="math notranslate nohighlight">
@@ -901,8 +892,8 @@ E L B O=\int_{\varepsilon} q_{\phi}(t(\varepsilon, \boldsymbol{\phi})) \log \lef
 <p>算法 2 非常类似于点估计深度学习的经典训练循环。事实上，许多最近对深度学习的优化策略可直接用于后向贝叶斯，例如，使用 Adam 优化器 [41] 而不是随机梯度下降。自然梯度下降也被用作贝叶斯神经网络变分推断的优化工具 [65]，因为如果在自然空间中参数化，则来自指数族的分布会导出一个非常简单的自然梯度公式 [39]。</p>
 <p>还要注意的是，该方法也可以直接用于具有随机激活的贝叶斯神经网络，尽管原始算法是针对具有随机权重的贝叶斯神经网络提出的。在该情况下，激活 <span class="math notranslate nohighlight">\(l\)</span> 表示：假设 <span class="math notranslate nohighlight">\(H\)</span> 和权重 <span class="math notranslate nohighlight">\(θ\)</span> 是变分参数 <span class="math notranslate nohighlight">\(ϕ\)</span> 的一部分。</p>
 </div>
-<div class="section" id="id20">
-<h3>7.4 学习先验<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id19">
+<h3>7.4 学习先验<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <p>尽管有悖于直觉，但在学习了后验之后再学习先验也是可能的。这在用已有知识设置了部分先验，并在得到后验之前学习剩余自由参数的先验时，显得非常有意义。在标准贝叶斯统计学中，这被称为 <code class="docutils literal notranslate"><span class="pre">经验贝叶斯</span></code>。当待学习的先验超参数数量远小于模型本身参数数量时，这通常是有效的近似。</p>
 <p>给定一个参数化的先验分布 <span class="math notranslate nohighlight">\(p_ξ(H)\)</span>，最大化数据似然是学习参数 <span class="math notranslate nohighlight">\(ξ\)</span> 的一个好方法。</p>
 <div class="math notranslate nohighlight" id="equation-49">
@@ -918,8 +909,8 @@ E L B O=\int_{\varepsilon} q_{\phi}(t(\varepsilon, \boldsymbol{\phi})) \log \lef
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/statistics_20210920_171205_ae.webp" /></p>
 </div>
 </div>
-<div class="section" id="id21">
-<h2>8 将贝叶斯方法用于深度学习<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id20">
+<h2>8 将贝叶斯方法用于深度学习<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
 <p>到目前为止，我们介绍了设计和训练贝叶斯神经网络的基本理论。然而，上述方法很难适用于目前深度学习中使用的大规模架构。最近的研究也表明，只有近似贝叶斯方法才能够得到一个较好的、正确校准的模型和不确定性估计 [46]。</p>
 <p>本节将介绍如何贝将叶斯方法应用于深度学习，从而产生新的、更有效的算法。我们将加速训练（或预测）的方法分为两大类（图 12）：<code class="docutils literal notranslate"><span class="pre">专门的推断方法</span></code>和<code class="docutils literal notranslate"><span class="pre">简化及压缩方法</span></code>。根据其所依赖的随机性来源、是否 MCMC 类随机算法、是否变分推断形式，专门推断算法可以被进一步分类。其中可以用于驱动这些方法的两个比较主要的随机性来源：一是Dropout与噪声层；二是随机梯度下降噪声。</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig12.webp" /></p>
@@ -946,8 +937,8 @@ z_{i, j} \sim \text { Bernouilli }\left(p_{i}\right) \\
 <p>但是 MC-Dropout 可能缺乏一些表达能力，因此不能完全捕捉与模型预测相关的不确定性。与其他方法相比，它在进行贝叶斯在线学习或主动学习时，也缺乏一些灵活性。</p>
 <p>MC-Dropout 的一个变种是 Variational Dropout，它试图在评价时应用高斯 Dropout [43]。Variational Dropout 被批评为非贝叶斯的 [34]，主要是因为作者选择了一个目标函数，其中高斯 Dropout 是唯一的正则化形式。在这种情况下，隐含先验（即对数均匀先验，对应于退化的概率分布）会导致退化的后验。必须强调的是，当使用 Dropout 作贝叶斯近似时，训练过程中必须考虑到 Dropout 之上的先验正则化。</p>
 </div>
-<div class="section" id="id22">
-<h3>8.2 通过随机梯度下降实现贝叶斯<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id21">
+<h3>8.2 通过随机梯度下降实现贝叶斯<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
 <p>随机梯度下降（SGD）和类似算法是现代机器学习的核心。SGD 的最初目标是提供一种算法，在只有目标函数的有噪声梯度估计条件下，收敛到对应最优解的点估计，特别是当训练数据必须被分割成小批次时。在时间 <span class="math notranslate nohighlight">\(t\)</span> 时的参数更新规则可以写为：</p>
 <div class="math notranslate nohighlight">
 \[
@@ -990,8 +981,8 @@ q_{\phi}(\boldsymbol{\theta})=\sum_{\theta_{i} \in \phi} \alpha_{\theta_{i}} \de
 <p>只训练几个随机层可以大大简化学习程序。它消除了许多概念和训练问题，同时仍然能从贝叶斯角度给出有意义的结果。它可以被解释为传统神经网络与浅层贝叶斯神经网络共同学习一个点估计变换。</p>
 <p>训练最后 n 层的贝叶斯神经网络起初似乎并不复杂，但事实上它与学习先验参数非常相似，如第 7.4 节所述。非贝叶斯层的权重应当既被视为先验的参数，也被视为变分后验的参数。</p>
 </div>
-<div class="section" id="id23">
-<h3>8.4 贝叶斯教师法<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id22">
+<h3>8.4 贝叶斯教师法<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
 <p>在实时性能很重要的应用中，使用蒙特卡洛样本做评估仍然有问题，例如：自动驾驶汽车、内存有限的智能手机和嵌入式设备（MCMC 获得的大量参数样本存在内存存储问题）。</p>
 <p>一些学者提出了一个解决方案，以加快使用贝叶斯神经网络时的评估时间，该方案源自已经用于贝叶斯建模的方法 [81]。该方法使用贝叶斯神经网络（被称为教师）来训练一个非随机人工神经网络（被称为学生），用于预测边缘概率 <span class="math notranslate nohighlight">\(p(y|x,D)\)</span> [45]。该方法与知识蒸馏的思想有关 [30,57]，知识蒸馏中通常存在几个预训练的知识源用来训练一个功能更强的系统。</p>
 <p>为此，参数分布 <span class="math notranslate nohighlight">\(q_ω(y|x)\)</span>（其中 <span class="math notranslate nohighlight">\(ω\)</span> 是学生网络的系数）和边缘分布 <span class="math notranslate nohighlight">\(p(y|x,D)\)</span> 之间的 KL 散度需最小化：</p>
@@ -1009,8 +1000,8 @@ q_{\phi}(\boldsymbol{\theta})=\sum_{\theta_{i} \in \phi} \alpha_{\theta_{i}} \de
 <p>现在，对于希望压缩 MCMC 算法生成的样本集的情况，贝叶斯教师法也是一个有趣的解决方案 [90]。此时代替缓存样本集合 <span class="math notranslate nohighlight">\(Θ\)</span> 的是生成模型 <span class="math notranslate nohighlight">\(G\)</span>（即 [90] 中的 GAN），在评估时针对 MCMC 样本进行训练以生成系数 <span class="math notranslate nohighlight">\(θ_i\)</span> 。该方法在某种程度上类似于变分推断，因为生成模型实际上代表了一个参数分布，但所提出的算法允许训练一个比通常被视为变分推断的分布更复杂的模型。</p>
 </div>
 </div>
-<div class="section" id="id24">
-<h2>9 评估贝叶斯神经网络的性能<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id23">
+<h2>9 评估贝叶斯神经网络的性能<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
 <p>贝叶斯神经网络的一大挑战是评估其性能，因为它们并不直接输出一个点估计预测 <span class="math notranslate nohighlight">\(\hat y\)</span>，而是输出一个条件概率分布 <span class="math notranslate nohighlight">\(p(y|x,D)\)</span>，之后可以从该分布中抽取一个 <span class="math notranslate nohighlight">\(\hat y\)</span> 的最佳估计 。</p>
 <p>网络的预测性能（有时在统计学中被称为锐度）可以通过将估计器 <span class="math notranslate nohighlight">\(\hat y\)</span> 视为预测结果来评估。这个过程通常取决于网络要处理的数据类型，在实践中使用了许多不同的指标，如：MSE 、ℓ 阶距离、交叉熵等。这些指标的解释不在本教程范围内，更多细节可以参考[35]。</p>
 <p>检查预测后验 <span class="math notranslate nohighlight">\(p(y|x,D)\)</span> 是否行为良好，即网络对其预测既不过度自信也不缺乏自信，也很重要。</p>
@@ -1061,17 +1052,17 @@ d(\check{p}, \hat{p})=\sqrt{\int_{0}^{1}(\check{p}-\hat{p})^{2} d \hat{p}}
 <p>在这种情况下，计分规则被称为适合的计分规则。如果也有 ̄<span class="math notranslate nohighlight">\(S(Q,Q)= ̄S(P,Q)⇒P=Q\)</span> ，那么该评分规则被称为严格适合的。</p>
 <p>理论上，要得到一个合适的校准模型，只需确保用于训练的损失与（严格）适合的评分规则相对应即可。在实践中，这一点更为复杂，因为只有在大型数据集上才能准确评估分数的预期值。当训练好的模型出现在与原始训练集稍有偏差的数据中时，这可能会导致错误校准误差 [66]。这是贝叶斯模型真正的闪光点，因为它们在设计上遵循了适当的评分规则，并且考虑了认知不确定性和偶然不确定性，使模型对这种变化即使不能免疫，也足够有弹性。在这种情况下，可能需要调整先验，因为所做假设太具体，而且可能不合理。另外，训练策略可能需要重新考虑，特别是如果训练期间使用的变分分布不能正确接近后验的时候。</p>
 </div>
-<div class="section" id="id25">
-<h2>10 贝叶斯深度学习编程框架<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id24">
+<h2>10 贝叶斯深度学习编程框架<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
 <p>在结束本教程之前，本节会简单介绍一些可用于贝叶斯深度学习的框架。</p>
-<div class="section" id="id26">
-<h3>10.1 概率编程语言<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id25">
+<h3>10.1 概率编程语言<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
 <p>概率编程语言（PPL）旨在描述概率分布，同时以类似概率图模型（PGM）的方式计算变量之间的关系，以加快推断速度。大多数概率编程语言包括许多不同的优化算法，例如： MCMC、变分推断和最大似然估计器，少部分只关注特定的专门方法。</p>
 <p>Stan[10] 和 PyMC3[77] 是普遍使用的概率编程语言。Stan 是用 C++编写的，用自己的语言来定义模型。它为所有流行的科学软件包提供了 API，包括 Python、R、Matlab、Julia 和一个命令行接口。PyMC3 是用 Python 编写的，基于 Theano 实现自动微分。</p>
 <p>使用纯概率编程语言设计贝叶斯神经网络的问题在于：它们建立自复杂的概率模型基础，不是专门面向深度学习的。使用概率编程语言编写贝叶斯神经网络是可能的，但大部分工作需要从头开始，特别是深度学习的部分几乎要从头做起。</p>
 </div>
-<div class="section" id="id27">
-<h3>10.2 深度学习框架下的概率编程<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id26">
+<h3>10.2 深度学习框架下的概率编程<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
 <p>概率编程语言和深度学习框架存在着或多或少相同的要求，其中最主要的要求是自动微分和大规模数据的优化程序。根据这一思考，最近的进展主要集中在将概率编程语言整合到深度学习框架中。其中比较重要的成果是 Pyro[5]，该框架构建在 PyTorch 之上。此外还有 Edward [87]，其构建在 TensorFlow 之上，现在 Edward 已经被扩展并集成到了 Tensorflow 的 Tensorflow Probability （TFP）子模块中。</p>
 <p>这些概率编程语言与各自深度学习框架的无缝集成使其成为设计、训练和使用贝叶斯神经网络的理想工具。它们还允许轻松地重新使用为点估计神经网络而设计的组件。</p>
 <p>Pyro 的开发重点是变分推断。它基于功能化编程范式，再加上上下文管理器来轻松地修改随机函数。Pyro 包括一个封装类，可以将 PyTorch 层转化为概率层，允许在运行中用样本点替换其参数。</p>
@@ -1079,13 +1070,13 @@ d(\check{p}, \hat{p})=\sqrt{\int_{0}^{1}(\check{p}-\hat{p})^{2} d \hat{p}}
 <p>在未做详细比较的情况下，我们建议你选择能够与熟悉的深度学习框架集成的框架，而这两个框架都有类似潜力。Pyro 可能更适合动态概率图模型，因为 Pytorch 使用的是动态计算图，而如果你只是想在一个固定的架构中使用贝叶斯层，那么 Edward 与 TFP 或许更适合你。</p>
 </div>
 </div>
-<div class="section" id="id28">
-<h2>11 结论<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id27">
+<h2>11 结论<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h2>
 <p>本教程包括贝叶斯神经网络的设计、实现、训练、使用和评估。虽然其基本思想很简单，即只是训练一个人工神经网络，并在其权重上附加一些概率分布，但其中隐含的挑战，即设计高效的算法来训练或使用贝叶斯神经网络，仍然难以解决。这就解释了为什么贝叶斯神经网络在实际应用中仍然很少。</p>
 <p>然而，贝叶斯神经网络的潜在应用巨大，该范式提供了一个很有前途的技术途径，可以将深度学习应用于不允许出现失败泛化，而且必须发出警告的系统。此外，传统深度学习算法和贝叶斯范式之间的联系比人们事先想象的要多，这意味着贝叶斯方法也可以帮助设计新的学习和正则化V策略。</p>
 </div>
-<div class="section" id="id29">
-<h2>参考文献<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id28">
+<h2>参考文献<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
 <p>[1]Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization.CoRR, arXiv:1607.06450, 2016. In NIPS 2016 Deep Learning Symposium.
 [2]Rémi Bardenet, Arnaud Doucet, and Chris Holmes. On Markov Chain Monte Carlo methods for tall data.J. Mach. Learn. Res., 18(1):1515–1557, January 2017. ISSN 1532–4435.
 [3]M Saiful Bari, Muhammad Tasnim Mohiuddin, and Shafiq Joty. MultiMix: A robust data augmentation strategy for cross-lingual nlp. InICML, 2020.

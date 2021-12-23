@@ -500,10 +500,17 @@ $$
 
 ### 4.4 随机变分推断（ SVI ）中的一些技巧
 
-#### 4.4.1 自适应学习率
+#### 4.4.1 自适应学习率与小批量大小
+
+
 
 #### 4.4.2 方差减少策略
 
+（1）控制变量法
+
+（2）非均匀采样法
+
+（3）其他方法
 
 ## 5 提升通用性 --- 黑盒变分推断
 
@@ -620,39 +627,172 @@ $$
 
 BBVI 的方差减少：BBVI 需要一套与第 3.2 节中审查的 SVI 不同的方差减少技术。与 SVI 的噪声来自有限数据点集的二次采样不同，BBVI 噪声来自可能具有无限支持的随机变量。在这种情况下，诸如 SVRG 之类的技术不适用，因为完整梯度不是有限多项的总和，并且无法保存在内存中。因此，BBVI 涉及一组不同的控制变量和其他方法，这里将简要回顾一下从梯度估计器中减去得分函数的蒙特卡罗期望：
 
-### 5.4 方差减少策略
+### 5.4 方差减少的策略
 
-Variance Reduction for BBVI: BBVI requires a
-different set of techniques for variance reduction than those reviewed for SVI in Section 3.2. In contrast to SVI where the noise resulted from subsampling from a finite set of data points, the BBVI noise originates
-from random variables with possibly infinite support. In this case, techniques such as SVRG are not applicable, since the full gradient is not a sum over finitely many terms and cannot be kept in memory. Hence, BBVI involves a different set of control variates and other methods which shall briefly be reviewed here one subtracts a Monte Carlo expectation of the score function from the gradient estimator:
+黑盒变分推断需要一套不同于第 4 节中为随机变分推断设计的方差减少技术。与随机变分推断的噪声来自有限数据点集的二次采样不同，BBVI 的噪声来自可能具有无限支持的随机变量。在这种情况下，诸如随机方差减少梯度  ( SVRG )之类的技术不再适用，因为完整梯度无法拆解成有限项的总和，而且难以保存在内存中。BBVI 会涉及一组不同的控制变量和其他方法，这里将简要回顾一下。
 
-As required, the score function control variate has
-expectation zero under the variational distribution. The
-weight w is selected such that it minimizes the variance
-of the gradient.
-While the original BBVI paper introduces both
-Rao-Blackwellization and control variates, [194] points
-out that good choices for control variates might be
-model-dependent. They further elaborate on local expectation gradients, which take only the Markov blanket of each variable into account. A different approach
-is presented by [167], which introduces overdispersed
-importance sampling. By sampling from a proposal distribution that belongs to an overdispersed exponential
-family and that places high mass on the tails of the
-variational distribution, the variance of the gradient is
-reduced
+BBVI 中最重要的控制变量是`得分函数控制变量`，其从梯度估计器中减去得分函数的期望（蒙特卡罗法）：
 
+根据需要，`得分函数控制变量`在变分分布下的期望为零。选择权重 $w$ 的依据是其能够最小化梯度的方差。
+
+$$
+\nabla_\lambda \hat{\mathcal{L}}_{control} =\nabla_\lambda \hat{ \mathcal{L}} − \frac{w}{K} \sum_{k=1}^{K}\nabla_\lambda  \text{log} q(z_k \mid \lambda) 
+$$
+
+虽然原始 BBVI 论文介绍了 `Rao-Blackwellization` 和`控制变量`，但 [194] 指出控制变量的良好选择可能取决于模型。因此提出了一种只考虑隐变量马尔可夫毯的局部期望梯度。
+
+ [167] 提出了一种不同的方法，它引入了`过度分散的重要性采样`。通过从属于过度分散的指数族并且在变分分布的尾部放置较大质量的提议分布中进行采样，可以减少梯度的方差。
 
 
 ## 6 提升准确性 ---  新的目标函数和结构化变分近似
 
-### 6.1 平均长变分的起源和局限性
+### 6.1 平均场变分的起源和局限性
+
+变分方法在统计物理学中有着悠久的传统。平均场法最初应用于模拟自旋玻璃，这是某种类型的无序磁体，其中原子的磁自旋没有以规则模式排列 [143]。这种自旋玻璃模型的一个简单示例是 `Ising 模型` ，它是具有成对耦合晶格的二元变量模型。为了估计自旋状态的结果分布，使用更简单的、分解后的分布作为代理。这样做的目的是尽可能地近似向上或向下自旋（也称为“磁化”）的边缘概率，同时忽略自旋之间的所有相关性。给定自旋与其相邻自旋的许多相互作用，被简化为其间有效磁场（也称为平均场）的单一相互作用。这也是平均场方法名称的由来。物理学家通常将`负对数后验`表示为`能量`或`汉密尔顿函数`。这种语言也已被机器学习社区用于有向和无向概率图模型的近似推断，在附录 A.6 中进行了总结以供读者参考。 
+
+平均场方法由 Anderson 和 Peterson 于 1987 年首次在神经网络中采用 [149]，后来在机器学习社区[79]、[143]、[172]中广受欢迎。平均场近似的主要限制是其明确地忽略了不同变量之间的相关性，例如 `Ising 模型` 中的自旋之间的相关性。此外，[205] 表明，变分分布破坏的依赖关系越多，优化问题就越非凸。相反，如果变分分布包含更多结构，则某些局部最优就不存在了。物理界提出了许多改善平均场变分推断的举措，并由机器学习社区进一步发展 [143]、[150]、[190]。 超越自旋玻璃中的平均场理论的早期例子是 `Thouless-Anderson-Palmer (TAP) 方程` 方法 [190]，它引入了对`变分自由能`的微扰校正。
+
+一个相关的想法依赖于幂扩展 [150]，它已被多位作者扩展并应用于机器学习模型 [80]、[142]、[145]、[158]、[185]。此外，信息几何提供了对 `MFVI` 和 `TAP 方程` [186]、[187] 之间关系的洞察。 [221] 进一步将 `TAP 方程`与`散度量`联系起来。我们将读者推荐给 [143] 以获取更多信息。接下来，我们基于 `KL 散度`以外的散度度量来回顾 MFVI 以外的最新进展。
 
 ### 6.2 采用新的散度做变分推断
 
+`KL 散度`通常提供一种计算方便的方法来测量两个分布之间的距离，它导致对某些模型类的、易于处理的、解析形式的期望。然而，传统的 `KL 变分推理` (KLVI) 存在诸如低估后验方差 [128] 等问题。在某些情况下，当后验的多个峰值非常接近时，`KL 散度`也无法打破对称性 [141]，并且它是一个相对松散的边界 [221]。出于这些缺点，我们在这里调研了许多其他的散度。
+
+`KL散度` 之外的散度度量不仅在 VI 中起作用，而且在期望传播（ EP ）等相关近似推理方法中也起作用。 EP [101]、[125]、[204]、[228] 的一些最新扩展大多可以被视为替换了新散度的经典 EP [128]。这些方法有着复杂的推导和有限的可扩展性，大多数从业者会发现它们难以使用。 VI 的最新发展主要集中在黑盒方式的统一框架上，以实现可扩展性和可访问性。 黑盒变分推断使其他散度度量的应用成为可能（ 例如 $χ$ 散度 [39] ），同时保持了该方法的效率和简单性。
+
+在本节中，我们将介绍相关的散度量并展示如何在 VI 的上下文中使用它们。如第 3.1 节所述，KL 散度是 `α-散度`的一种特殊形式，而 `α-散度` 是 `f-散度` 的一种特殊形式。所有上述散度都可以写成 `Stein discrepancy` 的形式。
+
+**（1）α-散度**
+
+The α-divergence is a family of di vergence measures with interesting properties from an information geometrical and computational perspective [4], [6]. Both the KL divergence and the Hellinger distance are special cases of the α-divergence. Different formulations of the α-divergence exist [6], [229], and various VI methods use different definitions [104], [128] . We focus on Renyi’s formulation, 
+
+DRα (p||q) = 1 α −1 log ∫
+p(x)α q(x)1−α dx,(17)
+
+where α >0,α 6= 1. With this definition of α-divergences, a smaller α leads to more mass-covering effects, while a larger α results in zero-forcing effects, meaning that the variational distribution avoids areas of low posterior probability. For α →1, we recover standard VI (involving the KL divergence). 
+
+α-divergences have recently been used in variational inference [103], [104]. Similar as in the derivation of the ELBO in Eq. 4, the α-divergence implies a bound on the marginal likelihood:
+
+Lα = log p(xxx)−DRα (q(zzz)||p(zzz|xxx))
+= 1
+α −1 log Eq
+[(p(zzz,xxx)
+q(zzz)
+)1−α ]
+.(18)
+
+For α ≥0,α 6= 1, Lα is a lower bound on the log marginal likelihood. Interestingly, Eq. 18 also admits negative values of α, in which case it becomes an upper bound. Note that in this case, DRα is not a divergence. Among various possible definitions of the α-divergence, only Renyi’s formulation leads to a bound (Eq. 18) in which the marginal likelihood p(x) cancels. 
+
+**（2）f-散度与广义变分推断**
+
+α-divergences are a subset of the more general family of f-divergences [3], [33], which take the form: 
+
+D f (p||q) =
+∫
+q(x)f
+(p(x)
+q(x)
+)
+dx.
+
+f is a convex function with f (1) = 0. For example, the KL divergence KL(p||q) is represented by the f-divergence with f (r) = r log(r), and the Pearson χ2 distance is an f -divergence with f (r) = (r −1)2. In general, only specific choices of f result in a bound that does only trivially depend on the marginal likelihood, and which is therefore useful for VI. [221] lower-bounded the marginal likelihood using Jensen’s inequality: 
+
+p(xxx) ≥  ̃f (p(xxx)) ≥Eq(zzz)
+[
+ ̃f
+(p(xxx,zzz)
+q(zzz)
+)]
+≡L ̃f .(19)
+
+Above,  ̃f is an arbitrary concave function with  ̃f (x) < x. This formulation recovers the true marginal likelihood for  ̃f = id, the standard ELBO for  ̃f = log, and α-VI for  ̃f(x) ∝ x(1−α). For V ≡log q(zzz)−log p(xxx,zzz), the authors propose the following function:
+
+ ̃f (V0 )(e−V )
+= e−V0
+(
+1 +(V0 −V )+ 1
+2 (V0 −V )2 + 1
+6 (V0 −V )3)
+.
+
+Above, V0 is a free parameter that can be optimized, and which absorbs the bound’s dependence on the marginal likelihood. The authors show that the terms up to linear order in V correspond to the KL divergence, whereas higher order polynomials are correction terms which make the bound tighter. This connects to earlier work on TAP equations [150], [190] (see Section 5.1), which generally did not result in a bound. 
+
+**（3）Stein Discrepancy 与变分推断**
+
+ Stein’s method [181] was first proposed as an error bound to measure how well an approximate distribution fits a distribution of interest. The Stein discrepancy has been adapted to modern VI [59], [108], [109], [110]. Here, we introduce the Stein discrepancy and two VI methods that use it:Stein Variational Gradient Descent (SVDG) [109] and operator VI [155].  These two methods share the same objective but are optimized in different manners. 
+
+The Stein discrepancy is an integral probability metric [120], [130], [179]. In particular,  [109], [155] used the Stein discrepancy as a divergence measure:
+
+Dstein(p,q) = sup f ∈F|Eq(zzz)[f (zzz)]−Ep(zzz|xxx)[f (zzz)]|2.
+(20)
+
+F indicates a set of smooth, real-valued functions. When q(zzz) and p(zzz|xxx) are identical, the divergence is zero. More generally, the more similar p and q are, the smaller is the discrepancy.
+
+The second term in Eq. 20 involves an expectation under the intractable posterior.  Therefore, the Stein discrepancy can only be used in VI for classes of functions F for which the second term is equal to zero. We can find a suitable class with this property as
+follows. We define f by applying a differential operator A on another function φ , where φ is only restricted to be smooth:
+
+f (zzz) = Apφ (zzz),
+
+where zzz ∼p(zzz). The operator A is constructed in such a way that the second expectation in Eq. 20 is zero for arbitrary φ ; all operators with this property are valid operators [155]. A popular operator that fulfills this requirement is the Stein operator:
+
+Apφ (zzz) = φ (zzz)∇zzz log p(zzz,xxx)+∇zzzφ (zzz).
+
+Both operator VI [155] and SVGD [109] use the Stein discrepancy with the Stein operator to construct the variational objective. The main difference between these two methods lies in the optimization of the variational objective using the Stein discrepancy. Operator VI [155] uses a minimax (GAN-style) formulation and BBVI to optimize the variational objec
+tive directly; while Stein Variational Gradient Descent (SVGD) [109] uses a kernelized Stein discrepancy.
+
+With a particular choice of the kernel and q, it can be shown that SVGD determines the optimal perturbation in the direction of the steepest gradient of the KL divergence [109]. SVGD leads to a scheme where samples in the latent space are sequentially transformed to approximate the posterior. As such, the method is reminiscent of, though formally distinct from, a normalizing flow approach [159] (see Section 6.3)
+
 ### 6.3 结构化变分推断
+
+MFVI assumes a fully-factorized variational distribution; as such, it is unable to capture posterior correlations. Fully factorized variational models have limited accuracy,  specially when the latent variables are highly dependent such as in models with hierarchical structure. This section examines variational distributions which are not fully factorized, but contain dependencies between the latent variables. These structured variational distributions are more expressive, but often come at higher computational costs.
+Allowing a structured variational distribution to capture dependencies between latent variables is a modeling choice; different dependencies may be more or less relevant and depend on the model under consideration. For example, structured variational inference for LDA [66] shows that maintaining global structure is vital, while structured variational inference for the Beta Bernoulli Process [175] shows that maintaining local structure is more important. As follows, we review structured inference for hierarchical models, and
+discuss VI for time series.
+
+Hierarchical VI: For many models, the variational approximation can be made more expressive by maintaining dependencies between latent variables, but these dependencies make it harder to estimate the gradient of the variational bound. Hierarchical variational models (HVM) [156] are a black box VI framework for structured variational distributions which applies to a broad class of models. In order to capture dependencies between latent variables, one starts with a meanfield variational distribution ∏i q(zi; λi), but instead of estimating the variational parameters λλλ , one places a prior q(λλλ ; θθθ ) over them and arginalizes them out:
+
+q(zzz; θθθ ) =
+∫ (
+∏i
+q(zi; λi)
+)
+q(λλλ ; θθθ )dλλλ .(21)
+
+The new variational distribution q(zzz; θθθ ) thus captures dependencies through the marginalization procedure. Sampling from this distribution is also possible by simulating the hierarchical process. The resulting ELBO can be made tractable by further ower-bounding the resulting entropy and sampling from the hierarchical model. Notably, this approach is used in the development of the variational Gaussian Process (VGP) [201], a particular HVM. The VGP applies a Gaussian Process to generate variational estimates, thus forming a Bayesian non-parametric prior. Since GPs can model a rich class of functions, the VGP is able to confidently approximate diverse posterior distributions [201]. 
+
+Another method that established dependencies between latent variables is copula VI [60], [199]. Instead of using a fully factorized variational distribution, copula VI assumes the variational family form: 
+
+q(zzz) =
+(
+∏i
+q(zi; λi)
+)
+c (Q(z1),...,Q(zN )),(22)
+
+where c is the copula distribution, which is a joint distribution over the marginal cumulative distribution functions Q(z1),...,Q(zN ). This copula distribution restores the dependencies among the latent variables.
+
+VI for Time Series: One of the most important model classes in need of structured variational approximations are time series models. Significant examples include Hidden Markov Models (HMM) [44] and Dynamic Topic Models (DTM) [17]. These models have strong dependencies between time steps, leading traditional fully factorized MFVI to produce unsatisfying results. When using VI for time series, one typically employs a structured variational distribution that explicitly captures dependencies between time points, while remaining fully-factorized in the remaining variables [12], [17], [45], [76]. This commonly requires model specific approximations. [45], [76] derive SVI for popular time series models including HMMs, hidden semi-Markov models (HSMM), and hierarchical Dirichlet process-HMMs. Moreover, [76] derive an accelerated SVI for HSMMs. [11], [12] derive a structured BBVI algorithm for non-conjugate latent diffusion models.
 
 ### 6.4 其他非标准的变分推断方法
 
+In this section, we cover a number of miscellaneous approaches which fall under the broad umbrella of improving the accuracy of VI, but would not be categorized as alternative divergence measures or structured models.
 
+**（1）VI With Mixture Distributions**
+
+Mixture distributions form a class of very flexible distributions, and have been used in VI since the 1990s [74], [79]. Due to their flexibility as well as computational difficulties, advancing VI for mixture models has been of continuous interest [8], [51], [58], [124], [170]. To fit a mixture model, we can make use of auxiliary bounds [156], a fixed point update [170], or enforce additional assumptions such as using uniform weights [51]. Inspired by boosting methods, recently proposed methods fit mixture components in a successive manner [58], [124]. Here, Boosting VI and variational boosting [58], [124] refine the approximate posterior iteratively by adding one component at a time while keeping previously fitted components fixed. In a different approach, [8] utilizes stochastic policy search methods found in the Reinforcement Learning literature for fitting Gaussian mixture models.
+
+**（2）VI by Stochastic Gradient Descent**
+
+Stochastic gradient descent on the negative log posterior of a probabilistic model can, under certain circumstances, be seen as an implicit VI algorithm. Here we consider SGD with constant learning rates (constant SGD) [113], [114], and early stopping [43]. 
+
+Constant SGD can be viewed as a Markov chain that converges to a stationary distribution; as such, it resembles Langevin dynamics [214]. The variance of the stationary distribution is controlled by the learning rate. [113] shows that the learning rate can be tuned to minimize the KL divergence between the resulting stationary distribution and the Bayesian posterior. Additionally, [113] derive formulas for this optimal learning rate which esemble AdaGrad [42] and its relatives. 
+
+A generalization of SGD that includes momentum and iterative averaging is presented in [114]. In contrast, [43] interprets SGD as a non-parametric VI scheme. The paper proposes a way to track entropy changes in the implicit variational objective based on estimates of the Hessian. As such, the authors consider sampling from distributions that are not stationary.
+
+**（3）Robustness to Outliers and Local Optima**
+
+Since the ELBO is a non-convex objective, VI benefits from advanced optimization algorithms that help to escape from poor local optima. Variational tempering [115] adapts deterministic annealing [136], [164]to VI, making the cooling schedule adaptive and data-dependent. 
+
+Temperature can be defined globally or locally, where local temperatures are specific to individual data points. Data points with associated small likelihoods under the model (such  as outliers) are automatically assigned a high temperature. This reduces their influence on the global variational parameters, making the inference algorithm more robust to local optima. Variational tempering can also be interpreted as data re-weighting [212], the weight being the inverse temperature. In this context, lower weights are assigned to outliers. Other means of making VI more robust include the trust-region method [189], which uses the KL divergence to tune the learning progress and avoids poor local optima, and population VI [92], which averages the variational posterior over bootstrapped data samples for more robust modeling performance 
 
 ## 7 摊销式变分推断与深度学习
 
@@ -668,22 +808,126 @@ reduced
 
 例如，摊销推断已应用于`深度高斯过程 (DGP)` `[35]`。 该模型中的推断难以处理，作者就将平均场变分推断与诱导点一起应用（参见 `[35]` 第 3.3 节)。进一步，`[34]` 建议将这些隐变量估计为推断网络的函数，而不是单独估计这些隐变量，从而允许深度高斯过程扩展到更大的数据集并加速收敛。另外，还可以通过将摊销误差反馈到推断模型中来迭代摊销 `[116]`。
 
-
 ### 7.2 变分自编码器 （VAE）
+
+Amortized VI has become a popular tool for inference in deep latent Gaussian models (DLGM)  This leads to the concept of variational autoencoders (VAEs), which have been proposed independently by two groups [85], [160], and which are discussed in detail below.  VAEs apply more generally than to DLGMs, but for simplicity we will restrict our discussion to this model class. 
+
+The Generative Model: In this paragraph we introduce the class of deep latent Gaussian models. The corresponding graphical model is depicted in Figure 2(b). The model employs a multivariate normal prior from which we draw a latent variable z, p(z) = N (0,I). 
+
+More generally, this could be an arbitrary prior pθ (z) that depends on additional  parameters θ . The likelihood of the model is:
+
+pθ (xxx|zzz) =
+N
+∏i=1
+N (xi; μ(zi),σ 2(zi)I).
+
+Most importantly, the likelihood depends on zzz through two non-linear functions μ(·) and σ (·). These are typically neural networks, which take the latent variables as an input and transform them in a non-linear way.
+
+The data are then drawn from a normal distribution centered around the transformed latent variables μ(zi). The parameter θ entails the parameters of the networks μ(·) and σ (·). 
+
+Deep latent Gaussian models are highly flexible density estimators. There exist many modified versions specific to other types of data. For example, for binary data, the Gaussian likelihood can be replaced by a Bernoulli likelihood. Next, we review how amortized inference is applied to this model class. 
+
+Variational Autoencoders: Most commonly, VAEs refer to deep latent Gaussian models which are trained using inference networks. 
+
+VAEs employ two deep sets of neural networks: a top-down generative model as described above, mapping from the latent variables zzz to the data xxx, and a bottom-up inference model which approximates the posterior p(zzz|xxx). Commonly, the corresponding neural networks are referred to as the generative network and the recognition network, or sometimes as decoder and encoder networks.
+
+In order to approximate the posterior, VAEs employ an amortized mean-field variational distribution:
+
+qφ (zzz|xxx) =
+N
+∏i=1
+qφ (zi|xi).
+
+The conditioning on xi indicates that the local variational parameters associated with each data point are replaced by a function of the data. This amortized variational distribution is typically chosen as: 
+
+qφ (zi|xi) = N (zi|μ(xi),σ 2(xi)I).(23)
+
+Similar to the generative model, the variational distribution employs non-linear mappings μ xi) and σ (xi) of the data in order to predict the approximate posterior distribution of xi. The parameter φ summarizes the corresponding neural network parameters.
+
+The main contribution of [85], [160] was to derive a scalable and efficient training scheme for deep latent variable models. During optimization, both the inference network and the generative network are trained jointly to optimize the ELBO.
+
+The key to training these models is the reparameterization trick (Section 4.3). We focus on the ELBO contribution form a single data point xi. First, we draw L samples ε(l,i) ∼ p(ε) from a noise distribution. We also employ a reparameterization function gφ , such that z(i,l) = gφ (ε(l,i),xi) realize samples from the approximate posterior qφ (zi|xi). For Eq. 23, the most common reparametrization function takes the form z(i,l) = μ(xi) + σ (xi) ∗ε(i,l), where μ(·) and σ (·) are parameterized by φ . One obtains an unbiased Monte Carlo estimator of the VAE’s ELBO by 
+
+ˆL(θ ,φ ,xi) = −DKL(qφ (zi|xi)||pθ (zi)) (24)
++ 1
+L
+L
+∑l=1
+log pθ (xi|μ(xi)+σ (xi)∗ε(i,l)).
+
+This stochastic estimate of the ELBO can subsequently be differentiated with respect to θ and φ to obtain an estimate of the gradient. The reparameterization trick also implies that the gradient variance is bounded by a constant [160]. The drawback of this approach however is that we require the approximate posterior to be reparameterizable.
+
+A Probabilistic Encoder-Decoder Perspective: The term variational autoencoder arises from the fact that the joint training of the generative and recognition network resembles the structure of autoencoders, a class of unsupervised, deterministic models. Autoencoders are deep neural networks that are trained to reconstruct their inputs as closely as possible. 
+Importantly, the neural networks involved in autoencoders have an hourglass structure, meaning that there is a small number of units in the inner layers that prevent the neural network from learning the trivial identity mapping. This ’bottleneck’ forces the network to learn a useful and compact representation of the data. 
+
+In contrast, VAEs are probabilistic models, but they have a close correspondence to classical autoencoders. It turns out that the hidden variables of the VAE can be thought of as the intermediate representations of the data in the bottleneck of an autoencoder. 
+
+During VAE training, one injects noise into this intermediate layer, which has a regularizing effect. In addition, the KL divergence term between the prior and the approximate posterior forces the latent representation of the VAE to be close to the prior, leading to a more homogeneous distribution in latent space that generalizes better to unseen data. When the variance of the noise is reduced to zero and the prior term is omitted, the VAE becomes a classical autoencoder 
 
 ### 7.3 更灵活的 VAE 
 
-#### 7.3.1 标准化流 VAE 
+Since the proposal of VAEs, an ever-growing number of extensions have been proposed. While exhaustive coverage of the topic would require a review article in its own right, we summarize a few important extensions. While several model extensions of the VAE have been proposed, this review puts a bigger emphasis on inference procedures. We will report on extensions that modify the variational approximation qφ , the model pθ , and finally discuss the dying units problem when the posterior of some latent units remains close to the prior during the optimization.
 
-#### 7.3.2 重要性加权 VAE
+#### 7.3.1 Flexible Variational Distributions $q_φ$ 
 
-### 7.4  结构化 VAE
+Traditional VI, including VAE training, relies on parametric inference models. The approximate posterior qφ can be an explicit parametric distribution, such as a Gaussian or discrete distribution [163]. We can use more flexible distributions, for example by transforming a simple parametric distribution. Here, we review VAE with implicit distributions, normalizing flow, and importance weighted VAE. Using more flexible variational distributions reduces not only the approximation error but also the amortization error, i.e. the error introduced by replacing the local variational parameters by a parametric function [30].
 
-####  7.4.1 结构化 VAE
+Implicit distributions can be used in VI since a closed-form density function is not a strict requirement for the inference model; all we need is to be able to sample from it. As detailed below, their reparameterization gradients can still be computed. In addition to the standard reparameterization approach, the entropy contribution to the gradient has to be estimated. Implicit distributions for VI is an active area of research [72], [81], [102], [105], [107], [119], [129], [196], [210]. 
 
-### 7.5 解决僵尸单元的问题
+VI requires the computation of the log density ratio log p(zzz)−log qφ (zzz|xxx). When q is implicit, the standard training procedure faces the problem that log density ratio is intractable. In this case, one can employ a Generative Adversarial Networks (GAN) [54] style discriminator T that discriminates the prior from the variational distribution, T (xxx,zzz) = log qφ (zzz|xxx)−log p(zzz) [102], [119]. This formulation is very general and can be combined with other ideas, for example a hierarchical structure [202], [217] .
 
-####  7.5.1 有损 VAE
+（1）标准化流方法
+Normalizing flow [29], [40], [41], [84], [159] presents another way to utilize flexible variational distributions. The main idea behind normalizing flow is to transform a simple (e.g. mean field) approximate posterior q(zzz) into a more expressive distribution by a series of successive invertible transformations.
+
+To this end, we first draw a random variable z ∼q(zzz), and transform it using an invertible, smooth function f . Let z′ = f (z). Then, the new distribution is 
+
+q(z′) = q(z)|∂ f −1
+∂ z′ |= q(z)|∂ f
+∂ z′|−1.(25)
+
+It is necessary that we can compute the determinant, since the variational approach requires us to also estimate the entropy of the transformed distribution. By choosing the transformation function f such that |∂ f ∂ z′| is easily computable, this normalizing flow constitutes an efficient method to generate multimodal distributions from a simple distribution. As variants, linear time-transformations, Langevin and Hamiltonian flow [159], as well as inverse autoregressive flow [84] and autoregressive flow [29] have been proposed. 
+
+Normalizing flow and the previously mentioned implicit distribution share the common idea of using transformations to transform simple distributions into more complicated ones. A key difference is that for normalizing flows, the density of q(z) can be estimated due to an invertible transformation function.
+
+（2）重要性加权 VAE
+One final approach that utilizes flexible variational distributions is the importance weighted variational autoencoder (IWAE) which was originally proposed to tighten the variational bound [25] and can be reinterpreted to sample from a more flexible distribution [31]. IWAEs require L samples from the approximate posterior which are weighted by the ratio 
+
+ˆwl = wl
+∑Ll=1 wl
+
+,where wl = pθ (xi,z(i,l))
+qφ (z(i,l)|xi) .(26)
+
+The authors show that the more samples L are evaluated, the tighter the variational bound becomes, implying that the true log likelihood is approached in the limit L →∞. A reinterpretation of IWAEs, suggests that they are identical to VAEs but sample from a more expressive distribution which converges pointwise to the true posterior as L →∞ [31]. As IWAEs introduce a biased estimator, additional steps to obtain potentially better variance-bias trade-offs can be taken, such as in [139], [152], [153] .
+
+#### 7.3.2 Modeling Choices of $p_θ$  
+
+Modeling choices affect the performance of deep latent Gaussian models. In particular improving the prior model in VAEs can lead to more interpretable fits and better model performance. [77] proposed a method to utilize a structured prior for VAEs, combining the advantages of traditional graphical models and inference networks. 
+
+These hybrid models overcome the intractability of non-conjugate priors and likelihoods by learning variational parameters of conjugate distributions with a recognition model. This allows one to approximate the posterior conditioned on the observations while maintaining conjugacy. As the encoder outputs an estimate of natural parameters, message passing, which relies on conjugacy, is applied to carry out the remaining inference. 
+
+Other approaches tackle the drawback of the standard VAE which is the assumption that the likelihood factorizes over dimensions. This can be a poor approximation, e.g., for images, for which a structured output model works better. The Deep Recurrent Attentive Writer [56] relies on a recurrent structure that gradually constructs the observations while automatically focusing on regions of interest. 
+
+In comparison, PixelVAE [57] tackles this problem by modeling dependencies between pixels within an image, using a conditional model that factorizes as 
+
+pθ (xi|zi) = ∏ j pθ (x j
+i |x1i ,...x j−1
+i ,zi),
+
+where x j i denotes the jth dimension of observation i. The dimensions are generated in a sequential fashion, which accounts for local dependencies within the pixels of an image. The expressiveness of the modeling choice comes at a cost. If the decoder is too strong, the inference procedure can fail to learn an informative posterior [29]. This problem, known as the dying units problem, will be discussed in the paragraph below.
+
+#### 7.3.3 解决僵尸单元的问题
+
+ Certain modeling choices and parameter configurations impose problems in VAE training, such that learning a good low dimensional representation of the data fails. A prominent such problem is known as the dying units problem.
+
+As detailed below, two main effects are responsible for this phenomenon: a too powerful decoder, and the KL divergence term.
+
+某些建模选择和参数配置给 VAE 训练带来了问题，例如学习数据的良好低维表示失败。一个突出的此类问题被称为僵尸单元问题。如下详述，造成这种现象的主要有两个原因：解码器过于强大，以及 KL 散度项。
+
+In some cases, the expressiveness of the decoder can be so strong, that some dimensions of the zzz variables are ignored, i.e. it might model pθ (x|z) independently of z. In this case the true posterior is the prior [29], and thus the variational posterior tries to match the prior in order to satisfy the KL divergence in Eq. 24. Lossy variational autoencoders [29] circumvent this problem by conditioning the decoding distribution for each output dimension on partial input information. For example, in the case of images, the likelihood of a given pixel is only conditioned on the values of the immediate surrounding pixels and the global latent state. This forces the distribution to encode global information in the latent variables.
+
+The KL divergence contribution to the VAE loss may exacerbate this problem. To see why, we can rewrite the ELBO as a sum of two KL divergences ˆL(θ ,φ ,xi) = −DKL(qφ (z|xi)||pθ (z)) −
+DKL(p(xi)||pθ (xi|z)) + C. If the model is expressive enough, the model is able to render the second term zero (independent of the value of zzz). In this case, in order to also satisfy the first term, the inference model places its probability mass to match the prior [227], failing to learn a useful representation of the data. Even if the decoder is not strong, the problem of dying units may arise in the early stages of the optimization where the approximate posterior does not yet carry relevant information about the data [19]. This problem is more severe when the dimension of z is high. In this situation, units are regularized towards the prior and might not be reactivated in the later stages of the optimization [178]. To counteract the early influence of the KL constraint, an annealing scheme can be applied to the KL divergence term during training [178] 
 
 ## 8 讨论
 
