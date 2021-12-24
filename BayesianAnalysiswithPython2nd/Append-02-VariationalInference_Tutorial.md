@@ -1,15 +1,15 @@
 ---
 jupytext:
-  formats: ipynb,md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.11.5
+ formats: ipynb,md:myst
+ text_representation:
+ extension: .md
+ format_name: myst
+ format_version: 0.13
+ jupytext_version: 1.11.5
 kernelspec:
-  display_name: Python 3
-  language: python3
-  name: python3
+ display_name: Python 3
+ language: python3
+ name: python3
 ---
 
 # 附录 B： 变分法推断
@@ -20,29 +20,29 @@ kernelspec:
 
 ## 1 问题提出
 
-概率模型中的推断通常难以处理，根据之前的介绍，通过对随机变量进行采样的方法，能够为推断问题（例如，边缘似然推断）提供近似解。大多数基于采样的推断算法是属于马尔可夫链蒙特卡罗 (MCMC) 方法。
+概率模型中的推断通常难以处理，通过对随机变量进行采样（ 即蒙特卡洛 ）的方法，能够为推断问题（例如，边缘似然的推断）提供近似解。大多数基于采样的推断算法属于`马尔可夫链蒙特卡罗 （ `MCMC` ) `方法。
 
-不幸的是，上述基于采样的方法有几个重要缺点。
+基于采样的方法有几个重要的缺陷：
 
-- 尽管随机方法可以保证找到全局最优解，但前提是时间充足，而这在实践中通常是受限的
-- 目前尚没有好的方法能够判断采样结果与真实解到底有多接近，收敛状况仍然需要人工判断
-- 为了找到一个效率足够高的解决方案，MCMC 方法需要选择合适的采样技术（例如，Metropolis-Hastings 、 HMC 、 NUTS 等），而选择本身就是一门艺术。
+- 时间要求：尽管随机方法可以保证找到全局最优解，但前提是时间充足，而这在实践中通常是受限的，尤其是在大数据流行的当下。
+- 收敛判断：目前尚没有好的方法能够判断采样结果与真实解到底有多接近，收敛状况仍然需要人工判断。
+- 采样途径：为了找到一个效率足够高的解决方案，`MCMC` 方法需要选择合适的采样技术（例如，Metropolis-Hastings 、 HMC 、 NUTS 等），这种选择本身就是一门艺术。
 
-为此，人们一直在寻找在保证适当精度条件下，比 MCMC 效率更高的后验推断方法，这就是变分推断方法。
+为此，人们一直在寻找在保证适当精度条件下，比 `MCMC` 效率更高的后验推断方法，这就是 `变分推断（ Variational Inference ）` 方法。
 
 ## 2 变分推断
 
 ### 2.1 核心思想
 
-根据贝叶斯概率框架，我们希望根据已有数据，来推断参数或隐变量的分布 $p$ ，进而能够做后续的预测任务；但是，当 $p$ 不容易表达，无法得到封闭形式解时，可以考虑寻找一个容易表达和求解的分布 $q$ 来近似 $p$ ，当 $q$ 和 $p$ 之间差距足够小时， $q$ 就可以代替 $p$ 作为输出结果，并执行后续任务。 当 $q$ 由若干变分参数 $\nu$ 定义时，该问题就变成了一个寻找 $\nu$ 的最优化问题，优化目标是最小化 $q$ 和 $p$ 两个概率分布之间的差距。其中， $q$ 被成为`变分分布`， $\nu$ 被成为变分参数。
+根据贝叶斯概率框架，我们希望根据已有数据，来推断`模型参数`或`隐变量`的概率分布 $p$ ，进而能够（通过边缘化）完成后续预测任务；但当 $p$ 不容易表达、无法得到封闭形式解时，可以考虑寻找一个容易表达和求解的分布 $q$ 来近似 $p$ ，当 $q$ 和 $p$ 之间差距足够小时， $q$ 就可以代替真实分布 $p$ 并被用于执行后续任务。 当 $q$ 由若干参数 $\nu$ 定义或索引时，推断问题就进一步变成了寻找最佳 $\nu$ 的优化问题，优化目标是最小化 $q$ 和 $p$ 两个概率分布之间的差距。其中， $q$ 被成为 **变分分布**， $\nu$ 被称为 **变分参数**。
 
-> 变分推断的精髓是将 “求分布” 的推断问题，变成了 “缩小差距” 的优化问题。
+> 变分推断的精髓是将 “求真实分布” 的推断问题，转变成了 “求近似分布” 的问题，并进一步转变成了 “缩小差距” 的优化问题。由于 $q$ 完全由人工定义，因此具备很大的灵活性。
 
-以下图为例进行说明，黄色分布为目标分布 $p$ ，很难求解，但它看上去有些像高斯，我们可以尝试从高斯分布族 $\mathcal{Q}$ 中（此处以一个红色高斯和一个绿色高斯为例，其变分参数为均值 $\mu$ 和 方差 $\sigma^2$ ），寻找和 $p$ 最像的（可以用“重叠面积比率最大” 或 “差异最小” 来度量 ） 那个 $q$ ， 作为 $p$ 的近似分布。
+以下图为例进行说明，黄色分布为目标分布 $p$ ，很难求解，但它看上去有些像高斯，于是可以尝试从高斯分布族 $\mathcal{Q}$ 中（此处以一个红色高斯和一个绿色高斯为例，其变分参数为均值 $\mu$ 和 方差 $\sigma^2$ ），寻找和 $p$ 最像的（可以用“重叠面积比率最大” 或 “差异最小” 来度量 ） 那个 $q$ ， 作为 $p$ 的近似分布。
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108085400-e452.webp)
 
-> 图 1：单变量的真实分布与近似分布。 此处简化了假设，更为复杂的分布应当具有更多变量，且涉及多维空间中的多峰分布。
+> 图 1：单变量的真实分布与近似分布。 以单变量举例只是为了可视化理解，真实情况通常是具有很多个维随机变量的联合分布（如：深度神经网络可能包含几百万个参数维度），而且涉及多维空间中的多峰分布。
 
 变分方法与采样方法的主要区别是：
 
@@ -52,65 +52,72 @@ kernelspec:
 
 - 更适合于随机梯度优化、多处理器并行处理以及使用 GPU 加速
 
-虽然采样方法的历史非常悠久，但随着大数据的发展，变分方法一直在稳步普及，并成为目前使用更为广泛的推断技术。
+虽然采样方法的历史非常悠久，但随着大数据发展，变分方法一直在稳步普及，并成为目前使用更为广泛的推断技术。
  
- ###  2.2 进一步加深理解
+ ### 2.2 进一步加深理解
 
-变分推断的核心要点包括以下四个：
+可以从以下五点加深对变分推断的理解：
 
-- **模型**：变分推断需要设计一个模型  $p(\mathbf{z, x})$ ，其中 $\mathbf{x}$ 为观测数据， $\mathbf{z}$ 为模型参数或/和隐变量（后面统一用隐变量来表示，但需要理解模型参数和隐变量有时具有不同的含义）。模型来自专家个人的业务知识和归纳偏好，通常可以用概率图模型表达，而数据则来自实际观测。
-- **目的**：基于观测数据 $\mathbf{x}$ 确定模型中隐变量 $\mathbf{z}$ 的值，但各种不确定性因素导致隐变量无法得到一个确切值，通常只能给出其概率分布 $p(\mathbf{z \mid x})$ ，而最大的问题在于这个分布可能很复杂，无法直接给出封闭形式的解。
-- **原理**：变分推断将人为构造一个由参数 $\boldsymbol{\nu}$ 索引（或定义）的概率分布 $q(\mathbf{z};\boldsymbol{\nu})$ ，并通过一些方法或技巧来优化 $\boldsymbol{\nu}$，使 $q(\mathbf{z};\boldsymbol{\nu})$ 能够近似并且代替复杂的真实分布  $p(\mathbf{z \mid x})$ 。
-- **途径**：通过一些优化算法，调整 $\boldsymbol{\nu}$ 以缩小 $q(\mathbf{z};\boldsymbol{\nu})$ 和   $p(\mathbf{z \mid x})$ 之间的差异直至收敛。
+- **模型**：变分推断需要设计一个模型 $p(\mathbf{z, x})$ ，其中 $\mathbf{x}$ 为观测数据， $\mathbf{z}$ 为模型参数或/和隐变量（ 模型参数通常是机器学习的提法，后面将统一采用概率模型中的隐变量来表示 ）。模型来自专家个人的业务知识和归纳偏好，通常可以用概率图模型表达（ 注：一张概率图表达的正是图中所有随机变量节点的联合分布 ），而数据则来自实际观测。
+- **目的**：基于观测数据 $\mathbf{x}$ 确定模型中隐变量 $\mathbf{z}$ 的值，以便进一步完成后续预测或决策任务。
+- **问题**：各种不确定性因素导致上述隐变量无法得到确切的结果，通常只能给出其概率分布 $p(\mathbf{z \mid x})$ ，而最大的问题在于这个分布可能很复杂，无法直接给出封闭形式的解。
+- **原理**：变分推断将人为构造一个由参数 $\boldsymbol{\nu}$ 索引（或定义）的、与$\mathbf{x}$ 无关的概率分布 $q(\mathbf{z};\boldsymbol{\nu})$ ，并通过一些方法或技巧来优化 $\boldsymbol{\nu}$，使 $q(\mathbf{z};\boldsymbol{\nu})$ 能够近似并且代替复杂的真实分布 $p(\mathbf{z \mid x})$ 。
+- **途径**：通过一些优化算法，渐进地调整 $\boldsymbol{\nu}$ 以缩小 $q(\mathbf{z};\boldsymbol{\nu})$ 和 $p(\mathbf{z \mid x})$ 之间的差异直至收敛。
 
 #### 2.2.1 变分推断基于贝叶斯模型
 
-简单说，专家利用其领域知识和归纳偏好，给出一个模型假设 $p(\mathbf{z, x})$ ，其中包括隐变量  $\mathbf{z}$  和观测变量 $\mathbf{x}$ ，还有相互之间可能存在依赖关系。变分推断是基于该模型实施的。
+变分推断是基于模型实施的，也就是说必须 “先有模型后又推断” 。简单说，专家利用其领域知识和归纳偏好，给出一个模型假设 $p(\mathbf{z, x})$ ，其中包括隐变量 $\mathbf{z}$ 和观测变量 $\mathbf{x}$ ，以及变量相互之间可能存在的依赖关系；然后基于该模型和观测数据推断其中隐变量的分布 $p(\mathbf{z} \mid \mathbf{x})$。
 
-> 注： 此处隐变量和观测变量采用黑体符号，表示其为向量形式，即代表了不止一个随机变量。
+> 注： 此处 `隐变量` 和 `观测变量` 均采用黑体符号，表示其为向量形式，即代表了不止一个随机变量。
 
-为了理解隐变量和观测变量之间的关系，一种比较易于理解的表达方式是建立 “观测变量的生成过程”  。可以认为，观测变量是从某个已知的、由隐变量组成的结构中生成出来的。
+为了理解隐变量和观测变量之间的关系，一种比较易于理解的表达方式是建立 “观测变量的生成过程” ，即认为`观测变量`是从某个已知的、由`隐变量`组成的结构中生成出来的。
 
-以高斯混合模型为例（见下图）。图中为我们观测到一个数据集，它实际上是从由 5 个相互独立的高斯组合而成的一个混合分布中采样的结果。如果从单个数据点出发，考虑其生成过程，可以分为两步：首先从 5 个类别组成的离散型分布中抽取一个类别样本（比如粉红色类别），然后从类别对应的高斯分布中抽取一个样本生成相应数据点。
+以高斯混合模型为例（见下图）。图中为我们观测到一个数据集，它实际上是从由 5 个相互独立的高斯组合而成的一个混合分布中采样的结果。如果从单个数据点出发，考虑其生成过程，可以分为两步：
+
+- 首先从 5 个类别组成的离散型分布中抽取一个类别样本（比如粉红色类别）
+
+- 然后从类别对应的高斯分布中抽取一个样本生成相应数据点。
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108085412-fdef.webp)
 
 > 图 2 ： 5 个组份构成的高斯混合模型示意图
 
-在上例中，可以发现隐变量可能有多个：
+在上例中，可以发现隐变量有：
 
--  5 个高斯分布的均值参数 $\boldsymbol{\mu}$ 和方差参数 $\boldsymbol{\sigma^2}$ （均为长度为 5 的向量）
--  数据点所属类别 $\mathbf{c}$ （独热向量形式）
+- 5 个高斯分布的均值 $\boldsymbol{\mu}$ 和方差 $\boldsymbol{\sigma^2}$ （ 均为长度为 5 的向量 ）
+- 每个数据点 $i$ 所属类别 $\mathbf{c}_i$ （独热向量形式）
 
-上述变量 $\boldsymbol{\mu}$、$\boldsymbol{\sigma}^2$ 和 $\mathbf{c}$ 一起构成了隐变量 $\mathbf{z}$ ，而且 $\boldsymbol{\mu}$、$\boldsymbol{\sigma}^2$  和 $\mathbf{c}$ 之间可能存在一定的依赖关系。
+上述变量 $\boldsymbol{\mu}$、$\boldsymbol{\sigma}^2$ 和 $\mathbf{c}$ 一起构成了隐变量 $\mathbf{z}$ ，而且三者之间可能存在一定的依赖关系。
 
 #### 2.2.2 问题本质是基于观测数据推断隐变量的分布
 
-后验概率 $p(\mathbf{z|x})$ 的物理含义是：基于现有观测数据 $\mathbf{x}$ ，推断隐变量 $\mathbf{z}$ 的分布。 
+后验概率 $p(\mathbf{z|x})$ 的物理含义是：基于现有观测数据 $\mathbf{x}$ ，推断隐变量 $\mathbf{z}$ 的概率分布。 
 
-对于上面的高斯混合模型来说，变分推断的目的就是求得隐变量 $\mathbf{z} = \{\boldsymbol{\mu},\boldsymbol{\sigma^2},  \mathbf{c} \}$  的后验分布  $p(\mathbf{z} \mid \mathbf{x})$ 。根据贝叶斯公式，$p(\mathbf{z} \mid \mathbf{x}) = p(\mathbf{z,x}) / p(\mathbf{x})$ 。 根据专家提供的生成过程，能够写出联合分布 $p(\mathbf{z,x})$ 的表达式，但边缘似然 $p(\mathbf{x})$ 是一个很难处理的分母项。当 $\mathbf{z}$ 为连续型时，边缘似然 $p(\mathbf{x})$ 需要求 $p(\mathbf{z,x})$ 关于 $\mathbf{z}$ 所在空间的积分（即边缘化）；当 $\mathbf{z}$ 为离散型时，需要对所有可能的 $\mathbf{z}$ 求和；而积分（和求和）的计算复杂性随着样本数量的增加会呈指数增长。
+对于上面的高斯混合模型来说，变分推断的目的就是求得隐变量 $\mathbf{z} = \{\boldsymbol{\mu},\boldsymbol{\sigma^2}, \mathbf{c} \}$ 的后验分布 $p(\mathbf{z} \mid \mathbf{x})$ 。根据贝叶斯公式，$p(\mathbf{z} \mid \mathbf{x}) = p(\mathbf{z,x}) / p(\mathbf{x})$ 。 依据专家设计的生成过程，能够写出分子中联合分布 $p(\mathbf{z,x})$ 的表达式，但分母中的边缘似然 $p(\mathbf{x})$ 是一个很难处理的项。当 $\mathbf{z}$ 为连续型时，边缘似然 $p(\mathbf{x})$ 需要在隐变量 $\mathbf{z}$ 的概率空间内求 $p(\mathbf{z,x})$ 的积分（ 即做边缘化处理 ）；当 $\mathbf{z}$ 为离散型时，需要对所有可能的 $\mathbf{z}$ 求和；而积分（和求和）的计算复杂性随着样本数量的增加会呈指数增长。
 
-#### 2.2.3 变分推断的关键是构造`变分分布` 
+> 注解： 细心的读者会发现，求 `边缘似然` 和求 `预测分布` 都是在做边缘化，区别仅在于 `边缘似然` 是基于先验空间做边缘化，而 `预测分布` 是在后验空间做边缘化。
+
+#### 2.2.3 变分推断的关键是构造 `变分分布` 
 
 变分推断需要构造`变分分布` $q(\mathbf{z}; \boldsymbol{\nu})$，并通过优化调整 $\boldsymbol{\nu}$，使 $q(\mathbf{z}; \boldsymbol{\nu})$ 更接近真实后验 $p(\mathbf{z \mid x})$ 。
 
 在`变分分布` $q(\mathbf{z}; \boldsymbol{\nu})$ 中， $\mathbf{z}$ 为隐变量，$ \boldsymbol{\nu}$ 是控制 $q$ 形态的参数（例如：假设 $q$ 为高斯分布，则 $\boldsymbol{\nu}$ 为均值和方差 ， 而对于泊松分布，则 $\boldsymbol{\nu}$ 为二值概率）。因此构造`变分分布` $q$ 分为两步：
 
-- 首先是概率分布类型的选择。通常依据 $p$ 的形态，由专家给出，例如在上述高斯混合模型中，假设目标分布 $p$ 服从多元高斯分布，则构造 $q$ 时通常依然会考虑高斯分布。
+- 首先是概率分布类型的选择。通常依据 $p$ 的形态由专家给出，例如在上述高斯混合模型中，假设目标分布 $p$ 服从多元高斯分布，则构造 $q$ 时通常依然会考虑高斯分布。
 
 - 其次是概率分布参数的确定。该确定过程是一个逐步优化迭代的过程，通常经过渐进调整 $\boldsymbol{\nu}$ 的值 ，使 $q$ 逐渐逼近 $p$ 。
 
-####  2.2.4 变分推断是一个优化问题
+#### 2.2.4 变分推断是一个优化问题
 
-变分推断是一个优化问题，其最直观的优化目标是最小化 $KL$ 散度，但实际可操作的优化目标是最大化证据下界 `ELBO` 。
+变分推断是一个优化问题，其最直观的优化目标是最小化 `KL 散度` ，但实际可操作的优化目标是最大化证据下界 `ELBO` 。
 
-直观地理解，变分推断的优化目标很明确，就是最小化 $q$ 和 $p$ 之间的差距，而信息论为我们提供了一个量化两个分布之间差距的工具 $KL$ 散度。但不幸的是，$KL$ 散度的计算并不简单，其计算表达式中同样存在难以处理的边缘似然积分项（边缘似然也称证据，在一般化的数学形式中也被成为配分函数）。为此，有人提出了可操作的优化目标 --- 证据下界 `ELBO` （见 2.4 节）。
+直观地理解，变分推断的优化目标很明确，就是最小化 $q$ 和 $p$ 之间的差距。信息论为我们提供了一个度量两个分布之间差距的数学工具： `KL 散度` 。但不幸的是， `KL 散度` 的计算并不简单，因为其计算表达式中仍然包含难以处理的边缘似然项（即贝叶斯公式中的分母积分项，也称证据，在一些数学形式中也被称为边缘似然）。为此，有人提出了可操作的优化目标 --- 证据下界 `ELBO` （见 2.4 节）。
 
-在证据下界 `ELBO` 的计算表达式中，只包括联合分布  $p(\mathbf{z, x})$  和`变分分布` $q(\mathbf{z}; \boldsymbol{\nu})$ ，摆脱了难以处理的边缘似然积分项。并且在给定观测数据后，最大化 `ELBO` 等价于最小化 $KL$ 。 也就是说，`ELBO` 的最大化过程结束时，获得的输出 $q(\mathbf{z}; \boldsymbol{\nu^\star})$就是我们寻求的最终`变分分布`。
+在证据下界 `ELBO` 的计算表达式中，只包括联合分布 $p(\mathbf{z, x})$ （ 即贝叶斯公式的分子项 ） 和 `变分分布` $q(\mathbf{z}; \boldsymbol{\nu})$ ，从而摆脱了难以处理的边缘似然项。数学推导表明，在给定观测数据后，最大化 `ELBO` 等价于最小化 `KL 散度` 。 也就是说，`ELBO` 的最大化过程结束时，获得的输出 $q(\mathbf{z}; \boldsymbol{\nu^\star})$ 就是我们寻求的 `最佳变分分布`。
 
 #### 2.2.5 变分推断的形象化解释
 
-下图为变分推断的示意图。图中大圈表示了一个分布族，由参数 $\boldsymbol{\nu}$ 索引。我们也可以理解为，大圈是分布 $q$ 的参数 $\boldsymbol{\nu}$ 的取值空间，圈中每个点均表示不同 $\boldsymbol{\nu}$ 对应的分布 $q$ 。例如，在高斯混合模型的例子中， $q$ 属于高斯分布族，则不同的均值和方差，代表了不同的分布 $q$ 。从 $\boldsymbol{\nu}^{init}$ 到 $\boldsymbol{\nu}^*$ 的路径表示变分推断的优化迭代过程，通过优化更新 $\boldsymbol{\nu}$ 值来缩小 $q$ 与 $p$ 之间的差距，而这个差距通常采用 $KL$ 散度来衡量。路径终点 $\boldsymbol{\nu}^*$ 对应的分布 $p$ 与真实后验 $p(z \mid x)$ 之间应当是某种距离测度上的最小值。
+下图为变分推断的形式化示意图。图中大圈表示了一个分布族，由参数 $\boldsymbol{\nu}$ 索引。我们也可以理解为，大圈是分布 $q$ 的参数 $\boldsymbol{\nu}$ 的取值空间。大圈中每个点均表示不同 $\boldsymbol{\nu}$ 值对应的分布 $q$ 。例如，在高斯混合模型的例子中， $q$ 属于高斯分布族，则不同的均值和方差，代表了不同的分布 $q$ 。从 $\boldsymbol{\nu}^{init}$ 到 $\boldsymbol{\nu}^*$ 的路径表示变分推断的优化迭代过程，通过优化更新 $\boldsymbol{\nu}$ 值来缩小 $q$ 与 $p$ 之间的差距，而这个差距通常采用 `KL 散度` 来衡量。路径终点 $\boldsymbol{\nu}^*$ 对应的分布 $p$ 与真实后验 $p(z \mid x)$ 之间应当是某种距离测度上的最小值。
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108085528-fa88.webp)
 
@@ -124,9 +131,7 @@ kernelspec:
 
 > 图 4 ：贝叶斯概率框架示意图
 
-上图是贝叶斯统计问题的一般求解流程图。领域专家拥有知识可以用来建模，并且存在需要解答的问题。他们依据拥有的知识，给出带有归纳偏好的合理假设，构建出数据的生成过程模型 (Generative  Processing Model)。模型中主要包括隐变量、观测变量以及它们之间的依赖关系。
-
-利用该模型，我们希望通过对数据的处理，挖掘出有价值的模式，然后实现各式各样的应用。
+上图是贝叶斯统计问题的一般求解流程图。领域专家拥有知识可以用来建模，并且存在需要解答的问题。他们依据拥有的知识，给出带有归纳偏好的合理假设，构建出数据的生成过程模型 (Generative Processing Model)。模型中主要包括隐变量、观测变量以及它们之间的依赖关系。利用该模型，我们希望通过对观测数据的处理，从中挖掘出有价值的模式，然后实现各式各样的应用。
 
 还是以高斯混合模型为例，可以将其生成过程形式化为：
 
@@ -134,27 +139,27 @@ $$
 \begin{aligned}
  \boldsymbol{\mu}_{k} & \sim \mathcal{N}\left(0, \sigma^{2}\right), & & k=1, \ldots, K, &（先验）\\
 \mathbf{c}_{i} & \sim \text { Categorical }(1 / K, \ldots, 1 / K), & & i=1, \ldots, n, &（先验）\\
-x_{i} \mid \mathbf{c}_{i}, \boldsymbol{\mu} & \sim \mathscr{N}\left(\mathbf{c}_{i}^{\top}  \boldsymbol{\mu}, 1\right) & & i=1, \ldots, n &（似然）
+x_{i} \mid \mathbf{c}_{i}, \boldsymbol{\mu} & \sim \mathscr{N}\left(\mathbf{c}_{i}^{\top} \boldsymbol{\mu}, 1\right) & & i=1, \ldots, n &（似然）
 \end{aligned}
 $$
 
-该模型混合了 $K$ 个相互独立的高斯组份（ $K$ 是超参数），模型中的隐变量包括数据点所在的类别 $ \mathbf{c}_i$，各类别组份的均值 $\boldsymbol{\mu}_k$ 和方差 $ \boldsymbol{\sigma}_k^2$ （为简化问题，此处假设 $ \boldsymbol{\sigma}_k^2$ 为常数 1 ）。
+该模型混合了 $K$ 个相互独立的高斯组份（ 注意， $K$ 是超参数而非隐变量 ），模型中的隐变量包括数据点所在的类别 $ \mathbf{c}_i$，各类别组份的均值 $\boldsymbol{\mu}_k$ 和方差 $ \boldsymbol{\sigma}_k^2$ （为简化问题，此处假设 $ \boldsymbol{\sigma}_k^2$ 为常数 1 ）。
 
 设所有高斯组份的均值参数 $\boldsymbol{\mu}_k$ 的先验为 0 均值的同方差（$\sigma^2$）高斯，如第一行所示；类别参数 $ \mathbf{c}_i$ 的先验为均匀的类别分布（因为缺乏关于类别的先验知识），如第二行所示。假设所有样本数据都是从某个方差为 $1$ 的高斯混合模型中随机生成的，则任一数据点 $x_i$ 的生成过程可以通过似然表达出来（如第三行所示），分为两步 ：
 
 - 第一步，从类别分布中随机抽取一个离散型的类标签 $ \mathbf{c}_i$ （此处采用独热变量形式）；
 
-- 第二步，从类标签 $ \mathbf{c}_i$ 对应的均值为 $\mu =  \mathbf{c}_{i}^{\top} \boldsymbol{\mu}$ 、方差为 $1$ 的高斯分布中，随机抽取一个数据点 $x_i$。
+- 第二步，从类标签 $ \mathbf{c}_i$ 对应的均值为 $\mu = \mathbf{c}_{i}^{\top} \boldsymbol{\mu}$ 、方差为 $1$ 的高斯分布中，随机抽取一个数据点 $x_i$。
 
 更细致的举例说明见图 2，五个分布用不同颜色表示，代表五个类别。每次从中选择一个类，如第三类粉红色，$\mathbf{c}_i=\{0，0，1，0，0\}$ ，然后从第三类对应的高斯分布中抽取 $x_i$ ，其均值为 $\mathbf{c}_i \cdot \boldsymbol{\mu}=\mu_3$。该点大概率出现在粉红色类覆盖的区域内。
 
-#### 2.3.2 利用概率图表示和理解
+#### 2.3.2 利用概率图表达随机变量的联合分布和依赖关系
 
-概率图模型是表达随机变量之间结构和关系的有力工具（参见概率图理论文献）。上述高斯混合模型的形式化生成过程，在概率图模型中体现为三个随机变量及它们之间的依赖关系（见下图），其中高斯组份的均值 $\boldsymbol{\mu}$ 和数据点所属类别 $\mathbf{z}$ 为隐变量，$\mathbb{x}_i$ 为观测变量。此外，可以做更细致的划分，将 $\boldsymbol{\mu}$ 视为全局随机变量，其作用发挥在所有数据上，而 $\mathbb{z}_i$ 为局部随机变量，只和数据点 $x_i$ 相关，与其他点无关。局部变量用矩形框与全局变量分隔开来。
+概率图模型是表达随机变量之间结构和关系的有力工具（参见概率图理论文献）。上述高斯混合模型的形式化生成过程，在概率图模型中体现为三个随机变量及它们之间的依赖关系（见下图），其中高斯组份的均值 $\boldsymbol{\mu}$ 和数据点所属类别 $\mathbf{z}$ 为隐变量，用白色圈表示；$\mathbf{x}_i$ 为观测变量，用灰色圈表示。此外，可以将隐变量的集合进一步划分为全局隐变量和局部隐变量，例如，图中 $\boldsymbol{\mu}$ 为全局隐变量，其作用发挥在所有数据上，而 $\mathbf{z}_i$ 为局部隐变量，只和数据点 $x_i$ 相关，与其他点无关。通常将局部变量用矩形框包围起来，以便与全局变量分隔开来。
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108085458-b4a9.webp)
 
->  图 5：高斯混合模型的概率图（1）白圈为隐变量，灰圈为观测变量；（2）矩形框内为局部变量，外部为全局变量；（3）矩形框表示其内部的变量 $z_i$ 和 $x_i$ 独立重复了 n 次；（4）箭头表示随机变量之间的条件依赖关系。
+> 图 5：高斯混合模型的概率图（1）白圈为隐变量，灰圈为观测变量；（2）矩形框内为局部变量，外部为全局变量；（3）矩形框表示其内部的变量 $z_i$ 和 $x_i$ 独立重复了 n 次；（4）箭头表示随机变量之间的条件依赖关系。
 
 基于上述概率图，可以解析地写出所有随机变量的联合概率分布（详情参见概率图原理）：
 
@@ -170,17 +175,17 @@ $$
 p(\boldsymbol{\mu}, \mathbf{c} \mid \mathbf{x})=\frac{p(\boldsymbol{\mu},\mathbf{c} , \mathbf{x})}{p(\mathbf{x})}
 $$
 
-式中，分子项为 $p(\boldsymbol{\mu},\mathbf{c} , \mathbf{x})$ ， 可根据概率图模型理论写出表达式，但分母 $p(\mathbf{x})$ 涉及所有数据点的积分问题，是难以处理的，因此，需要用近似的、可处理的近似分布 $q(\boldsymbol{\mu},\mathbf{c})$ 来代替后验分布 $p(\boldsymbol{\mu}, \mathbf{c} \mid \mathbf{x})$ 。
+式中，分子项为 $p(\boldsymbol{\mu},\mathbf{c} , \mathbf{x})$ ， 可根据概率图模型理论写出表达式，但分母 $p(\mathbf{x})$ 涉及所有数据点的积分问题，是难以处理的。因此，后验分布 $p(\boldsymbol{\mu}, \mathbf{c} \mid \mathbf{x})$ 很难直接求得，需要用近似的、可处理的近似分布 $q(\boldsymbol{\mu},\mathbf{c})$ 来代替。
 
-#### 2.3.3 更一般的形式
+#### 2.3.3 推广到更一般的形式
 
-我们把上述问题梳理一下，能够得到一个更一般的形式，可以用来描述各种各样的贝叶斯统计模型：
+把上述问题梳理一下，推广到更一般的形式，可以用来描述各种各样的贝叶斯统计模型：
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108085516-aec3.webp)
 
->  图 6：包含全局变量和局部变量的一般性概率图表示
+> 图 6：包含全局隐变量和局部隐变量的一般性概率图表示
 
-在上面的概率模型中，后验概率的分子项为联合概率分布，可通过概率图得出表达式（图 6 下）；但分母中的边缘似然项是难以处理的（见下式）。即便隐变量是离散型变量，存在 $K$ 个可能值，其计算复杂度也为 $O(K^n)$ ，意味着其计算复杂度会随着数据量 $n$ 的增长呈指数增长。
+在贝叶斯公式中，后验概率的分子项为联合概率分布，可通过概率图得出表达式（图 6 下）；但分母中的边缘似然项依然难以处理（ 见下式 ）。即便隐变量是离散型变量，存在 $K$ 个可能值，其计算复杂度也为 $O(K^n)$ ，意味着其计算复杂度会随着数据量 $n$ 的增长呈指数增长。
 
 $$
 p(\beta, z \mid x)=\frac{p(\beta, z, x)}{p(x)}=\frac{p(\beta, z, x)}{\iint_{\beta z} p(x) d \beta d z}
@@ -190,22 +195,20 @@ $$
 
 要将推断转化为优化问题，需要选择或者构造一个`变分分布`族 $\mathcal{Q}$ ，并设定合适的优化目标 $J(q)$ 。 关于分布族的讨论放在下一节，此处先讨论优化目标 $J(q)$ 。该目标需要捕获 $q$ 和 $p$ 之间的差距（或反之，相似性），而信息论为我们提供了一个直观并且好理解的工具，被称为 **KL（ Kullback-Leibler ）散度**。
 
-从形式上理解，*KL 散度* 指两个分布之间的差异。 $q$ 和 $p$ 之间离散形式的 **KL 散度** 被定义为：
+从形式上理解， `KL 散度` 指两个分布之间的差异。 $q$ 和 $p$ 之间离散形式的 `KL 散度` 被定义为：
 
 $$
 KL(q \| p) = \sum_x q(x) \log \frac{q(x)}{p(x)}
 $$
 
-在信息论中，此函数用于测量两个分布中所包含信息的差异大小。$KL$ 散度具有以下性质，使其在近似推断任务中特别有用：
+在信息论中，此函数用于测量两个分布中所包含信息的差异大小。 `KL 散度` 具有以下性质，使其在近似推断任务中特别有用：
 
--  对所有 $q$ 和 $p$ ，都有 $KL(q\|p) \geq 0$ 。 
--  当且仅当 $q = p$ 时，$KL(q\|p) = 0$ 。 
+- 对所有 $q$ 和 $p$ ，都有 $KL(q\|p) \geq 0$ 。 
+- 当且仅当 $q = p$ 时，$KL(q\|p) = 0$ 。 
 
-> 相关证明过程可以作为练习，本文略过。
+请注意： `KL 散度` 不具备可逆性（或对称性），即 $KL(q\|p) \neq KL(p\|q)$ 。这也是称之为`散度`，而不是`距离`的原因，因为距离是双向对称的。
 
-但请注意： $KL$ 散度不具备可逆性（或对称性），即 $KL(q\|p) \neq KL(p\|q)$ 。这也是称之为`散度`，而不是`距离`的原因，因为距离是双向对称的。
-
-$KL$ 散度虽然很好理解，但是是否能够直接使用 $KL$ 散度进行变分推断呢？ 我们有必要针对一般化形式的目标分布 $p$ 做一下分析。 
+ `KL 散度` 虽然很好理解，但是是否能够直接使用 `KL 散度` 进行变分推断呢？ 我们有必要针对一般化形式的目标分布 $p$ 做一下分析。 
 
 假设 $p$ 为一个泛化（离散、简单）的、具有如下形式的无方向概率模型（其实该形式是统计机器学习框架中后验分布的一般化形式，也是变分推断面临的主要场景）：
 
@@ -213,14 +216,15 @@ $$
 p(x_1,\ldots,x_n; \theta) = \frac{\tilde p(x_1,\ldots,x_n ; \theta)}{Z(\theta)} =\frac{1}{Z(\theta)} \prod_{k} \phi_k(x_k; \theta)
 $$
 
-其中 $k$ 为模型中因子的数量（有关因子的概念，参见无向概率图或马尔科夫随机场相关资料）， $\phi_k(\cdot)$ 为因子， $Z(\theta)$ 为归一化常数或配分函数。假设该形式能够涵盖所有可能的目标分布， 则在该一般化形式下，归一化常数 $Z(\theta)$ 面临着难以处理的问题。由于 $KL$ 散度的计算需要用到 $p(x)$ ，因此 $Z(\theta)$ 的存在导致无法直接使用 $KL(q\|p)$ 做为优化目标。
+其中 $k$ 为模型中因子的数量（有关因子的概念，参见无向概率图或马尔科夫随机场相关资料）， $\phi_k(\cdot)$ 为因子， $Z(\theta)$ 为归一化常数或边缘似然。假设该形式能够涵盖所有可能的目标分布， 则在该一般化形式下，归一化常数 $Z(\theta)$ 面临着难以处理的问题。由于 `KL 散度` 的计算需要用到 $p(x)$ ，因此 $Z(\theta)$ 的存在导致无法直接使用 $KL(q\|p)$ 做为优化目标。
 
-考虑到归一化常数虽然难以处理，但在观测数据确定的情况下是常数，因此，可以考虑仅处理形式上与 $KL$ 散度相似的未归一化分子项 $\tilde p(x) = \prod_{k} \phi_k(x_k; \theta)$ ，即将优化目标调整为：
+考虑到归一化常数虽然难以处理，但在观测数据确定的情况下是常数，因此，可以考虑仅处理形式上与 `KL 散度` 相似的未归一化分子项 $\tilde p(x) = \prod_{k} \phi_k(x_k; \theta)$ ，采用对数形式，即将优化目标调整为：
+
 $$
 J(q) = \sum_x q(x) \log \frac{q(x)}{\tilde p(x)}
 $$
 
-上述目标函数中， $q(x)$ 来自人工构造和 $\tilde p (x)$ 来自于数据概率生成过程，各项均可处理。 更重要的是，其还具有以下重要性质：
+上述目标函数中， $q(x)$ 来自人工构造、 $\tilde p (x)$ 来自于（ 数据概率生成过程中的 ）似然，各项均可处理。 更重要的是，其还具有以下重要性质：
 
 $$
 \begin{align*} 
@@ -230,21 +234,21 @@ J(q) &= \sum_x q(x) \log \frac{q(x)} {\tilde p(x)} \\
 \end{align*}
 $$
 
-也就是说，新的目标函数是 $KL$ 散度与对数配分函数之差，而根据 $KL$ 散度的性质， $KL(q\|p) \geq 0$ ，则重排公式可得：
+也就是说，新的目标函数是 `KL 散度` 与对数边缘似然之差，而根据 `KL 散度` 的性质， $KL(q\|p) \geq 0$ ，则重排公式可得：
 
 $$
 \log Z(\theta) = KL(q\|p) - J(q) \geq -J(q)
 $$
 
-该式表明，$-J(q)$ 是对数配分函数 $\log Z(\theta)$ 的下界。
+该式表明，$-J(q)$ 是对数边缘似然 $\log Z(\theta)$ 的下界。
 
-在大多数应用场景中， 对配分函数 $Z(\theta)$ 都有特别的解释。例如，在给定观测数据 $D$ 的情况下，我们可能想计算随机变量 $x$ 的边缘概率 $p(x \mid D) = p(x,D) / p(D)$ 。在这种情况下，最小化 $J(q)$ 等价于最大化对数边缘似然 $\log p(D)$  的下界。正是因为如此， $-J(q)$ 被称为变分下界或证据下界（ `ELBO` ），这种下界关系经常以如下不公式形式表示：
+在大多数应用场景中， 对边缘似然 $Z(\theta)$ 都有特别的解释。例如，在给定观测数据 $D$ 的情况下，我们可能想计算随机变量 $x$ 的边缘概率 $p(x \mid D) = p(x,D) / p(D)$ 。在这种情况下，最小化 $J(q)$ 等价于最大化对数边缘似然 $\log p(D)$ 的下界。正是因为如此， $-J(q)$ 被称为变分下界或证据下界（ `ELBO` ），这种下界关系经常以如下不公式形式表示：
 
 $$
 \log Z(\theta) \geq \mathbb{E}_{q(x)} [ \log \tilde p(x) - \log q(x) ]
 $$
 
-最关键的是，对数边缘似然 $\log Z(\theta)$ 和变分下界 $-J(q)$ 的差，正好是 $KL$ 散度。 因此，最大化变分下界等效于通过 "挤压" $-J(q)$ 和  $\log Z(\theta)$ 之间的差，实现 $KL(q\|p)$ 的最小化。 
+最关键的是，对数边缘似然 $\log Z(\theta)$ 和变分下界 $-J(q)$ 的差，正好是 `KL 散度` 。 因此，最大化变分下界等效于通过 "挤压" $-J(q)$ 和 $\log Z(\theta)$ 之间的差，实现 $KL(q\|p)$ 的最小化。 
 
 --- 
 
@@ -256,7 +260,7 @@ $$
 
 也许最重要的区别是计算效率：优化 $KL(q\|p)$ 时，涉及关于 $q$ 求期望；而优化 $KL(p\|q)$ 则需要关于 $p$ 求期望，而这又是难以处理甚至无法评估的。
 
-但当近似分布族 $\mathcal{Q}$ 不包含真实分布 $p$ 时，选择  $KL(p\|q)$ 会影响返回的解。 通过观察会发现， 如果 $p(x) = 0$ 并且 $q(x) > 0$ 时， $KL(q\|p)$ 是无限的 （ 该散度有时被称为 I 投影或信息投影 ） :
+但当近似分布族 $\mathcal{Q}$ 不包含真实分布 $p$ 时，选择 $KL(p\|q)$ 会影响返回的解。 通过观察会发现， 如果 $p(x) = 0$ 并且 $q(x) > 0$ 时， $KL(q\|p)$ 是无限的 （ 该散度有时被称为 I 投影或信息投影 ） :
 
 $$
 KL(q\|p) = \sum_x q(x) \log \frac{q(x)}{p(x)}
@@ -272,14 +276,14 @@ $$
 
 > 图 7：将单峰近似分布 $q$（红色）拟合到多峰 $p$（蓝色）。 (a) 使用 $KL(p||q)$ 会导致 $q$ 试图覆盖两个峰。 (b）(c) 使用 $KL(q||p)$ 会迫使 $q$ 选择 $p$ 的其中一个峰。
 
-鉴于两种散度的上述性质，我们经常称 $KL(p\|q)$ 为包容性 $KL$ 散度， 而 $KL(q\|p)$ 是独占性的 $KL$ 散度。
+鉴于两种散度的上述性质，我们经常称 $KL(p\|q)$ 为包容性 `KL 散度` ， 而 $KL(q\|p)$ 是独占性的 `KL 散度` 。
 
 ---
 
 小结：
 
-- 由于配分函数 $Z$ 的存在，使得直接计算 $KL$ 散度难以处理
-- 采用等价的最大化 `ELBO` 来代替最小化 $KL$ 散度作为新的优化目标
+- 由于边缘似然 $Z$ 的存在，使得直接计算 `KL 散度` 难以处理
+- 采用等价的最大化 `ELBO` 来代替最小化 `KL 散度` 作为新的优化目标
 - `ELBO` 中只包含`变分分布` $q$ 和目标分布的分子项 $\tilde p$ ，并且两者都可计算，进而可以作为真正的优化目标
 - $KL(q\|p)$ 和 $KL(p\|q)$ 虽然都是散度，也都可以作为优化目标，但作为目标时两者达到的效果截然不同。对于多峰后验，前者倾向于选择能够覆盖其中某个峰的`变分分布`，而后者倾向于选择能够覆盖多个峰的`变分分布`。
 
@@ -291,20 +295,19 @@ $$
 
 平均场近似假设所有隐变量相互独立，进而简化了推导。但这种独立性假设也会导致不太准确的近似，当后验中的随机变量存在高度依赖时尤其如此。因此，有人研究更为准确的近似方法，本文第 6 节会讨论此类更具表现力的`变分分布`。
 
-平均场变分推断 ( MFVI ) 起源于统计物理学的 [平均场理论](https://ieeexplore.ieee.org/book/6267422)。在平均场近似中，基于独立性假设，`变分分布`被分解为各因子分布的乘积，而每个因子由其自身变分参数控制：
+`平均场变分推断 ( MFVI )` 起源于统计物理学的 [平均场理论](https://ieeexplore.ieee.org/book/6267422)。在平均场近似中，基于独立性假设，`变分分布`被分解为各因子分布的乘积，而每个因子由其自身变分参数控制：
 
 $$
 q(\mathbf{z};\boldsymbol{\lambda}) = \prod_{i=1}^N q(z_i ; \lambda_i)
 $$
 
-为了符号简单，我们在本节的其余部分省略了变分参数 $λ$ 。我们现在回顾如何在平均场假设下最大化公式（ 3 ）中定义的 `ELBO` 。
+为了符号简单，我们将在本节的其余部分省略了变分参数 $λ$ 。现在回顾如何在平均场假设下最大化 `ELBO` 。
 
-完全分解的`变分分布`允许通过简单的迭代更新来优化。为了看到这一点，我们专注于更新与隐变量 $z_j$ 相关的变分参数 $λ_j$ 。将平均场分布插入公式（ 3 ）允许我们表达 `ELBO` 如下：
+完全分解的`变分分布`允许通过简单的迭代更新来做优化。为了看到这一点，我们专注于更新与隐变量 $z_j$ 相·关的变分参数 $λ_j$ 。将平均场分布引入 `ELBO`  可以表达如下：
 
 $$
 \begin{aligned}
-\mathscr{L}= \int q\left(z_{j}\right) \mathbb{E}_{q\left(z_{\neg j}\right)}\left[\log p\left(z_{j}, \boldsymbol{x} \mid \boldsymbol{z}_{\neg j}\right)\right] d z_{j} \\
--\int q\left(z_{j}\right) \log q\left(z_{j}\right) d z_{j}+c_{j}
+\mathscr{L}= \int q\left(z_{j}\right) \mathbb{E}_{q\left(z_{\neg j}\right)}\left[\log p\left(z_{j}, \boldsymbol{x} \mid \boldsymbol{z}_{\neg j}\right)\right] d z_{j} -\int q\left(z_{j}\right) \log q\left(z_{j}\right) d z_{j}+c_{j} \tag{6}
 \end{aligned}
 $$
 
@@ -381,7 +384,7 @@ $$
 
 坐标下降过程的结果是：
 
-依据 $KL(q\|p)$ 迭代地拟合了用于近似 $p$ 的完全因子式 $q(z) = q_1(z_1) q_2(z_2) \cdots q_n(z_n) $ ； 而坐标下降的每一步，都增加了变分下界，使其向  $\log Z(\theta)$ 进一步收紧。 最终的因子 $q_j(z_j)$ 不会完全等于真正的边缘分布 $p(z_j)$ ，但对于许多实际目的，它们通常表现足够好，如确定 $z_j$ 的峰值： $\max_{z_j} p(z_j)$ 。 
+依据 $KL(q\|p)$ 迭代地拟合了用于近似 $p$ 的完全因子式 $q(z) = q_1(z_1) q_2(z_2) \cdots q_n(z_n) $ ； 而坐标下降的每一步，都增加了变分下界，使其向 $\log Z(\theta)$ 进一步收紧。 最终的因子 $q_j(z_j)$ 不会完全等于真正的边缘分布 $p(z_j)$ ，但对于许多实际目的，它们通常表现足够好，如确定 $z_j$ 的峰值： $\max_{z_j} p(z_j)$ 。 
 
 还是用高斯混合模型的例子，根据概率图模型有：
 
@@ -389,7 +392,7 @@ $$
 p(\boldsymbol{\mu},\mathbf{c},\mathbf{x})=p(\boldsymbol{\mu})\prod_{i=1}^{n} p(c_i)p(x_i \mid c_i,\boldsymbol{\mu})
 $$
 
-该模型中涉及的隐变量为 $\mathbf{z} = \{\boldsymbol{\mu},\mathbf{c} \}$ ，其中 $\boldsymbol{\mu} =\{ \mu_k\}, k=1...5$  为 5 个高斯组份的均值；$\mathbf{c}$ 为所有数据点的类别向量。$\boldsymbol{\mu}$ 作为全局变量，其`变分分布`被构造为高斯分布  $q(u_k;m_k,S_k)$ ， $\nu_\mu = \{m_k,S_k\},k=1...5$  为需要优化求解的变分参数。 $c_i$ 为局部变量，其`变分分布`的构造形式为多项分布  $q(c_i ;\psi_i)$ ，其中 $\nu_c=\{ \psi_i \}, i=1...n$ 为控制每个数据点类别的变分参数（注意 $\psi_i$ 为向量）。
+该模型中涉及的隐变量为 $\mathbf{z} = \{\boldsymbol{\mu},\mathbf{c} \}$ ，其中 $\boldsymbol{\mu} =\{ \mu_k\}, k=1...5$ 为 5 个高斯组份的均值；$\mathbf{c}$ 为所有数据点的类别向量。$\boldsymbol{\mu}$ 作为全局变量，其`变分分布`被构造为高斯分布 $q(u_k;m_k,S_k)$ ， $\nu_\mu = \{m_k,S_k\},k=1...5$ 为需要优化求解的变分参数。 $c_i$ 为局部变量，其`变分分布`的构造形式为多项分布 $q(c_i ;\psi_i)$ ，其中 $\nu_c=\{ \psi_i \}, i=1...n$ 为控制每个数据点类别的变分参数（注意 $\psi_i$ 为向量）。
 
 按照平均场近似方法，各因变量之间相互独立，则`变分分布` $q(\boldsymbol{\mu},c)$ 可被构造为：
 
@@ -415,7 +418,7 @@ $$
 
 如算法中所示，即便是这样，在更新全局参数之前，也需要先循环遍历所有文档一遍（单批次梯度下降）。当文档太多时，这就会成为了一个新问题，模型更新的频率太低。不过，该算法将参数区分为全局参数和局部参数的作法，为随机梯度下降提供了一个思路。
 
-为了适应随机梯度下降，可将借鉴算法 1 的思路，将下界分解为两部分（采用对数形式）：**由局部参数 $\phi_i$ 参数化的逐数据点项** 和 **由全局参数 $\lambda$ 参数化的全局项**：
+为了适应随机梯度下降，可将借鉴算法 1 的思路，将下界分解为两部分（采用对数形式）：**由局部参数 $\phi_i$ 参数化的逐数据点局部隐变量项** 和 **由全局参数 $\lambda$ 参数化的全局隐变量项**：
 
 $$
 \mathcal{L}\left(\lambda, \phi_{1: n}\right)=\underbrace{\mathbb{E}_{q}[\log p(\beta)-\log q(\beta \mid \lambda)]}_{\text {global contribution }}+\sum_{i=1}^{n} \underbrace{\left\{\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i} \mid \beta\right]-\log q\left(z_{i} \mid \phi_{i}\right)\right\}\right.}_{\text {per-data point contribution }}
@@ -479,7 +482,7 @@ $$
 
 那能否能够直接基于概率分布空间做优化求解呢？答案是肯定的：那就是**将自然梯度方向作为优化的梯度方向**。
 
->  自然梯度是 Amari 于 1998 年提出的，主要用于衡量基于统计模型（如 KL 散度）的目标函数。此处知识点可参见 [文献综述](https://arxiv.org/pdf/1412.1193)
+> 自然梯度是 Amari 于 1998 年提出的，主要用于衡量基于统计模型（如 KL 散度）的目标函数。此处知识点可参见 [文献综述](https://arxiv.org/pdf/1412.1193)
 
 无论是从 KL 散度的角度，还是从变分下界的角度，我们期望的目标函数 $\mathcal{L}(\lambda,\phi_{1..n})$ 都是基于概率分布的。 [文献](https://arxiv.org/pdf/1412.1193) 证明： Fisher 信息矩阵（Fisher Information Matrix, FIM）是两个概率分布之间 KL 散度的二阶近似，它表示了统计流形（即概率分布空间）上的局部曲率。进而推导得出，自然梯度可以定义为：
 
@@ -497,15 +500,72 @@ $$
 
 ### 4.4 随机变分推断（ SVI ）中的一些技巧
 
+构成 SVI 基础的 SGD 的收敛速度取决于梯度估计的方差。较小的梯度噪声允许较大的学习率并导致更快的收敛。本节介绍 SVI 背景下的交易技巧，例如自适应学习率和方差减少。其中一些方法通常适用于 SGD。
+
 #### 4.4.1 自适应学习率与小批量大小
+The speed of convergence is influenced by the choice of the learning rate and the mini-batch size [10], [46]. Due to the law of large numbers, increasing the mini-batch size reduces the stochastic gradient noise [46], allowing larger learning rates. To accelerate the learning procedure, one can either optimally adapt the mini-batch size for a given learning rate, or optimally adjust the learning rate to a fixed mini-batch size. We begin by discussing learning rate adaptation. 
+
+收敛速度受选择的学习率和小批量大小 [10]、[46] 的影响。由于大数定律，增加小批量大小会降低随机梯度噪声 [46]，从而允许更大的学习率。为了加速学习过程，可以针对给定的学习率优化调整小批量大小，或者将学习率优化为固定小批量大小。我们首先讨论学习率适应。
+
+In each iteration, the empirical gradient variance can guide the adaptation of the learning rate which is inversely proportional to the gradient noise. Popular optimization methods that make use of this idea include RMSProp [191], AdaGrad [42], AdaDelta [218] and Adam [87]. These methods are not specific to SVI but are frequently used in this context; for more details we refer interested readers to [53]. [157] first introduced adaptive learning rates for the global variational parameter $γ$ in SVI, where the optimal learning rate was shown to satisfy $ρ∗t = (γ∗t −γt )T (γ∗t −γt ) (γ∗t −γt )T (γ∗t −γt )+tr(Σ).(11)$
+
+在每次迭代中，经验梯度方差可以指导与梯度噪声成反比的学习率的适应。利用这个想法的流行优化方法包括 RMSProp [191]、AdaGrad [42]、AdaDelta [218] 和 Adam [87]。这些方法不是 SVI 特有的，但在这种情况下经常使用；有关更多详细信息，我们请感兴趣的读者参阅 [53]。 [157]首先在 SVI 中引入了全局变分参数 $γ$ 的自适应学习率，其中最佳学习率被证明满足 $ρ∗t = (γ∗t −γt )T (γ∗t −γt ) (γ ∗t −γt )T (γ∗t −γt )+tr(Σ).(11)$
+
+Above, $γ∗t$ denotes the optimal global variational parameter, and $γt$ the current estimate. $Σ$ is the covariance matrix of the variational parameter in this mini-batch. Since $γ∗t$ is unknown, [157] showed how to estimate the optimal learning rate in an online fashion. Instead of adapting the learning rate, the mini-batch size can be adapted while keeping the learning rate fixed. This achieves similar effects [10]  [26], [37], [184]. In order to decrease the SGD variance, [10] proposed to choose the mini-batch size proportionally to the value of the objective function relative to its optimum. In practice, the estimated gradient noise covariance and the magnitude of the gradient are used to estimate the optimal mini-batch size.
+
+上面，$γ∗t$ 表示最优全局变分参数，$γt$ 表示当前估计。 $Σ$ 是这个 mini-batch 中变分参数的协方差矩阵。由于 $γ∗t$ 是未知的，[157] 展示了如何以在线方式估计最佳学习率。可以在保持学习率固定的同时调整小批量大小，而不是调整学习率。这实现了类似的效果 [10] [26]、[37]、[184]。为了减少 SGD 方差，[10] 建议根据目标函数的值与其最优值成比例地选择小批量大小。在实践中，估计的梯度噪声协方差和梯度的大小用于估计最佳小批量大小。
 
 #### 4.4.2 方差减少策略
+除了通过学习率和小批量大小控制优化路径之外，我们还可以减少方差，从而实现更大的梯度步长。 SVI 中经常使用方差减少来实现更快的收敛。如下，我们总结了有关如何通过控制变量、非均匀采样和其他方法实现这一目标的文献。
 
 （1）控制变量法
 
+A control variate is a stochastic term that can be added to the stochastic gradient such that its expectation remains the same, but its variance is reduced [20]. A control variate needs to be correlated with the stochastic gradient, and easy to compute. Using control variates for variance reduction is common in Monte Carlo simulation and stochastic optimization [165], [208]. Several authors have suggested the use of control variates in the context of SVI [78], [146], [154], [208]. As a prominent example, we discuss the stochastic variance reduced gradient (SVRG) method [78]. In SVRG, one constructs a control variate which takes advantage of previous gradients from all data points, and one exploits that gradients along the optimization path are correlated. The standard stochastic gradient update $γt+1 = γt −ρt (∇ ˆL(γt ))$ is replaced by $γt+1 = γt −ρt (∇ ˆL(γt )−∇ ˆL(  ̃γ)+  ̃μ).(12)$ . $ˆL$ indicates the estimated objective (here the negative ELBO) based on the current set of mini-batch indices, $γ$ is a snapshot of $γ$ after every $m$ iterations, and $μ$ is the batch gradient computed over all the data points, $ ̃μ = ∇L(  ̃γ)$. Since $−∇ ˆL(  ̃γ)+  ̃μ$ has expectation zero, it is a control variate. SVRG requires a full pass through the dataset every mth iteration to compute the full gradients, even though a full pass can be relaxed to a very large mini-batch for large data sets. For smooth but not strongly convex objectives, SVRG was shown to achieve the asymptotic convergence rate O(1/T ), compared to O(1/√T ) of SGD. Many other control variates are used in practice [140], [146], [203]. We present another popular type of a control variate, the score function control variate
+
+控制变量是一个随机项，可以添加到随机梯度中，使其期望保持不变，但其方差减少 [20]。控制变量需要与随机梯度相关，并且易于计算。使用控制变量来减少方差在 Monte Carlo 模拟和随机优化 [165]、[208] 中很常见。几位作者建议在 SVI [78]、[146]、[154]、[208] 的上下文中使用控制变量。作为一个突出的例子，我们讨论了随机方差减小梯度 (SVRG) 方法 [78]。在 SVRG 中，一种利用来自所有数据点的先前梯度构建控制变量，并且利用沿优化路径的梯度是相关的。标准随机梯度更新 $γt+1 = γt −ρt (∇ ˆL(γt ))$ 被替换为 $γt+1 = γt −ρt (∇ ˆL(γt )−∇ ˆL( ̃γ)+ ̃μ).(12 )$ 。 $ˆL$ 表示基于当前小批量索引集的估计目标（此处为负 ELBO），$γ$ 是每 $m$ 次迭代后 $γ$ 的快照，$μ$ 是计算的批梯度在所有数据点上，$ ̃μ = ∇L( ̃γ)$。由于 $−∇ ˆL( ̃γ)+ ̃μ$ 的期望为零，因此它是一个控制变量。 SVRG 需要每第 m 次迭代对数据集进行一次完整的传递以计算完整的梯度，即使完整的传递可以放宽到大数据集的非常大的小批量。对于平滑但不是强凸的目标，与 SGD 的 O(1/√T ) 相比，SVRG 被证明可以实现 O(1/T ) 的渐近收敛率。在实践中使用了许多其他控制变量 [140]、[146]、[203]。我们提出了另一种流行的控制变量类型，得分函数控制变量
+
 （2）非均匀采样法
 
+Instead of subsampling data points with equal probability, non-uniform sampling can be used to select mini-batches with a lower gradient variance. Several authors suggested variants of importance sampling in the context of mini-batch selection [32], [55], [148], [226]. Although effective, these methods are not always practical, as the computational complexity of the sampling mechanism relates to the dimensionality of model parameters [47]. Alternative methods aim at de-correlating similar points and sampling diversified mini-batches. These methods include stratified sampling [225], where one samples data from pre-defined subgroups based on meta-data or labels, clustering-based sampling [47], which amounts to clustering the data using k-means and then sampling data from every cluster with adjusted probabilities, and diversified mini-batch sampling [223], [224] using repulsive point processes to suppress the probability of data points with similar features in the same mini-batch. All of these methods have been shown to reduce variance and can also be used for learning on imbalanced data.
+
+可以使用非均匀采样来选择具有较低梯度方差的小批量，而不是以等概率对数据点进行二次采样。几位作者建议在小批量选择 [32]、[55]、[148]、[226] 的背景下进行重要性采样的变体。尽管有效，但这些方法并不总是实用，因为采样机制的计算复杂性与模型参数的维度有关 [47]。替代方法旨在消除相似点的相关性并对多样化的小批量进行采样。这些方法包括分层抽样 [225]，其中一个基于元数据或标签从预定义的子组中抽样数据，基于聚类的抽样 [47]，这相当于使用 k 均值对数据进行聚类，然后从每个具有调整概率的聚类，以及多样化的小批量采样 [223]、[224] 使用排斥点过程来抑制同一小批量中具有相似特征的数据点的概率。所有这些方法都已被证明可以减少方差，也可以用于学习不平衡数据。
+
 （3）其他方法
+
+A number of alternative methods have been developed that contribute to variance reduction for SVI. A popular approach relies on Rao-Blackwellization, which is used in [154]. The Rao-Blackwellization theorem (see Appendix A.5) generally states that a conditional estimation has lower variance if there exists a valid statistic that it can be conditioned on. Inspired by Rao-Blackwellization, the local expectation gradients method [194] has been proposed. This method splits the computation of the gradient of the ELBO into a Monte Carlo estimation and an exact expectation so that the contribution of each latent dimension to the gradient variance is optimally taken into account. Another related approach has been developed for SVI, which averages expected sufficient statistics over a sliding window of mini-
+batches to obtain a natural gradient with smaller mean squared error [112].
+
+已经开发了许多有助于减少 SVI 方差的替代方法。一种流行的方法依赖于 [154] 中使用的 Rao-Blackwellization。 Rao-Blackwellization 定理（参见附录 A.5）通常指出，如果存在可以作为条件估计的有效统计量，则条件估计具有较低的方差。
+
+受 Rao-Blackwellization 的启发，已经提出了局部期望梯度方法 [194]。该方法将 ELBO 的梯度计算拆分为 Monte Carlo 估计和精确期望，以便最佳地考虑每个潜在维度对梯度方差的贡献。
+
+已经为 SVI 开发了另一种相关方法，它在小批量的滑动窗口上平均预期足够的统计数据，以获得具有较小均方误差的自然梯度 [112]。
+
+### 4.5 其他可扩展推断方法
+
+与使用随机优化更快收敛相比，本节介绍了利用某些模型的结构来实现相同目标的方法。我们特别关注折叠、稀疏、并行和分布式推断
+
+#### 4.5.1 折叠推断
+
+Collapsed variational inference (CVI) relies on the idea of analytically integrating out certain model parameters [64], [83], [94], [97], [182], [188], [197]. Due to the reduced number of parameters to be estimated, inference is typically faster. Collapsed inference is commonly constrained in the traditional conjugate exponential families, where the ELBO assumes an analytical form during marginalization. For these models, one can either marginalize out these latent variables before the ELBO is derived, or eliminate them afterwards [64], [83]. Several authors have proposed CVI for topic models [94], [188] where one can either collapse the topic proportions [188] or the topic assignments [64]. In addition to these model specific derivations, [64] unifies existing model-specific CVI approaches and presents a general collapsed inference method for models in the conjugate exponential family class.
+
+折叠变分推断 (CVI) 依赖于分析整合某些模型参数 [64]、[83]、[94]、[97]、[182]、[188]、[197] 的想法。由于要估计的参数数量减少，推断通常会更快。折叠推断通常受限于传统的共轭指数族，其中 ELBO 在边缘化期间采用分析形式。对于这些模型，可以在推导出 ELBO 之前将这些潜在变量边缘化，或者在之后消除它们 [64]、[83]。几位作者提出了用于主题模型 [94]、[188] 的 CVI，其中可以折叠主题比例 [188] 或主题分配 [64]。除了这些特定于模型的推导之外，[64] 统一了现有的特定于模型的 CVI 方法，并为共轭指数族类中的模型提供了一种通用的折叠推断方法。
+
+The computational benefit of CVI depends strongly on the statistics of the collapsed variables. Additionally, collapsing latent random variables can make other inference techniques tractable. For models such as topic models, we can collapse the discrete variables and only infer the continuous ones. This allows the usage of inference networks (Section 6) [122], [180]. More generally, CVI does not solve all problems. On the one side, integrating out certain model variables makes the ELBO tighter, since the marginal likelihood does not have to get lower-bounded in these variables. On the other hand, besides mathematical challenges, marginalizing variables can introduce additional dependencies between variables. For example, collapsing the global variables in Latent Dirichlet Allocation introduces non-local dependencies between the assignment variables, making distributed inference harder
+
+CVI 的计算优势很大程度上取决于折叠变量的统计数据。此外，折叠潜在随机变量可以使其他推断技术易于处理。对于主题模型等模型，我们可以折叠离散变量，仅推断连续变量。这允许使用推断网络（第 6 节）[122]、[180]。更一般地说，CVI 并不能解决所有问题。一方面，整合某些模型变量会使 ELBO 更紧密，因为边际似然不必在这些变量中获得下界。另一方面，除了数学挑战之外，边缘化变量还会在变量之间引入额外的依赖关系。例如，在潜在狄利克雷分配中折叠全局变量会在赋值变量之间引入非局部依赖性，从而使分布式推断更加困难
+
+#### 4.5.2  稀疏推断
+
+Sparse inference introduces additional low-rank approximations into the variational approach, enabling more scalable inference [63], [177], [195]. Sparse inference can be either interpreted as a modeling choice or as an inference scheme [24]. Sparse inference methods are often encountered in the Gaussian Process (GPs) literature. The computational cost of learning GPs is O(M3), where M is the number of data points. This cost is caused by the inversion of the kernel matrix KMM of size M ×M, which hinders the application of GPs to big data sets. The idea of sparse inference in GPs [177] is to introduce T inducing points. Inducing points can be interpreted as pseudo-inputs that reflect the original data, but yield a more sparse representation since T M. With inducing points, only a T ×T sized matrix needs to be inverted, and consequently the computational complexity of this method is O(MT 2). [195] collapses the distribution of inducing points, and [63] further extends this work to a stochastic version with a computational complexity of O(T 3). Additionally, sparse inducing points make inference in Deep GPs tractable [35]
+
+稀疏推断在变分方法中引入了额外的低秩近似，从而实现了更具可扩展性的推断 [63]、[177]、[195]。稀疏推断既可以解释为建模选择，也可以解释为推断方案 [24]。在高斯过程 (GP) 文献中经常会遇到稀疏推断方法。学习 GP 的计算成本是 O(M3)，其中 M 是数据点的数量。这个代价是由大小为 M ×M 的核矩阵 KMM 的求逆引起的，这阻碍了 GP 在大数据集上的应用。 GPs [177] 中稀疏推断的思想是引入 T 诱导点。诱导点可以解释为反映原始数据的伪输入，但自 T M 以来产生更稀疏的表示。对于诱导点，只需要反转一个T×T大小的矩阵，因此该方法的计算复杂度为O(MT 2)。 [195] 折叠了诱导点的分布，[63] 进一步将这项工作扩展到了一个计算复杂度为 O(T 3) 的随机版本。此外，稀疏诱导点使 Deep GPs 中的推断变得易于处理 [35]
+
+#### 4.5.4 分布式和并行推断
+
+Variational inference can be adjusted to distributed computing scenarios, where subsets of the data or parameters are distributed among several machines. [21], [49], [135], [138], [219]. Distributed inference schemes are often required in large scale scenarios, where data and computations are distributed across several machines. Independent latent variable models are trivially parallelizable. However, model specific designs such as reparametrizations might be required to enable efficient distributed inference [49]. Current computing resources make VI applicable to web-scale data analysis [219]
+
+变分推断可以调整到分布式计算场景，其中数据或参数的子集分布在多台机器上。 [21]、[49]、[135]、[138]、[219]。在大规模场景中通常需要分布式推断方案，其中数据和计算分布在多台机器上。独立的潜在变量模型可以简单地并行化。然而，可能需要模型特定的设计，例如重新参数化，以实现高效的分布式推断 [49]。当前的计算资源使 VI 适用于网络规模的数据分析 [219]
 
 ## 5 提升通用性 --- 黑盒变分推断
 
@@ -531,7 +591,7 @@ BBVI 大致分为两种类型：
 
 ### 5.2 使用评分梯度的 BBVI
 
-考虑如下概率模型，其中  $\mathbf{x}$  是观测变量， $\mathbf{z}$ 是隐变量，其`变分分布`为 $q(\mathbf{z} \mid \lambda)$ 。变分下界 (`ELBO`) 为：
+考虑如下概率模型，其中 $\mathbf{x}$ 是观测变量， $\mathbf{z}$ 是隐变量，其`变分分布`为 $q(\mathbf{z} \mid \lambda)$ 。变分下界 (`ELBO`) 为：
 
 $$
 \mathcal{L}(\lambda) \triangleq \mathbb{E}_{q_{\lambda}(\mathbf{z})}[\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda)] \tag{9}
@@ -623,21 +683,21 @@ BBVI 的方差减少：BBVI 需要一套与第 3.2 节中审查的 SVI 不同的
 
 ### 5.4 方差减少的策略
 
-黑盒变分推断需要一套不同于第 4 节中为随机变分推断设计的方差减少技术。与随机变分推断的噪声来自有限数据点集的二次采样不同，BBVI 的噪声来自可能具有无限支持的随机变量。在这种情况下，诸如随机方差减少梯度  ( SVRG ) 之类的技术不再适用，因为完整梯度无法拆解成有限项的总和，而且难以保存在内存中。BBVI 会涉及一组不同的控制变量和其他方法，这里将简要回顾一下。
+黑盒变分推断需要一套不同于第 4 节中为随机变分推断设计的方差减少技术。与随机变分推断的噪声来自有限数据点集的二次采样不同，BBVI 的噪声来自可能具有无限支持的随机变量。在这种情况下，诸如随机方差减少梯度 ( SVRG ) 之类的技术不再适用，因为完整梯度无法拆解成有限项的总和，而且难以保存在内存中。BBVI 会涉及一组不同的控制变量和其他方法，这里将简要回顾一下。
 
 BBVI 中最重要的控制变量是`得分函数控制变量`，其从梯度估计器中减去得分函数的期望（蒙特卡罗法）：
 
 根据需要，`得分函数控制变量`在`变分分布`下的期望为零。选择权重 $w$ 的依据是其能够最小化梯度的方差。
 
 $$
-\nabla_\lambda \hat{\mathcal{L}}_{control} =\nabla_\lambda \hat{ \mathcal{L}} − \frac{w}{K} \sum_{k=1}^{K}\nabla_\lambda  \text{log} q(z_k \mid \lambda) 
+\nabla_\lambda \hat{\mathcal{L}}_{control} =\nabla_\lambda \hat{ \mathcal{L}} − \frac{w}{K} \sum_{k=1}^{K}\nabla_\lambda \text{log} q(z_k \mid \lambda) 
 $$
 
 虽然原始 BBVI 论文介绍了 `Rao-Blackwellization` 和`控制变量`，但 [194] 指出控制变量的良好选择可能取决于模型。因此提出了一种只考虑隐变量马尔可夫毯的局部期望梯度。
 
  [167] 提出了一种不同的方法，它引入了`过度分散的重要性采样`。通过从属于过度分散的指数族并且在`变分分布`的尾部放置较大质量的提议分布中进行采样，可以减少梯度的方差。
 
-## 6 提升准确性 ---  新的目标函数和结构化变分近似
+## 6 提升准确性 --- 新的目标函数和结构化变分近似
 
 ### 6.1 平均场变分的起源和局限性
 
@@ -645,22 +705,22 @@ $$
 
 平均场方法由 Anderson 和 Peterson 于 1987 年首次在神经网络中采用 [149]，后来在机器学习社区 [79]、[143]、[172] 中广受欢迎。平均场近似的主要限制是其明确地忽略了不同变量之间的相关性，例如 `Ising 模型` 中的自旋之间的相关性。此外，[205] 表明，`变分分布`破坏的依赖关系越多，优化问题就越非凸。相反，如果`变分分布`包含更多结构，则某些局部最优就不存在了。物理界提出了许多改善平均场变分推断的举措，并由机器学习社区进一步发展 [143]、[150]、[190]。 超越自旋玻璃中的平均场理论的早期例子是 `Thouless-Anderson-Palmer (TAP) 方程` 方法 [190]，它引入了对`变分自由能`的微扰校正。
 
-一个相关的想法依赖于幂扩展 [150]，它已被多位作者扩展并应用于机器学习模型 [80]、[142]、[145]、[158]、[185]。此外，信息几何提供了对 `MFVI` 和 `TAP 方程` [186]、[187] 之间关系的洞察。 [221] 进一步将 `TAP 方程`与`散度量`联系起来。我们将读者推荐给 [143] 以获取更多信息。接下来，我们基于 `KL 散度`以外的散度度量来回顾 MFVI 以外的最新进展。
+一个相关的想法依赖于幂扩展 [150]，它已被多位作者扩展并应用于机器学习模型 [80]、[142]、[145]、[158]、[185]。此外，信息几何提供了对 `MFVI` 和 `TAP 方程` [186]、[187] 之间关系的洞察。 [221] 进一步将 `TAP 方程`与`散度量`联系起来。我们将读者推荐给 [143] 以获取更多信息。接下来，我们基于 `KL 散度` 以外的散度度量来回顾 MFVI 以外的最新进展。
 
 ### 6.2 改进目标函数
 
-`KL 散度`通常提供一种计算方便的方法来测量两个分布之间的距离，它导致对某些模型类的、易于处理的、解析形式的期望。然而，传统的 `KL 变分推断` (KLVI) 存在诸如低估后验方差 [128] 等问题。在某些情况下，当后验的多个峰值非常接近时，`KL 散度`也无法打破对称性 [141]，并且它是一个相对松散的边界 [221]。出于这些缺点，我们在这里调研了许多其他的散度。
+ `KL 散度` 通常提供一种计算方便的方法来测量两个分布之间的距离，它导致对某些模型类的、易于处理的、解析形式的期望。然而，传统的 `KL 变分推断` (KLVI) 存在诸如低估后验方差 [128] 等问题。在某些情况下，当后验的多个峰值非常接近时， `KL 散度` 也无法打破对称性 [141]，并且它是一个相对松散的边界 [221]。出于这些缺点，我们在这里调研了许多其他的散度。
 
-`KL 散度` 之外的散度度量不仅在变分推断中起作用，而且在期望传播（ EP ）等相关近似推断方法中也起作用。 EP [101]、[125]、[204]、[228] 的一些最新扩展大多可以被视为替换了新散度的经典 EP [128]。这些方法有着复杂的推导和有限的可扩展性，大多数从业者会发现它们难以使用。变分推断的最新发展主要集中在黑盒方式的统一框架上，以实现可扩展性和可访问性。 黑盒变分推断使其他散度度量的应用成为可能（ 例如 $χ$ 散度 [39] ），同时保持了该方法的效率和简单性。
+ `KL 散度` 之外的散度度量不仅在变分推断中起作用，而且在期望传播（ EP ）等相关近似推断方法中也起作用。 EP [101]、[125]、[204]、[228] 的一些最新扩展大多可以被视为替换了新散度的经典 EP [128]。这些方法有着复杂的推导和有限的可扩展性，大多数从业者会发现它们难以使用。变分推断的最新发展主要集中在黑盒方式的统一框架上，以实现可扩展性和可访问性。 黑盒变分推断使其他散度度量的应用成为可能（ 例如 $χ$ 散度 [39] ），同时保持了该方法的效率和简单性。
 
 在本节中，我们将介绍相关的散度量并展示如何在变分推断的上下文中使用它们。如第 3.1 节所述，KL 散度是 `α-散度`的一种特殊形式，而 `α-散度` 是 `f-散度` 的一种特殊形式。所有上述散度都可以写成 `Stein discrepancy` 的形式。
 
 **（1）α-散度**
 
-从信息几何和计算的角度来看，`α-散度`是一系列具有有趣特性的散度度量 [4]、[6]。 `KL 散度`和 `海林格（ Hellinger ）距离` 都是 `α-散度` 的特例。存在不同的`α-散度`公式 [6]、[229]，并且多种 `VI` 方法使用了不同的定义 [104]、[128]。本文采用 `Renyi` 的公式：
+从信息几何和计算的角度来看，`α-散度`是一系列具有有趣特性的散度度量 [4]、[6]。 `KL 散度` 和 `海林格（ Hellinger ）距离` 都是 `α-散度` 的特例。存在不同的`α-散度`公式 [6]、[229]，并且多种 `VI` 方法使用了不同的定义 [104]、[128]。本文采用 `Renyi` 的公式：
 
 $$
-D^R_\alpha (p||q) = \frac{1}{\alpha −1} \log \int p(x)^\alpha q(x)^{1−\alpha}  \mathrm{d} x \tag{17}
+D^R_\alpha (p||q) = \frac{1}{\alpha −1} \log \int p(x)^\alpha q(x)^{1−\alpha} \mathrm{d} x \tag{17}
 $$
 
 其中 $α > 0,\ α \neq 1$ 。根据 `α 散度` 的这个定义，较小的 $α$ 会导致更多的质量覆盖效应，而较大的 $α$ 会导致零强迫效应，这意味着`变分分布`规避了低后验概率的区域。对于 $α →1$，我们可以恢复为涉及 `KL 散度` 的标准 `VI` 。
@@ -705,7 +765,7 @@ $$
 \end{aligned}
 $$
 
-上式中，$V_0$ 是一个可以优化的自由参数，它吸收了对边缘似然的边界依赖。作者表明，在 $V$ 中达到线性阶的项对应于 `KL 散度`，而高阶项是使边界更紧致的校正项。这与早期关于 `TAP 方程` [150]、[190] 的工作有关，这些工作通常不会产生边界。
+上式中，$V_0$ 是一个可以优化的自由参数，它吸收了对边缘似然的边界依赖。作者表明，在 $V$ 中达到线性阶的项对应于 `KL 散度` ，而高阶项是使边界更紧致的校正项。这与早期关于 `TAP 方程` [150]、[190] 的工作有关，这些工作通常不会产生边界。
 
 **（3）Stein Discrepancy 与变分推断**
 
@@ -731,9 +791,9 @@ $$
 Apφ (\boldsymbol{z}) = φ (\boldsymbol{z})∇\boldsymbol{z} log p(\boldsymbol{z},\boldsymbol{x})+∇\boldsymbol{z}φ (\boldsymbol{z}).
 $$
 
-`运算符变分推断` 和 `SVGD` [109] 都使用带`Stein 运算符` 的 `Stein 差` 来构造变分目标。这两种方法的主要区别在于优化算法。 `运算符变分推断`  [155] 使用 `minmax`（GAN 风格）公式和黑盒变分推断直接优化变分目标；而 `SVGD` [109] 使用核化的 `Stein 差`。
+`运算符变分推断` 和 `SVGD` [109] 都使用带`Stein 运算符` 的 `Stein 差` 来构造变分目标。这两种方法的主要区别在于优化算法。 `运算符变分推断` [155] 使用 `minmax`（GAN 风格）公式和黑盒变分推断直接优化变分目标；而 `SVGD` [109] 使用核化的 `Stein 差`。
 
-通过对核和 $q$ 的特定选择，可以证明 `SVGD` 确定了 `KL 散度`的最陡梯度方向上的最佳扰动 [109]。 `SVGD` 导致了一种方案，其中隐空间中的样本被顺序转换为近似后验。因此，虽然形式上不同，但该方法很容易让人想起标准化流方法 [159]。
+通过对核和 $q$ 的特定选择，可以证明 `SVGD` 确定了 `KL 散度` 的最陡梯度方向上的最佳扰动 [109]。 `SVGD` 导致了一种方案，其中隐空间中的样本被顺序转换为近似后验。因此，虽然形式上不同，但该方法很容易让人想起标准化流方法 [159]。
 
 ### 6.3 改进`变分分布`的结构
 
@@ -785,7 +845,7 @@ $$
 
 在某些情况下，概率模型的负对数后验上的随机梯度下降可以被视为一种隐式变分推断算法。在这里，我们考虑具有恒定学习率[113]、[114] 和提前停止 [43] 的随机梯度下降（ SGD ）。
 
-`恒定 SGD` 可以看作是收敛到平稳分布的马尔可夫链；因此，它类似于朗之万动力学 ( Langevin dynamics ) [214]。平稳分布的方差由学习率控制。 [113] 表明可以调整学习率以最小化所得平稳分布和贝叶斯后验之间的 `KL 散度`。此外，[113] 推导出了一个最佳学习率的公式，这些公式结合了 `AdaGrad` [42] 及相关成果。
+`恒定 SGD` 可以看作是收敛到平稳分布的马尔可夫链；因此，它类似于朗之万动力学 ( Langevin dynamics ) [214]。平稳分布的方差由学习率控制。 [113] 表明可以调整学习率以最小化所得平稳分布和贝叶斯后验之间的 `KL 散度` 。此外，[113] 推导出了一个最佳学习率的公式，这些公式结合了 `AdaGrad` [42] 及相关成果。
 
 [114] 中介绍了包括`动量`和`迭代平均`的`泛化 SGD`。相比之下，[43] 将 SGD 解释为非参数变分推断方案。该论文提出了一种跟踪隐式变分目标熵变化的、基于 `Hessian 估计`的新方法，因此作者考虑从非平稳分布中抽样。
 
@@ -795,7 +855,7 @@ $$
 
 可以在全局或局部范围内定义温度，其中局部温度特定于局部的若干数据点。模型下具有较小似然的若干数据点（ 例如异常值 ）会自动被分配高温，从而减少了其对全局变分参数的影响，使推断算法对局部最优更鲁棒。变分退火法也可以解释为数据重新加权 [212]，权重是逆温度。在这种情况下，为异常值分配了较低的权重。
 
-其他使变分推断更稳健的方法包括`信任区域法` [189]，它使用 `KL 散度`来调整学习进度并避免局部最优；另外还有`种群变分推断`[92]，它通过对自举数据样本的变分后验进行平均，得到更为鲁棒的建模性能。
+其他使变分推断更稳健的方法包括`信任区域法` [189]，它使用 `KL 散度` 来调整学习进度并避免局部最优；另外还有`种群变分推断`[92]，它通过对自举数据样本的变分后验进行平均，得到更为鲁棒的建模性能。
 
 ## 7 摊销式变分推断与深度学习
 
@@ -895,7 +955,7 @@ $$
 q(z^′) = q(z)|\frac{\partial f^{−1}}{ ∂ z^′} |= q(z)|\frac{\partial f}{∂ z^′}|^{−1}
 $$
 
-我们有必要计算行列式，因为变分方法要求估计变换分布的熵。通过选择变换函数 $f$ 使得 $|\frac{\partial f}{\partial z'}|$ 更容易计算，这种标准化流程构成了一种从简单分布生成多峰分布的有效方法。作为其变体，已经提出了`线性时间变换流`、`Langevin 流` 和 `Hamiltonian 流`  [159] 以及`逆自回归流` [84] 和`自回归流` [29]。
+我们有必要计算行列式，因为变分方法要求估计变换分布的熵。通过选择变换函数 $f$ 使得 $|\frac{\partial f}{\partial z'}|$ 更容易计算，这种标准化流程构成了一种从简单分布生成多峰分布的有效方法。作为其变体，已经提出了`线性时间变换流`、`Langevin 流` 和 `Hamiltonian 流` [159] 以及`逆自回归流` [84] 和`自回归流` [29]。
 
 `标准化流`和前面提到的`隐式分布`采取了 “使用转换将简单分布转换为复杂分布” 的共同想法，它们之间一个关键区别在于，由于采用了可逆变换函数，标准化流允许估计 $q(z)$ 的密度。
 
@@ -926,9 +986,9 @@ i,z_i)$ ，其中 $x^j_i$ 表示观测 $i$ 的第 $j$ 个维度。维度以顺�
 
 造成这种现象的主要有两个原因：`解码器过于强大`以及 `KL 散度项`。
 
-在某些情况下，解码器的表达能力非常强，以至于 $\boldsymbol{z}$ 变量的某些维度被忽略了，即它可能独立于 $z$ 对 $p_\theta (x|z)$ 进行建模。此时真实后验变成了先验 [29]，因此变分后验试图匹配先验以满足等式中的 `KL 散度`。  `有损变分自编码器` [29] 通过在部分输入信息上调节每个输出维度的解码分布来规避此问题。例如，在图像案例中，给定像素的似然仅取决于周围像素的值和全局隐状态，这迫使分布编码了隐变量中包含的全局信息。
+在某些情况下，解码器的表达能力非常强，以至于 $\boldsymbol{z}$ 变量的某些维度被忽略了，即它可能独立于 $z$ 对 $p_\theta (x|z)$ 进行建模。此时真实后验变成了先验 [29]，因此变分后验试图匹配先验以满足等式中的 `KL 散度` 。 `有损变分自编码器` [29] 通过在部分输入信息上调节每个输出维度的解码分布来规避此问题。例如，在图像案例中，给定像素的似然仅取决于周围像素的值和全局隐状态，这迫使分布编码了隐变量中包含的全局信息。
 
- `KL 散度`对 `VAE` 损失的贡献可能会加剧这个问题。要了解原因，可以将 `ELBO` 重写为两个 `KL 散度`之和 $\hat{\mathscr L}(\theta ,\phi ,x_i) = −D_{KL}(q_\phi (z|x_i)||p_\theta (z)) −D_{KL}(p(x_i)|| p_\theta (x_i|z)) + C$ 。如果模型表达能力足够强，则模型能够将第二项置为零（与 $\boldsymbol{z}$ 的值无关）。此时，为了同时满足第一项，推断模型将其概率质量与先验 [227] 相匹配，从而未能学习到数据的有用表示。即使解码器不强，在优化早期阶段可能会出现僵尸单元问题，此时近似后验尚未携带有关数据的相关信息 [19]。当 $z$ 的维数很高时，这个问题更加严重。这种情况下，单元会朝着先验方向正则化，并且可能无法在优化后期阶段重新激活 [178]。为了抵消 `KL 约束`的早期影响，可以在训练期间对 `KL 散度项`应用退火方案 [178]。
+ `KL 散度` 对 `VAE` 损失的贡献可能会加剧这个问题。要了解原因，可以将 `ELBO` 重写为两个 `KL 散度` 之和 $\hat{\mathscr L}(\theta ,\phi ,x_i) = −D_{KL}(q_\phi (z|x_i)||p_\theta (z)) −D_{KL}(p(x_i)|| p_\theta (x_i|z)) + C$ 。如果模型表达能力足够强，则模型能够将第二项置为零（与 $\boldsymbol{z}$ 的值无关）。此时，为了同时满足第一项，推断模型将其概率质量与先验 [227] 相匹配，从而未能学习到数据的有用表示。即使解码器不强，在优化早期阶段可能会出现僵尸单元问题，此时近似后验尚未携带有关数据的相关信息 [19]。当 $z$ 的维数很高时，这个问题更加严重。这种情况下，单元会朝着先验方向正则化，并且可能无法在优化后期阶段重新激活 [178]。为了抵消 `KL 约束`的早期影响，可以在训练期间对 `KL 散度项`应用退火方案 [178]。
 
 ## 8 讨论
 
@@ -948,7 +1008,7 @@ i,z_i)$ ，其中 $x^j_i$ 表示观测 $i$ 的第 $j$ 个维度。维度以顺�
 
 ### 8.4 自动变分推断
 
-概率编程允许从业者快速实现和修改模型，而不必担心推断问题。用户只需要指定模型，推断引擎就会自动进行推断。流行的概率编程工具包括但不限于：Stan[28]，涵盖了大量的高级变分推断和 MCMC 推断方法； Net[126] 基于变分消息传递和 EP；Automatic Statistician[52] 和 Anglican[198] 主要依靠采样方法；Ed-ward[200] 支持 BBVI 和 MonteCarlo 采样 ； Zhusuan[176] 的特点是用于贝叶斯深度学习的变分推断。这些工具的长期目标是改变概率建模的研究方法，使用户能够快速修改和改进模型，并使其他受众可以访问它们。
+概率编程允许从业者快速实现和修改模型，而不必担心推断问题。用户只需要指定模型，推断引擎就会自动进行推断。流行的概率编程工具包括但不限于：Stan[28]，涵盖了大量的高级变分推断和 `MCMC` 推断方法； Net[126] 基于变分消息传递和 EP；Automatic Statistician[52] 和 Anglican[198] 主要依靠采样方法；Ed-ward[200] 支持 BBVI 和 MonteCarlo 采样 ； Zhusuan[176] 的特点是用于贝叶斯深度学习的变分推断。这些工具的长期目标是改变概率建模的研究方法，使用户能够快速修改和改进模型，并使其他受众可以访问它们。
 
 尽管目前努力使从业者更容易使用 VI，但对于非专家来说，其使用仍然不简单。例如，人工识别后验的对称性并打破这些对称性是 Infer.Net 所必需的。此外，诸如控制变量等减少方差的方法可以极大地加速收敛，但需要模型进行特定设计才能获得最佳性能。在撰写本文时，当前的概率编程工具箱尚未解决此类问题。我们相信这些方向对于推进概率建模在科学和技术中的影响非常重要。
 
