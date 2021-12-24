@@ -34,7 +34,7 @@ kernelspec:
 
 ### 2.1 核心思想
 
-根据贝叶斯概率框架，我们希望根据已有数据，来推断参数或隐变量的分布 $p$ ，进而能够做后续的预测任务；但是，当 $p$ 不容易表达，无法得到封闭形式解时，可以考虑寻找一个容易表达和求解的分布 $q$ 来近似 $p$ ，当 $q$ 和 $p$ 之间差距足够小时， $q$ 就可以代替 $p$ 作为输出结果，并执行后续任务。 当 $q$ 由若干变分参数 $\nu$ 定义时，该问题就变成了一个寻找 $\nu$ 的最优化问题，优化目标是最小化 $q$ 和 $p$ 两个概率分布之间的差距。其中， $q$ 被成为变分分布， $\nu$ 被成为变分参数。
+根据贝叶斯概率框架，我们希望根据已有数据，来推断参数或隐变量的分布 $p$ ，进而能够做后续的预测任务；但是，当 $p$ 不容易表达，无法得到封闭形式解时，可以考虑寻找一个容易表达和求解的分布 $q$ 来近似 $p$ ，当 $q$ 和 $p$ 之间差距足够小时， $q$ 就可以代替 $p$ 作为输出结果，并执行后续任务。 当 $q$ 由若干变分参数 $\nu$ 定义时，该问题就变成了一个寻找 $\nu$ 的最优化问题，优化目标是最小化 $q$ 和 $p$ 两个概率分布之间的差距。其中， $q$ 被成为`变分分布`， $\nu$ 被成为变分参数。
 
 > 变分推断的精髓是将 “求分布” 的推断问题，变成了 “缩小差距” 的优化问题。
 
@@ -90,11 +90,11 @@ kernelspec:
 
 对于上面的高斯混合模型来说，变分推断的目的就是求得隐变量 $\mathbf{z} = \{\boldsymbol{\mu},\boldsymbol{\sigma^2},  \mathbf{c} \}$  的后验分布  $p(\mathbf{z} \mid \mathbf{x})$ 。根据贝叶斯公式，$p(\mathbf{z} \mid \mathbf{x}) = p(\mathbf{z,x}) / p(\mathbf{x})$ 。 根据专家提供的生成过程，能够写出联合分布 $p(\mathbf{z,x})$ 的表达式，但边缘似然 $p(\mathbf{x})$ 是一个很难处理的分母项。当 $\mathbf{z}$ 为连续型时，边缘似然 $p(\mathbf{x})$ 需要求 $p(\mathbf{z,x})$ 关于 $\mathbf{z}$ 所在空间的积分（即边缘化）；当 $\mathbf{z}$ 为离散型时，需要对所有可能的 $\mathbf{z}$ 求和；而积分（和求和）的计算复杂性随着样本数量的增加会呈指数增长。
 
-#### 2.2.3 变分推断的关键是构造变分分布 
+#### 2.2.3 变分推断的关键是构造`变分分布` 
 
-变分推断需要构造变分分布 $q(\mathbf{z}; \boldsymbol{\nu})$，并通过优化调整 $\boldsymbol{\nu}$，使 $q(\mathbf{z}; \boldsymbol{\nu})$ 更接近真实后验 $p(\mathbf{z \mid x})$ 。
+变分推断需要构造`变分分布` $q(\mathbf{z}; \boldsymbol{\nu})$，并通过优化调整 $\boldsymbol{\nu}$，使 $q(\mathbf{z}; \boldsymbol{\nu})$ 更接近真实后验 $p(\mathbf{z \mid x})$ 。
 
-在变分分布 $q(\mathbf{z}; \boldsymbol{\nu})$ 中， $\mathbf{z}$ 为隐变量，$ \boldsymbol{\nu}$ 是控制 $q$ 形态的参数（例如：假设 $q$ 为高斯分布，则 $\boldsymbol{\nu}$ 为均值和方差 ， 而对于泊松分布，则 $\boldsymbol{\nu}$ 为二值概率）。因此构造变分分布 $q$ 分为两步：
+在`变分分布` $q(\mathbf{z}; \boldsymbol{\nu})$ 中， $\mathbf{z}$ 为隐变量，$ \boldsymbol{\nu}$ 是控制 $q$ 形态的参数（例如：假设 $q$ 为高斯分布，则 $\boldsymbol{\nu}$ 为均值和方差 ， 而对于泊松分布，则 $\boldsymbol{\nu}$ 为二值概率）。因此构造`变分分布` $q$ 分为两步：
 
 - 首先是概率分布类型的选择。通常依据 $p$ 的形态，由专家给出，例如在上述高斯混合模型中，假设目标分布 $p$ 服从多元高斯分布，则构造 $q$ 时通常依然会考虑高斯分布。
 
@@ -106,7 +106,7 @@ kernelspec:
 
 直观地理解，变分推断的优化目标很明确，就是最小化 $q$ 和 $p$ 之间的差距，而信息论为我们提供了一个量化两个分布之间差距的工具 $KL$ 散度。但不幸的是，$KL$ 散度的计算并不简单，其计算表达式中同样存在难以处理的边缘似然积分项（边缘似然也称证据，在一般化的数学形式中也被成为配分函数）。为此，有人提出了可操作的优化目标 --- 证据下界 `ELBO` （见 2.4 节）。
 
-在证据下界 `ELBO` 的计算表达式中，只包括联合分布  $p(\mathbf{z, x})$  和变分分布 $q(\mathbf{z}; \boldsymbol{\nu})$ ，摆脱了难以处理的边缘似然积分项。并且在给定观测数据后，最大化 `ELBO` 等价于最小化 $KL$ 。 也就是说，`ELBO` 的最大化过程结束时，获得的输出 $q(\mathbf{z}; \boldsymbol{\nu^\star})$就是我们寻求的最终变分分布。
+在证据下界 `ELBO` 的计算表达式中，只包括联合分布  $p(\mathbf{z, x})$  和`变分分布` $q(\mathbf{z}; \boldsymbol{\nu})$ ，摆脱了难以处理的边缘似然积分项。并且在给定观测数据后，最大化 `ELBO` 等价于最小化 $KL$ 。 也就是说，`ELBO` 的最大化过程结束时，获得的输出 $q(\mathbf{z}; \boldsymbol{\nu^\star})$就是我们寻求的最终`变分分布`。
 
 #### 2.2.5 变分推断的形象化解释
 
@@ -188,7 +188,7 @@ $$
 
 ### 2.4 目标函数的选择
 
-要将推断转化为优化问题，需要选择或者构造一个变分分布族 $\mathcal{Q}$ ，并设定合适的优化目标 $J(q)$ 。 关于分布族的讨论放在下一节，此处先讨论优化目标 $J(q)$ 。该目标需要捕获 $q$ 和 $p$ 之间的差距（或反之，相似性），而信息论为我们提供了一个直观并且好理解的工具，被称为 **KL（ Kullback-Leibler ）散度**。
+要将推断转化为优化问题，需要选择或者构造一个`变分分布`族 $\mathcal{Q}$ ，并设定合适的优化目标 $J(q)$ 。 关于分布族的讨论放在下一节，此处先讨论优化目标 $J(q)$ 。该目标需要捕获 $q$ 和 $p$ 之间的差距（或反之，相似性），而信息论为我们提供了一个直观并且好理解的工具，被称为 **KL（ Kullback-Leibler ）散度**。
 
 从形式上理解，*KL 散度* 指两个分布之间的差异。 $q$ 和 $p$ 之间离散形式的 **KL 散度** 被定义为：
 
@@ -280,18 +280,18 @@ $$
 
 - 由于配分函数 $Z$ 的存在，使得直接计算 $KL$ 散度难以处理
 - 采用等价的最大化 `ELBO` 来代替最小化 $KL$ 散度作为新的优化目标
-- `ELBO` 中只包含变分分布 $q$ 和目标分布的分子项 $\tilde p$ ，并且两者都可计算，进而可以作为真正的优化目标
-- $KL(q\|p)$ 和 $KL(p\|q)$ 虽然都是散度，也都可以作为优化目标，但作为目标时两者达到的效果截然不同。对于多峰后验，前者倾向于选择能够覆盖其中某个峰的变分分布，而后者倾向于选择能够覆盖多个峰的变分分布。
+- `ELBO` 中只包含`变分分布` $q$ 和目标分布的分子项 $\tilde p$ ，并且两者都可计算，进而可以作为真正的优化目标
+- $KL(q\|p)$ 和 $KL(p\|q)$ 虽然都是散度，也都可以作为优化目标，但作为目标时两者达到的效果截然不同。对于多峰后验，前者倾向于选择能够覆盖其中某个峰的`变分分布`，而后者倾向于选择能够覆盖多个峰的`变分分布`。
 
 ## 3 经典方法 --- 平均场、指数族与坐标上升算法
 
 ### 3.1 平均场近似的基本原理
 
-在构造变分分布时，需要在 $q(\mathbf{z};\boldsymbol{\lambda}) $ 的表达能力和简单易处理性之间做权衡。其中一种常见的选择是使用完全因子分解的方法来构造分布，也称为平均场分布。
+在构造`变分分布`时，需要在 $q(\mathbf{z};\boldsymbol{\lambda}) $ 的表达能力和简单易处理性之间做权衡。其中一种常见的选择是使用完全因子分解的方法来构造分布，也称为平均场分布。
 
-平均场近似假设所有隐变量相互独立，进而简化了推导。但这种独立性假设也会导致不太准确的近似，当后验中的随机变量存在高度依赖时尤其如此。因此，有人研究更为准确的近似方法，本文第 6 节会讨论此类更具表现力的变分分布。
+平均场近似假设所有隐变量相互独立，进而简化了推导。但这种独立性假设也会导致不太准确的近似，当后验中的随机变量存在高度依赖时尤其如此。因此，有人研究更为准确的近似方法，本文第 6 节会讨论此类更具表现力的`变分分布`。
 
-平均场变分推断 ( MFVI ) 起源于统计物理学的 [平均场理论](https://ieeexplore.ieee.org/book/6267422)。在平均场近似中，基于独立性假设，变分分布被分解为各因子分布的乘积，而每个因子由其自身变分参数控制：
+平均场变分推断 ( MFVI ) 起源于统计物理学的 [平均场理论](https://ieeexplore.ieee.org/book/6267422)。在平均场近似中，基于独立性假设，`变分分布`被分解为各因子分布的乘积，而每个因子由其自身变分参数控制：
 
 $$
 q(\mathbf{z};\boldsymbol{\lambda}) = \prod_{i=1}^N q(z_i ; \lambda_i)
@@ -299,7 +299,7 @@ $$
 
 为了符号简单，我们在本节的其余部分省略了变分参数 $λ$ 。我们现在回顾如何在平均场假设下最大化公式（ 3 ）中定义的 `ELBO` 。
 
-完全分解的变分分布允许通过简单的迭代更新来优化。为了看到这一点，我们专注于更新与隐变量 $z_j$ 相关的变分参数 $λ_j$ 。将平均场分布插入公式（ 3 ）允许我们表达 `ELBO` 如下：
+完全分解的`变分分布`允许通过简单的迭代更新来优化。为了看到这一点，我们专注于更新与隐变量 $z_j$ 相关的变分参数 $λ_j$ 。将平均场分布插入公式（ 3 ）允许我们表达 `ELBO` 如下：
 
 $$
 \begin{aligned}
@@ -325,17 +325,17 @@ q^{*}\left(z_{j}\right) & \propto \exp \left(\mathbb{E}_{q\left(z_{\neg j}\right
 \end{aligned}
 $$
 
-使用公式。如图 8 所示，可以针对每个隐变量迭代地更新变分分布直到收敛。类似的更新也构成了变分消息传递算法 [216](附录 A.3)的基础。
+使用公式。如图 8 所示，可以针对每个隐变量迭代地更新`变分分布`直到收敛。类似的更新也构成了变分消息传递算法 [216](附录 A.3)的基础。
 
 有关平均场近似及其几何解释的更多详细信息，请读者参阅 [14] 和 [205]。
 
 ### 3.2 指数族分布的适用性
 
-变分推断的另一个重要的技术点在于变分分布族 $\mathcal{Q}$ 的选择。在高斯混合模型中，我们知道目标分布 $p$ 是高斯的，那么将变分分布 $q$ 构造为高斯的，会更容易逼近 $p$ 。 
+变分推断的另一个重要的技术点在于`变分分布`族 $\mathcal{Q}$ 的选择。在高斯混合模型中，我们知道目标分布 $p$ 是高斯的，那么将`变分分布` $q$ 构造为高斯的，会更容易逼近 $p$ 。 
 
 但对于更为复杂的目标分布怎么办？答案是：**可以用更广泛的指数族分布来构造！！！**
 
-数学上已经证明，$p$ 不一定必须是高斯的，只要它属于指数族分布，那么我们都可以将变分分布 $q$ 构造为同一指数族的分布。因为指数族分布有一些很好的性质，允许我们很巧妙地简化自然梯度的推导。事实上指数族分布非常宽泛，基本涵盖了常见的分布形态，如：高斯分布、$\chi ^2$ 分布、伯努利分布、指数分布、贝塔分布、伽马分布、泊松分布等。
+数学上已经证明，$p$ 不一定必须是高斯的，只要它属于指数族分布，那么我们都可以将`变分分布` $q$ 构造为同一指数族的分布。因为指数族分布有一些很好的性质，允许我们很巧妙地简化自然梯度的推导。事实上指数族分布非常宽泛，基本涵盖了常见的分布形态，如：高斯分布、$\chi ^2$ 分布、伯努利分布、指数分布、贝塔分布、伽马分布、泊松分布等。
 
 但是，当 $p$ 本身确实并不属于指数族时， $q$ 可能永远无法近似 $p$ ，而这也是变分推断的一个缺陷，即最终计算得出的结果是一个难以提前估计的近似。
 
@@ -389,9 +389,9 @@ $$
 p(\boldsymbol{\mu},\mathbf{c},\mathbf{x})=p(\boldsymbol{\mu})\prod_{i=1}^{n} p(c_i)p(x_i \mid c_i,\boldsymbol{\mu})
 $$
 
-该模型中涉及的隐变量为 $\mathbf{z} = \{\boldsymbol{\mu},\mathbf{c} \}$ ，其中 $\boldsymbol{\mu} =\{ \mu_k\}, k=1...5$  为 5 个高斯组份的均值；$\mathbf{c}$ 为所有数据点的类别向量。$\boldsymbol{\mu}$ 作为全局变量，其变分分布被构造为高斯分布  $q(u_k;m_k,S_k)$ ， $\nu_\mu = \{m_k,S_k\},k=1...5$  为需要优化求解的变分参数。 $c_i$ 为局部变量，其变分分布的构造形式为多项分布  $q(c_i ;\psi_i)$ ，其中 $\nu_c=\{ \psi_i \}, i=1...n$ 为控制每个数据点类别的变分参数（注意 $\psi_i$ 为向量）。
+该模型中涉及的隐变量为 $\mathbf{z} = \{\boldsymbol{\mu},\mathbf{c} \}$ ，其中 $\boldsymbol{\mu} =\{ \mu_k\}, k=1...5$  为 5 个高斯组份的均值；$\mathbf{c}$ 为所有数据点的类别向量。$\boldsymbol{\mu}$ 作为全局变量，其`变分分布`被构造为高斯分布  $q(u_k;m_k,S_k)$ ， $\nu_\mu = \{m_k,S_k\},k=1...5$  为需要优化求解的变分参数。 $c_i$ 为局部变量，其`变分分布`的构造形式为多项分布  $q(c_i ;\psi_i)$ ，其中 $\nu_c=\{ \psi_i \}, i=1...n$ 为控制每个数据点类别的变分参数（注意 $\psi_i$ 为向量）。
 
-按照平均场近似方法，各因变量之间相互独立，则变分分布 $q(\boldsymbol{\mu},c)$ 可被构造为：
+按照平均场近似方法，各因变量之间相互独立，则`变分分布` $q(\boldsymbol{\mu},c)$ 可被构造为：
 
 $$
 p(\boldsymbol{\mu},\mathbf{c} \mid \mathbf{x}) \approx q(\boldsymbol{\mu},c)=\prod_{k=1}^{K} q(\mu_k;m_k,S_k^2) \prod_{i=1}^{n}q(c_i ;\psi_i)
@@ -399,7 +399,7 @@ $$
 
 ## 4 提升可扩展性 --- 随机变分推断
 
-上节中讲解了平均场变分分布的构造原理，并介绍了采用坐标上升法对其做优化的算法。但该方法存在两个方面的问题：
+上节中讲解了`平均场变分分布`的构造原理，并介绍了采用坐标上升法对其做优化的算法。但该方法存在两个方面的问题：
 
 - 坐标上升过程需要所有样本参与计算，不适合大样本
 
@@ -461,7 +461,7 @@ $$
 
 ### 4.2 参数梯度与自然梯度
 
-坐标上升法以及上述面向随机梯度方法的改造，都解决不了另外一个问题：下界的优化是在变分参数空间内进行的，并非基于概率分布，而这会导致更新和收敛速度变慢。这是由于变分参数仅仅是为了描述变分分布的，下界在变分参数空间中的梯度，通常并不是概率分布空间中上升（或下降）最快的那个方向。
+坐标上升法以及上述面向随机梯度方法的改造，都解决不了另外一个问题：下界的优化是在变分参数空间内进行的，并非基于概率分布，而这会导致更新和收敛速度变慢。这是由于变分参数仅仅是为了描述`变分分布`的，下界在变分参数空间中的梯度，通常并不是概率分布空间中上升（或下降）最快的那个方向。
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211114112004-358c.webp)
 
@@ -471,7 +471,7 @@ $$
 
 举例说明这种现象：
 
-两组具有相同均值和方差的高斯分布对（可以想象为变分分布 $q$ 和 真实分布 $p$ ），虽然两者在变分参数（此例指均值）空间中具有相同的“距离”，但其 KL 散度（即下图中同颜色的两个高斯分布之间的重叠区域，下界会有与其相对应的反应）却截然不同。如果固定均值为 0 ，仅考虑方差作为变分参数时，会有类似现象产生。
+两组具有相同均值和方差的高斯分布对（可以想象为`变分分布` $q$ 和 真实分布 $p$ ），虽然两者在变分参数（此例指均值）空间中具有相同的“距离”，但其 KL 散度（即下图中同颜色的两个高斯分布之间的重叠区域，下界会有与其相对应的反应）却截然不同。如果固定均值为 0 ，仅考虑方差作为变分参数时，会有类似现象产生。
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108161120-f068.webp)
 
@@ -513,9 +513,9 @@ $$
 
 上面章节中，我们针对特定模型做出变分推断，其中大家应该已经注意到了，在 `ELBO` 的计算表达式中，需要人为设定 $q$ ，并给出其数学期望的解析表达式（事实上，[文献](http://www.nowpublishers.com/article/Details/MAL-001) 表明，该方法只适用于**条件共轭指数族分布**）。考虑到现实世界中可能存在无数种模型，而且大部分可能是非共轭的，即便符合条件共轭假设，为每一个模型设计一种变分方案显然也是不可接受的。
 
-因此，人们自然而然在思考：是否存在一个不需特定于某种模型的通用解决方案 ？这个解决方案最好将像黑匣子一样，只需输入模型和海量数据，然后就自动输出变分分布（或变分参数）。事实表明，这是有可能的，此类推断方法被称为**黑盒变分推断（BBVI）**。
+因此，人们自然而然在思考：是否存在一个不需特定于某种模型的通用解决方案 ？这个解决方案最好将像黑匣子一样，只需输入模型和海量数据，然后就自动输出`变分分布`（或变分参数）。事实表明，这是有可能的，此类推断方法被称为**黑盒变分推断（BBVI）**。
 
-> 黑盒变分推断的概念最早出现在文献 [Ranganath et al., 2014](https://arxiv.org/pdf/1401.0118) 中和 [Sal-imans 和 Knowles，2014](https://arxiv.org/pdf/1401.1022); [Kingma and Welling, 2014](https://arxiv.org/abs/1312.6114v10) 和 [Rezende et al., 2014](https://arxiv.org/abs/1401.4082) 提出了利用重参数化技巧实现反向传播和优化的方法；[Rezende and Mohamed, 2015](https://arxiv.org/abs/1505.05770) 提出了归一化流的 BBVI 方案、[Tran et al.,2016](https://arxiv.org/abs/158.06499) 提出了变分高斯过程的 BBVI 方案，均提升了变分推断的精度；[Alp Kucukelbir et al, 2016](https://arxiv.org/abs/1603.00788) 提出自动微分变分推断方法（ ADVI ）；[Yuri Burda et al., 2016](https://arxiv.org/abs/1505.00519) 在 VAE 基础上，提出了重要性加权变分自编码器；[J Domke and D Sheldon, 2018](https://arxiv.org/abs/1807.09034) 对其进行了泛化，提出了重要性加权变分推断。
+> 黑盒变分推断的概念最早出现在文献 [Ranganath et al., 2014](https://arxiv.org/pdf/1401.0118) 中和 [Sal-imans 和 Knowles，2014](https://arxiv.org/pdf/1401.1022); [Kingma and Welling, 2014](https://arxiv.org/abs/1312.6114v10) 和 [Rezende et al., 2014](https://arxiv.org/abs/1401.4082) 提出了利用重参数化技巧实现反向传播和优化的方法；[Rezende and Mohamed, 2015](https://arxiv.org/abs/1505.05770) 提出了标准化流的 BBVI 方案、[Tran et al.,2016](https://arxiv.org/abs/158.06499) 提出了变分高斯过程的 BBVI 方案，均提升了变分推断的精度；[Alp Kucukelbir et al, 2016](https://arxiv.org/abs/1603.00788) 提出自动微分变分推断方法（ ADVI ）；[Yuri Burda et al., 2016](https://arxiv.org/abs/1505.00519) 在 VAE 基础上，提出了重要性加权变分自编码器；[J Domke and D Sheldon, 2018](https://arxiv.org/abs/1807.09034) 对其进行了泛化，提出了重要性加权变分推断。
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211115171851-9244.webp)
 
@@ -531,7 +531,7 @@ BBVI 大致分为两种类型：
 
 ### 5.2 使用评分梯度的 BBVI
 
-考虑如下概率模型，其中  $\mathbf{x}$  是观测变量， $\mathbf{z}$ 是隐变量，其变分分布为 $q(\mathbf{z} \mid \lambda)$ 。变分下界 (`ELBO`) 为：
+考虑如下概率模型，其中  $\mathbf{x}$  是观测变量， $\mathbf{z}$ 是隐变量，其`变分分布`为 $q(\mathbf{z} \mid \lambda)$ 。变分下界 (`ELBO`) 为：
 
 $$
 \mathcal{L}(\lambda) \triangleq \mathbb{E}_{q_{\lambda}(\mathbf{z})}[\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda)] \tag{9}
@@ -545,7 +545,7 @@ $$
 
 其中 $\nabla_{\lambda} \log q(\mathbf{z} \mid \lambda)$ 被称为评分函数。
 
-使用式（ 10 ） 中的评分梯度，就可以利用蒙特卡罗的优势，用变分分布的样本来计算 `ELBO` 的含噪声无偏梯度：
+使用式（ 10 ） 中的评分梯度，就可以利用蒙特卡罗的优势，用`变分分布`的样本来计算 `ELBO` 的含噪声无偏梯度：
 
 $$
 \nabla_\lambda \approx \frac{1}{S} \sum_{S=1}^{S} \nabla_\lambda \log q(z_S \mid \lambda)(\log p(\mathbf{x},z_S) - \log q(z_S \mid \lambda))
@@ -587,7 +587,7 @@ $$
 \mathcal{L}(\lambda) \triangleq \mathbb{E}_{q_{\lambda}(\mathbf{z})}[\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda)]
 $$
 
-假设变分分布可以表示成如下变换：
+假设`变分分布`可以表示成如下变换：
 
 $$
 \begin{aligned}
@@ -627,7 +627,7 @@ BBVI 的方差减少：BBVI 需要一套与第 3.2 节中审查的 SVI 不同的
 
 BBVI 中最重要的控制变量是`得分函数控制变量`，其从梯度估计器中减去得分函数的期望（蒙特卡罗法）：
 
-根据需要，`得分函数控制变量`在变分分布下的期望为零。选择权重 $w$ 的依据是其能够最小化梯度的方差。
+根据需要，`得分函数控制变量`在`变分分布`下的期望为零。选择权重 $w$ 的依据是其能够最小化梯度的方差。
 
 $$
 \nabla_\lambda \hat{\mathcal{L}}_{control} =\nabla_\lambda \hat{ \mathcal{L}} − \frac{w}{K} \sum_{k=1}^{K}\nabla_\lambda  \text{log} q(z_k \mid \lambda) 
@@ -635,7 +635,7 @@ $$
 
 虽然原始 BBVI 论文介绍了 `Rao-Blackwellization` 和`控制变量`，但 [194] 指出控制变量的良好选择可能取决于模型。因此提出了一种只考虑隐变量马尔可夫毯的局部期望梯度。
 
- [167] 提出了一种不同的方法，它引入了`过度分散的重要性采样`。通过从属于过度分散的指数族并且在变分分布的尾部放置较大质量的提议分布中进行采样，可以减少梯度的方差。
+ [167] 提出了一种不同的方法，它引入了`过度分散的重要性采样`。通过从属于过度分散的指数族并且在`变分分布`的尾部放置较大质量的提议分布中进行采样，可以减少梯度的方差。
 
 ## 6 提升准确性 ---  新的目标函数和结构化变分近似
 
@@ -643,157 +643,167 @@ $$
 
 变分方法在统计物理学中有着悠久的传统。平均场法最初应用于模拟自旋玻璃，这是某种类型的无序磁体，其中原子的磁自旋没有以规则模式排列 [143]。这种自旋玻璃模型的一个简单示例是 `Ising 模型` ，它是具有成对耦合晶格的二元变量模型。为了估计自旋状态的结果分布，使用更简单的、分解后的分布作为代理。这样做的目的是尽可能地近似向上或向下自旋（也称为“磁化”）的边缘概率，同时忽略自旋之间的所有相关性。给定自旋与其相邻自旋的许多相互作用，被简化为其间有效磁场（也称为平均场）的单一相互作用。这也是平均场方法名称的由来。物理学家通常将`负对数后验`表示为`能量`或`汉密尔顿函数`。这种语言也已被机器学习社区用于有向和无向概率图模型的近似推断，在附录 A.6 中进行了总结以供读者参考。 
 
-平均场方法由 Anderson 和 Peterson 于 1987 年首次在神经网络中采用 [149]，后来在机器学习社区 [79]、[143]、[172] 中广受欢迎。平均场近似的主要限制是其明确地忽略了不同变量之间的相关性，例如 `Ising 模型` 中的自旋之间的相关性。此外，[205] 表明，变分分布破坏的依赖关系越多，优化问题就越非凸。相反，如果变分分布包含更多结构，则某些局部最优就不存在了。物理界提出了许多改善平均场变分推断的举措，并由机器学习社区进一步发展 [143]、[150]、[190]。 超越自旋玻璃中的平均场理论的早期例子是 `Thouless-Anderson-Palmer (TAP) 方程` 方法 [190]，它引入了对`变分自由能`的微扰校正。
+平均场方法由 Anderson 和 Peterson 于 1987 年首次在神经网络中采用 [149]，后来在机器学习社区 [79]、[143]、[172] 中广受欢迎。平均场近似的主要限制是其明确地忽略了不同变量之间的相关性，例如 `Ising 模型` 中的自旋之间的相关性。此外，[205] 表明，`变分分布`破坏的依赖关系越多，优化问题就越非凸。相反，如果`变分分布`包含更多结构，则某些局部最优就不存在了。物理界提出了许多改善平均场变分推断的举措，并由机器学习社区进一步发展 [143]、[150]、[190]。 超越自旋玻璃中的平均场理论的早期例子是 `Thouless-Anderson-Palmer (TAP) 方程` 方法 [190]，它引入了对`变分自由能`的微扰校正。
 
 一个相关的想法依赖于幂扩展 [150]，它已被多位作者扩展并应用于机器学习模型 [80]、[142]、[145]、[158]、[185]。此外，信息几何提供了对 `MFVI` 和 `TAP 方程` [186]、[187] 之间关系的洞察。 [221] 进一步将 `TAP 方程`与`散度量`联系起来。我们将读者推荐给 [143] 以获取更多信息。接下来，我们基于 `KL 散度`以外的散度度量来回顾 MFVI 以外的最新进展。
 
-### 6.2 采用新的散度做变分推断
+### 6.2 改进目标函数
 
-`KL 散度`通常提供一种计算方便的方法来测量两个分布之间的距离，它导致对某些模型类的、易于处理的、解析形式的期望。然而，传统的 `KL 变分推理` (KLVI) 存在诸如低估后验方差 [128] 等问题。在某些情况下，当后验的多个峰值非常接近时，`KL 散度`也无法打破对称性 [141]，并且它是一个相对松散的边界 [221]。出于这些缺点，我们在这里调研了许多其他的散度。
+`KL 散度`通常提供一种计算方便的方法来测量两个分布之间的距离，它导致对某些模型类的、易于处理的、解析形式的期望。然而，传统的 `KL 变分推断` (KLVI) 存在诸如低估后验方差 [128] 等问题。在某些情况下，当后验的多个峰值非常接近时，`KL 散度`也无法打破对称性 [141]，并且它是一个相对松散的边界 [221]。出于这些缺点，我们在这里调研了许多其他的散度。
 
-`KL 散度` 之外的散度度量不仅在 VI 中起作用，而且在期望传播（ EP ）等相关近似推理方法中也起作用。 EP [101]、[125]、[204]、[228] 的一些最新扩展大多可以被视为替换了新散度的经典 EP [128]。这些方法有着复杂的推导和有限的可扩展性，大多数从业者会发现它们难以使用。 VI 的最新发展主要集中在黑盒方式的统一框架上，以实现可扩展性和可访问性。 黑盒变分推断使其他散度度量的应用成为可能（ 例如 $χ$ 散度 [39] ），同时保持了该方法的效率和简单性。
+`KL 散度` 之外的散度度量不仅在变分推断中起作用，而且在期望传播（ EP ）等相关近似推断方法中也起作用。 EP [101]、[125]、[204]、[228] 的一些最新扩展大多可以被视为替换了新散度的经典 EP [128]。这些方法有着复杂的推导和有限的可扩展性，大多数从业者会发现它们难以使用。变分推断的最新发展主要集中在黑盒方式的统一框架上，以实现可扩展性和可访问性。 黑盒变分推断使其他散度度量的应用成为可能（ 例如 $χ$ 散度 [39] ），同时保持了该方法的效率和简单性。
 
-在本节中，我们将介绍相关的散度量并展示如何在 VI 的上下文中使用它们。如第 3.1 节所述，KL 散度是 `α-散度`的一种特殊形式，而 `α-散度` 是 `f-散度` 的一种特殊形式。所有上述散度都可以写成 `Stein discrepancy` 的形式。
+在本节中，我们将介绍相关的散度量并展示如何在变分推断的上下文中使用它们。如第 3.1 节所述，KL 散度是 `α-散度`的一种特殊形式，而 `α-散度` 是 `f-散度` 的一种特殊形式。所有上述散度都可以写成 `Stein discrepancy` 的形式。
 
 **（1）α-散度**
 
-The α-divergence is a family of di vergence measures with interesting properties from an information geometrical and computational perspective [4], [6]. Both the KL divergence and the Hellinger distance are special cases of the α-divergence. Different formulations of the α-divergence exist [6], [229], and various VI methods use different definitions [104], [128] . We focus on Renyi’s formulation, 
+从信息几何和计算的角度来看，`α-散度`是一系列具有有趣特性的散度度量 [4]、[6]。 `KL 散度`和 `海林格（ Hellinger ）距离` 都是 `α-散度` 的特例。存在不同的`α-散度`公式 [6]、[229]，并且多种 `VI` 方法使用了不同的定义 [104]、[128]。本文采用 `Renyi` 的公式：
 
-DRα (p||q) = 1 α −1 log ∫
-p(x)α q(x)1−α dx,(17)
+$$
+D^R_\alpha (p||q) = \frac{1}{\alpha −1} \log \int p(x)^\alpha q(x)^{1−\alpha}  \mathrm{d} x \tag{17}
+$$
 
-where α >0,α 6= 1. With this definition of α-divergences, a smaller α leads to more mass-covering effects, while a larger α results in zero-forcing effects, meaning that the variational distribution avoids areas of low posterior probability. For α →1, we recover standard VI (involving the KL divergence). 
+其中 $α > 0,\ α \neq 1$ 。根据 `α 散度` 的这个定义，较小的 $α$ 会导致更多的质量覆盖效应，而较大的 $α$ 会导致零强迫效应，这意味着`变分分布`规避了低后验概率的区域。对于 $α →1$，我们可以恢复为涉及 `KL 散度` 的标准 `VI` 。
 
-α-divergences have recently been used in variational inference [103], [104]. Similar as in the derivation of the ELBO in Eq. 4, the α-divergence implies a bound on the marginal likelihood:
+`α-散度`最近被用于变分推断 [103]、[104]。类似于 `ELBO` 的推导，`α-散度`意味着边缘似然的边界：
 
-Lα = log p(xxx)−DRα (q(zzz)||p(zzz|xxx))
-= 1
-α −1 log Eq
-[(p(zzz,xxx)
-q(zzz)
-)1−α ]
-.(18)
+$$
+\begin{align*}
+\mathscr{L}_{\alpha} =\log p(\boldsymbol{x})-D_{\alpha}^{R}(q(\boldsymbol{z}) \| p(\boldsymbol{z} \mid \boldsymbol{x})) \\
+=\frac{1}{\alpha-1} \log \mathbb{E}_{q}\left[\left(\frac{p(\boldsymbol{z}, \boldsymbol{x})}{q(\boldsymbol{z})}\right)^{1-\alpha}\right] \tag{18}
+\end{align*}
+$$
 
-For α ≥0,α 6= 1, Lα is a lower bound on the log marginal likelihood. Interestingly, Eq. 18 also admits negative values of α, in which case it becomes an upper bound. Note that in this case, DRα is not a divergence. Among various possible definitions of the α-divergence, only Renyi’s formulation leads to a bound (Eq. 18) in which the marginal likelihood p(x) cancels. 
+对于 $α ≥0,α \neq 1$ ， $\mathscr{L}_α$ 是对数边缘似然的下界。有趣的是，式（ 18 ） 也允许 $α$ 为负值，在这种情况下它变成了一个上限。但请注意，此时 $D^R_α$ 不是散度。在 `α-散度` 的各种可能定义中，只有 `Renyi` 的定义能够产生式（ 18 ） 的边缘似然 $p(x)$ 边界。
+
 
 **（2）f-散度与广义变分推断**
 
-α-divergences are a subset of the more general family of f-divergences [3], [33], which take the form: 
+`α-散度` 是更广泛的 `f-散度` 的子集 [3], [33]， `f-散度` 形式如下：
 
-D f (p||q) =
-∫
-q(x)f
-(p(x)
-q(x)
-)
-dx.
+$$
+D_f (p||q) = \int q(x) f \left (\frac{p(x)}{q(x)}\right) \mathrm{d} x
+$$
 
-f is a convex function with f (1) = 0. For example, the KL divergence KL(p||q) is represented by the f-divergence with f (r) = r log(r), and the Pearson χ2 distance is an f -divergence with f (r) = (r −1)2. In general, only specific choices of f result in a bound that does only trivially depend on the marginal likelihood, and which is therefore useful for VI. [221] lower-bounded the marginal likelihood using Jensen’s inequality: 
 
-p(xxx) ≥  ̃f (p(xxx)) ≥Eq(zzz)
-[
- ̃f
-(p(xxx,zzz)
-q(zzz)
-)]
-≡L ̃f .(19)
+$f$ 是具有 $f(1)=0$ 性质的凸函数。例如 `KL散度` $KL(p||q)$ 用 `f-散度` 可以表示为 $f(r)=r \log(r)$ ，皮尔逊 $χ^2$ 距离也是一个 `f-散度`，其中 $f (r) = (r -1)^2$ 。
 
-Above,  ̃f is an arbitrary concave function with  ̃f (x) < x. This formulation recovers the true marginal likelihood for  ̃f = id, the standard ELBO for  ̃f = log, and α-VI for  ̃f(x) ∝ x(1−α). For V ≡log q(zzz)−log p(xxx,zzz), the authors propose the following function:
+一般来说，只有特定选择的 $f$ 才会导致取决于边缘似然的边界，进而对变分推断有用。 
 
- ̃f (V0 )(e−V )
-= e−V0
-(
-1 +(V0 −V )+ 1
-2 (V0 −V )2 + 1
-6 (V0 −V )3)
-.
+`[221]` 使用 `Jensen 不等式` 得到边缘似然的下界：
 
-Above, V0 is a free parameter that can be optimized, and which absorbs the bound’s dependence on the marginal likelihood. The authors show that the terms up to linear order in V correspond to the KL divergence, whereas higher order polynomials are correction terms which make the bound tighter. This connects to earlier work on TAP equations [150], [190] (see Section 5.1), which generally did not result in a bound. 
+$$
+p(\boldsymbol{x}) \geq \tilde{f}(p(\boldsymbol{x})) \geq \mathbb{E}_{q(z)}\left[\tilde{f}\left(\frac{p(\boldsymbol{x}, \boldsymbol{z})}{q(\boldsymbol{z})}\right)\right] \equiv \mathscr{L}_{\tilde{f}}
+$$
+
+上面，$\tilde{f}$ 是一个任意的凹函数，其中 $\tilde{f}(x)<$ $x$。该公式恢复了 $\tilde{f}=id$ 的真实边缘似然、$\tilde{f}=\log$ 的标准 `ELBO` 和 $\tilde{f}(x) \propto x^{(1-\alpha)}$ 的 `α-散度` 。对于 $V \equiv \log q(\boldsymbol{z})-\log p(\boldsymbol{x}, \boldsymbol{z})$，作者提出以下函数：
+
+$$
+\begin{aligned}
+&\tilde{f}^{\left(V_{0}\right)}\left(e^{-V}\right) \\
+&=e^{-V_{0}}\left(1+\left(V_{0}-V\right)+\frac{1}{2}\left(V_{0}-V\right)^{2}+\frac{1}{6}\left(V_{0}-V\right)^{3}\right) .
+\end{aligned}
+$$
+
+上式中，$V_0$ 是一个可以优化的自由参数，它吸收了对边缘似然的边界依赖。作者表明，在 $V$ 中达到线性阶的项对应于 `KL 散度`，而高阶项是使边界更紧致的校正项。这与早期关于 `TAP 方程` [150]、[190] 的工作有关，这些工作通常不会产生边界。
 
 **（3）Stein Discrepancy 与变分推断**
 
- Stein’s method [181] was first proposed as an error bound to measure how well an approximate distribution fits a distribution of interest. The Stein discrepancy has been adapted to modern VI [59], [108], [109], [110]. Here, we introduce the Stein discrepancy and two VI methods that use it:Stein Variational Gradient Descent (SVDG) [109] and operator VI [155].  These two methods share the same objective but are optimized in different manners. 
+`Stein 方法` [181] 最初被提出作为一个误差边界，用于衡量近似分布与感兴趣分布的拟合程度。`Stein 差`已适应现代变分推断[59]、[108]、[109]、[110]。在这里，我们介绍 `Stein 差`和使用它的两种变分推断方法：`Stein 变分梯度下降（Variational Gradient Descent, SVDG）` [109] 和 `运算符变分推断（ Operator VI）` [155]。这两种方法共享相同的目标，但以不同的方式实现优化。
 
-The Stein discrepancy is an integral probability metric [120], [130], [179]. In particular,  [109], [155] used the Stein discrepancy as a divergence measure:
+`Stein 差` 是一个积分概率度量 [120]、[130]、[179]。特别是，[109]、[155] 使用 `Stein 差` 作为散度度量：
 
-Dstein(p,q) = sup f ∈F|Eq(zzz)[f (zzz)]−Ep(zzz|xxx)[f (zzz)]|2.
-(20)
+$$
+D_{stein}(p,q) = \sup \nolimits_{f \in \mathscr{F}} \mid \mathbb{E}_{q(\boldsymbol{z})}[f (\boldsymbol{z})]−\mathbb{E}_{p(\boldsymbol{z}|\boldsymbol{x})}[f (\boldsymbol{z})] \mid ^2 \tag{20}
+$$
 
-F indicates a set of smooth, real-valued functions. When q(zzz) and p(zzz|xxx) are identical, the divergence is zero. More generally, the more similar p and q are, the smaller is the discrepancy.
+$\mathscr{F}$ 表示一组平滑的实值函数。当 $q(\boldsymbol{z})$ 和 $p(\boldsymbol{z}|\boldsymbol{x})$ 相同时，散度为零。更一般地，$p$ 和 $q$ 越相似，差异越小。
 
-The second term in Eq. 20 involves an expectation under the intractable posterior.  Therefore, the Stein discrepancy can only be used in VI for classes of functions F for which the second term is equal to zero. We can find a suitable class with this property as
-follows. We define f by applying a differential operator A on another function φ , where φ is only restricted to be smooth:
+式中的第二项涉及到难以处理的后验的期望。因此，`Stein 差` 只能在变分推断中用于第二项为零的 $\mathscr{F}$ 类函数。可以找到具有此性质的合适类，如下所示。通过在另一个函数 $\phi$ 上应用微分算子 $\mathscr{A}$ 来定义 $f$，其中 $\phi$ 仅限制为平滑：
 
-f (zzz) = Apφ (zzz),
+$$
+f (\boldsymbol{z}) = \mathscr A_p \phi (\boldsymbol{z}),
+$$
 
-where zzz ∼p(zzz). The operator A is constructed in such a way that the second expectation in Eq. 20 is zero for arbitrary φ ; all operators with this property are valid operators [155]. A popular operator that fulfills this requirement is the Stein operator:
+其中 $\boldsymbol{z} ∼ p(\boldsymbol{z})$ 。运算符 $\mathscr A$ 的构造方式使得式中的第二个期望对于任意 $\phi$ 均为零；所有具有此性质的运算符都是有效的运算符 [155]。满足此要求的流行运算符是 `Stein 运算符`：
 
-Apφ (zzz) = φ (zzz)∇zzz log p(zzz,xxx)+∇zzzφ (zzz).
+$$
+Apφ (\boldsymbol{z}) = φ (\boldsymbol{z})∇\boldsymbol{z} log p(\boldsymbol{z},\boldsymbol{x})+∇\boldsymbol{z}φ (\boldsymbol{z}).
+$$
 
-Both operator VI [155] and SVGD [109] use the Stein discrepancy with the Stein operator to construct the variational objective. The main difference between these two methods lies in the optimization of the variational objective using the Stein discrepancy. Operator VI [155] uses a minimax (GAN-style) formulation and BBVI to optimize the variational objec
-tive directly; while Stein Variational Gradient Descent (SVGD) [109] uses a kernelized Stein discrepancy.
+`运算符变分推断` 和 `SVGD` [109] 都使用带`Stein 运算符` 的 `Stein 差` 来构造变分目标。这两种方法的主要区别在于优化算法。 `运算符变分推断`  [155] 使用 `minmax`（GAN 风格）公式和黑盒变分推断直接优化变分目标；而 `SVGD` [109] 使用核化的 `Stein 差`。
 
-With a particular choice of the kernel and q, it can be shown that SVGD determines the optimal perturbation in the direction of the steepest gradient of the KL divergence [109]. SVGD leads to a scheme where samples in the latent space are sequentially transformed to approximate the posterior. As such, the method is reminiscent of, though formally distinct from, a normalizing flow approach [159] (see Section 6.3)
+通过对核和 $q$ 的特定选择，可以证明 `SVGD` 确定了 `KL 散度`的最陡梯度方向上的最佳扰动 [109]。 `SVGD` 导致了一种方案，其中隐空间中的样本被顺序转换为近似后验。因此，虽然形式上不同，但该方法很容易让人想起标准化流方法 [159]。
 
-### 6.3 结构化变分推断
+### 6.3 改进`变分分布`的结构
 
-MFVI assumes a fully-factorized variational distribution; as such, it is unable to capture posterior correlations. Fully factorized variational models have limited accuracy,  specially when the latent variables are highly dependent such as in models with hierarchical structure. This section examines variational distributions which are not fully factorized, but contain dependencies between the latent variables. These structured variational distributions are more expressive, but often come at higher computational costs.
-Allowing a structured variational distribution to capture dependencies between latent variables is a modeling choice; different dependencies may be more or less relevant and depend on the model under consideration. For example, structured variational inference for LDA [66] shows that maintaining global structure is vital, while structured variational inference for the Beta Bernoulli Process [175] shows that maintaining local structure is more important. As follows, we review structured inference for hierarchical models, and
-discuss VI for time series.
+`MFVI` 假设一个完全因式分解的`变分分布`；因此，无法捕获后验相关性。全分解变分模型的准确性有限，特别是当隐变量高度依赖时，例如在具有层次结构的模型中。本节讨论未完全分解、但包含隐变量之间依赖关系的`变分分布`。这些结构化的`变分分布`更具表现力，但通常需要更高的计算成本。
 
-Hierarchical VI: For many models, the variational approximation can be made more expressive by maintaining dependencies between latent variables, but these dependencies make it harder to estimate the gradient of the variational bound. Hierarchical variational models (HVM) [156] are a black box VI framework for structured variational distributions which applies to a broad class of models. In order to capture dependencies between latent variables, one starts with a meanfield variational distribution ∏i q(zi; λi), but instead of estimating the variational parameters λλλ , one places a prior q(λλλ ; θθθ ) over them and arginalizes them out:
+`允许结构化`变分分布`以捕获隐变量之间的依赖关系`是一种建模选择；不同依赖关系可能或多或少相关，并取决于所考虑的模型。例如，`LDA` [66] 的结构化变分推断表明维持全局结构至关重要，而 `Beta Bernoulli Process` [175] 的结构化变分推断表明维持局部结构更为重要。如下，我们回顾了分层模型的结构化推断，并讨论了时间序列的变分推断。
 
-q(zzz; θθθ ) =
-∫ (
-∏i
-q(zi; λi)
-)
-q(λλλ ; θθθ )dλλλ .(21)
+**（1）分层变分推断（Hierarchical VI）**
 
-The new variational distribution q(zzz; θθθ ) thus captures dependencies through the marginalization procedure. Sampling from this distribution is also possible by simulating the hierarchical process. The resulting ELBO can be made tractable by further ower-bounding the resulting entropy and sampling from the hierarchical model. Notably, this approach is used in the development of the variational Gaussian Process (VGP) [201], a particular HVM. The VGP applies a Gaussian Process to generate variational estimates, thus forming a Bayesian non-parametric prior. Since GPs can model a rich class of functions, the VGP is able to confidently approximate diverse posterior distributions [201]. 
+对于许多模型，通过保持隐变量之间的依赖关系可以使变分近似更具表现力，但这些依赖关系使得变分边界梯度的估计变得更加困难。`分层变分模型 (HVM)` [156] 是用于结构化`变分分布`的黑盒变分推断框架，适用于广泛的模型类别。为了捕捉隐变量之间的依赖关系，人们从`平均场变分分布` $\prod_i q(z_i; \lambda_i)$ 开始，但不是估计变分参数 $\boldsymbol{\lambda}$ ，而是在变分参数上放置一个先验 $q(\boldsymbol{\lambda} ; \boldsymbol{\theta} )$ 并将其边缘化：
 
-Another method that established dependencies between latent variables is copula VI [60], [199]. Instead of using a fully factorized variational distribution, copula VI assumes the variational family form: 
+$$
+q(\boldsymbol{z}; \boldsymbol{\theta} ) =∫ \left(\prod_i q(z_i; \lambda_i)\right) q(\boldsymbol{\lambda} ; \boldsymbol{\theta}) \ \mathrm{d} \boldsymbol{\lambda} (21)
+$$
 
-q(zzz) =
-(
-∏i
-q(zi; λi)
-)
-c (Q(z1),...,Q(zN )),(22)
+新的`变分分布` $q(\boldsymbol{z}; \boldsymbol{\theta})$ 通过边缘化过程捕获依赖关系。通过模拟分层过程也可以从该分布中进行采样。通过熵下界和从分层模型中采样，可以使 `ELBO` 易于处理。值得注意的是，该方法可以用于开发`变分高斯过程 (VGP)` [201]，这是一种特殊的层次变分模型。 `变分高斯过程`应用高斯过程来生成变分估计，从而形成贝叶斯非参数先验。由于高斯过程可以对丰富的函数类进行建模，因此`变分高斯过程`能够自信地近似各种后验分布 [201]。
 
-where c is the copula distribution, which is a joint distribution over the marginal cumulative distribution functions Q(z1),...,Q(zN ). This copula distribution restores the dependencies among the latent variables.
 
-VI for Time Series: One of the most important model classes in need of structured variational approximations are time series models. Significant examples include Hidden Markov Models (HMM) [44] and Dynamic Topic Models (DTM) [17]. These models have strong dependencies between time steps, leading traditional fully factorized MFVI to produce unsatisfying results. When using VI for time series, one typically employs a structured variational distribution that explicitly captures dependencies between time points, while remaining fully-factorized in the remaining variables [12], [17], [45], [76]. This commonly requires model specific approximations. [45], [76] derive SVI for popular time series models including HMMs, hidden semi-Markov models (HSMM), and hierarchical Dirichlet process-HMMs. Moreover, [76] derive an accelerated SVI for HSMMs. [11], [12] derive a structured BBVI algorithm for non-conjugate latent diffusion models.
+**(2) copula 分布及变分推断**
 
-### 6.4 其他非标准的变分推断方法
+另一种在隐变量之间建立依赖关系的方法是 `copula VI` [60], [199]。 `copula VI` 没有使用完全因式分解的`变分分布`，而是采用变分族形式：
 
-In this section, we cover a number of miscellaneous approaches which fall under the broad umbrella of improving the accuracy of VI, but would not be categorized as alternative divergence measures or structured models.
+$$
+q(\boldsymbol{z})=\left(\prod_i q(z_i; λ_i)\right) c \left(Q(z_1),...,Q(z_N )\right)
+$$
 
-**（1）VI With Mixture Distributions**
+其中 $c$ 是 `copula 分布`，它是边缘累积分布函数 $Q(z_1),...,Q(z_N)$ 上的联合分布。这种 `copula 分布`恢复了隐变量之间的依赖关系。
 
-Mixture distributions form a class of very flexible distributions, and have been used in VI since the 1990s [74], [79]. Due to their flexibility as well as computational difficulties, advancing VI for mixture models has been of continuous interest [8], [51], [58], [124], [170]. To fit a mixture model, we can make use of auxiliary bounds [156], a fixed point update [170], or enforce additional assumptions such as using uniform weights [51]. Inspired by boosting methods, recently proposed methods fit mixture components in a successive manner [58], [124]. Here, Boosting VI and variational boosting [58], [124] refine the approximate posterior iteratively by adding one component at a time while keeping previously fitted components fixed. In a different approach, [8] utilizes stochastic policy search methods found in the Reinforcement Learning literature for fitting Gaussian mixture models.
+**（3）时间序列变分推断**
 
-**（2）VI by Stochastic Gradient Descent**
+需要结构化变分近似的最重要的模型类之一是时间序列模型，重要例子包括`隐马尔可夫模型 (HMM) `[44] 和`动态主题模型` (DTM) [17] 等。这些模型在时间步长之间具有很强的依赖性，导致传统全因子平均场变分推断方法产生无法令人满意的结果。当将变分推断用于时间序列时，通常采用结构化的`变分分布`，明确捕获时间点之间的依赖关系，同时在其余变量中保持完全分解[12]、[17]、[45]、[76]。
 
-Stochastic gradient descent on the negative log posterior of a probabilistic model can, under certain circumstances, be seen as an implicit VI algorithm. Here we consider SGD with constant learning rates (constant SGD) [113], [114], and early stopping [43]. 
+这通常需要特定于模型的近似值。 [45]、[76] 为流行的时间序列模型导出了随机变分推断，包括 `隐马尔科夫模型（ HMM ）`、`隐式半马尔可夫模型 ( HSMM )` 和`分层狄利克雷过程-隐马尔科夫模型`。此外，[76] 为 `隐式半马尔可夫模型 ( HSMM )` 推导了一个加速的随机变分推断算法。 [11], [12] 推导出一个结构化的黑盒变分推断算法，用于非共轭的隐弥散模型。
 
-Constant SGD can be viewed as a Markov chain that converges to a stationary distribution; as such, it resembles Langevin dynamics [214]. The variance of the stationary distribution is controlled by the learning rate. [113] shows that the learning rate can be tuned to minimize the KL divergence between the resulting stationary distribution and the Bayesian posterior. Additionally, [113] derive formulas for this optimal learning rate which esemble AdaGrad [42] and its relatives. 
 
-A generalization of SGD that includes momentum and iterative averaging is presented in [114]. In contrast, [43] interprets SGD as a non-parametric VI scheme. The paper proposes a way to track entropy changes in the implicit variational objective based on estimates of the Hessian. As such, the authors consider sampling from distributions that are not stationary.
+### 6.4 其他非标准方法
 
-**（3）Robustness to Outliers and Local Optima**
+本节将介绍一些杂项方法，这些方法属于提高变分推断准确性的广泛范围，但不会被归类为新的散度度量或结构化模型。
 
-Since the ELBO is a non-convex objective, VI benefits from advanced optimization algorithms that help to escape from poor local optima. Variational tempering [115] adapts deterministic annealing [136], [164]to VI, making the cooling schedule adaptive and data-dependent. 
 
-Temperature can be defined globally or locally, where local temperatures are specific to individual data points. Data points with associated small likelihoods under the model (such  as outliers) are automatically assigned a high temperature. This reduces their influence on the global variational parameters, making the inference algorithm more robust to local optima. Variational tempering can also be interpreted as data re-weighting [212], the weight being the inverse temperature. In this context, lower weights are assigned to outliers. Other means of making VI more robust include the trust-region method [189], which uses the KL divergence to tune the learning progress and avoids poor local optima, and population VI [92], which averages the variational posterior over bootstrapped data samples for more robust modeling performance 
+**（1）混合分布的变分推断**
+
+
+混合分布形成了一类非常灵活的分布，自 1990 年代以来一直在变分推断中使用 [74]、[79]。由于其灵活性和计算困难，混合模型的变分推断一直备受关注 [8]、[51]、[58]、[124]、[170]。为了拟合混合模型，可以使用辅助边界 [156]、定点更新 [170]，或强制执行额外的假设，例如使用统一权重 [51]。
+
+受提升方法的启发，最近提出的方法以连续方式拟合混合成分[58]，[124]。在这里，`提升变分推断（Boosting VI）`和`变分提升（variational boosting）`[58]、[124] 一次添加一个组件，同时固定先前已拟合的组件，通过迭代来改进近似后验。在另一种方法中，[8] 利用强化学习文献中的随机策略搜索方法来拟合高斯混合模型。
+
+**（2）利用随机梯度下降的变分推断**
+
+在某些情况下，概率模型的负对数后验上的随机梯度下降可以被视为一种隐式变分推断算法。在这里，我们考虑具有恒定学习率[113]、[114] 和提前停止 [43] 的随机梯度下降（ SGD ）。
+
+`恒定 SGD` 可以看作是收敛到平稳分布的马尔可夫链；因此，它类似于朗之万动力学 ( Langevin dynamics ) [214]。平稳分布的方差由学习率控制。 [113] 表明可以调整学习率以最小化所得平稳分布和贝叶斯后验之间的 `KL 散度`。此外，[113] 推导出了一个最佳学习率的公式，这些公式结合了 `AdaGrad` [42] 及相关成果。
+
+[114] 中介绍了包括`动量`和`迭代平均`的`泛化 SGD`。相比之下，[43] 将 SGD 解释为非参数变分推断方案。该论文提出了一种跟踪隐式变分目标熵变化的、基于 `Hessian 估计`的新方法，因此作者考虑从非平稳分布中抽样。
+
+**（3）对异常值和局部最优的鲁棒性**
+
+由于 `ELBO` 是一个非凸目标，变分推断受益于高级优化算法以摆脱局部最优解。其中，`变分退火法` [115] 在变分推断中采用确定性退火 [136]、[164]，使冷却方案具有自适应性和数据相关性。
+
+可以在全局或局部范围内定义温度，其中局部温度特定于局部的若干数据点。模型下具有较小似然的若干数据点（ 例如异常值 ）会自动被分配高温，从而减少了其对全局变分参数的影响，使推断算法对局部最优更鲁棒。变分退火法也可以解释为数据重新加权 [212]，权重是逆温度。在这种情况下，为异常值分配了较低的权重。
+
+其他使变分推断更稳健的方法包括`信任区域法` [189]，它使用 `KL 散度`来调整学习进度并避免局部最优；另外还有`种群变分推断`[92]，它通过对自举数据样本的变分后验进行平均，得到更为鲁棒的建模性能。
 
 ## 7 摊销式变分推断与深度学习
 
-考虑第 $4$ 节的设置，其中每个数据点 $x_i$ 由其具有变分参数 $ξ_i$ 的隐变量 $z_i$ 控制。传统的变分推断需要为每个数据点 $x_i$ 优化 $ξ_i$，这在计算上过于昂贵，特别是当这种优化嵌入到全局参数的更新循环时。摊销推断背后的基本思想是使用强大的预测器根据 $x_i$ 的特征来预测最优 $z_i$，即 $z_i = f(x_i)$ 。这样，局部变分参数就被数据的函数替换，而函数中的参数在所有数据点之间共享，即推断被摊销了。我们在 7.1 节详细介绍了这种方法背后的主要思想，并在 7.2 和 7.3 节中展示了如何以变分自动编码器的形式应用它。
+考虑第 $4$ 节的设置，其中每个数据点 $x_i$ 由其具有变分参数 $ξ_i$ 的隐变量 $z_i$ 控制。传统的变分推断需要为每个数据点 $x_i$ 优化 $ξ_i$，这在计算上过于昂贵，特别是当这种优化嵌入到全局参数的更新循环时。摊销推断背后的基本思想是使用强大的预测器根据 $x_i$ 的特征来预测最优 $z_i$，即 $z_i = f(x_i)$ 。这样，局部变分参数就被数据的函数替换，而函数中的参数在所有数据点之间共享，即推断被摊销了。我们在 7.1 节详细介绍了这种方法背后的主要思想，并在 7.2 和 7.3 节中展示了如何以变分自编码器的形式应用它。
 
 ### 7.1 摊销变分推断（Amortized Variational Families） 
 
-术语『摊销推断』指利用来自过去计算的推断来支持未来的计算 `[36]、[50]`。对于变分推断，摊销推断通常是指对局部变量的推断。与为每个数据点近似单独的隐变量不同，如图 2(a) 所示，摊销变分推断假设局部变分参数可以通过数据的函数进行预测。因此，一旦估计了该函数，就可以通过该函数传递新数据点来获取潜在变量，如图 2(b) 所示。这种情况下使用的深度神经网络也被称为推断网络。因此，具有推断网络的摊销变分推断将概率建模与深度学习的表示能力结合到了一起。
+术语『摊销推断』指利用来自过去计算的推断来支持未来的计算 `[36]、[50]`。对于变分推断，摊销推断通常是指对局部变量的推断。与为每个数据点近似单独的隐变量不同，如图 2(a) 所示，摊销变分推断假设局部变分参数可以通过数据的函数进行预测。因此，一旦估计了该函数，就可以通过该函数传递新数据点来获取隐变量，如图 2(b) 所示。这种情况下使用的深度神经网络也被称为推断网络。因此，具有推断网络的摊销变分推断将概率建模与深度学习的表示能力结合到了一起。
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211223113610-8a74.webp)
 
@@ -803,172 +813,122 @@ Temperature can be defined globally or locally, where local temperatures are spe
 
 ### 7.2 变分自编码器 （VAE）
 
-Amortized VI has become a popular tool for inference in deep latent Gaussian models (DLGM)  This leads to the concept of variational autoencoders (VAEs), which have been proposed independently by two groups [85], [160], and which are discussed in detail below.  VAEs apply more generally than to DLGMs, but for simplicity we will restrict our discussion to this model class. 
+摊销变分推断已成为深度隐高斯模型 (DLGM) 中推断的流行工具。这产生了`变分自编码器 (VAE)` 的概念。变分自编码器由两个研究小组独立提出 [85]、[160]。变分自编码器不仅限用于深度隐高斯模型，但为了简单起见，我们将讨论限制在这个模型类上。
 
-摊销 VI 已成为深度潜在高斯模型 (DLGM) 中推理的流行工具 这导致了变分自编码器 (VAE) 的概念，该概念已由两个小组独立提出 [85]、[160]，并在详情如下。 VAEs 比 DLGMs 更普遍，但为了简单起见，我们将讨论限制在这个模型类上。
 
-The Generative Model: In this paragraph we introduce the class of deep latent Gaussian models. The corresponding graphical model is depicted in Figure 2(b). The model employs a multivariate normal prior from which we draw a latent variable z, p(z) = N (0,I). 
+**（1）生成式模型**
 
-生成模型：在本段中，我们介绍了一类深层潜在高斯模型。相应的图形模型如图 2(b) 所示。该模型采用多元正态先验，我们从中得出一个潜在变量 z，p(z) = N (0,I)。
+深度隐高斯模型的概率图模型如图 2(b) 所示。该模型采用多元正态先验，我们从中抽取一个隐变量 $z$ ，
+$$
+p(z) = \mathcal N (0,I)
+$$
 
-More generally, this could be an arbitrary prior pθ (z) that depends on additional  parameters θ . The likelihood of the model is:
+更一般地，这可能是依赖于附加参数 $θ$ 的任意先验 $p_θ (z)$ 。模型的似然为：
 
-更一般地，这可能是依赖于附加参数 θ 的任意先验 pθ (z)。模型的似然为：
+$$
+p_θ (\boldsymbol{x}|\boldsymbol{z}) = \prod_{i=1}^{N}\mathcal{N} (x_i; μ(z_i),σ^2(z_i)I)
+$$
 
-pθ (xxx|zzz) =
-N
-∏i=1
-N (xi; μ(zi),σ 2(zi)I).
+最重要的是，似然通过两个非线性函数 $μ(·)$ 和 $σ (·)$ 而依赖于 $\boldsymbol{z}$。这些非线性函数通常是神经网络，它将隐变量作为输入并以非线性方式进行转换。然后从 『以转换后的变量 $μ(z_i)$ 为中心的正态分布中』抽取数据。参数 $θ$ 包含网络 $μ(·)$ 和 $σ (·)$ 中的参数。
 
-Most importantly, the likelihood depends on zzz through two non-linear functions μ(·) and σ (·). These are typically neural networks, which take the latent variables as an input and transform them in a non-linear way.
+深度隐高斯模型是高度灵活的密度估计器。存在许多特定于其他数据类型的改进版本。例如，对于二进制数据，高斯似然可以替换为伯努利似然。下面我们回顾如何将摊销推断应用于该模型类。
 
-The data are then drawn from a normal distribution centered around the transformed latent variables μ(zi). The parameter θ entails the parameters of the networks μ(·) and σ (·). 
+**（2）变分自编码器（ VAE ）**
 
-Deep latent Gaussian models are highly flexible density estimators. There exist many modified versions specific to other types of data. For example, for binary data, the Gaussian likelihood can be replaced by a Bernoulli likelihood. Next, we review how amortized inference is applied to this model class. 
+变分自编码器（ VAE ）是指使用推断网络训练的深层隐高斯模型。 `VAE` 使用两组深度神经网络：一是上述的自顶向下的生成模型，从隐变量 $\boldsymbol{z}$ 映射到数据 $\boldsymbol{x}$ ； 二是获得近似后验 $p(\boldsymbol{z}|\boldsymbol{x})$ 的自底向上的推断模型。通常，对应的神经网络被称为`生成网络`和`推断网络`，从机器学习视角看，也被称为`解码器`和`编码器`网络。 
 
-Variational Autoencoders: Most commonly, VAEs refer to deep latent Gaussian models which are trained using inference networks. 
+为了近似后验，`VAE` 采用`摊销平均场变分分布`：
 
-VAEs employ two deep sets of neural networks: a top-down generative model as described above, mapping from the latent variables zzz to the data xxx, and a bottom-up inference model which approximates the posterior p(zzz|xxx). Commonly, the corresponding neural networks are referred to as the generative network and the recognition network, or sometimes as decoder and encoder networks.
+$$
+q_\phi (\boldsymbol{z}|\boldsymbol{x}) = \prod_{i=1}^N q_\phi (z_i|x_i)
+$$
 
-In order to approximate the posterior, VAEs employ an amortized mean-field variational distribution:
+$x_i$ 条件化表明与每个数据点相关的局部变分参数被数据的某个函数所取代。
 
-最重要的是，似然通过两个非线性函数 μ(·) 和 σ (·) 取决于 zzz。这些通常是神经网络，它将潜在变量作为输入并以非线性方式转换它们。然后从以转换的潜在变量 μ(zi) 为中心的正态分布中提取数据。参数 θ 包含网络 μ(·) 和 σ (·) 的参数。深度潜在高斯模型是高度灵活的密度估计器。存在许多特定于其他类型数据的修改版本。例如，对于二进制数据，高斯似然可以替换为伯努利似然。接下来，我们回顾如何将摊销推理应用于这个模型类。变分自动编码器：最常见的是，VAE 是指使用推理网络训练的深层潜在高斯模型。 VAE 使用两组深度神经网络：如上所述的自顶向下生成模型，从潜在变量 zzz 映射到数据 xxx，以及近似后验 p(zzz|xxx) 的自底向上推理模型。通常，相应的神经网络被称为生成网络和识别网络，有时也被称为解码器和编码器网络。 为了近似后验，VAE 采用摊销平均场变分分布：
-qφ (zzz|xxx) =
-N
-∏i=1
-qφ (zi|xi).
+这种`摊销变分分布`的一种常见选择是使用高斯模型：
 
-The conditioning on xi indicates that the local variational parameters associated with each data point are replaced by a function of the data. This amortized variational distribution is typically chosen as: 
-xi 上的条件表明与每个数据点相关的局部变分参数被数据的函数替换。这种摊销变分分布通常选择为：
+$$
+q_\phi (z_i|x_i) = \mathcal{N} (z_i|μ(x_i),σ^2(x_i)I))
+$$
 
-qφ (zi|xi) = N (zi|μ(xi),σ 2(xi)I).(23)
+与生成模型类似，`变分分布`采用数据的非线性映射 $μ(x_i)$ 和 $σ(x_i)$ 来预测 $x_i$ 的近似后验分布。参数 $\phi$ 涵盖了推断网络中的参数。 
 
-Similar to the generative model, the variational distribution employs non-linear mappings μ xi) and σ (xi) of the data in order to predict the approximate posterior distribution of xi. The parameter φ summarizes the corresponding neural network parameters.
+[85]、[160] 的主要贡献是为深度隐变量模型推导出了一个可扩展且高效的训练方案。在优化过程中，推断网络和生成网络共同训练以优化 `ELBO`。
 
-The main contribution of [85], [160] was to derive a scalable and efficient training scheme for deep latent variable models. During optimization, both the inference network and the generative network are trained jointly to optimize the ELBO.
+训练该模型的关键是`重新参数化技巧`。我们关注来自单个数据点 $x_i$ 的 `ELBO` 贡献。首先，从噪声分布中抽取 `L` 个样本 $ε_{(l,i)} ∼ p(ε)$。我们还使用了重参数化函数 $g_\phi$ ，使得 $z_{(i,l)} = g_\phi (ε_{(l,i)},x_i)$ 实现来自近似后验 $q_\phi (z_i|x_i)$ 的样本。对于上式，最常见的重参数化函数采用 $z_{(i,l)} = μ(x_i​​) + σ (x_i) ∗ε_{(i,l)}$ 的形式，其中 $μ(·)$ 和 $σ (·)$ 由 $\phi$ 参数化。获得变分自编码器的 `ELBO` 无偏蒙特卡罗估计量：
 
-The key to training these models is the reparameterization trick (Section 4.3). We focus on the ELBO contribution form a single data point xi. First, we draw L samples ε(l,i) ∼ p(ε) from a noise distribution. We also employ a reparameterization function gφ , such that z(i,l) = gφ (ε(l,i),xi) realize samples from the approximate posterior qφ (zi|xi). For Eq. 23, the most common reparametrization function takes the form z(i,l) = μ(xi) + σ (xi) ∗ε(i,l), where μ(·) and σ (·) are parameterized by φ . One obtains an unbiased Monte Carlo estimator of the VAE’s ELBO by 
+$$
+\hat{\mathscr{L}} (\theta ,\phi ,x_i) = − D_{KL}(q_\phi (z_i|x_i)||p_\theta (z_i)) + \frac 1L \sum_{l=1}^L \log p_\theta(x_i|μ(x_i)+σ(x_i)∗ε_{(i,l)}) 
+$$
 
-与生成模型类似，变分分布采用数据的非线性映射 μ xi) 和 σ (xi) 来预测 xi 的近似后验分布。参数 φ 总结了相应的神经网络参数。 [85]、[160] 的主要贡献是为深度潜变量模型推导出一个可扩展且高效的训练方案。在优化过程中，推理网络和生成网络共同训练以优化 ELBO。训练这些模型的关键是重新参数化技巧（第 4.3 节）。我们关注来自单个数据点 xi 的 ELBO 贡献。首先，我们从噪声分布中抽取 L 个样本 ε(l,i) ∼ p(ε)。我们还使用重新参数化函数 gφ ，使得 z(i,l) = gφ (ε(l,i),xi) 实现来自近似后验 qφ (zi|xi) 的样本。对于方程。如图 23 所示，最常见的重新参数化函数采用 z(i,l) = μ(xi​​) + σ (xi) ∗ε(i,l) 的形式，其中 μ(·) 和 σ (·) 由 φ 参数化。获得 VAE ELBO 的无偏蒙特卡罗估计量
+ELBO 的这种随机估计随后可以根据 θ 和 φ 进行微分，以获得梯度的估计。
 
-ˆL(θ ,φ ,xi) = −DKL(qφ (zi|xi)||pθ (zi)) (24)
-+ 1
-L
-∑l=1
-log pθ (xi|μ(xi)+σ (xi)∗ε(i,l)).
+重新参数化技巧还意味着梯度方差受常数限制 [160]。然而，这种方法的缺点是我们需要近似后验是可重新参数化的。 
 
-This stochastic estimate of the ELBO can subsequently be differentiated with respect to θ and φ to obtain an estimate of the gradient. The reparameterization trick also implies that the gradient variance is bounded by a constant [160]. The drawback of this approach however is that we require the approximate posterior to be reparameterizable.
 
-A Probabilistic Encoder-Decoder Perspective: The term variational autoencoder arises from the fact that the joint training of the generative and recognition network resembles the structure of autoencoders, a class of unsupervised, deterministic models. Autoencoders are deep neural networks that are trained to reconstruct their inputs as closely as possible. 
-Importantly, the neural networks involved in autoencoders have an hourglass structure, meaning that there is a small number of units in the inner layers that prevent the neural network from learning the trivial identity mapping. This ’bottleneck’ forces the network to learn a useful and compact representation of the data. 
-
-In contrast, VAEs are probabilistic models, but they have a close correspondence to classical autoencoders. It turns out that the hidden variables of the VAE can be thought of as the intermediate representations of the data in the bottleneck of an autoencoder. 
-
-During VAE training, one injects noise into this intermediate layer, which has a regularizing effect. In addition, the KL divergence term between the prior and the approximate posterior forces the latent representation of the VAE to be close to the prior, leading to a more homogeneous distribution in latent space that generalizes better to unseen data. When the variance of the noise is reduced to zero and the prior term is omitted, the VAE becomes a classical autoencoder 
-
-ELBO 的这种随机估计随后可以根据 θ 和 φ 进行微分，以获得梯度的估计。重新参数化技巧还意味着梯度方差受常数限制 [160]。然而，这种方法的缺点是我们需要近似后验是可重新参数化的。 概率编码器 - 解码器视角：术语变分自动编码器源于这样一个事实，即生成和识别网络的联合训练类似于自动编码器的结构，一类无监督的确定性模型。自编码器是经过训练的深度神经网络，可以尽可能地重建其输入。重要的是，自动编码器中涉及的神经网络具有沙漏结构，这意味着内层中有少量单元阻止神经网络学习琐碎的身份映射。这个“瓶颈”迫使网络学习有用且紧凑的数据表示。相比之下，VAE 是概率模型，但它们与经典自动编码器有密切的对应关系。事实证明，VAE 的隐藏变量可以被认为是自编码器瓶颈中数据的中间表示。在 VAE 训练期间，将噪声注入该中间层，具有正则化作用。此外，先验和近似后验之间的 KL 散度项迫使 VAE 的潜在表示接近先验，导致潜在空间中的分布更均匀，可以更好地泛化到看不见的数据。当噪声的方差减少到零并省略先验项时，VAE 成为经典的自编码器
+> **编码器-解码器的概率视角**
+>
+> 术语`变分自编码器`源于这样一个事实，即生成和推断网络的联合训练类似于自编码器（一种无监督的确定性模型）的结构。自编码器是经过训练的深度神经网络，能够尽可能地重建其输入。重要的是，自编码器中涉及的神经网络具有沙漏结构，这意味着有存在少量单元的隐藏层用于阻止神经网络学习琐碎的映射。这个“瓶颈”迫使网络学习有用且紧凑的数据表示。相比之下，`VAE` 是一个概率模型，但它们与经典自编码器有密切的对应关系。事实证明，`VAE` 的隐藏变量可以被认为是自编码器的 “瓶颈” 中的中间表示。在 `VAE` 训练期间，将噪声注入该中间层，具有正则化作用。此外，先验和近似后验之间的 `KL 散度项`迫使 `VAE` 的隐表示接近先验，导致隐空间中的分布更均匀，并更好地泛化到未观测数据。当噪声方差减少到零并省略先验项时，`VAE` 就是经典的自编码器。
 
 ### 7.3 更灵活的 VAE 
 
-Since the proposal of VAEs, an ever-growing number of extensions have been proposed. While exhaustive coverage of the topic would require a review article in its own right, we summarize a few important extensions. While several model extensions of the VAE have been proposed, this review puts a bigger emphasis on inference procedures. We will report on extensions that modify the variational approximation qφ , the model pθ , and finally discuss the dying units problem when the posterior of some latent units remains close to the prior during the optimization.
 
-自从提出 VAE 以来，提出了越来越多的扩展。虽然该主题的详尽覆盖本身需要一篇评论文章，但我们总结了一些重要的扩展。虽然已经提出了 VAE 的几个模型扩展，但本次审查更加强调推理过程。我们将报告修改变分逼近 qφ 和模型 pθ 的扩展，最后讨论当一些潜在单元的后验在优化过程中与先验保持接近时的死亡单元问题。
+自从提出 `VAE` 以来，提出了越来越多的扩展。该主题本身就可以写一篇评论文章，因此，本文仅总结了其中一些重要的扩展，并且更加强调推断过程。我们先讨论修改变分分布 $q_\phi$ 和模型 $p_θ$ 的扩展，最后讨论当一些隐单元的后验在优化过程中与先验保持接近时的死亡单元问题。
 
-#### 7.3.1 Flexible Variational Distributions $q_φ$ 
+#### 7.3.1 灵活的`变分分布` $q_\phi$ 
 
-Traditional VI, including VAE training, relies on parametric inference models. The approximate posterior qφ can be an explicit parametric distribution, such as a Gaussian or discrete distribution [163]. We can use more flexible distributions, for example by transforming a simple parametric distribution. Here, we review VAE with implicit distributions, normalizing flow, and importance weighted VAE. Using more flexible variational distributions reduces not only the approximation error but also the amortization error, i.e. the error introduced by replacing the local variational parameters by a parametric function [30].
+包括 `VAE` 在内的传统变分推断依赖于参数化的推断模型。近似后验 $q_\phi$ 可以是显式的参数分布，例如高斯分布或离散分布 [163]。我们也可以使用更灵活的分布，例如通过对简单参数分布做转换。在这里，我们回顾了`具有隐式分布的 VAE`、`标准化流`和`重要性加权 VAE`。使用更灵活的`变分分布`不仅可以减少近似误差，还可以减少摊销误差，即由于用参数化的函数替换局部变分参数而引入的误差 [30]。
 
-Implicit distributions can be used in VI since a closed-form density function is not a strict requirement for the inference model; all we need is to be able to sample from it. As detailed below, their reparameterization gradients can still be computed. In addition to the standard reparameterization approach, the entropy contribution to the gradient has to be estimated. Implicit distributions for VI is an active area of research [72], [81], [102], [105], [107], [119], [129], [196], [210]. 
+**（1）隐式分布**
 
-VI requires the computation of the log density ratio log p(zzz)−log qφ (zzz|xxx). When q is implicit, the standard training procedure faces the problem that log density ratio is intractable. In this case, one can employ a Generative Adversarial Networks (GAN) [54] style discriminator T that discriminates the prior from the variational distribution, T (xxx,zzz) = log qφ (zzz|xxx)−log p(zzz) [102], [119]. This formulation is very general and can be combined with other ideas, for example a hierarchical structure [202], [217] .
+隐式分布可以在变分推断中使用，因为封闭形式的密度函数是对推断模型没有严格要求；我们所需要的只是能够从中采样。如下详述，它们的重新参数化梯度仍然可以计算。除了标准的重新参数化方法之外，还必须估计对梯度的熵贡献。变分推断的隐式分布是一个活跃的研究领域 [72]、[81]、[102]、[105]、[107]、[119]、[129]、[196]、[210]。
 
-包括 VAE 训练在内的传统 VI 依赖于参数推理模型。近似后验 qφ 可以是显式参数分布，例如高斯分布或离散分布 [163]。我们可以使用更灵活的分布，例如通过转换简单的参数分布。在这里，我们回顾了具有隐式分布、标准化流和重要性加权 VAE 的 VAE。使用更灵活的变分分布不仅可以减少近似误差，还可以减少摊销误差，即通过用参数函数替换局部变分参数而引入的误差 [30]。
+变分推断需要计算对数密度比 $\log p(\boldsymbol{z})−\log q_\phi (\boldsymbol{z}|\boldsymbol{x})$ 。当 $q$ 为隐式时，标准训练程序面临对数密度比难以处理的问题。在这种情况下，可以使用`生成对抗网络 (GAN)` [54] 风格的鉴别器 $T$ ，以从`变分分布`中判别出先验，$T (\boldsymbol{x},\boldsymbol{z}) = \log q_\phi (\boldsymbol{z}|\boldsymbol{x})−\log p(\boldsymbol{z})$ [ 102]、[119]。这个公式非常通用，可以与其他想法结合，例如分层结构 [202]、[217]。
 
-隐式分布可以在 VI 中使用，因为封闭形式的密度函数是对推理模型没有严格要求；我们所需要的只是能够从中采样。如下详述，它们的重新参数化梯度仍然可以计算。除了标准的重新参数化方法之外，还必须估计对梯度的熵贡献。 VI 的隐式分布是一个活跃的研究领域 [72]、[81]、[102]、[105]、[107]、[119]、[129]、[196]、[210]。
+**（2）标准化流方法**
 
- VI 需要计算对数密度比 log p(zzz)−log qφ (zzz|xxx)。当 q 为隐式时，标准训练程序面临对数密度比难以处理的问题。在这种情况下，可以使用生成对抗网络 (GAN) [54] 风格的鉴别器 T，它从变分分布中区分先验，T (xxx,zzz) = log qφ (zzz|xxx)−log p(zzz) [ 102]、[119]。这个公式非常通用，可以与其他想法结合，例如分层结构 [202]、[217]。
+标准化流 [29]、[40]、[41]、[84]、[159] 提出了另一种灵活`变分分布`的方法。标准化流背后的主要思想是通过一系列连续的可逆变换将简单（例如平均场）近似后验 $q(\boldsymbol{z})$ 变换为更具表现力的分布。
 
-（1）标准化流方法
-Normalizing flow [29], [40], [41], [84], [159] presents another way to utilize flexible variational distributions. The main idea behind normalizing flow is to transform a simple (e.g. mean field) approximate posterior q(zzz) into a more expressive distribution by a series of successive invertible transformations.
+为此，首先抽取一个随机变量 $z ∼q(\boldsymbol{z})$ ，并使用可逆的平滑函数 $f$ 对其进行变换。设 $z′ = f (z)$。那么，新的分布是：
 
-To this end, we first draw a random variable z ∼q(zzz), and transform it using an invertible, smooth function f . Let z′ = f (z). Then, the new distribution is 
+$$
+q(z^′) = q(z)|\frac{\partial f^{−1}}{ ∂ z^′} |= q(z)|\frac{\partial f}{∂ z^′}|^{−1}
+$$
 
-标准化流 [29]、[40]、[41]、[84]、[159] 提出了另一种利用灵活变分分布的方法。归一化流背后的主要思想是通过一系列连续的可逆变换将简单（例如平均场）近似后验 q(zzz) 变换为更具表现力的分布。
+我们有必要计算行列式，因为变分方法要求估计变换分布的熵。通过选择变换函数 $f$ 使得 $|\frac{\partial f}{\partial z'}|$ 更容易计算，这种标准化流程构成了一种从简单分布生成多峰分布的有效方法。作为其变体，已经提出了`线性时间变换流`、`Langevin 流` 和 `Hamiltonian 流`  [159] 以及`逆自回归流` [84] 和`自回归流` [29]。
 
-为此，我们首先绘制一个随机变量 z ∼q(zzz )，并使用可逆的平滑函数 f 对其进行变换。设 z′ = f (z)。那么，新的分布是
+`标准化流`和前面提到的`隐式分布`采取了 “使用转换将简单分布转换为复杂分布” 的共同想法，它们之间一个关键区别在于，由于采用了可逆变换函数，标准化流允许估计 $q(z)$ 的密度。
 
-q(z′) = q(z)|∂ f −1
-∂ z′ |= q(z)|∂ f
-∂ z′|−1.(25)
+**（3）重要性加权 VAE**
 
-It is necessary that we can compute the determinant, since the variational approach requires us to also estimate the entropy of the transformed distribution. By choosing the transformation function f such that |∂ f ∂ z′| is easily computable, this normalizing flow constitutes an efficient method to generate multimodal distributions from a simple distribution. As variants, linear time-transformations, Langevin and Hamiltonian flow [159], as well as inverse autoregressive flow [84] and autoregressive flow [29] have been proposed. 
+利用灵活变分分布的最后一种方法是`重要性加权变分自编码器 (IWAE)`，它最初被提议用于收紧变分边界 [25]，并且可以重新解释为从更灵活的分布 [31] 中采样。 `IWAE` 需要来自近似后验的 `L` 个样本，这些样本按比率进行加权：
 
-Normalizing flow and the previously mentioned implicit distribution share the common idea of using transformations to transform simple distributions into more complicated ones. A key difference is that for normalizing flows, the density of q(z) can be estimated due to an invertible transformation function.
+$$
+\hat w_l = \frac{w_l}{\sum^L_{l=1} w_l} \ , \ \ w_l = p_\theta (x_i,z_{(i,l)})
+q_\phi (z_{(i,l)}|x_i)
+$$
 
-我们有必要计算行列式，因为变分方法要求我们还估计变换分布的熵。通过选择变换函数 f 使得 |∂ f ∂ z'|很容易计算，这种归一化流程构成了一种从简单分布生成多峰分布的有效方法。作为变体，已经提出了线性时间变换、Langevin 和哈密顿流 [159] 以及逆自回归流 [84] 和自回归流 [29]。
 
-规范化流和前面提到的隐式分布共享使用转换将简单分布转换为更复杂分布的共同想法。一个关键的区别在于，对于归一化流，由于可逆变换函数，可以估计 q(z) 的密度。
+作者表明，评估的样本 `L` 越多，变分边界变得越紧，这意味着在 $L →∞$ 时接近真实对数似然。对 `IWAE` 的重新解释表明，它们与 `VAE` 相同，但从更具表现力的分布中采样，该分布在 $L →∞$ [31] 时逐点收敛到真实后验。由于 `IWAE` 引入了有偏估计器，因此潜在地可以采取额外步骤来获得更好的`方差-偏差权衡` [139]、[152]、[153] 。
 
-（2）重要性加权 VAE
+#### 7.3.2 先验 $p_θ$ 的建模选择
 
-One final approach that utilizes flexible variational distributions is the importance weighted variational autoencoder (IWAE) which was originally proposed to tighten the variational bound [25] and can be reinterpreted to sample from a more flexible distribution [31]. IWAEs require L samples from the approximate posterior which are weighted by the ratio 
+建模选择会影响深度隐高斯模型的性能。特别是改进 `VAE` 中的先验模型可以带来更多可解释的拟合和更好的模型性能。 [77] 提出了一种将结构化先验用于 `VAE` 的方法，结合了传统概率图模型和推断网络的优点。这些混合模型通过使用识别模型来学习共轭分布的变分参数，克服了非共轭先验和似然的难点。这允许人们在保持共轭的同时近似后验。当编码器输出自然参数的估计值时，依赖共轭的`消息传递`被应用于执行剩余的推断。
 
-利用灵活变分分布的最后一种方法是重要性加权变分自动编码器 (IWAE)，它最初被提议用于收紧变分边界 [25]，并且可以重新解释为从更灵活的分布 [31] 中采样。 IWAE 需要来自近似后验的 L 个样本，这些样本按比率加权
+还有其他方法解决了标准 `VAE` 的缺点。由于标准 `VAE` 假设似然在维度上可分解，因此可能产生一个糟糕的近似，例如，对于结构化输出模型效果更好的图像。 `Deep Recurrent Attentive Writer` [56] 依赖于一种循环结构，该结构逐渐构建观测结果，同时自动关注感兴趣的区域。相比之下，`PixelVAE` [57] 则通过对图像内像素之间的依赖关系建模来解决这个问题，该方法使用了一个条件模型的分解式 $p_\theta (x_i|z_i) = \prod_j p_\theta (x^j_i \mid x^1_i ,...x^{j−1}_
+i,z_i)$ ，其中 $x^j_i$ 表示观测 $i$ 的第 $j$ 个维度。维度以顺序方式生成，这说明了图像像素内的局部依赖性。
 
-ˆwl = wl
-∑Ll=1 wl
-
-,where wl = pθ (xi,z(i,l))
-qφ (z(i,l)|xi) .(26)
-
-The authors show that the more samples L are evaluated, the tighter the variational bound becomes, implying that the true log likelihood is approached in the limit L →∞. A reinterpretation of IWAEs, suggests that they are identical to VAEs but sample from a more expressive distribution which converges pointwise to the true posterior as L →∞ [31]. As IWAEs introduce a biased estimator, additional steps to obtain potentially better variance-bias trade-offs can be taken, such as in [139], [152], [153] .
-
-作者表明，评估的样本 L 越多，变分界限变得越紧，这意味着在 L →∞ 极限内接近真实对数似然。对 IWAE 的重新解释表明，它们与 VAE 相同，但从更具表现力的分布中采样，该分布在 L →∞ [31] 时逐点收敛到真正的后验。由于 IWAE 引入了有偏差的估计器，因此可以采取额外的步骤来获得潜在更好的方差-偏差权衡，例如在 [139]、[152]、[153] 中。
-
-#### 7.3.2 Modeling Choices of $p_θ$  
-
-Modeling choices affect the performance of deep latent Gaussian models. In particular improving the prior model in VAEs can lead to more interpretable fits and better model performance. [77] proposed a method to utilize a structured prior for VAEs, combining the advantages of traditional graphical models and inference networks. 
-
-These hybrid models overcome the intractability of non-conjugate priors and likelihoods by learning variational parameters of conjugate distributions with a recognition model. This allows one to approximate the posterior conditioned on the observations while maintaining conjugacy. As the encoder outputs an estimate of natural parameters, message passing, which relies on conjugacy, is applied to carry out the remaining inference. 
-
-Other approaches tackle the drawback of the standard VAE which is the assumption that the likelihood factorizes over dimensions. This can be a poor approximation, e.g., for images, for which a structured output model works better. The Deep Recurrent Attentive Writer [56] relies on a recurrent structure that gradually constructs the observations while automatically focusing on regions of interest. 
-
-In comparison, PixelVAE [57] tackles this problem by modeling dependencies between pixels within an image, using a conditional model that factorizes as 
-
-建模选择会影响深度潜在高斯模型的性能。特别是改进 VAE 中的先验模型可以带来更多可解释的拟合和更好的模型性能。 [77] 提出了一种将结构化先验用于 VAE 的方法，结合了传统图形模型和推理网络的优点。
-
-这些混合模型通过使用识别模型学习共轭分布的变分参数，克服了非共轭先验和可能性的难点。这允许人们在保持共轭的同时近似以观察为条件的后验。当编码器输出自然参数的估计值时，依赖共轭的消息传递被应用于执行剩余的推理。
-
-其他方法解决了标准 VAE 的缺点，即假设可能性在维度上分解。这可能是一个糟糕的近似值，例如，对于结构化输出模型效果更好的图像。 Deep Recurrent Attentive Writer [56] 依赖于一种循环结构，该结构逐渐构建观察结果，同时自动关注感兴趣的区域。
-
-相比之下，PixelVAE [57] 通过对图像内像素之间的依赖关系建模来解决这个问题，使用条件模型分解为
-
-pθ (xi|zi) = ∏ j pθ (x j
-i |x1i ,...x j−1
-i ,zi),
-
-where x j i denotes the jth dimension of observation i. The dimensions are generated in a sequential fashion, which accounts for local dependencies within the pixels of an image. The expressiveness of the modeling choice comes at a cost. If the decoder is too strong, the inference procedure can fail to learn an informative posterior [29]. This problem, known as the dying units problem, will be discussed in the paragraph below.
-
-其中 x j i 表示观测 i 的第 j 个维度。维度以顺序方式生成，这说明了图像像素内的局部依赖性。建模选择的表现力是有代价的。如果解码器太强，推理过程可能无法学习信息丰富的后验 [29]。这个问题，称为死亡单位问题，将在下面的段落中讨论。
+建模选择带来的表现力是需要代价的。如果解码器太强，推断过程可能无法学习信息丰富的后验 [29]。该问题被称为`僵尸单元问题`。
 
 #### 7.3.3 解决僵尸单元的问题
 
- Certain modeling choices and parameter configurations impose problems in VAE training, such that learning a good low dimensional representation of the data fails. A prominent such problem is known as the dying units problem.
+某些建模选择和参数配置给 `VAE` 训练带来了问题，例如学习数据的良好低维表示容易失败。一个突出的问题被称为`僵尸单元问题`。
 
-As detailed below, two main effects are responsible for this phenomenon: a too powerful decoder, and the KL divergence term.
+造成这种现象的主要有两个原因：`解码器过于强大`以及 `KL 散度项`。
 
-某些建模选择和参数配置给 VAE 训练带来了问题，例如学习数据的良好低维表示失败。一个突出的此类问题被称为僵尸单元问题。
+在某些情况下，解码器的表达能力非常强，以至于 $\boldsymbol{z}$ 变量的某些维度被忽略了，即它可能独立于 $z$ 对 $p_\theta (x|z)$ 进行建模。此时真实后验变成了先验 [29]，因此变分后验试图匹配先验以满足等式中的 `KL 散度`。  `有损变分自编码器` [29] 通过在部分输入信息上调节每个输出维度的解码分布来规避此问题。例如，在图像案例中，给定像素的似然仅取决于周围像素的值和全局隐状态，这迫使分布编码了隐变量中包含的全局信息。
 
-如下详述，造成这种现象的主要有两个原因：解码器过于强大，以及 KL 散度项。
-
-In some cases, the expressiveness of the decoder can be so strong, that some dimensions of the zzz variables are ignored, i.e. it might model pθ (x|z) independently of z. In this case the true posterior is the prior [29], and thus the variational posterior tries to match the prior in order to satisfy the KL divergence in Eq. 24. Lossy variational autoencoders [29] circumvent this problem by conditioning the decoding distribution for each output dimension on partial input information. For example, in the case of images, the likelihood of a given pixel is only conditioned on the values of the immediate surrounding pixels and the global latent state. This forces the distribution to encode global information in the latent variables.
-
-The KL divergence contribution to the VAE loss may exacerbate this problem. To see why, we can rewrite the ELBO as a sum of two KL divergences ˆL(θ ,φ ,xi) = −DKL(qφ (z|xi)||pθ (z)) −
-DKL(p(xi)||pθ (xi|z)) + C. If the model is expressive enough, the model is able to render the second term zero (independent of the value of zzz). In this case, in order to also satisfy the first term, the inference model places its probability mass to match the prior [227], failing to learn a useful representation of the data. Even if the decoder is not strong, the problem of dying units may arise in the early stages of the optimization where the approximate posterior does not yet carry relevant information about the data [19]. This problem is more severe when the dimension of z is high. In this situation, units are regularized towards the prior and might not be reactivated in the later stages of the optimization [178]. To counteract the early influence of the KL constraint, an annealing scheme can be applied to the KL divergence term during training [178] 
-
-在某些情况下，解码器的表达能力非常强，以至于 zzz 变量的某些维度被忽略，即它可能独立于 z 对 pθ (x|z) 进行建模。在这种情况下，真正的后验是先验 [29]，因此变分后验试图匹配先验以满足等式中的 KL 散度。  有损变分自编码器 [29] 通过在部分输入信息上调节每个输出维度的解码分布来规避这个问题。例如，在图像的情况下，给定像素的可能性仅取决于直接周围像素的值和全局潜在状态。这迫使分布在潜在变量中编码全局信息。
-
- KL 散度对 VAE 损失的贡献可能会加剧这个问题。要了解原因，我们可以将 ELBO 重写为两个 KL 散度之和 ˆL(θ ,φ ,xi) = −DKL(qφ (z|xi)||pθ (z)) −DKL(p(xi)|| pθ (xi|z)) + C。如果模型的表达能力足够强，则模型能够将第二项呈现为零（与 zzz 的值无关）。在这种情况下，为了也满足第一项，推理模型将其概率质量与先验 [227] 相匹配，未能学习到数据的有用表示。即使解码器不强，在优化的早期阶段可能会出现单元死亡的问题，此时近似后验尚未携带有关数据的相关信息 [19]。当 z 的维数很高时，这个问题更加严重。在这种情况下，单元会朝着先验规则化，并且可能不会在优化的后期阶段重新激活 [178]。为了抵消 KL 约束的早期影响，可以在训练期间对 KL 散度项应用退火方案 [178]
+ `KL 散度`对 `VAE` 损失的贡献可能会加剧这个问题。要了解原因，可以将 `ELBO` 重写为两个 `KL 散度`之和 $\hat{\mathscr L}(\theta ,\phi ,x_i) = −D_{KL}(q_\phi (z|x_i)||p_\theta (z)) −D_{KL}(p(x_i)|| p_\theta (x_i|z)) + C$ 。如果模型表达能力足够强，则模型能够将第二项置为零（与 $\boldsymbol{z}$ 的值无关）。此时，为了同时满足第一项，推断模型将其概率质量与先验 [227] 相匹配，从而未能学习到数据的有用表示。即使解码器不强，在优化早期阶段可能会出现僵尸单元问题，此时近似后验尚未携带有关数据的相关信息 [19]。当 $z$ 的维数很高时，这个问题更加严重。这种情况下，单元会朝着先验方向正则化，并且可能无法在优化后期阶段重新激活 [178]。为了抵消 `KL 约束`的早期影响，可以在训练期间对 `KL 散度项`应用退火方案 [178]。
 
 ## 8 讨论
 
@@ -976,11 +936,11 @@ DKL(p(xi)||pθ (xi|z)) + C. If the model is expressive enough, the model is able
 
 ### 8.1 变分推断理论方面
 
-尽管在建模和推断方面取得了进展，但很少有作者讨论 VI  的理论方面 [95]、[133]、[213]。一个重要方向是量化变分分布替换真实后验时的近似误差 [133]。与此相关的一个问题是预测误差，例如，使用 VI 近似来做贝叶斯预测分布的边缘化计算。我们还推测 VI 理论可以从与信息论的联系中受益。这已经在 [186]、[187] 中举例说明。信息论还激发了新模型和推断方案的发展 [2]、[13]、[193]。例如，信息瓶颈 [193] 最近推动了深度变分信息瓶颈 [2]。我们期望融合这两条研究线会产生更多有趣的结果。
+尽管在建模和推断方面取得了进展，但很少有作者讨论变分推断 的理论方面 [95]、[133]、[213]。一个重要方向是量化`变分分布`替换真实后验时的近似误差 [133]。与此相关的一个问题是预测误差，例如，使用变分推断近似来做贝叶斯预测分布的边缘化计算。我们还推测变分推断理论可以从与信息论的联系中受益。这已经在 [186]、[187] 中举例说明。信息论还激发了新模型和推断方案的发展 [2]、[13]、[193]。例如，信息瓶颈 [193] 最近推动了深度变分信息瓶颈 [2]。我们期望融合这两条研究线会产生更多有趣的结果。
 
 ### 8.2 变分推断和深度学习
 
-尽管最近在各领域取得了成功，但深度学习仍然缺乏原则性的不确定性估计、缺乏其特征表示的可解释性，并且难以包含先验知识。贝叶斯方法（例如贝叶斯神经网络 [137] 和变分自动编码器）正在改进这些方面。最近的工作旨在使用可解释性概率模型作为 VAE 的先验 [38]、[77]、[91]、[168]。在此类模型中，变分推断是必不可少的组成部分。在贝叶斯深度架构中，如何使变分推断计算更为高效且易于实现，正在成为一个重要研究方向 [48]
+尽管最近在各领域取得了成功，但深度学习仍然缺乏原则性的不确定性估计、缺乏其特征表示的可解释性，并且难以包含先验知识。贝叶斯方法（例如贝叶斯神经网络 [137] 和变分自编码器）正在改进这些方面。最近的工作旨在使用可解释性概率模型作为 VAE 的先验 [38]、[77]、[91]、[168]。在此类模型中，变分推断是必不可少的组成部分。在贝叶斯深度架构中，如何使变分推断计算更为高效且易于实现，正在成为一个重要研究方向 [48]
 
 ### 8.3 变分推断和策略梯度
 
@@ -988,7 +948,7 @@ DKL(p(xi)||pθ (xi|z)) + C. If the model is expressive enough, the model is able
 
 ### 8.4 自动变分推断
 
-概率编程允许从业者快速实现和修改模型，而不必担心推断问题。用户只需要指定模型，推断引擎就会自动进行推断。流行的概率编程工具包括但不限于：Stan[28]，涵盖了大量的高级 VI 和 MCMC 推断方法； Net[126] 基于变分消息传递和 EP；Automatic Statistician[52] 和 Anglican[198] 主要依靠采样方法；Ed-ward[200] 支持 BBVI 和 MonteCarlo 采样 ； Zhusuan[176] 的特点是用于贝叶斯深度学习的 VI 。这些工具的长期目标是改变概率建模的研究方法，使用户能够快速修改和改进模型，并使其他受众可以访问它们。
+概率编程允许从业者快速实现和修改模型，而不必担心推断问题。用户只需要指定模型，推断引擎就会自动进行推断。流行的概率编程工具包括但不限于：Stan[28]，涵盖了大量的高级变分推断和 MCMC 推断方法； Net[126] 基于变分消息传递和 EP；Automatic Statistician[52] 和 Anglican[198] 主要依靠采样方法；Ed-ward[200] 支持 BBVI 和 MonteCarlo 采样 ； Zhusuan[176] 的特点是用于贝叶斯深度学习的变分推断。这些工具的长期目标是改变概率建模的研究方法，使用户能够快速修改和改进模型，并使其他受众可以访问它们。
 
 尽管目前努力使从业者更容易使用 VI，但对于非专家来说，其使用仍然不简单。例如，人工识别后验的对称性并打破这些对称性是 Infer.Net 所必需的。此外，诸如控制变量等减少方差的方法可以极大地加速收敛，但需要模型进行特定设计才能获得最佳性能。在撰写本文时，当前的概率编程工具箱尚未解决此类问题。我们相信这些方向对于推进概率建模在科学和技术中的影响非常重要。
 
@@ -1000,5 +960,5 @@ DKL(p(xi)||pθ (xi|z)) + C. If the model is expressive enough, the model is able
 - 后验推断的关键是算法问题
 - 变分推断为后验推断提供了可扩展和通用方法
 - 平均长近似和坐标上升方法是最为基础的变分推断方法
-- 随机变分推断将 VI 扩展到海量数据
-- 黑盒变分推断将 VI 泛化到多种模型
+- 随机变分推断将变分推断扩展到海量数据
+- 黑盒变分推断将变分推断泛化到多种模型
