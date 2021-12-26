@@ -492,80 +492,82 @@ $$
 
 式中的 $F$ 为 Fisher 信息矩阵。根据公式也可以看出，自然梯度考虑了参数空间上的曲率信息 $ \nabla_\theta \mathcal{L}(\lambda,\phi_{1..n})$。
 
-### 4.3 随机变分推断（ SVI ）：自然梯度与 SGD 的结合
+### 4.3 随机变分推断（ `SVI` ）：自然梯度与 `SGD` 的结合
 
-既然给出了目标函数的最速梯度方向，那么与 4.1 节的随机梯度下降相结合就成为一种非常自然的想法。大家都知道， SGD 是小批量梯度下降的特例，由于每次仅随机地使用一个样本（这也是取名为随机梯度下降的原因），因此会引入较大的方差，但总体趋向于最优解。以下算法 2 为**随机变分变分推断算法**， 其基本思想是：在每一轮迭代中，随机抽取一个样本数据点并计算最优局部参数，然后根据自然梯度公式更新全局参数，直至收敛。
+既然给出了目标函数的最速梯度方向，那么与 4.1 节的随机梯度下降相结合就成为一种非常自然的想法。大家都知道， `SGD` 是小批量梯度下降的特例，由于每次仅随机地使用一个样本（这也是取名为随机梯度下降的原因），因此会引入较大的方差，但总体趋向于最优解。以下算法 2 为**随机变分变分推断算法**， 其基本思想是：在每一轮迭代中，随机抽取一个样本数据点并计算最优局部参数，然后根据自然梯度公式更新全局参数，直至收敛。
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108163233-7872.webp)
 
-### 4.4 随机变分推断（ SVI ）中的一些技巧
+### 4.4 随机变分推断（ `SVI` ）中的一些技巧
 
-构成 SVI 基础的 SGD 的收敛速度取决于梯度估计的方差。较小的梯度噪声允许较大的学习率并导致更快的收敛。本节介绍 SVI 背景下的交易技巧，例如自适应学习率和方差减少。其中一些方法通常适用于 SGD。
+在随机变分推断中，随机梯度下降（ `SGD` ）的收敛速度取决于梯度估计的方差，较小的梯度噪声允许较大的学习率，并导致更快的收敛。本节介绍随机变分推断背景下的权衡技巧，例如自适应学习率和方差减少策略。其中一些方法通常适用于 `SGD`。
 
 #### 4.4.1 自适应学习率与小批量大小
-The speed of convergence is influenced by the choice of the learning rate and the mini-batch size [10], [46]. Due to the law of large numbers, increasing the mini-batch size reduces the stochastic gradient noise [46], allowing larger learning rates. To accelerate the learning procedure, one can either optimally adapt the mini-batch size for a given learning rate, or optimally adjust the learning rate to a fixed mini-batch size. We begin by discussing learning rate adaptation. 
 
-收敛速度受选择的学习率和小批量大小 [10]、[46] 的影响。由于大数定律，增加小批量大小会降低随机梯度噪声 [46]，从而允许更大的学习率。为了加速学习过程，可以针对给定的学习率优化调整小批量大小，或者将学习率优化为固定小批量大小。我们首先讨论学习率适应。
+收敛速度受学习率和批量大小 [10]、[46] 的影响。基于大数定律，增加批量大小会较小随机梯度的噪声 [46]，进而允许更大的学习率。因此，为了加速学习过程，可以在给定学习率的情况下，优化调整批量大小，或者固定批量大学，优化学习率。
 
-In each iteration, the empirical gradient variance can guide the adaptation of the learning rate which is inversely proportional to the gradient noise. Popular optimization methods that make use of this idea include RMSProp [191], AdaGrad [42], AdaDelta [218] and Adam [87]. These methods are not specific to SVI but are frequently used in this context; for more details we refer interested readers to [53]. [157] first introduced adaptive learning rates for the global variational parameter $γ$ in SVI, where the optimal learning rate was shown to satisfy $ρ∗t = (γ∗t −γt )T (γ∗t −γt ) (γ∗t −γt )T (γ∗t −γt )+tr(Σ).(11)$
+**（1）学习率的自适应调整**
 
-在每次迭代中，经验梯度方差可以指导与梯度噪声成反比的学习率的适应。利用这个想法的流行优化方法包括 RMSProp [191]、AdaGrad [42]、AdaDelta [218] 和 Adam [87]。这些方法不是 SVI 特有的，但在这种情况下经常使用；有关更多详细信息，我们请感兴趣的读者参阅 [53]。 [157]首先在 SVI 中引入了全局变分参数 $γ$ 的自适应学习率，其中最佳学习率被证明满足 $ρ∗t = (γ∗t −γt )T (γ∗t −γt ) (γ ∗t −γt )T (γ∗t −γt )+tr(Σ).(11)$
+在每次迭代中，梯度的经验方差可以用于指导学习率的自动适应（ 因为梯度噪声与学习率成反比 ）。利用此想法的优化方法包括 `RMSProp` [191]、`AdaGrad` [42]、`AdaDelta` [218] 和 `Adam` [87] 等。这些方法不是随机变分推断特有的，但在其中经常使用；更多详细信息请参阅 [53]。 
 
-Above, $γ∗t$ denotes the optimal global variational parameter, and $γt$ the current estimate. $Σ$ is the covariance matrix of the variational parameter in this mini-batch. Since $γ∗t$ is unknown, [157] showed how to estimate the optimal learning rate in an online fashion. Instead of adapting the learning rate, the mini-batch size can be adapted while keeping the learning rate fixed. This achieves similar effects [10]  [26], [37], [184]. In order to decrease the SGD variance, [10] proposed to choose the mini-batch size proportionally to the value of the objective function relative to its optimum. In practice, the estimated gradient noise covariance and the magnitude of the gradient are used to estimate the optimal mini-batch size.
+[157]首先在随机变分推断中引入了全局变分参数 $γ$ 的自适应学习率，其中最佳学习率被证明满足：
 
-上面，$γ∗t$ 表示最优全局变分参数，$γt$ 表示当前估计。 $Σ$ 是这个 mini-batch 中变分参数的协方差矩阵。由于 $γ∗t$ 是未知的，[157] 展示了如何以在线方式估计最佳学习率。可以在保持学习率固定的同时调整小批量大小，而不是调整学习率。这实现了类似的效果 [10] [26]、[37]、[184]。为了减少 SGD 方差，[10] 建议根据目标函数的值与其最优值成比例地选择小批量大小。在实践中，估计的梯度噪声协方差和梯度的大小用于估计最佳小批量大小。
+$$
+ρ^∗_t = \frac{(γ^∗_t −γ_t )^T (γ^∗_t −γ_t )}{ (γ^∗_t − γ_t )^T (γ^∗_t −γ_t )+tr(Σ)}
+$$
 
-#### 4.4.2 方差减少策略
-除了通过学习率和小批量大小控制优化路径之外，我们还可以减少方差，从而实现更大的梯度步长。 SVI 中经常使用方差减少来实现更快的收敛。如下，我们总结了有关如何通过控制变量、非均匀采样和其他方法实现这一目标的文献。
+上面，$γ^∗_t$ 表示最优全局变分参数，$γ_t$ 表示当前估计。 $Σ$ 是这个批次中变分参数的协方差矩阵。由于 $γ^∗_t$ 是未知的，[157] 展示了如何以在线方式估计最佳学习率。
 
-（1）控制变量法
+**（2）批量大小的自适应调整**
 
-A control variate is a stochastic term that can be added to the stochastic gradient such that its expectation remains the same, but its variance is reduced [20]. A control variate needs to be correlated with the stochastic gradient, and easy to compute. Using control variates for variance reduction is common in Monte Carlo simulation and stochastic optimization [165], [208]. Several authors have suggested the use of control variates in the context of SVI [78], [146], [154], [208]. As a prominent example, we discuss the stochastic variance reduced gradient (SVRG) method [78]. In SVRG, one constructs a control variate which takes advantage of previous gradients from all data points, and one exploits that gradients along the optimization path are correlated. The standard stochastic gradient update $γt+1 = γt −ρt (∇ ˆL(γt ))$ is replaced by $γt+1 = γt −ρt (∇ ˆL(γt )−∇ ˆL(  ̃γ)+  ̃μ).(12)$ . $ˆL$ indicates the estimated objective (here the negative ELBO) based on the current set of mini-batch indices, $γ$ is a snapshot of $γ$ after every $m$ iterations, and $μ$ is the batch gradient computed over all the data points, $ ̃μ = ∇L(  ̃γ)$. Since $−∇ ˆL(  ̃γ)+  ̃μ$ has expectation zero, it is a control variate. SVRG requires a full pass through the dataset every mth iteration to compute the full gradients, even though a full pass can be relaxed to a very large mini-batch for large data sets. For smooth but not strongly convex objectives, SVRG was shown to achieve the asymptotic convergence rate O(1/T ), compared to O(1/√T ) of SGD. Many other control variates are used in practice [140], [146], [203]. We present another popular type of a control variate, the score function control variate
+可以在保持学习率固定的同时调整批量大小，这也实现了类似效果 [10] [26]、[37]、[184]。为了减少随机梯度下降的方差，[10] 建议根据目标函数的值与其最优值成比例地选择批量大小。在实践中，估计的梯度噪声协方差和梯度大小被用于估计最佳批量大小。
 
-控制变量是一个随机项，可以添加到随机梯度中，使其期望保持不变，但其方差减少 [20]。控制变量需要与随机梯度相关，并且易于计算。使用控制变量来减少方差在 Monte Carlo 模拟和随机优化 [165]、[208] 中很常见。几位作者建议在 SVI [78]、[146]、[154]、[208] 的上下文中使用控制变量。作为一个突出的例子，我们讨论了随机方差减小梯度 (SVRG) 方法 [78]。在 SVRG 中，一种利用来自所有数据点的先前梯度构建控制变量，并且利用沿优化路径的梯度是相关的。标准随机梯度更新 $γt+1 = γt −ρt (∇ ˆL(γt ))$ 被替换为 $γt+1 = γt −ρt (∇ ˆL(γt )−∇ ˆL( ̃γ)+ ̃μ).(12 )$ 。 $ˆL$ 表示基于当前小批量索引集的估计目标（此处为负 ELBO），$γ$ 是每 $m$ 次迭代后 $γ$ 的快照，$μ$ 是计算的批梯度在所有数据点上，$ ̃μ = ∇L( ̃γ)$。由于 $−∇ ˆL( ̃γ)+ ̃μ$ 的期望为零，因此它是一个控制变量。 SVRG 需要每第 m 次迭代对数据集进行一次完整的传递以计算完整的梯度，即使完整的传递可以放宽到大数据集的非常大的小批量。对于平滑但不是强凸的目标，与 SGD 的 O(1/√T ) 相比，SVRG 被证明可以实现 O(1/T ) 的渐近收敛率。在实践中使用了许多其他控制变量 [140]、[146]、[203]。我们提出了另一种流行的控制变量类型，得分函数控制变量
 
-（2）非均匀采样法
+#### 4.4.2 方差减少的策略
 
-Instead of subsampling data points with equal probability, non-uniform sampling can be used to select mini-batches with a lower gradient variance. Several authors suggested variants of importance sampling in the context of mini-batch selection [32], [55], [148], [226]. Although effective, these methods are not always practical, as the computational complexity of the sampling mechanism relates to the dimensionality of model parameters [47]. Alternative methods aim at de-correlating similar points and sampling diversified mini-batches. These methods include stratified sampling [225], where one samples data from pre-defined subgroups based on meta-data or labels, clustering-based sampling [47], which amounts to clustering the data using k-means and then sampling data from every cluster with adjusted probabilities, and diversified mini-batch sampling [223], [224] using repulsive point processes to suppress the probability of data points with similar features in the same mini-batch. All of these methods have been shown to reduce variance and can also be used for learning on imbalanced data.
+除了通过学习率和小批量大小控制优化路径之外，还可以采取一些措施来减少方差，从而实现更大的梯度步长。 随机变分推断中经常使用`方差减少`来实现更快的收敛。下面总结了一些通过`控制变量`、`非均匀采样`和其他方法实现这一目标的方法：
 
-可以使用非均匀采样来选择具有较低梯度方差的小批量，而不是以等概率对数据点进行二次采样。几位作者建议在小批量选择 [32]、[55]、[148]、[226] 的背景下进行重要性采样的变体。尽管有效，但这些方法并不总是实用，因为采样机制的计算复杂性与模型参数的维度有关 [47]。替代方法旨在消除相似点的相关性并对多样化的小批量进行采样。这些方法包括分层抽样 [225]，其中一个基于元数据或标签从预定义的子组中抽样数据，基于聚类的抽样 [47]，这相当于使用 k 均值对数据进行聚类，然后从每个具有调整概率的聚类，以及多样化的小批量采样 [223]、[224] 使用排斥点过程来抑制同一小批量中具有相似特征的数据点的概率。所有这些方法都已被证明可以减少方差，也可以用于学习不平衡数据。
+**（1）控制变量法**
 
-（3）其他方法
+控制变量是一个随机项，该随机项可以被添加到随机梯度中，以使梯度的期望保持不变，而方差减少 [20]。控制变量需要与随机梯度相关，并且易于计算。使用控制变量来减少方差在蒙特卡洛模拟和随机优化 [165]、[208] 中很常见。几位作者建议在随机变分推断中使用控制变量[78]、[146]、[154]、[208] 。
 
-A number of alternative methods have been developed that contribute to variance reduction for SVI. A popular approach relies on Rao-Blackwellization, which is used in [154]. The Rao-Blackwellization theorem (see Appendix A.5) generally states that a conditional estimation has lower variance if there exists a valid statistic that it can be conditioned on. Inspired by Rao-Blackwellization, the local expectation gradients method [194] has been proposed. This method splits the computation of the gradient of the ELBO into a Monte Carlo estimation and an exact expectation so that the contribution of each latent dimension to the gradient variance is optimally taken into account. Another related approach has been developed for SVI, which averages expected sufficient statistics over a sliding window of mini-
-batches to obtain a natural gradient with smaller mean squared error [112].
+其中一个突出例子，是`随机方差减小梯度 (SVRG) ` [78]。在 `SVRG` 中，利用来自所有数据点获得的历史梯度来构建控制变量，并且充分利用了沿优化路径的梯度具有相关性这一特点。标准随机梯度更新 $γ_{t+1} = γ_t −ρ_t (∇ \hat{\mathscr{L}}(γ_t))$ 被替换为：
 
-已经开发了许多有助于减少 SVI 方差的替代方法。一种流行的方法依赖于 [154] 中使用的 Rao-Blackwellization。 Rao-Blackwellization 定理（参见附录 A.5）通常指出，如果存在可以作为条件估计的有效统计量，则条件估计具有较低的方差。
+$$
+γ_{t+1} = γ_t − ρ_t (∇ \hat{\mathscr{L}} (γ_t ) − ∇ \hat{\mathscr{L}}( \tilde{γ})+\tilde{μ})
+$$ 
 
-受 Rao-Blackwellization 的启发，已经提出了局部期望梯度方法 [194]。该方法将 ELBO 的梯度计算拆分为 Monte Carlo 估计和精确期望，以便最佳地考虑每个潜在维度对梯度方差的贡献。
+$\hat{\mathscr{L}}$ 表示基于当前批量集索引的待估计目标（ 此处为负的 `ELBO` ），$\tilde γ$ 是每 $m$ 次迭代后 $γ$ 的快照，$\tilde μ$ 是在所有数据点上计算的批梯度，$\tilde μ = ∇\mathscr{L}(\tilde γ)$。由于 $ − ∇ \hat{\mathscr{L}}(\tilde γ)+ \tilde μ$ 的期望为零，因此它是一个控制变量。 
 
-已经为 SVI 开发了另一种相关方法，它在小批量的滑动窗口上平均预期足够的统计数据，以获得具有较小均方误差的自然梯度 [112]。
+`SVRG` 需要每 $m$ 次迭代对数据集进行一次完整的遍历以计算完整的梯度，即便这种完整遍历可以被放宽到大数据集的某个非常大的批次上。对于平滑但不是强凸的目标，与 `SGD` 的 $O(1/\sqrt{T})$ 相比，`SVRG` 被证明可以实现 $O(1/T )$ 的渐近收敛率。在实践中还有许多其他控制变量 [140]、[146]、[203]。其中在 5.2 节还会介绍另外一种比较流行的控制变量类型 --- 得分函数控制变量。
+
+**（2）非均匀采样法**
+
+可以使用非均匀二次采样来获得具有较低梯度方差的批量，而不是以等概率对数据点进行采样。有几位作者建议在批量选择 [32]、[55]、[148]、[226] 是采用重要性采样及其变体。这些方法有效但并不总是实用，因为采样机制的计算复杂度与模型参数维度有关 [47]。另外一种替代方法旨在消除相似点的相关性并对多样化的批量进行采样。这些方法包括：`分层抽样` [225]，基于元数据或标签从预定义的子组中抽样数据；`基于聚类的抽样` [47]，使用 $k$ 均值对数据进行聚类，然后从每个聚类中按照调整后的概率抽取样本；`多样化的批量采样` [223]、[224] 使用`排斥点过程`来抑制同一小批量中具有相似特征的数据点出现的概率。上述这些方法都已被证明可以减少方差，也可以用于学习不平衡数据。
+
+**（3）`Rao-Blackwellization` 及其他**
+
+已经开发了许多有助于减少随机变分推断方差的其他方法。一种流行的方法依赖于 [154] 中使用的`Rao-Blackwellization` 。 `Rao-Blackwellization 定理`（参见附录 A.5）指出，如果存在可以作为条件估计的有效统计量，则条件估计具有较低的方差。受 `Rao-Blackwellization` 的启发，已经提出了`局部期望梯度方法` [194]。该方法将 `ELBO` 的梯度计算拆分为一个蒙特卡洛估计和一个精确期望，以便最佳地考虑每个隐维度对梯度方差的贡献。
+
+还有其他一些随机变分推断的方法，例如， [112] 在一个批量的滑动窗口上对预期的充分统计量做平均，以获得具有较小均方误差的自然梯度。
 
 ### 4.5 其他可扩展推断方法
 
-与使用随机优化更快收敛相比，本节介绍了利用某些模型的结构来实现相同目标的方法。我们特别关注折叠、稀疏、并行和分布式推断
+与利用随机优化来使收敛更快的方法相比，本节介绍了一些利用模型结构来实现相同目标的方法。特别是其中的`折叠推断`、`稀疏推断`、`并行和分布式推断` 方法。
 
-#### 4.5.1 折叠推断
+#### 4.5.1 折叠变分推断
 
-Collapsed variational inference (CVI) relies on the idea of analytically integrating out certain model parameters [64], [83], [94], [97], [182], [188], [197]. Due to the reduced number of parameters to be estimated, inference is typically faster. Collapsed inference is commonly constrained in the traditional conjugate exponential families, where the ELBO assumes an analytical form during marginalization. For these models, one can either marginalize out these latent variables before the ELBO is derived, or eliminate them afterwards [64], [83]. Several authors have proposed CVI for topic models [94], [188] where one can either collapse the topic proportions [188] or the topic assignments [64]. In addition to these model specific derivations, [64] unifies existing model-specific CVI approaches and presents a general collapsed inference method for models in the conjugate exponential family class.
+`折叠变分推断 (CVI)` 依赖于解析地积分出某些模型参数 [64]、[83]、[94]、[97]、[182]、[188]、[197] 的想法。这样的话，需要估计的参数数量会减少，推断过程通常会更快。折叠推断通常限制在传统共轭指数族上，其中 `ELBO` 在边缘化期间采用解析形式获得。对于这些模型，可以在推导出 `ELBO` 之前将这些隐变量边缘化，或者在之后消除它们 [64]、[83]。几位作者提出了用于主题建模 [94]、[188] 的折叠变分推断，其中可以折叠主题比例 [188] 或主题分配 [64]。除了这些特定于模型的推导之外，[64] 统一了现有的特定于模型的 `CVI` 方法，并为共轭指数族类中的模型提供了一种通用的折叠推断方法。
 
-折叠变分推断 (CVI) 依赖于分析整合某些模型参数 [64]、[83]、[94]、[97]、[182]、[188]、[197] 的想法。由于要估计的参数数量减少，推断通常会更快。折叠推断通常受限于传统的共轭指数族，其中 ELBO 在边缘化期间采用分析形式。对于这些模型，可以在推导出 ELBO 之前将这些潜在变量边缘化，或者在之后消除它们 [64]、[83]。几位作者提出了用于主题模型 [94]、[188] 的 CVI，其中可以折叠主题比例 [188] 或主题分配 [64]。除了这些特定于模型的推导之外，[64] 统一了现有的特定于模型的 CVI 方法，并为共轭指数族类中的模型提供了一种通用的折叠推断方法。
+`CVI` 的计算优势很大程度上取决于折叠变量的统计量。此外，折叠隐随机变量可以使其他推断技术易于处理。对于主题模型等，可以折叠离散变量，仅推断连续变量。这允许使用推断网络[122]、[180]。更一般地说，`CVI` 并不能解决所有问题。一方面，整合某些模型变量会使 `ELBO` 更紧致，因为边缘似然不必在这些变量中获得下界。另一方面，除了数学挑战之外，边缘化变量还会在变量之间引入额外的依赖关系。例如，在隐狄利克雷分配中，折叠全局变量会在赋值变量之间引入非局部依赖性，从而使分布式推断更加困难。
 
-The computational benefit of CVI depends strongly on the statistics of the collapsed variables. Additionally, collapsing latent random variables can make other inference techniques tractable. For models such as topic models, we can collapse the discrete variables and only infer the continuous ones. This allows the usage of inference networks (Section 6) [122], [180]. More generally, CVI does not solve all problems. On the one side, integrating out certain model variables makes the ELBO tighter, since the marginal likelihood does not have to get lower-bounded in these variables. On the other hand, besides mathematical challenges, marginalizing variables can introduce additional dependencies between variables. For example, collapsing the global variables in Latent Dirichlet Allocation introduces non-local dependencies between the assignment variables, making distributed inference harder
+#### 4.5.2  稀疏变分推断
 
-CVI 的计算优势很大程度上取决于折叠变量的统计数据。此外，折叠潜在随机变量可以使其他推断技术易于处理。对于主题模型等模型，我们可以折叠离散变量，仅推断连续变量。这允许使用推断网络（第 6 节）[122]、[180]。更一般地说，CVI 并不能解决所有问题。一方面，整合某些模型变量会使 ELBO 更紧密，因为边际似然不必在这些变量中获得下界。另一方面，除了数学挑战之外，边缘化变量还会在变量之间引入额外的依赖关系。例如，在潜在狄利克雷分配中折叠全局变量会在赋值变量之间引入非局部依赖性，从而使分布式推断更加困难
-
-#### 4.5.2  稀疏推断
-
-Sparse inference introduces additional low-rank approximations into the variational approach, enabling more scalable inference [63], [177], [195]. Sparse inference can be either interpreted as a modeling choice or as an inference scheme [24]. Sparse inference methods are often encountered in the Gaussian Process (GPs) literature. The computational cost of learning GPs is O(M3), where M is the number of data points. This cost is caused by the inversion of the kernel matrix KMM of size M ×M, which hinders the application of GPs to big data sets. The idea of sparse inference in GPs [177] is to introduce T inducing points. Inducing points can be interpreted as pseudo-inputs that reflect the original data, but yield a more sparse representation since T M. With inducing points, only a T ×T sized matrix needs to be inverted, and consequently the computational complexity of this method is O(MT 2). [195] collapses the distribution of inducing points, and [63] further extends this work to a stochastic version with a computational complexity of O(T 3). Additionally, sparse inducing points make inference in Deep GPs tractable [35]
-
-稀疏推断在变分方法中引入了额外的低秩近似，从而实现了更具可扩展性的推断 [63]、[177]、[195]。稀疏推断既可以解释为建模选择，也可以解释为推断方案 [24]。在高斯过程 (GP) 文献中经常会遇到稀疏推断方法。学习 GP 的计算成本是 O(M3)，其中 M 是数据点的数量。这个代价是由大小为 M ×M 的核矩阵 KMM 的求逆引起的，这阻碍了 GP 在大数据集上的应用。 GPs [177] 中稀疏推断的思想是引入 T 诱导点。诱导点可以解释为反映原始数据的伪输入，但自 T M 以来产生更稀疏的表示。对于诱导点，只需要反转一个T×T大小的矩阵，因此该方法的计算复杂度为O(MT 2)。 [195] 折叠了诱导点的分布，[63] 进一步将这项工作扩展到了一个计算复杂度为 O(T 3) 的随机版本。此外，稀疏诱导点使 Deep GPs 中的推断变得易于处理 [35]
+稀疏变分推断引入了额外的低秩近似，从而实现了更具可扩展性的推断 [63]、[177]、[195]。稀疏推断既可以被解释为建模选择，也可以解释为一种推断方案 [24]。在`高斯过程 ( GP )` 文献中经常会遇到稀疏推断方法。学习高斯过程的计算成本是 $O(M^3)$，其中 $M$ 是数据点的数量。这个代价是由大小为 $M \times M$ 的核矩阵 $KMM$ 求逆引起的，这阻碍了高斯过程在大数据集上的应用。 稀疏高斯过程推断的思想是引入 $T$ 个诱导点 [177] 。这些诱导点可以解释为反映原始数据的伪输入，但 $T \ll M$ 从而产生更稀疏的表示。而对于诱导点来说，只需要对一个 $T×T$ 大小的矩阵求逆，因此该方法的计算复杂度为 $O(MT^2)$。 [195] 折叠了诱导点的分布，[63] 进一步将这项工作扩展到了一个计算复杂度为 $O(T^3)$ 的随机版本。此外，稀疏诱导点使`深度高斯过程`中的推断变得易于处理 [35]。
 
 #### 4.5.4 分布式和并行推断
 
-Variational inference can be adjusted to distributed computing scenarios, where subsets of the data or parameters are distributed among several machines. [21], [49], [135], [138], [219]. Distributed inference schemes are often required in large scale scenarios, where data and computations are distributed across several machines. Independent latent variable models are trivially parallelizable. However, model specific designs such as reparametrizations might be required to enable efficient distributed inference [49]. Current computing resources make VI applicable to web-scale data analysis [219]
-
-变分推断可以调整到分布式计算场景，其中数据或参数的子集分布在多台机器上。 [21]、[49]、[135]、[138]、[219]。在大规模场景中通常需要分布式推断方案，其中数据和计算分布在多台机器上。独立的潜在变量模型可以简单地并行化。然而，可能需要模型特定的设计，例如重新参数化，以实现高效的分布式推断 [49]。当前的计算资源使 VI 适用于网络规模的数据分析 [219]
+变分推断可以调整到分布式计算场景，其中数据或参数的子集分布在多台机器上 [21]、[49]、[135]、[138]、[219]。在大规模场景中通常需要分布式推断方案，其中数据和计算分布在多台机器上。独立的隐变量模型可以简单地并行化；然而可能需要模型的特定设计（例如重参数化），以实现高效的分布式推断 [49]。当前的计算资源使变分推断适用于网络规模的数据分析 [219]。
 
 ## 5 提升通用性 --- 黑盒变分推断
 
@@ -575,17 +577,17 @@ Variational inference can be adjusted to distributed computing scenarios, where 
 
 因此，人们自然而然在思考：是否存在一个不需特定于某种模型的通用解决方案 ？这个解决方案最好将像黑匣子一样，只需输入模型和海量数据，然后就自动输出`变分分布`（或变分参数）。事实表明，这是有可能的，此类推断方法被称为**黑盒变分推断（BBVI）**。
 
-> 黑盒变分推断的概念最早出现在文献 [Ranganath et al., 2014](https://arxiv.org/pdf/1401.0118) 中和 [Sal-imans 和 Knowles，2014](https://arxiv.org/pdf/1401.1022); [Kingma and Welling, 2014](https://arxiv.org/abs/1312.6114v10) 和 [Rezende et al., 2014](https://arxiv.org/abs/1401.4082) 提出了利用重参数化技巧实现反向传播和优化的方法；[Rezende and Mohamed, 2015](https://arxiv.org/abs/1505.05770) 提出了标准化流的 BBVI 方案、[Tran et al.,2016](https://arxiv.org/abs/158.06499) 提出了变分高斯过程的 BBVI 方案，均提升了变分推断的精度；[Alp Kucukelbir et al, 2016](https://arxiv.org/abs/1603.00788) 提出自动微分变分推断方法（ ADVI ）；[Yuri Burda et al., 2016](https://arxiv.org/abs/1505.00519) 在 VAE 基础上，提出了重要性加权变分自编码器；[J Domke and D Sheldon, 2018](https://arxiv.org/abs/1807.09034) 对其进行了泛化，提出了重要性加权变分推断。
+> 黑盒变分推断的概念最早出现在文献 [Ranganath et al., 2014](https://arxiv.org/pdf/1401.0118) 中和 [Sal-imans 和 Knowles，2014](https://arxiv.org/pdf/1401.1022); [Kingma and Welling, 2014](https://arxiv.org/abs/1312.6114v10) 和 [Rezende et al., 2014](https://arxiv.org/abs/1401.4082) 提出了利用重参数化技巧实现反向传播和优化的方法；[Rezende and Mohamed, 2015](https://arxiv.org/abs/1505.05770) 提出了标准化流的 黑盒变分推断方案、[Tran et al.,2016](https://arxiv.org/abs/158.06499) 提出了变分高斯过程的 黑盒变分推断方案，均提升了变分推断的精度；[Alp Kucukelbir et al, 2016](https://arxiv.org/abs/1603.00788) 提出自动微分变分推断方法（ ADVI ）；[Yuri Burda et al., 2016](https://arxiv.org/abs/1505.00519) 在 VAE 基础上，提出了重要性加权变分自编码器；[J Domke and D Sheldon, 2018](https://arxiv.org/abs/1807.09034) 对其进行了泛化，提出了重要性加权变分推断。
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211115171851-9244.webp)
 
 > > 图 12： 变分推断概念图，愿景是：（1）可以轻松对任何模型进行变分推断；（2）可以利用海量数据进行推断；（3）用户只需指定模型而不需要做其他数学工作。
 
-BBVI 大致分为两种类型：
+黑盒变分推断大致分为两种类型：
 
-- **基于评分梯度**的黑盒变分推断（ BBVI ）
+- **基于评分梯度**的黑盒变分推断
 
-- **基于重参数化梯度**的黑盒变分推断（ BBVI ）
+- **基于重参数化梯度**的黑盒变分推断
 
 后者是变分自编码器 (VAE) 的基础。
 
@@ -639,7 +641,7 @@ $$
 
 ---
 
-### 5.3 使用重参数化梯度的 BBVI 
+### 5.3 使用重参数化梯度的 黑盒变分推断
 
 依然采用上节中的模型，变分下界 `ELBO` 为（为方便重复式 9）：
 
@@ -679,13 +681,13 @@ $$
 > 
 > (2) 可微性是重参数化技巧使用的重要条件，这意味着其适用范围不如评分函数方法。
 
-BBVI 的方差减少：BBVI 需要一套与第 3.2 节中审查的 SVI 不同的方差减少技术。与 SVI 的噪声来自有限数据点集的二次采样不同，BBVI 噪声来自可能具有无限支持的随机变量。在这种情况下，诸如 SVRG 之类的技术不适用，因为完整梯度不是有限多项的总和，并且无法保存在内存中。因此，BBVI 涉及一组不同的控制变量和其他方法，这里将简要回顾一下从梯度估计器中减去得分函数的蒙特卡罗期望：
+黑盒变分推断的方差减少：黑盒变分推断需要一套与第 4.2 节中 `SVI` 不同的方差减少技术。与 `SVI` 的噪声来自有限数据点集的二次采样不同，黑盒变分推断噪声来自可能具有无限支持的随机变量。在这种情况下，诸如 SVRG 之类的技术不适用，因为完整梯度不是有限多项的总和，并且无法保存在内存中。因此，黑盒变分推断涉及一组不同的控制变量和其他方法，这里将简要回顾一下从梯度估计器中减去得分函数的蒙特卡罗期望：
 
-### 5.4 方差减少的策略
+### 5.4 黑盒变分推断中的方差减少策略
 
-黑盒变分推断需要一套不同于第 4 节中为随机变分推断设计的方差减少技术。与随机变分推断的噪声来自有限数据点集的二次采样不同，BBVI 的噪声来自可能具有无限支持的随机变量。在这种情况下，诸如随机方差减少梯度 ( SVRG ) 之类的技术不再适用，因为完整梯度无法拆解成有限项的总和，而且难以保存在内存中。BBVI 会涉及一组不同的控制变量和其他方法，这里将简要回顾一下。
+黑盒变分推断需要一套不同于为`随机变分推断`设计的方差减少技术。与随机变分推断的噪声来自有限数据点集的二次采样不同，黑盒变分推断的噪声来自可能具有无限支持的随机变量。在这种情况下，诸如`随机方差减少梯度 ( SVRG )` 之类的技术不再适用，因为完整梯度无法拆解成有限项的和，而且很难保存在内存当中。黑盒变分推断会涉及一组不同的控制变量和其他方法，这里将简要回顾一下。
 
-BBVI 中最重要的控制变量是`得分函数控制变量`，其从梯度估计器中减去得分函数的期望（蒙特卡罗法）：
+黑盒变分推断中最重要的控制变量是`得分函数控制变量`，其从梯度估计器中减去得分函数的期望（蒙特卡罗法）：
 
 根据需要，`得分函数控制变量`在`变分分布`下的期望为零。选择权重 $w$ 的依据是其能够最小化梯度的方差。
 
@@ -693,11 +695,11 @@ $$
 \nabla_\lambda \hat{\mathcal{L}}_{control} =\nabla_\lambda \hat{ \mathcal{L}} − \frac{w}{K} \sum_{k=1}^{K}\nabla_\lambda \text{log} q(z_k \mid \lambda) 
 $$
 
-虽然原始 BBVI 论文介绍了 `Rao-Blackwellization` 和`控制变量`，但 [194] 指出控制变量的良好选择可能取决于模型。因此提出了一种只考虑隐变量马尔可夫毯的局部期望梯度。
+虽然原始 黑盒变分推断论文介绍了 `Rao-Blackwellization` 和`控制变量`，但 [194] 指出控制变量的良好选择可能取决于模型。因此提出了一种只考虑隐变量马尔可夫毯的局部期望梯度。
 
  [167] 提出了一种不同的方法，它引入了`过度分散的重要性采样`。通过从属于过度分散的指数族并且在`变分分布`的尾部放置较大质量的提议分布中进行采样，可以减少梯度的方差。
 
-## 6 提升准确性 --- 新的目标函数和结构化变分近似
+## 6 提升准确性 --- 新的目标函数和变分分布
 
 ### 6.1 平均场变分的起源和局限性
 
@@ -795,7 +797,7 @@ $$
 
 通过对核和 $q$ 的特定选择，可以证明 `SVGD` 确定了 `KL 散度` 的最陡梯度方向上的最佳扰动 [109]。 `SVGD` 导致了一种方案，其中隐空间中的样本被顺序转换为近似后验。因此，虽然形式上不同，但该方法很容易让人想起标准化流方法 [159]。
 
-### 6.3 改进`变分分布`的结构
+### 6.3 改进变分分布的结构
 
 `MFVI` 假设一个完全因式分解的`变分分布`；因此，无法捕获后验相关性。全分解变分模型的准确性有限，特别是当隐变量高度依赖时，例如在具有层次结构的模型中。本节讨论未完全分解、但包含隐变量之间依赖关系的`变分分布`。这些结构化的`变分分布`更具表现力，但通常需要更高的计算成本。
 
@@ -829,7 +831,7 @@ $$
 这通常需要特定于模型的近似值。 [45]、[76] 为流行的时间序列模型导出了随机变分推断，包括 `隐马尔科夫模型（ HMM ）`、`隐式半马尔可夫模型 ( HSMM )` 和`分层狄利克雷过程-隐马尔科夫模型`。此外，[76] 为 `隐式半马尔可夫模型 ( HSMM )` 推导了一个加速的随机变分推断算法。 [11], [12] 推导出一个结构化的黑盒变分推断算法，用于非共轭的隐弥散模型。
 
 
-### 6.4 其他非标准方法
+### 6.4 其他非标准的方法
 
 本节将介绍一些杂项方法，这些方法属于提高变分推断准确性的广泛范围，但不会被归类为新的散度度量或结构化模型。
 
@@ -843,11 +845,11 @@ $$
 
 **（2）利用随机梯度下降的变分推断**
 
-在某些情况下，概率模型的负对数后验上的随机梯度下降可以被视为一种隐式变分推断算法。在这里，我们考虑具有恒定学习率[113]、[114] 和提前停止 [43] 的随机梯度下降（ SGD ）。
+在某些情况下，概率模型的负对数后验上的随机梯度下降可以被视为一种隐式变分推断算法。在这里，我们考虑具有恒定学习率[113]、[114] 和提前停止 [43] 的随机梯度下降（ `SGD` ）。
 
 `恒定 SGD` 可以看作是收敛到平稳分布的马尔可夫链；因此，它类似于朗之万动力学 ( Langevin dynamics ) [214]。平稳分布的方差由学习率控制。 [113] 表明可以调整学习率以最小化所得平稳分布和贝叶斯后验之间的 `KL 散度` 。此外，[113] 推导出了一个最佳学习率的公式，这些公式结合了 `AdaGrad` [42] 及相关成果。
 
-[114] 中介绍了包括`动量`和`迭代平均`的`泛化 SGD`。相比之下，[43] 将 SGD 解释为非参数变分推断方案。该论文提出了一种跟踪隐式变分目标熵变化的、基于 `Hessian 估计`的新方法，因此作者考虑从非平稳分布中抽样。
+[114] 中介绍了包括`动量`和`迭代平均`的`泛化 SGD`。相比之下，[43] 将 `SGD` 解释为非参数变分推断方案。该论文提出了一种跟踪隐式变分目标熵变化的、基于 `Hessian 估计`的新方法，因此作者考虑从非平稳分布中抽样。
 
 **（3）对异常值和局部最优的鲁棒性**
 
@@ -969,7 +971,7 @@ q_\phi (z_{(i,l)}|x_i)
 $$
 
 
-作者表明，评估的样本 `L` 越多，变分边界变得越紧，这意味着在 $L →∞$ 时接近真实对数似然。对 `IWAE` 的重新解释表明，它们与 `VAE` 相同，但从更具表现力的分布中采样，该分布在 $L →∞$ [31] 时逐点收敛到真实后验。由于 `IWAE` 引入了有偏估计器，因此潜在地可以采取额外步骤来获得更好的`方差-偏差权衡` [139]、[152]、[153] 。
+作者表明，评估的样本 `L` 越多，变分边界变得越紧，这意味着在 $L →∞$ 时接近真实对数似然。对 `IWAE` 的重新解释表明，它们与 `VAE` 相同，但从更具表现力的分布中采样，该分布在 $L →∞$ [31] 时逐点收敛到真实后验。由于 `IWAE` 引入了有偏估计器，因此隐地可以采取额外步骤来获得更好的`方差-偏差权衡` [139]、[152]、[153] 。
 
 #### 7.3.2 先验 $p_θ$ 的建模选择
 
@@ -1008,7 +1010,7 @@ i,z_i)$ ，其中 $x^j_i$ 表示观测 $i$ 的第 $j$ 个维度。维度以顺�
 
 ### 8.4 自动变分推断
 
-概率编程允许从业者快速实现和修改模型，而不必担心推断问题。用户只需要指定模型，推断引擎就会自动进行推断。流行的概率编程工具包括但不限于：Stan[28]，涵盖了大量的高级变分推断和 `MCMC` 推断方法； Net[126] 基于变分消息传递和 EP；Automatic Statistician[52] 和 Anglican[198] 主要依靠采样方法；Ed-ward[200] 支持 BBVI 和 MonteCarlo 采样 ； Zhusuan[176] 的特点是用于贝叶斯深度学习的变分推断。这些工具的长期目标是改变概率建模的研究方法，使用户能够快速修改和改进模型，并使其他受众可以访问它们。
+概率编程允许从业者快速实现和修改模型，而不必担心推断问题。用户只需要指定模型，推断引擎就会自动进行推断。流行的概率编程工具包括但不限于：Stan[28]，涵盖了大量的高级变分推断和 `MCMC` 推断方法； Net[126] 基于变分消息传递和 EP；Automatic Statistician[52] 和 Anglican[198] 主要依靠采样方法；Ed-ward[200] 支持 黑盒变分推断和 MonteCarlo 采样 ； Zhusuan[176] 的特点是用于贝叶斯深度学习的变分推断。这些工具的长期目标是改变概率建模的研究方法，使用户能够快速修改和改进模型，并使其他受众可以访问它们。
 
 尽管目前努力使从业者更容易使用 VI，但对于非专家来说，其使用仍然不简单。例如，人工识别后验的对称性并打破这些对称性是 Infer.Net 所必需的。此外，诸如控制变量等减少方差的方法可以极大地加速收敛，但需要模型进行特定设计才能获得最佳性能。在撰写本文时，当前的概率编程工具箱尚未解决此类问题。我们相信这些方向对于推进概率建模在科学和技术中的影响非常重要。
 
