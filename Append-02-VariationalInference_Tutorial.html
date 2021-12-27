@@ -383,12 +383,12 @@
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id12">
-       2.3.2 利用概率图表示和理解
+       2.3.2 利用概率图表达随机变量的联合分布和依赖关系
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id13">
-       2.3.3 更一般的形式
+       2.3.3 推广到更一般的形式
       </a>
      </li>
     </ul>
@@ -407,7 +407,7 @@
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id16">
-     3.1 平均场近似的基本原理
+     3.1 平均场近似的数学推导
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -417,7 +417,7 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id18">
-     3.3 坐标上升优化算法
+     3.3 平均场推断优化算法 – 坐标上升法
     </a>
    </li>
   </ul>
@@ -439,12 +439,30 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#svi-sgd">
-     4.3 随机变分推断（ SVI ）：自然梯度与 SGD 的结合
+     4.3 随机变分推断（
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       SVI
+      </span>
+     </code>
+     ）：自然梯度与
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       SGD
+      </span>
+     </code>
+     的结合
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#svi">
-     4.4 随机变分推断（ SVI ）中的一些技巧
+     4.4 随机变分推断（
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       SVI
+      </span>
+     </code>
+     ）中的一些技巧
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
@@ -454,7 +472,29 @@
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id23">
-       4.4.2 方差减少策略
+       4.4.2 方差减少的策略
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id24">
+     4.5 其他可扩展推断方法
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id25">
+       4.5.1 折叠变分推断
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id26">
+       4.5.2  稀疏变分推断
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id27">
+       4.5.4 分布式和并行推断
       </a>
      </li>
     </ul>
@@ -462,7 +502,7 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id24">
+  <a class="reference internal nav-link" href="#id28">
    5 提升通用性 — 黑盒变分推断
   </a>
   <ul class="nav section-nav flex-column">
@@ -472,57 +512,51 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id25">
+    <a class="reference internal nav-link" href="#id29">
      5.2 使用评分梯度的 BBVI
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id26">
-     5.3 使用重参数化梯度的 BBVI
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id27">
-     5.4 方差减少的策略
-    </a>
-   </li>
-  </ul>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id28">
-   6 提升准确性 —  新的目标函数和结构化变分近似
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id29">
-     6.1 平均场变分的起源和局限性
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id30">
-     6.2 改进目标函数
+     5.3 使用重参数化梯度的 黑盒变分推断
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id31">
-     6.3 改进
-     <code class="docutils literal notranslate">
-      <span class="pre">
-       变分分布
-      </span>
-     </code>
-     的结构
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id32">
-     6.4 其他非标准方法
+     5.4 黑盒变分推断中的方差减少策略
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id33">
+  <a class="reference internal nav-link" href="#id32">
+   6 提升准确性 — 新的目标函数和变分分布
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id33">
+     6.1 平均场变分的起源和局限性
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id34">
+     6.2 改进目标函数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id35">
+     6.3 改进变分分布的结构
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id36">
+     6.4 其他非标准的方法
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id37">
    7 摊销式变分推断与深度学习
   </a>
   <ul class="nav section-nav flex-column">
@@ -537,7 +571,7 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id34">
+    <a class="reference internal nav-link" href="#id38">
      7.3 更灵活的 VAE
     </a>
     <ul class="nav section-nav flex-column">
@@ -564,7 +598,7 @@
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id35">
+      <a class="reference internal nav-link" href="#id39">
        7.3.3 解决僵尸单元的问题
       </a>
      </li>
@@ -573,34 +607,34 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id36">
+  <a class="reference internal nav-link" href="#id40">
    8 讨论
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id37">
+    <a class="reference internal nav-link" href="#id41">
      8.1 变分推断理论方面
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id38">
+    <a class="reference internal nav-link" href="#id42">
      8.2 变分推断和深度学习
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id39">
+    <a class="reference internal nav-link" href="#id43">
      8.3 变分推断和策略梯度
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#id40">
+    <a class="reference internal nav-link" href="#id44">
      8.4 自动变分推断
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id41">
+  <a class="reference internal nav-link" href="#id45">
    9 总结
   </a>
  </li>
@@ -621,27 +655,27 @@
 <style>p{text-indent:2em;2}</style>
 <div class="section" id="id1">
 <h2>1 问题提出<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>概率模型中的推断通常难以处理，根据之前的介绍，通过对随机变量进行采样的方法，能够为推断问题（例如，边缘似然推断）提供近似解。大多数基于采样的推断算法是属于马尔可夫链蒙特卡罗 (MCMC) 方法。</p>
-<p>不幸的是，上述基于采样的方法有几个重要缺点。</p>
+<p>概率模型中的推断通常难以处理，通过对随机变量进行采样（ 即蒙特卡洛 ）的方法，能够为推断问题（例如，边缘似然的推断）提供近似解。大多数基于采样的推断算法属于<code class="docutils literal notranslate"><span class="pre">马尔可夫链蒙特卡罗</span> <span class="pre">（</span> </code>MCMC<code class="docutils literal notranslate"><span class="pre">)</span></code>方法。</p>
+<p>基于采样的方法有几个重要的缺陷：</p>
 <ul class="simple">
-<li><p>尽管随机方法可以保证找到全局最优解，但前提是时间充足，而这在实践中通常是受限的</p></li>
-<li><p>目前尚没有好的方法能够判断采样结果与真实解到底有多接近，收敛状况仍然需要人工判断</p></li>
-<li><p>为了找到一个效率足够高的解决方案，MCMC 方法需要选择合适的采样技术（例如，Metropolis-Hastings 、 HMC 、 NUTS 等），而选择本身就是一门艺术。</p></li>
+<li><p>时间要求：尽管随机方法可以保证找到全局最优解，但前提是时间充足，而这在实践中通常是受限的，尤其是在大数据流行的当下。</p></li>
+<li><p>收敛判断：目前尚没有好的方法能够判断采样结果与真实解到底有多接近，收敛状况仍然需要人工判断。</p></li>
+<li><p>采样途径：为了找到一个效率足够高的解决方案，<code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 方法需要选择合适的采样技术（例如，Metropolis-Hastings 、 HMC 、 NUTS 等），这种选择本身就是一门艺术。</p></li>
 </ul>
-<p>为此，人们一直在寻找在保证适当精度条件下，比 MCMC 效率更高的后验推断方法，这就是变分推断方法。</p>
+<p>为此，人们一直在寻找在保证适当精度条件下，比 <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 效率更高的后验推断方法，这就是 <code class="docutils literal notranslate"><span class="pre">变分推断（</span> <span class="pre">Variational</span> <span class="pre">Inference</span> <span class="pre">）</span></code> 方法。</p>
 </div>
 <div class="section" id="id2">
 <h2>2 变分推断<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
 <h3>2.1 核心思想<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>根据贝叶斯概率框架，我们希望根据已有数据，来推断参数或隐变量的分布 <span class="math notranslate nohighlight">\(p\)</span> ，进而能够做后续的预测任务；但是，当 <span class="math notranslate nohighlight">\(p\)</span> 不容易表达，无法得到封闭形式解时，可以考虑寻找一个容易表达和求解的分布 <span class="math notranslate nohighlight">\(q\)</span> 来近似 <span class="math notranslate nohighlight">\(p\)</span> ，当 <span class="math notranslate nohighlight">\(q\)</span> 和 <span class="math notranslate nohighlight">\(p\)</span> 之间差距足够小时， <span class="math notranslate nohighlight">\(q\)</span> 就可以代替 <span class="math notranslate nohighlight">\(p\)</span> 作为输出结果，并执行后续任务。 当 <span class="math notranslate nohighlight">\(q\)</span> 由若干变分参数 <span class="math notranslate nohighlight">\(\nu\)</span> 定义时，该问题就变成了一个寻找 <span class="math notranslate nohighlight">\(\nu\)</span> 的最优化问题，优化目标是最小化 <span class="math notranslate nohighlight">\(q\)</span> 和 <span class="math notranslate nohighlight">\(p\)</span> 两个概率分布之间的差距。其中， <span class="math notranslate nohighlight">\(q\)</span> 被成为<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>， <span class="math notranslate nohighlight">\(\nu\)</span> 被成为变分参数。</p>
+<p>根据贝叶斯概率框架，我们希望根据已有数据，来推断<code class="docutils literal notranslate"><span class="pre">模型参数</span></code>或<code class="docutils literal notranslate"><span class="pre">隐变量</span></code>的概率分布 <span class="math notranslate nohighlight">\(p\)</span> ，进而能够（通过边缘化）完成后续预测任务；但当 <span class="math notranslate nohighlight">\(p\)</span> 不容易表达、无法得到封闭形式解时，可以考虑寻找一个容易表达和求解的分布 <span class="math notranslate nohighlight">\(q\)</span> 来近似 <span class="math notranslate nohighlight">\(p\)</span> ，当 <span class="math notranslate nohighlight">\(q\)</span> 和 <span class="math notranslate nohighlight">\(p\)</span> 之间差距足够小时， <span class="math notranslate nohighlight">\(q\)</span> 就可以代替真实分布 <span class="math notranslate nohighlight">\(p\)</span> 并被用于执行后续任务。 当 <span class="math notranslate nohighlight">\(q\)</span> 由若干参数 <span class="math notranslate nohighlight">\(\nu\)</span> 定义或索引时，推断问题就进一步变成了寻找最佳 <span class="math notranslate nohighlight">\(\nu\)</span> 的优化问题，优化目标是最小化 <span class="math notranslate nohighlight">\(q\)</span> 和 <span class="math notranslate nohighlight">\(p\)</span> 两个概率分布之间的差距。其中， <span class="math notranslate nohighlight">\(q\)</span> 被成为 <strong>变分分布</strong>， <span class="math notranslate nohighlight">\(\nu\)</span> 被称为 <strong>变分参数</strong>。</p>
 <blockquote>
-<div><p>变分推断的精髓是将 “求分布” 的推断问题，变成了 “缩小差距” 的优化问题。</p>
+<div><p>变分推断的精髓是将 “求真实分布” 的推断问题，转变成了 “求近似分布” 的问题，并进一步转变成了 “缩小差距” 的优化问题。由于 <span class="math notranslate nohighlight">\(q\)</span> 完全由人工定义，因此具备很大的灵活性。</p>
 </div></blockquote>
-<p>以下图为例进行说明，黄色分布为目标分布 <span class="math notranslate nohighlight">\(p\)</span> ，很难求解，但它看上去有些像高斯，我们可以尝试从高斯分布族 <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span> 中（此处以一个红色高斯和一个绿色高斯为例，其变分参数为均值 <span class="math notranslate nohighlight">\(\mu\)</span> 和 方差 <span class="math notranslate nohighlight">\(\sigma^2\)</span> ），寻找和 <span class="math notranslate nohighlight">\(p\)</span> 最像的（可以用“重叠面积比率最大” 或 “差异最小” 来度量 ） 那个 <span class="math notranslate nohighlight">\(q\)</span> ， 作为 <span class="math notranslate nohighlight">\(p\)</span> 的近似分布。</p>
+<p>以下图为例进行说明，黄色分布为目标分布 <span class="math notranslate nohighlight">\(p\)</span> ，很难求解，但它看上去有些像高斯，于是可以尝试从高斯分布族 <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span> 中（此处以一个红色高斯和一个绿色高斯为例，其变分参数为均值 <span class="math notranslate nohighlight">\(\mu\)</span> 和 方差 <span class="math notranslate nohighlight">\(\sigma^2\)</span> ），寻找和 <span class="math notranslate nohighlight">\(p\)</span> 最像的（可以用“重叠面积比率最大” 或 “差异最小” 来度量 ） 那个 <span class="math notranslate nohighlight">\(q\)</span> ， 作为 <span class="math notranslate nohighlight">\(p\)</span> 的近似分布。</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108085400-e452.webp" /></p>
 <blockquote>
-<div><p>图 1：单变量的真实分布与近似分布。 此处简化了假设，更为复杂的分布应当具有更多变量，且涉及多维空间中的多峰分布。</p>
+<div><p>图 1：单变量的真实分布与近似分布。 以单变量举例只是为了可视化理解，真实情况通常是具有很多个维随机变量的联合分布（如：深度神经网络可能包含几百万个参数维度），而且涉及多维空间中的多峰分布。</p>
 </div></blockquote>
 <p>变分方法与采样方法的主要区别是：</p>
 <ul class="simple">
@@ -649,59 +683,67 @@
 <li><p>可以知道自身收敛情况，甚至可以对其准确性有限制</p></li>
 <li><p>更适合于随机梯度优化、多处理器并行处理以及使用 GPU 加速</p></li>
 </ul>
-<p>虽然采样方法的历史非常悠久，但随着大数据的发展，变分方法一直在稳步普及，并成为目前使用更为广泛的推断技术。</p>
+<p>虽然采样方法的历史非常悠久，但随着大数据发展，变分方法一直在稳步普及，并成为目前使用更为广泛的推断技术。</p>
 </div>
 <div class="section" id="id4">
 <h3>2.2 进一步加深理解<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<p>变分推断的核心要点包括以下四个：</p>
+<p>可以从以下五点加深对变分推断的理解：</p>
 <ul class="simple">
-<li><p><strong>模型</strong>：变分推断需要设计一个模型  <span class="math notranslate nohighlight">\(p(\mathbf{z, x})\)</span> ，其中 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 为观测数据， <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 为模型参数或/和隐变量（后面统一用隐变量来表示，但需要理解模型参数和隐变量有时具有不同的含义）。模型来自专家个人的业务知识和归纳偏好，通常可以用概率图模型表达，而数据则来自实际观测。</p></li>
-<li><p><strong>目的</strong>：基于观测数据 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 确定模型中隐变量 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 的值，但各种不确定性因素导致隐变量无法得到一个确切值，通常只能给出其概率分布 <span class="math notranslate nohighlight">\(p(\mathbf{z \mid x})\)</span> ，而最大的问题在于这个分布可能很复杂，无法直接给出封闭形式的解。</p></li>
-<li><p><strong>原理</strong>：变分推断将人为构造一个由参数 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span> 索引（或定义）的概率分布 <span class="math notranslate nohighlight">\(q(\mathbf{z};\boldsymbol{\nu})\)</span> ，并通过一些方法或技巧来优化 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span>，使 <span class="math notranslate nohighlight">\(q(\mathbf{z};\boldsymbol{\nu})\)</span> 能够近似并且代替复杂的真实分布  <span class="math notranslate nohighlight">\(p(\mathbf{z \mid x})\)</span> 。</p></li>
-<li><p><strong>途径</strong>：通过一些优化算法，调整 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span> 以缩小 <span class="math notranslate nohighlight">\(q(\mathbf{z};\boldsymbol{\nu})\)</span> 和   <span class="math notranslate nohighlight">\(p(\mathbf{z \mid x})\)</span> 之间的差异直至收敛。</p></li>
+<li><p><strong>模型</strong>：变分推断需要设计一个模型 <span class="math notranslate nohighlight">\(p(\mathbf{z, x})\)</span> ，其中 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 为观测数据， <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 为模型参数或/和隐变量（ 模型参数通常是机器学习的提法，后面将统一采用概率模型中的隐变量来表示 ）。模型来自专家个人的业务知识和归纳偏好，通常可以用概率图模型表达（ 注：一张概率图表达的正是图中所有随机变量节点的联合分布 ），而数据则来自实际观测。</p></li>
+<li><p><strong>目的</strong>：基于观测数据 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 确定模型中隐变量 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 的值，以便进一步完成后续预测或决策任务。</p></li>
+<li><p><strong>问题</strong>：各种不确定性因素导致上述隐变量无法得到确切的结果，通常只能给出其概率分布 <span class="math notranslate nohighlight">\(p(\mathbf{z \mid x})\)</span> ，而最大的问题在于这个分布可能很复杂，无法直接给出封闭形式的解。</p></li>
+<li><p><strong>原理</strong>：变分推断将人为构造一个由参数 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span> 索引（或定义）的、与<span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 无关的概率分布 <span class="math notranslate nohighlight">\(q(\mathbf{z};\boldsymbol{\nu})\)</span> ，并通过一些方法或技巧来优化 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span>，使 <span class="math notranslate nohighlight">\(q(\mathbf{z};\boldsymbol{\nu})\)</span> 能够近似并且代替复杂的真实分布 <span class="math notranslate nohighlight">\(p(\mathbf{z \mid x})\)</span> 。</p></li>
+<li><p><strong>途径</strong>：通过一些优化算法，渐进地调整 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span> 以缩小 <span class="math notranslate nohighlight">\(q(\mathbf{z};\boldsymbol{\nu})\)</span> 和 <span class="math notranslate nohighlight">\(p(\mathbf{z \mid x})\)</span> 之间的差异直至收敛。</p></li>
 </ul>
 <div class="section" id="id5">
 <h4>2.2.1 变分推断基于贝叶斯模型<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
-<p>简单说，专家利用其领域知识和归纳偏好，给出一个模型假设 <span class="math notranslate nohighlight">\(p(\mathbf{z, x})\)</span> ，其中包括隐变量  <span class="math notranslate nohighlight">\(\mathbf{z}\)</span>  和观测变量 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> ，还有相互之间可能存在依赖关系。变分推断是基于该模型实施的。</p>
+<p>变分推断是基于模型实施的，也就是说必须 “先有模型后又推断” 。简单说，专家利用其领域知识和归纳偏好，给出一个模型假设 <span class="math notranslate nohighlight">\(p(\mathbf{z, x})\)</span> ，其中包括隐变量 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 和观测变量 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> ，以及变量相互之间可能存在的依赖关系；然后基于该模型和观测数据推断其中隐变量的分布 <span class="math notranslate nohighlight">\(p(\mathbf{z} \mid \mathbf{x})\)</span>。</p>
 <blockquote>
-<div><p>注： 此处隐变量和观测变量采用黑体符号，表示其为向量形式，即代表了不止一个随机变量。</p>
+<div><p>注： 此处 <code class="docutils literal notranslate"><span class="pre">隐变量</span></code> 和 <code class="docutils literal notranslate"><span class="pre">观测变量</span></code> 均采用黑体符号，表示其为向量形式，即代表了不止一个随机变量。</p>
 </div></blockquote>
-<p>为了理解隐变量和观测变量之间的关系，一种比较易于理解的表达方式是建立 “观测变量的生成过程”  。可以认为，观测变量是从某个已知的、由隐变量组成的结构中生成出来的。</p>
-<p>以高斯混合模型为例（见下图）。图中为我们观测到一个数据集，它实际上是从由 5 个相互独立的高斯组合而成的一个混合分布中采样的结果。如果从单个数据点出发，考虑其生成过程，可以分为两步：首先从 5 个类别组成的离散型分布中抽取一个类别样本（比如粉红色类别），然后从类别对应的高斯分布中抽取一个样本生成相应数据点。</p>
+<p>为了理解隐变量和观测变量之间的关系，一种比较易于理解的表达方式是建立 “观测变量的生成过程” ，即认为<code class="docutils literal notranslate"><span class="pre">观测变量</span></code>是从某个已知的、由<code class="docutils literal notranslate"><span class="pre">隐变量</span></code>组成的结构中生成出来的。</p>
+<p>以高斯混合模型为例（见下图）。图中为我们观测到一个数据集，它实际上是从由 5 个相互独立的高斯组合而成的一个混合分布中采样的结果。如果从单个数据点出发，考虑其生成过程，可以分为两步：</p>
+<ul class="simple">
+<li><p>首先从 5 个类别组成的离散型分布中抽取一个类别样本（比如粉红色类别）</p></li>
+<li><p>然后从类别对应的高斯分布中抽取一个样本生成相应数据点。</p></li>
+</ul>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108085412-fdef.webp" /></p>
 <blockquote>
 <div><p>图 2 ： 5 个组份构成的高斯混合模型示意图</p>
 </div></blockquote>
-<p>在上例中，可以发现隐变量可能有多个：</p>
+<p>在上例中，可以发现隐变量有：</p>
 <ul class="simple">
-<li><p>5 个高斯分布的均值参数 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span> 和方差参数 <span class="math notranslate nohighlight">\(\boldsymbol{\sigma^2}\)</span> （均为长度为 5 的向量）</p></li>
-<li><p>数据点所属类别 <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> （独热向量形式）</p></li>
+<li><p>5 个高斯分布的均值 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span> 和方差 <span class="math notranslate nohighlight">\(\boldsymbol{\sigma^2}\)</span> （ 均为长度为 5 的向量 ）</p></li>
+<li><p>每个数据点 <span class="math notranslate nohighlight">\(i\)</span> 所属类别 <span class="math notranslate nohighlight">\(\mathbf{c}_i\)</span> （独热向量形式）</p></li>
 </ul>
-<p>上述变量 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>、<span class="math notranslate nohighlight">\(\boldsymbol{\sigma}^2\)</span> 和 <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> 一起构成了隐变量 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> ，而且 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>、<span class="math notranslate nohighlight">\(\boldsymbol{\sigma}^2\)</span>  和 <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> 之间可能存在一定的依赖关系。</p>
+<p>上述变量 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span>、<span class="math notranslate nohighlight">\(\boldsymbol{\sigma}^2\)</span> 和 <span class="math notranslate nohighlight">\(\mathbf{c}\)</span> 一起构成了隐变量 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> ，而且三者之间可能存在一定的依赖关系。</p>
 </div>
 <div class="section" id="id6">
 <h4>2.2.2 问题本质是基于观测数据推断隐变量的分布<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
-<p>后验概率 <span class="math notranslate nohighlight">\(p(\mathbf{z|x})\)</span> 的物理含义是：基于现有观测数据 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> ，推断隐变量 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 的分布。</p>
-<p>对于上面的高斯混合模型来说，变分推断的目的就是求得隐变量 <span class="math notranslate nohighlight">\(\mathbf{z} = \{\boldsymbol{\mu},\boldsymbol{\sigma^2},  \mathbf{c} \}\)</span>  的后验分布  <span class="math notranslate nohighlight">\(p(\mathbf{z} \mid \mathbf{x})\)</span> 。根据贝叶斯公式，<span class="math notranslate nohighlight">\(p(\mathbf{z} \mid \mathbf{x}) = p(\mathbf{z,x}) / p(\mathbf{x})\)</span> 。 根据专家提供的生成过程，能够写出联合分布 <span class="math notranslate nohighlight">\(p(\mathbf{z,x})\)</span> 的表达式，但边缘似然 <span class="math notranslate nohighlight">\(p(\mathbf{x})\)</span> 是一个很难处理的分母项。当 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 为连续型时，边缘似然 <span class="math notranslate nohighlight">\(p(\mathbf{x})\)</span> 需要求 <span class="math notranslate nohighlight">\(p(\mathbf{z,x})\)</span> 关于 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 所在空间的积分（即边缘化）；当 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 为离散型时，需要对所有可能的 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 求和；而积分（和求和）的计算复杂性随着样本数量的增加会呈指数增长。</p>
+<p>后验概率 <span class="math notranslate nohighlight">\(p(\mathbf{z|x})\)</span> 的物理含义是：基于现有观测数据 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> ，推断隐变量 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 的概率分布。</p>
+<p>对于上面的高斯混合模型来说，变分推断的目的就是求得隐变量 <span class="math notranslate nohighlight">\(\mathbf{z} = \{\boldsymbol{\mu},\boldsymbol{\sigma^2}, \mathbf{c} \}\)</span> 的后验分布 <span class="math notranslate nohighlight">\(p(\mathbf{z} \mid \mathbf{x})\)</span> 。根据贝叶斯公式，<span class="math notranslate nohighlight">\(p(\mathbf{z} \mid \mathbf{x}) = p(\mathbf{z,x}) / p(\mathbf{x})\)</span> 。 依据专家设计的生成过程，能够写出分子中联合分布 <span class="math notranslate nohighlight">\(p(\mathbf{z,x})\)</span> 的表达式，但分母中的边缘似然 <span class="math notranslate nohighlight">\(p(\mathbf{x})\)</span> 是一个很难处理的项。当 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 为连续型时，边缘似然 <span class="math notranslate nohighlight">\(p(\mathbf{x})\)</span> 需要在隐变量 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 的概率空间内求 <span class="math notranslate nohighlight">\(p(\mathbf{z,x})\)</span> 的积分（ 即做边缘化处理 ）；当 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 为离散型时，需要对所有可能的 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 求和；而积分（和求和）的计算复杂性随着样本数量的增加会呈指数增长。</p>
+<blockquote>
+<div><p>注解： 细心的读者会发现，求 <code class="docutils literal notranslate"><span class="pre">边缘似然</span></code> 和求 <code class="docutils literal notranslate"><span class="pre">预测分布</span></code> 都是在做边缘化，区别仅在于 <code class="docutils literal notranslate"><span class="pre">边缘似然</span></code> 是基于先验空间做边缘化，而 <code class="docutils literal notranslate"><span class="pre">预测分布</span></code> 是在后验空间做边缘化。</p>
+</div></blockquote>
 </div>
 <div class="section" id="id7">
-<h4>2.2.3 变分推断的关键是构造<code class="docutils literal notranslate"><span class="pre">变分分布</span></code><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<h4>2.2.3 变分推断的关键是构造 <code class="docutils literal notranslate"><span class="pre">变分分布</span></code><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
 <p>变分推断需要构造<code class="docutils literal notranslate"><span class="pre">变分分布</span></code> <span class="math notranslate nohighlight">\(q(\mathbf{z}; \boldsymbol{\nu})\)</span>，并通过优化调整 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span>，使 <span class="math notranslate nohighlight">\(q(\mathbf{z}; \boldsymbol{\nu})\)</span> 更接近真实后验 <span class="math notranslate nohighlight">\(p(\mathbf{z \mid x})\)</span> 。</p>
 <p>在<code class="docutils literal notranslate"><span class="pre">变分分布</span></code> <span class="math notranslate nohighlight">\(q(\mathbf{z}; \boldsymbol{\nu})\)</span> 中， <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 为隐变量，<span class="math notranslate nohighlight">\( \boldsymbol{\nu}\)</span> 是控制 <span class="math notranslate nohighlight">\(q\)</span> 形态的参数（例如：假设 <span class="math notranslate nohighlight">\(q\)</span> 为高斯分布，则 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span> 为均值和方差 ， 而对于泊松分布，则 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span> 为二值概率）。因此构造<code class="docutils literal notranslate"><span class="pre">变分分布</span></code> <span class="math notranslate nohighlight">\(q\)</span> 分为两步：</p>
 <ul class="simple">
-<li><p>首先是概率分布类型的选择。通常依据 <span class="math notranslate nohighlight">\(p\)</span> 的形态，由专家给出，例如在上述高斯混合模型中，假设目标分布 <span class="math notranslate nohighlight">\(p\)</span> 服从多元高斯分布，则构造 <span class="math notranslate nohighlight">\(q\)</span> 时通常依然会考虑高斯分布。</p></li>
+<li><p>首先是概率分布类型的选择。通常依据 <span class="math notranslate nohighlight">\(p\)</span> 的形态由专家给出，例如在上述高斯混合模型中，假设目标分布 <span class="math notranslate nohighlight">\(p\)</span> 服从多元高斯分布，则构造 <span class="math notranslate nohighlight">\(q\)</span> 时通常依然会考虑高斯分布。</p></li>
 <li><p>其次是概率分布参数的确定。该确定过程是一个逐步优化迭代的过程，通常经过渐进调整 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span> 的值 ，使 <span class="math notranslate nohighlight">\(q\)</span> 逐渐逼近 <span class="math notranslate nohighlight">\(p\)</span> 。</p></li>
 </ul>
 </div>
 <div class="section" id="id8">
 <h4>2.2.4 变分推断是一个优化问题<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
-<p>变分推断是一个优化问题，其最直观的优化目标是最小化 <span class="math notranslate nohighlight">\(KL\)</span> 散度，但实际可操作的优化目标是最大化证据下界 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 。</p>
-<p>直观地理解，变分推断的优化目标很明确，就是最小化 <span class="math notranslate nohighlight">\(q\)</span> 和 <span class="math notranslate nohighlight">\(p\)</span> 之间的差距，而信息论为我们提供了一个量化两个分布之间差距的工具 <span class="math notranslate nohighlight">\(KL\)</span> 散度。但不幸的是，<span class="math notranslate nohighlight">\(KL\)</span> 散度的计算并不简单，其计算表达式中同样存在难以处理的边缘似然积分项（边缘似然也称证据，在一般化的数学形式中也被成为配分函数）。为此，有人提出了可操作的优化目标 — 证据下界 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> （见 2.4 节）。</p>
-<p>在证据下界 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的计算表达式中，只包括联合分布  <span class="math notranslate nohighlight">\(p(\mathbf{z, x})\)</span>  和<code class="docutils literal notranslate"><span class="pre">变分分布</span></code> <span class="math notranslate nohighlight">\(q(\mathbf{z}; \boldsymbol{\nu})\)</span> ，摆脱了难以处理的边缘似然积分项。并且在给定观测数据后，最大化 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 等价于最小化 <span class="math notranslate nohighlight">\(KL\)</span> 。 也就是说，<code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的最大化过程结束时，获得的输出 <span class="math notranslate nohighlight">\(q(\mathbf{z}; \boldsymbol{\nu^\star})\)</span>就是我们寻求的最终<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>。</p>
+<p>变分推断是一个优化问题，其最直观的优化目标是最小化 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> ，但实际可操作的优化目标是最大化证据下界 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 。</p>
+<p>直观地理解，变分推断的优化目标很明确，就是最小化 <span class="math notranslate nohighlight">\(q\)</span> 和 <span class="math notranslate nohighlight">\(p\)</span> 之间的差距。信息论为我们提供了一个度量两个分布之间差距的数学工具： <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 。但不幸的是， <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 的计算并不简单，因为其计算表达式中仍然包含难以处理的边缘似然项（即贝叶斯公式中的分母积分项，也称证据，在一些数学形式中也被称为边缘似然）。为此，有人提出了可操作的优化目标 — 证据下界 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> （见 2.4 节）。</p>
+<p>在证据下界 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的计算表达式中，只包括联合分布 <span class="math notranslate nohighlight">\(p(\mathbf{z, x})\)</span> （ 即贝叶斯公式的分子项 ） 和 <code class="docutils literal notranslate"><span class="pre">变分分布</span></code> <span class="math notranslate nohighlight">\(q(\mathbf{z}; \boldsymbol{\nu})\)</span> ，从而摆脱了难以处理的边缘似然项。数学推导表明，在给定观测数据后，最大化 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 等价于最小化 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 。 也就是说，<code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的最大化过程结束时，获得的输出 <span class="math notranslate nohighlight">\(q(\mathbf{z}; \boldsymbol{\nu^\star})\)</span> 就是我们寻求的 <code class="docutils literal notranslate"><span class="pre">最佳变分分布</span></code>。</p>
 </div>
 <div class="section" id="id9">
 <h4>2.2.5 变分推断的形象化解释<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
-<p>下图为变分推断的示意图。图中大圈表示了一个分布族，由参数 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span> 索引。我们也可以理解为，大圈是分布 <span class="math notranslate nohighlight">\(q\)</span> 的参数 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span> 的取值空间，圈中每个点均表示不同 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span> 对应的分布 <span class="math notranslate nohighlight">\(q\)</span> 。例如，在高斯混合模型的例子中， <span class="math notranslate nohighlight">\(q\)</span> 属于高斯分布族，则不同的均值和方差，代表了不同的分布 <span class="math notranslate nohighlight">\(q\)</span> 。从 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}^{init}\)</span> 到 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}^*\)</span> 的路径表示变分推断的优化迭代过程，通过优化更新 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span> 值来缩小 <span class="math notranslate nohighlight">\(q\)</span> 与 <span class="math notranslate nohighlight">\(p\)</span> 之间的差距，而这个差距通常采用 <span class="math notranslate nohighlight">\(KL\)</span> 散度来衡量。路径终点 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}^*\)</span> 对应的分布 <span class="math notranslate nohighlight">\(p\)</span> 与真实后验 <span class="math notranslate nohighlight">\(p(z \mid x)\)</span> 之间应当是某种距离测度上的最小值。</p>
+<p>下图为变分推断的形式化示意图。图中大圈表示了一个分布族，由参数 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span> 索引。我们也可以理解为，大圈是分布 <span class="math notranslate nohighlight">\(q\)</span> 的参数 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span> 的取值空间。大圈中每个点均表示不同 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span> 值对应的分布 <span class="math notranslate nohighlight">\(q\)</span> 。例如，在高斯混合模型的例子中， <span class="math notranslate nohighlight">\(q\)</span> 属于高斯分布族，则不同的均值和方差，代表了不同的分布 <span class="math notranslate nohighlight">\(q\)</span> 。从 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}^{init}\)</span> 到 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}^*\)</span> 的路径表示变分推断的优化迭代过程，通过优化更新 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}\)</span> 值来缩小 <span class="math notranslate nohighlight">\(q\)</span> 与 <span class="math notranslate nohighlight">\(p\)</span> 之间的差距，而这个差距通常采用 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 来衡量。路径终点 <span class="math notranslate nohighlight">\(\boldsymbol{\nu}^*\)</span> 对应的分布 <span class="math notranslate nohighlight">\(p\)</span> 与真实后验 <span class="math notranslate nohighlight">\(p(z \mid x)\)</span> 之间应当是某种距离测度上的最小值。</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108085528-fa88.webp" /></p>
 <blockquote>
 <div><p>图 3 ：变分推断示意图。图中隐变量为 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span>，包含局部变量和全局变量。<span class="math notranslate nohighlight">\(\nu\)</span> 对应了所有变分参数。</p>
@@ -716,28 +758,27 @@
 <blockquote>
 <div><p>图 4 ：贝叶斯概率框架示意图</p>
 </div></blockquote>
-<p>上图是贝叶斯统计问题的一般求解流程图。领域专家拥有知识可以用来建模，并且存在需要解答的问题。他们依据拥有的知识，给出带有归纳偏好的合理假设，构建出数据的生成过程模型 (Generative  Processing Model)。模型中主要包括隐变量、观测变量以及它们之间的依赖关系。</p>
-<p>利用该模型，我们希望通过对数据的处理，挖掘出有价值的模式，然后实现各式各样的应用。</p>
+<p>上图是贝叶斯统计问题的一般求解流程图。领域专家拥有知识可以用来建模，并且存在需要解答的问题。他们依据拥有的知识，给出带有归纳偏好的合理假设，构建出数据的生成过程模型 (Generative Processing Model)。模型中主要包括隐变量、观测变量以及它们之间的依赖关系。利用该模型，我们希望通过对观测数据的处理，从中挖掘出有价值的模式，然后实现各式各样的应用。</p>
 <p>还是以高斯混合模型为例，可以将其生成过程形式化为：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
  \boldsymbol{\mu}_{k} &amp; \sim \mathcal{N}\left(0, \sigma^{2}\right), &amp; &amp; k=1, \ldots, K, &amp;（先验）\\
 \mathbf{c}_{i} &amp; \sim \text { Categorical }(1 / K, \ldots, 1 / K), &amp; &amp; i=1, \ldots, n, &amp;（先验）\\
-x_{i} \mid \mathbf{c}_{i}, \boldsymbol{\mu} &amp; \sim \mathscr{N}\left(\mathbf{c}_{i}^{\top}  \boldsymbol{\mu}, 1\right) &amp; &amp; i=1, \ldots, n &amp;（似然）
+x_{i} \mid \mathbf{c}_{i}, \boldsymbol{\mu} &amp; \sim \mathscr{N}\left(\mathbf{c}_{i}^{\top} \boldsymbol{\mu}, 1\right) &amp; &amp; i=1, \ldots, n &amp;（似然）
 \end{aligned}
 \end{split}\]</div>
-<p>该模型混合了 <span class="math notranslate nohighlight">\(K\)</span> 个相互独立的高斯组份（ <span class="math notranslate nohighlight">\(K\)</span> 是超参数），模型中的隐变量包括数据点所在的类别 <span class="math notranslate nohighlight">\( \mathbf{c}_i\)</span>，各类别组份的均值 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span> 和方差 <span class="math notranslate nohighlight">\( \boldsymbol{\sigma}_k^2\)</span> （为简化问题，此处假设 <span class="math notranslate nohighlight">\( \boldsymbol{\sigma}_k^2\)</span> 为常数 1 ）。</p>
+<p>该模型混合了 <span class="math notranslate nohighlight">\(K\)</span> 个相互独立的高斯组份（ 注意， <span class="math notranslate nohighlight">\(K\)</span> 是超参数而非隐变量 ），模型中的隐变量包括数据点所在的类别 <span class="math notranslate nohighlight">\( \mathbf{c}_i\)</span>，各类别组份的均值 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span> 和方差 <span class="math notranslate nohighlight">\( \boldsymbol{\sigma}_k^2\)</span> （为简化问题，此处假设 <span class="math notranslate nohighlight">\( \boldsymbol{\sigma}_k^2\)</span> 为常数 1 ）。</p>
 <p>设所有高斯组份的均值参数 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span> 的先验为 0 均值的同方差（<span class="math notranslate nohighlight">\(\sigma^2\)</span>）高斯，如第一行所示；类别参数 <span class="math notranslate nohighlight">\( \mathbf{c}_i\)</span> 的先验为均匀的类别分布（因为缺乏关于类别的先验知识），如第二行所示。假设所有样本数据都是从某个方差为 <span class="math notranslate nohighlight">\(1\)</span> 的高斯混合模型中随机生成的，则任一数据点 <span class="math notranslate nohighlight">\(x_i\)</span> 的生成过程可以通过似然表达出来（如第三行所示），分为两步 ：</p>
 <ul class="simple">
 <li><p>第一步，从类别分布中随机抽取一个离散型的类标签 <span class="math notranslate nohighlight">\( \mathbf{c}_i\)</span> （此处采用独热变量形式）；</p></li>
-<li><p>第二步，从类标签 <span class="math notranslate nohighlight">\( \mathbf{c}_i\)</span> 对应的均值为 <span class="math notranslate nohighlight">\(\mu =  \mathbf{c}_{i}^{\top} \boldsymbol{\mu}\)</span> 、方差为 <span class="math notranslate nohighlight">\(1\)</span> 的高斯分布中，随机抽取一个数据点 <span class="math notranslate nohighlight">\(x_i\)</span>。</p></li>
+<li><p>第二步，从类标签 <span class="math notranslate nohighlight">\( \mathbf{c}_i\)</span> 对应的均值为 <span class="math notranslate nohighlight">\(\mu = \mathbf{c}_{i}^{\top} \boldsymbol{\mu}\)</span> 、方差为 <span class="math notranslate nohighlight">\(1\)</span> 的高斯分布中，随机抽取一个数据点 <span class="math notranslate nohighlight">\(x_i\)</span>。</p></li>
 </ul>
 <p>更细致的举例说明见图 2，五个分布用不同颜色表示，代表五个类别。每次从中选择一个类，如第三类粉红色，<span class="math notranslate nohighlight">\(\mathbf{c}_i=\{0，0，1，0，0\}\)</span> ，然后从第三类对应的高斯分布中抽取 <span class="math notranslate nohighlight">\(x_i\)</span> ，其均值为 <span class="math notranslate nohighlight">\(\mathbf{c}_i \cdot \boldsymbol{\mu}=\mu_3\)</span>。该点大概率出现在粉红色类覆盖的区域内。</p>
 </div>
 <div class="section" id="id12">
-<h4>2.3.2 利用概率图表示和理解<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
-<p>概率图模型是表达随机变量之间结构和关系的有力工具（参见概率图理论文献）。上述高斯混合模型的形式化生成过程，在概率图模型中体现为三个随机变量及它们之间的依赖关系（见下图），其中高斯组份的均值 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span> 和数据点所属类别 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 为隐变量，<span class="math notranslate nohighlight">\(\mathbb{x}_i\)</span> 为观测变量。此外，可以做更细致的划分，将 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span> 视为全局随机变量，其作用发挥在所有数据上，而 <span class="math notranslate nohighlight">\(\mathbb{z}_i\)</span> 为局部随机变量，只和数据点 <span class="math notranslate nohighlight">\(x_i\)</span> 相关，与其他点无关。局部变量用矩形框与全局变量分隔开来。</p>
+<h4>2.3.2 利用概率图表达随机变量的联合分布和依赖关系<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<p>概率图模型是表达随机变量之间结构和关系的有力工具（参见概率图理论文献）。上述高斯混合模型的形式化生成过程，在概率图模型中体现为三个随机变量及它们之间的依赖关系（见下图），其中高斯组份的均值 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span> 和数据点所属类别 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 为隐变量，用白色圈表示；<span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span> 为观测变量，用灰色圈表示。此外，可以将隐变量的集合进一步划分为全局隐变量和局部隐变量，例如，图中 <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span> 为全局隐变量，其作用发挥在所有数据上，而 <span class="math notranslate nohighlight">\(\mathbf{z}_i\)</span> 为局部隐变量，只和数据点 <span class="math notranslate nohighlight">\(x_i\)</span> 相关，与其他点无关。通常将局部变量用矩形框包围起来，以便与全局变量分隔开来。</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108085458-b4a9.webp" /></p>
 <blockquote>
 <div><p>图 5：高斯混合模型的概率图（1）白圈为隐变量，灰圈为观测变量；（2）矩形框内为局部变量，外部为全局变量；（3）矩形框表示其内部的变量 <span class="math notranslate nohighlight">\(z_i\)</span> 和 <span class="math notranslate nohighlight">\(x_i\)</span> 独立重复了 n 次；（4）箭头表示随机变量之间的条件依赖关系。</p>
@@ -753,16 +794,16 @@ p(\boldsymbol{\mu}, \mathbf{z}, \mathbf{x})=p(\boldsymbol{\mu}) \prod_{i=1}^{n} 
 \[
 p(\boldsymbol{\mu}, \mathbf{c} \mid \mathbf{x})=\frac{p(\boldsymbol{\mu},\mathbf{c} , \mathbf{x})}{p(\mathbf{x})}
 \]</div>
-<p>式中，分子项为 <span class="math notranslate nohighlight">\(p(\boldsymbol{\mu},\mathbf{c} , \mathbf{x})\)</span> ， 可根据概率图模型理论写出表达式，但分母 <span class="math notranslate nohighlight">\(p(\mathbf{x})\)</span> 涉及所有数据点的积分问题，是难以处理的，因此，需要用近似的、可处理的近似分布 <span class="math notranslate nohighlight">\(q(\boldsymbol{\mu},\mathbf{c})\)</span> 来代替后验分布 <span class="math notranslate nohighlight">\(p(\boldsymbol{\mu}, \mathbf{c} \mid \mathbf{x})\)</span> 。</p>
+<p>式中，分子项为 <span class="math notranslate nohighlight">\(p(\boldsymbol{\mu},\mathbf{c} , \mathbf{x})\)</span> ， 可根据概率图模型理论写出表达式，但分母 <span class="math notranslate nohighlight">\(p(\mathbf{x})\)</span> 涉及所有数据点的积分问题，是难以处理的。因此，后验分布 <span class="math notranslate nohighlight">\(p(\boldsymbol{\mu}, \mathbf{c} \mid \mathbf{x})\)</span> 很难直接求得，需要用近似的、可处理的近似分布 <span class="math notranslate nohighlight">\(q(\boldsymbol{\mu},\mathbf{c})\)</span> 来代替。</p>
 </div>
 <div class="section" id="id13">
-<h4>2.3.3 更一般的形式<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
-<p>我们把上述问题梳理一下，能够得到一个更一般的形式，可以用来描述各种各样的贝叶斯统计模型：</p>
+<h4>2.3.3 推广到更一般的形式<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<p>把上述问题梳理一下，推广到更一般的形式，可以用来描述各种各样的贝叶斯统计模型：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108085516-aec3.webp" /></p>
 <blockquote>
-<div><p>图 6：包含全局变量和局部变量的一般性概率图表示</p>
+<div><p>图 6：包含全局隐变量和局部隐变量的一般性概率图表示</p>
 </div></blockquote>
-<p>在上面的概率模型中，后验概率的分子项为联合概率分布，可通过概率图得出表达式（图 6 下）；但分母中的边缘似然项是难以处理的（见下式）。即便隐变量是离散型变量，存在 <span class="math notranslate nohighlight">\(K\)</span> 个可能值，其计算复杂度也为 <span class="math notranslate nohighlight">\(O(K^n)\)</span> ，意味着其计算复杂度会随着数据量 <span class="math notranslate nohighlight">\(n\)</span> 的增长呈指数增长。</p>
+<p>在贝叶斯公式中，后验概率的分子项为联合概率分布，可通过概率图得出表达式（图 6 下）；但分母中的边缘似然项依然难以处理（ 见下式 ）。即便隐变量是离散型变量，存在 <span class="math notranslate nohighlight">\(K\)</span> 个可能值，其计算复杂度也为 <span class="math notranslate nohighlight">\(O(K^n)\)</span> ，意味着其计算复杂度会随着数据量 <span class="math notranslate nohighlight">\(n\)</span> 的增长呈指数增长。</p>
 <div class="math notranslate nohighlight">
 \[
 p(\beta, z \mid x)=\frac{p(\beta, z, x)}{p(x)}=\frac{p(\beta, z, x)}{\iint_{\beta z} p(x) d \beta d z}
@@ -771,33 +812,34 @@ p(\beta, z \mid x)=\frac{p(\beta, z, x)}{p(x)}=\frac{p(\beta, z, x)}{\iint_{\bet
 </div>
 <div class="section" id="id14">
 <h3>2.4 目标函数的选择<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
-<p>要将推断转化为优化问题，需要选择或者构造一个<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>族 <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span> ，并设定合适的优化目标 <span class="math notranslate nohighlight">\(J(q)\)</span> 。 关于分布族的讨论放在下一节，此处先讨论优化目标 <span class="math notranslate nohighlight">\(J(q)\)</span> 。该目标需要捕获 <span class="math notranslate nohighlight">\(q\)</span> 和 <span class="math notranslate nohighlight">\(p\)</span> 之间的差距（或反之，相似性），而信息论为我们提供了一个直观并且好理解的工具，被称为 <strong>KL（ Kullback-Leibler ）散度</strong>。</p>
-<p>从形式上理解，<em>KL 散度</em> 指两个分布之间的差异。 <span class="math notranslate nohighlight">\(q\)</span> 和 <span class="math notranslate nohighlight">\(p\)</span> 之间离散形式的 <strong>KL 散度</strong> 被定义为：</p>
+<p>要将推断转化为优化问题，需要选择或者构造一个<code class="docutils literal notranslate"><span class="pre">变分分布族</span></code> <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span> ，并设定合适的优化目标 <span class="math notranslate nohighlight">\(J(q)\)</span> 。 关于分布族的讨论放在下一节，此处先讨论优化目标 <span class="math notranslate nohighlight">\(J(q)\)</span> 。该目标需要捕获 <span class="math notranslate nohighlight">\(q\)</span> 和 <span class="math notranslate nohighlight">\(p\)</span> 之间的差距（或反之，相似性），而信息论为我们提供了一个直观并且好理解的工具，被称为 <strong>KL（ Kullback-Leibler ）散度</strong>。</p>
+<p>从形式上理解， <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 指两个分布之间的差异。 <span class="math notranslate nohighlight">\(q\)</span> 和 <span class="math notranslate nohighlight">\(p\)</span> 之间离散形式的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 被定义为：</p>
 <div class="math notranslate nohighlight">
 \[
 KL(q \| p) = \sum_x q(x) \log \frac{q(x)}{p(x)}
 \]</div>
-<p>在信息论中，此函数用于测量两个分布中所包含信息的差异大小。<span class="math notranslate nohighlight">\(KL\)</span> 散度具有以下性质，使其在近似推断任务中特别有用：</p>
+<p>在信息论中，此函数用于测量两个分布中所包含信息的差异大小。 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 具有以下性质，使其在近似推断任务中特别有用：</p>
 <ul class="simple">
 <li><p>对所有 <span class="math notranslate nohighlight">\(q\)</span> 和 <span class="math notranslate nohighlight">\(p\)</span> ，都有 <span class="math notranslate nohighlight">\(KL(q\|p) \geq 0\)</span> 。</p></li>
 <li><p>当且仅当 <span class="math notranslate nohighlight">\(q = p\)</span> 时，<span class="math notranslate nohighlight">\(KL(q\|p) = 0\)</span> 。</p></li>
 </ul>
-<blockquote>
-<div><p>相关证明过程可以作为练习，本文略过。</p>
-</div></blockquote>
-<p>但请注意： <span class="math notranslate nohighlight">\(KL\)</span> 散度不具备可逆性（或对称性），即 <span class="math notranslate nohighlight">\(KL(q\|p) \neq KL(p\|q)\)</span> 。这也是称之为<code class="docutils literal notranslate"><span class="pre">散度</span></code>，而不是<code class="docutils literal notranslate"><span class="pre">距离</span></code>的原因，因为距离是双向对称的。</p>
-<p><span class="math notranslate nohighlight">\(KL\)</span> 散度虽然很好理解，但是是否能够直接使用 <span class="math notranslate nohighlight">\(KL\)</span> 散度进行变分推断呢？ 我们有必要针对一般化形式的目标分布 <span class="math notranslate nohighlight">\(p\)</span> 做一下分析。</p>
+<p>请注意： <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 不具备可逆性（或对称性），即 <span class="math notranslate nohighlight">\(KL(q\|p) \neq KL(p\|q)\)</span> 。这也是称之为<code class="docutils literal notranslate"><span class="pre">散度</span></code>，而不是<code class="docutils literal notranslate"><span class="pre">距离</span></code>的原因，因为距离是双向对称的。</p>
+<p><code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 虽然很好理解，但是是否能够直接使用 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 进行变分推断呢？ 我们有必要针对一般化形式的目标分布 <span class="math notranslate nohighlight">\(p\)</span> 做一下分析。</p>
 <p>假设 <span class="math notranslate nohighlight">\(p\)</span> 为一个泛化（离散、简单）的、具有如下形式的无方向概率模型（其实该形式是统计机器学习框架中后验分布的一般化形式，也是变分推断面临的主要场景）：</p>
 <div class="math notranslate nohighlight">
 \[
 p(x_1,\ldots,x_n; \theta) = \frac{\tilde p(x_1,\ldots,x_n ; \theta)}{Z(\theta)} =\frac{1}{Z(\theta)} \prod_{k} \phi_k(x_k; \theta)
 \]</div>
-<p>其中 <span class="math notranslate nohighlight">\(k\)</span> 为模型中因子的数量（有关因子的概念，参见无向概率图或马尔科夫随机场相关资料）， <span class="math notranslate nohighlight">\(\phi_k(\cdot)\)</span> 为因子， <span class="math notranslate nohighlight">\(Z(\theta)\)</span> 为归一化常数或配分函数。假设该形式能够涵盖所有可能的目标分布， 则在该一般化形式下，归一化常数 <span class="math notranslate nohighlight">\(Z(\theta)\)</span> 面临着难以处理的问题。由于 <span class="math notranslate nohighlight">\(KL\)</span> 散度的计算需要用到 <span class="math notranslate nohighlight">\(p(x)\)</span> ，因此 <span class="math notranslate nohighlight">\(Z(\theta)\)</span> 的存在导致无法直接使用 <span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 做为优化目标。</p>
-<p>考虑到归一化常数虽然难以处理，但在观测数据确定的情况下是常数，因此，可以考虑仅处理形式上与 <span class="math notranslate nohighlight">\(KL\)</span> 散度相似的未归一化分子项 <span class="math notranslate nohighlight">\(\tilde p(x) = \prod_{k} \phi_k(x_k; \theta)\)</span> ，即将优化目标调整为：
-$<span class="math notranslate nohighlight">\(
+<blockquote>
+<div><p>注：此处假设了真实分布 <span class="math notranslate nohighlight">\(p\)</span> 的后验可以被因子分解的情况，是变分推断中比较常见的一种假设，详情见后面的平均场变分推断部分。</p>
+</div></blockquote>
+<p>其中 <span class="math notranslate nohighlight">\(k\)</span> 为模型中因子的数量（有关因子的概念，参见无向概率图或马尔科夫随机场相关资料）， <span class="math notranslate nohighlight">\(\phi_k(\cdot)\)</span> 为因子， <span class="math notranslate nohighlight">\(Z(\theta)\)</span> 为归一化常数或边缘似然。假设该形式能够涵盖所有可能的目标分布， 则在该一般化形式下，归一化常数 <span class="math notranslate nohighlight">\(Z(\theta)\)</span> 面临着难以处理的问题。由于 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 的计算需要用到 <span class="math notranslate nohighlight">\(p(x)\)</span> ，因此 <span class="math notranslate nohighlight">\(Z(\theta)\)</span> 的存在导致无法直接使用 <span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 做为优化目标。</p>
+<p>考虑到归一化常数虽然难以处理，但在观测数据确定的情况下是常数，因此，可以考虑仅处理形式上与 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 相似的未归一化分子项 <span class="math notranslate nohighlight">\(\tilde p(x) = \prod_{k} \phi_k(x_k; \theta)\)</span> ，采用对数形式，即将优化目标调整为：</p>
+<div class="math notranslate nohighlight">
+\[
 J(q) = \sum_x q(x) \log \frac{q(x)}{\tilde p(x)}
-\)</span>$</p>
-<p>上述目标函数中， <span class="math notranslate nohighlight">\(q(x)\)</span> 来自人工构造和 <span class="math notranslate nohighlight">\(\tilde p (x)\)</span> 来自于数据概率生成过程，各项均可处理。 更重要的是，其还具有以下重要性质：</p>
+\]</div>
+<p>上述目标函数中， <span class="math notranslate nohighlight">\(q(x)\)</span> 来自人工构造、 <span class="math notranslate nohighlight">\(\tilde p (x)\)</span> 来自于（ 数据概率生成过程中的 ）似然和先验，各项均可处理。 更重要的是，其还具有以下重要性质：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*} 
@@ -806,24 +848,26 @@ J(q) &amp;= \sum_x q(x) \log \frac{q(x)} {\tilde p(x)} \\
 &amp;= KL(q\|p) - \log Z(\theta) 
 \end{align*}
 \end{split}\]</div>
-<p>也就是说，新的目标函数是 <span class="math notranslate nohighlight">\(KL\)</span> 散度与对数配分函数之差，而根据 <span class="math notranslate nohighlight">\(KL\)</span> 散度的性质， <span class="math notranslate nohighlight">\(KL(q\|p) \geq 0\)</span> ，则重排公式可得：</p>
+<p>也就是说，新的目标函数 <span class="math notranslate nohighlight">\(J(q)\)</span> 是 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 与<code class="docutils literal notranslate"><span class="pre">对数边缘似然</span></code>之差，而根据 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 的性质， <span class="math notranslate nohighlight">\(KL(q\|p) \geq 0\)</span> ，则重排公式可得：</p>
 <div class="math notranslate nohighlight">
 \[
 \log Z(\theta) = KL(q\|p) - J(q) \geq -J(q)
 \]</div>
-<p>该式表明，<span class="math notranslate nohighlight">\(-J(q)\)</span> 是对数配分函数 <span class="math notranslate nohighlight">\(\log Z(\theta)\)</span> 的下界。</p>
-<p>在大多数应用场景中， 对配分函数 <span class="math notranslate nohighlight">\(Z(\theta)\)</span> 都有特别的解释。例如，在给定观测数据 <span class="math notranslate nohighlight">\(D\)</span> 的情况下，我们可能想计算随机变量 <span class="math notranslate nohighlight">\(x\)</span> 的边缘概率 <span class="math notranslate nohighlight">\(p(x \mid D) = p(x,D) / p(D)\)</span> 。在这种情况下，最小化 <span class="math notranslate nohighlight">\(J(q)\)</span> 等价于最大化对数边缘似然 <span class="math notranslate nohighlight">\(\log p(D)\)</span>  的下界。正是因为如此， <span class="math notranslate nohighlight">\(-J(q)\)</span> 被称为变分下界或证据下界（ <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> ），这种下界关系经常以如下不公式形式表示：</p>
+<p>该式表明，新目标函数的相对值 <span class="math notranslate nohighlight">\(-J(q)\)</span> 是<code class="docutils literal notranslate"><span class="pre">对数边缘似然</span></code> <span class="math notranslate nohighlight">\(\log Z(\theta)\)</span> 的下界。在大多数应用场景中， 边缘似然 <span class="math notranslate nohighlight">\(Z(\theta)\)</span> 都有着特定的解释。例如贝叶斯框架下，在给定观测数据 <span class="math notranslate nohighlight">\(D\)</span> 的情况下，我们可能想计算随机变量 <span class="math notranslate nohighlight">\(x\)</span> 的边缘概率 <span class="math notranslate nohighlight">\(p(x \mid D) = p(x,D) / p(D)\)</span> 。在这种情况下，最小化 <span class="math notranslate nohighlight">\(J(q)\)</span> 等价于最大化<code class="docutils literal notranslate"><span class="pre">对数边缘似然</span></code> <span class="math notranslate nohighlight">\(\log p(D)\)</span> 的下界。正是因为如此， <span class="math notranslate nohighlight">\(-J(q)\)</span> 被称为变分下界或证据下界（ <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> ），这种关系经常以如下不等式形式表示：</p>
 <div class="math notranslate nohighlight">
 \[
-\log Z(\theta) \geq \mathbb{E}_{q(x)} [ \log \tilde p(x) - \log q(x) ]
+\log Z(\theta) \geq \mathbb{E}_{q(x)} [ \log \tilde p(x) - \log q(x) ]=\ ELBO
 \]</div>
-<p>最关键的是，对数边缘似然 <span class="math notranslate nohighlight">\(\log Z(\theta)\)</span> 和变分下界 <span class="math notranslate nohighlight">\(-J(q)\)</span> 的差，正好是 <span class="math notranslate nohighlight">\(KL\)</span> 散度。 因此，最大化变分下界等效于通过 “挤压” <span class="math notranslate nohighlight">\(-J(q)\)</span> 和  <span class="math notranslate nohighlight">\(\log Z(\theta)\)</span> 之间的差，实现 <span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 的最小化。</p>
+<blockquote>
+<div><p>注：依据公式， <span class="math notranslate nohighlight">\(J(q)\)</span> 可以视为在分布 <span class="math notranslate nohighlight">\(q(x)\)</span> 上求 <span class="math notranslate nohighlight">\(\log \frac{q(x)} {\tilde p(x)}\)</span> 的期望值。</p>
+</div></blockquote>
+<p>最关键的是，对数边缘似然 <span class="math notranslate nohighlight">\(\log Z(\theta)\)</span> 和变分下界 <span class="math notranslate nohighlight">\(-J(q)\)</span> 的差，正好是 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 。 因此，最大化变分下界等效于通过挤压 <span class="math notranslate nohighlight">\(-J(q)\)</span> 和 <span class="math notranslate nohighlight">\(\log Z(\theta)\)</span> 之间的差，实现最小化 <span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 。</p>
 <hr class="docutils" />
 <p><strong>讨论：</strong></p>
 <p>刚刚为变分推断重新定义了优化目标，并且表明，最大化下界等效于最小化散度 <span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 。</p>
 <p>回想之前说过的 <span class="math notranslate nohighlight">\(KL(q\|p) \neq KL(p\|q)\)</span> ; 当 <span class="math notranslate nohighlight">\(q = p\)</span> 时，两种散度都等于零，但当 <span class="math notranslate nohighlight">\(q \neq p\)</span> 时，两者的值不同。 这就提出了一个问题：为什么选择其中一个而非另一个，它们有何不同？</p>
 <p>也许最重要的区别是计算效率：优化 <span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 时，涉及关于 <span class="math notranslate nohighlight">\(q\)</span> 求期望；而优化 <span class="math notranslate nohighlight">\(KL(p\|q)\)</span> 则需要关于 <span class="math notranslate nohighlight">\(p\)</span> 求期望，而这又是难以处理甚至无法评估的。</p>
-<p>但当近似分布族 <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span> 不包含真实分布 <span class="math notranslate nohighlight">\(p\)</span> 时，选择  <span class="math notranslate nohighlight">\(KL(p\|q)\)</span> 会影响返回的解。 通过观察会发现， 如果 <span class="math notranslate nohighlight">\(p(x) = 0\)</span> 并且 <span class="math notranslate nohighlight">\(q(x) &gt; 0\)</span> 时， <span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 是无限的 （ 该散度有时被称为 I 投影或信息投影 ） :</p>
+<p>但当近似分布族 <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span> 不包含真实分布 <span class="math notranslate nohighlight">\(p\)</span> 时，选择 <span class="math notranslate nohighlight">\(KL(p\|q)\)</span> 会影响返回的解。 通过观察会发现， 如果 <span class="math notranslate nohighlight">\(p(x) = 0\)</span> 并且 <span class="math notranslate nohighlight">\(q(x) &gt; 0\)</span> 时， <span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 是无限的 （ 该散度有时被称为 I 投影或信息投影 ） :</p>
 <div class="math notranslate nohighlight">
 \[
 KL(q\|p) = \sum_x q(x) \log \frac{q(x)}{p(x)}
@@ -835,12 +879,12 @@ KL(q\|p) = \sum_x q(x) \log \frac{q(x)}{p(x)}
 <blockquote>
 <div><p>图 7：将单峰近似分布 <span class="math notranslate nohighlight">\(q\)</span>（红色）拟合到多峰 <span class="math notranslate nohighlight">\(p\)</span>（蓝色）。 (a) 使用 <span class="math notranslate nohighlight">\(KL(p||q)\)</span> 会导致 <span class="math notranslate nohighlight">\(q\)</span> 试图覆盖两个峰。 (b）(c) 使用 <span class="math notranslate nohighlight">\(KL(q||p)\)</span> 会迫使 <span class="math notranslate nohighlight">\(q\)</span> 选择 <span class="math notranslate nohighlight">\(p\)</span> 的其中一个峰。</p>
 </div></blockquote>
-<p>鉴于两种散度的上述性质，我们经常称 <span class="math notranslate nohighlight">\(KL(p\|q)\)</span> 为包容性 <span class="math notranslate nohighlight">\(KL\)</span> 散度， 而 <span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 是独占性的 <span class="math notranslate nohighlight">\(KL\)</span> 散度。</p>
+<p>鉴于两种散度的上述性质，我们经常称 <span class="math notranslate nohighlight">\(KL(p\|q)\)</span> 为包容性 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> ， 而 <span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 是独占性的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 。</p>
 <hr class="docutils" />
 <p>小结：</p>
 <ul class="simple">
-<li><p>由于配分函数 <span class="math notranslate nohighlight">\(Z\)</span> 的存在，使得直接计算 <span class="math notranslate nohighlight">\(KL\)</span> 散度难以处理</p></li>
-<li><p>采用等价的最大化 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 来代替最小化 <span class="math notranslate nohighlight">\(KL\)</span> 散度作为新的优化目标</p></li>
+<li><p>由于边缘似然 <span class="math notranslate nohighlight">\(Z\)</span> 的存在，使得直接计算 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 难以处理</p></li>
+<li><p>采用等价的最大化 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 来代替最小化 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 作为新的优化目标</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 中只包含<code class="docutils literal notranslate"><span class="pre">变分分布</span></code> <span class="math notranslate nohighlight">\(q\)</span> 和目标分布的分子项 <span class="math notranslate nohighlight">\(\tilde p\)</span> ，并且两者都可计算，进而可以作为真正的优化目标</p></li>
 <li><p><span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 和 <span class="math notranslate nohighlight">\(KL(p\|q)\)</span> 虽然都是散度，也都可以作为优化目标，但作为目标时两者达到的效果截然不同。对于多峰后验，前者倾向于选择能够覆盖其中某个峰的<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>，而后者倾向于选择能够覆盖多个峰的<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>。</p></li>
 </ul>
@@ -849,72 +893,86 @@ KL(q\|p) = \sum_x q(x) \log \frac{q(x)}{p(x)}
 <div class="section" id="id15">
 <h2>3 经典方法 — 平均场、指数族与坐标上升算法<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id16">
-<h3>3.1 平均场近似的基本原理<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
-<p>在构造<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>时，需要在 <span class="math notranslate nohighlight">\(q(\mathbf{z};\boldsymbol{\lambda}) \)</span> 的表达能力和简单易处理性之间做权衡。其中一种常见的选择是使用完全因子分解的方法来构造分布，也称为平均场分布。</p>
-<p>平均场近似假设所有隐变量相互独立，进而简化了推导。但这种独立性假设也会导致不太准确的近似，当后验中的随机变量存在高度依赖时尤其如此。因此，有人研究更为准确的近似方法，本文第 6 节会讨论此类更具表现力的<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>。</p>
-<p>平均场变分推断 ( MFVI ) 起源于统计物理学的 <a class="reference external" href="https://ieeexplore.ieee.org/book/6267422">平均场理论</a>。在平均场近似中，基于独立性假设，<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>被分解为各因子分布的乘积，而每个因子由其自身变分参数控制：</p>
+<h3>3.1 平均场近似的数学推导<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>上一节曾经剃刀，在构造<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>时，需要在 <span class="math notranslate nohighlight">\(q\)</span> 的表达能力和简单易处理性之间做权衡。其中一种常见的选择是使用<strong>完全因子分解</strong>的方法来构造分布，也被称为平均场分布。</p>
+<p>平均场近似假设所有隐变量相互独立，进而简化了推导。当然，这种比较强的独立性假设会导致不太准确的近似，特别是当后验中的随机变量存在高度依赖时尤其如此。因此，有人研究更为准确的近似方法，本文第 6 节会讨论此类更具表现力的<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>。</p>
+<p><code class="docutils literal notranslate"><span class="pre">平均场变分推断</span> <span class="pre">(</span> <span class="pre">MFVI</span> <span class="pre">)</span></code> 起源于统计物理学的 <a class="reference external" href="https://ieeexplore.ieee.org/book/6267422">平均场理论</a>。在平均场近似中，基于独立性假设，<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>被分解为各因子分布的乘积，而每个因子由其自身的变分参数控制：</p>
 <div class="math notranslate nohighlight">
 \[
 q(\mathbf{z};\boldsymbol{\lambda}) = \prod_{i=1}^N q(z_i ; \lambda_i)
 \]</div>
-<p>为了符号简单，我们在本节的其余部分省略了变分参数 <span class="math notranslate nohighlight">\(λ\)</span> 。我们现在回顾如何在平均场假设下最大化公式（ 3 ）中定义的 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 。</p>
-<p>完全分解的<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>允许通过简单的迭代更新来优化。为了看到这一点，我们专注于更新与隐变量 <span class="math notranslate nohighlight">\(z_j\)</span> 相关的变分参数 <span class="math notranslate nohighlight">\(λ_j\)</span> 。将平均场分布插入公式（ 3 ）允许我们表达 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 如下：</p>
+<p>为了符号简单，我们将在本节的其余部分省略了变分参数 <span class="math notranslate nohighlight">\(λ\)</span> 。现在看一下如何在平均场假设下最大化 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 。</p>
+<p>完全因子分解的<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>可以通过简单的迭代更新来做优化。为了看到这一点，我们可以将注意力放在更新与隐变量 <span class="math notranslate nohighlight">\(z_j\)</span> 相关的变分参数 <span class="math notranslate nohighlight">\(λ_j\)</span> 上。首先，将平均场分布引入 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的计算公式后，可以得到如下表示：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\begin{aligned}
-\mathscr{L}= \int q\left(z_{j}\right) \mathbb{E}_{q\left(z_{\neg j}\right)}\left[\log p\left(z_{j}, \boldsymbol{x} \mid \boldsymbol{z}_{\neg j}\right)\right] d z_{j} \\
--\int q\left(z_{j}\right) \log q\left(z_{j}\right) d z_{j}+c_{j}
-\end{aligned}
+\begin{align*}
+\mathscr{L}= \int q\left(z_{j}\right) \mathbb{E}_{q\left(z_{\neg j}\right)}\left[\log p\left(z_{j}, \boldsymbol{x} \mid \boldsymbol{z}_{\neg j}\right)\right] d z_{j} \\ -\int q\left(z_{j}\right) \log q\left(z_{j}\right) d z_{j}+c_{j} \tag{6}
+\end{align*}
 \end{split}\]</div>
-<p><span class="math notranslate nohighlight">\(\boldsymbol{z}_{\neg j}\)</span> 表示集合 <span class="math notranslate nohighlight">\(\boldsymbol{z}\)</span> 中除不包括 <span class="math notranslate nohighlight">\(z_{j}\)</span> 常数 <span class="math notranslate nohighlight">\(c_{j}\)</span> 包含所有关于常数的项<span class="math notranslate nohighlight">\(z_{j}\)</span>，例如与 <span class="math notranslate nohighlight">\(z_{\neg j}\)</span> 相关的熵项。因此，我们将完全期望分为对 <span class="math notranslate nohighlight">\(\boldsymbol{z}_{\neg j}\)</span> 的内部期望和对 <span class="math notranslate nohighlight">\(z_{j}\)</span> 的外部期望。</p>
-<p>公式（ 6 ）采用负 <span class="math notranslate nohighlight">\(\mathrm{KL}\)</span> 散度的形式，对于变量 <span class="math notranslate nohighlight">\(j\)</span> 最大化</p>
+<blockquote>
+<div><p>注： 此处采用了连续隐变量的表达方式，对于离散型隐变量，积分符号要改为求和符号。</p>
+</div></blockquote>
+<p><span class="math notranslate nohighlight">\(\boldsymbol{z}_{\neg j}\)</span> 表示集合 <span class="math notranslate nohighlight">\(\boldsymbol{z}\)</span> 中除 <span class="math notranslate nohighlight">\(z_{j}\)</span> 以外的变量集合；常数 <span class="math notranslate nohighlight">\(c_{j}\)</span> 包含所有相对于 <span class="math notranslate nohighlight">\(z_{j}\)</span> 可视为常数的项（ 例如：与 <span class="math notranslate nohighlight">\(z_{\neg j}\)</span> 相关的熵项，由于 <span class="math notranslate nohighlight">\(z_{\neg j}\)</span> 相对于 <span class="math notranslate nohighlight">\(z_{j}\)</span> 是常数，因此该熵项可视为常数项 ）。至此，我们将完整的期望分解为了两个部分：一是关于 <span class="math notranslate nohighlight">\(\boldsymbol{z}_{\neg j}\)</span> 的内部期望；另一个是关于 <span class="math notranslate nohighlight">\(z_{j}\)</span> 的外部期望。</p>
+<p>公式（ 6 ）采用负 <span class="math notranslate nohighlight">\(\mathrm{KL}\)</span> 散度的形式，对于变量 <span class="math notranslate nohighlight">\(z_j\)</span> 最大化</p>
 <div class="math notranslate nohighlight">
 \[
-\log q^{*}\left(z_{j}\right)=\mathbb{E}_{q\left(z_{\neg j}\right)}\left[\log p\left(z_{j} \mid \boldsymbol{z}_{\neg j}, \boldsymbol{x}\right)\right]+\text { const }
+\log q^{*}\left(z_{j}\right)=\mathbb{E}_{q\left(z_{\neg j}\right)}\left[\log p\left(z_{j} \mid \boldsymbol{z}_{\neg j}, \boldsymbol{x}\right)\right]+\text { const } \tag{7}
 \]</div>
-<p>对这个结果求幂和归一化产生：</p>
+<p>对这个结果求幂并做归一化，产生：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
 q^{*}\left(z_{j}\right) &amp; \propto \exp \left(\mathbb{E}_{q\left(z_{\neg j}\right)}\left[\log p\left(z_{j} \mid z_{\neg j}, \boldsymbol{x}\right)\right]\right) \\
-&amp; \propto \exp \left(\mathbb{E}_{q\left(z_{\neg j}\right)}[\log p(z, \boldsymbol{x})]\right)
+&amp; \propto \exp \left(\mathbb{E}_{q\left(z_{\neg j}\right)}[\log p(z, \boldsymbol{x})]\right) \tag{8}
 \end{aligned}
 \end{split}\]</div>
-<p>使用公式。如图 8 所示，可以针对每个隐变量迭代地更新<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>直到收敛。类似的更新也构成了变分消息传递算法 [216](附录 A.3)的基础。</p>
+<p>使用公式（ 8 ）所示，可以针对每个隐变量迭代地更新变分分布，直至其收敛。类似的更新也构成了变分消息传递算法 [216] 的基础。</p>
 <p>有关平均场近似及其几何解释的更多详细信息，请读者参阅 [14] 和 [205]。</p>
 </div>
 <div class="section" id="id17">
 <h3>3.2 指数族分布的适用性<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
-<p>变分推断的另一个重要的技术点在于<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>族 <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span> 的选择。在高斯混合模型中，我们知道目标分布 <span class="math notranslate nohighlight">\(p\)</span> 是高斯的，那么将<code class="docutils literal notranslate"><span class="pre">变分分布</span></code> <span class="math notranslate nohighlight">\(q\)</span> 构造为高斯的，会更容易逼近 <span class="math notranslate nohighlight">\(p\)</span> 。</p>
-<p>但对于更为复杂的目标分布怎么办？答案是：<strong>可以用更广泛的指数族分布来构造！！！</strong></p>
-<p>数学上已经证明，<span class="math notranslate nohighlight">\(p\)</span> 不一定必须是高斯的，只要它属于指数族分布，那么我们都可以将<code class="docutils literal notranslate"><span class="pre">变分分布</span></code> <span class="math notranslate nohighlight">\(q\)</span> 构造为同一指数族的分布。因为指数族分布有一些很好的性质，允许我们很巧妙地简化自然梯度的推导。事实上指数族分布非常宽泛，基本涵盖了常见的分布形态，如：高斯分布、<span class="math notranslate nohighlight">\(\chi ^2\)</span> 分布、伯努利分布、指数分布、贝塔分布、伽马分布、泊松分布等。</p>
-<p>但是，当 <span class="math notranslate nohighlight">\(p\)</span> 本身确实并不属于指数族时， <span class="math notranslate nohighlight">\(q\)</span> 可能永远无法近似 <span class="math notranslate nohighlight">\(p\)</span> ，而这也是变分推断的一个缺陷，即最终计算得出的结果是一个难以提前估计的近似。</p>
+<p>变分推断的另一个重要的技术点在于<code class="docutils literal notranslate"><span class="pre">变分分布族</span></code> <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span> 的选择。在高斯混合模型中，我们假设目标分布 <span class="math notranslate nohighlight">\(p\)</span> 是高斯的，因此将<code class="docutils literal notranslate"><span class="pre">变分分布</span></code> <span class="math notranslate nohighlight">\(q\)</span> 构造为高斯分布族，会更容易逼近 <span class="math notranslate nohighlight">\(p\)</span> 。</p>
+<p>但对于更为复杂的目标分布怎么办？答案是：<strong>使用更广泛的指数族分布来构造！！！</strong></p>
+<p>当 <span class="math notranslate nohighlight">\(p\)</span> 属于指数族分布时，数学上已经证明，都可以将其近似分布 <span class="math notranslate nohighlight">\(q\)</span> 构造为相同类型的指数族分布。指数族分布具有一些非常好的性质，允许很巧妙地简化<code class="docutils literal notranslate"><span class="pre">自然梯度</span></code>的推导（ <code class="docutils literal notranslate"><span class="pre">自然梯度</span></code>的概念见 4.2 节）。最重要的是，指数族分布非常宽泛，基本涵盖了常见的分布形态，如：高斯分布、<span class="math notranslate nohighlight">\(\chi ^2\)</span> 分布、伯努利分布、指数分布、贝塔分布、伽马分布、泊松分布等。</p>
+<p>当 <span class="math notranslate nohighlight">\(p\)</span> 确实不属于指数族时，平均场变分分布 <span class="math notranslate nohighlight">\(q\)</span> 可能永远无法近似 <span class="math notranslate nohighlight">\(p\)</span> ，这是变分推断的一个缺陷，即最终计算得出的结果是一个难以提前估计的近似。</p>
 </div>
 <div class="section" id="id18">
-<h3>3.3 坐标上升优化算法<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
-<p>在构造 <span class="math notranslate nohighlight">\(q\)</span> 时，除了对分布族做选择之外，还需要考虑不同随机变量之间的依赖关系问题。其中一种最简单的近似，就是假设隐变量可以被分解为多个因子，而因子之间相互独立，根据概率图模型，此时隐变量的联合分布可以被分解为多个因子分布的乘积（见下图）。</p>
+<h3>3.3 平均场推断优化算法 – 坐标上升法<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p><strong>（1）概率图中的平均场变分推断</strong></p>
+<p>在构造 <span class="math notranslate nohighlight">\(q\)</span> 时，除了对分布族做选择之外，还需要考虑不同随机变量之间的依赖关系问题。其中一种最简单的近似，就是假设隐变量可以被分解为多个因子，而因子之间相互独立，此即平均场的原理。</p>
+<p>根据概率图模型，此时隐变量的联合分布可被分解为多个因子分布的乘积（见下图）。</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108085537-3530.webp" /></p>
 <blockquote>
-<div><p>图 8：独立因子假设及其概率图表示</p>
+<div><p>图 8：<code class="docutils literal notranslate"><span class="pre">LDA</span></code> 模型及其完全独立因子分解的概率图表示</p>
 </div></blockquote>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108085543-3d28.webp" /></p>
 <blockquote>
 <div><p>图 9：完全因子分解后的平均场变分族</p>
 </div></blockquote>
-<p>在这种因子分解形式的近似中，完全因子分解是使用最广泛的一种构造形式，即每个隐变量有自己独立的分布，与其他隐变量无关，数学形式为： <span class="math notranslate nohighlight">\(q(z) = q_1(z_1) q_2(z_2) \cdots q_n(z_n) \)</span>，其中所有的 <span class="math notranslate nohighlight">\(q_i(z_i)\)</span> 都是一元离散变量上的类别分布（ <code class="docutils literal notranslate"><span class="pre">Catalogical</span> <span class="pre">Distribution</span></code> ），可描述为一维表形式。</p>
-<p>事实表明，对于 <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span> 的这种选择很容易优化，并且工作地出奇得好。在优化变分下界时，这种因子分解的方法也许是目前最流行的一种选择。</p>
-<p>这种采用完全因子分解方法的变分推断，被称为<strong>平均场近似推断</strong>。此方法包含以下需要解决的优化问题：</p>
+<p>在上述因子分解形式的近似中，<code class="docutils literal notranslate"><span class="pre">完全因子分解</span></code>是使用最广泛的一种构造形式，该分解形式中，每个隐变量都有自己的独立分布，而与其他隐变量无关。数学形式为：</p>
 <div class="math notranslate nohighlight">
 \[
-\min_{q_1, \ldots, q_n} J(q) 
+q(z) = q_1(z_1) q_2(z_2) \cdots q_n(z_n) 
 \]</div>
-<p>解决此优化问题的标准方法是在 <span class="math notranslate nohighlight">\(q_j\)</span> 上实施坐标下降做最小化（或坐标上升做最大化）： 我们在 <span class="math notranslate nohighlight">\(j=1,2,\ldots,n\)</span> 上做迭代，对于每一个 <span class="math notranslate nohighlight">\(j\)</span> ，在保持其他”坐标” <span class="math notranslate nohighlight">\(q_{-j} = \prod_{i \neq j} q_i\)</span> 固定的情况下，仅关于 <span class="math notranslate nohighlight">\(q_j\)</span> 来优化 <span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 。</p>
-<p>最有趣的是：<strong>单一坐标的优化问题具有一个简单的闭式解</strong>：</p>
+<p>其中所有的 <span class="math notranslate nohighlight">\(q_i(z_i)\)</span> 都是一元隐变量上的分布。显而易见地，当 <span class="math notranslate nohighlight">\(z_i\)</span> 为离散型变量时， 则 <span class="math notranslate nohighlight">\(q_i(z_i)\)</span> 为类别分布（ <code class="docutils literal notranslate"><span class="pre">Catalogical</span> <span class="pre">Distribution</span></code> ），通常描述为一维对照表形式。</p>
+<p>事实表明，对于 <span class="math notranslate nohighlight">\(\mathcal{Q}\)</span> 的这种构造很容易进行优化，并且工作地出奇得好。在优化变分下界时，这种因子分解的方法也许是目前最流行的一种选择。</p>
+<p><strong>（2）平均场变分推断的优化算法</strong></p>
+<p>依据变分推断的基本原理，平均场变分推断需要解决如下优化问题：</p>
+<div class="math notranslate nohighlight">
+\[
+\min_{q_1, \ldots, q_n} KL(q || p) \ 或 \ \max_{q_1, \ldots, q_n} ELBO(q || p)
+\]</div>
+<p>解决此优化问题的标准方法是在 <span class="math notranslate nohighlight">\(q_j\)</span> 上对 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 实施坐标下降法做最小化，或对证据下界 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 实施坐标上升法做最大化。</p>
+<p>坐标下降法（或上升法）的原理也比较简单：每次仅更新一个维度的变分参数。即在 <span class="math notranslate nohighlight">\(j=1,2,\ldots,n\)</span> 上做迭代，对于每一个 <span class="math notranslate nohighlight">\(j\)</span> ，在保持其他维度随机变量 <span class="math notranslate nohighlight">\(q_{-j} = \prod_{i \neq j} q_i\)</span> 固定（所谓固定指保持其他维度的变分参数不变，或视为常数 ），仅关于 <span class="math notranslate nohighlight">\(q_j\)</span> 来优化 <span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 或 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code>；所有维度 <span class="math notranslate nohighlight">\(j\)</span> 遍历一遍后完成一次完整更新。</p>
+<blockquote>
+<div><p>注解：  此处坐标下降法（或上升法）以完全因子分解为例。</p>
+</div></blockquote>
+<p>最有趣的是：<strong>单一坐标的优化问题具有简单的封闭形式解析解</strong>：</p>
 <div class="math notranslate nohighlight">
 \[
  \log q_j(z_j) \gets \mathbb{E}_{q_{-j}} \left[ \log \tilde p(z) \right] + \textrm{const}
 \]</div>
-<p>注意上述公式两侧都包含一元隐变量 <span class="math notranslate nohighlight">\(z_j\)</span> 的函数，我们只是用右侧的另一个函数取代了 <span class="math notranslate nohighlight">\(q(z_j)\)</span> 。右式中的常数项为新分布的归一化常数，此外还包含一个因子总和的期望：</p>
+<p>注意上述公式两侧都包含一元隐变量 <span class="math notranslate nohighlight">\(z_j\)</span> 的函数，只是用右侧的另一个函数取代了 <span class="math notranslate nohighlight">\(q(z_j)\)</span> 。右式中的常数项为新分布的归一化常数（依据前面基本原理的介绍，该常数项中应当包含其他与 <span class="math notranslate nohighlight">\(z_j\)</span> 无关的隐变量相关的项 ），此外还包含一个因子总和的期望：</p>
 <div class="math notranslate nohighlight">
 \[
 \log \tilde p(z) = \sum_k \log \phi(z_k)
@@ -922,13 +980,14 @@ q^{*}\left(z_{j}\right) &amp; \propto \exp \left(\mathbb{E}_{q\left(z_{\neg j}\r
 <p>根据无向概率图模型（即马尔科夫随机场理论），只有在变量 <span class="math notranslate nohighlight">\(z_j\)</span> 的马尔科夫毯内的因子，才是 <span class="math notranslate nohighlight">\(z_j\)</span> 的函数 ，马尔科夫毯之外的其余因子对于 <span class="math notranslate nohighlight">\(z_j\)</span> 都可视为常数，可以纳入常数项 <span class="math notranslate nohighlight">\(\textrm{constant}\)</span>。</p>
 <p>这样能够大量减少期望公式中的因子数量；当 <span class="math notranslate nohighlight">\(z_j\)</span> 的马尔科夫毯很小时，可以比较容易给出 <span class="math notranslate nohighlight">\(q(z_j)\)</span> 的解析公式。 例如，假设变量 <span class="math notranslate nohighlight">\(z_j\)</span> 是具有 <span class="math notranslate nohighlight">\(K\)</span> 个可能值的离散型变量，并且在 <span class="math notranslate nohighlight">\(z_j\)</span> 的马尔科夫毯中有 <span class="math notranslate nohighlight">\(F\)</span> 个因子和 <span class="math notranslate nohighlight">\(N\)</span> 个变量，则计算期望值的时间复杂度为 <span class="math notranslate nohighlight">\(O(K F K^N)\)</span>：即对于每个 <span class="math notranslate nohighlight">\(z_j\)</span> 的 <span class="math notranslate nohighlight">\(K\)</span> 种可能的取值，需要对 <span class="math notranslate nohighlight">\(N\)</span> 个变量的所有 <span class="math notranslate nohighlight">\(K^N\)</span> 次赋值以及 <span class="math notranslate nohighlight">\(F\)</span> 个因子求和。</p>
 <p>坐标下降过程的结果是：</p>
-<p>依据 <span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 迭代地拟合了用于近似 <span class="math notranslate nohighlight">\(p\)</span> 的完全因子式 <span class="math notranslate nohighlight">\(q(z) = q_1(z_1) q_2(z_2) \cdots q_n(z_n) \)</span> ； 而坐标下降的每一步，都增加了变分下界，使其向  <span class="math notranslate nohighlight">\(\log Z(\theta)\)</span> 进一步收紧。 最终的因子 <span class="math notranslate nohighlight">\(q_j(z_j)\)</span> 不会完全等于真正的边缘分布 <span class="math notranslate nohighlight">\(p(z_j)\)</span> ，但对于许多实际目的，它们通常表现足够好，如确定 <span class="math notranslate nohighlight">\(z_j\)</span> 的峰值： <span class="math notranslate nohighlight">\(\max_{z_j} p(z_j)\)</span> 。</p>
+<p>依据 <span class="math notranslate nohighlight">\(KL(q\|p)\)</span> 迭代地拟合了用于近似 <span class="math notranslate nohighlight">\(p\)</span> 的完全因子式 <span class="math notranslate nohighlight">\(q(z) = q_1(z_1) q_2(z_2) \cdots q_n(z_n) \)</span> ； 而坐标下降的每一步，都增加了变分下界，使其向 <span class="math notranslate nohighlight">\(\log Z(\theta)\)</span> 进一步收紧。 最终的因子 <span class="math notranslate nohighlight">\(q_j(z_j)\)</span> 不会完全等于真正的边缘分布 <span class="math notranslate nohighlight">\(p(z_j)\)</span> ，但对于许多实际目的，它们通常表现足够好，如确定 <span class="math notranslate nohighlight">\(z_j\)</span> 的峰值： <span class="math notranslate nohighlight">\(\max_{z_j} p(z_j)\)</span> 。</p>
+<p><strong>（3）以高斯混合模型为例</strong></p>
 <p>还是用高斯混合模型的例子，根据概率图模型有：</p>
 <div class="math notranslate nohighlight">
 \[
 p(\boldsymbol{\mu},\mathbf{c},\mathbf{x})=p(\boldsymbol{\mu})\prod_{i=1}^{n} p(c_i)p(x_i \mid c_i,\boldsymbol{\mu})
 \]</div>
-<p>该模型中涉及的隐变量为 <span class="math notranslate nohighlight">\(\mathbf{z} = \{\boldsymbol{\mu},\mathbf{c} \}\)</span> ，其中 <span class="math notranslate nohighlight">\(\boldsymbol{\mu} =\{ \mu_k\}, k=1...5\)</span>  为 5 个高斯组份的均值；<span class="math notranslate nohighlight">\(\mathbf{c}\)</span> 为所有数据点的类别向量。<span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span> 作为全局变量，其<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>被构造为高斯分布  <span class="math notranslate nohighlight">\(q(u_k;m_k,S_k)\)</span> ， <span class="math notranslate nohighlight">\(\nu_\mu = \{m_k,S_k\},k=1...5\)</span>  为需要优化求解的变分参数。 <span class="math notranslate nohighlight">\(c_i\)</span> 为局部变量，其<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>的构造形式为多项分布  <span class="math notranslate nohighlight">\(q(c_i ;\psi_i)\)</span> ，其中 <span class="math notranslate nohighlight">\(\nu_c=\{ \psi_i \}, i=1...n\)</span> 为控制每个数据点类别的变分参数（注意 <span class="math notranslate nohighlight">\(\psi_i\)</span> 为向量）。</p>
+<p>该模型中涉及的隐变量为 <span class="math notranslate nohighlight">\(\mathbf{z} = \{\boldsymbol{\mu},\mathbf{c} \}\)</span> ，其中 <span class="math notranslate nohighlight">\(\boldsymbol{\mu} =\{ \mu_k\}, k=1...5\)</span> 为 5 个高斯组份的均值；<span class="math notranslate nohighlight">\(\mathbf{c}\)</span> 为所有数据点的类别向量。<span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span> 作为全局变量，其<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>被构造为高斯分布 <span class="math notranslate nohighlight">\(q(u_k;m_k,S_k)\)</span> ， <span class="math notranslate nohighlight">\(\nu_\mu = \{m_k,S_k\},k=1...5\)</span> 为需要优化求解的变分参数。 <span class="math notranslate nohighlight">\(c_i\)</span> 为局部变量，其<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>的构造形式为多项分布 <span class="math notranslate nohighlight">\(q(c_i ;\psi_i)\)</span> ，其中 <span class="math notranslate nohighlight">\(\nu_c=\{ \psi_i \}, i=1...n\)</span> 为控制每个数据点类别的变分参数（注意 <span class="math notranslate nohighlight">\(\psi_i\)</span> 为向量）。</p>
 <p>按照平均场近似方法，各因变量之间相互独立，则<code class="docutils literal notranslate"><span class="pre">变分分布</span></code> <span class="math notranslate nohighlight">\(q(\boldsymbol{\mu},c)\)</span> 可被构造为：</p>
 <div class="math notranslate nohighlight">
 \[
@@ -949,7 +1008,7 @@ p(\boldsymbol{\mu},\mathbf{c} \mid \mathbf{x}) \approx q(\boldsymbol{\mu},c)=\pr
 <p>在最原始的坐标上升方法中，所有的隐变量同等对待，逐一更新一遍效率较低。为此，有学者对其做了改进，将隐变量分为两种类型，即仅关系单个数据点的局部参数，和关系到所有数据点的全局参数（ <span class="math notranslate nohighlight">\(\lambda\)</span> ） 。算法 1 对其进行了高层次的总结：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108160249-c296.webp" /></p>
 <p>如算法中所示，即便是这样，在更新全局参数之前，也需要先循环遍历所有文档一遍（单批次梯度下降）。当文档太多时，这就会成为了一个新问题，模型更新的频率太低。不过，该算法将参数区分为全局参数和局部参数的作法，为随机梯度下降提供了一个思路。</p>
-<p>为了适应随机梯度下降，可将借鉴算法 1 的思路，将下界分解为两部分（采用对数形式）：<strong>由局部参数 <span class="math notranslate nohighlight">\(\phi_i\)</span> 参数化的逐数据点项</strong> 和 <strong>由全局参数 <span class="math notranslate nohighlight">\(\lambda\)</span> 参数化的全局项</strong>：</p>
+<p>为了适应随机梯度下降，可将借鉴算法 1 的思路，将下界分解为两部分（采用对数形式）：<strong>由局部参数 <span class="math notranslate nohighlight">\(\phi_i\)</span> 参数化的逐数据点局部隐变量项</strong> 和 <strong>由全局参数 <span class="math notranslate nohighlight">\(\lambda\)</span> 参数化的全局隐变量项</strong>：</p>
 <div class="math notranslate nohighlight">
 \[
 \mathcal{L}\left(\lambda, \phi_{1: n}\right)=\underbrace{\mathbb{E}_{q}[\log p(\beta)-\log q(\beta \mid \lambda)]}_{\text {global contribution }}+\sum_{i=1}^{n} \underbrace{\left\{\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i} \mid \beta\right]-\log q\left(z_{i} \mid \phi_{i}\right)\right\}\right.}_{\text {per-data point contribution }}
@@ -1012,31 +1071,72 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <p>式中的 <span class="math notranslate nohighlight">\(F\)</span> 为 Fisher 信息矩阵。根据公式也可以看出，自然梯度考虑了参数空间上的曲率信息 <span class="math notranslate nohighlight">\( \nabla_\theta \mathcal{L}(\lambda,\phi_{1..n})\)</span>。</p>
 </div>
 <div class="section" id="svi-sgd">
-<h3>4.3 随机变分推断（ SVI ）：自然梯度与 SGD 的结合<a class="headerlink" href="#svi-sgd" title="Permalink to this headline">¶</a></h3>
-<p>既然给出了目标函数的最速梯度方向，那么与 4.1 节的随机梯度下降相结合就成为一种非常自然的想法。大家都知道， SGD 是小批量梯度下降的特例，由于每次仅随机地使用一个样本（这也是取名为随机梯度下降的原因），因此会引入较大的方差，但总体趋向于最优解。以下算法 2 为<strong>随机变分变分推断算法</strong>， 其基本思想是：在每一轮迭代中，随机抽取一个样本数据点并计算最优局部参数，然后根据自然梯度公式更新全局参数，直至收敛。</p>
+<h3>4.3 随机变分推断（ <code class="docutils literal notranslate"><span class="pre">SVI</span></code> ）：自然梯度与 <code class="docutils literal notranslate"><span class="pre">SGD</span></code> 的结合<a class="headerlink" href="#svi-sgd" title="Permalink to this headline">¶</a></h3>
+<p>既然给出了目标函数的最速梯度方向，那么与 4.1 节的随机梯度下降相结合就成为一种非常自然的想法。大家都知道， <code class="docutils literal notranslate"><span class="pre">SGD</span></code> 是小批量梯度下降的特例，由于每次仅随机地使用一个样本（这也是取名为随机梯度下降的原因），因此会引入较大的方差，但总体趋向于最优解。以下算法 2 为<strong>随机变分变分推断算法</strong>， 其基本思想是：在每一轮迭代中，随机抽取一个样本数据点并计算最优局部参数，然后根据自然梯度公式更新全局参数，直至收敛。</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108163233-7872.webp" /></p>
 </div>
 <div class="section" id="svi">
-<h3>4.4 随机变分推断（ SVI ）中的一些技巧<a class="headerlink" href="#svi" title="Permalink to this headline">¶</a></h3>
+<h3>4.4 随机变分推断（ <code class="docutils literal notranslate"><span class="pre">SVI</span></code> ）中的一些技巧<a class="headerlink" href="#svi" title="Permalink to this headline">¶</a></h3>
+<p>在随机变分推断中，随机梯度下降（ <code class="docutils literal notranslate"><span class="pre">SGD</span></code> ）的收敛速度取决于梯度估计的方差，较小的梯度噪声允许较大的学习率，并导致更快的收敛。本节介绍随机变分推断背景下的权衡技巧，例如自适应学习率和方差减少策略。其中一些方法通常适用于 <code class="docutils literal notranslate"><span class="pre">SGD</span></code>。</p>
 <div class="section" id="id22">
 <h4>4.4.1 自适应学习率与小批量大小<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<p>收敛速度受学习率和批量大小 [10]、[46] 的影响。基于大数定律，增加批量大小会较小随机梯度的噪声 [46]，进而允许更大的学习率。因此，为了加速学习过程，可以在给定学习率的情况下，优化调整批量大小，或者固定批量大学，优化学习率。</p>
+<p><strong>（1）学习率的自适应调整</strong></p>
+<p>在每次迭代中，梯度的经验方差可以用于指导学习率的自动适应（ 因为梯度噪声与学习率成反比 ）。利用此想法的优化方法包括 <code class="docutils literal notranslate"><span class="pre">RMSProp</span></code> [191]、<code class="docutils literal notranslate"><span class="pre">AdaGrad</span></code> [42]、<code class="docutils literal notranslate"><span class="pre">AdaDelta</span></code> [218] 和 <code class="docutils literal notranslate"><span class="pre">Adam</span></code> [87] 等。这些方法不是随机变分推断特有的，但在其中经常使用；更多详细信息请参阅 [53]。</p>
+<p>[157]首先在随机变分推断中引入了全局变分参数 <span class="math notranslate nohighlight">\(γ\)</span> 的自适应学习率，其中最佳学习率被证明满足：</p>
+<div class="math notranslate nohighlight">
+\[
+ρ^∗_t = \frac{(γ^∗_t −γ_t )^T (γ^∗_t −γ_t )}{ (γ^∗_t − γ_t )^T (γ^∗_t −γ_t )+tr(Σ)}
+\]</div>
+<p>上面，<span class="math notranslate nohighlight">\(γ^∗_t\)</span> 表示最优全局变分参数，<span class="math notranslate nohighlight">\(γ_t\)</span> 表示当前估计。 <span class="math notranslate nohighlight">\(Σ\)</span> 是这个批次中变分参数的协方差矩阵。由于 <span class="math notranslate nohighlight">\(γ^∗_t\)</span> 是未知的，[157] 展示了如何以在线方式估计最佳学习率。</p>
+<p><strong>（2）批量大小的自适应调整</strong></p>
+<p>可以在保持学习率固定的同时调整批量大小，这也实现了类似效果 [10] [26]、[37]、[184]。为了减少随机梯度下降的方差，[10] 建议根据目标函数的值与其最优值成比例地选择批量大小。在实践中，估计的梯度噪声协方差和梯度大小被用于估计最佳批量大小。</p>
 </div>
 <div class="section" id="id23">
-<h4>4.4.2 方差减少策略<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
-<p>（1）控制变量法</p>
-<p>（2）非均匀采样法</p>
-<p>（3）其他方法</p>
-</div>
+<h4>4.4.2 方差减少的策略<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
+<p>除了通过学习率和小批量大小控制优化路径之外，还可以采取一些措施来减少方差，从而实现更大的梯度步长。 随机变分推断中经常使用<code class="docutils literal notranslate"><span class="pre">方差减少</span></code>来实现更快的收敛。下面总结了一些通过<code class="docutils literal notranslate"><span class="pre">控制变量</span></code>、<code class="docutils literal notranslate"><span class="pre">非均匀采样</span></code>和其他方法实现这一目标的方法：</p>
+<p><strong>（1）控制变量法</strong></p>
+<p>控制变量是一个随机项，该随机项可以被添加到随机梯度中，以使梯度的期望保持不变，而方差减少 [20]。控制变量需要与随机梯度相关，并且易于计算。使用控制变量来减少方差在蒙特卡洛模拟和随机优化 [165]、[208] 中很常见。几位作者建议在随机变分推断中使用控制变量[78]、[146]、[154]、[208] 。</p>
+<p>其中一个突出例子，是<code class="docutils literal notranslate"><span class="pre">随机方差减小梯度</span> <span class="pre">(SVRG)</span> </code> [78]。在 <code class="docutils literal notranslate"><span class="pre">SVRG</span></code> 中，利用来自所有数据点获得的历史梯度来构建控制变量，并且充分利用了沿优化路径的梯度具有相关性这一特点。标准随机梯度更新 <span class="math notranslate nohighlight">\(γ_{t+1} = γ_t −ρ_t (∇ \hat{\mathscr{L}}(γ_t))\)</span> 被替换为：</p>
+<div class="math notranslate nohighlight">
+\[
+γ_{t+1} = γ_t − ρ_t (∇ \hat{\mathscr{L}} (γ_t ) − ∇ \hat{\mathscr{L}}( \tilde{γ})+\tilde{μ})
+\]</div>
+<p><span class="math notranslate nohighlight">\(\hat{\mathscr{L}}\)</span> 表示基于当前批量集索引的待估计目标（ 此处为负的 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> ），<span class="math notranslate nohighlight">\(\tilde γ\)</span> 是每 <span class="math notranslate nohighlight">\(m\)</span> 次迭代后 <span class="math notranslate nohighlight">\(γ\)</span> 的快照，<span class="math notranslate nohighlight">\(\tilde μ\)</span> 是在所有数据点上计算的批梯度，<span class="math notranslate nohighlight">\(\tilde μ = ∇\mathscr{L}(\tilde γ)\)</span>。由于 <span class="math notranslate nohighlight">\( − ∇ \hat{\mathscr{L}}(\tilde γ)+ \tilde μ\)</span> 的期望为零，因此它是一个控制变量。</p>
+<p><code class="docutils literal notranslate"><span class="pre">SVRG</span></code> 需要每 <span class="math notranslate nohighlight">\(m\)</span> 次迭代对数据集进行一次完整的遍历以计算完整的梯度，即便这种完整遍历可以被放宽到大数据集的某个非常大的批次上。对于平滑但不是强凸的目标，与 <code class="docutils literal notranslate"><span class="pre">SGD</span></code> 的 <span class="math notranslate nohighlight">\(O(1/\sqrt{T})\)</span> 相比，<code class="docutils literal notranslate"><span class="pre">SVRG</span></code> 被证明可以实现 <span class="math notranslate nohighlight">\(O(1/T )\)</span> 的渐近收敛率。在实践中还有许多其他控制变量 [140]、[146]、[203]。其中在 5.2 节还会介绍另外一种比较流行的控制变量类型 — 得分函数控制变量。</p>
+<p><strong>（2）非均匀采样法</strong></p>
+<p>可以使用非均匀二次采样来获得具有较低梯度方差的批量，而不是以等概率对数据点进行采样。有几位作者建议在批量选择 [32]、[55]、[148]、[226] 是采用重要性采样及其变体。这些方法有效但并不总是实用，因为采样机制的计算复杂度与模型参数维度有关 [47]。另外一种替代方法旨在消除相似点的相关性并对多样化的批量进行采样。这些方法包括：<code class="docutils literal notranslate"><span class="pre">分层抽样</span></code> [225]，基于元数据或标签从预定义的子组中抽样数据；<code class="docutils literal notranslate"><span class="pre">基于聚类的抽样</span></code> [47]，使用 <span class="math notranslate nohighlight">\(k\)</span> 均值对数据进行聚类，然后从每个聚类中按照调整后的概率抽取样本；<code class="docutils literal notranslate"><span class="pre">多样化的批量采样</span></code> [223]、[224] 使用<code class="docutils literal notranslate"><span class="pre">排斥点过程</span></code>来抑制同一小批量中具有相似特征的数据点出现的概率。上述这些方法都已被证明可以减少方差，也可以用于学习不平衡数据。</p>
+<p><strong>（3）<code class="docutils literal notranslate"><span class="pre">Rao-Blackwellization</span></code> 及其他</strong></p>
+<p>已经开发了许多有助于减少随机变分推断方差的其他方法。一种流行的方法依赖于 [154] 中使用的<code class="docutils literal notranslate"><span class="pre">Rao-Blackwellization</span></code> 。 <code class="docutils literal notranslate"><span class="pre">Rao-Blackwellization</span> <span class="pre">定理</span></code> 指出，如果存在可以作为条件估计的有效统计量，则条件估计具有较低的方差。受 <code class="docutils literal notranslate"><span class="pre">Rao-Blackwellization</span></code> 的启发，已经提出了<code class="docutils literal notranslate"><span class="pre">局部期望梯度方法</span></code> [194]。该方法将 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的梯度计算拆分为一个蒙特卡洛估计和一个精确期望，以便最佳地考虑每个隐维度对梯度方差的贡献。</p>
+<p>还有其他一些随机变分推断的方法，例如， [112] 在一个批量的滑动窗口上对预期的充分统计量做平均，以获得具有较小均方误差的自然梯度。</p>
 </div>
 </div>
 <div class="section" id="id24">
-<h2>5 提升通用性 — 黑盒变分推断<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
+<h3>4.5 其他可扩展推断方法<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<p>与利用随机优化来使收敛更快的方法相比，本节介绍了一些利用模型结构来实现相同目标的方法。特别是其中的<code class="docutils literal notranslate"><span class="pre">折叠推断</span></code>、<code class="docutils literal notranslate"><span class="pre">稀疏推断</span></code>、<code class="docutils literal notranslate"><span class="pre">并行和分布式推断</span></code> 方法。</p>
+<div class="section" id="id25">
+<h4>4.5.1 折叠变分推断<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">折叠变分推断</span> <span class="pre">(CVI)</span></code> 依赖于解析地积分出某些模型参数 [64]、[83]、[94]、[97]、[182]、[188]、[197] 的想法。这样的话，需要估计的参数数量会减少，推断过程通常会更快。折叠推断通常限制在传统共轭指数族上，其中 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 在边缘化期间采用解析形式获得。对于这些模型，可以在推导出 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 之前将这些隐变量边缘化，或者在之后消除它们 [64]、[83]。几位作者提出了用于主题建模 [94]、[188] 的折叠变分推断，其中可以折叠主题比例 [188] 或主题分配 [64]。除了这些特定于模型的推导之外，[64] 统一了现有的特定于模型的 <code class="docutils literal notranslate"><span class="pre">CVI</span></code> 方法，并为共轭指数族类中的模型提供了一种通用的折叠推断方法。</p>
+<p><code class="docutils literal notranslate"><span class="pre">CVI</span></code> 的计算优势很大程度上取决于折叠变量的统计量。此外，折叠隐随机变量可以使其他推断技术易于处理。对于主题模型等，可以折叠离散变量，仅推断连续变量。这允许使用推断网络[122]、[180]。更一般地说，<code class="docutils literal notranslate"><span class="pre">CVI</span></code> 并不能解决所有问题。一方面，整合某些模型变量会使 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 更紧致，因为边缘似然不必在这些变量中获得下界。另一方面，除了数学挑战之外，边缘化变量还会在变量之间引入额外的依赖关系。例如，在隐狄利克雷分配中，折叠全局变量会在赋值变量之间引入非局部依赖性，从而使分布式推断更加困难。</p>
+</div>
+<div class="section" id="id26">
+<h4>4.5.2  稀疏变分推断<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h4>
+<p>稀疏变分推断引入了额外的低秩近似，从而实现了更具可扩展性的推断 [63]、[177]、[195]。稀疏推断既可以被解释为建模选择，也可以解释为一种推断方案 [24]。在<code class="docutils literal notranslate"><span class="pre">高斯过程</span> <span class="pre">(</span> <span class="pre">GP</span> <span class="pre">)</span></code> 文献中经常会遇到稀疏推断方法。学习高斯过程的计算成本是 <span class="math notranslate nohighlight">\(O(M^3)\)</span>，其中 <span class="math notranslate nohighlight">\(M\)</span> 是数据点的数量。这个代价是由大小为 <span class="math notranslate nohighlight">\(M \times M\)</span> 的核矩阵 <span class="math notranslate nohighlight">\(KMM\)</span> 求逆引起的，这阻碍了高斯过程在大数据集上的应用。 稀疏高斯过程推断的思想是引入 <span class="math notranslate nohighlight">\(T\)</span> 个诱导点 [177] 。这些诱导点可以解释为反映原始数据的伪输入，但 <span class="math notranslate nohighlight">\(T \ll M\)</span> 从而产生更稀疏的表示。而对于诱导点来说，只需要对一个 <span class="math notranslate nohighlight">\(T×T\)</span> 大小的矩阵求逆，因此该方法的计算复杂度为 <span class="math notranslate nohighlight">\(O(MT^2)\)</span>。 [195] 折叠了诱导点的分布，[63] 进一步将这项工作扩展到了一个计算复杂度为 <span class="math notranslate nohighlight">\(O(T^3)\)</span> 的随机版本。此外，稀疏诱导点使<code class="docutils literal notranslate"><span class="pre">深度高斯过程</span></code>中的推断变得易于处理 [35]。</p>
+</div>
+<div class="section" id="id27">
+<h4>4.5.4 分布式和并行推断<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h4>
+<p>变分推断可以调整到分布式计算场景，其中数据或参数的子集分布在多台机器上 [21]、[49]、[135]、[138]、[219]。在大规模场景中通常需要分布式推断方案，其中数据和计算分布在多台机器上。独立的隐变量模型可以简单地并行化；然而可能需要模型的特定设计（例如重参数化），以实现高效的分布式推断 [49]。当前的计算资源使变分推断适用于网络规模的数据分析 [219]。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id28">
+<h2>5 提升通用性 — 黑盒变分推断<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="bbvi">
 <h3>5.1 为何要做黑盒变分推断（BBVI）？<a class="headerlink" href="#bbvi" title="Permalink to this headline">¶</a></h3>
 <p>上面章节中，我们针对特定模型做出变分推断，其中大家应该已经注意到了，在 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的计算表达式中，需要人为设定 <span class="math notranslate nohighlight">\(q\)</span> ，并给出其数学期望的解析表达式（事实上，<a class="reference external" href="http://www.nowpublishers.com/article/Details/MAL-001">文献</a> 表明，该方法只适用于<strong>条件共轭指数族分布</strong>）。考虑到现实世界中可能存在无数种模型，而且大部分可能是非共轭的，即便符合条件共轭假设，为每一个模型设计一种变分方案显然也是不可接受的。</p>
 <p>因此，人们自然而然在思考：是否存在一个不需特定于某种模型的通用解决方案 ？这个解决方案最好将像黑匣子一样，只需输入模型和海量数据，然后就自动输出<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>（或变分参数）。事实表明，这是有可能的，此类推断方法被称为<strong>黑盒变分推断（BBVI）</strong>。</p>
 <blockquote>
-<div><p>黑盒变分推断的概念最早出现在文献 <a class="reference external" href="https://arxiv.org/pdf/1401.0118">Ranganath et al., 2014</a> 中和 <a class="reference external" href="https://arxiv.org/pdf/1401.1022">Sal-imans 和 Knowles，2014</a>; <a class="reference external" href="https://arxiv.org/abs/1312.6114v10">Kingma and Welling, 2014</a> 和 <a class="reference external" href="https://arxiv.org/abs/1401.4082">Rezende et al., 2014</a> 提出了利用重参数化技巧实现反向传播和优化的方法；<a class="reference external" href="https://arxiv.org/abs/1505.05770">Rezende and Mohamed, 2015</a> 提出了标准化流的 BBVI 方案、<a class="reference external" href="https://arxiv.org/abs/158.06499">Tran et al.,2016</a> 提出了变分高斯过程的 BBVI 方案，均提升了变分推断的精度；<a class="reference external" href="https://arxiv.org/abs/1603.00788">Alp Kucukelbir et al, 2016</a> 提出自动微分变分推断方法（ ADVI ）；<a class="reference external" href="https://arxiv.org/abs/1505.00519">Yuri Burda et al., 2016</a> 在 VAE 基础上，提出了重要性加权变分自编码器；<a class="reference external" href="https://arxiv.org/abs/1807.09034">J Domke and D Sheldon, 2018</a> 对其进行了泛化，提出了重要性加权变分推断。</p>
+<div><p>黑盒变分推断的概念最早出现在文献 <a class="reference external" href="https://arxiv.org/pdf/1401.0118">Ranganath et al., 2014</a> 中和 <a class="reference external" href="https://arxiv.org/pdf/1401.1022">Sal-imans 和 Knowles，2014</a>; <a class="reference external" href="https://arxiv.org/abs/1312.6114v10">Kingma and Welling, 2014</a> 和 <a class="reference external" href="https://arxiv.org/abs/1401.4082">Rezende et al., 2014</a> 提出了利用重参数化技巧实现反向传播和优化的方法；<a class="reference external" href="https://arxiv.org/abs/1505.05770">Rezende and Mohamed, 2015</a> 提出了标准化流的 黑盒变分推断方案、<a class="reference external" href="https://arxiv.org/abs/158.06499">Tran et al.,2016</a> 提出了变分高斯过程的 黑盒变分推断方案，均提升了变分推断的精度；<a class="reference external" href="https://arxiv.org/abs/1603.00788">Alp Kucukelbir et al, 2016</a> 提出自动微分变分推断方法（ ADVI ）；<a class="reference external" href="https://arxiv.org/abs/1505.00519">Yuri Burda et al., 2016</a> 在 VAE 基础上，提出了重要性加权变分自编码器；<a class="reference external" href="https://arxiv.org/abs/1807.09034">J Domke and D Sheldon, 2018</a> 对其进行了泛化，提出了重要性加权变分推断。</p>
 </div></blockquote>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211115171851-9244.webp" /></p>
 <blockquote>
@@ -1044,16 +1144,16 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <div><p>图 12： 变分推断概念图，愿景是：（1）可以轻松对任何模型进行变分推断；（2）可以利用海量数据进行推断；（3）用户只需指定模型而不需要做其他数学工作。</p>
 </div></blockquote>
 </div></blockquote>
-<p>BBVI 大致分为两种类型：</p>
+<p>黑盒变分推断大致分为两种类型：</p>
 <ul class="simple">
-<li><p><strong>基于评分梯度</strong>的黑盒变分推断（ BBVI ）</p></li>
-<li><p><strong>基于重参数化梯度</strong>的黑盒变分推断（ BBVI ）</p></li>
+<li><p><strong>基于评分梯度</strong>的黑盒变分推断</p></li>
+<li><p><strong>基于重参数化梯度</strong>的黑盒变分推断</p></li>
 </ul>
 <p>后者是变分自编码器 (VAE) 的基础。</p>
 </div>
-<div class="section" id="id25">
-<h3>5.2 使用评分梯度的 BBVI<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
-<p>考虑如下概率模型，其中  <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>  是观测变量， <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 是隐变量，其<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>为 <span class="math notranslate nohighlight">\(q(\mathbf{z} \mid \lambda)\)</span> 。变分下界 (<code class="docutils literal notranslate"><span class="pre">ELBO</span></code>) 为：</p>
+<div class="section" id="id29">
+<h3>5.2 使用评分梯度的 BBVI<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<p>考虑如下概率模型，其中 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 是观测变量， <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 是隐变量，其<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>为 <span class="math notranslate nohighlight">\(q(\mathbf{z} \mid \lambda)\)</span> 。变分下界 (<code class="docutils literal notranslate"><span class="pre">ELBO</span></code>) 为：</p>
 <div class="math notranslate nohighlight">
 \[
 \mathcal{L}(\lambda) \triangleq \mathbb{E}_{q_{\lambda}(\mathbf{z})}[\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda)] \tag{9}
@@ -1095,8 +1195,8 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 \end{split}\]</div>
 </div>
 <hr class="docutils" />
-<div class="section" id="id26">
-<h3>5.3 使用重参数化梯度的 BBVI<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id30">
+<h3>5.3 使用重参数化梯度的 黑盒变分推断<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
 <p>依然采用上节中的模型，变分下界 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 为（为方便重复式 9）：</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1129,39 +1229,39 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <p>(1) 此部分最经典案例见 <a class="reference external" href="http://www.cs.columbia.edu/~blei/fogm/2018F/materials/KingmaWelling2013.pdf">变分自编码器</a></p>
 <p>(2) 可微性是重参数化技巧使用的重要条件，这意味着其适用范围不如评分函数方法。</p>
 </div></blockquote>
-<p>BBVI 的方差减少：BBVI 需要一套与第 3.2 节中审查的 SVI 不同的方差减少技术。与 SVI 的噪声来自有限数据点集的二次采样不同，BBVI 噪声来自可能具有无限支持的随机变量。在这种情况下，诸如 SVRG 之类的技术不适用，因为完整梯度不是有限多项的总和，并且无法保存在内存中。因此，BBVI 涉及一组不同的控制变量和其他方法，这里将简要回顾一下从梯度估计器中减去得分函数的蒙特卡罗期望：</p>
+<p>黑盒变分推断的方差减少：黑盒变分推断需要一套与第 4.2 节中 <code class="docutils literal notranslate"><span class="pre">SVI</span></code> 不同的方差减少技术。与 <code class="docutils literal notranslate"><span class="pre">SVI</span></code> 的噪声来自有限数据点集的二次采样不同，黑盒变分推断噪声来自可能具有无限支持的随机变量。在这种情况下，诸如 SVRG 之类的技术不适用，因为完整梯度不是有限多项的总和，并且无法保存在内存中。因此，黑盒变分推断涉及一组不同的控制变量和其他方法，这里将简要回顾一下从梯度估计器中减去得分函数的蒙特卡罗期望：</p>
 </div>
-<div class="section" id="id27">
-<h3>5.4 方差减少的策略<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
-<p>黑盒变分推断需要一套不同于第 4 节中为随机变分推断设计的方差减少技术。与随机变分推断的噪声来自有限数据点集的二次采样不同，BBVI 的噪声来自可能具有无限支持的随机变量。在这种情况下，诸如随机方差减少梯度  ( SVRG ) 之类的技术不再适用，因为完整梯度无法拆解成有限项的总和，而且难以保存在内存中。BBVI 会涉及一组不同的控制变量和其他方法，这里将简要回顾一下。</p>
-<p>BBVI 中最重要的控制变量是<code class="docutils literal notranslate"><span class="pre">得分函数控制变量</span></code>，其从梯度估计器中减去得分函数的期望（蒙特卡罗法）：</p>
+<div class="section" id="id31">
+<h3>5.4 黑盒变分推断中的方差减少策略<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+<p>黑盒变分推断需要一套不同于为<code class="docutils literal notranslate"><span class="pre">随机变分推断</span></code>设计的方差减少技术。与随机变分推断的噪声来自有限数据点集的二次采样不同，黑盒变分推断的噪声来自可能具有无限支持的随机变量。在这种情况下，诸如<code class="docutils literal notranslate"><span class="pre">随机方差减少梯度</span> <span class="pre">(</span> <span class="pre">SVRG</span> <span class="pre">)</span></code> 之类的技术不再适用，因为完整梯度无法拆解成有限项的和，而且很难保存在内存当中。黑盒变分推断会涉及一组不同的控制变量和其他方法，这里将简要回顾一下。</p>
+<p>黑盒变分推断中最重要的控制变量是<code class="docutils literal notranslate"><span class="pre">得分函数控制变量</span></code>，其从梯度估计器中减去得分函数的期望（蒙特卡罗法）：</p>
 <p>根据需要，<code class="docutils literal notranslate"><span class="pre">得分函数控制变量</span></code>在<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>下的期望为零。选择权重 <span class="math notranslate nohighlight">\(w\)</span> 的依据是其能够最小化梯度的方差。</p>
 <div class="math notranslate nohighlight">
 \[
-\nabla_\lambda \hat{\mathcal{L}}_{control} =\nabla_\lambda \hat{ \mathcal{L}} − \frac{w}{K} \sum_{k=1}^{K}\nabla_\lambda  \text{log} q(z_k \mid \lambda) 
+\nabla_\lambda \hat{\mathcal{L}}_{control} =\nabla_\lambda \hat{ \mathcal{L}} − \frac{w}{K} \sum_{k=1}^{K}\nabla_\lambda \text{log} q(z_k \mid \lambda) 
 \]</div>
-<p>虽然原始 BBVI 论文介绍了 <code class="docutils literal notranslate"><span class="pre">Rao-Blackwellization</span></code> 和<code class="docutils literal notranslate"><span class="pre">控制变量</span></code>，但 [194] 指出控制变量的良好选择可能取决于模型。因此提出了一种只考虑隐变量马尔可夫毯的局部期望梯度。</p>
+<p>虽然原始 黑盒变分推断论文介绍了 <code class="docutils literal notranslate"><span class="pre">Rao-Blackwellization</span></code> 和<code class="docutils literal notranslate"><span class="pre">控制变量</span></code>，但 [194] 指出控制变量的良好选择可能取决于模型。因此提出了一种只考虑隐变量马尔可夫毯的局部期望梯度。</p>
 <p>[167] 提出了一种不同的方法，它引入了<code class="docutils literal notranslate"><span class="pre">过度分散的重要性采样</span></code>。通过从属于过度分散的指数族并且在<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>的尾部放置较大质量的提议分布中进行采样，可以减少梯度的方差。</p>
 </div>
 </div>
-<div class="section" id="id28">
-<h2>6 提升准确性 —  新的目标函数和结构化变分近似<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id29">
-<h3>6.1 平均场变分的起源和局限性<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
-<p>变分方法在统计物理学中有着悠久的传统。平均场法最初应用于模拟自旋玻璃，这是某种类型的无序磁体，其中原子的磁自旋没有以规则模式排列 [143]。这种自旋玻璃模型的一个简单示例是 <code class="docutils literal notranslate"><span class="pre">Ising</span> <span class="pre">模型</span></code> ，它是具有成对耦合晶格的二元变量模型。为了估计自旋状态的结果分布，使用更简单的、分解后的分布作为代理。这样做的目的是尽可能地近似向上或向下自旋（也称为“磁化”）的边缘概率，同时忽略自旋之间的所有相关性。给定自旋与其相邻自旋的许多相互作用，被简化为其间有效磁场（也称为平均场）的单一相互作用。这也是平均场方法名称的由来。物理学家通常将<code class="docutils literal notranslate"><span class="pre">负对数后验</span></code>表示为<code class="docutils literal notranslate"><span class="pre">能量</span></code>或<code class="docutils literal notranslate"><span class="pre">汉密尔顿函数</span></code>。这种语言也已被机器学习社区用于有向和无向概率图模型的近似推断，在附录 A.6 中进行了总结以供读者参考。</p>
+<div class="section" id="id32">
+<h2>6 提升准确性 — 新的目标函数和变分分布<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id33">
+<h3>6.1 平均场变分的起源和局限性<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h3>
+<p>变分方法在统计物理学中有着悠久的传统。平均场法最初应用于模拟自旋玻璃，这是某种类型的无序磁体，其中原子的磁自旋没有以规则模式排列 [143]。这种自旋玻璃模型的一个简单示例是 <code class="docutils literal notranslate"><span class="pre">Ising</span> <span class="pre">模型</span></code> ，它是具有成对耦合晶格的二元变量模型。为了估计自旋状态的结果分布，使用更简单的、分解后的分布作为代理。这样做的目的是尽可能地近似向上或向下自旋（也称为“磁化”）的边缘概率，同时忽略自旋之间的所有相关性。给定自旋与其相邻自旋的许多相互作用，被简化为其间有效磁场（也称为平均场）的单一相互作用。这也是平均场方法名称的由来。物理学家通常将<code class="docutils literal notranslate"><span class="pre">负对数后验</span></code>表示为<code class="docutils literal notranslate"><span class="pre">能量</span></code>或<code class="docutils literal notranslate"><span class="pre">汉密尔顿函数</span></code>。这种语言也已被机器学习社区用于有向和无向概率图模型的近似推断。</p>
 <p>平均场方法由 Anderson 和 Peterson 于 1987 年首次在神经网络中采用 [149]，后来在机器学习社区 [79]、[143]、[172] 中广受欢迎。平均场近似的主要限制是其明确地忽略了不同变量之间的相关性，例如 <code class="docutils literal notranslate"><span class="pre">Ising</span> <span class="pre">模型</span></code> 中的自旋之间的相关性。此外，[205] 表明，<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>破坏的依赖关系越多，优化问题就越非凸。相反，如果<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>包含更多结构，则某些局部最优就不存在了。物理界提出了许多改善平均场变分推断的举措，并由机器学习社区进一步发展 [143]、[150]、[190]。 超越自旋玻璃中的平均场理论的早期例子是 <code class="docutils literal notranslate"><span class="pre">Thouless-Anderson-Palmer</span> <span class="pre">(TAP)</span> <span class="pre">方程</span></code> 方法 [190]，它引入了对<code class="docutils literal notranslate"><span class="pre">变分自由能</span></code>的微扰校正。</p>
-<p>一个相关的想法依赖于幂扩展 [150]，它已被多位作者扩展并应用于机器学习模型 [80]、[142]、[145]、[158]、[185]。此外，信息几何提供了对 <code class="docutils literal notranslate"><span class="pre">MFVI</span></code> 和 <code class="docutils literal notranslate"><span class="pre">TAP</span> <span class="pre">方程</span></code> [186]、[187] 之间关系的洞察。 [221] 进一步将 <code class="docutils literal notranslate"><span class="pre">TAP</span> <span class="pre">方程</span></code>与<code class="docutils literal notranslate"><span class="pre">散度量</span></code>联系起来。我们将读者推荐给 [143] 以获取更多信息。接下来，我们基于 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>以外的散度度量来回顾 MFVI 以外的最新进展。</p>
+<p>一个相关的想法依赖于幂扩展 [150]，它已被多位作者扩展并应用于机器学习模型 [80]、[142]、[145]、[158]、[185]。此外，信息几何提供了对 <code class="docutils literal notranslate"><span class="pre">MFVI</span></code> 和 <code class="docutils literal notranslate"><span class="pre">TAP</span> <span class="pre">方程</span></code> [186]、[187] 之间关系的洞察。 [221] 进一步将 <code class="docutils literal notranslate"><span class="pre">TAP</span> <span class="pre">方程</span></code>与<code class="docutils literal notranslate"><span class="pre">散度量</span></code>联系起来。我们将读者推荐给 [143] 以获取更多信息。接下来，我们基于 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 以外的散度度量来回顾 MFVI 以外的最新进展。</p>
 </div>
-<div class="section" id="id30">
-<h3>6.2 改进目标函数<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>通常提供一种计算方便的方法来测量两个分布之间的距离，它导致对某些模型类的、易于处理的、解析形式的期望。然而，传统的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">变分推断</span></code> (KLVI) 存在诸如低估后验方差 [128] 等问题。在某些情况下，当后验的多个峰值非常接近时，<code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>也无法打破对称性 [141]，并且它是一个相对松散的边界 [221]。出于这些缺点，我们在这里调研了许多其他的散度。</p>
+<div class="section" id="id34">
+<h3>6.2 改进目标函数<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 通常提供一种计算方便的方法来测量两个分布之间的距离，它导致对某些模型类的、易于处理的、解析形式的期望。然而，传统的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">变分推断</span></code> (KLVI) 存在诸如低估后验方差 [128] 等问题。在某些情况下，当后验的多个峰值非常接近时， <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 也无法打破对称性 [141]，并且它是一个相对松散的边界 [221]。出于这些缺点，我们在这里调研了许多其他的散度。</p>
 <p><code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 之外的散度度量不仅在变分推断中起作用，而且在期望传播（ EP ）等相关近似推断方法中也起作用。 EP [101]、[125]、[204]、[228] 的一些最新扩展大多可以被视为替换了新散度的经典 EP [128]。这些方法有着复杂的推导和有限的可扩展性，大多数从业者会发现它们难以使用。变分推断的最新发展主要集中在黑盒方式的统一框架上，以实现可扩展性和可访问性。 黑盒变分推断使其他散度度量的应用成为可能（ 例如 <span class="math notranslate nohighlight">\(χ\)</span> 散度 [39] ），同时保持了该方法的效率和简单性。</p>
 <p>在本节中，我们将介绍相关的散度量并展示如何在变分推断的上下文中使用它们。如第 3.1 节所述，KL 散度是 <code class="docutils literal notranslate"><span class="pre">α-散度</span></code>的一种特殊形式，而 <code class="docutils literal notranslate"><span class="pre">α-散度</span></code> 是 <code class="docutils literal notranslate"><span class="pre">f-散度</span></code> 的一种特殊形式。所有上述散度都可以写成 <code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">discrepancy</span></code> 的形式。</p>
 <p><strong>（1）α-散度</strong></p>
-<p>从信息几何和计算的角度来看，<code class="docutils literal notranslate"><span class="pre">α-散度</span></code>是一系列具有有趣特性的散度度量 [4]、[6]。 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>和 <code class="docutils literal notranslate"><span class="pre">海林格（</span> <span class="pre">Hellinger</span> <span class="pre">）距离</span></code> 都是 <code class="docutils literal notranslate"><span class="pre">α-散度</span></code> 的特例。存在不同的<code class="docutils literal notranslate"><span class="pre">α-散度</span></code>公式 [6]、[229]，并且多种 <code class="docutils literal notranslate"><span class="pre">VI</span></code> 方法使用了不同的定义 [104]、[128]。本文采用 <code class="docutils literal notranslate"><span class="pre">Renyi</span></code> 的公式：</p>
+<p>从信息几何和计算的角度来看，<code class="docutils literal notranslate"><span class="pre">α-散度</span></code>是一系列具有有趣特性的散度度量 [4]、[6]。 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 和 <code class="docutils literal notranslate"><span class="pre">海林格（</span> <span class="pre">Hellinger</span> <span class="pre">）距离</span></code> 都是 <code class="docutils literal notranslate"><span class="pre">α-散度</span></code> 的特例。存在不同的<code class="docutils literal notranslate"><span class="pre">α-散度</span></code>公式 [6]、[229]，并且多种 <code class="docutils literal notranslate"><span class="pre">VI</span></code> 方法使用了不同的定义 [104]、[128]。本文采用 <code class="docutils literal notranslate"><span class="pre">Renyi</span></code> 的公式：</p>
 <div class="math notranslate nohighlight">
 \[
-D^R_\alpha (p||q) = \frac{1}{\alpha −1} \log \int p(x)^\alpha q(x)^{1−\alpha}  \mathrm{d} x \tag{17}
+D^R_\alpha (p||q) = \frac{1}{\alpha −1} \log \int p(x)^\alpha q(x)^{1−\alpha} \mathrm{d} x \tag{17}
 \]</div>
 <p>其中 <span class="math notranslate nohighlight">\(α &gt; 0,\ α \neq 1\)</span> 。根据 <code class="docutils literal notranslate"><span class="pre">α</span> <span class="pre">散度</span></code> 的这个定义，较小的 <span class="math notranslate nohighlight">\(α\)</span> 会导致更多的质量覆盖效应，而较大的 <span class="math notranslate nohighlight">\(α\)</span> 会导致零强迫效应，这意味着<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>规避了低后验概率的区域。对于 <span class="math notranslate nohighlight">\(α →1\)</span>，我们可以恢复为涉及 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 的标准 <code class="docutils literal notranslate"><span class="pre">VI</span></code> 。</p>
 <p><code class="docutils literal notranslate"><span class="pre">α-散度</span></code>最近被用于变分推断 [103]、[104]。类似于 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的推导，<code class="docutils literal notranslate"><span class="pre">α-散度</span></code>意味着边缘似然的边界：</p>
@@ -1194,7 +1294,7 @@ p(\boldsymbol{x}) \geq \tilde{f}(p(\boldsymbol{x})) \geq \mathbb{E}_{q(z)}\left[
 &amp;=e^{-V_{0}}\left(1+\left(V_{0}-V\right)+\frac{1}{2}\left(V_{0}-V\right)^{2}+\frac{1}{6}\left(V_{0}-V\right)^{3}\right) .
 \end{aligned}
 \end{split}\]</div>
-<p>上式中，<span class="math notranslate nohighlight">\(V_0\)</span> 是一个可以优化的自由参数，它吸收了对边缘似然的边界依赖。作者表明，在 <span class="math notranslate nohighlight">\(V\)</span> 中达到线性阶的项对应于 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>，而高阶项是使边界更紧致的校正项。这与早期关于 <code class="docutils literal notranslate"><span class="pre">TAP</span> <span class="pre">方程</span></code> [150]、[190] 的工作有关，这些工作通常不会产生边界。</p>
+<p>上式中，<span class="math notranslate nohighlight">\(V_0\)</span> 是一个可以优化的自由参数，它吸收了对边缘似然的边界依赖。作者表明，在 <span class="math notranslate nohighlight">\(V\)</span> 中达到线性阶的项对应于 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> ，而高阶项是使边界更紧致的校正项。这与早期关于 <code class="docutils literal notranslate"><span class="pre">TAP</span> <span class="pre">方程</span></code> [150]、[190] 的工作有关，这些工作通常不会产生边界。</p>
 <p><strong>（3）Stein Discrepancy 与变分推断</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">方法</span></code> [181] 最初被提出作为一个误差边界，用于衡量近似分布与感兴趣分布的拟合程度。<code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">差</span></code>已适应现代变分推断[59]、[108]、[109]、[110]。在这里，我们介绍 <code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">差</span></code>和使用它的两种变分推断方法：<code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">变分梯度下降（Variational</span> <span class="pre">Gradient</span> <span class="pre">Descent,</span> <span class="pre">SVDG）</span></code> [109] 和 <code class="docutils literal notranslate"><span class="pre">运算符变分推断（</span> <span class="pre">Operator</span> <span class="pre">VI）</span></code> [155]。这两种方法共享相同的目标，但以不同的方式实现优化。</p>
 <p><code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">差</span></code> 是一个积分概率度量 [120]、[130]、[179]。特别是，[109]、[155] 使用 <code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">差</span></code> 作为散度度量：</p>
@@ -1213,11 +1313,11 @@ f (\boldsymbol{z}) = \mathscr A_p \phi (\boldsymbol{z}),
 \[
 Apφ (\boldsymbol{z}) = φ (\boldsymbol{z})∇\boldsymbol{z} log p(\boldsymbol{z},\boldsymbol{x})+∇\boldsymbol{z}φ (\boldsymbol{z}).
 \]</div>
-<p><code class="docutils literal notranslate"><span class="pre">运算符变分推断</span></code> 和 <code class="docutils literal notranslate"><span class="pre">SVGD</span></code> [109] 都使用带<code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">运算符</span></code> 的 <code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">差</span></code> 来构造变分目标。这两种方法的主要区别在于优化算法。 <code class="docutils literal notranslate"><span class="pre">运算符变分推断</span></code>  [155] 使用 <code class="docutils literal notranslate"><span class="pre">minmax</span></code>（GAN 风格）公式和黑盒变分推断直接优化变分目标；而 <code class="docutils literal notranslate"><span class="pre">SVGD</span></code> [109] 使用核化的 <code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">差</span></code>。</p>
-<p>通过对核和 <span class="math notranslate nohighlight">\(q\)</span> 的特定选择，可以证明 <code class="docutils literal notranslate"><span class="pre">SVGD</span></code> 确定了 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>的最陡梯度方向上的最佳扰动 [109]。 <code class="docutils literal notranslate"><span class="pre">SVGD</span></code> 导致了一种方案，其中隐空间中的样本被顺序转换为近似后验。因此，虽然形式上不同，但该方法很容易让人想起标准化流方法 [159]。</p>
+<p><code class="docutils literal notranslate"><span class="pre">运算符变分推断</span></code> 和 <code class="docutils literal notranslate"><span class="pre">SVGD</span></code> [109] 都使用带<code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">运算符</span></code> 的 <code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">差</span></code> 来构造变分目标。这两种方法的主要区别在于优化算法。 <code class="docutils literal notranslate"><span class="pre">运算符变分推断</span></code> [155] 使用 <code class="docutils literal notranslate"><span class="pre">minmax</span></code>（GAN 风格）公式和黑盒变分推断直接优化变分目标；而 <code class="docutils literal notranslate"><span class="pre">SVGD</span></code> [109] 使用核化的 <code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">差</span></code>。</p>
+<p>通过对核和 <span class="math notranslate nohighlight">\(q\)</span> 的特定选择，可以证明 <code class="docutils literal notranslate"><span class="pre">SVGD</span></code> 确定了 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 的最陡梯度方向上的最佳扰动 [109]。 <code class="docutils literal notranslate"><span class="pre">SVGD</span></code> 导致了一种方案，其中隐空间中的样本被顺序转换为近似后验。因此，虽然形式上不同，但该方法很容易让人想起标准化流方法 [159]。</p>
 </div>
-<div class="section" id="id31">
-<h3>6.3 改进<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>的结构<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id35">
+<h3>6.3 改进变分分布的结构<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">MFVI</span></code> 假设一个完全因式分解的<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>；因此，无法捕获后验相关性。全分解变分模型的准确性有限，特别是当隐变量高度依赖时，例如在具有层次结构的模型中。本节讨论未完全分解、但包含隐变量之间依赖关系的<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>。这些结构化的<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>更具表现力，但通常需要更高的计算成本。</p>
 <p><code class="docutils literal notranslate"><span class="pre">允许结构化</span></code>变分分布<code class="docutils literal notranslate"><span class="pre">以捕获隐变量之间的依赖关系</span></code>是一种建模选择；不同依赖关系可能或多或少相关，并取决于所考虑的模型。例如，<code class="docutils literal notranslate"><span class="pre">LDA</span></code> [66] 的结构化变分推断表明维持全局结构至关重要，而 <code class="docutils literal notranslate"><span class="pre">Beta</span> <span class="pre">Bernoulli</span> <span class="pre">Process</span></code> [175] 的结构化变分推断表明维持局部结构更为重要。如下，我们回顾了分层模型的结构化推断，并讨论了时间序列的变分推断。</p>
 <p><strong>（1）分层变分推断（Hierarchical VI）</strong></p>
@@ -1238,24 +1338,24 @@ q(\boldsymbol{z})=\left(\prod_i q(z_i; λ_i)\right) c \left(Q(z_1),...,Q(z_N )\r
 <p>需要结构化变分近似的最重要的模型类之一是时间序列模型，重要例子包括<code class="docutils literal notranslate"><span class="pre">隐马尔可夫模型</span> <span class="pre">(HMM)</span> </code>[44] 和<code class="docutils literal notranslate"><span class="pre">动态主题模型</span></code> (DTM) [17] 等。这些模型在时间步长之间具有很强的依赖性，导致传统全因子平均场变分推断方法产生无法令人满意的结果。当将变分推断用于时间序列时，通常采用结构化的<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>，明确捕获时间点之间的依赖关系，同时在其余变量中保持完全分解[12]、[17]、[45]、[76]。</p>
 <p>这通常需要特定于模型的近似值。 [45]、[76] 为流行的时间序列模型导出了随机变分推断，包括 <code class="docutils literal notranslate"><span class="pre">隐马尔科夫模型（</span> <span class="pre">HMM</span> <span class="pre">）</span></code>、<code class="docutils literal notranslate"><span class="pre">隐式半马尔可夫模型</span> <span class="pre">(</span> <span class="pre">HSMM</span> <span class="pre">)</span></code> 和<code class="docutils literal notranslate"><span class="pre">分层狄利克雷过程-隐马尔科夫模型</span></code>。此外，[76] 为 <code class="docutils literal notranslate"><span class="pre">隐式半马尔可夫模型</span> <span class="pre">(</span> <span class="pre">HSMM</span> <span class="pre">)</span></code> 推导了一个加速的随机变分推断算法。 [11], [12] 推导出一个结构化的黑盒变分推断算法，用于非共轭的隐弥散模型。</p>
 </div>
-<div class="section" id="id32">
-<h3>6.4 其他非标准方法<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id36">
+<h3>6.4 其他非标准的方法<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
 <p>本节将介绍一些杂项方法，这些方法属于提高变分推断准确性的广泛范围，但不会被归类为新的散度度量或结构化模型。</p>
 <p><strong>（1）混合分布的变分推断</strong></p>
 <p>混合分布形成了一类非常灵活的分布，自 1990 年代以来一直在变分推断中使用 [74]、[79]。由于其灵活性和计算困难，混合模型的变分推断一直备受关注 [8]、[51]、[58]、[124]、[170]。为了拟合混合模型，可以使用辅助边界 [156]、定点更新 [170]，或强制执行额外的假设，例如使用统一权重 [51]。</p>
 <p>受提升方法的启发，最近提出的方法以连续方式拟合混合成分[58]，[124]。在这里，<code class="docutils literal notranslate"><span class="pre">提升变分推断（Boosting</span> <span class="pre">VI）</span></code>和<code class="docutils literal notranslate"><span class="pre">变分提升（variational</span> <span class="pre">boosting）</span></code>[58]、[124] 一次添加一个组件，同时固定先前已拟合的组件，通过迭代来改进近似后验。在另一种方法中，[8] 利用强化学习文献中的随机策略搜索方法来拟合高斯混合模型。</p>
 <p><strong>（2）利用随机梯度下降的变分推断</strong></p>
-<p>在某些情况下，概率模型的负对数后验上的随机梯度下降可以被视为一种隐式变分推断算法。在这里，我们考虑具有恒定学习率[113]、[114] 和提前停止 [43] 的随机梯度下降（ SGD ）。</p>
-<p><code class="docutils literal notranslate"><span class="pre">恒定</span> <span class="pre">SGD</span></code> 可以看作是收敛到平稳分布的马尔可夫链；因此，它类似于朗之万动力学 ( Langevin dynamics ) [214]。平稳分布的方差由学习率控制。 [113] 表明可以调整学习率以最小化所得平稳分布和贝叶斯后验之间的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>。此外，[113] 推导出了一个最佳学习率的公式，这些公式结合了 <code class="docutils literal notranslate"><span class="pre">AdaGrad</span></code> [42] 及相关成果。</p>
-<p>[114] 中介绍了包括<code class="docutils literal notranslate"><span class="pre">动量</span></code>和<code class="docutils literal notranslate"><span class="pre">迭代平均</span></code>的<code class="docutils literal notranslate"><span class="pre">泛化</span> <span class="pre">SGD</span></code>。相比之下，[43] 将 SGD 解释为非参数变分推断方案。该论文提出了一种跟踪隐式变分目标熵变化的、基于 <code class="docutils literal notranslate"><span class="pre">Hessian</span> <span class="pre">估计</span></code>的新方法，因此作者考虑从非平稳分布中抽样。</p>
+<p>在某些情况下，概率模型的负对数后验上的随机梯度下降可以被视为一种隐式变分推断算法。在这里，我们考虑具有恒定学习率[113]、[114] 和提前停止 [43] 的随机梯度下降（ <code class="docutils literal notranslate"><span class="pre">SGD</span></code> ）。</p>
+<p><code class="docutils literal notranslate"><span class="pre">恒定</span> <span class="pre">SGD</span></code> 可以看作是收敛到平稳分布的马尔可夫链；因此，它类似于朗之万动力学 ( Langevin dynamics ) [214]。平稳分布的方差由学习率控制。 [113] 表明可以调整学习率以最小化所得平稳分布和贝叶斯后验之间的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 。此外，[113] 推导出了一个最佳学习率的公式，这些公式结合了 <code class="docutils literal notranslate"><span class="pre">AdaGrad</span></code> [42] 及相关成果。</p>
+<p>[114] 中介绍了包括<code class="docutils literal notranslate"><span class="pre">动量</span></code>和<code class="docutils literal notranslate"><span class="pre">迭代平均</span></code>的<code class="docutils literal notranslate"><span class="pre">泛化</span> <span class="pre">SGD</span></code>。相比之下，[43] 将 <code class="docutils literal notranslate"><span class="pre">SGD</span></code> 解释为非参数变分推断方案。该论文提出了一种跟踪隐式变分目标熵变化的、基于 <code class="docutils literal notranslate"><span class="pre">Hessian</span> <span class="pre">估计</span></code>的新方法，因此作者考虑从非平稳分布中抽样。</p>
 <p><strong>（3）对异常值和局部最优的鲁棒性</strong></p>
 <p>由于 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 是一个非凸目标，变分推断受益于高级优化算法以摆脱局部最优解。其中，<code class="docutils literal notranslate"><span class="pre">变分退火法</span></code> [115] 在变分推断中采用确定性退火 [136]、[164]，使冷却方案具有自适应性和数据相关性。</p>
 <p>可以在全局或局部范围内定义温度，其中局部温度特定于局部的若干数据点。模型下具有较小似然的若干数据点（ 例如异常值 ）会自动被分配高温，从而减少了其对全局变分参数的影响，使推断算法对局部最优更鲁棒。变分退火法也可以解释为数据重新加权 [212]，权重是逆温度。在这种情况下，为异常值分配了较低的权重。</p>
-<p>其他使变分推断更稳健的方法包括<code class="docutils literal notranslate"><span class="pre">信任区域法</span></code> [189]，它使用 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>来调整学习进度并避免局部最优；另外还有<code class="docutils literal notranslate"><span class="pre">种群变分推断</span></code>[92]，它通过对自举数据样本的变分后验进行平均，得到更为鲁棒的建模性能。</p>
+<p>其他使变分推断更稳健的方法包括<code class="docutils literal notranslate"><span class="pre">信任区域法</span></code> [189]，它使用 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 来调整学习进度并避免局部最优；另外还有<code class="docutils literal notranslate"><span class="pre">种群变分推断</span></code>[92]，它通过对自举数据样本的变分后验进行平均，得到更为鲁棒的建模性能。</p>
 </div>
 </div>
-<div class="section" id="id33">
-<h2>7 摊销式变分推断与深度学习<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id37">
+<h2>7 摊销式变分推断与深度学习<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h2>
 <p>考虑第 <span class="math notranslate nohighlight">\(4\)</span> 节的设置，其中每个数据点 <span class="math notranslate nohighlight">\(x_i\)</span> 由其具有变分参数 <span class="math notranslate nohighlight">\(ξ_i\)</span> 的隐变量 <span class="math notranslate nohighlight">\(z_i\)</span> 控制。传统的变分推断需要为每个数据点 <span class="math notranslate nohighlight">\(x_i\)</span> 优化 <span class="math notranslate nohighlight">\(ξ_i\)</span>，这在计算上过于昂贵，特别是当这种优化嵌入到全局参数的更新循环时。摊销推断背后的基本思想是使用强大的预测器根据 <span class="math notranslate nohighlight">\(x_i\)</span> 的特征来预测最优 <span class="math notranslate nohighlight">\(z_i\)</span>，即 <span class="math notranslate nohighlight">\(z_i = f(x_i)\)</span> 。这样，局部变分参数就被数据的函数替换，而函数中的参数在所有数据点之间共享，即推断被摊销了。我们在 7.1 节详细介绍了这种方法背后的主要思想，并在 7.2 和 7.3 节中展示了如何以变分自编码器的形式应用它。</p>
 <div class="section" id="amortized-variational-families">
 <h3>7.1 摊销变分推断（Amortized Variational Families）<a class="headerlink" href="#amortized-variational-families" title="Permalink to this headline">¶</a></h3>
@@ -1308,8 +1408,8 @@ q_\phi (z_i|x_i) = \mathcal{N} (z_i|μ(x_i),σ^2(x_i)I))
 <p>术语<code class="docutils literal notranslate"><span class="pre">变分自编码器</span></code>源于这样一个事实，即生成和推断网络的联合训练类似于自编码器（一种无监督的确定性模型）的结构。自编码器是经过训练的深度神经网络，能够尽可能地重建其输入。重要的是，自编码器中涉及的神经网络具有沙漏结构，这意味着有存在少量单元的隐藏层用于阻止神经网络学习琐碎的映射。这个“瓶颈”迫使网络学习有用且紧凑的数据表示。相比之下，<code class="docutils literal notranslate"><span class="pre">VAE</span></code> 是一个概率模型，但它们与经典自编码器有密切的对应关系。事实证明，<code class="docutils literal notranslate"><span class="pre">VAE</span></code> 的隐藏变量可以被认为是自编码器的 “瓶颈” 中的中间表示。在 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 训练期间，将噪声注入该中间层，具有正则化作用。此外，先验和近似后验之间的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度项</span></code>迫使 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 的隐表示接近先验，导致隐空间中的分布更均匀，并更好地泛化到未观测数据。当噪声方差减少到零并省略先验项时，<code class="docutils literal notranslate"><span class="pre">VAE</span></code> 就是经典的自编码器。</p>
 </div></blockquote>
 </div>
-<div class="section" id="id34">
-<h3>7.3 更灵活的 VAE<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id38">
+<h3>7.3 更灵活的 VAE<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
 <p>自从提出 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 以来，提出了越来越多的扩展。该主题本身就可以写一篇评论文章，因此，本文仅总结了其中一些重要的扩展，并且更加强调推断过程。我们先讨论修改变分分布 <span class="math notranslate nohighlight">\(q_\phi\)</span> 和模型 <span class="math notranslate nohighlight">\(p_θ\)</span> 的扩展，最后讨论当一些隐单元的后验在优化过程中与先验保持接近时的死亡单元问题。</p>
 <div class="section" id="q-phi">
 <h4>7.3.1 灵活的<code class="docutils literal notranslate"><span class="pre">变分分布</span></code> <span class="math notranslate nohighlight">\(q_\phi\)</span><a class="headerlink" href="#q-phi" title="Permalink to this headline">¶</a></h4>
@@ -1324,7 +1424,7 @@ q_\phi (z_i|x_i) = \mathcal{N} (z_i|μ(x_i),σ^2(x_i)I))
 \[
 q(z^′) = q(z)|\frac{\partial f^{−1}}{ ∂ z^′} |= q(z)|\frac{\partial f}{∂ z^′}|^{−1}
 \]</div>
-<p>我们有必要计算行列式，因为变分方法要求估计变换分布的熵。通过选择变换函数 <span class="math notranslate nohighlight">\(f\)</span> 使得 <span class="math notranslate nohighlight">\(|\frac{\partial f}{\partial z'}|\)</span> 更容易计算，这种标准化流程构成了一种从简单分布生成多峰分布的有效方法。作为其变体，已经提出了<code class="docutils literal notranslate"><span class="pre">线性时间变换流</span></code>、<code class="docutils literal notranslate"><span class="pre">Langevin</span> <span class="pre">流</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Hamiltonian</span> <span class="pre">流</span></code>  [159] 以及<code class="docutils literal notranslate"><span class="pre">逆自回归流</span></code> [84] 和<code class="docutils literal notranslate"><span class="pre">自回归流</span></code> [29]。</p>
+<p>我们有必要计算行列式，因为变分方法要求估计变换分布的熵。通过选择变换函数 <span class="math notranslate nohighlight">\(f\)</span> 使得 <span class="math notranslate nohighlight">\(|\frac{\partial f}{\partial z'}|\)</span> 更容易计算，这种标准化流程构成了一种从简单分布生成多峰分布的有效方法。作为其变体，已经提出了<code class="docutils literal notranslate"><span class="pre">线性时间变换流</span></code>、<code class="docutils literal notranslate"><span class="pre">Langevin</span> <span class="pre">流</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Hamiltonian</span> <span class="pre">流</span></code> [159] 以及<code class="docutils literal notranslate"><span class="pre">逆自回归流</span></code> [84] 和<code class="docutils literal notranslate"><span class="pre">自回归流</span></code> [29]。</p>
 <p><code class="docutils literal notranslate"><span class="pre">标准化流</span></code>和前面提到的<code class="docutils literal notranslate"><span class="pre">隐式分布</span></code>采取了 “使用转换将简单分布转换为复杂分布” 的共同想法，它们之间一个关键区别在于，由于采用了可逆变换函数，标准化流允许估计 <span class="math notranslate nohighlight">\(q(z)\)</span> 的密度。</p>
 <p><strong>（3）重要性加权 VAE</strong></p>
 <p>利用灵活变分分布的最后一种方法是<code class="docutils literal notranslate"><span class="pre">重要性加权变分自编码器</span> <span class="pre">(IWAE)</span></code>，它最初被提议用于收紧变分边界 [25]，并且可以重新解释为从更灵活的分布 [31] 中采样。 <code class="docutils literal notranslate"><span class="pre">IWAE</span></code> 需要来自近似后验的 <code class="docutils literal notranslate"><span class="pre">L</span></code> 个样本，这些样本按比率进行加权：</p>
@@ -1333,7 +1433,7 @@ q(z^′) = q(z)|\frac{\partial f^{−1}}{ ∂ z^′} |= q(z)|\frac{\partial f}{�
 \hat w_l = \frac{w_l}{\sum^L_{l=1} w_l} \ , \ \ w_l = p_\theta (x_i,z_{(i,l)})
 q_\phi (z_{(i,l)}|x_i)
 \]</div>
-<p>作者表明，评估的样本 <code class="docutils literal notranslate"><span class="pre">L</span></code> 越多，变分边界变得越紧，这意味着在 <span class="math notranslate nohighlight">\(L →∞\)</span> 时接近真实对数似然。对 <code class="docutils literal notranslate"><span class="pre">IWAE</span></code> 的重新解释表明，它们与 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 相同，但从更具表现力的分布中采样，该分布在 <span class="math notranslate nohighlight">\(L →∞\)</span> [31] 时逐点收敛到真实后验。由于 <code class="docutils literal notranslate"><span class="pre">IWAE</span></code> 引入了有偏估计器，因此潜在地可以采取额外步骤来获得更好的<code class="docutils literal notranslate"><span class="pre">方差-偏差权衡</span></code> [139]、[152]、[153] 。</p>
+<p>作者表明，评估的样本 <code class="docutils literal notranslate"><span class="pre">L</span></code> 越多，变分边界变得越紧，这意味着在 <span class="math notranslate nohighlight">\(L →∞\)</span> 时接近真实对数似然。对 <code class="docutils literal notranslate"><span class="pre">IWAE</span></code> 的重新解释表明，它们与 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 相同，但从更具表现力的分布中采样，该分布在 <span class="math notranslate nohighlight">\(L →∞\)</span> [31] 时逐点收敛到真实后验。由于 <code class="docutils literal notranslate"><span class="pre">IWAE</span></code> 引入了有偏估计器，因此隐地可以采取额外步骤来获得更好的<code class="docutils literal notranslate"><span class="pre">方差-偏差权衡</span></code> [139]、[152]、[153] 。</p>
 </div>
 <div class="section" id="p">
 <h4>7.3.2 先验 <span class="math notranslate nohighlight">\(p_θ\)</span> 的建模选择<a class="headerlink" href="#p" title="Permalink to this headline">¶</a></h4>
@@ -1342,38 +1442,38 @@ q_\phi (z_{(i,l)}|x_i)
 i,z_i)\)</span> ，其中 <span class="math notranslate nohighlight">\(x^j_i\)</span> 表示观测 <span class="math notranslate nohighlight">\(i\)</span> 的第 <span class="math notranslate nohighlight">\(j\)</span> 个维度。维度以顺序方式生成，这说明了图像像素内的局部依赖性。</p>
 <p>建模选择带来的表现力是需要代价的。如果解码器太强，推断过程可能无法学习信息丰富的后验 [29]。该问题被称为<code class="docutils literal notranslate"><span class="pre">僵尸单元问题</span></code>。</p>
 </div>
-<div class="section" id="id35">
-<h4>7.3.3 解决僵尸单元的问题<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id39">
+<h4>7.3.3 解决僵尸单元的问题<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h4>
 <p>某些建模选择和参数配置给 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 训练带来了问题，例如学习数据的良好低维表示容易失败。一个突出的问题被称为<code class="docutils literal notranslate"><span class="pre">僵尸单元问题</span></code>。</p>
 <p>造成这种现象的主要有两个原因：<code class="docutils literal notranslate"><span class="pre">解码器过于强大</span></code>以及 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度项</span></code>。</p>
-<p>在某些情况下，解码器的表达能力非常强，以至于 <span class="math notranslate nohighlight">\(\boldsymbol{z}\)</span> 变量的某些维度被忽略了，即它可能独立于 <span class="math notranslate nohighlight">\(z\)</span> 对 <span class="math notranslate nohighlight">\(p_\theta (x|z)\)</span> 进行建模。此时真实后验变成了先验 [29]，因此变分后验试图匹配先验以满足等式中的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>。  <code class="docutils literal notranslate"><span class="pre">有损变分自编码器</span></code> [29] 通过在部分输入信息上调节每个输出维度的解码分布来规避此问题。例如，在图像案例中，给定像素的似然仅取决于周围像素的值和全局隐状态，这迫使分布编码了隐变量中包含的全局信息。</p>
-<p><code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>对 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 损失的贡献可能会加剧这个问题。要了解原因，可以将 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 重写为两个 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>之和 <span class="math notranslate nohighlight">\(\hat{\mathscr L}(\theta ,\phi ,x_i) = −D_{KL}(q_\phi (z|x_i)||p_\theta (z)) −D_{KL}(p(x_i)|| p_\theta (x_i|z)) + C\)</span> 。如果模型表达能力足够强，则模型能够将第二项置为零（与 <span class="math notranslate nohighlight">\(\boldsymbol{z}\)</span> 的值无关）。此时，为了同时满足第一项，推断模型将其概率质量与先验 [227] 相匹配，从而未能学习到数据的有用表示。即使解码器不强，在优化早期阶段可能会出现僵尸单元问题，此时近似后验尚未携带有关数据的相关信息 [19]。当 <span class="math notranslate nohighlight">\(z\)</span> 的维数很高时，这个问题更加严重。这种情况下，单元会朝着先验方向正则化，并且可能无法在优化后期阶段重新激活 [178]。为了抵消 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">约束</span></code>的早期影响，可以在训练期间对 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度项</span></code>应用退火方案 [178]。</p>
+<p>在某些情况下，解码器的表达能力非常强，以至于 <span class="math notranslate nohighlight">\(\boldsymbol{z}\)</span> 变量的某些维度被忽略了，即它可能独立于 <span class="math notranslate nohighlight">\(z\)</span> 对 <span class="math notranslate nohighlight">\(p_\theta (x|z)\)</span> 进行建模。此时真实后验变成了先验 [29]，因此变分后验试图匹配先验以满足等式中的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 。 <code class="docutils literal notranslate"><span class="pre">有损变分自编码器</span></code> [29] 通过在部分输入信息上调节每个输出维度的解码分布来规避此问题。例如，在图像案例中，给定像素的似然仅取决于周围像素的值和全局隐状态，这迫使分布编码了隐变量中包含的全局信息。</p>
+<p><code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 对 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 损失的贡献可能会加剧这个问题。要了解原因，可以将 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 重写为两个 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 之和 <span class="math notranslate nohighlight">\(\hat{\mathscr L}(\theta ,\phi ,x_i) = −D_{KL}(q_\phi (z|x_i)||p_\theta (z)) −D_{KL}(p(x_i)|| p_\theta (x_i|z)) + C\)</span> 。如果模型表达能力足够强，则模型能够将第二项置为零（与 <span class="math notranslate nohighlight">\(\boldsymbol{z}\)</span> 的值无关）。此时，为了同时满足第一项，推断模型将其概率质量与先验 [227] 相匹配，从而未能学习到数据的有用表示。即使解码器不强，在优化早期阶段可能会出现僵尸单元问题，此时近似后验尚未携带有关数据的相关信息 [19]。当 <span class="math notranslate nohighlight">\(z\)</span> 的维数很高时，这个问题更加严重。这种情况下，单元会朝着先验方向正则化，并且可能无法在优化后期阶段重新激活 [178]。为了抵消 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">约束</span></code>的早期影响，可以在训练期间对 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度项</span></code>应用退火方案 [178]。</p>
 </div>
 </div>
-</div>
-<div class="section" id="id36">
-<h2>8 讨论<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h2>
-<p>下面是一些活跃的研究方向和开放性问题：</p>
-<div class="section" id="id37">
-<h3>8.1 变分推断理论方面<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h3>
-<p>尽管在建模和推断方面取得了进展，但很少有作者讨论变分推断 的理论方面 [95]、[133]、[213]。一个重要方向是量化<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>替换真实后验时的近似误差 [133]。与此相关的一个问题是预测误差，例如，使用变分推断近似来做贝叶斯预测分布的边缘化计算。我们还推测变分推断理论可以从与信息论的联系中受益。这已经在 [186]、[187] 中举例说明。信息论还激发了新模型和推断方案的发展 [2]、[13]、[193]。例如，信息瓶颈 [193] 最近推动了深度变分信息瓶颈 [2]。我们期望融合这两条研究线会产生更多有趣的结果。</p>
-</div>
-<div class="section" id="id38">
-<h3>8.2 变分推断和深度学习<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
-<p>尽管最近在各领域取得了成功，但深度学习仍然缺乏原则性的不确定性估计、缺乏其特征表示的可解释性，并且难以包含先验知识。贝叶斯方法（例如贝叶斯神经网络 [137] 和变分自编码器）正在改进这些方面。最近的工作旨在使用可解释性概率模型作为 VAE 的先验 [38]、[77]、[91]、[168]。在此类模型中，变分推断是必不可少的组成部分。在贝叶斯深度架构中，如何使变分推断计算更为高效且易于实现，正在成为一个重要研究方向 [48]</p>
-</div>
-<div class="section" id="id39">
-<h3>8.3 变分推断和策略梯度<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
-<p>策略梯度估计对于强化学习 (RL)[183]​​ 和随机控制很重要。这些应用中的技术挑战与变分推断非常相似 [98]、[99]、[110]、[173]、[211] 。例如，SVGD 已作为 Steinpolicy 梯度被应用于 RL 设置 [110]。 变分推断在强化学习中的应用目前是一个活跃的研究领域。</p>
 </div>
 <div class="section" id="id40">
-<h3>8.4 自动变分推断<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h3>
-<p>概率编程允许从业者快速实现和修改模型，而不必担心推断问题。用户只需要指定模型，推断引擎就会自动进行推断。流行的概率编程工具包括但不限于：Stan[28]，涵盖了大量的高级变分推断和 MCMC 推断方法； Net[126] 基于变分消息传递和 EP；Automatic Statistician[52] 和 Anglican[198] 主要依靠采样方法；Ed-ward[200] 支持 BBVI 和 MonteCarlo 采样 ； Zhusuan[176] 的特点是用于贝叶斯深度学习的变分推断。这些工具的长期目标是改变概率建模的研究方法，使用户能够快速修改和改进模型，并使其他受众可以访问它们。</p>
+<h2>8 讨论<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h2>
+<p>下面是一些活跃的研究方向和开放性问题：</p>
+<div class="section" id="id41">
+<h3>8.1 变分推断理论方面<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
+<p>尽管在建模和推断方面取得了进展，但很少有作者讨论变分推断 的理论方面 [95]、[133]、[213]。一个重要方向是量化<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>替换真实后验时的近似误差 [133]。与此相关的一个问题是预测误差，例如，使用变分推断近似来做贝叶斯预测分布的边缘化计算。我们还推测变分推断理论可以从与信息论的联系中受益。这已经在 [186]、[187] 中举例说明。信息论还激发了新模型和推断方案的发展 [2]、[13]、[193]。例如，信息瓶颈 [193] 最近推动了深度变分信息瓶颈 [2]。我们期望融合这两条研究线会产生更多有趣的结果。</p>
+</div>
+<div class="section" id="id42">
+<h3>8.2 变分推断和深度学习<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h3>
+<p>尽管最近在各领域取得了成功，但深度学习仍然缺乏原则性的不确定性估计、缺乏其特征表示的可解释性，并且难以包含先验知识。贝叶斯方法（例如贝叶斯神经网络 [137] 和变分自编码器）正在改进这些方面。最近的工作旨在使用可解释性概率模型作为 VAE 的先验 [38]、[77]、[91]、[168]。在此类模型中，变分推断是必不可少的组成部分。在贝叶斯深度架构中，如何使变分推断计算更为高效且易于实现，正在成为一个重要研究方向 [48]</p>
+</div>
+<div class="section" id="id43">
+<h3>8.3 变分推断和策略梯度<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
+<p>策略梯度估计对于强化学习 (RL)[183]​​ 和随机控制很重要。这些应用中的技术挑战与变分推断非常相似 [98]、[99]、[110]、[173]、[211] 。例如，SVGD 已作为 Steinpolicy 梯度被应用于 RL 设置 [110]。 变分推断在强化学习中的应用目前是一个活跃的研究领域。</p>
+</div>
+<div class="section" id="id44">
+<h3>8.4 自动变分推断<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h3>
+<p>概率编程允许从业者快速实现和修改模型，而不必担心推断问题。用户只需要指定模型，推断引擎就会自动进行推断。流行的概率编程工具包括但不限于：Stan[28]，涵盖了大量的高级变分推断和 <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 推断方法； Net[126] 基于变分消息传递和 EP；Automatic Statistician[52] 和 Anglican[198] 主要依靠采样方法；Ed-ward[200] 支持 黑盒变分推断和 MonteCarlo 采样 ； Zhusuan[176] 的特点是用于贝叶斯深度学习的变分推断。这些工具的长期目标是改变概率建模的研究方法，使用户能够快速修改和改进模型，并使其他受众可以访问它们。</p>
 <p>尽管目前努力使从业者更容易使用 VI，但对于非专家来说，其使用仍然不简单。例如，人工识别后验的对称性并打破这些对称性是 <a class="reference external" href="http://Infer.Net">Infer.Net</a> 所必需的。此外，诸如控制变量等减少方差的方法可以极大地加速收敛，但需要模型进行特定设计才能获得最佳性能。在撰写本文时，当前的概率编程工具箱尚未解决此类问题。我们相信这些方向对于推进概率建模在科学和技术中的影响非常重要。</p>
 </div>
 </div>
-<div class="section" id="id41">
-<h2>9 总结<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id45">
+<h2>9 总结<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>概率机器学习是将领域知识与数据联系起来的机器学习方法</p></li>
 <li><p>它提供了一种用于分析数据的计算方法</p></li>
