@@ -771,107 +771,205 @@ Edward 和 TFP 包括一些更高层次的结构，特别是可单独使用的�
 
 ## 参考文献
 
-[1]Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization.CoRR, arXiv:1607.06450, 2016. In NIPS 2016 Deep Learning Symposium.
-[2]Rémi Bardenet, Arnaud Doucet, and Chris Holmes. On Markov Chain Monte Carlo methods for tall data.J. Mach. Learn. Res., 18(1):1515–1557, January 2017. ISSN 1532–4435.
-[3]M Saiful Bari, Muhammad Tasnim Mohiuddin, and Shafiq Joty. MultiMix: A robust data augmentation strategy for cross-lingual nlp. InICML, 2020.
-[4]L. Beyer, X. Zhai, A. Oliver, and A. Kolesnikov. S4L: Self-supervised semi-supervised learning. In2019 IEEE/CVF International Conference on Computer Vision (ICCV), pages 1476–1485, 2019.
-[5]Eli Bingham, Jonathan P. Chen, Martin Jankowiak, Fritz Obermeyer, Neeraj Pradhan, Theofanis Karaletsos, Rohit Singh, Paul Szerlip, Paul Horsfall, and Noah D. Goodman. Pyro: Deep universal probabilistic programming.J. Mach. Learn. Res., 20(1):973âĂŞ978, January 2019. ISSN 1532-4435.
-[6]David M. Blei, Alp Kucukelbir, and Jon D. McAuliffe. Variational inference: A review for statisticians.Journal of the American Statistical Association, 112(518):859–877, 2017.
-[7]Charles Blundell, Julien Cornebise, Koray Kavukcuoglu, and Daan Wierstra. Weight uncertainty in neural network. In Proceedings of the 32nd International Conference on Machine Learning, volume 37 ofProceedings of Machine Learning Research, pages 1613–1622, 2015.
-[8]Nicolas Brosse, Carlos Riquelme, Alice Martin, Sylvain Gelly, and ÃĽric Moulines. On last-layer algorithms for classification: Decoupling representation from uncertainty estimation.CoRR, abs/2001.08049, 2020. URL http://arxiv. org/abs/2001.08049.
-[9]W. L. Buntine. Operations for learning with graphical models.Journal of Artificial Intelligence Research, 2:159–225, Dec 1994. ISSN 1076–9757.
-[10]Bob Carpenter, Andrew Gelman, Matthew D Hoffman, Daniel Lee, Ben Goodrich, Michael Betancourt, Marcus Brubaker, Jiqiang Guo, Peter Li, and Allen Riddell. Stan: A probabilistic programming language.Journal of statistical software, 76(1), 2017.
-[11]Rodolfo C. Cavalcante, Rodrigo C. Brasileiro, Victor L.F. Souza, Jarley P. Nobrega, and Adriano L.I. Oliveira. Computational intelligence and financial markets: A survey and future directions.Expert Systems with Applications, 55:194–211.
-[12]Olivier Chapelle, Jason Weston, Léon Bottou, and Vladimir Vapnik. Vicinal risk minimization. In T. K. Leen, T. G. Dietterich, and V. Tresp, editors,Advances in Neural Information Processing Systems 13, pages 416–422. MIT Press, 2001.
-[13]Siddhartha Chib and Edward Greenberg. Understanding the Metropolis-Hastings algorithm.The American Statistician, 49(4):327–335, 1995.
-[14]Stefan Depeweg, Jose-Miguel Hernandez-Lobato, Finale Doshi-Velez, and Steffen Udluft. Decomposition of uncertainty  in Bayesian deep learning for efficient and risk-sensitive learning. InProceedings of the 35th International Conference on Machine Learning, volume 80 ofProceedings of Machine Learning Research, pages 1184–1193, 2018.
-[15]Alexander Etz, Quentin F. Gronau, Fabian Dablander, Peter A. Edelsbrunner, and Beth Baribault. How to become a Bayesian in eight easy steps: An annotated reading list.Psychonomic Bulletin & Review, 25:219–234, 2018.
-[16]B. Frenay and M. Verleysen. Classification in the presence of label noise: A survey.IEEE Transactions on Neural Networks and Learning Systems, 25(5):845–869, 2014.
-[17]Yarin Gal and Zoubin Ghahramani. Bayesian convolutional neural networks with Bernoulli approximate variational inference.CoRR, abs/1506.02158, 2015. URL http://arxiv.org/abs/1506.02158.
-[18]Yarin Gal and Zoubin Ghahramani. Dropout as a Bayesian approximation: Representing model uncertainty in deep learning. InProceedings of the 33rd International Conference on Machine Learning - Volume 48, ICMLâĂŹ16, page 1050âĂŞ1059, 2016.
-[19]Yarin Gal, Riashat Islam, and Zoubin Ghahramani. Deep Bayesian active learning with image data. InProceedings of the 34th International Conference on Machine Learning - Volume 70, ICMLâĂŹ17, page 1183âĂŞ1192, 2017.
-[20]Francis Galton. Vox Populi.Nature, 75(1949):450–451, Mar 1907. ISSN 1476–4687.
-[21]Andrew Gelman and other Stan developers. Prior choice recommendations, 2020. Retrieved from
+[1].    Jimmy Lei Ba, Jamie Ryan Kiros, and Geoffrey E Hinton. Layer normalization.CoRR, arXiv:1607.06450, 2016. In NIPS 2016 Deep Learning Symposium.
+
+[2].   Rémi Bardenet, Arnaud Doucet, and Chris Holmes. On Markov Chain Monte Carlo methods for tall data.J. Mach. Learn. Res., 18(1):1515–1557, January 2017. ISSN 1532–4435.
+
+[3].     M Saiful Bari, Muhammad Tasnim Mohiuddin, and Shafiq Joty. MultiMix: A robust data augmentation strategy for cross-lingual nlp. InICML, 2020.
+
+[4].   L. Beyer, X. Zhai, A. Oliver, and A. Kolesnikov. S4L: Self-supervised semi-supervised learning. In2019 IEEE/CVF International Conference on Computer Vision (ICCV), pages 1476–1485, 2019.
+
+[5].   Eli Bingham, Jonathan P. Chen, Martin Jankowiak, Fritz Obermeyer, Neeraj Pradhan, Theofanis Karaletsos, Rohit Singh, Paul Szerlip, Paul Horsfall, and Noah D. Goodman. Pyro: Deep universal probabilistic programming.J. Mach. Learn. Res., 20(1):973âĂŞ978, January 2019. ISSN 1532-4435.
+
+[6].  avid M. Blei, Alp Kucukelbir, and Jon D. McAuliffe. Variational inference: A review for statisticians.Journal of the American Statistical Association, 112(518):859–877, 2017.
+
+[7].  harles Blundell, Julien Cornebise, Koray Kavukcuoglu, and Daan Wierstra. Weight uncertainty in neural network. In Proceedings of the 32nd International Conference on Machine Learning, volume 37 ofProceedings of Machine Learning Research, pages 1613–1622, 2015.
+
+[8].  icolas Brosse, Carlos Riquelme, Alice Martin, Sylvain Gelly, and ÃĽric Moulines. On last-layer algorithms for classification: Decoupling representation from uncertainty estimation.CoRR, abs/2001.08049, 2020. URL http://arxiv. org/abs/2001.08049.
+
+[9].  . L. Buntine. Operations for learning with graphical models.Journal of Artificial Intelligence Research, 2:159–225, Dec 1994. ISSN 1076–9757.
+
+[10].  ob Carpenter, Andrew Gelman, Matthew D Hoffman, Daniel Lee, Ben Goodrich, Michael Betancourt, Marcus Brubaker, Jiqiang Guo, Peter Li, and Allen Riddell. Stan: A probabilistic programming language.Journal of statistical software, 76(1), 2017.
+
+[11].  odolfo C. Cavalcante, Rodrigo C. Brasileiro, Victor L.F. Souza, Jarley P. Nobrega, and Adriano L.I. Oliveira. Computational intelligence and financial markets: A survey and future directions.Expert Systems with Applications, 55:194–211.
+
+[12].  livier Chapelle, Jason Weston, Léon Bottou, and Vladimir Vapnik. Vicinal risk minimization. In T. K. Leen, T. G. Dietterich, and V. Tresp, editors,Advances in Neural Information Processing Systems 13, pages 416–422. MIT Press, 2001.
+
+[13].  iddhartha Chib and Edward Greenberg. Understanding the Metropolis-Hastings algorithm.The American Statistician, 49(4):327–335, 1995.
+
+[14].  tefan Depeweg, Jose-Miguel Hernandez-Lobato, Finale Doshi-Velez, and Steffen Udluft. Decomposition of uncertainty  in Bayesian deep learning for efficient and risk-sensitive learning. InProceedings of the 35th International Conference on Machine Learning, volume 80 ofProceedings of Machine Learning Research, pages 1184–1193, 2018.
+
+[15].  lexander Etz, Quentin F. Gronau, Fabian Dablander, Peter A. Edelsbrunner, and Beth Baribault. How to become a Bayesian in eight easy steps: An annotated reading list.Psychonomic Bulletin & Review, 25:219–234, 2018.
+
+[16].  . Frenay and M. Verleysen. Classification in the presence of label noise: A survey.IEEE Transactions on Neural Networks and Learning Systems, 25(5):845–869, 2014.
+
+[17].  arin Gal and Zoubin Ghahramani. Bayesian convolutional neural networks with Bernoulli approximate variational inference.CoRR, abs/1506.02158, 2015. URL http://arxiv.org/abs/1506.02158.
+
+[18].  arin Gal and Zoubin Ghahramani. Dropout as a Bayesian approximation: Representing model uncertainty in deep learning. InProceedings of the 33rd International Conference on Machine Learning - Volume 48, ICMLâĂŹ16, page 1050âĂŞ1059, 2016.
+
+[19].  arin Gal, Riashat Islam, and Zoubin Ghahramani. Deep Bayesian active learning with image data. InProceedings of the 34th International Conference on Machine Learning - Volume 70, ICMLâĂŹ17, page 1183âĂŞ1192, 2017.
+
+[20].  rancis Galton. Vox Populi.Nature, 75(1949):450–451, Mar 1907. ISSN 1476–4687.
+
+[21].  ndrew Gelman and other Stan developers. Prior choice recommendations, 2020. Retrieved from
 https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations [last seen 13.07.2020].
-[22]Edward I. George, George Casella, and Edward I. George. Explaining the Gibbs sampler.The American Statistician, 1992.
-[23]Zoubin Ghahramani and Matthew J. Beal. Propagation algorithms for variational Bayesian learning. In T. K. Leen, T. G. Dietterich, and V. Tresp, editors,Advances in Neural Information Processing Systems 13, pages 507–513. MIT Press, 2001.
-[24]Tilmann Gneiting and Adrian E Raftery. Strictly proper scoring rules, prediction, and estimation.Journal of the American Statistical Association, 102(477):359–378, 2007.
-[25]Erin Grant, Chelsea Finn, Sergey Levine, Trevor Darrell, and Thomas L. Griffiths. Recasting gradient-based meta-learning as hierarchical Bayes. In6th International Conference on Learning Representations, ICLR 2018, Vancouver, BC, Canada, April 30 - May 3, 2018, Conference Track Proceedings, 2018.
-[26]Alex Graves. Practical variational inference for neural networks. In J. Shawe-Taylor, R. S. Zemel, P. L. Bartlett, F. Pereira, and K. Q. Weinberger, editors,Advances in Neural Information Processing Systems 24, pages 2348–2356. Curran Associates, Inc., 2011.
-[27]Chuan Guo, Geoff Pleiss, Yu Sun, and Kilian Q. Weinberger. On calibration of modern neural network. InProceedings of the 34th International Conference on Machine Learning - Volume 70, ICMLâĂŹ17, pages 1321–1330, 2017.
-[28]Dan Hendrycks and Kevin Gimpel. A baseline for detecting misclassified and out-of-distribution examples in neural networks. In5th International Conference on Learning Representations, ICLR 2017, Conference Track Proceedings, 2017.
-[29]José Miguel Hernández-Lobato and Ryan P. Adams. Probabilistic backpropagation for scalable learning of Bayesian neural networks. InProceedings of the 32nd International Conference on International Conference on Machine Learning - Volume 37, ICMLâĂŹ15, page 1861âĂŞ1869, 2015.
-[30]Geoffrey Hinton, Oriol Vinyals, and Jeff Dean. Distilling the knowledge in a neural network.arXiv preprint arXiv:1503.02531, 2015. In NIPS 2014 Deep Learning Workshop.
-[31]Matthew D Hoffman and Andrew Gelman. The No-U-Turn sampler: adaptively setting path lengths in Hamiltonian Monte Carlo.Journal of Machine Learning Research, 15(1):1593–1623, 2014.
-[32]Matthew D. Hoffman, David M. Blei, Chong Wang, and John Paisley. Stochastic variational inference.J. Mach. Learn. Res., 14(1):1303–1347, May 2013. ISSN 1532-4435.
-[33]Timothy Hospedales, Antreas Antoniou, Paul Micaelli, and Amos Storkey. Meta-learning in neural networks: A survey. CoRR, abs/2004.05439, 2020. URL http://arxiv.org/abs/2004.05439.
-[34]Jiri Hron, Alex Matthews, and Zoubin Ghahramani. Variational Bayesian dropout: pitfalls and fixes. InProceedings of the 35th International Conference on Machine Learning, volume 80 ofProceedings of Machine Learning Research, pages 2019–2028, 2018.
-[35]Katarzyna Janocha and Wojciech Marian Czarnecki. On loss functions for deep neural networks in classification. Schedae Informaticae, 1/2016, 2017. ISSN 2083-8476. doi: 10.4467/20838476si.16.004.6185. URL http://dx.doi.org/10.4467/20838476SI.16.004.6185.
-[36]L. Jing and Y. Tian. Self-supervised visual feature learning with deep neural networks: A survey.IEEE Transactions on Pattern Analysis and Machine Intelligence, pages 1–1, 2020.
-[37]Alex Kendall and Yarin Gal. What uncertainties do we need in Bayesian deep learning for computer vision? In Proceedings of the 31st International Conference on Neural Information Processing Systems, NIPSâĂŹ17, page 5580âĂŞ5590, 2017. ISBN 9781510860964.
-[38]J. Ker, L. Wang, J. Rao, and T. Lim. Deep learning applications in medical image analysis.IEEE Access, 6:9375–9389, 2018.
-[39]M. E. Khan and D. Nielsen. Fast yet simple natural-gradient descent for variational inference in complex models. In 2018 International Symposium on Information Theory and Its Applications (ISITA), pages 31–35, 2018.
-[40]Mohammad Khan, Didrik Nielsen, Voot Tangkaratt, Wu Lin, Yarin Gal, and Akash Srivastava. Fast and scalable Bayesian deep learning by weight-perturbation in Adam. InProceedings of the 35th International Conference on Machine Learning, volume 80 ofProceedings of Machine Learning Research, pages 2611–2620, 2018.
-[41]Diederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization.International Conference on Learning Representations, 12 2014.
-[42]Diederik P Kingma, Max Welling, et al. An introduction to variational autoencoders.Foundations and Trends®in Machine Learning, 12(4):307–392, 2019.
-[43]Durk P Kingma, Tim Salimans, and Max Welling. Variational dropout and the local reparameterization trick. In C. Cortes, N. D. Lawrence, D. D. Lee, M. Sugiyama, and R. Garnett, editors,Advances in Neural Information Processing Systems 28, pages 2575–2583. Curran Associates, Inc., 2015.
-[44]Armen Der Kiureghian and Ove Ditlevsen. Aleatory or epistemic? does it matter?Structural Safety, 31(2):105–112, 2009. ISSN 0167–4730. Risk Acceptance and Risk Communication.
-[45]Anoop Korattikara, Vivek Rathod, Kevin Murphy, and Max Welling. Bayesian dark knowledge. InProceedings of the 28th International Conference on Neural Information Processing Systems - Volume 2, NIPSâĂŹ15, page 3438âĂŞ3446, 2015.
-[46]Agustinus Kristiadi, Matthias Hein, and Philipp Hennig. Being Bayesian, even just a bit, fixes overconfidence in ReLU networks.CoRR, abs/2002.10118, 2020. URL http://arxiv.org/abs/2002.10118.
-[47]Volodymyr Kuleshov, Nathan Fenner, and Stefano Ermon. Accurate uncertainties for deep learning using calibrated regression. InProceedings of the 35th International Conference on Machine Learning, volume 80 ofProceedings of Machine Learning Research, pages 2796–2804, 2018.
-[48]R. Kunwar, U. Pal, and M. Blumenstein. Semi-supervised online Bayesian network learner for handwritten characters recognition. In2014 22nd International Conference on Pattern Recognition, pages 3104–3109, 2014.
-[49]Balaji Lakshminarayanan, Alexander Pritzel, and Charles Blundell. Simple and scalable predictive uncertainty estimation using deep ensembles. In I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett, editors,Advances in Neural Information Processing Systems 30, pages 6402–6413. Curran Associates, Inc., 2017.
-[50]Jouko Lampinen and Aki Vehtari. Bayesian approach for neural networksâĂŤreview and case studies.Neural Networks, 14(3):257 – 274, 2001. ISSN 0893-6080.
-[51]Dong-Hyun Lee. Pseudo-label: The simple and efficient semi-supervised learning method for deep neural networks. In Workshop on challenges in representation learning, ICML, volume 3, 2013.
-[52]Yingzhen Li and Yarin Gal. Dropout inference in Bayesian neural networks with  lpha-divergences. InProceedings of the 34th International Conference on Machine Learning - Volume 70, ICMLâĂŹ17, pages 2052–2061, 2017.
-[53]Zhun Li, ByungSoo Ko, and Ho-Jin Choi. Naive semi-supervised deep learning using pseudo-label.Peer-to-Peer Networking and Applications, 12(5):1358–1368, 2019. ISSN 1936-6450.
-[54]David J. C. MacKay. A practical Bayesian framework for backpropagation networks.Neural Computation, 4(3):448–472, 1992.
-[55]Wesley J Maddox, Pavel Izmailov, Timur Garipov, Dmitry P Vetrov, and Andrew Gordon Wilson. A simple baseline for Bayesian uncertainty in deep learning. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d'Alché-Buc, E. Fox, and R. Garnett, editors,Advances in Neural Information Processing Systems 32, pages 13153–13164. Curran Associates, Inc., 2019.
-[56]Stephan Mandt, Matthew D Hoffman, and David M Blei. Stochastic gradient descent as approximate Bayesian inference. The Journal of Machine Learning Research, 18(1):4873–4907, 2017.
-[57]Aditya Krishna Menon, Ankit Singh Rawat, Sashank J. Reddi, Seungyeon Kim, and Sanjiv Kumar. Why distillation helps: a statistical perspective.CoRR, abs/2005.10419, 2020. URL https://arxiv.org/abs/2005.10419.
-[58]John Mitros and Brian Mac Namee. On the validity of Bayesian neural networks for uncertainty estimation. InAICS,2019.
-[59]Kevin P. Murphy.Machine Learning: A Probabilistic Perspective. The MIT Press, 2012. ISBN 0262018020. 
-[60]Eric Nalisnick, Akihiro Matsukawa, Yee Whye Teh, Dilan Gorur, and Balaji Lakshminarayanan. Do deep generative models know what they don’t know? InInternational Conference on Learning Representations, 2019.
-[61]Nagarajan Natarajan, Inderjit S Dhillon, Pradeep K Ravikumar, and Ambuj Tewari. Learning with noisy labels. In C. J. C. Burges, L. Bottou, M. Welling, Z. Ghahramani, and K. Q. Weinberger, editors,Advances in Neural Information Processing Systems 26, pages 1196–1204. Curran Associates, Inc., 2013.
-[62]Radford M Neal et al. MCMC using Hamiltonian dynamics.Handbook of Markov Chain Monte Carlo, 2(11):2, 2011.
-[63]Jeremy Nixon, Michael W. Dusenberry, Linchuan Zhang, Ghassen Jerfel, and Dustin Tran. Measuring calibration in deep learning. InThe IEEE Conference on Computer Vision and Pattern Recognition (CVPR) Workshops, June 2019.
-[64]Manfred Opper and Ole Winther. A Bayesian approach to on-line learning.On-line learning in neural networks, pages 363–378, 1998.
-[65]Kazuki Osawa, Siddharth Swaroop, Mohammad Emtiyaz E Khan, Anirudh Jain, Runa Eschenhagen, Richard E Turner, and Rio Yokota. Practical deep learning with Bayesian principles. InAdvances in Neural Information Processing Systems 32, pages 4287–4299. Curran Associates, Inc., 2019.
-[66]Yaniv Ovadia, Emily Fertig, Jie Ren, Zachary Nado, D. Sculley, Sebastian Nowozin, Joshua Dillon, Balaji Lakshmi-narayanan, and Jasper Snoek. Can you trust your model's uncertainty? evaluating predictive uncertainty under dataset shift. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d'Alché-Buc, E. Fox, and R. Garnett, editors,Advances in Neural Information Processing Systems 32, pages 13991–14002. Curran Associates, Inc., 2019.
-[67]S. J. Pan and Q. Yang. A survey on transfer learning.IEEE Transactions on Knowledge and Data Engineering, 22(10): 1345–1359, 2010.
-[68]Tim Pearce, Felix Leibfried, Alexandra Brintrup, Mohamed Zaki, and Andy Neely. Uncertainty in neural networks: Approximately Bayesian ensembling. InAISTATS 2020, 2020.
-[69]Nicholas G Polson, Vadim Sokolov, et al. Deep learning: a Bayesian perspective.Bayesian Analysis, 12(4):1275–1304, 2017.
-[70]Arya A Pourzanjani, Richard M Jiang, Brian Mitchell, Paul J Atzberger, and Linda R Petzold. Bayesian inference over the Stiefel manifold via the Givens representation.CoRR, abs/1710.09443, 2017. URL http://arxiv.org/abs/1710.09443.
-[71]Samira Pouyanfar, Saad Sadiq, Yilin Yan, Haiman Tian, Yudong Tao, Maria Presa Reyes, Mei-Ling Shyu, Shu-Ching Chen, and S. S. Iyengar. A survey on deep learning: Algorithms, techniques, and applications.
-[72]Guo-Jun Qi and Jiebo Luo. Small data challenges in big data era: A survey of recent progress on unsupervised and semi-supervised methods.CoRR, abs/1903.11260, 2019. URL http://arxiv.org/abs/1903.11260.
-[73]Xipeng Qiu, Tianxiang Sun, Yige Xu, Yunfan Shao, Ning Dai, and Xuanjing Huang. Pre-trained models for natural language processing: A survey.CoRR, abs/2003.08271, 2020.
-[74]Qing Rao and Jelena Frtunikj. Deep learning for self-driving cars: Chances and challenges. InProceedings of the 1st International Workshop on Software Engineering for AI in Autonomous Systems, SEFAIS âĂŹ18, pages 35–38, 2018.
-[75]Hippolyt Ritter, Aleksandar Botev, and David Barber. A scalable laplace approximation for neural networks. In International Conference on Learning Representations, 2018.
-[76]Christian Robert.The Bayesian choice: from decision-theoretic foundations to computational implementation. Springer Science & Business Media, 2007.
-[77]John Salvatier, Thomas V Wieckiâ, and Christopher Fonnesbeck. PyMC3: Python probabilistic programming framework. PeerJ Computer Science, 2:e55, 2016. https://doi.org/10.7717/peerj-cs.55.
-[78]Nabeel Seedat and Christopher Kanan. Towards calibrated and scalable uncertainty representations for neural networks. CoRR, abs/1911.00104, 2019. URL http://arxiv.org/abs/1911.00104.
-[79]Joan SerrÃă, David ÃĄlvarez, VicenÃğ GÃşmez, Olga Slizovskaia, JosÃľ F. NÃžÃśez, and Jordi Luque. Input complexity and out-of-distribution detection with likelihood-based generative models.CoRR, abs/1909.11480, 2020. URL http://arxiv.org/abs/1909.11480.
-[80]Daniele Silvestro and Tobias Andermann. Prior choice affects ability of Bayesian neural networks to identify unknowns. CoRR, abs/2005.04987, 2020. URL http://arxiv.org/abs/2005.04987.
-[81]Edward Snelson and Zoubin Ghahramani. Compact approximations to Bayesian predictive distributions. InProceedings of the 22nd International Conference on Machine Learning, ICML âĂŹ05, page 840âĂŞ847, 2005.
-[82]Kihyuk Sohn, David Berthelot, Chun-Liang Li, Zizhao Zhang, Nicholas Carlini, Ekin D. Cubuk, Alex Kurakin, Han Zhang, and Colin Raffel. FixMatch: Simplifying semi-supervised learning with consistency and confidence.CoRR, abs/2001.07685, 2020. URL https://arxiv.org/abs/2001.07685.
-[83]Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout: A simple way to prevent neural networks from overfitting.Journal of Machine Learning Research, 15(56):1929–1958, 2014.
-[84]Martin A. Tanner and Wing Hung Wong. The calculation of posterior distributions by data augmentation.Journal of the American Statistical Association, 82(398):528–540, 1987.
-[85]D. M. Titterington. Bayesian methods for neural networks and related models.Statist. Sci., 19(1):128–139, 02 2004.
-[86]Adrian Corduneanu Tommi and Tommi Jaakkola. On information regularization. InIn Proceedings of the 19th UAI,2003. 
-[87]Dustin Tran, Matthew D. Hoffman, Rif A. Saurous, Eugene Brevdo, Kevin Murphy, and David M. Blei. Deep probabilistic programming.CoRR, abs/1701.03757, 2017. URL http://arxiv.org/abs/1701.03757.
-[88]Toan Tran, Thanh-Toan Do, Ian Reid, and Gustavo Carneiro. Bayesian generative active deep learning.CoRR, abs/1904.11643, 2019. URL http://arxiv.org/abs/1904.11643.
-[89]Hao Wang and Dit-Yan Yeung. Towards Bayesian deep learning: A framework and some existing methods.IEEE Trans.
+
+[22].  dward I. George, George Casella, and Edward I. George. Explaining the Gibbs sampler.The American Statistician, 1992.
+
+[23].  oubin Ghahramani and Matthew J. Beal. Propagation algorithms for variational Bayesian learning. In T. K. Leen, T. G. Dietterich, and V. Tresp, editors,Advances in Neural Information Processing Systems 13, pages 507–513. MIT Press, 2001.
+
+[24].  ilmann Gneiting and Adrian E Raftery. Strictly proper scoring rules, prediction, and estimation.Journal of the American Statistical Association, 102(477):359–378, 2007.
+
+[25].  rin Grant, Chelsea Finn, Sergey Levine, Trevor Darrell, and Thomas L. Griffiths. Recasting gradient-based meta-learning as hierarchical Bayes. In6th International Conference on Learning Representations, ICLR 2018, Vancouver, BC, Canada, April 30 - May 3, 2018, Conference Track Proceedings, 2018.
+
+[26].  lex Graves. Practical variational inference for neural networks. In J. Shawe-Taylor, R. S. Zemel, P. L. Bartlett, F. Pereira, and K. Q. Weinberger, editors,Advances in Neural Information Processing Systems 24, pages 2348–2356. Curran Associates, Inc., 2011.
+
+[27].  huan Guo, Geoff Pleiss, Yu Sun, and Kilian Q. Weinberger. On calibration of modern neural network. InProceedings of the 34th International Conference on Machine Learning - Volume 70, ICMLâĂŹ17, pages 1321–1330, 2017.
+
+[28].  an Hendrycks and Kevin Gimpel. A baseline for detecting misclassified and out-of-distribution examples in neural networks. In5th International Conference on Learning Representations, ICLR 2017, Conference Track Proceedings, 2017.
+
+[29].  osé Miguel Hernández-Lobato and Ryan P. Adams. Probabilistic backpropagation for scalable learning of Bayesian neural networks. InProceedings of the 32nd International Conference on International Conference on Machine Learning - Volume 37, ICMLâĂŹ15, page 1861âĂŞ1869, 2015.
+
+[30].  eoffrey Hinton, Oriol Vinyals, and Jeff Dean. Distilling the knowledge in a neural network.arXiv preprint arXiv:1503.02531, 2015. In NIPS 2014 Deep Learning Workshop.
+
+[31].  atthew D Hoffman and Andrew Gelman. The No-U-Turn sampler: adaptively setting path lengths in Hamiltonian Monte Carlo.Journal of Machine Learning Research, 15(1):1593–1623, 2014.
+
+[32].  atthew D. Hoffman, David M. Blei, Chong Wang, and John Paisley. Stochastic variational inference.J. Mach. Learn. Res., 14(1):1303–1347, May 2013. ISSN 1532-4435.
+
+[33].  imothy Hospedales, Antreas Antoniou, Paul Micaelli, and Amos Storkey. Meta-learning in neural networks: A survey. CoRR, abs/2004.05439, 2020. URL http://arxiv.org/abs/2004.05439.
+
+[34].  iri Hron, Alex Matthews, and Zoubin Ghahramani. Variational Bayesian dropout: pitfalls and fixes. InProceedings of the 35th International Conference on Machine Learning, volume 80 ofProceedings of Machine Learning Research, pages 2019–2028, 2018.
+
+[35].  atarzyna Janocha and Wojciech Marian Czarnecki. On loss functions for deep neural networks in classification. Schedae Informaticae, 1/2016, 2017. ISSN 2083-8476. doi: 10.4467/20838476si.16.004.6185. URL http://dx.doi.org/10.4467/20838476SI.16.004.6185.
+
+[36].  . Jing and Y. Tian. Self-supervised visual feature learning with deep neural networks: A survey.IEEE Transactions on Pattern Analysis and Machine Intelligence, pages 1–1, 2020.
+
+[37].  lex Kendall and Yarin Gal. What uncertainties do we need in Bayesian deep learning for computer vision? In Proceedings of the 31st International Conference on Neural Information Processing Systems, NIPSâĂŹ17, page 5580âĂŞ5590, 2017. ISBN 9781510860964.
+
+[38].  . Ker, L. Wang, J. Rao, and T. Lim. Deep learning applications in medical image analysis.IEEE Access, 6:9375–9389, 2018.
+
+[39].  . E. Khan and D. Nielsen. Fast yet simple natural-gradient descent for variational inference in complex models. In 2018 International Symposium on Information Theory and Its Applications (ISITA), pages 31–35, 2018.
+
+[40].  ohammad Khan, Didrik Nielsen, Voot Tangkaratt, Wu Lin, Yarin Gal, and Akash Srivastava. Fast and scalable Bayesian deep learning by weight-perturbation in Adam. InProceedings of the 35th International Conference on Machine Learning, volume 80 ofProceedings of Machine Learning Research, pages 2611–2620, 2018.
+
+[41].  iederik Kingma and Jimmy Ba. Adam: A method for stochastic optimization.International Conference on Learning Representations, 12 2014.
+
+[42].  iederik P Kingma, Max Welling, et al. An introduction to variational autoencoders.Foundations and Trends®in Machine Learning, 12(4):307–392, 2019.
+
+[43].  urk P Kingma, Tim Salimans, and Max Welling. Variational dropout and the local reparameterization trick. In C. Cortes, N. D. Lawrence, D. D. Lee, M. Sugiyama, and R. Garnett, editors,Advances in Neural Information Processing Systems 28, pages 2575–2583. Curran Associates, Inc., 2015.
+
+[44].  rmen Der Kiureghian and Ove Ditlevsen. Aleatory or epistemic? does it matter?Structural Safety, 31(2):105–112, 2009. ISSN 0167–4730. Risk Acceptance and Risk Communication.
+
+[45].  noop Korattikara, Vivek Rathod, Kevin Murphy, and Max Welling. Bayesian dark knowledge. InProceedings of the 28th International Conference on Neural Information Processing Systems - Volume 2, NIPSâĂŹ15, page 3438âĂŞ3446, 2015.
+
+[46].  gustinus Kristiadi, Matthias Hein, and Philipp Hennig. Being Bayesian, even just a bit, fixes overconfidence in ReLU networks.CoRR, abs/2002.10118, 2020. URL http://arxiv.org/abs/2002.10118.
+
+[47].  olodymyr Kuleshov, Nathan Fenner, and Stefano Ermon. Accurate uncertainties for deep learning using calibrated regression. InProceedings of the 35th International Conference on Machine Learning, volume 80 ofProceedings of Machine Learning Research, pages 2796–2804, 2018.
+
+[48].  . Kunwar, U. Pal, and M. Blumenstein. Semi-supervised online Bayesian network learner for handwritten characters recognition. In2014 22nd International Conference on Pattern Recognition, pages 3104–3109, 2014.
+
+[49].  alaji Lakshminarayanan, Alexander Pritzel, and Charles Blundell. Simple and scalable predictive uncertainty estimation using deep ensembles. In I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett, editors,Advances in Neural Information Processing Systems 30, pages 6402–6413. Curran Associates, Inc., 2017.
+
+[50].  ouko Lampinen and Aki Vehtari. Bayesian approach for neural networksâĂŤreview and case studies.Neural Networks, 14(3):257 – 274, 2001. ISSN 0893-6080.
+
+[51].  ong-Hyun Lee. Pseudo-label: The simple and efficient semi-supervised learning method for deep neural networks. In Workshop on challenges in representation learning, ICML, volume 3, 2013.
+
+[52].  ingzhen Li and Yarin Gal. Dropout inference in Bayesian neural networks with  lpha-divergences. InProceedings of the 34th International Conference on Machine Learning - Volume 70, ICMLâĂŹ17, pages 2052–2061, 2017.
+
+[53].  hun Li, ByungSoo Ko, and Ho-Jin Choi. Naive semi-supervised deep learning using pseudo-label.Peer-to-Peer Networking and Applications, 12(5):1358–1368, 2019. ISSN 1936-6450.
+
+[54].  avid J. C. MacKay. A practical Bayesian framework for backpropagation networks.Neural Computation, 4(3):448–472, 1992.
+
+[55].  esley J Maddox, Pavel Izmailov, Timur Garipov, Dmitry P Vetrov, and Andrew Gordon Wilson. A simple baseline for Bayesian uncertainty in deep learning. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d'Alché-Buc, E. Fox, and R. Garnett, editors,Advances in Neural Information Processing Systems 32, pages 13153–13164. Curran Associates, Inc., 2019.
+
+[56].  tephan Mandt, Matthew D Hoffman, and David M Blei. Stochastic gradient descent as approximate Bayesian inference. The Journal of Machine Learning Research, 18(1):4873–4907, 2017.
+
+[57].  ditya Krishna Menon, Ankit Singh Rawat, Sashank J. Reddi, Seungyeon Kim, and Sanjiv Kumar. Why distillation helps: a statistical perspective.CoRR, abs/2005.10419, 2020. URL https://arxiv.org/abs/2005.10419.
+
+[58].  ohn Mitros and Brian Mac Namee. On the validity of Bayesian neural networks for uncertainty estimation. InAICS,2019.
+
+[59].  evin P. Murphy.Machine Learning: A Probabilistic Perspective. The MIT Press, 2012. ISBN 0262018020. 
+
+[60].  ric Nalisnick, Akihiro Matsukawa, Yee Whye Teh, Dilan Gorur, and Balaji Lakshminarayanan. Do deep generative models know what they don’t know? InInternational Conference on Learning Representations, 2019.
+
+[61].  agarajan Natarajan, Inderjit S Dhillon, Pradeep K Ravikumar, and Ambuj Tewari. Learning with noisy labels. In C. J. C. Burges, L. Bottou, M. Welling, Z. Ghahramani, and K. Q. Weinberger, editors,Advances in Neural Information Processing Systems 26, pages 1196–1204. Curran Associates, Inc., 2013.
+
+[62].  adford M Neal et al. MCMC using Hamiltonian dynamics.Handbook of Markov Chain Monte Carlo, 2(11):2, 2011.
+
+[63].  eremy Nixon, Michael W. Dusenberry, Linchuan Zhang, Ghassen Jerfel, and Dustin Tran. Measuring calibration in deep learning. InThe IEEE Conference on Computer Vision and Pattern Recognition (CVPR) Workshops, June 2019.
+
+[64].  anfred Opper and Ole Winther. A Bayesian approach to on-line learning.On-line learning in neural networks, pages 363–378, 1998.
+
+[65].  azuki Osawa, Siddharth Swaroop, Mohammad Emtiyaz E Khan, Anirudh Jain, Runa Eschenhagen, Richard E Turner, and Rio Yokota. Practical deep learning with Bayesian principles. InAdvances in Neural Information Processing Systems 32, pages 4287–4299. Curran Associates, Inc., 2019.
+
+[66].  aniv Ovadia, Emily Fertig, Jie Ren, Zachary Nado, D. Sculley, Sebastian Nowozin, Joshua Dillon, Balaji Lakshmi-narayanan, and Jasper Snoek. Can you trust your model's uncertainty? evaluating predictive uncertainty under dataset shift. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d'Alché-Buc, E. Fox, and R. Garnett, editors,Advances in Neural Information Processing Systems 32, pages 13991–14002. Curran Associates, Inc., 2019.
+
+[67].  . J. Pan and Q. Yang. A survey on transfer learning.IEEE Transactions on Knowledge and Data Engineering, 22(10): 1345–1359, 2010.
+
+[68].  im Pearce, Felix Leibfried, Alexandra Brintrup, Mohamed Zaki, and Andy Neely. Uncertainty in neural networks: Approximately Bayesian ensembling. InAISTATS 2020, 2020.
+
+[69].  icholas G Polson, Vadim Sokolov, et al. Deep learning: a Bayesian perspective.Bayesian Analysis, 12(4):1275–1304, 2017.
+
+[70].  rya A Pourzanjani, Richard M Jiang, Brian Mitchell, Paul J Atzberger, and Linda R Petzold. Bayesian inference over the Stiefel manifold via the Givens representation.CoRR, abs/1710.09443, 2017. URL http://arxiv.org/abs/1710.09443.
+
+[71].  amira Pouyanfar, Saad Sadiq, Yilin Yan, Haiman Tian, Yudong Tao, Maria Presa Reyes, Mei-Ling Shyu, Shu-Ching Chen, and S. S. Iyengar. A survey on deep learning: Algorithms, techniques, and applications.
+
+[72].  uo-Jun Qi and Jiebo Luo. Small data challenges in big data era: A survey of recent progress on unsupervised and semi-supervised methods.CoRR, abs/1903.11260, 2019. URL http://arxiv.org/abs/1903.11260.
+
+[73].  ipeng Qiu, Tianxiang Sun, Yige Xu, Yunfan Shao, Ning Dai, and Xuanjing Huang. Pre-trained models for natural language processing: A survey.CoRR, abs/2003.08271, 2020.
+
+[74].  ing Rao and Jelena Frtunikj. Deep learning for self-driving cars: Chances and challenges. InProceedings of the 1st International Workshop on Software Engineering for AI in Autonomous Systems, SEFAIS âĂŹ18, pages 35–38, 2018.
+
+[75].  ippolyt Ritter, Aleksandar Botev, and David Barber. A scalable laplace approximation for neural networks. In International Conference on Learning Representations, 2018.
+
+[76].  hristian Robert.The Bayesian choice: from decision-theoretic foundations to computational implementation. Springer Science & Business Media, 2007.
+
+[77].  ohn Salvatier, Thomas V Wieckiâ, and Christopher Fonnesbeck. PyMC3: Python probabilistic programming framework. PeerJ Computer Science, 2:e55, 2016. https://doi.org/10.7717/peerj-cs.55.
+
+[78].  abeel Seedat and Christopher Kanan. Towards calibrated and scalable uncertainty representations for neural networks. CoRR, abs/1911.00104, 2019. URL http://arxiv.org/abs/1911.00104.
+
+[79].  oan SerrÃă, David ÃĄlvarez, VicenÃğ GÃşmez, Olga Slizovskaia, JosÃľ F. NÃžÃśez, and Jordi Luque. Input complexity and out-of-distribution detection with likelihood-based generative models.CoRR, abs/1909.11480, 2020. URL http://arxiv.org/abs/1909.11480.
+
+[80].  aniele Silvestro and Tobias Andermann. Prior choice affects ability of Bayesian neural networks to identify unknowns. CoRR, abs/2005.04987, 2020. URL http://arxiv.org/abs/2005.04987.
+
+[81].  dward Snelson and Zoubin Ghahramani. Compact approximations to Bayesian predictive distributions. InProceedings of the 22nd International Conference on Machine Learning, ICML âĂŹ05, page 840âĂŞ847, 2005.
+
+[82].  ihyuk Sohn, David Berthelot, Chun-Liang Li, Zizhao Zhang, Nicholas Carlini, Ekin D. Cubuk, Alex Kurakin, Han Zhang, and Colin Raffel. FixMatch: Simplifying semi-supervised learning with consistency and confidence.CoRR, abs/2001.07685, 2020. URL https://arxiv.org/abs/2001.07685.
+
+[83].  itish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout: A simple way to prevent neural networks from overfitting.Journal of Machine Learning Research, 15(56):1929–1958, 2014.
+
+[84].  artin A. Tanner and Wing Hung Wong. The calculation of posterior distributions by data augmentation.Journal of the American Statistical Association, 82(398):528–540, 1987.
+
+[85].  . M. Titterington. Bayesian methods for neural networks and related models.Statist. Sci., 19(1):128–139, 02 2004.
+
+[86].  drian Corduneanu Tommi and Tommi Jaakkola. On information regularization. InIn Proceedings of the 19th UAI,2003. 
+
+[87].  ustin Tran, Matthew D. Hoffman, Rif A. Saurous, Eugene Brevdo, Kevin Murphy, and David M. Blei. Deep probabilistic programming.CoRR, abs/1701.03757, 2017. URL http://arxiv.org/abs/1701.03757.
+
+[88].  oan Tran, Thanh-Toan Do, Ian Reid, and Gustavo Carneiro. Bayesian generative active deep learning.CoRR, abs/1904.11643, 2019. URL http://arxiv.org/abs/1904.11643.
+
+[89].  ao Wang and Dit-Yan Yeung. Towards Bayesian deep learning: A framework and some existing methods.IEEE Trans.
 on Knowl. and Data Eng., 28(12):3395–3408, December 2016. ISSN 1041–4347.
-[90]Kuan-Chieh Wang, Paul Vicol, James Lucas, Li Gu, Roger Grosse, and Richard Zemel. Adversarial distillation of Bayesian neural network posteriors. InProceedings of the 35th International Conference on Machine Learning, volume 80 of Proceedings of Machine Learning Research, pages 5190–5199, 2018.
-[91]Max Welling and Yee W Teh. Bayesian learning via stochastic gradient Langevin dynamics. InProceedings of the 28th international conference on machine learning, ICML âĂŹ11, pages 681–688, 2011.
-[92]Yeming Wen, Paul Vicol, Jimmy Ba, Dustin Tran, and Roger Grosse. Flipout: Efficient pseudo-independent weight perturbations on mini-batches. InInternational Conference on Learning Representations, 2018.
-[93]Andrew Gordon Wilson and Pavel Izmailov. Bayesian deep learning and a probabilistic perspective of generalization. CoRR, abs/2002.08791, 2020. URL http://arxiv.org/abs/2002.08791.
-[94]D. H. Wolpert. The lack of a priori distinctions between learning algorithms.Neural Computation, 8(7):1341–1390, 1996.
-[95]Qizhe Xie, Zihang Dai, Eduard H. Hovy, Minh-Thang Luong, and Quoc V. Le. Unsupervised data augmentation.CoRR, abs/1904.12848, 2019. URL http://arxiv.org/abs/1904.12848.
-[96]Shipeng Yu, Balaji Krishnapuram, Rómer Rosales, and R. Bharat Rao. Bayesian co-training.Journal of Machine Learning Research, 12(80):2649–2680, 2011.
-[97]Jiaming Zeng, Adam Lesnikowski, and Jose M. Alvarez. The relevance of Bayesian layer positioning to model  uncertainty in deep Bayesian active learning.CoRR, abs/1811.12535, 2018. URL http://arxiv.org/abs/1811.12535.
-[98]Chiyuan Zhang, Samy Bengio, Moritz Hardt, Benjamin Recht, and Oriol Vinyals. Understanding deep learning requires rethinking generalization. In 5th International Conference on Learning Representations, ICLR, 2017.
-[99]Zhi-Hua Zhou.Ensemble Methods: Foundations and Algorithms. Chapman and Hall/CRC, 1st edition, 2012.
+
+[90].  uan-Chieh Wang, Paul Vicol, James Lucas, Li Gu, Roger Grosse, and Richard Zemel. Adversarial distillation of Bayesian neural network posteriors. InProceedings of the 35th International Conference on Machine Learning, volume 80 of Proceedings of Machine Learning Research, pages 5190–5199, 2018.
+
+[91].  ax Welling and Yee W Teh. Bayesian learning via stochastic gradient Langevin dynamics. InProceedings of the 28th international conference on machine learning, ICML âĂŹ11, pages 681–688, 2011.
+
+[92].  eming Wen, Paul Vicol, Jimmy Ba, Dustin Tran, and Roger Grosse. Flipout: Efficient pseudo-independent weight perturbations on mini-batches. InInternational Conference on Learning Representations, 2018.
+
+[93].  ndrew Gordon Wilson and Pavel Izmailov. Bayesian deep learning and a probabilistic perspective of generalization. CoRR, abs/2002.08791, 2020. URL http://arxiv.org/abs/2002.08791.
+
+[94].  . H. Wolpert. The lack of a priori distinctions between learning algorithms.Neural Computation, 8(7):1341–1390, 1996.
+
+[95].  izhe Xie, Zihang Dai, Eduard H. Hovy, Minh-Thang Luong, and Quoc V. Le. Unsupervised data augmentation.CoRR, abs/1904.12848, 2019. URL http://arxiv.org/abs/1904.12848.
+
+[96].  hipeng Yu, Balaji Krishnapuram, Rómer Rosales, and R. Bharat Rao. Bayesian co-training.Journal of Machine Learning Research, 12(80):2649–2680, 2011.
+
+[97].  iaming Zeng, Adam Lesnikowski, and Jose M. Alvarez. The relevance of Bayesian layer positioning to model  uncertainty in deep Bayesian active learning.CoRR, abs/1811.12535, 2018. URL http://arxiv.org/abs/1811.12535.
+
+[98].  hiyuan Zhang, Samy Bengio, Moritz Hardt, Benjamin Recht, and Oriol Vinyals. Understanding deep learning requires rethinking generalization. In 5th International Conference on Learning Representations, ICLR, 2017.
+
+[99].  hi-Hua Zhou.Ensemble Methods: Foundations and Algorithms. Chapman and Hall/CRC, 1st edition, 2012.
 
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig01.webp)
 ![](https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig02.webp)
