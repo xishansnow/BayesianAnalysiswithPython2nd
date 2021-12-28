@@ -574,7 +574,7 @@ y_i= \alpha + x_i \beta \tag{式3.1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2392/3927609152.py:18: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2384/3927609152.py:18: UserWarning: This figure was using constrained_layout, but that is incompatible with subplots_adjust and/or tight_layout; disabling constrained_layout.
   plt.tight_layout()
 </pre></div>
 </div>
@@ -606,7 +606,7 @@ y_i= \alpha + x_i \beta \tag{式3.1}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2392/2262848942.py:12: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2384/2262848942.py:12: FutureWarning: In v4.0, pm.sample will return an `arviz.InferenceData` object instead of a `MultiTrace` by default. You can pass return_inferencedata=True or return_inferencedata=False to be safe and silence this warning.
   trace_g = pm.sample(2000, tune = 1000)
 Auto-assigning NUTS sampler...
 </pre></div>
@@ -616,7 +616,7 @@ Auto-assigning NUTS sampler...
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>---------------------------------------------------------------------------
 KeyboardInterrupt                         Traceback (most recent call last)
-/tmp/ipykernel_2392/2262848942.py in &lt;module&gt;
+/tmp/ipykernel_2384/2262848942.py in &lt;module&gt;
      10 
      11     # 近似推断：随机采样生成模型中所有随机变量（模型参数或隐变量等）和显式确定性变量的迹
 ---&gt; 12     trace_g = pm.sample(2000, tune = 1000)
@@ -825,90 +825,6 @@ KeyboardInterrupt                         Traceback (most recent call last)
    1395                         if not isinstance(term, Variable):
 
 /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in &lt;listcomp&gt;(.0)
-   1059             inputs = node.inputs
-   1060 
--&gt; 1061             output_grads = [access_grad_cache(var) for var in node.outputs]
-   1062 
-   1063             # list of bools indicating if each output is connected to the cost
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_grad_cache(var)
-   1391                     for idx in node_to_idx[node]:
-   1392 
--&gt; 1393                         term = access_term_cache(node)[idx]
-   1394 
-   1395                         if not isinstance(term, Variable):
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/gradient.py in access_term_cache(node)
    1218                             )
    1219 
 -&gt; 1220                 input_grads = node.op.L_op(inputs, node.outputs, new_output_grads)
@@ -935,6 +851,48 @@ KeyboardInterrupt                         Traceback (most recent call last)
 --&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
     660             return new_r
     661 
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in &lt;listcomp&gt;(.0)
+    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+--&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
+    660             return new_r
+    661 
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
+    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+--&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
+    660             return new_r
+    661 
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in &lt;listcomp&gt;(.0)
+    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+--&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
+    660             return new_r
+    661 
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
+    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+--&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
+    660             return new_r
+    661 
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in &lt;listcomp&gt;(.0)
+    657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+--&gt; 659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
+    660             return new_r
+    661 
+
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/elemwise.py in transform(r)
+    655                 # dimensions
+    656                 res = theano.tensor.constant(np.asarray(r.data), dtype=r.type.dtype)
+--&gt; 657                 return DimShuffle((), [&quot;x&quot;] * nd)(res)
+    658 
+    659             new_r = Elemwise(node.op, {})(*[transform(ipt) for ipt in node.inputs])
 
 /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/op.py in __call__(self, *inputs, **kwargs)
     251 
@@ -986,53 +944,32 @@ KeyboardInterrupt                         Traceback (most recent call last)
    1636         vars = self.inputs + self.outputs + self.orphans
 
 /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in module_from_key(self, key, lnk)
-   1189             try:
-   1190                 location = dlimport_workdir(self.dirname)
--&gt; 1191                 module = lnk.compile_cmodule(location)
-   1192                 name = module.__file__
-   1193                 assert name.startswith(location)
+   1155         # Is the source code already in the cache?
+   1156         module_hash = get_module_hash(src_code, key)
+-&gt; 1157         module = self._get_from_hash(module_hash, key)
+   1158         if module is not None:
+   1159             return module
 
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/basic.py in compile_cmodule(self, location)
-   1541             try:
-   1542                 _logger.debug(f&quot;LOCATION {location}&quot;)
--&gt; 1543                 module = c_compiler.compile_str(
-   1544                     module_name=mod.code_hash,
-   1545                     src_code=src_code,
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in _get_from_hash(self, module_hash, key)
+   1058             with lock_ctx():
+   1059                 try:
+-&gt; 1060                     key_data.add_key(key, save_pkl=bool(key[0]))
+   1061                     key_broken = False
+   1062                 except pickle.PicklingError:
 
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in compile_str(module_name, src_code, location, include_dirs, lib_dirs, libs, preargs, py_module, hide_symbols)
-   2494 
-   2495         try:
--&gt; 2496             p_out = output_subprocess_Popen(cmd)
-   2497             compile_stderr = p_out[1].decode()
-   2498         except Exception:
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in add_key(self, key, save_pkl)
+    498         self.keys.add(key)
+    499         if save_pkl:
+--&gt; 500             self.save_pkl()
+    501 
+    502     def remove_key(self, key, save_pkl=True):
 
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/utils.py in output_subprocess_Popen(command, **params)
-    252     # we need to use communicate to make sure we don&#39;t deadlock around
-    253     # the stdout/stderr pipe.
---&gt; 254     out = p.communicate()
-    255     return out + (p.returncode,)
-    256 
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/subprocess.py in communicate(self, input, timeout)
-   1026 
-   1027             try:
--&gt; 1028                 stdout, stderr = self._communicate(input, endtime, timeout)
-   1029             except KeyboardInterrupt:
-   1030                 # https://bugs.python.org/issue25942
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/subprocess.py in _communicate(self, input, endtime, orig_timeout)
-   1866                             &#39;failed to raise TimeoutExpired.&#39;)
-   1867 
--&gt; 1868                     ready = selector.select(timeout)
-   1869                     self._check_timeout(endtime, orig_timeout, stdout, stderr)
-   1870 
-
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/selectors.py in select(self, timeout)
-    413         ready = []
-    414         try:
---&gt; 415             fd_event_list = self._selector.poll(timeout)
-    416         except InterruptedError:
-    417             return ready
+/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py in save_pkl(self)
+    520         try:
+    521             with open(self.key_pkl, &quot;wb&quot;) as f:
+--&gt; 522                 pickle.dump(self, f, protocol=pickle.HIGHEST_PROTOCOL)
+    523         except pickle.PicklingError:
+    524             _logger.warning(f&quot;Cache leak due to unpickle-able key data {self.keys}&quot;)
 
 KeyboardInterrupt: 
 </pre></div>
