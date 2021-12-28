@@ -1091,7 +1091,7 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 </div>
 <div class="section" id="svi-sgd">
 <h3>4.3 随机变分推断（ <code class="docutils literal notranslate"><span class="pre">SVI</span></code> ）：自然梯度与 <code class="docutils literal notranslate"><span class="pre">SGD</span></code> 的结合<a class="headerlink" href="#svi-sgd" title="Permalink to this headline">¶</a></h3>
-<p>既然给出了目标函数的最速梯度方向，那么与 4.1 节的随机梯度下降相结合就成为一种非常自然的想法。大家都知道， <code class="docutils literal notranslate"><span class="pre">SGD</span></code> 是小批量梯度下降的特例，由于每次仅随机地使用一个样本（这也是取名为随机梯度下降的原因），因此会引入较大的方差，但总体趋向于最优解。以下算法 2 为<strong>随机变分变分推断算法</strong>， 其基本思想是：在每一轮迭代中，随机抽取一个样本数据点并计算最优局部参数，然后根据自然梯度公式更新全局参数，直至收敛。</p>
+<p>既然给出了目标函数的最速梯度方向，那么与 4.1 节的坐标上升法以及优化方法中常用的<code class="docutils literal notranslate"><span class="pre">随机梯度下降法（</span> <span class="pre">SGD</span> <span class="pre">）</span></code>相结合就成为一种非常自然的想法。大家都知道， <code class="docutils literal notranslate"><span class="pre">SGD</span></code> 是小批量梯度下降的特例，由于每次仅随机地使用一个样本（这也是取名为随机梯度下降的原因），因此会引入较大的方差，但总体趋向于最优解。以下算法 2 为<strong>随机变分变分推断算法</strong>， 其基本思想是：在每一轮迭代中，随机抽取一个样本数据点并计算最优局部参数，然后根据自然梯度公式更新全局参数，直至收敛。</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108163233-7872.webp" /></p>
 </div>
 <div class="section" id="svi">
@@ -1099,9 +1099,12 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <p>在随机变分推断中，随机梯度下降（ <code class="docutils literal notranslate"><span class="pre">SGD</span></code> ）的收敛速度取决于梯度估计的方差，较小的梯度噪声允许较大的学习率，并导致更快的收敛。本节介绍随机变分推断背景下的权衡技巧，例如自适应学习率和方差减少策略。其中一些方法通常适用于 <code class="docutils literal notranslate"><span class="pre">SGD</span></code>。</p>
 <div class="section" id="id22">
 <h4>4.4.1 自适应学习率与小批量大小<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
-<p>收敛速度受学习率和批量大小 [10]、[46] 的影响。基于大数定律，增加批量大小会较小随机梯度的噪声 [46]，进而允许更大的学习率。因此，为了加速学习过程，可以在给定学习率的情况下，优化调整批量大小，或者固定批量大学，优化学习率。</p>
+<p>收敛速度受学习率和批量大小 [10]、[46] 的影响。基于大数定律，增加批量大小会减小随机梯度的噪声 [46]，进而允许更大的学习率。因此，为了加速学习过程，可以在给定学习率的情况下，优化调整批量大小，或者固定批量大小，优化学习率。</p>
 <p><strong>（1）学习率的自适应调整</strong></p>
 <p>在每次迭代中，梯度的经验方差可以用于指导学习率的自动适应（ 因为梯度噪声与学习率成反比 ）。利用此想法的优化方法包括 <code class="docutils literal notranslate"><span class="pre">RMSProp</span></code> [191]、<code class="docutils literal notranslate"><span class="pre">AdaGrad</span></code> [42]、<code class="docutils literal notranslate"><span class="pre">AdaDelta</span></code> [218] 和 <code class="docutils literal notranslate"><span class="pre">Adam</span></code> [87] 等。这些方法不是随机变分推断特有的，但在其中经常使用；更多详细信息请参阅 [53].</p>
+<blockquote>
+<div><p>注：详情参见机器学习或优化算法相关书籍。</p>
+</div></blockquote>
 <p>[157]首先在随机变分推断中引入了全局变分参数 <span class="math notranslate nohighlight">\(γ\)</span> 的自适应学习率，其中最佳学习率被证明满足：</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1109,13 +1112,13 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 \]</div>
 <p>上面，<span class="math notranslate nohighlight">\(γ^∗_t\)</span> 表示最优全局变分参数，<span class="math notranslate nohighlight">\(γ_t\)</span> 表示当前估计。 <span class="math notranslate nohighlight">\(Σ\)</span> 是这个批次中变分参数的协方差矩阵。由于 <span class="math notranslate nohighlight">\(γ^∗_t\)</span> 是未知的，[157] 展示了如何以在线方式估计最佳学习率。</p>
 <p><strong>（2）批量大小的自适应调整</strong></p>
-<p>可以在保持学习率固定的同时调整批量大小，这也实现了类似效果 [10] [26]、[37]、[184]。为了减少随机梯度下降的方差，[10] 建议根据目标函数的值与其最优值成比例地选择批量大小。在实践中，估计的梯度噪声协方差和梯度大小被用于估计最佳批量大小。</p>
+<p>可以在保持学习率固定的同时调整批量大小，这也可以实现了类似效果 [10] [26]、[37]、[184]。为了减少随机梯度下降的方差，[10] 建议根据目标函数的值与其最优值成比例地选择批量大小。在实践中，估计的梯度噪声协方差和梯度大小被用于估计最佳批量大小。</p>
 </div>
 <div class="section" id="id23">
 <h4>4.4.2 方差减少的策略<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
 <p>除了通过学习率和小批量大小控制优化路径之外，还可以采取一些措施来减少方差，从而实现更大的梯度步长。 随机变分推断中经常使用<code class="docutils literal notranslate"><span class="pre">方差减少</span></code>来实现更快的收敛。下面总结了一些通过<code class="docutils literal notranslate"><span class="pre">控制变量</span></code>、<code class="docutils literal notranslate"><span class="pre">非均匀采样</span></code>和其他方法实现这一目标的方法：</p>
 <p><strong>（1）控制变量法</strong></p>
-<p>控制变量是一个随机项，该随机项可以被添加到随机梯度中，以使梯度的期望保持不变，而方差减少 [20]。控制变量需要与随机梯度相关，并且易于计算。使用控制变量来减少方差在蒙特卡洛模拟和随机优化 [165]、[208] 中很常见。几位作者建议在随机变分推断中使用控制变量[78]、[146]、[154]、[208] 。</p>
+<p><strong>控制变量是一个随机项，该随机项可以被添加到随机梯度中，在梯度的期望保持不变条件下，使方差减少</strong> [20]。<strong>控制变量需要与随机梯度呈相关关系，并且易于计算</strong>。使用控制变量来减少方差在蒙特卡洛模拟和随机优化 [165]、[208] 中很常见。几位作者建议在随机变分推断中使用控制变量[78]、[146]、[154]、[208] 。</p>
 <p>其中一个突出例子，是<code class="docutils literal notranslate"><span class="pre">随机方差减小梯度</span> <span class="pre">(SVRG)</span> </code> [78]。在 <code class="docutils literal notranslate"><span class="pre">SVRG</span></code> 中，利用来自所有数据点获得的历史梯度来构建控制变量，并且充分利用了沿优化路径的梯度具有相关性这一特点。标准随机梯度更新 <span class="math notranslate nohighlight">\(γ_{t+1} = γ_t −ρ_t (\nabla  \hat{\mathscr{L}}(γ_t))\)</span> 被替换为：</p>
 <div class="math notranslate nohighlight">
 \[
