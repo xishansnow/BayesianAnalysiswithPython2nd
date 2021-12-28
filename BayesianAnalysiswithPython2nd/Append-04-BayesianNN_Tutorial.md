@@ -858,127 +858,250 @@ $$
 
 ## 参考文献
 
-1. F. Rosenblatt, “The perceptron: A probabilistic model for information storage and organization in the brain.” Psychological Review, vol. 65, no. 6, pp. 386 – 408, 1958.
-2. C. Bishop, Pattern recognition and machine learning. New York: Springer, 2006.
-3. D. E. Rumelhart, G. E. Hinton, and R. J. Williams, “Learning representations by back-propagating errors,” nature, vol. 323, no. 6088, p. 533, 1986.
-4. K.-S. Oh and K. Jung, “GPU implementation of neural networks,” Pattern Recognition, vol. 37, no. 6, pp. 1311–1314, 2004.
-5. D. C. Ciresan, U. Meier, L. M. Gambardella, and J. Schmidhuber, “Deep big simple neural nets excel on handwritten digit recognition,” CoRR, 2010.
-6. A. Krizhevsky, I. Sutskever, and G. E. Hinton, “Imagenet classification with deep convolutional neural networks,” in Advances in neural information processing systems,2012, pp. 1097–1105.
-7. K. Simonyan and A. Zisserman, “Very deep convolutional networks for large-scale image recognition,” CoRR, 2014.
-8. C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed, D. Anguelov, D. Erhan, V. Vanhoucke, A. Rabinovich et al., “Going deeper with convolutions,” in CVPR, 2015.
-9. R. Girshick, J. Donahue, T. Darrell, and J. Malik, “Rich feature hierarchies for accurate object detection and semantic segmentation,” in Proceedings of the IEEE conference on computervision and pattern recognition, 2014, pp. 580–587.
-10. S. Ren, K. He, R. Girshick, and J. Sun, “Faster r-cnn: Towards real-time object detection with region proposal networks,” in Advances in neural information processing systems, 2015, pp. 91–99.
-11. J. Redmon, S. Divvala, R. Girshick, and A. Farhadi, “You only look once: Unified,real-time object detection,” in Proceedings of the IEEE conference on computervision and pattern recognition, 2016, pp. 779–788.
-12. A. Mohamed, G. E. Dahl, and G. Hinton, “Acoustic modeling using deep belief networks,” IEEE Transactions on Audio, Speech, and Language Processing, vol. 20, no. 1, pp. 14–22, 2012.
-13. G. E. Dahl, D. Yu, L. Deng, and A. Acero, “Context-dependent pre-trained deep neural networks for large-vocabulary speech recognition,” IEEE Transactions on audio,speech, and language processing, vol. 20, no. 1, pp. 30–42, 2012.
-14. G. Hinton, L. Deng, D. Yu, G. E. Dahl, A.-r. Mohamed, N. Jaitly, A. Senior, V. Vanhoucke, P. Nguyen, T. N. Sainath et al., “Deep neural networks for acoustic modeling in speech recognition: The sharedviews of four research groups,” IEEE Signal Processing Magazine, vol. 29, no. 6, pp. 82–97, 2012.
-15. D. Amodei, S. Ananthanarayanan, R. Anubhai, J. Bai, E. Battenberg, C. Case, J. Casper, B. Catanzaro, Q. Cheng, G. Chen, J. Chen, J. Chen, Z. Chen, M. Chrzanowski, A. Coates, G. Diamos, K. Ding, N. Du, E. Elsen, J. Engel, W. Fang, L. Fan, C. Fougner, L. Gao, C. Gong, A. Hannun, T. Han, L. Johannes, B. Jiang, C. Ju, B. Jun, P. LeGresley, L. Lin, J. Liu, Y. Liu, W. Li, X. Li, D. Ma, S. Narang, A. Ng, S. Ozair, Y. Peng, R. Prenger, S. Qian, Z. Quan, J. Raiman, V. Rao, S. Satheesh, D. Seetapun, S. Sengupta, K. Srinet, A. Sriram, H. Tang, L. Tang, C. Wang, J. Wang, K. Wang, Y. Wang, Z. Wang, Z. Wang, S. Wu, L. Wei, B. Xiao, W. Xie, Y. Xie, D. Yogatama, B. Yuan, J. Zhan, and Z. Zhu, “Deep speech 2 : End-to-end speech recognition in english and mandarin,” in Proceedings of The 33rd International Conference on Machine Learning, ser. Proceedings of Machine Learning Research, M. F. Balcan and K. Q. Weinberger, Eds., vol. 48. New York, New York, USA: PMLR, 20–22 Jun 2016, pp. 173–182.
-16. D. Silver, J. Schrittwieser, K. Simonyan, I. Antonoglou, A. Huang, A. Guez, T. Hubert, L. Baker, M. Lai, A. Bolton et al., “Mastering the game of go without human knowledge,” Nature, vol. 550, no. 7676, p. 354, 2017.
-17. “Smartening up with artificial intelligence (ai) - what’s in it for germany and its industrial sector?” McKinsey & Company, Inc, Tech. Rep., 4 2017. `[Online].Available: https://www.mckinsey.de/files/170419 mckinsey ki final m.pdf
-18. E. V. T. V. Serooskerken, “Artificial intelligence in wealth and asset management,” Pictet on Robot Advisors, Tech. Rep., 1 2017.[Online]. Available: https://perspectives.pictet.com/wp-content/uploads/2016/12/Edgar-van-Tuyll-van-Serooskerken-Pictet-Report-winter-2016-2.pdf
-19. A. van den Oord, T. Walters, and T. Strohman, “Wavenet launches in the google assistant.” `[Online]. Available: https://deepmind.com/blog/wavenet-launches-google-assistant/
-20. Siri Team, “Deep learning for siri’s voice: On-device deep mixture density networks for hybrid unit selection synthesis,” 8 2017. `[Online]. Available: https://machinelearning.apple.com/2017/08/06/siri-voices.html
-21. J. Wakefield, “Microsoft chatbot is taught to swear on twitter.” `[Online]. Available:www.bbc.com/news/technology-35890188
-22. J. Guynn, “Google photos labeled black people ’gorillas’.” `[Online]. Available: https://www.usatoday.com/story/tech/2015/07/01/ google-apologizes-after-photos-identify-black-people-as-gorillas/29567465/
-23. J. Buolamwini and T. Gebru, “Gender shades: Intersectional accuracy disparities in commercial gender classification,” in Conference on fairness, accountability and transparency, 2018, pp. 77–91.
-24. Tesla Team, “A tragic loss.” `[Online]. Available: https://www.tesla.com/en GB/blog/tragic-loss
-25. ABC News, “Uber suspends self-driving car tests after vehicle hits and kills woman crossing the street in arizona,” 2018. `[Online]. Available: http://www.abc.net.au/news/2018-03-20/uber-suspends-self-driving-car-tests-after-fatal-crash/9565586
-26. Council of European Union, “Regulation (eu) 2016/679 of the european parliment and of the council,” 2016.
-27. B. Goodman and S. Flaxman, “European union regulations on algorithmic decision making and a right to explanation,” AI magazine, vol. 38, no. 3, pp. 50–57, 2017.
-28. M. Vu, T. Adali, D. Ba, G. Buzsaki, D. Carlson, K. Heller, C. Liston, C. Rudin, V. Sohal, A. Widge, H. Mayberg, G. Sapiro, and K. Dzirasa, “A sharedvision for machine learning in neuroscience,” JOURNAL OF NEUROSCIENCE, vol. 38, no. 7, pp. 1601–1607, 2018.
-29. A. Holzinger, C. Biemann, C. S. Pattichis, and D. B. Kell, “What do we need to build explainable ai systems for the medical domain?” arXiv preprint arXiv:1712.09923, 2017.
-30. R. Caruana, Y. Lou, J. Gehrke, P. Koch, M. Sturm, and N. Elhadad, “Intelligible models for healthcare: Predicting pneumonia risk and hospital 30-day readmission,” in Proceedings of the 21th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. ACM, 2015, pp. 1721–1730.
-31. D. Gunning, “Explainable artificial intelligence (xai),” Defense Advanced Research Projects Agency (DARPA), nd Web, 2017.
-32. D. J. MacKay, “Probable networks and plausible predictionsa review of practical bayesian methods for supervised neural networks,” Network: computation in neural systems, vol. 6, no. 3, pp. 469–505, 1995.
-33. J. Lampinen and A. Vehtari, “Bayesian approach for neural networks review and case studies,” Neural networks, vol. 14, no. 3, pp. 257–274, 2001.
-34. H. Wang and D.-Y. Yeung, “Towards bayesian deep learning: A survey,” arXiv preprint arXiv:1604.01662, 2016.
-35. K. Murphey, Machine learning, a probabilistic perspective. Cambridge, MA: MIT Press, 2012.
-36. X. Glorot, A. Bordes, and Y. Bengio, “Deep sparse rectifier neural networks,” in AISTATS, 2011, pp. 315–323.
-37. A. L. Maas, A. Y. Hannun, and A. Y. Ng, “Rectifier nonlinearities improve neural network acoustic models,” in ICML, vol. 30, 2013, p. 3.
-38. R. M. Neal, Bayesian learning for neural networks. Springer Science & Business Media, 1996, vol. 118.
-39. Y. Gal, “Uncertainty in deep learning,” University of Cambridge, 2016.
-40. N. Tishby, E. Levin, and S. A. Solla, “Consistent inference of probabilities in layered networks: predictions and generalizations,” in International 1989 Joint Conference on Neural Networks, 1989, pp. 403–409 vol.2.
-41. J. S. Denker and Y. Lecun, “Transforming neural-net output levels to probability distributions,” in NeurIPS, 1991, pp. 853–859.
-42. G. Cybenko, “Approximation by superpositions of a sigmoidal function,” Mathematics of control, signals and systems, vol. 2, no. 4, pp. 303–314, 1989.
-43. K.-I. Funahashi, “On the approximate realization of continuous mappings by neural networks,” Neural networks, vol. 2, no. 3, pp. 183–192, 1989.
-44. K. Hornik, “Approximation capabilities of multilayer feedforward networks,” Neural networks, vol. 4, no. 2, pp. 251–257, 1991.
-45. S. F. Gull and J. Skilling, “Quantified maximum entropy memsys5 users manual,” Maximum Entropy Data Consultants Ltd, vol. 33, 1991.
-46. D. J. MacKay, “Bayesian interpolation,” Neural computation, vol. 4, no. 3, pp. 415–447, 1992.
-47. ——, “Bayesian methods for adaptive models,” Ph.D. dissertation, California Institute of Technology, 1992.
-48. ——, “A practical bayesian framework for backpropagation networks,” Neural computation, vol. 4, no. 3, pp. 448–472, 1992.
-49. M. I. Jordan, Z. Ghahramani, T. S. Jaakkola, and L. K. Saul, “An introduction to variational methods for graphical models,” Machine learning, vol. 37, no. 2, pp. 183–233, 1999.
-50. M. J. Wainwright, M. I. Jordan et al., “Graphical models, exponential families, and variational inference,” Foundations and Trends R ? in Machine Learning, vol. 1, no.1–2, pp. 1–305, 2008.
-51. D. M. Blei, A. Kucukelbir, and J. D. McAuliffe, “Variational inference: A review for statisticians,” Journal of the American Statistical Association, vol. 112, no. 518, pp. 859–877, 2017.
-52. M. D. Hoffman, D. M. Blei, C. Wang, and J. Paisley, “Stochastic variational inference,” The Journal of Machine Learning Research, vol. 14, no. 1, pp. 1303–1347, 2013.
-53. D. Barber and C. M. Bishop, “Ensemble learning in bayesian neural networks,” NATO ASI SERIES F COMPUTER AND SYSTEMS SCIENCES, vol. 168, pp. 215–238,1998.
-54. G. E. Hinton and D. Van Camp, “Keeping the neural networks simple by minimizing the description length of the weights,” in Proceedings of the sixth annual conference on Computational learning theory. ACM, 1993, pp. 5–13.
-55. M. Betancourt, “A conceptual introduction to hamiltonian monte carlo,” arXiv preprint arXiv:1701.02434, 2017.
-56. M. Betancourt, S. Byrne, S. Livingstone, M. Girolami et al., “The geometric foundations of hamiltonian monte carlo,” Bernoulli, vol. 23, no. 4A, pp. 2257–2298, 2017.
-57. G. Madey, X. Xiang, S. E. Cabaniss, and Y. Huang, “Agent-based scientific simulation,” Computing in Science & Engineering, vol. 2, no. 01, pp. 22–29, jan 2005.
-58. S. Duane, A. D. Kennedy, B. J. Pendleton, and D. Roweth, “Hybrid monte carlo,” Physics letters B, vol. 195, no. 2, pp. 216–222, 1987.
-59. R. M. Neal et al., “MCMC using hamiltonian dynamics,” Handbook of markov chain monte carlo, vol. 2, no. 11, p. 2, 2011.
-60. S. Brooks, A. Gelman, G. Jones, and X.-L. Meng, Handbook of markov chain monte carlo. CRC press, 2011.
-61. M. Welling and Y. Teh, “Bayesian learningvia stochastic gradient langevin dynamics,” Proceedings of the 28th International Conference on Machine Learning, ICML 2011, pp. 681–688, 2011.
-62. A. Graves, “Practical variational inference for neural networks,” in Advances in Neural Information Processing Systems 24, J. Shawe-Taylor, R. S. Zemel, P. L. Bartlett,F. Pereira, and K. Q. Weinberger, Eds. Curran Associates, Inc., 2011, pp. 2348–2356.
-63. M. Opper and C. Archambeau, “The variational gaussian approximation revisited,” Neural computation, vol. 21, no. 3, pp. 786–792, 2009.
-64. J. M. Hern´ andez-Lobato and R. Adams, “Probabilistic backpropagation for scalable learning of bayesian neural networks,” in International Conference on Machine Learning, 2015, pp. 1861–1869.
-65. J. Paisley, D. Blei, and M. Jordan, “Variational bayesian inference with stochastic search,” arXiv preprint arXiv:1206.6430, 2012.
-66. J. R. Wilson, “Variance reduction techniques for digital simulation,” American Journal of Mathematical and Management Sciences, vol. 4, no. 3-4, pp. 277–312, 1984.
-67. M. Opper and C. Archambeau, “The variational gaussian approximation revisited,” Neural computation, vol. 21 3, pp. 786–92, 2009.
-68. D. P. Kingma and M. Welling, “Auto-encoding variational bayes,” arXiv preprint arXiv:1312. 6114, 2013.
-69. D. J. Rezende, S. Mohamed, and D. Wierstra, “Stochastic backpropagation and approximate inference in deep generative models,” in Proceedings of the 31st International Conference on Machine Learning (ICML), 2014, pp. 1278–1286.
-70. N. Srivastava, G. Hinton, A. Krizhevsky, I. Sutskever, and R. Salakhutdinov, “Dropout: A simple way to prevent neural networks from overfitting,” The Journal of Machine Learning Research, vol. 15, no. 1, pp. 1929–1958, 2014.
-71. D. P. Kingma, T. Salimans, and M. Welling, “Variational dropout and the local reparameterization trick,” in Advances in Neural Information Processing Systems, 2015, pp. 2575–2583.
-72. S. Wang and C. Manning, “Fast dropout training,” in international conference on machine learning, 2013, pp. 118–126.
-73. A. Livnat, C. Papadimitriou, N. Pippenger, and M. W. Feldman, “Sex, mixability, and modularity,” Proceedings of the National Academy of Sciences, vol. 107, no. 4, pp. 1452–1457, 2010.
-74. M. Opper and O. Winther, “A bayesian approach to on-line learning,” On-line learning in neural networks, pp. 363–378, 1998.
-75. T. P. Minka, “A family of algorithms for approximate bayesian inference,” Ph.D. dissertation, Massachusetts Institute of Technology, 2001.
-76. C. Blundell, J. Cornebise, K. Kavukcuoglu, and D. Wierstra, “Weight uncertainty in neural networks,” arXiv preprint arXiv:1505.05424, 2015.
-77. C. K. Williams, “Computing with infinite networks,” in Advances in neural information processing systems, 1997, pp. 295–301.
-78. J. Lee, J. Sohl-dickstein, J. Pennington, R. Novak, S. Schoenholz, and Y. Bahri, “Deep neural networks as gaussian processes,” in International Conference on Learning Representations, 2018.
-79. A. Damianou and N. Lawrence, “Deep gaussian processes,” in AISTATS, 2013, pp. 207–215.
-80. A. Damianou, “Deep gaussian processes and variational propagation of uncertainty,” Ph.D. dissertation, University of Sheffield, 2015.
-81. N. Lawrence, “Deep gaussian processes,” 2019. `[Online]. Available: http://inverseprobability.com/talks/notes/deep-gaussian-processes.html
-82. A. Damianou, M. K. Titsias, and N. D. Lawrence, “Variational gaussian process dynamical systems,” in NeurIPS, 2011, pp. 2510–2518.
-83. M. Titsias, “Variational learning of inducing variables in sparse gaussian processes,” in Proceedings of the Twelth International Conference on Artificial Intelligence and Statistics, ser. Proceedings of Machine Learning Research, D. van Dyk and M. Welling, Eds., vol. 5. Hilton Clearwater Beach Resort, Clearwater Beach, Florida USA: PMLR, 16–18 Apr 2009, pp. 567–574.
-84. Y. Gal and Z. Ghahramani, “Dropout as a bayesian approximation: Insights and applications,” in Deep Learning Workshop, ICML, vol. 1, 2015, p. 2.
-85. ——, “Dropout as a bayesian approximation: Representing model uncertainty in deep learning,” in ICML, 2016, pp. 1050–1059.
-86. ——, “Dropout as a bayesian approximation: Appendix,” arXiv preprint arXiv:1506.02157, 2015.
-87. A. Garriga-Alonso, L. Aitchison, and C. E. Rasmussen, “Deep convolutional networks as shallow gaussian processes,” arXiv preprint arXiv:1808.05587, 2018.
-88. R. Novak, L. Xiao, Y. Bahri, J. Lee, G. Yang, D. A. Abolafia, J. Pennington, and J. Sohl-dickstein, “Bayesian deep convolutional networks with many channels are gaussian processes,” in International Conference on Learning Representations, 2019.
-89. M. Van der Wilk, C. E. Rasmussen, and J. Hensman, “Convolutional gaussian processes,” in Advances in Neural Information Processing Systems, 2017, pp. 2849–2858.
-90. D. J. MacKay and D. J. Mac Kay, Information theory, inference and learning algorithms. Cambridge university press, 2003.
-91. B. Wang and D. Titterington, “Inadequacy of interval estimates corresponding to variational bayesian approximations.” in AISTATS. Barbados, 2005.
-92. R. E. Turner and M. Sahani, “Two problems with variational expectation maximisation for time-series models,” in Bayesian Time Series Models, D. Barber, A. T. Cemgil, and S. Chiappa, Eds. Cambridge University Press, 2011.
-93. R. Giordano, T. Broderick, and M. I. Jordan, “Covariances, robustness, and variational bayes,” Journal of Machine Learning Research, vol. 19, no. 51, pp. 1–49, 2018.
-94. D. Hafner, D. Tran, A. Irpan, T. Lillicrap, and J. Davidson, “Reliable uncertainty estimates in deep neural networks using noise contrastive priors,” arXiv preprint arXiv:1807.09289, 2018.
-95. V. Kuleshov, N. Fenner, and S. Ermon, “Accurate uncertainties for deep learning using calibrated regression,” arXiv preprint arXiv:1807.00263, 2018.
-96. Y. Gal, J. Hron, and A. Kendall, “Concrete dropout,” in Advances in Neural Information Processing Systems, 2017, pp. 3581–3590.
-97. C. J. Maddison, A. Mnih, and Y. W. Teh, “The concrete distribution: A continuous relaxation of discrete random variables,” arXiv preprint arXiv:1611.00712, 2016.
-98. T. S. Jaakkola and M. I. Jordan, “Improving the mean field approximationvia the use of mixture distributions,” in Learning in graphical models. Springer, 1998, pp. 163–173.
-99. C. Louizos and M. Welling, “Structured and efficient variational deep learning with matrix gaussian posteriors,” in International Conference on Machine Learning, 2016, pp. 1708–1716.
-100. E. G. Tabak and E. Vanden-Eijnden, “Density estimation by dual ascent of the log-likelihood,” Commun. Math. Sci., vol. 8, no. 1, pp. 217–233, 03 2010.
-101. E. G. Tabak and C. V. Turner, “A family of nonparametric density estimation algorithms,” Communications on Pure and Applied Mathematics, vol. 66, no. 2, pp. 145–164, 2013.
-102. D. J. Rezende and S. Mohamed, “Variational inference with normalizing flows,” arXiv preprint arXiv:1505.05770, 2015.
-103. C. Louizos and M. Welling, “Multiplicative normalizing flows for variational bayesianneural networks,” in Proceedings of the 34th International Conference on Machine Learning - Volume 70, ser. ICML’17. JMLR.org, 2017, pp. 2218–2227.
-104. L. Dinh, J. Sohl-Dickstein, and S. Bengio, “Density estimation using real NVP,”CoRR, vol. abs/1605.08803, 2016.
-105. C. Cremer, X. Li, and D. K. Duvenaud, “Inference suboptimality in variational au-toencoders,” CoRR, vol. abs/1801.03558, 2018.
-106. S.-i. Amari, Differential-geometrical methods in statistics. Springer Science & Busi-ness Media, 2012, vol. 28.
-107. T. Minka et al., “Divergence measures and message passing,” Technical report, Mi-crosoft Research, Tech. Rep., 2005.
-108. Y. Jia, E. Shelhamer, J. Donahue, S. Karayev, J. Long, R. Girshick, S. Guadarrama,and T. Darrell, “Caffe: Convolutional architecture for fast feature embedding,” arXiv preprint arXiv:1408.5093, 2014.
-109. F. Chollet, “keras,” https://github.com/fchollet/keras, 2015.
-110. M. Abadi, A. Agarwal, P. Barham, E. Brevdo, Z. Chen, C. Citro, G. S. Corrado,A. Davis, J. Dean, M. Devin, S. Ghemawat, I. J. Goodfellow, A. Harp, G. Irving,M. Isard, Y. Jia, R. J´ ozefowicz, L. Kaiser, M. Kudlur, J. Levenberg, D. Man´ e,R. Monga, S. Moore, D. G. Murray, C. Olah, M. Schuster, J. Shlens, B. Steiner,I. Sutskever, K. Talwar, P. A. Tucker, V. Vanhoucke, V. Vasudevan, F. B.vi´ egas,O.vinyals, P. Warden, M. Wattenberg, M. Wicke, Y. Yu, and X. Zheng, “Tensor-flow: Large-scale machine learning on heterogeneous distributed systems,” CoRR,vol. abs/1603.04467, 2016.
-111. J. V. Dillon, I. Langmore, D. Tran, E. Brevdo, S. Vasudevan, D. Moore, B. Patton,A. Alemi, M. D. Hoffman, and R. A. Saurous, “Tensorflow distributions,” CoRR, vol. abs/1711.10604, 2017.
-112. P. Adam, G. Sam, C. Soumith, C. Gregory, Y. Edward, D. Zachary, L. Zeming, D. Al-ban, A. Luca, and L. Adam, “Automatic differentiation in pytorch,” in Proceedings of Neural Information Processing Systems, 2017.
-113. T. Chen, M. Li, Y. Li, M. Lin, N. Wang, M. Wang, T. Xiao, B. Xu, C. Zhang, and Z. Zhang, “Mxnet: A flexible and efficient machine learning library for heterogeneous distributed systems,” CoRR, vol. abs/1512.01274, 2015.
-114. A. Kucukelbir, D. Tran, R. Ranganath, A. Gelman, and D. M. Blei, “Automatic Differentiation Variational Inference,” arXiv e-prints, p. arXiv:1603.00788, Mar 2016.
-115. S. Patterson and Y. W. Teh, “Stochastic gradient riemannian langevin dynamics on the probability simplex,” in Advances in Neural Information Processing Systems 26,C. J. C. Burges, L. Bottou, M. Welling, Z. Ghahramani, and K. Q. Weinberger, Eds.Curran Associates, Inc., 2013, pp. 3102–3110.
-116. T. Chen, E. Fox, and C. Guestrin, “Stochastic gradient hamiltonian monte carlo,” in Proceedings of the 31st International Conference on Machine Learning, ser. Proceed-ings of Machine Learning Research, E. P. Xing and T. Jebara, Eds., vol. 32. PMLR, 22–24 Jun 2014, pp. 1683–1691.
-117. C. Li, C. Chen, D. Carlson, and L. Carin, “Preconditioned Stochastic Gradient Langevin Dynamics for Deep Neural Networks,” arXiv e-prints, Dec. 2015.
-118. M. Betancourt, “The fundamental incompatibility of scalable hamiltonian montecarlo and naive data subsampling,” in Proceedings of the 32Nd International Confer-ence on International Conference on Machine Learning - Volume 37, ser. ICML’15.JMLR.org, 2015, pp. 533–540.
-119. I. Osband, C. Blundell, A. Pritzel, and B. V. Roy, “Deep explorationvia bootstrapped DQN,” CoRR, vol. abs/1602.04621, 2016.
-120. A. G. d. G. Matthews, M. van der Wilk, T. Nickson, K. Fujii, A. Boukouvalas,P. Le´ on-villagr´ a, Z. Ghahramani, and J. Hensman, “GPflow: A Gaussian process library using TensorFlow,” Journal of Machine Learning Research, vol. 18, no. 40, pp. 1–6, 4 2017.
-121. Y. LeCun, B. Boser, J. S. Denker, D. Henderson, R. E. Howard, W. Hubbard, and L. D. Jackel, “Backpropagation applied to handwritten zip code recognition,” Neural
+
+[1]. F. Rosenblatt, “The perceptron: A probabilistic model for information storage and organization in the brain.” Psychological Review, vol. 65, no. 6, pp. 386 – 408, 1958.
+
+[2]. C. Bishop, Pattern recognition and machine learning. New York: Springer, 2006.
+
+[3]. D. E. Rumelhart, G. E. Hinton, and R. J. Williams, “Learning representations by back-propagating errors,” nature, vol. 323, no. 6088, p. 533, 1986.
+
+[4]. K.-S. Oh and K. Jung, “GPU implementation of neural networks,” Pattern Recognition, vol. 37, no. 6, pp. 1311–1314, 2004.
+
+[5]. D. C. Ciresan, U. Meier, L. M. Gambardella, and J. Schmidhuber, “Deep big simple neural nets excel on handwritten digit recognition,” CoRR, 2010.
+
+[6]. A. Krizhevsky, I. Sutskever, and G. E. Hinton, “Imagenet classification with deep convolutional neural networks,” in Advances in neural information processing systems,2012, pp. 1097–1105.
+
+[7]. K. Simonyan and A. Zisserman, “Very deep convolutional networks for large-scale image recognition,” CoRR, 2014.
+
+[8]. C. Szegedy, W. Liu, Y. Jia, P. Sermanet, S. Reed, D. Anguelov, D. Erhan, V. Vanhoucke, A. Rabinovich et al., “Going deeper with convolutions,” in CVPR, 2015.
+
+[9]. R. Girshick, J. Donahue, T. Darrell, and J. Malik, “Rich feature hierarchies for accurate object detection and semantic segmentation,” in Proceedings of the IEEE conference on computervision and pattern recognition, 2014, pp. 580–587.
+
+[10]. S. Ren, K. He, R. Girshick, and J. Sun, “Faster r-cnn: Towards real-time object detection with region proposal networks,” in Advances in neural information processing systems, 2015, pp. 91–99.
+
+[11]. J. Redmon, S. Divvala, R. Girshick, and A. Farhadi, “You only look once: Unified,real-time object detection,” in Proceedings of the IEEE conference on computervision and pattern recognition, 2016, pp. 779–788.
+
+[12]. A. Mohamed, G. E. Dahl, and G. Hinton, “Acoustic modeling using deep belief networks,” IEEE Transactions on Audio, Speech, and Language Processing, vol. 20, no. 1, pp. 14–22, 2012.
+
+[13]. G. E. Dahl, D. Yu, L. Deng, and A. Acero, “Context-dependent pre-trained deep neural networks for large-vocabulary speech recognition,” IEEE Transactions on audio,speech, and language processing, vol. 20, no. 1, pp. 30–42, 2012.
+
+[14]. G. Hinton, L. Deng, D. Yu, G. E. Dahl, A.-r. Mohamed, N. Jaitly, A. Senior, V. Vanhoucke, P. Nguyen, T. N. Sainath et al., “Deep neural networks for acoustic modeling in speech recognition: The sharedviews of four research groups,” IEEE Signal Processing Magazine, vol. 29, no. 6, pp. 82–97, 2012.
+
+[15]. D. Amodei, S. Ananthanarayanan, R. Anubhai, J. Bai, E. Battenberg, C. Case, J. Casper, B. Catanzaro, Q. Cheng, G. Chen, J. Chen, J. Chen, Z. Chen, M. Chrzanowski, A. Coates, G. Diamos, K. Ding, N. Du, E. Elsen, J. Engel, W. Fang, L. Fan, C. Fougner, L. Gao, C. Gong, A. Hannun, T. Han, L. Johannes, B. Jiang, C. Ju, B. Jun, P. LeGresley, L. Lin, J. Liu, Y. Liu, W. Li, X. Li, D. Ma, S. Narang, A. Ng, S. Ozair, Y. Peng, R. Prenger, S. Qian, Z. Quan, J. Raiman, V. Rao, S. Satheesh, D. Seetapun, S. Sengupta, K. Srinet, A. Sriram, H. Tang, L. Tang, C. Wang, J. Wang, K. Wang, Y. Wang, Z. Wang, Z. Wang, S. Wu, L. Wei, B. Xiao, W. Xie, Y. Xie, D. Yogatama, B. Yuan, J. Zhan, and Z. Zhu, “Deep speech 2 : End-to-end speech recognition in english and mandarin,” in Proceedings of The 33rd International Conference on Machine Learning, ser. Proceedings of Machine Learning Research, M. F. Balcan and K. Q. Weinberger, Eds., vol 48. New York, New York, USA: PMLR, 20–22 Jun 2016, pp. 173–182.
+
+[16]. D. Silver, J. Schrittwieser, K. Simonyan, I. Antonoglou, A. Huang, A. Guez, T. Hubert, L. Baker, M. Lai, A. Bolton et al., “Mastering the game of go without human knowledge,” Nature, vol. 550, no. 7676, p. 354, 2017.
+
+[17]. “Smartening up with artificial intelligence (ai) - what’s in it for germany and its industrial sector?” McKinsey & Company, Inc, Tech. Rep., 4 2017. [Online].Available: https://www.mckinsey.de/files/170419 mckinsey ki final m.pdf
+
+[18]. E. V. T. V. Serooskerken, “Artificial intelligence in wealth and asset management,” Pictet on Robot Advisors, Tech. Rep., 1 2017.[Online]. Available: https://perspectives.pictet.com/wp-content/uploads/2016/12/Edgar-van-Tuyll-van-Serooskerken-Pictet-Report-winter-2016-2.pdf
+
+[19]. A. van den Oord, T. Walters, and T. Strohman, “Wavenet launches in the google assistant.” `[Online]. Available: https://deepmind.com/blog/wavenet-launches-google-assistant/
+
+[20]. Siri Team, “Deep learning for siri’s voice: On-device deep mixture density networks for hybrid unit selection synthesis,” 8 2017. [Online]. Available: https://machinelearning.apple.com/2017/08/06/siri-voices.html
+
+[21]. J. Wakefield, “Microsoft chatbot is taught to swear on twitter.” `[Online]. Available:www.bbc.com/news/technology-35890188
+
+[22]. J. Guynn, “Google photos labeled black people ’gorillas’.” `[Online]. Available: https://www.usatoday.com/story/tech/2015/07/01/ google-apologizes-after-photos-identify-black-people-as-gorillas/29567465/
+
+[23]. J. Buolamwini and T. Gebru, “Gender shades: Intersectional accuracy disparities in commercial gender classification,” in Conference on fairness, accountability and transparency, 2018, pp. 77–91.
+
+[24]. Tesla Team, “A tragic loss.” `[Online]. Available: https://www.tesla.com/en GB/blog/tragic-loss
+
+[25]. ABC News, “Uber suspends self-driving car tests after vehicle hits and kills woman crossing the street in arizona,” 2018. [Online]. Available: http://www.abc.net.au/news/2018-03-20/uber-suspends-self-driving-car-tests-after-fatal-crash/9565586
+
+[26]. Council of European Union, “Regulation (eu) 2016/679 of the european parliment and of the council,” 2016.
+
+[27]. B. Goodman and S. Flaxman, “European union regulations on algorithmic decision making and a right to explanation,” AI magazine, vol. 38, no. 3, pp. 50–57, 2017.
+
+[28]. M. Vu, T. Adali, D. Ba, G. Buzsaki, D. Carlson, K. Heller, C. Liston, C. Rudin, V. Sohal, A. Widge, H. Mayberg, G. Sapiro, and K. Dzirasa, “A sharedvision for machine learning in neuroscience,” JOURNAL OF NEUROSCIENCE, vol. 38, no. 7, pp. 1601–1607, 2018.
+
+[29]. A. Holzinger, C. Biemann, C. S. Pattichis, and D. B. Kell, “What do we need to build explainable ai systems for the medical domain?” arXiv preprint arXiv:1712.09923, 2017.
+
+[30]. R. Caruana, Y. Lou, J. Gehrke, P. Koch, M. Sturm, and N. Elhadad, “Intelligible models for healthcare: Predicting pneumonia risk and hospital 30-day readmission,” in Proceedings of the 21th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. ACM, 2015, pp. 1721–1730.
+
+[31]. D. Gunning, “Explainable artificial intelligence (xai),” Defense Advanced Research Projects Agency (DARPA), nd Web, 2017.
+
+[32]. D. J. MacKay, “Probable networks and plausible predictionsa review of practical bayesian methods for supervised neural networks,” Network: computation in neural systems, vol. 6, no. 3, pp. 469–505, 1995.
+
+[33]. J. Lampinen and A. Vehtari, “Bayesian approach for neural networks review and case studies,” Neural networks, vol. 14, no. 3, pp. 257–274, 2001.
+
+[34]. H. Wang and D.-Y. Yeung, “Towards bayesian deep learning: A survey,” arXiv preprint arXiv:1604.01662, 2016.
+
+[35]. K. Murphey, Machine learning, a probabilistic perspective. Cambridge, MA: MIT Press, 2012.
+
+[36]. X. Glorot, A. Bordes, and Y. Bengio, “Deep sparse rectifier neural networks,” in AISTATS, 2011, pp. 315–323.
+
+[37]. A. L. Maas, A. Y. Hannun, and A. Y. Ng, “Rectifier nonlinearities improve neural network acoustic models,” in ICML, vol. 30, 2013, p. 3.
+
+[38]. R. M. Neal, Bayesian learning for neural networks. Springer Science & Business Media, 1996, vol. 118.
+
+[39]. Y. Gal, “Uncertainty in deep learning,” University of Cambridge, 2016.
+
+[40]. N. Tishby, E. Levin, and S. A. Solla, “Consistent inference of probabilities in layered networks: predictions and generalizations,” in International 1989 Joint Conference on Neural Networks, 1989, pp. 403–409 vol.2.
+
+[41]. J. S. Denker and Y. Lecun, “Transforming neural-net output levels to probability distributions,” in NeurIPS, 1991, pp. 853–859.
+
+[42]. G. Cybenko, “Approximation by superpositions of a sigmoidal function,” Mathematics of control, signals and systems, vol. 2, no. 4, pp. 303–314, 1989.
+
+[43]. K.-I. Funahashi, “On the approximate realization of continuous mappings by neural networks,” Neural networks, vol. 2, no. 3, pp. 183–192, 1989.
+
+[44]. K. Hornik, “Approximation capabilities of multilayer feedforward networks,” Neural networks, vol. 4, no. 2, pp. 251–257, 1991.
+
+[45]. S. F. Gull and J. Skilling, “Quantified maximum entropy memsys5 users manual,” Maximum Entropy Data Consultants Ltd, vol. 33, 1991.
+
+[46]. D. J. MacKay, “Bayesian interpolation,” Neural computation, vol. 4, no. 3, pp. 415–447, 1992.
+
+[47]. ——, “Bayesian methods for adaptive models,” Ph.D. dissertation, California Institute of Technology, 1992.
+
+[48]. ——, “A practical bayesian framework for backpropagation networks,” Neural computation, vol. 4, no. 3, pp. 448–472, 1992.
+
+[49]. M. I. Jordan, Z. Ghahramani, T. S. Jaakkola, and L. K. Saul, “An introduction to variational methods for graphical models,” Machine learning, vol. 37, no. 2, pp. 183–233, 1999.
+
+[50]. M. J. Wainwright, M. I. Jordan et al., “Graphical models, exponential families, and variational inference,” Foundations and Trends R ? in Machine Learning, vol. 1, no.1–2, pp. 1–305, 2008.
+
+[51]. D. M. Blei, A. Kucukelbir, and J. D. McAuliffe, “Variational inference: A review for statisticians,” Journal of the American Statistical Association, vol. 112, no. 518, pp. 859–877, 2017.
+
+[52]. M. D. Hoffman, D. M. Blei, C. Wang, and J. Paisley, “Stochastic variational inference,” The Journal of Machine Learning Research, vol. 14, no. 1, pp. 1303–1347, 2013.
+
+[53]. D. Barber and C. M. Bishop, “Ensemble learning in bayesian neural networks,” NATO ASI SERIES F COMPUTER AND SYSTEMS SCIENCES, vol. 168, pp. 215–238,1998.
+
+[54]. G. E. Hinton and D. Van Camp, “Keeping the neural networks simple by minimizing the description length of the weights,” in Proceedings of the sixth annual conference on Computational learning theory. ACM, 1993, pp. 5–13.
+
+[55]. M. Betancourt, “A conceptual introduction to hamiltonian monte carlo,” arXiv preprint arXiv:1701.02434, 2017.
+
+[56]. M. Betancourt, S. Byrne, S. Livingstone, M. Girolami et al., “The geometric foundations of hamiltonian monte carlo,” Bernoulli, vol. 23, no. 4A, pp. 2257–2298, 2017.
+
+[57]. G. Madey, X. Xiang, S. E. Cabaniss, and Y. Huang, “Agent-based scientific simulation,” Computing in Science & Engineering, vol. 2, no. 01, pp. 22–29, jan 2005.
+
+[58]. S. Duane, A. D. Kennedy, B. J. Pendleton, and D. Roweth, “Hybrid monte carlo,” Physics letters B, vol. 195, no. 2, pp. 216–222, 1987.
+
+[59]. R. M. Neal et al., “MCMC using hamiltonian dynamics,” Handbook of markov chain monte carlo, vol. 2, no. 11, p. 2, 2011.
+
+[60]. S. Brooks, A. Gelman, G. Jones, and X.-L. Meng, Handbook of markov chain monte carlo. CRC press, 2011.
+
+[61]. M. Welling and Y. Teh, “Bayesian learningvia stochastic gradient langevin dynamics,” Proceedings of the 28th International Conference on Machine Learning, ICML 2011, pp. 681–688, 2011.
+
+[62]. A. Graves, “Practical variational inference for neural networks,” in Advances in Neural Information Processing Systems 24, J. Shawe-Taylor, R. S. Zemel, P. L. Bartlett,F. Pereira, and K. Q. Weinberger, Eds. Curran Associates, Inc., 2011, pp. 2348–2356.
+
+[63]. M. Opper and C. Archambeau, “The variational gaussian approximation revisited,” Neural computation, vol. 21, no. 3, pp. 786–792, 2009.
+
+[64]. J. M. Hern´ andez-Lobato and R. Adams, “Probabilistic backpropagation for scalable learning of bayesian neural networks,” in International Conference on Machine Learning, 2015, pp. 1861–1869.
+
+[65]. J. Paisley, D. Blei, and M. Jordan, “Variational bayesian inference with stochastic search,” arXiv preprint arXiv:1206.6430, 2012.
+
+[66]. J. R. Wilson, “Variance reduction techniques for digital simulation,” American Journal of Mathematical and Management Sciences, vol. 4, no. 3-4, pp. 277–312, 1984.
+
+[67]. M. Opper and C. Archambeau, “The variational gaussian approximation revisited,” Neural computation, vol. 21 3, pp. 786–92, 2009.
+
+[68]. D. P. Kingma and M. Welling, “Auto-encoding variational bayes,” arXiv preprint arXiv:1312.6114, 2013.
+
+[69]. D. J. Rezende, S. Mohamed, and D. Wierstra, “Stochastic backpropagation and approximate inference in deep generative models,” in Proceedings of the 31st International Conference on Machine Learning (ICML), 2014, pp. 1278–1286.
+
+[70]. N. Srivastava, G. Hinton, A. Krizhevsky, I. Sutskever, and R. Salakhutdinov, “Dropout: A simple way to prevent neural networks from overfitting,” The Journal of Machine Learning Research, vol. 15, no. 1, pp. 1929–1958, 2014.
+
+[71]. D. P. Kingma, T. Salimans, and M. Welling, “Variational dropout and the local reparameterization trick,” in Advances in Neural Information Processing Systems, 2015, pp. 2575–2583.
+
+[72]. S. Wang and C. Manning, “Fast dropout training,” in international conference on machine learning, 2013, pp. 118–126.
+
+[73]. A. Livnat, C. Papadimitriou, N. Pippenger, and M. W. Feldman, “Sex, mixability, and modularity,” Proceedings of the National Academy of Sciences, vol. 107, no. 4, pp. 1452–1457, 2010.
+
+[74]. M. Opper and O. Winther, “A bayesian approach to on-line learning,” On-line learning in neural networks, pp. 363–378, 1998.
+
+[75]. T. P. Minka, “A family of algorithms for approximate bayesian inference,” Ph.D. dissertation, Massachusetts Institute of Technology, 2001.
+
+[76]. C. Blundell, J. Cornebise, K. Kavukcuoglu, and D. Wierstra, “Weight uncertainty in neural networks,” arXiv preprint arXiv:1505.05424, 2015.
+
+[77]. C. K. Williams, “Computing with infinite networks,” in Advances in neural information processing systems, 1997, pp. 295–301.
+
+[78]. J. Lee, J. Sohl-dickstein, J. Pennington, R. Novak, S. Schoenholz, and Y. Bahri, “Deep neural networks as gaussian processes,” in International Conference on Learning Representations, 2018.
+
+[79]. A. Damianou and N. Lawrence, “Deep gaussian processes,” in AISTATS, 2013, pp. 207–215.
+
+[80]. A. Damianou, “Deep gaussian processes and variational propagation of uncertainty,” Ph.D. dissertation, University of Sheffield, 2015.
+
+[81]. N. Lawrence, “Deep gaussian processes,” 2019. [Online]. Available: http://inverseprobability.com/talks/notes/deep-gaussian-processes.html
+
+[82]. A. Damianou, M. K. Titsias, and N. D. Lawrence, “Variational gaussian process dynamical systems,” in NeurIPS, 2011, pp. 2510–2518.
+
+[83]. M. Titsias, “Variational learning of inducing variables in sparse gaussian processes,” in Proceedings of the Twelth International Conference on Artificial Intelligence and Statistics, ser. Proceedings of Machine Learning Research, D. van Dyk and M. Welling, Eds., vol. 5. Hilton Clearwater Beach Resort, Clearwater Beach, Florida USA: PMLR, 16–18 Apr 2009, pp. 567–574.
+
+[84]. Y. Gal and Z. Ghahramani, “Dropout as a bayesian approximation: Insights and applications,” in Deep Learning Workshop, ICML, vol. 1, 2015, p. 2.
+
+[85]. ——, “Dropout as a bayesian approximation: Representing model uncertainty in deep learning,” in ICML, 2016, pp. 1050–1059.
+
+[86]. ——, “Dropout as a bayesian approximation: Appendix,” arXiv preprint arXiv:1506.02157, 2015.
+
+[87]. A. Garriga-Alonso, L. Aitchison, and C. E. Rasmussen, “Deep convolutional networks as shallow gaussian processes,” arXiv preprint arXiv:1808.05587, 2018.
+
+[88]. R. Novak, L. Xiao, Y. Bahri, J. Lee, G. Yang, D. A. Abolafia, J. Pennington, and J. Sohl-dickstein, “Bayesian deep convolutional networks with many channels are gaussian processes,” in International Conference on Learning Representations, 2019.
+
+[89]. M. Van der Wilk, C. E. Rasmussen, and J. Hensman, “Convolutional gaussian processes,” in Advances in Neural Information Processing Systems, 2017, pp. 2849–2858.
+
+[90]. D. J. MacKay and D. J. Mac Kay, Information theory, inference and learning algorithms. Cambridge university press, 2003.
+
+[91]. B. Wang and D. Titterington, “Inadequacy of interval estimates corresponding to variational bayesian approximations.” in AISTATS. Barbados, 2005.
+
+[92]. R. E. Turner and M. Sahani, “Two problems with variational expectation maximisation for time-series models,” in Bayesian Time Series Models, D. Barber, A. T. Cemgil, and S. Chiappa, Eds. Cambridge University Press, 2011.
+
+[93]. R. Giordano, T. Broderick, and M. I. Jordan, “Covariances, robustness, and variational bayes,” Journal of Machine Learning Research, vol. 19, no. 51, pp. 1–49, 2018.
+
+[94]. D. Hafner, D. Tran, A. Irpan, T. Lillicrap, and J. Davidson, “Reliable uncertainty estimates in deep neural networks using noise contrastive priors,” arXiv preprint arXiv:1807.09289, 2018.
+
+[95]. V. Kuleshov, N. Fenner, and S. Ermon, “Accurate uncertainties for deep learning using calibrated regression,” arXiv preprint arXiv:1807.00263, 2018.
+
+[96]. Y. Gal, J. Hron, and A. Kendall, “Concrete dropout,” in Advances in Neural Information Processing Systems, 2017, pp. 3581–3590.
+
+[97]. C. J. Maddison, A. Mnih, and Y. W. Teh, “The concrete distribution: A continuous relaxation of discrete random variables,” arXiv preprint arXiv:1611.00712, 2016.
+
+[98]. T. S. Jaakkola and M. I. Jordan, “Improving the mean field approximationvia the use of mixture distributions,” in Learning in graphical models. Springer, 1998, pp. 163–173.
+
+[99]. C. Louizos and M. Welling, “Structured and efficient variational deep learning with matrix gaussian posteriors,” in International Conference on Machine Learning, 2016, pp. 1708–1716.
+
+[100]. E. G. Tabak and E. Vanden-Eijnden, “Density estimation by dual ascent of the log-likelihood,” Commun. Math. Sci., vol. 8, no. 1, pp. 217–233, 03 2010.
+
+[101]. E. G. Tabak and C. V. Turner, “A family of nonparametric density estimation algorithms,” Communications on Pure and Applied Mathematics, vol. 66, no. 2, pp. 145–164, 2013.
+
+[102]. D. J. Rezende and S. Mohamed, “Variational inference with normalizing flows,” arXiv preprint arXiv:1505.05770, 2015.
+
+[103]. C. Louizos and M. Welling, “Multiplicative normalizing flows for variational bayesianneural networks,” in Proceedings of the 34th International Conference on Machine Learning - Volume 70, ser. ICML’17. JMLR.org, 2017, pp. 2218–2227.
+
+[104]. L. Dinh, J. Sohl-Dickstein, and S. Bengio, “Density estimation using real NVP,”CoRR, vol. abs/1605.08803, 2016.
+
+[105]. C. Cremer, X. Li, and D. K. Duvenaud, “Inference suboptimality in variational au-toencoders,” CoRR, vol. abs/1801.03558, 2018.
+
+[106]. S.-i. Amari, Differential-geometrical methods in statistics. Springer Science & Busi-ness Media, 2012, vol. 28.
+
+[107]. T. Minka et al., “Divergence measures and message passing,” Technical report, Mi-crosoft Research, Tech. Rep., 2005.
+
+[108]. Y. Jia, E. Shelhamer, J. Donahue, S. Karayev, J. Long, R. Girshick, S. Guadarrama,and T. Darrell, “Caffe: Convolutional architecture for fast feature embedding,” arXiv preprint arXiv:1408.5093, 2014.
+
+[109]. F. Chollet, “keras,” https://github.com/fchollet/keras, 2015.
+
+[110]. M. Abadi, A. Agarwal, P. Barham, E. Brevdo, Z. Chen, C. Citro, G. S. Corrado,A. Davis, J. Dean, M. Devin, S. Ghemawat, I. J. Goodfellow, A. Harp, G. Irving,M. Isard, Y. Jia, R. J´ ozefowicz, L. Kaiser, M. Kudlur, J. Levenberg, D. Man´ e,R. Monga, S. Moore, D. G. Murray, C. Olah, M. Schuster, J. Shlens, B. Steiner,I. Sutskever, K. Talwar, P. A. Tucker, V. Vanhoucke, V. Vasudevan, F. B.vi´ egas,O.vinyals, P. Warden, M. Wattenberg, M. Wicke, Y. Yu, and X. Zheng, “Tensor-flow: Large-scale machine learning on heterogeneous distributed systems,” CoRR,vol. abs/1603.04467, 2016.
+
+[111]. J. V. Dillon, I. Langmore, D. Tran, E. Brevdo, S. Vasudevan, D. Moore, B. Patton,A. Alemi, M. D. Hoffman, and R. A. Saurous, “Tensorflow distributions,” CoRR, vol. abs/1711.10604, 2017.
+
+[112]. P. Adam, G. Sam, C. Soumith, C. Gregory, Y. Edward, D. Zachary, L. Zeming, D. Al-ban, A. Luca, and L. Adam, “Automatic differentiation in pytorch,” in Proceedings of Neural Information Processing Systems, 2017.
+
+[113]. T. Chen, M. Li, Y. Li, M. Lin, N. Wang, M. Wang, T. Xiao, B. Xu, C. Zhang, and Z. Zhang, “Mxnet: A flexible and efficient machine learning library for heterogeneous distributed systems,” CoRR, vol. abs/1512.01274, 2015.
+
+[114]. A. Kucukelbir, D. Tran, R. Ranganath, A. Gelman, and D. M. Blei, “Automatic Differentiation Variational Inference,” arXiv e-prints, p. arXiv:1603.00788, Mar 2016.
+
+[115]. S. Patterson and Y. W. Teh, “Stochastic gradient riemannian langevin dynamics on the probability simplex,” in Advances in Neural Information Processing Systems 26,C. J. C. Burges, L. Bottou, M. Welling, Z. Ghahramani, and K. Q. Weinberger, Eds.Curran Associates, Inc., 2013, pp. 3102–3110.
+
+[116]. T. Chen, E. Fox, and C. Guestrin, “Stochastic gradient hamiltonian monte carlo,” in Proceedings of the 31st International Conference on Machine Learning, ser. Proceed-ings of Machine Learning Research, E. P. Xing and T. Jebara, Eds., vol. 32. PMLR, 22–24 Jun 2014, pp. 1683–1691.
+
+[117]. C. Li, C. Chen, D. Carlson, and L. Carin, “Preconditioned Stochastic Gradient Langevin Dynamics for Deep Neural Networks,” arXiv e-prints, Dec. 2015.
+
+[118]. M. Betancourt, “The fundamental incompatibility of scalable hamiltonian montecarlo and naive data subsampling,” in Proceedings of the 32Nd International Confer-ence on International Conference on Machine Learning - Volume 37, ser. ICML’15.JMLR.org, 2015, pp. 533–540.
+
+[119]. I. Osband, C. Blundell, A. Pritzel, and B. V. Roy, “Deep explorationvia bootstrapped DQN,” CoRR, vol. abs/1602.04621, 2016.
+
+[120]. A. G. d. G. Matthews, M. van der Wilk, T. Nickson, K. Fujii, A. Boukouvalas,P. Le´ on-villagr´ a, Z. Ghahramani, and J. Hensman, “GPflow: A Gaussian process library using TensorFlow,” Journal of Machine Learning Research, vol. 18, no. 40, pp. 1–6, 4 2017.
+
+[121]. Y. LeCun, B. Boser, J. S. Denker, D. Henderson, R. E. Howard, W. Hubbard, and L. D. Jackel, “Backpropagation applied to handwritten zip code recognition,” Neural
 computation, vol. 1, no. 4, pp. 541–551, 1989.
-122. I. Goodfellow, Y. Bengio, and A. Courville, Deep learning. MIT Press, 2016.
-123. Y. Lecun, L. Bottou, Y. Bengio, and P. Haffner, “Gradient-based learning applied to document recognition,” Proceedings of the IEEE, vol. 86, no. 11, pp. 2278–2324, Nov 1998.
+
+[122]. I. Goodfellow, Y. Bengio, and A. Courville, Deep learning. MIT Press, 2016.
+
+[123]. Y. Lecun, L. Bottou, Y. Bengio, and P. Haffner, “Gradient-based learning applied to document recognition,” Proceedings of the IEEE, vol. 86, no. 11, pp. 2278–2324, Nov 1998.
