@@ -567,17 +567,28 @@
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#vae">
-     7.2 变分自编码器 （VAE）
+     7.2 变分自编码器 （
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       VAE
+      </span>
+     </code>
+     ）
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id38">
-     7.3 更灵活的 VAE
+     7.3 更灵活的
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       VAE
+      </span>
+     </code>
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#q-phi">
-       7.3.1 灵活的
+       7.3.1 更灵活的
        <code class="docutils literal notranslate">
         <span class="pre">
          变分分布
@@ -594,12 +605,12 @@
        <span class="math notranslate nohighlight">
         \(p_θ\)
        </span>
-       的建模选择
+       的选择
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#id39">
-       7.3.3 解决僵尸单元的问题
+       7.3.3 僵尸单元的问题
       </a>
      </li>
     </ul>
@@ -636,6 +647,11 @@
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id45">
    9 总结
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id46">
+   参考.
   </a>
  </li>
 </ul>
@@ -851,7 +867,7 @@ J(q) &amp;= \sum_x q(x) \log \frac{q(x)} {\tilde p(x)} \\
 <p>也就是说，新的目标函数 <span class="math notranslate nohighlight">\(J(q)\)</span> 是 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 与<code class="docutils literal notranslate"><span class="pre">对数边缘似然</span></code>之差，而根据 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 的性质， <span class="math notranslate nohighlight">\(KL(q\|p) \geq 0\)</span> ，则重排公式可得：</p>
 <div class="math notranslate nohighlight">
 \[
-\log Z(\theta) = KL(q\|p) - J(q) \geq -J(q)
+\log Z(\theta) = K算法 1L(q\|p) - J(q) \geq -J(q)
 \]</div>
 <p>该式表明，新目标函数的相对值 <span class="math notranslate nohighlight">\(-J(q)\)</span> 是<code class="docutils literal notranslate"><span class="pre">对数边缘似然</span></code> <span class="math notranslate nohighlight">\(\log Z(\theta)\)</span> 的下界。在大多数应用场景中， 边缘似然 <span class="math notranslate nohighlight">\(Z(\theta)\)</span> 都有着特定的解释。例如贝叶斯框架下，在给定观测数据 <span class="math notranslate nohighlight">\(D\)</span> 的情况下，我们可能想计算随机变量 <span class="math notranslate nohighlight">\(x\)</span> 的边缘概率 <span class="math notranslate nohighlight">\(p(x \mid D) = p(x,D) / p(D)\)</span> 。在这种情况下，最小化 <span class="math notranslate nohighlight">\(J(q)\)</span> 等价于最大化<code class="docutils literal notranslate"><span class="pre">对数边缘似然</span></code> <span class="math notranslate nohighlight">\(\log p(D)\)</span> 的下界。正是因为如此， <span class="math notranslate nohighlight">\(-J(q)\)</span> 被称为变分下界或证据下界（ <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> ），这种关系经常以如下不等式形式表示：</p>
 <div class="math notranslate nohighlight">
@@ -999,19 +1015,22 @@ p(\boldsymbol{\mu},\mathbf{c} \mid \mathbf{x}) \approx q(\boldsymbol{\mu},c)=\pr
 <h2>4 提升可扩展性 — 随机变分推断<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
 <p>上节中讲解了<code class="docutils literal notranslate"><span class="pre">平均场变分分布</span></code>的构造原理，并介绍了采用坐标上升法对其做优化的算法。但该方法存在两个方面的问题：</p>
 <ul class="simple">
-<li><p>坐标上升过程需要所有样本参与计算，不适合大样本</p></li>
+<li><p>最早提出的坐标上升法没有考虑大样本问题</p></li>
 <li><p>梯度下降并非最优方向，收敛速度较慢</p></li>
 </ul>
 <p>随机变分推断方法针对上述问题，分别进行了处理。下面分别介绍。</p>
 <div class="section" id="id20">
 <h3>4.1 如何适应大数据 ？<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
-<p>在最原始的坐标上升方法中，所有的隐变量同等对待，逐一更新一遍效率较低。为此，有学者对其做了改进，将隐变量分为两种类型，即仅关系单个数据点的局部参数，和关系到所有数据点的全局参数（ <span class="math notranslate nohighlight">\(\lambda\)</span> ） 。算法 1 对其进行了高层次的总结：</p>
+<p>首先看一下最原始的坐标上升方法，其中所有隐变量同等对待，按照维度顺序逐一更新一遍，效率较低。为此，有学者对其做了改进，将隐变量分为两种类型：仅关系单个数据点的<strong>局部变量</strong>，和关系到所有数据点的<strong>全局变量</strong>（ <span class="math notranslate nohighlight">\(\lambda\)</span> ），这样会减少需要遍历的维度，进而带来效率上的提升。算法 1 对其进行了高层次的总结：</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108160249-c296.webp" /></p>
-<p>如算法中所示，即便是这样，在更新全局参数之前，也需要先循环遍历所有文档一遍（单批次梯度下降）。当文档太多时，这就会成为了一个新问题，模型更新的频率太低。不过，该算法将参数区分为全局参数和局部参数的作法，为随机梯度下降提供了一个思路。</p>
-<p>为了适应随机梯度下降，可将借鉴算法 1 的思路，将下界分解为两部分（采用对数形式）：<strong>由局部参数 <span class="math notranslate nohighlight">\(\phi_i\)</span> 参数化的逐数据点局部隐变量项</strong> 和 <strong>由全局参数 <span class="math notranslate nohighlight">\(\lambda\)</span> 参数化的全局隐变量项</strong>：</p>
+<blockquote>
+<div><p><strong>算法 1</strong> ：坐标上升算法的概括性展示</p>
+</div></blockquote>
+<p>但即便是这样，在更新全局参数之前，也需要先遍历所有数据点一遍（假设为单批次梯度下降）。当样本点太多时，这就会成为了一个新问题，即模型更新频率太低了。不过，该算法将参数区分为全局参数和局部参数的作法，为随机梯度下降提供了一个思路。</p>
+<p>借鉴算法 1 的思路，可以将证据下界（ <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> ）分解为两部分（采用对数形式）：<strong>由局部参数 <span class="math notranslate nohighlight">\(\phi_i\)</span> 参数化的逐数据点局部隐变量项</strong> 和 <strong>由全局参数 <span class="math notranslate nohighlight">\(\lambda\)</span> 参数化的全局隐变量项</strong>：</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{L}\left(\lambda, \phi_{1: n}\right)=\underbrace{\mathbb{E}_{q}[\log p(\beta)-\log q(\beta \mid \lambda)]}_{\text {global contribution }}+\sum_{i=1}^{n} \underbrace{\left\{\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i} \mid \beta\right]-\log q\left(z_{i} \mid \phi_{i}\right)\right\}\right.}_{\text {per-data point contribution }}
+\mathscr{L}\left(\lambda, \phi_{1: n}\right)=\underbrace{\mathbb{E}_{q}[\log p(\beta)-\log q(\beta \mid \lambda)]}_{\text {global contribution }}+\sum_{i=1}^{n} \underbrace{\left\{\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i} \mid \beta\right]-\log q\left(z_{i} \mid \phi_{i}\right)\right\}\right.}_{\text {per-data point contribution }}
 \]</div>
 <p>令下式为全局分布：</p>
 <div class="math notranslate nohighlight">
@@ -1023,27 +1042,27 @@ f(\lambda):=\mathbb{E}_{q}[\log p(\beta)-\log q(\beta \mid \lambda)]
 \[
 g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i} \mid \beta\right]-\log q\left(z_{i} \mid \phi_{i}\right)\right.
 \]</div>
-<p>则下界可简写为：</p>
+<p>则 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 下界可简写为：</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{L}\left(\lambda, \phi_{1: n}\right)=f(\lambda)+\sum_{i=1}^{n} \mathrm{g}_{i}\left(\lambda, \phi_{i}\right)
+\mathscr{L}\left(\lambda, \phi_{1: n}\right)=f(\lambda)+\sum_{i=1}^{n} \mathrm{g}_{i}\left(\lambda, \phi_{i}\right)
 \]</div>
-<p>为了优化目标，可以首先关于参数 <span class="math notranslate nohighlight">\(\phi_{1: n}\)</span> 最大化，这将产生单参数的下界：</p>
+<p>为了优化目标，可以首先关于参数 <span class="math notranslate nohighlight">\(\phi_{1: n}\)</span> 最大化，这将产生面向单参数的下界：</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{L}(\lambda)=f(\lambda)+\sum_{i=1}^{n} \max _{\phi_{i}} \mathrm{g}_{i}\left(\lambda, \phi_{i}\right)
+\mathscr{L}(\lambda)=f(\lambda)+\sum_{i=1}^{n} \max _{\phi_{i}} \mathrm{g}_{i}\left(\lambda, \phi_{i}\right) \tag{9}
 \]</div>
 <p>令每个数据点的优化为：</p>
 <div class="math notranslate nohighlight">
 \[
 \phi_{i}^{*}=\arg \max _{\phi} \mathrm{g}_{i}\left(\lambda, \phi_{i}\right)
 \]</div>
-<p>则单参数下界 <span class="math notranslate nohighlight">\(\mathcal{L}(λ)\)</span> 的梯度具有以下形式 ：</p>
+<p>则单参数下界 <span class="math notranslate nohighlight">\(\mathscr{L}(λ)\)</span> 的梯度具有以下形式 ：</p>
 <div class="math notranslate nohighlight">
 \[
-\frac{\partial \mathcal{L}(\lambda)}{\partial \lambda}=\frac{\partial f(\lambda)}{\partial \lambda}+\sum_{i=1}^{n} \frac{\partial \mathrm{g}_{i}\left(\lambda, \phi_{i}^*\right)}{\partial \lambda} \tag{7}
+\frac{\partial \mathscr{L}(\lambda)}{\partial \lambda}=\frac{\partial f(\lambda)}{\partial \lambda}+\sum_{i=1}^{n} \frac{\partial \mathrm{g}_{i}\left(\lambda, \phi_{i}^*\right)}{\partial \lambda} \tag{10}
 \]</div>
-<p>由于逐数据点项是每个数据点贡献的总和，每个数据点的导数也可以被累加起来计算每个数据点项的导数，如公式（ 7 ）的第二项所示。这使我们可以使用随机梯度算法来频繁地更新模型，以获得更好的收敛性。 一旦全局参数 <span class="math notranslate nohighlight">\(\lambda\)</span> 被估计出来，每个 <span class="math notranslate nohighlight">\(\phi_i\)</span> 也都可以在线估计出来。</p>
+<p>由于逐数据点项是每个数据点贡献的总和，每个数据点的导数也可以被累加起来计算每个数据点项的导数，如公式（ 10 ）的第二项所示。这使我们可以使用随机梯度算法来频繁地更新模型，以获得更好的收敛性。 一旦全局参数 <span class="math notranslate nohighlight">\(\lambda\)</span> 被估计出来，每个 <span class="math notranslate nohighlight">\(\phi_i\)</span> 也都可以在线估计出来。</p>
 </div>
 <div class="section" id="id21">
 <h3>4.2 参数梯度与自然梯度<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
@@ -1054,21 +1073,21 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 </div></blockquote>
 <p>产生上述原因的根本原因在于：<strong>变分参数空间中的欧式距离无法准确度量分布之间的距离。</strong></p>
 <p>举例说明这种现象：</p>
-<p>两组具有相同均值和方差的高斯分布对（可以想象为<code class="docutils literal notranslate"><span class="pre">变分分布</span></code> <span class="math notranslate nohighlight">\(q\)</span> 和 真实分布 <span class="math notranslate nohighlight">\(p\)</span> ），虽然两者在变分参数（此例指均值）空间中具有相同的“距离”，但其 KL 散度（即下图中同颜色的两个高斯分布之间的重叠区域，下界会有与其相对应的反应）却截然不同。如果固定均值为 0 ，仅考虑方差作为变分参数时，会有类似现象产生。</p>
+<p>两组具有相同均值和方差的高斯分布对（可以想象为变分分布 <span class="math notranslate nohighlight">\(q\)</span> 和 真实分布 <span class="math notranslate nohighlight">\(p\)</span> ），虽然两者在变分参数（此例指均值）空间中具有相同的“距离”，但其 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>（ 即下图中同颜色的两个高斯分布之间的重叠区域，下界会有与其相对应的反应 ）却截然不同。如果固定均值为 0 ，仅考虑方差作为变分参数时，会有类似现象产生。</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211108161120-f068.webp" /></p>
 <blockquote>
 <div><p>图 11：具有相同变分参数（此处为均值）的两对高斯分布，虽然在变分参数空间中，两者距离相等，但是在概率分布的相似性度量上（可直观理解为两个分布之间的重叠区域），两者并不相等。同时表明，在参数空间的欧式距离上求梯度，不能代表最速下降（或上升）方向。</p>
 </div></blockquote>
 <p>那能否能够直接基于概率分布空间做优化求解呢？答案是肯定的：那就是<strong>将自然梯度方向作为优化的梯度方向</strong>。</p>
 <blockquote>
-<div><p>自然梯度是 Amari 于 1998 年提出的，主要用于衡量基于统计模型（如 KL 散度）的目标函数。此处知识点可参见 <a class="reference external" href="https://arxiv.org/pdf/1412.1193">文献综述</a></p>
+<div><p>自然梯度是 Amari 于 1998 年提出的，主要用于衡量基于统计模型（如 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>）的目标函数。此处知识点可参见 <a class="reference external" href="https://arxiv.org/pdf/1412.1193">文献综述</a></p>
 </div></blockquote>
-<p>无论是从 KL 散度的角度，还是从变分下界的角度，我们期望的目标函数 <span class="math notranslate nohighlight">\(\mathcal{L}(\lambda,\phi_{1..n})\)</span> 都是基于概率分布的。 <a class="reference external" href="https://arxiv.org/pdf/1412.1193">文献</a> 证明： Fisher 信息矩阵（Fisher Information Matrix, FIM）是两个概率分布之间 KL 散度的二阶近似，它表示了统计流形（即概率分布空间）上的局部曲率。进而推导得出，自然梯度可以定义为：</p>
+<p>无论是从 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>的角度，还是从变分下界的角度，我们期望的目标函数 <span class="math notranslate nohighlight">\(\mathscr{L}(\lambda,\phi_{1..n})\)</span> 都是基于概率分布的。 <a class="reference external" href="https://arxiv.org/pdf/1412.1193">文献</a> 证明： Fisher 信息矩阵（Fisher Information Matrix, FIM）是两个概率分布之间 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>的二阶近似，它表示了统计流形（即概率分布空间）上的局部曲率。进而推导得出，自然梯度可以定义为：</p>
 <div class="math notranslate nohighlight">
 \[
-\delta \theta^*==\frac{1}{\lambda} F^{-1}\nabla_\theta \mathcal{L}(\lambda,\phi_{1..n}) 
+\delta \theta^*==\frac{1}{\lambda} F^{-1}\nabla_\theta \mathscr{L}(\lambda,\phi_{1..n}) 
 \]</div>
-<p>式中的 <span class="math notranslate nohighlight">\(F\)</span> 为 Fisher 信息矩阵。根据公式也可以看出，自然梯度考虑了参数空间上的曲率信息 <span class="math notranslate nohighlight">\( \nabla_\theta \mathcal{L}(\lambda,\phi_{1..n})\)</span>。</p>
+<p>式中的 <span class="math notranslate nohighlight">\(F\)</span> 为 Fisher 信息矩阵。根据公式也可以看出，自然梯度考虑了参数空间上的曲率信息 <span class="math notranslate nohighlight">\( \nabla_\theta \mathscr{L}(\lambda,\phi_{1..n})\)</span>。</p>
 </div>
 <div class="section" id="svi-sgd">
 <h3>4.3 随机变分推断（ <code class="docutils literal notranslate"><span class="pre">SVI</span></code> ）：自然梯度与 <code class="docutils literal notranslate"><span class="pre">SGD</span></code> 的结合<a class="headerlink" href="#svi-sgd" title="Permalink to this headline">¶</a></h3>
@@ -1082,7 +1101,7 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <h4>4.4.1 自适应学习率与小批量大小<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
 <p>收敛速度受学习率和批量大小 [10]、[46] 的影响。基于大数定律，增加批量大小会较小随机梯度的噪声 [46]，进而允许更大的学习率。因此，为了加速学习过程，可以在给定学习率的情况下，优化调整批量大小，或者固定批量大学，优化学习率。</p>
 <p><strong>（1）学习率的自适应调整</strong></p>
-<p>在每次迭代中，梯度的经验方差可以用于指导学习率的自动适应（ 因为梯度噪声与学习率成反比 ）。利用此想法的优化方法包括 <code class="docutils literal notranslate"><span class="pre">RMSProp</span></code> [191]、<code class="docutils literal notranslate"><span class="pre">AdaGrad</span></code> [42]、<code class="docutils literal notranslate"><span class="pre">AdaDelta</span></code> [218] 和 <code class="docutils literal notranslate"><span class="pre">Adam</span></code> [87] 等。这些方法不是随机变分推断特有的，但在其中经常使用；更多详细信息请参阅 [53]。</p>
+<p>在每次迭代中，梯度的经验方差可以用于指导学习率的自动适应（ 因为梯度噪声与学习率成反比 ）。利用此想法的优化方法包括 <code class="docutils literal notranslate"><span class="pre">RMSProp</span></code> [191]、<code class="docutils literal notranslate"><span class="pre">AdaGrad</span></code> [42]、<code class="docutils literal notranslate"><span class="pre">AdaDelta</span></code> [218] 和 <code class="docutils literal notranslate"><span class="pre">Adam</span></code> [87] 等。这些方法不是随机变分推断特有的，但在其中经常使用；更多详细信息请参阅 [53].</p>
 <p>[157]首先在随机变分推断中引入了全局变分参数 <span class="math notranslate nohighlight">\(γ\)</span> 的自适应学习率，其中最佳学习率被证明满足：</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1097,17 +1116,19 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <p>除了通过学习率和小批量大小控制优化路径之外，还可以采取一些措施来减少方差，从而实现更大的梯度步长。 随机变分推断中经常使用<code class="docutils literal notranslate"><span class="pre">方差减少</span></code>来实现更快的收敛。下面总结了一些通过<code class="docutils literal notranslate"><span class="pre">控制变量</span></code>、<code class="docutils literal notranslate"><span class="pre">非均匀采样</span></code>和其他方法实现这一目标的方法：</p>
 <p><strong>（1）控制变量法</strong></p>
 <p>控制变量是一个随机项，该随机项可以被添加到随机梯度中，以使梯度的期望保持不变，而方差减少 [20]。控制变量需要与随机梯度相关，并且易于计算。使用控制变量来减少方差在蒙特卡洛模拟和随机优化 [165]、[208] 中很常见。几位作者建议在随机变分推断中使用控制变量[78]、[146]、[154]、[208] 。</p>
-<p>其中一个突出例子，是<code class="docutils literal notranslate"><span class="pre">随机方差减小梯度</span> <span class="pre">(SVRG)</span> </code> [78]。在 <code class="docutils literal notranslate"><span class="pre">SVRG</span></code> 中，利用来自所有数据点获得的历史梯度来构建控制变量，并且充分利用了沿优化路径的梯度具有相关性这一特点。标准随机梯度更新 <span class="math notranslate nohighlight">\(γ_{t+1} = γ_t −ρ_t (∇ \hat{\mathscr{L}}(γ_t))\)</span> 被替换为：</p>
+<p>其中一个突出例子，是<code class="docutils literal notranslate"><span class="pre">随机方差减小梯度</span> <span class="pre">(SVRG)</span> </code> [78]。在 <code class="docutils literal notranslate"><span class="pre">SVRG</span></code> 中，利用来自所有数据点获得的历史梯度来构建控制变量，并且充分利用了沿优化路径的梯度具有相关性这一特点。标准随机梯度更新 <span class="math notranslate nohighlight">\(γ_{t+1} = γ_t −ρ_t (\nabla  \hat{\mathscr{L}}(γ_t))\)</span> 被替换为：</p>
 <div class="math notranslate nohighlight">
 \[
-γ_{t+1} = γ_t − ρ_t (∇ \hat{\mathscr{L}} (γ_t ) − ∇ \hat{\mathscr{L}}( \tilde{γ})+\tilde{μ})
+γ_{t+1} = γ_t − ρ_t (\nabla  \hat{\mathscr{L}} (γ_t ) − \nabla  \hat{\mathscr{L}}( \tilde{γ})+\tilde{μ})
 \]</div>
-<p><span class="math notranslate nohighlight">\(\hat{\mathscr{L}}\)</span> 表示基于当前批量集索引的待估计目标（ 此处为负的 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> ），<span class="math notranslate nohighlight">\(\tilde γ\)</span> 是每 <span class="math notranslate nohighlight">\(m\)</span> 次迭代后 <span class="math notranslate nohighlight">\(γ\)</span> 的快照，<span class="math notranslate nohighlight">\(\tilde μ\)</span> 是在所有数据点上计算的批梯度，<span class="math notranslate nohighlight">\(\tilde μ = ∇\mathscr{L}(\tilde γ)\)</span>。由于 <span class="math notranslate nohighlight">\( − ∇ \hat{\mathscr{L}}(\tilde γ)+ \tilde μ\)</span> 的期望为零，因此它是一个控制变量。</p>
+<p><span class="math notranslate nohighlight">\(\hat{\mathscr{L}}\)</span> 表示基于当前批量集索引的待估计目标（ 此处为负的 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> ），<span class="math notranslate nohighlight">\(\tilde γ\)</span> 是每 <span class="math notranslate nohighlight">\(m\)</span> 次迭代后 <span class="math notranslate nohighlight">\(γ\)</span> 的快照，<span class="math notranslate nohighlight">\(\tilde μ\)</span> 是在所有数据点上计算的批梯度，<span class="math notranslate nohighlight">\(\tilde μ = \nabla \mathscr{L}(\tilde γ)\)</span>。由于 <span class="math notranslate nohighlight">\( − \nabla  \hat{\mathscr{L}}(\tilde γ)+ \tilde μ\)</span> 的期望为零，因此它是一个控制变量。</p>
 <p><code class="docutils literal notranslate"><span class="pre">SVRG</span></code> 需要每 <span class="math notranslate nohighlight">\(m\)</span> 次迭代对数据集进行一次完整的遍历以计算完整的梯度，即便这种完整遍历可以被放宽到大数据集的某个非常大的批次上。对于平滑但不是强凸的目标，与 <code class="docutils literal notranslate"><span class="pre">SGD</span></code> 的 <span class="math notranslate nohighlight">\(O(1/\sqrt{T})\)</span> 相比，<code class="docutils literal notranslate"><span class="pre">SVRG</span></code> 被证明可以实现 <span class="math notranslate nohighlight">\(O(1/T )\)</span> 的渐近收敛率。在实践中还有许多其他控制变量 [140]、[146]、[203]。其中在 5.2 节还会介绍另外一种比较流行的控制变量类型 — 得分函数控制变量。</p>
 <p><strong>（2）非均匀采样法</strong></p>
-<p>可以使用非均匀二次采样来获得具有较低梯度方差的批量，而不是以等概率对数据点进行采样。有几位作者建议在批量选择 [32]、[55]、[148]、[226] 是采用重要性采样及其变体。这些方法有效但并不总是实用，因为采样机制的计算复杂度与模型参数维度有关 [47]。另外一种替代方法旨在消除相似点的相关性并对多样化的批量进行采样。这些方法包括：<code class="docutils literal notranslate"><span class="pre">分层抽样</span></code> [225]，基于元数据或标签从预定义的子组中抽样数据；<code class="docutils literal notranslate"><span class="pre">基于聚类的抽样</span></code> [47]，使用 <span class="math notranslate nohighlight">\(k\)</span> 均值对数据进行聚类，然后从每个聚类中按照调整后的概率抽取样本；<code class="docutils literal notranslate"><span class="pre">多样化的批量采样</span></code> [223]、[224] 使用<code class="docutils literal notranslate"><span class="pre">排斥点过程</span></code>来抑制同一小批量中具有相似特征的数据点出现的概率。上述这些方法都已被证明可以减少方差，也可以用于学习不平衡数据。</p>
+<p>可以使用非均匀二次采样来获得具有较低梯度方差的批量，而不是以等概率对数据点进行二次采样。有几位作者建议在批量选择时采用重要性采样及其变体 [32]、[55]、[148]、[226] 。这些方法有效但并不总是实用，因为采样机制的计算复杂度与模型参数的维度有关 [47]。</p>
+<p>另外一种替代方法旨在消除相似点的相关性并对多样化的批量进行采样。这些方法包括：<code class="docutils literal notranslate"><span class="pre">分层抽样</span></code> [225]，基于元数据或标签从预定义的子组中抽样数据；<code class="docutils literal notranslate"><span class="pre">基于聚类的抽样</span></code> [47]，使用 <span class="math notranslate nohighlight">\(k\)</span> 均值对数据进行聚类，然后从每个聚类中按照调整后的概率抽取样本；<code class="docutils literal notranslate"><span class="pre">多样化的批量采样</span></code> [223]、[224] 使用<code class="docutils literal notranslate"><span class="pre">排斥点过程</span></code>来抑制同一小批量中具有相似特征的数据点出现的概率。</p>
+<p>上述这些方法都已被证明可以减少方差，也可以用于学习不平衡数据。</p>
 <p><strong>（3）<code class="docutils literal notranslate"><span class="pre">Rao-Blackwellization</span></code> 及其他</strong></p>
-<p>已经开发了许多有助于减少随机变分推断方差的其他方法。一种流行的方法依赖于 [154] 中使用的<code class="docutils literal notranslate"><span class="pre">Rao-Blackwellization</span></code> 。 <code class="docutils literal notranslate"><span class="pre">Rao-Blackwellization</span> <span class="pre">定理</span></code> 指出，如果存在可以作为条件估计的有效统计量，则条件估计具有较低的方差。受 <code class="docutils literal notranslate"><span class="pre">Rao-Blackwellization</span></code> 的启发，已经提出了<code class="docutils literal notranslate"><span class="pre">局部期望梯度方法</span></code> [194]。该方法将 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的梯度计算拆分为一个蒙特卡洛估计和一个精确期望，以便最佳地考虑每个隐维度对梯度方差的贡献。</p>
+<p>已经开发了许多有助于减少随机变分推断方差的其他方法。一种流行的方法依赖于 [154] 中使用的<code class="docutils literal notranslate"><span class="pre">Rao-Blackwellization</span></code> 。 <code class="docutils literal notranslate"><span class="pre">Rao-Blackwellization</span> <span class="pre">定理</span></code> 指出，如果存在可以作为条件估计的有效统计量，则条件估计具有较低的方差。受 <code class="docutils literal notranslate"><span class="pre">Rao-Blackwellization</span></code> 的启发，已经提出了<code class="docutils literal notranslate"><span class="pre">局部期望梯度方法</span></code> [194]。该方法将 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的梯度计算拆分为一个蒙特卡洛估计和一个精确期望，以便最佳地考虑每个隐变量维度对梯度方差的贡献。</p>
 <p>还有其他一些随机变分推断的方法，例如， [112] 在一个批量的滑动窗口上对预期的充分统计量做平均，以获得具有较小均方误差的自然梯度。</p>
 </div>
 </div>
@@ -1116,16 +1137,19 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <p>与利用随机优化来使收敛更快的方法相比，本节介绍了一些利用模型结构来实现相同目标的方法。特别是其中的<code class="docutils literal notranslate"><span class="pre">折叠推断</span></code>、<code class="docutils literal notranslate"><span class="pre">稀疏推断</span></code>、<code class="docutils literal notranslate"><span class="pre">并行和分布式推断</span></code> 方法。</p>
 <div class="section" id="id25">
 <h4>4.5.1 折叠变分推断<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
-<p><code class="docutils literal notranslate"><span class="pre">折叠变分推断</span> <span class="pre">(CVI)</span></code> 依赖于解析地积分出某些模型参数 [64]、[83]、[94]、[97]、[182]、[188]、[197] 的想法。这样的话，需要估计的参数数量会减少，推断过程通常会更快。折叠推断通常限制在传统共轭指数族上，其中 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 在边缘化期间采用解析形式获得。对于这些模型，可以在推导出 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 之前将这些隐变量边缘化，或者在之后消除它们 [64]、[83]。几位作者提出了用于主题建模 [94]、[188] 的折叠变分推断，其中可以折叠主题比例 [188] 或主题分配 [64]。除了这些特定于模型的推导之外，[64] 统一了现有的特定于模型的 <code class="docutils literal notranslate"><span class="pre">CVI</span></code> 方法，并为共轭指数族类中的模型提供了一种通用的折叠推断方法。</p>
+<p><code class="docutils literal notranslate"><span class="pre">折叠变分推断</span> <span class="pre">(CVI)</span></code> 依赖于能够解析地积分出部分隐变量的想法 [64]、[83]、[94]、[97]、[182]、[188]、[197] 。这样的话，需要估计的参数数量会减少，推断过程通常会更快。</p>
+<p>正是由于解析的要求，折叠推断通常限制在传统共轭指数族上，其中 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 在边缘化期间采用解析形式获得。对于这些模型，可以在推导出 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 之前将某些隐变量边缘化，或者在之后消除它们 [64]、[83]。几位作者提出了用于主题建模的折叠变分推断 [94]、[188] ，其中可以折叠主题比例 [188] 或主题分配 [64]。除了这些特定于模型的推导之外，[64] 统一了现有的特定于模型的 <code class="docutils literal notranslate"><span class="pre">CVI</span></code> 方法，并为共轭指数族类中的模型提供了一种通用的折叠推断方法。</p>
 <p><code class="docutils literal notranslate"><span class="pre">CVI</span></code> 的计算优势很大程度上取决于折叠变量的统计量。此外，折叠隐随机变量可以使其他推断技术易于处理。对于主题模型等，可以折叠离散变量，仅推断连续变量。这允许使用推断网络[122]、[180]。更一般地说，<code class="docutils literal notranslate"><span class="pre">CVI</span></code> 并不能解决所有问题。一方面，整合某些模型变量会使 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 更紧致，因为边缘似然不必在这些变量中获得下界。另一方面，除了数学挑战之外，边缘化变量还会在变量之间引入额外的依赖关系。例如，在隐狄利克雷分配中，折叠全局变量会在赋值变量之间引入非局部依赖性，从而使分布式推断更加困难。</p>
 </div>
 <div class="section" id="id26">
 <h4>4.5.2  稀疏变分推断<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h4>
-<p>稀疏变分推断引入了额外的低秩近似，从而实现了更具可扩展性的推断 [63]、[177]、[195]。稀疏推断既可以被解释为建模选择，也可以解释为一种推断方案 [24]。在<code class="docutils literal notranslate"><span class="pre">高斯过程</span> <span class="pre">(</span> <span class="pre">GP</span> <span class="pre">)</span></code> 文献中经常会遇到稀疏推断方法。学习高斯过程的计算成本是 <span class="math notranslate nohighlight">\(O(M^3)\)</span>，其中 <span class="math notranslate nohighlight">\(M\)</span> 是数据点的数量。这个代价是由大小为 <span class="math notranslate nohighlight">\(M \times M\)</span> 的核矩阵 <span class="math notranslate nohighlight">\(KMM\)</span> 求逆引起的，这阻碍了高斯过程在大数据集上的应用。 稀疏高斯过程推断的思想是引入 <span class="math notranslate nohighlight">\(T\)</span> 个诱导点 [177] 。这些诱导点可以解释为反映原始数据的伪输入，但 <span class="math notranslate nohighlight">\(T \ll M\)</span> 从而产生更稀疏的表示。而对于诱导点来说，只需要对一个 <span class="math notranslate nohighlight">\(T×T\)</span> 大小的矩阵求逆，因此该方法的计算复杂度为 <span class="math notranslate nohighlight">\(O(MT^2)\)</span>。 [195] 折叠了诱导点的分布，[63] 进一步将这项工作扩展到了一个计算复杂度为 <span class="math notranslate nohighlight">\(O(T^3)\)</span> 的随机版本。此外，稀疏诱导点使<code class="docutils literal notranslate"><span class="pre">深度高斯过程</span></code>中的推断变得易于处理 [35]。</p>
+<p>稀疏变分推断旨在通过引入了额外的低秩近似，以实现更具可扩展性的推断方法 [63]、[177]、[195]。稀疏推断既可以被解释为一种建模选择，也可以被解释为一种推断方案 [24]。读者们在<code class="docutils literal notranslate"><span class="pre">高斯过程</span> <span class="pre">(</span> <span class="pre">GP</span> <span class="pre">)</span></code> 的相关文献中经常会遇到稀疏推断方法。高斯过程的学习计算成本是 <span class="math notranslate nohighlight">\(O(M^3)\)</span>，其中 <span class="math notranslate nohighlight">\(M\)</span> 是观测数据点的数量。高斯过程过得这种复杂度是由对 <span class="math notranslate nohighlight">\(M \times M\)</span> 的核矩阵求逆导致的，因此极大地阻碍了高斯过程在大数据集上的应用。</p>
+<p>[177] 提出稀疏高斯过程推断的想法。该工作在已知观测数据点基础上，人为地引入了 <span class="math notranslate nohighlight">\(T\)</span> 个诱导点，并将这些诱导点解释为 “能够反映原始数据特征” 的伪输入。诱导点的数量 <span class="math notranslate nohighlight">\(T \ll M\)</span> ，从而产生了一个更为稀疏的表示。而对于这些诱导点来说，只需要对一个 <span class="math notranslate nohighlight">\(T \times T\)</span> 大小的矩阵求逆即可，因此计算复杂度为 <span class="math notranslate nohighlight">\(O(MT^2)\)</span>，得到极大地降低。</p>
+<p><code class="docutils literal notranslate"><span class="pre">[195]</span></code> 折叠了诱导点的分布；<code class="docutils literal notranslate"><span class="pre">[63]</span></code> 进一步将该工作扩展到了一个计算复杂度为 <span class="math notranslate nohighlight">\(O(T^3)\)</span> 的随机版本；此外，稀疏诱导点使<code class="docutils literal notranslate"><span class="pre">深度高斯过程</span></code>中的推断变得易于处理 [35]。</p>
 </div>
 <div class="section" id="id27">
 <h4>4.5.4 分布式和并行推断<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h4>
-<p>变分推断可以调整到分布式计算场景，其中数据或参数的子集分布在多台机器上 [21]、[49]、[135]、[138]、[219]。在大规模场景中通常需要分布式推断方案，其中数据和计算分布在多台机器上。独立的隐变量模型可以简单地并行化；然而可能需要模型的特定设计（例如重参数化），以实现高效的分布式推断 [49]。当前的计算资源使变分推断适用于网络规模的数据分析 [219]。</p>
+<p>变分推断可以调整到分布式计算场景，其中数据或参数的子集分布在多台机器上 <code class="docutils literal notranslate"><span class="pre">[21]、[49]、[135]、[138]、[219]</span></code>。在大规模场景中通常需要分布式推断方案，其中数据和计算分布在多台机器上。独立的隐变量模型可以简单地并行化；然而可能需要模型的特定设计（例如重参数化），以实现高效的分布式推断 <code class="docutils literal notranslate"><span class="pre">[49]</span></code>。当前的计算资源使变分推断适用于网络规模的数据分析 <code class="docutils literal notranslate"><span class="pre">[219]</span></code>。</p>
 </div>
 </div>
 </div>
@@ -1133,10 +1157,11 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <h2>5 提升通用性 — 黑盒变分推断<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="bbvi">
 <h3>5.1 为何要做黑盒变分推断（BBVI）？<a class="headerlink" href="#bbvi" title="Permalink to this headline">¶</a></h3>
-<p>上面章节中，我们针对特定模型做出变分推断，其中大家应该已经注意到了，在 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的计算表达式中，需要人为设定 <span class="math notranslate nohighlight">\(q\)</span> ，并给出其数学期望的解析表达式（事实上，<a class="reference external" href="http://www.nowpublishers.com/article/Details/MAL-001">文献</a> 表明，该方法只适用于<strong>条件共轭指数族分布</strong>）。考虑到现实世界中可能存在无数种模型，而且大部分可能是非共轭的，即便符合条件共轭假设，为每一个模型设计一种变分方案显然也是不可接受的。</p>
-<p>因此，人们自然而然在思考：是否存在一个不需特定于某种模型的通用解决方案 ？这个解决方案最好将像黑匣子一样，只需输入模型和海量数据，然后就自动输出<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>（或变分参数）。事实表明，这是有可能的，此类推断方法被称为<strong>黑盒变分推断（BBVI）</strong>。</p>
+<p>上面章节中，我们针对特定模型做出变分推断，其中大家应该已经注意到了，在 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的计算表达式中，需要人为设定 <span class="math notranslate nohighlight">\(q\)</span> ，并给出其数学期望的解析表达式（事实上，<a class="reference external" href="http://www.nowpublishers.com/article/Details/MAL-001">文献</a> 表明，该方法只适用于<strong>条件共轭指数族分布</strong>）。考虑到现实世界中可能存在无数种模型，而且大部分可能是非共轭的，另外，即便符合条件共轭假设，为每一个模型设计一种变分方案显然也是不可接受的。因此，人们自然而然在思考：</p>
+<p><strong>“是否存在一个不需特定于某种近似模型的通用变分推断的解决方案 ？”</strong></p>
+<p>这个解决方案最好将像黑匣子一样，只需输入模型和海量数据，然后就自动输出变分分布（ 或变分参数 ）。事实表明，这是有可能的，此类推断方法被称为<strong>黑盒变分推断（BBVI）</strong>。</p>
 <blockquote>
-<div><p>黑盒变分推断的概念最早出现在文献 <a class="reference external" href="https://arxiv.org/pdf/1401.0118">Ranganath et al., 2014</a> 中和 <a class="reference external" href="https://arxiv.org/pdf/1401.1022">Sal-imans 和 Knowles，2014</a>; <a class="reference external" href="https://arxiv.org/abs/1312.6114v10">Kingma and Welling, 2014</a> 和 <a class="reference external" href="https://arxiv.org/abs/1401.4082">Rezende et al., 2014</a> 提出了利用重参数化技巧实现反向传播和优化的方法；<a class="reference external" href="https://arxiv.org/abs/1505.05770">Rezende and Mohamed, 2015</a> 提出了标准化流的 黑盒变分推断方案、<a class="reference external" href="https://arxiv.org/abs/158.06499">Tran et al.,2016</a> 提出了变分高斯过程的 黑盒变分推断方案，均提升了变分推断的精度；<a class="reference external" href="https://arxiv.org/abs/1603.00788">Alp Kucukelbir et al, 2016</a> 提出自动微分变分推断方法（ ADVI ）；<a class="reference external" href="https://arxiv.org/abs/1505.00519">Yuri Burda et al., 2016</a> 在 VAE 基础上，提出了重要性加权变分自编码器；<a class="reference external" href="https://arxiv.org/abs/1807.09034">J Domke and D Sheldon, 2018</a> 对其进行了泛化，提出了重要性加权变分推断。</p>
+<div><p>黑盒变分推断的概念最早出现在文献 <a class="reference external" href="https://arxiv.org/pdf/1401.0118">Ranganath et al., 2014</a> 中和 <a class="reference external" href="https://arxiv.org/pdf/1401.1022">Sal-imans 和 Knowles，2014</a>； <a class="reference external" href="https://arxiv.org/abs/1312.6114v10">Kingma and Welling, 2014</a> 和 <a class="reference external" href="https://arxiv.org/abs/1401.4082">Rezende et al., 2014</a> 提出了利用<code class="docutils literal notranslate"><span class="pre">重参数化技巧</span></code>实现反向传播和优化的方法；<a class="reference external" href="https://arxiv.org/abs/1505.05770">Rezende and Mohamed, 2015</a> 提出了<code class="docutils literal notranslate"><span class="pre">标准化流</span></code>的黑盒变分推断方案；<a class="reference external" href="https://arxiv.org/abs/158.06499">Tran et al.,2016</a> 提出了<code class="docutils literal notranslate"><span class="pre">高斯过程的黑盒变分推断方案</span></code>，均提升了变分推断的精度；<a class="reference external" href="https://arxiv.org/abs/1603.00788">Alp Kucukelbir et al, 2016</a> 提出<code class="docutils literal notranslate"><span class="pre">自动微分变分推断方法（</span> <span class="pre">ADVI</span> <span class="pre">）</span></code>；<a class="reference external" href="https://arxiv.org/abs/1505.00519">Yuri Burda et al., 2016</a> 在 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 基础上，提出了重要性加权变分自编码器；<a class="reference external" href="https://arxiv.org/abs/1807.09034">J Domke and D Sheldon, 2018</a> 对其进行了泛化，提出了重要性加权变分推断。</p>
 </div></blockquote>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211115171851-9244.webp" /></p>
 <blockquote>
@@ -1149,22 +1174,22 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <li><p><strong>基于评分梯度</strong>的黑盒变分推断</p></li>
 <li><p><strong>基于重参数化梯度</strong>的黑盒变分推断</p></li>
 </ul>
-<p>后者是变分自编码器 (VAE) 的基础。</p>
+<p>后者是变分自编码器 (<code class="docutils literal notranslate"><span class="pre">VAE</span></code>) 的基础。</p>
 </div>
 <div class="section" id="id29">
 <h3>5.2 使用评分梯度的 BBVI<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
 <p>考虑如下概率模型，其中 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> 是观测变量， <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 是隐变量，其<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>为 <span class="math notranslate nohighlight">\(q(\mathbf{z} \mid \lambda)\)</span> 。变分下界 (<code class="docutils literal notranslate"><span class="pre">ELBO</span></code>) 为：</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{L}(\lambda) \triangleq \mathbb{E}_{q_{\lambda}(\mathbf{z})}[\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda)] \tag{9}
+\mathscr{L}(\lambda) \triangleq \mathbb{E}_{q_{\lambda}(\mathbf{z})}[\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda)] \tag{12}
 \]</div>
 <p><code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 关于 <span class="math notranslate nohighlight">\(\lambda\)</span> 的梯度为：</p>
 <div class="math notranslate nohighlight">
 \[
-\nabla_{\lambda} \mathcal{L}=\mathbb{E}_{q}\left[\nabla_{\lambda} \log q(\mathbf{z} \mid \lambda)(\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda))\right] \tag{10}
+\nabla_{\lambda} \mathscr{L}=\mathbb{E}_{q}\left[\nabla_{\lambda} \log q(\mathbf{z} \mid \lambda)(\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda))\right] \tag{13}
 \]</div>
 <p>其中 <span class="math notranslate nohighlight">\(\nabla_{\lambda} \log q(\mathbf{z} \mid \lambda)\)</span> 被称为评分函数。</p>
-<p>使用式（ 10 ） 中的评分梯度，就可以利用蒙特卡罗的优势，用<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>的样本来计算 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的含噪声无偏梯度：</p>
+<p>使用式（ 13） 中的评分梯度，就可以采用蒙特卡罗方法，用<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>的样本来计算 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的含噪声无偏梯度：</p>
 <div class="math notranslate nohighlight">
 \[
 \nabla_\lambda \approx \frac{1}{S} \sum_{S=1}^{S} \nabla_\lambda \log q(z_S \mid \lambda)(\log p(\mathbf{x},z_S) - \log q(z_S \mid \lambda))
@@ -1172,10 +1197,10 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <p>其中 <span class="math notranslate nohighlight">\(z_S \sim q(\mathbf{z} \mid \lambda) \)</span> 。</p>
 <br>
 <hr class="docutils" />
-<p><strong>式 (10) 的证明</strong></p>
+<p><strong>式 (13) 的证明</strong></p>
 <blockquote>
 <div><p>此处见 <a class="reference external" href="http://www.cs.columbia.edu/~blei/fogm/2018F/materials/RanganathGerrishBlei2014.pdf">参考文献</a>
-与推导出式（10）需要两个基本事实：</p>
+与推导出式（ 13 ）需要两个基本事实：</p>
 </div></blockquote>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\nabla_{\lambda} q_{\lambda}(\mathbf{z})=\frac{1}{q_{\lambda}(\mathbf{z})} \nabla_{\lambda} q_{\lambda}(\mathbf{z})=q_{\lambda}(\mathbf{z}) \nabla_{\lambda} q_{\lambda}(\mathbf{z})\)</span></p></li>
@@ -1185,7 +1210,7 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
-\nabla_{\lambda} \mathcal{L} &amp;=\nabla_{\lambda} \int_{z}\left[q_{\lambda}(z) \log p(x, z)-q_{\lambda}(z) \log q_{\lambda}(z)\right] \mathrm{d} z \\
+\nabla_{\lambda} \mathscr{L} &amp;=\nabla_{\lambda} \int_{z}\left[q_{\lambda}(z) \log p(x, z)-q_{\lambda}(z) \log q_{\lambda}(z)\right] \mathrm{d} z \\
 &amp;=\int_{z}\left\{\log p(x, z) \nabla_{\lambda} q_{\lambda}(z)-\left[\nabla_{\lambda} q_{\lambda}(z) \log q_{\lambda}(z)+q_{\lambda}(z) \frac{1}{q_{\lambda}(z)} \nabla_{\lambda} q_{\lambda}(z)\right]\right\} \mathrm{d} z \\
 &amp;=\int_{z} \nabla_{\lambda} q_{\lambda}(z)\left[\log p(x, z)-\log q_{\lambda}(z)-1\right] \mathrm{d} z \\
 &amp;=\int_{z} q_{\lambda}(z) \nabla_{\lambda} q_{\lambda}(z)\left[\log p(x, z)-\log q_{\lambda}(z)-1\right] \mathrm{d} z \\
@@ -1197,10 +1222,10 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <hr class="docutils" />
 <div class="section" id="id30">
 <h3>5.3 使用重参数化梯度的 黑盒变分推断<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
-<p>依然采用上节中的模型，变分下界 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 为（为方便重复式 9）：</p>
+<p>依然采用上节中的模型，变分下界 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 为（为方便重复式 （ 9 ））：</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{L}(\lambda) \triangleq \mathbb{E}_{q_{\lambda}(\mathbf{z})}[\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda)]
+\mathscr{L}(\lambda) \triangleq \mathbb{E}_{q_{\lambda}(\mathbf{z})}[\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} \mid \lambda)]
 \]</div>
 <p>假设<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>可以表示成如下变换：</p>
 <div class="math notranslate nohighlight">
@@ -1221,7 +1246,7 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <p>另外假设 <span class="math notranslate nohighlight">\(\log p(\mathbf{x},\mathbf{z})\)</span> 和 <span class="math notranslate nohighlight">\(\log q(\mathbf{z})\)</span> 关于 <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> 可微，则可以得到 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 关于 <span class="math notranslate nohighlight">\(\lambda\)</span> 的重参数化的梯度：</p>
 <div class="math notranslate nohighlight">
 \[
-\nabla_{\lambda} \mathcal{L}=\mathbb{E}_{S(\epsilon)} \left[\nabla_{\mathbf{z}} \left [ (\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} )\right ] \nabla_\lambda t(\epsilon,\lambda)\right] \tag{10}
+\nabla_{\lambda} \mathscr{L}=\mathbb{E}_{S(\epsilon)} \left[\nabla_{\mathbf{z}} \left [ (\log p(\mathbf{x}, \mathbf{z})-\log q(\mathbf{z} )\right ] \nabla_\lambda t(\epsilon,\lambda)\right] \tag{10}
 \]</div>
 <p>进而可以使用自动微分来获取梯度，但并不是所有的分布都可以重参数化。</p>
 <blockquote>
@@ -1229,19 +1254,18 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <p>(1) 此部分最经典案例见 <a class="reference external" href="http://www.cs.columbia.edu/~blei/fogm/2018F/materials/KingmaWelling2013.pdf">变分自编码器</a></p>
 <p>(2) 可微性是重参数化技巧使用的重要条件，这意味着其适用范围不如评分函数方法。</p>
 </div></blockquote>
-<p>黑盒变分推断的方差减少：黑盒变分推断需要一套与第 4.2 节中 <code class="docutils literal notranslate"><span class="pre">SVI</span></code> 不同的方差减少技术。与 <code class="docutils literal notranslate"><span class="pre">SVI</span></code> 的噪声来自有限数据点集的二次采样不同，黑盒变分推断噪声来自可能具有无限支持的随机变量。在这种情况下，诸如 SVRG 之类的技术不适用，因为完整梯度不是有限多项的总和，并且无法保存在内存中。因此，黑盒变分推断涉及一组不同的控制变量和其他方法，这里将简要回顾一下从梯度估计器中减去得分函数的蒙特卡罗期望：</p>
 </div>
 <div class="section" id="id31">
 <h3>5.4 黑盒变分推断中的方差减少策略<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
-<p>黑盒变分推断需要一套不同于为<code class="docutils literal notranslate"><span class="pre">随机变分推断</span></code>设计的方差减少技术。与随机变分推断的噪声来自有限数据点集的二次采样不同，黑盒变分推断的噪声来自可能具有无限支持的随机变量。在这种情况下，诸如<code class="docutils literal notranslate"><span class="pre">随机方差减少梯度</span> <span class="pre">(</span> <span class="pre">SVRG</span> <span class="pre">)</span></code> 之类的技术不再适用，因为完整梯度无法拆解成有限项的和，而且很难保存在内存当中。黑盒变分推断会涉及一组不同的控制变量和其他方法，这里将简要回顾一下。</p>
-<p>黑盒变分推断中最重要的控制变量是<code class="docutils literal notranslate"><span class="pre">得分函数控制变量</span></code>，其从梯度估计器中减去得分函数的期望（蒙特卡罗法）：</p>
-<p>根据需要，<code class="docutils literal notranslate"><span class="pre">得分函数控制变量</span></code>在<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>下的期望为零。选择权重 <span class="math notranslate nohighlight">\(w\)</span> 的依据是其能够最小化梯度的方差。</p>
+<p>黑盒变分推断需要一套不同于<code class="docutils literal notranslate"><span class="pre">随机变分推断</span></code>中使用的方差减少技术。与随机变分推断的噪声来自有限数据点集的二次采样不同，黑盒变分推断的噪声来自可能具有无限支持的随机变量。在这种情况下，诸如<code class="docutils literal notranslate"><span class="pre">随机方差减少梯度</span> <span class="pre">(</span> <span class="pre">SVRG</span> <span class="pre">)</span></code> 之类的技术不再适用，因为完整梯度无法拆解成有限项的和，而且很难保存在内存当中。因此，黑盒变分推断会涉及一组不同的控制变量和其他方法，这里将简要回顾一下。</p>
+<p><strong>(1) 得分函数控制变量</strong></p>
+<p>黑盒变分推断中最重要的控制变量是<code class="docutils literal notranslate"><span class="pre">得分函数控制变量</span></code>，其从梯度估计器中减去得分函数的期望（蒙特卡罗法）。根据需要，<code class="docutils literal notranslate"><span class="pre">得分函数控制变量</span></code>在变分分布下的期望为零。选择权重 <span class="math notranslate nohighlight">\(w\)</span> 的依据是其能够最小化梯度的方差。</p>
 <div class="math notranslate nohighlight">
 \[
-\nabla_\lambda \hat{\mathcal{L}}_{control} =\nabla_\lambda \hat{ \mathcal{L}} − \frac{w}{K} \sum_{k=1}^{K}\nabla_\lambda \text{log} q(z_k \mid \lambda) 
+\nabla_\lambda \hat{\mathscr{L}}_{control} =\nabla_\lambda \hat{ \mathscr{L}} − \frac{w}{K} \sum_{k=1}^{K}\nabla_\lambda \text{log} q(z_k \mid \lambda) 
 \]</div>
-<p>虽然原始 黑盒变分推断论文介绍了 <code class="docutils literal notranslate"><span class="pre">Rao-Blackwellization</span></code> 和<code class="docutils literal notranslate"><span class="pre">控制变量</span></code>，但 [194] 指出控制变量的良好选择可能取决于模型。因此提出了一种只考虑隐变量马尔可夫毯的局部期望梯度。</p>
-<p>[167] 提出了一种不同的方法，它引入了<code class="docutils literal notranslate"><span class="pre">过度分散的重要性采样</span></code>。通过从属于过度分散的指数族并且在<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>的尾部放置较大质量的提议分布中进行采样，可以减少梯度的方差。</p>
+<p><strong>（2）局部期望梯度及其他</strong></p>
+<p>虽然原始黑盒变分推断论文介绍了 <code class="docutils literal notranslate"><span class="pre">Rao-Blackwellization</span></code> 和<code class="docutils literal notranslate"><span class="pre">控制变量</span></code>，但 [194] 指出控制变量的良好选择可能取决于模型。因此提出了一种只考虑隐变量马尔可夫毯的局部期望梯度。 [167] 提出了一种不同的方法，它引入了<code class="docutils literal notranslate"><span class="pre">过度分散的重要性采样</span></code>。通过从属于过度分散的指数族并且在<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>的尾部放置较大质量的提议分布中进行采样，可以减少梯度的方差。</p>
 </div>
 </div>
 <div class="section" id="id32">
@@ -1256,7 +1280,7 @@ g_{i}\left(\lambda, \psi_{i}\right):=\mathbb{E}_{q}\left[\log p\left(w_{i}, z_{i
 <h3>6.2 改进目标函数<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 通常提供一种计算方便的方法来测量两个分布之间的距离，它导致对某些模型类的、易于处理的、解析形式的期望。然而，传统的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">变分推断</span></code> (KLVI) 存在诸如低估后验方差 [128] 等问题。在某些情况下，当后验的多个峰值非常接近时， <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 也无法打破对称性 [141]，并且它是一个相对松散的边界 [221]。出于这些缺点，我们在这里调研了许多其他的散度。</p>
 <p><code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 之外的散度度量不仅在变分推断中起作用，而且在期望传播（ EP ）等相关近似推断方法中也起作用。 EP [101]、[125]、[204]、[228] 的一些最新扩展大多可以被视为替换了新散度的经典 EP [128]。这些方法有着复杂的推导和有限的可扩展性，大多数从业者会发现它们难以使用。变分推断的最新发展主要集中在黑盒方式的统一框架上，以实现可扩展性和可访问性。 黑盒变分推断使其他散度度量的应用成为可能（ 例如 <span class="math notranslate nohighlight">\(χ\)</span> 散度 [39] ），同时保持了该方法的效率和简单性。</p>
-<p>在本节中，我们将介绍相关的散度量并展示如何在变分推断的上下文中使用它们。如第 3.1 节所述，KL 散度是 <code class="docutils literal notranslate"><span class="pre">α-散度</span></code>的一种特殊形式，而 <code class="docutils literal notranslate"><span class="pre">α-散度</span></code> 是 <code class="docutils literal notranslate"><span class="pre">f-散度</span></code> 的一种特殊形式。所有上述散度都可以写成 <code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">discrepancy</span></code> 的形式。</p>
+<p>在本节中，我们将介绍相关的散度量并展示如何在变分推断的上下文中使用它们。如第 3.1 节所述，<code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>是 <code class="docutils literal notranslate"><span class="pre">α-散度</span></code>的一种特殊形式，而 <code class="docutils literal notranslate"><span class="pre">α-散度</span></code> 是 <code class="docutils literal notranslate"><span class="pre">f-散度</span></code> 的一种特殊形式。所有上述散度都可以写成 <code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">discrepancy</span></code> 的形式。</p>
 <p><strong>（1）α-散度</strong></p>
 <p>从信息几何和计算的角度来看，<code class="docutils literal notranslate"><span class="pre">α-散度</span></code>是一系列具有有趣特性的散度度量 [4]、[6]。 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 和 <code class="docutils literal notranslate"><span class="pre">海林格（</span> <span class="pre">Hellinger</span> <span class="pre">）距离</span></code> 都是 <code class="docutils literal notranslate"><span class="pre">α-散度</span></code> 的特例。存在不同的<code class="docutils literal notranslate"><span class="pre">α-散度</span></code>公式 [6]、[229]，并且多种 <code class="docutils literal notranslate"><span class="pre">VI</span></code> 方法使用了不同的定义 [104]、[128]。本文采用 <code class="docutils literal notranslate"><span class="pre">Renyi</span></code> 的公式：</p>
 <div class="math notranslate nohighlight">
@@ -1311,7 +1335,7 @@ f (\boldsymbol{z}) = \mathscr A_p \phi (\boldsymbol{z}),
 <p>其中 <span class="math notranslate nohighlight">\(\boldsymbol{z} ∼ p(\boldsymbol{z})\)</span> 。运算符 <span class="math notranslate nohighlight">\(\mathscr A\)</span> 的构造方式使得式中的第二个期望对于任意 <span class="math notranslate nohighlight">\(\phi\)</span> 均为零；所有具有此性质的运算符都是有效的运算符 [155]。满足此要求的流行运算符是 <code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">运算符</span></code>：</p>
 <div class="math notranslate nohighlight">
 \[
-Apφ (\boldsymbol{z}) = φ (\boldsymbol{z})∇\boldsymbol{z} log p(\boldsymbol{z},\boldsymbol{x})+∇\boldsymbol{z}φ (\boldsymbol{z}).
+ \mathscr A_p \phi (\boldsymbol{z})= \phi (\boldsymbol{z}) \nabla_{\boldsymbol{z}}  \log p(\boldsymbol{z},\boldsymbol{x})+\nabla_{\boldsymbol{z}} \phi (\boldsymbol{z}).
 \]</div>
 <p><code class="docutils literal notranslate"><span class="pre">运算符变分推断</span></code> 和 <code class="docutils literal notranslate"><span class="pre">SVGD</span></code> [109] 都使用带<code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">运算符</span></code> 的 <code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">差</span></code> 来构造变分目标。这两种方法的主要区别在于优化算法。 <code class="docutils literal notranslate"><span class="pre">运算符变分推断</span></code> [155] 使用 <code class="docutils literal notranslate"><span class="pre">minmax</span></code>（GAN 风格）公式和黑盒变分推断直接优化变分目标；而 <code class="docutils literal notranslate"><span class="pre">SVGD</span></code> [109] 使用核化的 <code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">差</span></code>。</p>
 <p>通过对核和 <span class="math notranslate nohighlight">\(q\)</span> 的特定选择，可以证明 <code class="docutils literal notranslate"><span class="pre">SVGD</span></code> 确定了 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 的最陡梯度方向上的最佳扰动 [109]。 <code class="docutils literal notranslate"><span class="pre">SVGD</span></code> 导致了一种方案，其中隐空间中的样本被顺序转换为近似后验。因此，虽然形式上不同，但该方法很容易让人想起标准化流方法 [159]。</p>
@@ -1346,7 +1370,7 @@ q(\boldsymbol{z})=\left(\prod_i q(z_i; λ_i)\right) c \left(Q(z_1),...,Q(z_N )\r
 <p>受提升方法的启发，最近提出的方法以连续方式拟合混合成分[58]，[124]。在这里，<code class="docutils literal notranslate"><span class="pre">提升变分推断（Boosting</span> <span class="pre">VI）</span></code>和<code class="docutils literal notranslate"><span class="pre">变分提升（variational</span> <span class="pre">boosting）</span></code>[58]、[124] 一次添加一个组件，同时固定先前已拟合的组件，通过迭代来改进近似后验。在另一种方法中，[8] 利用强化学习文献中的随机策略搜索方法来拟合高斯混合模型。</p>
 <p><strong>（2）利用随机梯度下降的变分推断</strong></p>
 <p>在某些情况下，概率模型的负对数后验上的随机梯度下降可以被视为一种隐式变分推断算法。在这里，我们考虑具有恒定学习率[113]、[114] 和提前停止 [43] 的随机梯度下降（ <code class="docutils literal notranslate"><span class="pre">SGD</span></code> ）。</p>
-<p><code class="docutils literal notranslate"><span class="pre">恒定</span> <span class="pre">SGD</span></code> 可以看作是收敛到平稳分布的马尔可夫链；因此，它类似于朗之万动力学 ( Langevin dynamics ) [214]。平稳分布的方差由学习率控制。 [113] 表明可以调整学习率以最小化所得平稳分布和贝叶斯后验之间的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 。此外，[113] 推导出了一个最佳学习率的公式，这些公式结合了 <code class="docutils literal notranslate"><span class="pre">AdaGrad</span></code> [42] 及相关成果。</p>
+<p><code class="docutils literal notranslate"><span class="pre">恒定</span> <span class="pre">SGD</span></code> 可以看作是收敛到平稳分布的马尔可夫链；因此，它类似于朗之万动力学 ( Langevin dynamics ) [214]。平稳分布的方差由学习率控制。 [113] 表明可以调整学习率以最小化所得平稳分布和贝叶斯后验之间的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 。此外，[113] 推导出了一个最佳学习率的公式，这些公式结合了 <code class="docutils literal notranslate"><span class="pre">AdaGrad</span></code> [42] 及相关成.</p>
 <p>[114] 中介绍了包括<code class="docutils literal notranslate"><span class="pre">动量</span></code>和<code class="docutils literal notranslate"><span class="pre">迭代平均</span></code>的<code class="docutils literal notranslate"><span class="pre">泛化</span> <span class="pre">SGD</span></code>。相比之下，[43] 将 <code class="docutils literal notranslate"><span class="pre">SGD</span></code> 解释为非参数变分推断方案。该论文提出了一种跟踪隐式变分目标熵变化的、基于 <code class="docutils literal notranslate"><span class="pre">Hessian</span> <span class="pre">估计</span></code>的新方法，因此作者考虑从非平稳分布中抽样。</p>
 <p><strong>（3）对异常值和局部最优的鲁棒性</strong></p>
 <p>由于 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 是一个非凸目标，变分推断受益于高级优化算法以摆脱局部最优解。其中，<code class="docutils literal notranslate"><span class="pre">变分退火法</span></code> [115] 在变分推断中采用确定性退火 [136]、[164]，使冷却方案具有自适应性和数据相关性。</p>
@@ -1356,21 +1380,23 @@ q(\boldsymbol{z})=\left(\prod_i q(z_i; λ_i)\right) c \left(Q(z_1),...,Q(z_N )\r
 </div>
 <div class="section" id="id37">
 <h2>7 摊销式变分推断与深度学习<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h2>
-<p>考虑第 <span class="math notranslate nohighlight">\(4\)</span> 节的设置，其中每个数据点 <span class="math notranslate nohighlight">\(x_i\)</span> 由其具有变分参数 <span class="math notranslate nohighlight">\(ξ_i\)</span> 的隐变量 <span class="math notranslate nohighlight">\(z_i\)</span> 控制。传统的变分推断需要为每个数据点 <span class="math notranslate nohighlight">\(x_i\)</span> 优化 <span class="math notranslate nohighlight">\(ξ_i\)</span>，这在计算上过于昂贵，特别是当这种优化嵌入到全局参数的更新循环时。摊销推断背后的基本思想是使用强大的预测器根据 <span class="math notranslate nohighlight">\(x_i\)</span> 的特征来预测最优 <span class="math notranslate nohighlight">\(z_i\)</span>，即 <span class="math notranslate nohighlight">\(z_i = f(x_i)\)</span> 。这样，局部变分参数就被数据的函数替换，而函数中的参数在所有数据点之间共享，即推断被摊销了。我们在 7.1 节详细介绍了这种方法背后的主要思想，并在 7.2 和 7.3 节中展示了如何以变分自编码器的形式应用它。</p>
+<p>考虑图 2 的设置，其中每个数据点 <span class="math notranslate nohighlight">\(x_i\)</span> 由其具有变分参数 <span class="math notranslate nohighlight">\(\xi_i\)</span> 的隐变量 <span class="math notranslate nohighlight">\(z_i\)</span> 制。传统的变分推断需要为每个数据点 <span class="math notranslate nohighlight">\(x_i\)</span> 优化 <span class="math notranslate nohighlight">\(\xi_i\)</span>，这在计算上过于昂贵，特别是当这种优化嵌入到全局参数的更新循环时。</p>
+<p>『摊销推断』背后的基本思想是使用强大的预测器根据 <span class="math notranslate nohighlight">\(x_i\)</span> 的特征来预测最优 <span class="math notranslate nohighlight">\(z_i\)</span>，即 <span class="math notranslate nohighlight">\(z_i = f(x_i)\)</span> 。这样，局部变分参数就被数据的函数替换，而函数中的参数在所有数据点之间共享，即推断被摊销了。我们在 7.1 节详细介绍了这种方法背后的主要思想，并在 7.2 和 7.3 节中展示了如何以变分自编码器的形式应用摊销变分推断。</p>
 <div class="section" id="amortized-variational-families">
 <h3>7.1 摊销变分推断（Amortized Variational Families）<a class="headerlink" href="#amortized-variational-families" title="Permalink to this headline">¶</a></h3>
-<p>术语『摊销推断』指利用来自过去计算的推断来支持未来的计算 <code class="docutils literal notranslate"><span class="pre">[36]、[50]</span></code>。对于变分推断，摊销推断通常是指对局部变量的推断。与为每个数据点近似单独的隐变量不同，如图 2(a) 所示，摊销变分推断假设局部变分参数可以通过数据的函数进行预测。因此，一旦估计了该函数，就可以通过该函数传递新数据点来获取隐变量，如图 2(b) 所示。这种情况下使用的深度神经网络也被称为推断网络。因此，具有推断网络的摊销变分推断将概率建模与深度学习的表示能力结合到了一起。</p>
+<p>术语『摊销推断』指利用来自过去计算的推断来支持未来的计算 <code class="docutils literal notranslate"><span class="pre">[36]、[50]</span></code>；对于变分推断，摊销推断通常是指对局部变量的推断（ 注：此处有些拗口，其实就是利用已有观测数据集来构建 “预测变量到局部隐变量” 的摊销模型，然后用于预测新数据点对应的局部隐变量 ）。</p>
+<p>与前述各种推断方法中为每个数据点对应的隐变量设置单独的变分参数（如图 2a 所示）不同，摊销变分推断假设局部隐变量的变分参数可以通过数据的某个函数进行预测（ 该函数被 <span class="math notranslate nohighlight">\(\phi\)</span> 参数化，所有局部隐变量共享该参数，如图 2b 所示 ）。因此，一旦估计了该函数（ 即确定了 <span class="math notranslate nohighlight">\(\phi\)</span> ），就可以通过向其传递新数据点来获取隐变量。当该函数为一个深度神经网络时，也被称为推断网络。因此，推断网络形式的摊销变分推断将“概率建模”与“深度学习”的表示能力优雅地结合到了一起。</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/stats-20211223113610-8a74.webp" /></p>
 <blockquote>
 <div><p>图 2. 随机变分推断的概率图表示 (a)，和变分自编码器 (b)，其中虚线线条表示对变分的近似</p>
 </div></blockquote>
-<p>例如，摊销推断已应用于<code class="docutils literal notranslate"><span class="pre">深度高斯过程</span> <span class="pre">(DGP)</span></code> <code class="docutils literal notranslate"><span class="pre">[35]</span></code>。 该模型中的推断难以处理，作者就将平均场变分推断与诱导点一起应用（参见 <code class="docutils literal notranslate"><span class="pre">[35]</span></code> 第 3.3 节）。进一步，<code class="docutils literal notranslate"><span class="pre">[34]</span></code> 建议将这些隐变量估计为推断网络的函数，而不是单独估计这些隐变量，从而允许深度高斯过程扩展到更大的数据集并加速收敛。另外，还可以通过将摊销误差反馈到推断模型中来迭代摊销 <code class="docutils literal notranslate"><span class="pre">[116]</span></code>。</p>
+<p>摊销推断方法已应用于<code class="docutils literal notranslate"><span class="pre">深度高斯过程</span> <span class="pre">(DGP)</span></code> <code class="docutils literal notranslate"><span class="pre">[35]</span></code>。 该模型中的推断难以处理，作者就将平均场变分推断与诱导点一起应用（参见 <code class="docutils literal notranslate"><span class="pre">[35]</span></code> 第 3.3 节）。进一步地，<code class="docutils literal notranslate"><span class="pre">[34]</span></code> 建议将这些隐变量估计为推断网络的函数，而不是单独估计这些隐变量，从而允许深度高斯过程扩展到更大的数据集并加速收敛。此外，还可以通过将摊销误差反馈到推断模型中来迭代摊销 <code class="docutils literal notranslate"><span class="pre">[116]</span></code>。</p>
 </div>
 <div class="section" id="vae">
-<h3>7.2 变分自编码器 （VAE）<a class="headerlink" href="#vae" title="Permalink to this headline">¶</a></h3>
-<p>摊销变分推断已成为深度隐高斯模型 (DLGM) 中推断的流行工具。这产生了<code class="docutils literal notranslate"><span class="pre">变分自编码器</span> <span class="pre">(VAE)</span></code> 的概念。变分自编码器由两个研究小组独立提出 [85]、[160]。变分自编码器不仅限用于深度隐高斯模型，但为了简单起见，我们将讨论限制在这个模型类上。</p>
+<h3>7.2 变分自编码器 （<code class="docutils literal notranslate"><span class="pre">VAE</span></code>）<a class="headerlink" href="#vae" title="Permalink to this headline">¶</a></h3>
+<p>摊销变分推断已成为<code class="docutils literal notranslate"><span class="pre">深度隐高斯模型</span> <span class="pre">(DLGM)</span></code> 中的流行推断工具。这产生了<code class="docutils literal notranslate"><span class="pre">变分自编码器</span> <span class="pre">(</span> <span class="pre">VAE</span> <span class="pre">)</span></code> 的概念。变分自编码器由两个研究小组独立提出 [85]、[160]，其应用比较广泛，不仅限用于深度隐高斯模型，但为简单起见，本文将讨论限制在这个模型类上。</p>
 <p><strong>（1）生成式模型</strong></p>
-<p>深度隐高斯模型的概率图模型如图 2(b) 所示。该模型采用多元正态先验，我们从中抽取一个隐变量 <span class="math notranslate nohighlight">\(z\)</span> ，
+<p>深度隐高斯模型的概率图模型如图 2b 所示。该模型采用多元正态先验，我们从中抽取一个隐变量 <span class="math notranslate nohighlight">\(z\)</span> ，
 $<span class="math notranslate nohighlight">\(
 p(z) = \mathcal N (0,I)
 \)</span>$</p>
@@ -1381,8 +1407,8 @@ p_θ (\boldsymbol{x}|\boldsymbol{z}) = \prod_{i=1}^{N}\mathcal{N} (x_i; μ(z_i),
 \]</div>
 <p>最重要的是，似然通过两个非线性函数 <span class="math notranslate nohighlight">\(μ(·)\)</span> 和 <span class="math notranslate nohighlight">\(σ (·)\)</span> 而依赖于 <span class="math notranslate nohighlight">\(\boldsymbol{z}\)</span>。这些非线性函数通常是神经网络，它将隐变量作为输入并以非线性方式进行转换。然后从 『以转换后的变量 <span class="math notranslate nohighlight">\(μ(z_i)\)</span> 为中心的正态分布中』抽取数据。参数 <span class="math notranslate nohighlight">\(θ\)</span> 包含网络 <span class="math notranslate nohighlight">\(μ(·)\)</span> 和 <span class="math notranslate nohighlight">\(σ (·)\)</span> 中的参数。</p>
 <p>深度隐高斯模型是高度灵活的密度估计器。存在许多特定于其他数据类型的改进版本。例如，对于二进制数据，高斯似然可以替换为伯努利似然。下面我们回顾如何将摊销推断应用于该模型类。</p>
-<p><strong>（2）变分自编码器（ VAE ）</strong></p>
-<p>变分自编码器（ VAE ）是指使用推断网络训练的深层隐高斯模型。 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 使用两组深度神经网络：一是上述的自顶向下的生成模型，从隐变量 <span class="math notranslate nohighlight">\(\boldsymbol{z}\)</span> 映射到数据 <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> ； 二是获得近似后验 <span class="math notranslate nohighlight">\(p(\boldsymbol{z}|\boldsymbol{x})\)</span> 的自底向上的推断模型。通常，对应的神经网络被称为<code class="docutils literal notranslate"><span class="pre">生成网络</span></code>和<code class="docutils literal notranslate"><span class="pre">推断网络</span></code>，从机器学习视角看，也被称为<code class="docutils literal notranslate"><span class="pre">解码器</span></code>和<code class="docutils literal notranslate"><span class="pre">编码器</span></code>网络。</p>
+<p><strong>（2）变分自编码器（ <code class="docutils literal notranslate"><span class="pre">VAE</span></code> ）</strong></p>
+<p>变分自编码器（ <code class="docutils literal notranslate"><span class="pre">VAE</span></code> ）是指使用推断网络训练的深层隐高斯模型。 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 使用两组深度神经网络：一是上述的自顶向下的生成模型，从隐变量 <span class="math notranslate nohighlight">\(\boldsymbol{z}\)</span> 映射到数据 <span class="math notranslate nohighlight">\(\boldsymbol{x}\)</span> ； 二是获得近似后验 <span class="math notranslate nohighlight">\(p(\boldsymbol{z}|\boldsymbol{x})\)</span> 的自底向上的推断模型。通常，对应的神经网络被称为<code class="docutils literal notranslate"><span class="pre">生成网络</span></code>和<code class="docutils literal notranslate"><span class="pre">推断网络</span></code>，从机器学习视角看，也被称为<code class="docutils literal notranslate"><span class="pre">解码器</span></code>和<code class="docutils literal notranslate"><span class="pre">编码器</span></code>网络。</p>
 <p>为了近似后验，<code class="docutils literal notranslate"><span class="pre">VAE</span></code> 采用<code class="docutils literal notranslate"><span class="pre">摊销平均场变分分布</span></code>：</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1394,31 +1420,30 @@ q_\phi (\boldsymbol{z}|\boldsymbol{x}) = \prod_{i=1}^N q_\phi (z_i|x_i)
 \[
 q_\phi (z_i|x_i) = \mathcal{N} (z_i|μ(x_i),σ^2(x_i)I))
 \]</div>
-<p>与生成模型类似，<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>采用数据的非线性映射 <span class="math notranslate nohighlight">\(μ(x_i)\)</span> 和 <span class="math notranslate nohighlight">\(σ(x_i)\)</span> 来预测 <span class="math notranslate nohighlight">\(x_i\)</span> 的近似后验分布。参数 <span class="math notranslate nohighlight">\(\phi\)</span> 涵盖了推断网络中的参数。</p>
+<p>与生成模型类似，<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>采用数据的非线性映射 <span class="math notranslate nohighlight">\(μ(x_i)\)</span> 和 <span class="math notranslate nohighlight">\(σ(x_i)\)</span> 来预测 <span class="math notranslate nohighlight">\(z_i\)</span> 的近似后验分布。参数 <span class="math notranslate nohighlight">\(\phi\)</span> 涵盖了推断网络中的参数.</p>
 <p>[85]、[160] 的主要贡献是为深度隐变量模型推导出了一个可扩展且高效的训练方案。在优化过程中，推断网络和生成网络共同训练以优化 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code>。</p>
 <p>训练该模型的关键是<code class="docutils literal notranslate"><span class="pre">重新参数化技巧</span></code>。我们关注来自单个数据点 <span class="math notranslate nohighlight">\(x_i\)</span> 的 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 贡献。首先，从噪声分布中抽取 <code class="docutils literal notranslate"><span class="pre">L</span></code> 个样本 <span class="math notranslate nohighlight">\(ε_{(l,i)} ∼ p(ε)\)</span>。我们还使用了重参数化函数 <span class="math notranslate nohighlight">\(g_\phi\)</span> ，使得 <span class="math notranslate nohighlight">\(z_{(i,l)} = g_\phi (ε_{(l,i)},x_i)\)</span> 实现来自近似后验 <span class="math notranslate nohighlight">\(q_\phi (z_i|x_i)\)</span> 的样本。对于上式，最常见的重参数化函数采用 <span class="math notranslate nohighlight">\(z_{(i,l)} = μ(x_i​​) + σ (x_i) ∗ε_{(i,l)}\)</span> 的形式，其中 <span class="math notranslate nohighlight">\(μ(·)\)</span> 和 <span class="math notranslate nohighlight">\(σ (·)\)</span> 由 <span class="math notranslate nohighlight">\(\phi\)</span> 参数化。获得变分自编码器的 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 无偏蒙特卡罗估计量：</p>
 <div class="math notranslate nohighlight">
 \[
 \hat{\mathscr{L}} (\theta ,\phi ,x_i) = − D_{KL}(q_\phi (z_i|x_i)||p_\theta (z_i)) + \frac 1L \sum_{l=1}^L \log p_\theta(x_i|μ(x_i)+σ(x_i)∗ε_{(i,l)}) 
 \]</div>
-<p>ELBO 的这种随机估计随后可以根据 θ 和 φ 进行微分，以获得梯度的估计。</p>
-<p>重新参数化技巧还意味着梯度方差受常数限制 [160]。然而，这种方法的缺点是我们需要近似后验是可重新参数化的。</p>
+<p><code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 的这种随机估计随后可以根据 <span class="math notranslate nohighlight">\(θ\)</span> 和 <span class="math notranslate nohighlight">\(\phi\)</span> 进行微分，以获得梯度的估计。重新参数化技巧还意味着梯度方差受常数限制 [160]。然而，这种方法的缺点是我们需要近似后验是可重新参数化的。</p>
 <blockquote>
 <div><p><strong>编码器-解码器的概率视角</strong></p>
-<p>术语<code class="docutils literal notranslate"><span class="pre">变分自编码器</span></code>源于这样一个事实，即生成和推断网络的联合训练类似于自编码器（一种无监督的确定性模型）的结构。自编码器是经过训练的深度神经网络，能够尽可能地重建其输入。重要的是，自编码器中涉及的神经网络具有沙漏结构，这意味着有存在少量单元的隐藏层用于阻止神经网络学习琐碎的映射。这个“瓶颈”迫使网络学习有用且紧凑的数据表示。相比之下，<code class="docutils literal notranslate"><span class="pre">VAE</span></code> 是一个概率模型，但它们与经典自编码器有密切的对应关系。事实证明，<code class="docutils literal notranslate"><span class="pre">VAE</span></code> 的隐藏变量可以被认为是自编码器的 “瓶颈” 中的中间表示。在 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 训练期间，将噪声注入该中间层，具有正则化作用。此外，先验和近似后验之间的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度项</span></code>迫使 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 的隐表示接近先验，导致隐空间中的分布更均匀，并更好地泛化到未观测数据。当噪声方差减少到零并省略先验项时，<code class="docutils literal notranslate"><span class="pre">VAE</span></code> 就是经典的自编码器。</p>
+<p>术语<code class="docutils literal notranslate"><span class="pre">变分自编码器</span></code>源于这样一个事实，即生成和推断网络的联合训练类似于自编码器（一种无监督的确定性模型）的结构。自编码器是经过训练的深度神经网络，能够尽可能地重建其输入。重要的是，自编码器中涉及的神经网络具有沙漏结构，这意味着有存在少量单元的隐藏层用于阻止神经网络学习琐碎的映射。这个“瓶颈”迫使网络学习有用且紧凑的数据表示。相比之下，<code class="docutils literal notranslate"><span class="pre">VAE</span></code> 是一个概率模型，但它们与经典自编码器有密切的对应关系。事实证明，<code class="docutils literal notranslate"><span class="pre">VAE</span></code> 的隐藏变量可以被认为是自编码器的 “瓶颈” 中的中间表示。在 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 训练期间，将噪声注入该中间层，具有正则化作用。此外，先验和近似后验之间的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>项<code class="docutils literal notranslate"><span class="pre">迫使</span> </code>VAE<code class="docutils literal notranslate"> <span class="pre">的隐表示接近先验，导致隐空间中的分布更均匀，并更好地泛化到未观测数据。当噪声方差减少到零并省略先验项时，</span></code>VAE` 就是经典的自编码器。</p>
 </div></blockquote>
 </div>
 <div class="section" id="id38">
-<h3>7.3 更灵活的 VAE<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
+<h3>7.3 更灵活的 <code class="docutils literal notranslate"><span class="pre">VAE</span></code><a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
 <p>自从提出 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 以来，提出了越来越多的扩展。该主题本身就可以写一篇评论文章，因此，本文仅总结了其中一些重要的扩展，并且更加强调推断过程。我们先讨论修改变分分布 <span class="math notranslate nohighlight">\(q_\phi\)</span> 和模型 <span class="math notranslate nohighlight">\(p_θ\)</span> 的扩展，最后讨论当一些隐单元的后验在优化过程中与先验保持接近时的死亡单元问题。</p>
 <div class="section" id="q-phi">
-<h4>7.3.1 灵活的<code class="docutils literal notranslate"><span class="pre">变分分布</span></code> <span class="math notranslate nohighlight">\(q_\phi\)</span><a class="headerlink" href="#q-phi" title="Permalink to this headline">¶</a></h4>
-<p>包括 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 在内的传统变分推断依赖于参数化的推断模型。近似后验 <span class="math notranslate nohighlight">\(q_\phi\)</span> 可以是显式的参数分布，例如高斯分布或离散分布 [163]。我们也可以使用更灵活的分布，例如通过对简单参数分布做转换。在这里，我们回顾了<code class="docutils literal notranslate"><span class="pre">具有隐式分布的</span> <span class="pre">VAE</span></code>、<code class="docutils literal notranslate"><span class="pre">标准化流</span></code>和<code class="docutils literal notranslate"><span class="pre">重要性加权</span> <span class="pre">VAE</span></code>。使用更灵活的<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>不仅可以减少近似误差，还可以减少摊销误差，即由于用参数化的函数替换局部变分参数而引入的误差 [30]。</p>
+<h4>7.3.1 更灵活的<code class="docutils literal notranslate"><span class="pre">变分分布</span></code> <span class="math notranslate nohighlight">\(q_\phi\)</span><a class="headerlink" href="#q-phi" title="Permalink to this headline">¶</a></h4>
+<p>包括 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 在内的传统变分推断依赖于参数化的推断模型。近似后验 <span class="math notranslate nohighlight">\(q_\phi\)</span> 可以是显式的参数分布，例如高斯分布或离散分布 [163]。我们也可以使用更灵活的分布，例如通过对简单参数分布做转换。在这里，我们回顾了<code class="docutils literal notranslate"><span class="pre">具有隐式分布的</span> </code>VAE<code class="docutils literal notranslate"><span class="pre">、</span></code>标准化流<code class="docutils literal notranslate"><span class="pre">和</span></code>重要性加权 <code class="docutils literal notranslate"><span class="pre">VAE</span></code>。使用更灵活的<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>不仅可以减少近似误差，还可以减少摊销误差，即由于用参数化的函数替换局部变分参数而引入的误差 [30]。</p>
 <p><strong>（1）隐式分布</strong></p>
 <p>隐式分布可以在变分推断中使用，因为封闭形式的密度函数是对推断模型没有严格要求；我们所需要的只是能够从中采样。如下详述，它们的重新参数化梯度仍然可以计算。除了标准的重新参数化方法之外，还必须估计对梯度的熵贡献。变分推断的隐式分布是一个活跃的研究领域 [72]、[81]、[102]、[105]、[107]、[119]、[129]、[196]、[210]。</p>
 <p>变分推断需要计算对数密度比 <span class="math notranslate nohighlight">\(\log p(\boldsymbol{z})−\log q_\phi (\boldsymbol{z}|\boldsymbol{x})\)</span> 。当 <span class="math notranslate nohighlight">\(q\)</span> 为隐式时，标准训练程序面临对数密度比难以处理的问题。在这种情况下，可以使用<code class="docutils literal notranslate"><span class="pre">生成对抗网络</span> <span class="pre">(GAN)</span></code> [54] 风格的鉴别器 <span class="math notranslate nohighlight">\(T\)</span> ，以从<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>中判别出先验，<span class="math notranslate nohighlight">\(T (\boldsymbol{x},\boldsymbol{z}) = \log q_\phi (\boldsymbol{z}|\boldsymbol{x})−\log p(\boldsymbol{z})\)</span> [ 102]、[119]。这个公式非常通用，可以与其他想法结合，例如分层结构 [202]、[217]。</p>
 <p><strong>（2）标准化流方法</strong></p>
-<p>标准化流 [29]、[40]、[41]、[84]、[159] 提出了另一种灵活<code class="docutils literal notranslate"><span class="pre">变分分布</span></code>的方法。标准化流背后的主要思想是通过一系列连续的可逆变换将简单（例如平均场）近似后验 <span class="math notranslate nohighlight">\(q(\boldsymbol{z})\)</span> 变换为更具表现力的分布。</p>
+<p><code class="docutils literal notranslate"><span class="pre">标准化流</span></code> [29]、[40]、[41]、[84]、[159] 提出了另一种灵活变分分布的方法。标准化流背后的主要思想是通过一系列连续的可逆变换将简单（例如平均场）近似后验 <span class="math notranslate nohighlight">\(q(\boldsymbol{z})\)</span> 变换为更具表现力的分布。</p>
 <p>为此，首先抽取一个随机变量 <span class="math notranslate nohighlight">\(z ∼q(\boldsymbol{z})\)</span> ，并使用可逆的平滑函数 <span class="math notranslate nohighlight">\(f\)</span> 对其进行变换。设 <span class="math notranslate nohighlight">\(z′ = f (z)\)</span>。那么，新的分布是：</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1426,7 +1451,7 @@ q(z^′) = q(z)|\frac{\partial f^{−1}}{ ∂ z^′} |= q(z)|\frac{\partial f}{�
 \]</div>
 <p>我们有必要计算行列式，因为变分方法要求估计变换分布的熵。通过选择变换函数 <span class="math notranslate nohighlight">\(f\)</span> 使得 <span class="math notranslate nohighlight">\(|\frac{\partial f}{\partial z'}|\)</span> 更容易计算，这种标准化流程构成了一种从简单分布生成多峰分布的有效方法。作为其变体，已经提出了<code class="docutils literal notranslate"><span class="pre">线性时间变换流</span></code>、<code class="docutils literal notranslate"><span class="pre">Langevin</span> <span class="pre">流</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Hamiltonian</span> <span class="pre">流</span></code> [159] 以及<code class="docutils literal notranslate"><span class="pre">逆自回归流</span></code> [84] 和<code class="docutils literal notranslate"><span class="pre">自回归流</span></code> [29]。</p>
 <p><code class="docutils literal notranslate"><span class="pre">标准化流</span></code>和前面提到的<code class="docutils literal notranslate"><span class="pre">隐式分布</span></code>采取了 “使用转换将简单分布转换为复杂分布” 的共同想法，它们之间一个关键区别在于，由于采用了可逆变换函数，标准化流允许估计 <span class="math notranslate nohighlight">\(q(z)\)</span> 的密度。</p>
-<p><strong>（3）重要性加权 VAE</strong></p>
+<p><strong>（3）重要性加权 <code class="docutils literal notranslate"><span class="pre">VAE</span></code></strong></p>
 <p>利用灵活变分分布的最后一种方法是<code class="docutils literal notranslate"><span class="pre">重要性加权变分自编码器</span> <span class="pre">(IWAE)</span></code>，它最初被提议用于收紧变分边界 [25]，并且可以重新解释为从更灵活的分布 [31] 中采样。 <code class="docutils literal notranslate"><span class="pre">IWAE</span></code> 需要来自近似后验的 <code class="docutils literal notranslate"><span class="pre">L</span></code> 个样本，这些样本按比率进行加权：</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1436,16 +1461,15 @@ q_\phi (z_{(i,l)}|x_i)
 <p>作者表明，评估的样本 <code class="docutils literal notranslate"><span class="pre">L</span></code> 越多，变分边界变得越紧，这意味着在 <span class="math notranslate nohighlight">\(L →∞\)</span> 时接近真实对数似然。对 <code class="docutils literal notranslate"><span class="pre">IWAE</span></code> 的重新解释表明，它们与 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 相同，但从更具表现力的分布中采样，该分布在 <span class="math notranslate nohighlight">\(L →∞\)</span> [31] 时逐点收敛到真实后验。由于 <code class="docutils literal notranslate"><span class="pre">IWAE</span></code> 引入了有偏估计器，因此隐地可以采取额外步骤来获得更好的<code class="docutils literal notranslate"><span class="pre">方差-偏差权衡</span></code> [139]、[152]、[153] 。</p>
 </div>
 <div class="section" id="p">
-<h4>7.3.2 先验 <span class="math notranslate nohighlight">\(p_θ\)</span> 的建模选择<a class="headerlink" href="#p" title="Permalink to this headline">¶</a></h4>
+<h4>7.3.2 先验 <span class="math notranslate nohighlight">\(p_θ\)</span> 的选择<a class="headerlink" href="#p" title="Permalink to this headline">¶</a></h4>
 <p>建模选择会影响深度隐高斯模型的性能。特别是改进 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 中的先验模型可以带来更多可解释的拟合和更好的模型性能。 [77] 提出了一种将结构化先验用于 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 的方法，结合了传统概率图模型和推断网络的优点。这些混合模型通过使用识别模型来学习共轭分布的变分参数，克服了非共轭先验和似然的难点。这允许人们在保持共轭的同时近似后验。当编码器输出自然参数的估计值时，依赖共轭的<code class="docutils literal notranslate"><span class="pre">消息传递</span></code>被应用于执行剩余的推断。</p>
 <p>还有其他方法解决了标准 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 的缺点。由于标准 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 假设似然在维度上可分解，因此可能产生一个糟糕的近似，例如，对于结构化输出模型效果更好的图像。 <code class="docutils literal notranslate"><span class="pre">Deep</span> <span class="pre">Recurrent</span> <span class="pre">Attentive</span> <span class="pre">Writer</span></code> [56] 依赖于一种循环结构，该结构逐渐构建观测结果，同时自动关注感兴趣的区域。相比之下，<code class="docutils literal notranslate"><span class="pre">PixelVAE</span></code> [57] 则通过对图像内像素之间的依赖关系建模来解决这个问题，该方法使用了一个条件模型的分解式 <span class="math notranslate nohighlight">\(p_\theta (x_i|z_i) = \prod_j p_\theta (x^j_i \mid x^1_i ,...x^{j−1}_
 i,z_i)\)</span> ，其中 <span class="math notranslate nohighlight">\(x^j_i\)</span> 表示观测 <span class="math notranslate nohighlight">\(i\)</span> 的第 <span class="math notranslate nohighlight">\(j\)</span> 个维度。维度以顺序方式生成，这说明了图像像素内的局部依赖性。</p>
 <p>建模选择带来的表现力是需要代价的。如果解码器太强，推断过程可能无法学习信息丰富的后验 [29]。该问题被称为<code class="docutils literal notranslate"><span class="pre">僵尸单元问题</span></code>。</p>
 </div>
 <div class="section" id="id39">
-<h4>7.3.3 解决僵尸单元的问题<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h4>
-<p>某些建模选择和参数配置给 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 训练带来了问题，例如学习数据的良好低维表示容易失败。一个突出的问题被称为<code class="docutils literal notranslate"><span class="pre">僵尸单元问题</span></code>。</p>
-<p>造成这种现象的主要有两个原因：<code class="docutils literal notranslate"><span class="pre">解码器过于强大</span></code>以及 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度项</span></code>。</p>
+<h4>7.3.3 僵尸单元的问题<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h4>
+<p>某些建模选择和参数配置给 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 训练带来了问题，例如学习数据的良好低维表示容易失败。一个突出的问题被称为<code class="docutils literal notranslate"><span class="pre">僵尸单元问题</span></code>。造成这种现象的主要有两个原因：<code class="docutils literal notranslate"><span class="pre">解码器过于强大</span></code>以及 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度项</span></code>。</p>
 <p>在某些情况下，解码器的表达能力非常强，以至于 <span class="math notranslate nohighlight">\(\boldsymbol{z}\)</span> 变量的某些维度被忽略了，即它可能独立于 <span class="math notranslate nohighlight">\(z\)</span> 对 <span class="math notranslate nohighlight">\(p_\theta (x|z)\)</span> 进行建模。此时真实后验变成了先验 [29]，因此变分后验试图匹配先验以满足等式中的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 。 <code class="docutils literal notranslate"><span class="pre">有损变分自编码器</span></code> [29] 通过在部分输入信息上调节每个输出维度的解码分布来规避此问题。例如，在图像案例中，给定像素的似然仅取决于周围像素的值和全局隐状态，这迫使分布编码了隐变量中包含的全局信息。</p>
 <p><code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 对 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 损失的贡献可能会加剧这个问题。要了解原因，可以将 <code class="docutils literal notranslate"><span class="pre">ELBO</span></code> 重写为两个 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code> 之和 <span class="math notranslate nohighlight">\(\hat{\mathscr L}(\theta ,\phi ,x_i) = −D_{KL}(q_\phi (z|x_i)||p_\theta (z)) −D_{KL}(p(x_i)|| p_\theta (x_i|z)) + C\)</span> 。如果模型表达能力足够强，则模型能够将第二项置为零（与 <span class="math notranslate nohighlight">\(\boldsymbol{z}\)</span> 的值无关）。此时，为了同时满足第一项，推断模型将其概率质量与先验 [227] 相匹配，从而未能学习到数据的有用表示。即使解码器不强，在优化早期阶段可能会出现僵尸单元问题，此时近似后验尚未携带有关数据的相关信息 [19]。当 <span class="math notranslate nohighlight">\(z\)</span> 的维数很高时，这个问题更加严重。这种情况下，单元会朝着先验方向正则化，并且可能无法在优化后期阶段重新激活 [178]。为了抵消 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">约束</span></code>的早期影响，可以在训练期间对 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度项</span></code>应用退火方案 [178]。</p>
 </div>
@@ -1460,16 +1484,16 @@ i,z_i)\)</span> ，其中 <span class="math notranslate nohighlight">\(x^j_i\)</
 </div>
 <div class="section" id="id42">
 <h3>8.2 变分推断和深度学习<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h3>
-<p>尽管最近在各领域取得了成功，但深度学习仍然缺乏原则性的不确定性估计、缺乏其特征表示的可解释性，并且难以包含先验知识。贝叶斯方法（例如贝叶斯神经网络 [137] 和变分自编码器）正在改进这些方面。最近的工作旨在使用可解释性概率模型作为 VAE 的先验 [38]、[77]、[91]、[168]。在此类模型中，变分推断是必不可少的组成部分。在贝叶斯深度架构中，如何使变分推断计算更为高效且易于实现，正在成为一个重要研究方向 [48]</p>
+<p>尽管最近在各领域取得了成功，但深度学习仍然缺乏原则性的不确定性估计、缺乏其特征表示的可解释性，并且难以包含先验知识。贝叶斯方法（例如贝叶斯神经网络 [137] 和变分自编码器）正在改进这些方面。最近的工作旨在使用可解释性概率模型作为 <code class="docutils literal notranslate"><span class="pre">VAE</span></code> 的先验 [38]、[77]、[91]、[168]。在此类模型中，变分推断是必不可少的组成部分。在贝叶斯深度架构中，如何使变分推断计算更为高效且易于实现，正在成为一个重要研究方向 [48]</p>
 </div>
 <div class="section" id="id43">
 <h3>8.3 变分推断和策略梯度<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
-<p>策略梯度估计对于强化学习 (RL)[183]​​ 和随机控制很重要。这些应用中的技术挑战与变分推断非常相似 [98]、[99]、[110]、[173]、[211] 。例如，SVGD 已作为 Steinpolicy 梯度被应用于 RL 设置 [110]。 变分推断在强化学习中的应用目前是一个活跃的研究领域。</p>
+<p>策略梯度估计对于<code class="docutils literal notranslate"><span class="pre">强化学习</span> <span class="pre">(RL)</span></code>[183]​​ 和随机控制很重要。这些应用中的技术挑战与变分推断非常相似 [98]、[99]、[110]、[173]、[211] 。例如，<code class="docutils literal notranslate"><span class="pre">SVGD</span></code> 已作为 <code class="docutils literal notranslate"><span class="pre">Stein</span> <span class="pre">Policy</span> <span class="pre">梯度</span></code>被应用于 RL 设置 [110]。 变分推断在强化学习中的应用目前是一个活跃的研究领域。</p>
 </div>
 <div class="section" id="id44">
 <h3>8.4 自动变分推断<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h3>
-<p>概率编程允许从业者快速实现和修改模型，而不必担心推断问题。用户只需要指定模型，推断引擎就会自动进行推断。流行的概率编程工具包括但不限于：Stan[28]，涵盖了大量的高级变分推断和 <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 推断方法； Net[126] 基于变分消息传递和 EP；Automatic Statistician[52] 和 Anglican[198] 主要依靠采样方法；Ed-ward[200] 支持 黑盒变分推断和 MonteCarlo 采样 ； Zhusuan[176] 的特点是用于贝叶斯深度学习的变分推断。这些工具的长期目标是改变概率建模的研究方法，使用户能够快速修改和改进模型，并使其他受众可以访问它们。</p>
-<p>尽管目前努力使从业者更容易使用 VI，但对于非专家来说，其使用仍然不简单。例如，人工识别后验的对称性并打破这些对称性是 <a class="reference external" href="http://Infer.Net">Infer.Net</a> 所必需的。此外，诸如控制变量等减少方差的方法可以极大地加速收敛，但需要模型进行特定设计才能获得最佳性能。在撰写本文时，当前的概率编程工具箱尚未解决此类问题。我们相信这些方向对于推进概率建模在科学和技术中的影响非常重要。</p>
+<p>概率编程允许从业者快速实现和修改模型，而不必担心推断问题。用户只需要指定模型，推断引擎就会自动进行推断。流行的概率编程工具包括但不限于：Stan[28]，涵盖了大量的高级变分推断和 <code class="docutils literal notranslate"><span class="pre">MCMC</span></code> 推断方法； Net[126] 基于变分消息传递和期望传播；Automatic Statistician[52] 和 Anglican[198] 主要依靠采样方法；Ed-ward[200] 支持黑盒变分推断和蒙特卡洛采样 ； Zhusuan[176] 的特点是用于贝叶斯深度学习的变分推断。这些工具的长期目标是改变概率建模的研究方法，使用户能够快速修改和改进模型，并使其他受众可以访问它们。</p>
+<p>尽管目前努力使从业者更容易使用变分推断，但对于非专家来说，其使用仍然不简单。例如，人工识别后验的对称性并打破这些对称性是推断网络所必需的。此外，诸如控制变量等减少方差的方法可以极大地加速收敛，但需要模型进行特定设计才能获得最佳性能。在撰写本文时，当前的概率编程工具箱尚未解决此类问题。我们相信这些方向对于推进概率建模在科学和技术中的影响非常重要。</p>
 </div>
 </div>
 <div class="section" id="id45">
@@ -1484,6 +1508,238 @@ i,z_i)\)</span> ，其中 <span class="math notranslate nohighlight">\(x^j_i\)</
 <li><p>随机变分推断将变分推断扩展到海量数据</p></li>
 <li><p>黑盒变分推断将变分推断泛化到多种模型</p></li>
 </ul>
+</div>
+<div class="section" id="id46">
+<h2>参考.<a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h2>
+<p>[1] S. Ahn, A. Korattikara, and M. Welling. Bayesian posterior sampling via stochastic gradient fisher scoring. In ICML, 201.</p>
+<p>[2] A. Alemi, I. Fischer, J. Dillon, and K. Murphy. Deep variational information bottleneck. In ICLR, 201.</p>
+<p>[3] S. M. Ali and S. D. Silvey. A general class of coefficients of divergence of one distribution from another. Journal of the Royal Statistical Society., 196.</p>
+<p>[4] S.I. Amari. Differential-geometrical methods in statistics. Springer, 198.</p>
+<p>[5] S.I. Amari. Natural gradient works efficiently in learning. Neural computation, 10(2), 199.</p>
+<p>[6] S.I. Amari. α-divergence is unique, belonging to both f - divergence and bregman divergence classes. IEEE Trans- actions on Information Theory, 55(11), 200.</p>
+<p>[7] E. Angelino, M. J. Johnson, and R. P. Adams. Patterns of scalable bayesian inference. Foundations and Trends R©in Machine Learning, 9(2-3), 201.</p>
+<p>[8] O. Arenz, M.J. Zhong, and G. Neumann. Efficient gradient-free variational inference using policy search. In ICML, 201.</p>
+<p>[9] A. Azevedo-Filho and R.D. Shachter. Laplace’s method approximations for probabilistic inferencein belief networks with continuous variables. In UAI, 199.</p>
+<p>[10] L. Balles, J. Romero, and P. Hennig. Coupling adaptive batch sizes with learning rates. In UAI, 201.</p>
+<p>[11] R. Bamler and S. Mandt. Dynamic word embeddings. In ICML, 201.</p>
+<p>[12] R. Bamler and S. Mandt. Structured black box variational inference for latent time series models. In ICML WS, 201.</p>
+<p>[13] D. Barber and F. Agakov. The IM algorithm: a variational approach to information maximization. In NIPS, 200.</p>
+<p>[14] C. M. Bishop. Pattern recognition and machine learning. springer, 200.</p>
+<p>[15] D. M. Blei, A. Kucukelbir, and J. D. McAuliffe. Variational inference: A review for statisticians. 201.</p>
+<p>[16] D. M. Blei and J. D. Lafferty. Correlated topic models. In NIPS, volume 18, 200.</p>
+<p>[17] D. M. Blei and J. D. Lafferty. Dynamic topic models. In ICML, 200.</p>
+<p>[18] L. Bottou. Large-scale machine learning with stochastic gradient descent. Springer, 201.</p>
+<p>[19] S. R. Bowman, L. Vilnis, O. Vinyals, A. M. Dai, R. J  ́ozefowicz, and S. Bengio. Generating sentences from a continuous space. In CoNLL.</p>
+<p>[20] P.P. Boyle. Options: A monte carlo approach. Journal of financial economics, 4(3):323–338, 197.</p>
+<p>[21] T. Broderick, N. Boyd, A. Wibisono, A. C. Wilson, and M. I. Jordan. Streaming variational bayes. In NIPS, 2013.</p>
+<p>[22] S. Brooks, A. Gelman, G. Jones, and X.L Meng. Handbook of markov chain monte carlo. CRC press, 2011.</p>
+<p>[23] A. Buchholz, F. Wenzel, and S. Mandt. Quasi-Monte Carlo Variational Inference. In ICML, 2018.</p>
+<p>[24] T. D. Bui, J. Yan, and R. E. Turner. A unifying framework for sparse gaussian process approximation using power expectation propagation. arXiv:1605.07066, 2016.</p>
+<p>[25] Y. Burda, R. Grosse, and R. Salakhutdinov. Importance weighted autoencoders. arXiv:1509.00519, 2015.</p>
+<p>[26] R.H. Byrd, G.M. Chin, J. Nocedal, and Y.C. Wu. Soamploample size selection in optimization methods for machine learning. Mathematical programming, 134(1), 2012.</p>
+<p>[27] L. Le Cam. Asymptotic methods in statistical decision theory. Springer Science &amp; Business Media, 2012.</p>
+<p>[28] B. Carpenter, D. Lee, M. A. Brubaker, A. Riddell, A. Gelman, B. Goodrich, J. Guo, M. Hoffman, M. Betancourt, and P Li. Stan: A probabilistic programming language. Journal of Statistical Software, 2016.</p>
+<p>[29] X. Chen, D. P. Kingma, T. Salimans, Y. Dua, P. Dhariwal, J. Schulman, I. Sutskever, and P. Abbeel. Variational lossy autoencoder. In ICLR, 2017.</p>
+<p>[30] C. Cremer, X Li, and D. Duvenaud. Inference suboptimality in variational autoencoders. In ICML, 2018.</p>
+<p>[31] C. Cremer, Q. Morris, and D. Duvenaud. Reinterpreting importance-weighted autoencoders. In ICLR WS, 2017.</p>
+<p>[32] D. Csiba and P. Richt ́arik. Importance sampling for minibatches. arXiv:1602.02283, 2016.</p>
+<p>[33] I. Csisz ́ar. Eine informations theoretische ungleichung und ihre anwendung auf beweis der ergodizitaet von markoff18 schen ketten. Magyer Tud. Akad. Mat. Kutato Int. Koezl., 8, 1964.</p>
+<p>[34] Z.W. Dai, A. Damianou, J. Gonz ́alez, and N. Lawrence. Variational auto-encoded deep Gaussian processes. In ICLR, 2016.</p>
+<p>[35] A. Damianou and N. Lawrence. Deep gaussian processes. In AISTATS, 2013.</p>
+<p>[36] P. Dayan, G. E. Hinton, R. M. Neal, and R. S. Zemel. The helmholtz machine. Neural computation, 7(5), 1995.</p>
+<p>[37] S. De, A. Yadav, D. Jacobs, and T. Goldstein. Automated inference using adaptive batch sizes. In AISTATS, 2017.</p>
+<p>[38] Z.W. Deng, R. Navarathna, P. Carr, S. Mandt, Y.S. Yue, I. Matthews, and G. Mori. Factorized variational autoencoders for modeling audience reactions to movies. In CVPR, 2017.</p>
+<p>[39] A. B. Dieng, D. Tran, R. Ranganath, J. Paisley, and D. M. Blei. Variational inference via chi-upper bound minimization. In NIPS, 2017.</p>
+<p>[40] L. Dinh, D. Krueger, and Y. Bengio. NICE: non-linear independent components estimation. arXiv:1410.8516, 2014.</p>
+<p>[41] L. Dinh, J. Sohl-Dickstein, and S. Bengio. Density estimation using real nvp. In ICLR, 2017.</p>
+<p>[42] J. Duchi, E. Hazan, and Y. Singer. Adaptive subgradient methods for online learning and stochastic optimization. JMLR, 12, 2011.</p>
+<p>[43] D. Duvenaud, D. Maclaurin, and R. Adams. Early stopping as nonparametric variational inference. In AISTATS, 2016.</p>
+<p>[44] S. R. Eddy. Hidden Markov Models. Current opinion in structural biology, 6(3), 1996.</p>
+<p>[45] N. Foti, J. Xu, D. Laird, and E. Fox. Stochastic variational inference for hidden Markov models. In NIPS, 2014.</p>
+<p>[46] M. P. Friedlander and M. Schmidt. Hybrid deterministicstochastic methods for data fitting. SIAM Journal on Scientific Computing, 34(3), 2012.</p>
+<p>[47] T.F Fu and Z.H. Zhang. CPSG-MCMC: Clustering-based preprocessing method for stochastic gradient mcmc. In AISTATS, 2017.</p>
+<p>[48] Y. Gal. Uncertainty in deep learning. PhD thesis, PhD thesis, University of Cambridge, 2016.</p>
+<p>[49] Y. Gal, M. van der Wilk, and C. Rasmussen. Distributed variational inference in sparse gaussian process regression and latent variable models. In NIPS, 2014.</p>
+<p>[50] S. Gershman and N. Goodman. Amortized inference in probabilistic reasoning. In CogSci, volume 36, 2014.</p>
+<p>[51] S. J. Gershman, M. D. Hoffman, and D. M. Blei. Nonparametric variational inference. In ICML, 2012.</p>
+<p>[52] Z. Ghahramani. Probabilistic Machine Learning and Artificial Intelligence. Nature, 521(7553), 2015.</p>
+<p>[53] I. Goodfellow, Y. Bengio, and A. Courville. Deep Learning. MIT Press, 2016.</p>
+<p>[54] I. Goodfellow, J. Pouget-Abadie, M. Mirza, B. Xuand D. Warde-Farley, S. Ozair, A. Courville, and Y. Bengio. Generative adversarial nets. In NIPS, 2014.</p>
+<p>[55] P. K. Gopalan, S. Gerrish, M. Freedman, D. M. Blei, and D. M. Mimno. Scalable inference of overlapping communities. In NIPS, 2012.</p>
+<p>[56] K. Gregor, I. Danihelka, A. Graves, D. J. Rezende, and D. Wierstra. Draw: A recurrent neural network for image generation. In ICML, 2015.</p>
+<p>[57] I. Gulrajani, K. Kumar, F. Ahmed, A. A. Taiga, F. V. Visin, D. Vazquez, and A. Courville. PixelVAE: A latent variable model for natural images. 2017.</p>
+<p>[58] F.J. Guo, X.Y. Wang, K. Fan, T. Broderick, and D. B. Dunson. Boosting variational inference. arXiv:1611.05559, 2016.</p>
+<p>[59] J. Han and Q. Liu. Stein variational adaptive importance sampling. In UAI, 2017.</p>
+<p>[60] S. Han, X. Liao, D. Dunson, and L. Carin. Variational gaussian copula inference. 2016.</p>
+<p>[61] G. Heinrich. Parameter estimation for text analysis, 2008.</p>
+<p>[62] P. Hennig. Approximate inference in graphical models. PhD thesis, University of Cambridge, 2011.</p>
+<p>[63] J. Hensman, N. Fusi, and N. D. Lawrence. Gaussian processes for big data. In UAI, 2013.</p>
+<p>[64] J Hensman, M Rattray, and N. D Lawrence. Fast variational inference in the conjugate exponential family. In NIPS, 2012.</p>
+<p>[65] M. Hoffman, F. R. Bach, and D. M. Blei. Online learning for Latent Dirichlet Allocation. In NIPS, 2010.</p>
+<p>[66] M. D. Hoffman and D. M. Blei. Structured stochastic variational inference. In AISTATS, 2015.</p>
+<p>[67] M D. Hoffman, D. M. Blei, C. Wang, and J. Paisley. Stochastic variational inference. JMLR, 14(1), 2013.</p>
+<p>[68] R. V. Hogg and A. T. Craig. Introduction to mathematical statistics.(5th edition). Upper Saddle River, New Jersey: Prentice Hall, 1995.</p>
+<p>[69] A. Honkela, T. Raiko, M. Kuusela, M. Tornio, and J. Karhunen. Approximate riemannian conjugate gradient learning for fixed-form variational bayes. JMLR, 11, 2010.</p>
+<p>[70] A. Honkela, M. Tornio, T. Raiko, and J. Karhunen. Natural conjugate gradient in variational inference. In ICONIP, 2007.</p>
+<p>[71] A. Honkela and H. Valpola. Online variational bayesian learning. 2003.</p>
+<p>[72] F. Husz ́ar. Variational inference using implicit distributions. arXiv:1702.08235, 2017.</p>
+<p>[73] T. S. Jaakkol, L. K. Saul, and M. I. Jordan. Fast learning by bounding likelihoods in sigmoid type belief networks. NIPS, 1996.</p>
+<p>[74] T. S. Jaakkola and M. I. Jordan. Improving the mean field approximation via the use of mixture distributions. NATO ASI series D behaviroural and social sciences, 89, 1998.</p>
+<p>[75] E. Jang, S.X. Gu, and B. Poole. Categorical reparameterization with gumbel-softmax. In ICLR, 2017.</p>
+<p>[76] M. Johnson and A. Willsky. Stochastic variational inference for bayesian time series models. In ICML, 2014.</p>
+<p>[77] M. J. Johnson, D. Duvenaud, A. B. Wiltschko, S. R. Datta, and R. P. Adams. Structured VAEs: Composing probabilistic graphical models and variational autoencoders. In NIPS, 2016.</p>
+<p>[78] R. Johnson and T. Zhang. Accelerating stochastic gradient descent using predictive variance reduction. In NIPS, 2013.</p>
+<p>[79] M. I. Jordan, Z. Ghahramani, T. S. Jaakkola, and L. K. Saul. An introduction to variational methods for graphical models. Machine learning, 37(2), 1999.</p>
+<p>[80] H. J. Kappen and W. Wiegerinck. Second order approximations for probability models. In NIPS, 2001.</p>
+<p>[81] T. Karaletsos. Adversarial message passing for graphical models. In NIPS WS. 2016.</p>
+<p>[82] M. E. Khan, P. Baqu ́e, F. Fleuret, and P. Fua. Kullback-Leibler Proximal Variational Inference. In NIPS, 2015.</p>
+<p>[83] N. King and N. Lawrence. Fast variational inference for gaussian process models through KL-correction. In ECML, 2006.</p>
+<p>[84] D. P. Kingma, T. Salimans, R. Jozefowicz, X. Chen, I. Sutskever, and M. Welling. Improving variational autoencoders with inverse autoregressive flow. In NIPS, 2016.</p>
+<p>[85] D. P. Kingma and M. Welling. Auto-encoding variational bayes. In ICLR, 2014.</p>
+<p>[86] D. P. Kingma and M. Welling. Stochastic gradient vb and the variational auto-encoder. In ICLR, 2014.</p>
+<p>[87] D.P. Kingma and J. Ba. Adam: A method for stochastic optimization. In ICLR, 2015.</p>
+<p>[88] D. A. Knowles and T. P. Minka. Non-conjugate variational message passing for multinomial and binary regression. In NIPS, 2011.</p>
+<p>[89] D.A. Knowles. Stochastic gradient variational Bayes for gamma approximating distributions. arXiv, page 1509.01631, 2015. 1.</p>
+<p>[90] A. Korattikara, V. Rathod, K. Murphy, and M. Welling. Bayesian Dark Knowledge. arXiv:1506.04416, 2015.</p>
+<p>[91] R. G. Krishnan, U. Shalit, and D. Sontag. Deep kalman filters. In NIPS WS, 2015.</p>
+<p>[92] A. Kucukelbir and D. M. Blei. Population empirical bayes. In UAI, 2015.</p>
+<p>[93] S. Kullback and R. A. Leibler. On information and sufficiency. The annals of mathematical statistics, 22(1), 1951.</p>
+<p>[94] K. Kurihara, M. Welling, and Y. W. Teh. Collapsed variational dirichlet process mixture models. In IJCAI, 2007.</p>
+<p>[95] S. Lacoste-Julien, F. Husz ́ar, and Z. Ghahramani. Approximate inference for the loss-calibrated bayesian. In AISTATS.</p>
+<p>[96] P. S. Laplace. Memoir on the probability of the causes of events. Statistical Science, 1(3), 1986.</p>
+<p>[97] M. L ́azaro-Gredilla, S. Van Vaerenbergh, and N. D. Lawrence. Overlapping mixtures of gaussian processes for the data association problem. Pattern Recognition, 45(4), 2012.</p>
+<p>[98] S. Levine. Reinforcement learning and control as probabilistic inference: Tutorial and review. arXiv:1805.00909, 2018.</p>
+<p>[99] S. Levine and V. Koltun. Variational policy search via trajectory optimization. In NIPS, 2013.</p>
+<p>[100] Y.Z. Li. Approximate Inference: New Visions. PhD thesis, 2018.</p>
+<p>[101] Y.Z. Li, J.M. Hern ́andez-Lobato, and R.E. Turner. Stochastic expectation propagation. In NIPS, 2015.</p>
+<p>[102] Y.Z. Li and Q. Liu. Wild variational approximations. In NIPS WS, 2016.</p>
+<p>[103] Y.Z Li and r. e. Turner. R ́enyi divergence variational inference. In NIPS, 2016.</p>
+<p>[104] Y.Z Li, M. Rowland, T. Bui, D. Hernandez-Lobato, and R. Turner. Black-Box Alpha Divergence Minimization. In ICML, 2016.</p>
+<p>[105] Y.Z. Li, R. E. Turner, and Q. Liu. Approximate inference with amortised MCMC. arXiv:1702.08343, 2017.</p>
+<p>[106] Wu. Lin, N. Hubacher, and M.E. Khan. Variational message passing with structured inference networks. arXiv:1803.05589, 2018.</p>
+<p>[107] Q. Liu and Y. Feng. Two methods for wild variational inference. arXiv:1612.00081, 2016.</p>
+<p>[108] Q. Liu, J. Lee, and M. Jordan. A kernelized stein discrepancy for goodness-of-fit tests. In ICML, 2016.</p>
+<p>[109] Q. Liu and D. Wang. Stein variational gradient descent: A general purpose bayesian inference algorithm. In NIPS, 2016.</p>
+<p>[110] Y. Liu, P. Ramachandran, Q. Liu, and J. Peng. Stein variational policy gradient. In UAI, 2017.</p>
+<p>[111] C. J. Maddison, A. Mnih, and Y. W. Teh. The concrete distribution: A continuous relaxation of discrete random variables, 2017.</p>
+<p>[112] S. Mandt and D. Blei. Smoothed gradients for stochastic variational inference. In NIPS, 2014.</p>
+<p>[113] S. Mandt, M. D. Hoffman, and D. M. Blei. A Variational Analysis of Stochastic Gradient Algorithms. In ICML, 2016.</p>
+<p>[114] S. Mandt, M. D. Hoffman, and D. M. Blei. Stochastic gradient descent as approximate bayesian inference. JMLR, 2017.</p>
+<p>[115] S. Mandt, J. McInerney, F. Abrol, R. Ranganath, and Blei. Variational Tempering. In AISTATS, 2016.</p>
+<p>[116] Joseph Marino, Yisong Yue, and Stephan Mandt. Iterative amortized inference. In ICML, 2018.</p>
+<p>[117] J. McInerney, R. Ranganath, and D. Blei. The population posterior and bayesian modeling on streams. In NIPS, 2015.</p>
+<p>[118] M.E.Khan, D. Nielsen, V. Tangkaratt, W. Lin, Y. Gal, and A. Srivastava. Fast and scalable bayesian deep learning by weight-perturbation in adam. arXiv:1806.04854, 2018.</p>
+<p>[119] L. Mescheder, S. Nowozin, and A. Geiger. Adversarial variational bayes: Unifying variational autoencoders and generative adversarial networks. In ICML, 2017.</p>
+<p>[120] L. Mescheder, S. Nowozin, and A. Geiger. The numerics of gans. In NIPS, 2017.</p>
+<p>[121] M. M ́ezard, G. Parisi, and M. A. Virasoro. Spin glass theory and beyond. 1990.</p>
+<p>[122] Y. Miao, L. Yu, and P. Blunsom. Neural variational inference for text processing. In ICML, 2016.</p>
+<p>[123] A. C. Miller, N. J. Foti, A. D’Amour, and R. P. Adams. Reducing reparameterization gradient variance. In NIPS, 2017.</p>
+<p>[124] A.C. Miller, N. Foti, and R. P. Adams. Variational boosting: Iteratively refining posterior approximations. In ICML, 2017.</p>
+<p>[125] T. Minka. Power EP. Technical report, Technical report, Microsoft Research, Cambridge, 2004.</p>
+<p>[126] T. Minka, J. M. Winn, J. P. Guiver, S. Webster, Y. Zaykov, B. Yangel, A. Spengler, and J. Bronskill. <a class="reference external" href="http://Infer.NET">Infer.NET</a> 2.6. <a class="reference external" href="http://research.microsoft.com/infernet">http://research.microsoft.com/infernet</a>, 2014.</p>
+<p>[127] T. P. Minka. Expectation propagation for approximate bayesian inference. In UAI, 2001.</p>
+<p>[128] T. P. Minka. Divergence measures and message passing. In Microsoft Research Technical Report, 2005.</p>
+<p>[129] S. Mohamed and B. Lakshminarayanan. Learning in implicit generative models. arXiv:1610.03483, 2016.</p>
+<p>[130] A. M  ̈uller. Integral probability metrics and their generating classes of functions. Advances in Applied Probability, 1997.</p>
+<p>[131] K. P. Murphy, Y. Weiss, and M. I. Jordan. Loopy belief propagation for approximate inference: An empirical study. In UAI, 1999.</p>
+<p>[132] C. Naesseth, F. Ruiz, S. Linderman, and D. M. Blei. Reparameterization gradients through acceptance-rejection sampling algorithms. In AISTATS, 2017.</p>
+<p>[133] S. Nakajima and S. Watanabe. Variational bayes solution of linear neural networks and its generalization performance. Neural Computation, 19(4), 2007.</p>
+<p>[134] E. Nalisnick and P. Smyth. Stick-breaking variational autoencoders. In ICLR, 2017.</p>
+<p>[135] R. Nallapati, W. Cohen, and J. Lafferty. Parallelized variational em for latent dirichlet allocation: An experimental evaluation of speed and scalability. In ICDM WS, 2007.</p>
+<p>[136] R. M. Neal. Probabilistic inference using markov chain monte carlo methods. In Technical Report, 1993.</p>
+<p>[137] R. M. Neal. Bayesian learning for neural networks, volume 118. Springer Science &amp; Business Media, 2012.</p>
+<p>[138] W. Neiswanger, C. Wang, and E. Xing. Embarrassingly parallel variational inference in nonconjugate models. arXiv:1510.04163, 2015.</p>
+<p>[139] S. Nowozin. Debiasing evidence approximations: On importance-weighted autoencoders and jackknife variational inference. In ICLR, 2018.</p>
+<p>[140] C.J. Oates, M. Girolami, and N. Chopin. Control functionals for monte carlo integration. Journal of the Royal Statistical Society, 79(3):695–718, 2017.</p>
+<p>[141] M. Opper, M. Fraccaro, U. Paquet, A. Susemihl, and O. Winther. Perturbation theory for variational inference. NIPS WS, 2015.</p>
+<p>[142] M. Opper, U. Paquet, and O. Winther. Perturbative corrections for approximate inference in gaussian latent variable models. JMLR, 14(1), 2013.</p>
+<p>[143] M. Opper and D. Saad. Advanced mean field methods: Theory and practice. MIT press, 2001.</p>
+<p>[144] M. Opper and O. Winther. A mean field algorithm for bayes learning in large feed-forward neural networks. In NIPS, 1996. 2.</p>
+<p>[145] M. Opper and O. Winther. Tractable approximations for probabilistic models: The adaptive thouless-andersonpalmer mean field approach. Physical Review Letters, 86(17), 2001.</p>
+<p>[146] J. Paisley, D. M. Blei, and M. I. Jordan. Variational bayesian inference with stochastic search. In ICML, 2012.</p>
+<p>[147] G. Parisi. Statistical field theory. Addison-Wesley, 1988.</p>
+<p>[148] D Perekrestenko, V Cevher, and M Jaggi. Faster coordinate descent via adaptive importance sampling. In AISTATS, 2017.</p>
+<p>[149] C. Peterson and J. R. Anderson. A mean field theory learning algorithm for neural networks. Complex systems, 1, 1987.</p>
+<p>[150] T Plefka. Convergence condition of the TAP equation for the infinite-ranged ising spin glass model. Journal of Physics A: Mathematical and general, 15(6), 1982.</p>
+<p>[151] I. Porteous, D. Newman, A. Ihler, A. Asuncion, P. Smyth, and M. Welling. Fast collapsed gibbs sampling for latent dirichlet allocation. 2008.</p>
+<p>[152] T. Rainforth, R. Cornish, H. Yang, A. Warrington, and F. Wood. On Nesting Monte Carlo Estimators. In ICML, 2018.</p>
+<p>[153] T. Rainforth, A. R. Kosiorek, T. A. Le, C. J. Maddison, M. Igl, F. Wood, and Y. W. Teh. Tighter variational bounds are not necessarily better. In ICML, 2018.</p>
+<p>[154] R. Ranganath, S. Gerrish, and D. Blei. Black box variational inference. In AISTATS, 2014.</p>
+<p>[155] R. Ranganath, D. Tran, J. Altosaar, and D. M. Blei. Operator variational inference. In NIPS. 2016.</p>
+<p>[156] R. Ranganath, D. Tran, and D. M. Blei. Hierarchical variational models. In ICML, 2016.</p>
+<p>[157] R. Ranganath, C. Wang, D. Blei, and E. Xing. An adaptive learning rate for Stochastic Variational Inference. In ICML, 2013.</p>
+<p>[158] J. Raymond, A. Manoel, and M. Opper. Expectation propagation. arXiv:1409.6179, 2014.</p>
+<p>[159] D. Rezende and S. Mohamed. Variational Inference with Normalizing Flows. In ICML, 2015.</p>
+<p>[160] D. J. Rezende, S. Mohamed, and D. Wierstra. Stochastic backpropagation and approximate inference in deep generative models. In ICML, 2014.</p>
+<p>[161] H. Robbins and S. Monro. A stochastic approximation method. The annals of mathematical statistics, 1951.</p>
+<p>[162] G. Roeder, Y. Wu, and D. Duvenaud. Sticking the landing: An asymptotically zero-variance gradient estimator for variational inference. In NIPS, 2017.</p>
+<p>[163] J. T. Rolfe. Discrete variational autoencoders. In ICLR, 2017.</p>
+<p>[164] K. Rose, E. Gurewitz, and G. Fox. A deterministic annealing approach to clustering. Pattern Recognition Letters, 11(9), 1990.</p>
+<p>[165] S. M. Ross. Simulation. Elsevier, 2006.</p>
+<p>[166] F. J.R. Ruiz, M. K. Titsias, and D. M. Blei. The generalized reparameterization gradient. In NIPS. 2016.</p>
+<p>[167] F. J.R. Ruiz, M. K. Titsias, and D. M. Blei. Overdispersed black-box variational inference. In UAI, 2016.</p>
+<p>[168] A. Saeedi, M. D. Hoffman, S. J. DiVerdi, A. Ghandeharioun, M. J. Johnson, and R. P. Adams. Multimodal prediction and personalization of photo edits with deep generative models. arXiv:1704.04997, 2017.</p>
+<p>[169] T. Salimans, D. P. Kingma, and M. Welling. Markov chain monte carlo and variational inference: Bridging the gap. In ICML, 2015.</p>
+<p>[170] T. Salimans and D. A. Knowles. Fixed-form variational posterior approximation through stochastic linear regression. Bayesian Analysis, 8(4), 2013.</p>
+<p>[171] M. Sato. Online model selection based on the variational Bayes. Neural Computation, 13(7):1649–1681, 2001.</p>
+<p>[172] L. K. Saul, T. Jaakkola, and M. I. Jordan. Mean field theory for sigmoid belief networks. Journal of artificial intelligence research, 4(1), 1996.</p>
+<p>[173] J. Schulman, S. Levine, P. Abbeel, M. Jordan, and P. Moritz. Trust region policy optimization. In ICML, 2015.</p>
+<p>[174] M. Seeger. Expectation propagation for exponential families. Technical report, 2005.</p>
+<p>[175] A. Shah, D. A. Knowles, and Z. Ghahramani. An Empirical Study of Stochastic Variational Algorithms for the Beta Bernoulli Process. In ICML, 2015.</p>
+<p>[176] J. Shi, J. Chen, J. Zhu, S. Sun, Y. Luo, Yihong Gu, and Yuhao Zhou. Zhusuan: A library for bayesian deep learning. arXiv:1709.05870, 2017.</p>
+<p>[177] E. Snelson and Z. Ghahramani. Sparse gaussian processes using pseudo-inputs. NIPS, 18, 2006.</p>
+<p>[178] C. K. Sønderby, T. Raiko, L. Maaløe, S. K. Sønderby, and O. Winther. How to train deep variational autoencoders and probabilistic ladder networks. In ICML, 2016.</p>
+<p>[179] B. K. Sriperumbudur, K. Fukumizu, A. Gretton, B. Sch  ̈olkopf, and G. RG. Lanckriet. On integral probability metrics,\phi-divergences and binary classification. arXiv preprint arXiv:0901.2698, 2009.</p>
+<p>[180] A. Srivastava and C. Sutton. Autoencoding variational inference for topic models. In ICLR, 2017.</p>
+<p>[181] C. Stein. A bound for the error in the normal approximation to the distribution of a sum of dependent random variables. In Berkeley Symposium on Mathematical Statistics and Probability, 1972.</p>
+<p>[182] J. Sung, Z. Ghahramani, and S. Y. Bang. Latent-space variational bayes. TPAMI, 30(12), 2008.</p>
+<p>[183] R. S. Sutton and A. G. Barto. Reinforcement learning: An introduction, volume 1. MIT press Cambridge, 1998.</p>
+<p>[184] L. SL. Tan. Stochastic variational inference for largescale discrete choice models using adaptive batch sizes. Statistics and Computing, 27(1):237–257, 2017.</p>
+<p>[185] T. Tanaka. Estimation of third-order correlations within mean field approximation. In NIPS, 1998.</p>
+<p>[186] T. Tanaka. A theory of mean field approximation. In NIPS, 1999.</p>
+<p>[187] T. Tanaka. Information geometry of mean-field approximation. Neural Computation, 12(8), 2000.</p>
+<p>[188] Y. W. Teh, D. Newman, and M. Welling. A collapsed variational Bayesian inference algorithm for latent Dirichlet allocation. In NIPS, 2006.</p>
+<p>[189] L. Theis and M. Hoffman. A Trust-region Method for Stochastic Variational Inference with Applications to Streaming Data. In ICML, 2015.</p>
+<p>[190] D.J. Thouless, P. W. Anderson, and R. G. Palmer. Solution of ’solvable model of a spin glass’. Philosophical Magazine, 35(3), 1977.</p>
+<p>[191] T. Tieleman and G. Hinton. Lecture 6.5-rmsprop: Divide the gradient by a running average of its recent magnitude. COURSERA: Neural networks for machine learning, 4(2), 2012.</p>
+<p>[192] L. Tierney and J.B. Kadane. Accurate approximations for posterior moments and marginal densities. Journal of the american statistical association, 81(393), 1986.</p>
+<p>[193] N. Tishby, F. C. Pereira, and W. Bialek. The information bottleneck method. physics/0004057, 2000.</p>
+<p>[194] M. Titsias and M. L ́azaro-Gredilla. Local Expectation Gradients for Black Box Variational Inference. In NIPS, 2015.</p>
+<p>[195] M. K. Titsias. Variational learning of inducing variables in sparse gaussian processes. In AISTATS, 2009.</p>
+<p>[196] M. K. Titsias. Learning model reparametrizations: Implicit variational inference by fitting mcmc distributions. arXiv:1708.01529, 2017.</p>
+<p>[197] M.K. Titsias and M. L ́azaro-Gredilla. Variational heteroscedastic gaussian process regression. In ICML, 2011.</p>
+<p>[198] D. Tolpin, J. W. van de Meent, H. Yang, and F. Wood. Design and implementation of probabilistic programming language anglican. arXiv:1608.05263, 2016. 2.</p>
+<p>[199] D. Tran, D. M. Blei, and E. M. Airoldi. Copula variational inference. In NIPS, 2015.</p>
+<p>[200] D. Tran, A. Kucukelbir, A. B. Dieng, M. Rudolph, D. Liang, and D. M. Blei. Edward: A library for probabilistic modeling, inference, and criticism. arXiv:1610.09787, 2016.</p>
+<p>[201] D. Tran, R. Ranganath, and D. M. Blei. The Variational Gaussian Process. stat, 1050, 2016.</p>
+<p>[202] D. Tran, R. Ranganath, and D. M. Blei. Hierarchical implicit models and likelihood-free variational inference. arXiv:1702.08896, 2017.</p>
+<p>[203] G. Tucker, A. Mnih, C.J. Maddison, J. Lawson, and J. Sohl-Dickstein. REBAR: Low-variance, unbiased gradient estimates for discrete latent variable models. In NIPS, 2017.</p>
+<p>[204] M. J. Wainwright, T. S. Jaakkola, and A. S. Willsky. A new class of upper bounds on the log partition function. IEEE Transactions on Information Theory, 51(7), 2005.</p>
+<p>[205] M. J. Wainwright and M. I. Jordan. Graphical models, exponential families, and variational inference. Foundations and Trends R©in Machine Learning, 1(1-2), 2008.</p>
+<p>[206] C. Wang, D. Blei, and L. Fei-Fei. Simultaneous image classification and annotation. In CVPR, 2009.</p>
+<p>[207] C. Wang and D. M. Blei. Variational inference in nonconjugate models. JMLR, 14(Apr), 2013.</p>
+<p>[208] C. Wang, X. Chen, A. J. Smola, and E. P. Xing. Variance reduction for stochastic gradient optimization. In NIPS, 2013.</p>
+<p>[209] C. Wang, J. Paisley, and D. M. Blei. Online variational inference for the hierarchical dirichlet process. In AISTATS, 2011.</p>
+<p>[210] D. Wang and Q. Liu. Learning to draw samples: With application to amortized MLE for generative adversarial learning. arXiv:1611.01722, 2016.</p>
+<p>[211] Y. Wang, G. Williams, E. Theodorou, and L. Song. Variational policy for guiding point processes. In ICML, 2017.</p>
+<p>[212] Y. X. Wang, A. Kucukelbir, and D. M. Blei. Robust Probabilistic Modeling with Bayesian Data Reweighting. In ICML, 2017.</p>
+<p>[213] Yixin Wang and David M Blei. Frequentist consistency of variational bayes. 2018.</p>
+<p>[214] M. Welling and Y. W. Teh. Bayesian learning via stochastic gradient langevin dynamics. In ICML, 2011.</p>
+<p>[215] R. J. Williams. Simple statistical gradient-following algorithms for connectionist reinforcement learning. Machine learning, 8(3-4):229–256, 1992.</p>
+<p>[216] J. Winn and C. M. Bishop. Variational message passing. JMLR, 6, 2005.</p>
+<p>[217] M. Yin and M. Zhou. Semi-implicit variational inference. In ICML, 2018.</p>
+<p>[218] M.D. Zeiler. Adadelta: an adaptive learning rate method. arXiv:1212.5701, 2012.</p>
+<p>[219] K. Zhai, J. Boyd-Graber, N. Asadi, and M. L. Alkhouja. Mr. lda: A flexible large scale topic modeling package using variational inference in mapreduce. In WWW, 2012.</p>
+<p>[220] C. Zhang. Structured Representation Using Latent Variable Models. PhD thesis, KTH Royal Institute of Technology, 2016.</p>
+<p>[221] C. Zhang, R. Bamler, M. Opper, and S. Mandt. Perturbative black box variational inference. In NIPS, 2017.</p>
+<p>[222] C. Zhang, C. H. Ek, X. Gratal, F. T. Pokorny, and H. Kjellstr  ̈om. Supervised hierarchical Dirichlet processes with variational inference. In ICCV WS, 2013.</p>
+<p>[223] C. Zhang, H. Kjellstrom, and S. Mandt. Determinantal point processes for mini-batch diversification. In UAI, 2017.</p>
+<p>[224] C. Zhang, C.  ̈Oztireli, S. Mandt, and G. Salvi. Active mini-batch sampling using repulsive point processes. arXiv:1804.02772, 2018.</p>
+<p>[225] P.L. Zhao and T. Zhang. Accelerating minibatch stochastic gradient descent using stratified sampling. arXiv:1405.3080, 2014.</p>
+<p>[226] P.L. Zhao and T. Zhang. Stochastic optimization with importance sampling for regularized loss minimization. In ICML, 2015.</p>
+<p>[227] S. Zhao, J. Song, and S. Ermon. Towards deeper understanding of variational autoencoding models. CoRR, abs/1702.08658, 2017.</p>
+<p>[228] S.D. Zhe, K.C. Lee, K. Zhang, and J. Neville. Online spike-and-slab inference with stochastic expectation propagation. In NIPS WS, 2016.</p>
+<p>[229] H. Zhu and R. Rohwer. Information geometric measurements of generalisation. Technical report, 1995.</p>
 </div>
 </div>
 

@@ -702,7 +702,7 @@ x_{2}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_2078/2438433875.py:43: MatplotlibDeprecationWarning: Calling gca() with keyword arguments was deprecated in Matplotlib 3.4. Starting two minor releases later, gca() will take no keyword arguments. The gca() function should only be used to get the current axes, or if no axes exist, create new axes with default keyword arguments. To create a new axes with non-default arguments, use plt.axes() or plt.subplot().
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1845/2438433875.py:43: MatplotlibDeprecationWarning: Calling gca() with keyword arguments was deprecated in Matplotlib 3.4. Starting two minor releases later, gca() will take no keyword arguments. The gca() function should only be used to get the current axes, or if no axes exist, create new axes with default keyword arguments. To create a new axes with non-default arguments, use plt.axes() or plt.subplot().
   ax = fig.gca(projection=&#39;3d&#39;)
 </pre></div>
 </div>
@@ -872,125 +872,82 @@ cov(x_i, x_j)=\exp\left(-~\frac{(x_i-x_j)^2}{2}\right)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 3600x2400 with 0 Axes&gt;
-</pre></div>
-</div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2078</span><span class="o">/</span><span class="mf">1931245098.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1845</span><span class="o">/</span><span class="mf">1931245098.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">19</span>     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Xshow</span><span class="p">,</span> <span class="n">f_prior</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markeredgewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span> 
 <span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;200 samples of the 200-D gaussian kernelized prior&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="c1">#plt.axis([0, 1, -3, 3])</span>
-<span class="ne">---&gt; </span><span class="mi">23</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="c1">#plt.savefig(&#39;priorT.png&#39;, bbox_inches=&#39;tight&#39;, dpi=300)</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/pyplot.py</span> in <span class="ni">show</span><span class="nt">(*args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">366</span>     <span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">367</span><span class="sd">     _warn_if_gui_out_of_main_thread()</span>
-<span class="ne">--&gt; </span><span class="mi">368</span><span class="sd">     return _backend_mod.show(*args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">369</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">370</span><span class="sd"> </span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/pyplot.py</span> in <span class="ni">plot</span><span class="nt">(scalex, scaley, data, *args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2755</span> <span class="nd">@_copy_docstring_and_deprecators</span><span class="p">(</span><span class="n">Axes</span><span class="o">.</span><span class="n">plot</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2756</span> <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">scalex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">scaley</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">2757</span>     <span class="k">return</span> <span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">2758</span>         <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">scalex</span><span class="o">=</span><span class="n">scalex</span><span class="p">,</span> <span class="n">scaley</span><span class="o">=</span><span class="n">scaley</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">2759</span>         <span class="o">**</span><span class="p">({</span><span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">data</span><span class="p">}</span> <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib_inline/backend_inline.py</span> in <span class="ni">show</span><span class="nt">(close, block)</span>
-<span class="g g-Whitespace">     </span><span class="mi">39</span><span class="sd">     try:</span>
-<span class="g g-Whitespace">     </span><span class="mi">40</span><span class="sd">         for figure_manager in Gcf.get_all_fig_managers():</span>
-<span class="ne">---&gt; </span><span class="mi">41</span><span class="sd">             display(</span>
-<span class="g g-Whitespace">     </span><span class="mi">42</span><span class="sd">                 figure_manager.canvas.figure,</span>
-<span class="g g-Whitespace">     </span><span class="mi">43</span><span class="sd">                 metadata=_fetch_figure_metadata(figure_manager.canvas.figure)</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/axes/_axes.py</span> in <span class="ni">plot</span><span class="nt">(self, scalex, scaley, data, *args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1632</span>         <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_lines</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)]</span>
+<span class="g g-Whitespace">   </span><span class="mi">1633</span>         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1634</span>             <span class="bp">self</span><span class="o">.</span><span class="n">add_line</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1635</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_request_autoscale_view</span><span class="p">(</span><span class="n">scalex</span><span class="o">=</span><span class="n">scalex</span><span class="p">,</span> <span class="n">scaley</span><span class="o">=</span><span class="n">scaley</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1636</span>         <span class="k">return</span> <span class="n">lines</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/IPython/core/display.py</span> in <span class="ni">display</span><span class="nt">(include, exclude, metadata, transient, display_id, *objs, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">318</span><span class="sd">             publish_display_data(data=obj, metadata=metadata, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">319</span><span class="sd">         else:</span>
-<span class="ne">--&gt; </span><span class="mi">320</span><span class="sd">             format_dict, md_dict = format(obj, include=include, exclude=exclude)</span>
-<span class="g g-Whitespace">    </span><span class="mi">321</span><span class="sd">             if not format_dict:</span>
-<span class="g g-Whitespace">    </span><span class="mi">322</span><span class="sd">                 # nothing to display (e.g. _ipython_display_ took over)</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/axes/_base.py</span> in <span class="ni">add_line</span><span class="nt">(self, line)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2279</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_set_artist_props</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2280</span>         <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">get_clip_path</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2281</span>             <span class="n">line</span><span class="o">.</span><span class="n">set_clip_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">patch</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2282</span> 
+<span class="g g-Whitespace">   </span><span class="mi">2283</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_update_line_limits</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/IPython/core/formatters.py</span> in <span class="ni">format</span><span class="nt">(self, obj, include, exclude)</span>
-<span class="g g-Whitespace">    </span><span class="mi">178</span><span class="sd">             md = None</span>
-<span class="g g-Whitespace">    </span><span class="mi">179</span><span class="sd">             try:</span>
-<span class="ne">--&gt; </span><span class="mi">180</span><span class="sd">                 data = formatter(obj)</span>
-<span class="g g-Whitespace">    </span><span class="mi">181</span><span class="sd">             except:</span>
-<span class="g g-Whitespace">    </span><span class="mi">182</span><span class="sd">                 # FIXME: log the exception</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/artist.py</span> in <span class="ni">set_clip_path</span><span class="nt">(self, path, transform)</span>
+<span class="g g-Whitespace">    </span><span class="mi">788</span>             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">Rectangle</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">789</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">clipbox</span> <span class="o">=</span> <span class="n">TransformedBbox</span><span class="p">(</span><span class="n">Bbox</span><span class="o">.</span><span class="n">unit</span><span class="p">(),</span>
+<span class="ne">--&gt; </span><span class="mi">790</span>                                                <span class="n">path</span><span class="o">.</span><span class="n">get_transform</span><span class="p">())</span>
+<span class="g g-Whitespace">    </span><span class="mi">791</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">_clippath</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">792</span>                 <span class="n">success</span> <span class="o">=</span> <span class="kc">True</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/decorator.py</span> in <span class="ni">fun</span><span class="nt">(*args, **kw)</span>
-<span class="g g-Whitespace">    </span><span class="mi">230</span><span class="sd">             if not kwsyntax:</span>
-<span class="g g-Whitespace">    </span><span class="mi">231</span><span class="sd">                 args, kw = fix(args, kw, sig)</span>
-<span class="ne">--&gt; </span><span class="mi">232</span><span class="sd">             return caller(func, *(extras + args), **kw)</span>
-<span class="g g-Whitespace">    </span><span class="mi">233</span><span class="sd">     fun.__name__ = func.__name__</span>
-<span class="g g-Whitespace">    </span><span class="mi">234</span><span class="sd">     fun.__doc__ = func.__doc__</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/patches.py</span> in <span class="ni">get_transform</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">276</span>     <span class="k">def</span> <span class="nf">get_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">277</span>         <span class="sd">&quot;&quot;&quot;Return the `~.transforms.Transform` applied to the `Patch`.&quot;&quot;&quot;</span>
+<span class="ne">--&gt; </span><span class="mi">278</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_patch_transform</span><span class="p">()</span> <span class="o">+</span> <span class="n">artist</span><span class="o">.</span><span class="n">Artist</span><span class="o">.</span><span class="n">get_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">279</span> 
+<span class="g g-Whitespace">    </span><span class="mi">280</span>     <span class="k">def</span> <span class="nf">get_data_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/IPython/core/formatters.py</span> in <span class="ni">catch_format_error</span><span class="nt">(method, self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">222</span><span class="sd">     &quot;&quot;&quot;</span><span class="n">show</span> <span class="n">traceback</span> <span class="n">on</span> <span class="n">failed</span> <span class="nb">format</span> <span class="n">call</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">223</span><span class="s2">     try:</span>
-<span class="ne">--&gt; </span><span class="mi">224</span><span class="s2">         r = method(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">225</span><span class="s2">     except NotImplementedError:</span>
-<span class="g g-Whitespace">    </span><span class="mi">226</span><span class="s2">         # don&#39;t warn on NotImplementedErrors</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/patches.py</span> in <span class="ni">get_patch_transform</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">751</span>         <span class="c1"># transformation member variable.</span>
+<span class="g g-Whitespace">    </span><span class="mi">752</span>         <span class="n">bbox</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bbox</span><span class="p">()</span>
+<span class="ne">--&gt; </span><span class="mi">753</span>         <span class="k">return</span> <span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">BboxTransformTo</span><span class="p">(</span><span class="n">bbox</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">754</span>                 <span class="o">+</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Affine2D</span><span class="p">()</span><span class="o">.</span><span class="n">rotate_deg_around</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">755</span>                     <span class="n">bbox</span><span class="o">.</span><span class="n">x0</span><span class="p">,</span> <span class="n">bbox</span><span class="o">.</span><span class="n">y0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">angle</span><span class="p">))</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/IPython/core/formatters.py</span> in <span class="ni">__call__</span><span class="nt">(self, obj)</span>
-<span class="g g-Whitespace">    </span><span class="mi">339</span><span class="s2">                 pass</span>
-<span class="g g-Whitespace">    </span><span class="mi">340</span><span class="s2">             else:</span>
-<span class="ne">--&gt; </span><span class="mi">341</span><span class="s2">                 return printer(obj)</span>
-<span class="g g-Whitespace">    </span><span class="mi">342</span><span class="s2">             # Finally look for special method names</span>
-<span class="g g-Whitespace">    </span><span class="mi">343</span><span class="s2">             method = get_real_method(obj, self.print_method)</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/transforms.py</span> in <span class="ni">__init__</span><span class="nt">(self, boxout, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2592</span>             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;boxout&#39; must be bbox&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2593</span> 
+<span class="ne">-&gt; </span><span class="mi">2594</span>         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2595</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_boxout</span> <span class="o">=</span> <span class="n">boxout</span>
+<span class="g g-Whitespace">   </span><span class="mi">2596</span>         <span class="bp">self</span><span class="o">.</span><span class="n">set_children</span><span class="p">(</span><span class="n">boxout</span><span class="p">)</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/IPython/core/pylabtools.py</span> in <span class="ni">print_figure</span><span class="nt">(fig, fmt, bbox_inches, base64, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">149</span><span class="s2">         FigureCanvasBase(fig)</span>
-<span class="g g-Whitespace">    </span><span class="mi">150</span><span class="s2"> </span>
-<span class="ne">--&gt; </span><span class="mi">151</span><span class="s2">     fig.canvas.print_figure(bytes_io, **kw)</span>
-<span class="g g-Whitespace">    </span><span class="mi">152</span><span class="s2">     data = bytes_io.getvalue()</span>
-<span class="g g-Whitespace">    </span><span class="mi">153</span><span class="s2">     if fmt == &#39;svg&#39;:</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/transforms.py</span> in <span class="ni">__init__</span><span class="nt">(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1782</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1783</span>     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="ne">-&gt; </span><span class="mi">1784</span>         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1785</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_inverted</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1786</span> 
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/backend_bases.py</span> in <span class="ni">print_figure</span><span class="nt">(self, filename, dpi, facecolor, edgecolor, orientation, format, bbox_inches, pad_inches, bbox_extra_artists, backend, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2297</span><span class="s2">             if bbox_inches:</span>
-<span class="g g-Whitespace">   </span><span class="mi">2298</span><span class="s2">                 if bbox_inches == &quot;tight&quot;:</span>
-<span class="ne">-&gt; </span><span class="mi">2299</span><span class="s2">                     bbox_inches = self.figure.get_tightbbox(</span>
-<span class="g g-Whitespace">   </span><span class="mi">2300</span><span class="s2">                         renderer, bbox_extra_artists=bbox_extra_artists)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2301</span><span class="s2">                     if pad_inches is None:</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/figure.py</span> in <span class="ni">get_tightbbox</span><span class="nt">(self, renderer, bbox_extra_artists)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1630</span><span class="s2"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">1631</span><span class="s2">         for a in artists:</span>
-<span class="ne">-&gt; </span><span class="mi">1632</span><span class="s2">             bbox = a.get_tightbbox(renderer)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1633</span><span class="s2">             if bbox is not None and (bbox.width != 0 or bbox.height != 0):</span>
-<span class="g g-Whitespace">   </span><span class="mi">1634</span><span class="s2">                 bb.append(bbox)</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/artist.py</span> in <span class="ni">get_tightbbox</span><span class="nt">(self, renderer)</span>
-<span class="g g-Whitespace">    </span><span class="mi">357</span><span class="s2">             clip_box = self.get_clip_box()</span>
-<span class="g g-Whitespace">    </span><span class="mi">358</span><span class="s2">             if clip_box is not None:</span>
-<span class="ne">--&gt; </span><span class="mi">359</span><span class="s2">                 bbox = Bbox.intersection(bbox, clip_box)</span>
-<span class="g g-Whitespace">    </span><span class="mi">360</span><span class="s2">             clip_path = self.get_clip_path()</span>
-<span class="g g-Whitespace">    </span><span class="mi">361</span><span class="s2">             if clip_path is not None and bbox is not None:</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/transforms.py</span> in <span class="ni">intersection</span><span class="nt">(bbox1, bbox2)</span>
-<span class="g g-Whitespace">    </span><span class="mi">680</span><span class="s2">         x1 = np.minimum(bbox1.xmax, bbox2.xmax)</span>
-<span class="g g-Whitespace">    </span><span class="mi">681</span><span class="s2">         y0 = np.maximum(bbox1.ymin, bbox2.ymin)</span>
-<span class="ne">--&gt; </span><span class="mi">682</span><span class="s2">         y1 = np.minimum(bbox1.ymax, bbox2.ymax)</span>
-<span class="g g-Whitespace">    </span><span class="mi">683</span><span class="s2">         return Bbox([[x0, y0], [x1, y1]]) if x0 &lt;= x1 and y0 &lt;= y1 else None</span>
-<span class="g g-Whitespace">    </span><span class="mi">684</span><span class="s2"> </span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/transforms.py</span> in <span class="ni">ymax</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">342</span><span class="s2">     def ymax(self):</span>
-<span class="g g-Whitespace">    </span><span class="mi">343</span><span class="s2">         &quot;&quot;&quot;</span><span class="n">The</span> <span class="n">top</span> <span class="n">edge</span> <span class="n">of</span> <span class="n">the</span> <span class="n">bounding</span> <span class="n">box</span><span class="o">.</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">344</span><span class="s2">         return np.max(self.get_points()[:, 1])</span>
-<span class="g g-Whitespace">    </span><span class="mi">345</span><span class="s2"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">346</span><span class="s2">     @property</span>
-
-<span class="nn">&lt;__array_function__ internals&gt;</span> in <span class="ni">amax</span><span class="nt">(*args, **kwargs)</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/numpy/core/fromnumeric.py</span> in <span class="ni">amax</span><span class="nt">(a, axis, out, keepdims, initial, where)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2752</span><span class="s2">     5</span>
-<span class="g g-Whitespace">   </span><span class="mi">2753</span><span class="s2">     &quot;&quot;&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">2754</span>     <span class="k">return</span> <span class="n">_wrapreduction</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">2755</span>                           <span class="n">keepdims</span><span class="o">=</span><span class="n">keepdims</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="n">initial</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="n">where</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2756</span> 
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/numpy/core/fromnumeric.py</span> in <span class="ni">_wrapreduction</span><span class="nt">(obj, ufunc, method, axis, dtype, out, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">67</span> 
-<span class="g g-Whitespace">     </span><span class="mi">68</span> 
-<span class="ne">---&gt; </span><span class="mi">69</span> <span class="k">def</span> <span class="nf">_wrapreduction</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">ufunc</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="nn">     70     passkwargs = {k: v for k, v</span> in <span class="ni">kwargs.items</span><span class="nt">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">71</span>                   <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">_NoValue</span><span class="p">}</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/transforms.py</span> in <span class="ni">__init__</span><span class="nt">(self, shorthand_name)</span>
+<span class="g g-Whitespace">    </span><span class="mi">119</span>         <span class="c1"># computed for the first time.</span>
+<span class="g g-Whitespace">    </span><span class="mi">120</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_invalid</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="ne">--&gt; </span><span class="mi">121</span>         <span class="bp">self</span><span class="o">.</span><span class="n">_shorthand_name</span> <span class="o">=</span> <span class="n">shorthand_name</span> <span class="ow">or</span> <span class="s1">&#39;&#39;</span>
+<span class="g g-Whitespace">    </span><span class="mi">122</span> 
+<span class="g g-Whitespace">    </span><span class="mi">123</span>     <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 3600x2400 with 0 Axes&gt;
 </pre></div>
 </div>
 </div>
