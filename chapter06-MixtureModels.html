@@ -584,7 +584,7 @@ p(y \mid \theta)=\sum_{i=1}^{K} w_{i} p_{i}\left(y \mid \theta_{i}\right) \tag{å
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_3019</span><span class="o">/</span><span class="mf">1412715280.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_3074</span><span class="o">/</span><span class="mf">1412715280.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">y</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="n">means</span><span class="p">[</span><span class="n">z</span><span class="p">],</span> <span class="n">sd</span><span class="o">=</span><span class="n">sd</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="n">cs_exp</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">15</span> 
 <span class="ne">---&gt; </span><span class="mi">16</span>     <span class="n">trace_kg</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
@@ -694,103 +694,33 @@ p(y \mid \theta)=\sum_{i=1}^{K} w_{i} p_{i}\left(y \mid \theta_{i}\right) \tag{å
 <span class="g g-Whitespace">     </span><span class="mi">84</span><span class="sd">         return ret</span>
 <span class="g g-Whitespace">     </span><span class="mi">85</span><span class="sd"> </span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/opt.py</span> in <span class="ni">apply</span><span class="nt">(self, fgraph)</span>
-<span class="g g-Whitespace">    </span><span class="mi">243</span><span class="sd">                     nb_nodes_before = len(fgraph.apply_nodes)</span>
-<span class="g g-Whitespace">    </span><span class="mi">244</span><span class="sd">                     t0 = time.time()</span>
-<span class="ne">--&gt; </span><span class="mi">245</span><span class="sd">                     sub_prof = optimizer.optimize(fgraph)</span>
-<span class="g g-Whitespace">    </span><span class="mi">246</span><span class="sd">                     l.append(float(time.time() - t0))</span>
-<span class="g g-Whitespace">    </span><span class="mi">247</span><span class="sd">                     sub_profs.append(sub_prof)</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/opt.py</span> in <span class="ni">optimize</span><span class="nt">(self, fgraph, *args, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">81</span><span class="sd">         &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">82</span>         <span class="bp">self</span><span class="o">.</span><span class="n">add_requirements</span><span class="p">(</span><span class="n">fgraph</span><span class="p">)</span>
-<span class="ne">---&gt; </span><span class="mi">83</span>         <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">fgraph</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">84</span>         <span class="k">return</span> <span class="n">ret</span>
-<span class="g g-Whitespace">     </span><span class="mi">85</span> 
-
 <span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/opt.py</span> in <span class="ni">apply</span><span class="nt">(self, fgraph)</span>
-<span class="g g-Whitespace">   </span><span class="mi">7725</span>                 <span class="c1"># Don&#39;t try to fuse node that have already been fused.</span>
-<span class="g g-Whitespace">   </span><span class="mi">7726</span>                 <span class="k">if</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">fgraph</span><span class="o">.</span><span class="n">apply_nodes</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">7727</span>                     <span class="n">new_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">(</span><span class="n">fgraph</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">7728</span>                     <span class="k">if</span> <span class="n">new_outputs</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">7729</span>                         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_outputs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">488</span><span class="sd">                         if nb_change_no_validate &gt;= check_each_change:</span>
+<span class="g g-Whitespace">    </span><span class="mi">489</span><span class="sd">                             prof[&quot;nb_call_validate&quot;] += 1</span>
+<span class="ne">--&gt; </span><span class="mi">490</span><span class="sd">                             fgraph.validate()</span>
+<span class="g g-Whitespace">    </span><span class="mi">491</span><span class="sd">                             chk = fgraph.checkpoint()</span>
+<span class="g g-Whitespace">    </span><span class="mi">492</span><span class="sd">                             nb_change_no_validate = 0</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/opt.py</span> in <span class="ni">local_fuse</span><span class="nt">(fgraph, node)</span>
-<span class="g g-Whitespace">   </span><span class="mi">7669</span>         <span class="c1"># debug mode will be faster as it won&#39;t test all intermediate step.</span>
-<span class="g g-Whitespace">   </span><span class="mi">7670</span>         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">7671</span>             <span class="n">ret</span> <span class="o">=</span> <span class="n">local_fuse</span><span class="p">(</span><span class="n">fgraph</span><span class="p">,</span> <span class="n">new_node</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">7672</span>             <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">7673</span>                 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_node</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/toolbox.py</span> in <span class="ni">validate_</span><span class="nt">(self, fgraph)</span>
+<span class="g g-Whitespace">    </span><span class="mi">450</span><span class="sd">         t0 = time.time()</span>
+<span class="g g-Whitespace">    </span><span class="mi">451</span><span class="sd">         try:</span>
+<span class="ne">--&gt; </span><span class="mi">452</span><span class="sd">             ret = fgraph.execute_callbacks(&quot;validate&quot;)</span>
+<span class="g g-Whitespace">    </span><span class="mi">453</span><span class="sd">         except Exception as e:</span>
+<span class="g g-Whitespace">    </span><span class="mi">454</span><span class="sd">             cf = inspect.currentframe()</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/opt.py</span> in <span class="ni">local_fuse</span><span class="nt">(fgraph, node)</span>
-<span class="g g-Whitespace">   </span><span class="mi">7669</span>         <span class="c1"># debug mode will be faster as it won&#39;t test all intermediate step.</span>
-<span class="g g-Whitespace">   </span><span class="mi">7670</span>         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">7671</span>             <span class="n">ret</span> <span class="o">=</span> <span class="n">local_fuse</span><span class="p">(</span><span class="n">fgraph</span><span class="p">,</span> <span class="n">new_node</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">7672</span>             <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">7673</span>                 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_node</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/fg.py</span> in <span class="ni">execute_callbacks</span><span class="nt">(self, name, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">610</span><span class="sd">                 continue</span>
+<span class="g g-Whitespace">    </span><span class="mi">611</span><span class="sd">             tf0 = time.time()</span>
+<span class="ne">--&gt; </span><span class="mi">612</span><span class="sd">             fn(self, *args, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">613</span><span class="sd">             self.execute_callbacks_times[feature] += time.time() - tf0</span>
+<span class="g g-Whitespace">    </span><span class="mi">614</span><span class="sd">         self.execute_callbacks_time += time.time() - t0</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/opt.py</span> in <span class="ni">local_fuse</span><span class="nt">(fgraph, node)</span>
-<span class="g g-Whitespace">   </span><span class="mi">7669</span>         <span class="c1"># debug mode will be faster as it won&#39;t test all intermediate step.</span>
-<span class="g g-Whitespace">   </span><span class="mi">7670</span>         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">7671</span>             <span class="n">ret</span> <span class="o">=</span> <span class="n">local_fuse</span><span class="p">(</span><span class="n">fgraph</span><span class="p">,</span> <span class="n">new_node</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">7672</span>             <span class="k">if</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">ret</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">7673</span>                 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_node</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/opt.py</span> in <span class="ni">local_fuse</span><span class="nt">(fgraph, node)</span>
-<span class="g g-Whitespace">   </span><span class="mi">7651</span> 
-<span class="g g-Whitespace">   </span><span class="mi">7652</span>         <span class="c1"># create the composite op.</span>
-<span class="ne">-&gt; </span><span class="mi">7653</span>         <span class="n">composite_op</span> <span class="o">=</span> <span class="n">ts</span><span class="o">.</span><span class="n">Composite</span><span class="p">(</span><span class="n">s_inputs</span><span class="p">,</span> <span class="n">s_new_out</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">7654</span> 
-<span class="g g-Whitespace">   </span><span class="mi">7655</span>         <span class="c1"># create the new node.</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/scalar/basic.py</span> in <span class="ni">__init__</span><span class="nt">(self, inputs, outputs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">4148</span>             <span class="c1"># 2. We continue this partial clone with the graph in</span>
-<span class="g g-Whitespace">   </span><span class="mi">4149</span>             <span class="c1"># the inner Composite</span>
-<span class="ne">-&gt; </span><span class="mi">4150</span>             <span class="n">res2</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">compile</span><span class="o">.</span><span class="n">rebuild_collect_shared</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">4151</span>                 <span class="n">inputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">owner</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">inputs</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">4152</span>                 <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">owner</span><span class="o">.</span><span class="n">op</span><span class="o">.</span><span class="n">outputs</span><span class="p">,</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/compile/function/pfunc.py</span> in <span class="ni">rebuild_collect_shared</span><span class="nt">(outputs, inputs, replace, updates, rebuild_strict, copy_inputs_over, no_default_updates)</span>
-<span class="g g-Whitespace">    </span><span class="mi">217</span>         <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">218</span>             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">Variable</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">219</span>                 <span class="n">cloned_v</span> <span class="o">=</span> <span class="n">clone_v_get_shared_updates</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">copy_inputs_over</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">220</span>                 <span class="n">cloned_outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cloned_v</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">221</span>             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">Out</span><span class="p">):</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/compile/function/pfunc.py</span> in <span class="ni">clone_v_get_shared_updates</span><span class="nt">(v, copy_inputs_over)</span>
-<span class="g g-Whitespace">     </span><span class="mi">88</span>             <span class="k">if</span> <span class="n">owner</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">clone_d</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">89</span>                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">owner</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">90</span>                     <span class="n">clone_v_get_shared_updates</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">copy_inputs_over</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">91</span> 
-<span class="g g-Whitespace">     </span><span class="mi">92</span>                 <span class="n">clone_d</span><span class="p">[</span><span class="n">owner</span><span class="p">]</span> <span class="o">=</span> <span class="n">owner</span><span class="o">.</span><span class="n">clone_with_new_inputs</span><span class="p">(</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/compile/function/pfunc.py</span> in <span class="ni">clone_v_get_shared_updates</span><span class="nt">(v, copy_inputs_over)</span>
-<span class="g g-Whitespace">     </span><span class="mi">88</span>             <span class="k">if</span> <span class="n">owner</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">clone_d</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">89</span>                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">owner</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">90</span>                     <span class="n">clone_v_get_shared_updates</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">copy_inputs_over</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">91</span> 
-<span class="g g-Whitespace">     </span><span class="mi">92</span>                 <span class="n">clone_d</span><span class="p">[</span><span class="n">owner</span><span class="p">]</span> <span class="o">=</span> <span class="n">owner</span><span class="o">.</span><span class="n">clone_with_new_inputs</span><span class="p">(</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/compile/function/pfunc.py</span> in <span class="ni">clone_v_get_shared_updates</span><span class="nt">(v, copy_inputs_over)</span>
-<span class="g g-Whitespace">     </span><span class="mi">88</span>             <span class="k">if</span> <span class="n">owner</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">clone_d</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">89</span>                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">owner</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">90</span>                     <span class="n">clone_v_get_shared_updates</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">copy_inputs_over</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">91</span> 
-<span class="g g-Whitespace">     </span><span class="mi">92</span>                 <span class="n">clone_d</span><span class="p">[</span><span class="n">owner</span><span class="p">]</span> <span class="o">=</span> <span class="n">owner</span><span class="o">.</span><span class="n">clone_with_new_inputs</span><span class="p">(</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/compile/function/pfunc.py</span> in <span class="ni">clone_v_get_shared_updates</span><span class="nt">(v, copy_inputs_over)</span>
-<span class="g g-Whitespace">     </span><span class="mi">88</span>             <span class="k">if</span> <span class="n">owner</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">clone_d</span><span class="p">:</span>
-<span class="g g-Whitespace">     </span><span class="mi">89</span>                 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">owner</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">90</span>                     <span class="n">clone_v_get_shared_updates</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">copy_inputs_over</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">91</span> 
-<span class="g g-Whitespace">     </span><span class="mi">92</span>                 <span class="n">clone_d</span><span class="p">[</span><span class="n">owner</span><span class="p">]</span> <span class="o">=</span> <span class="n">owner</span><span class="o">.</span><span class="n">clone_with_new_inputs</span><span class="p">(</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/compile/function/pfunc.py</span> in <span class="ni">clone_v_get_shared_updates</span><span class="nt">(v, copy_inputs_over)</span>
-<span class="g g-Whitespace">     </span><span class="mi">73</span>     <span class="n">shared_inputs</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="g g-Whitespace">     </span><span class="mi">74</span> 
-<span class="ne">---&gt; </span><span class="mi">75</span>     <span class="k">def</span> <span class="nf">clone_v_get_shared_updates</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">copy_inputs_over</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">76</span>         <span class="s2">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">77</span><span class="s2">         Clones a variable and its inputs recursively until all are in clone_d.</span>
+<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/graph/destroyhandler.py</span> in <span class="ni">validate</span><span class="nt">(self, fgraph)</span>
+<span class="g g-Whitespace">    </span><span class="mi">640</span><span class="sd">         &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">641</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">destroyers</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">642</span>             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">algo</span> <span class="o">==</span> <span class="s2">&quot;fast&quot;</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">643</span>                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fail_validate</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">644</span>                     <span class="n">app_err_pairs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fail_validate</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
