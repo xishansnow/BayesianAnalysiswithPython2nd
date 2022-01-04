@@ -770,18 +770,18 @@ P ( x ) = \int _ { z } P ( x , z ) d z \tag{A.2 }
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1796</span><span class="o">/</span><span class="mf">268937468.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1759</span><span class="o">/</span><span class="mf">268937468.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">posterior</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">15000</span><span class="p">,</span> <span class="n">mu_init</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">posterior</span><span class="p">)</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;mu&#39;</span><span class="p">);</span>
 
-<span class="nn">/tmp/ipykernel_1796/2334080286.py</span> in <span class="ni">sampler</span><span class="nt">(data, samples, mu_init, proposal_width, plot, mu_prior_mu, mu_prior_sd)</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>        <span class="c1"># 计算当前值和建议值的似然 Compute likelihood by multiplying probabilities of each data point</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>        <span class="n">likelihood_current</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_current</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">prod</span><span class="p">()</span>
-<span class="ne">---&gt; </span><span class="mi">11</span>        <span class="n">likelihood_proposal</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_proposal</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">prod</span><span class="p">()</span>
+<span class="nn">/tmp/ipykernel_1759/2334080286.py</span> in <span class="ni">sampler</span><span class="nt">(data, samples, mu_init, proposal_width, plot, mu_prior_mu, mu_prior_sd)</span>
 <span class="g g-Whitespace">     </span><span class="mi">12</span> 
 <span class="g g-Whitespace">     </span><span class="mi">13</span>        <span class="c1"># 计算当前值和建议值的先验概率 Compute prior probability of current and proposed mu</span>
+<span class="ne">---&gt; </span><span class="mi">14</span>        <span class="n">prior_current</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_prior_mu</span><span class="p">,</span> <span class="n">mu_prior_sd</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">mu_current</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>        <span class="n">prior_proposal</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_prior_mu</span><span class="p">,</span> <span class="n">mu_prior_sd</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">mu_proposal</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> 
 
 <span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">__call__</span><span class="nt">(self, *args, **kwds)</span>
 <span class="g g-Whitespace">    </span><span class="mi">863</span> 
@@ -812,18 +812,11 @@ P ( x ) = \int _ { z } P ( x , z ) d z \tag{A.2 }
 <span class="g g-Whitespace">   </span><span class="mi">1741</span><span class="s2">     def __getstate__(self):</span>
 
 <span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">_construct_doc</span><span class="nt">(self, docdict, shapes_vals)</span>
-<span class="g g-Whitespace">    </span><span class="mi">822</span><span class="s2">                 self.__doc__ = self.__doc__.replace(&quot;</span><span class="si">%(shapes)s</span><span class="s2">, &quot;, &quot;&quot;)</span>
-<span class="g g-Whitespace">    </span><span class="mi">823</span><span class="s2">             try:</span>
-<span class="ne">--&gt; </span><span class="mi">824</span><span class="s2">                 self.__doc__ = doccer.docformat(self.__doc__, tempdict)</span>
-<span class="g g-Whitespace">    </span><span class="mi">825</span><span class="s2">             except TypeError as e:</span>
-<span class="g g-Whitespace">    </span><span class="mi">826</span><span class="s2">                 raise Exception(&quot;Unable to construct docstring for &quot;</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/scipy/_lib/doccer.py</span> in <span class="ni">docformat</span><span class="nt">(docstring, docdict)</span>
-<span class="g g-Whitespace">     </span><span class="mi">59</span><span class="s2">         try:</span>
-<span class="g g-Whitespace">     </span><span class="mi">60</span><span class="s2">             newlines = [lines[0]]</span>
-<span class="ne">---&gt; </span><span class="mi">61</span><span class="s2">             for line in lines[1:]:</span>
-<span class="g g-Whitespace">     </span><span class="mi">62</span><span class="s2">                 newlines.append(indent+line)</span>
-<span class="g g-Whitespace">     </span><span class="mi">63</span><span class="s2">             indented[name] = &#39;</span><span class="se">\n</span><span class="s2">&#39;.join(newlines)</span>
+<span class="g g-Whitespace">    </span><span class="mi">800</span><span class="s2">         if shapes_vals is None:</span>
+<span class="g g-Whitespace">    </span><span class="mi">801</span><span class="s2">             shapes_vals = ()</span>
+<span class="ne">--&gt; </span><span class="mi">802</span><span class="s2">         vals = &#39;, &#39;.join(&#39;</span><span class="si">%.3g</span><span class="s2">&#39; % val for val in shapes_vals)</span>
+<span class="g g-Whitespace">    </span><span class="mi">803</span><span class="s2">         tempdict[&#39;vals&#39;] = vals</span>
+<span class="g g-Whitespace">    </span><span class="mi">804</span><span class="s2"> </span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>

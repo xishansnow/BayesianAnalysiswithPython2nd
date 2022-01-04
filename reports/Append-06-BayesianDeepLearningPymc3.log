@@ -46,14 +46,112 @@ ax.set(xlabel='X', ylabel='Y', title='Toy binary classification data set');
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m/tmp/ipykernel_1950/3715064878.py[0m in [0;36m<module>[0;34m[0m
-[1;32m     11[0m [0;32mfrom[0m [0msklearn[0m [0;32mimport[0m [0mdatasets[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     12[0m [0;32mfrom[0m [0msklearn[0m[0;34m.[0m[0mpreprocessing[0m [0;32mimport[0m [0mscale[0m[0;34m[0m[0;34m[0m[0m
-[0;32m---> 13[0;31m [0;32mfrom[0m [0msklearn[0m[0;34m.[0m[0mcross_validation[0m [0;32mimport[0m [0mtrain_test_split[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     14[0m [0;32mfrom[0m [0msklearn[0m[0;34m.[0m[0mdatasets[0m [0;32mimport[0m [0mmake_moons[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     15[0m [0;34m[0m[0m
+[0;31mNoSectionError[0m                            Traceback (most recent call last)
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py[0m in [0;36mfetch_val_for_key[0;34m(self, key, delete_key)[0m
+[1;32m    237[0m             [0;32mtry[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 238[0;31m                 [0;32mreturn[0m [0mself[0m[0;34m.[0m[0m_theano_cfg[0m[0;34m.[0m[0mget[0m[0;34m([0m[0msection[0m[0;34m,[0m [0moption[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    239[0m             [0;32mexcept[0m [0mInterpolationError[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mModuleNotFoundError[0m: No module named 'sklearn.cross_validation'
-ModuleNotFoundError: No module named 'sklearn.cross_validation'
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/configparser.py[0m in [0;36mget[0;34m(self, section, option, raw, vars, fallback)[0m
+[1;32m    780[0m         [0;32mtry[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 781[0;31m             [0md[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0m_unify_values[0m[0;34m([0m[0msection[0m[0;34m,[0m [0mvars[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    782[0m         [0;32mexcept[0m [0mNoSectionError[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/configparser.py[0m in [0;36m_unify_values[0;34m(self, section, vars)[0m
+[1;32m   1148[0m             [0;32mif[0m [0msection[0m [0;34m!=[0m [0mself[0m[0;34m.[0m[0mdefault_section[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 1149[0;31m                 [0;32mraise[0m [0mNoSectionError[0m[0;34m([0m[0msection[0m[0;34m)[0m [0;32mfrom[0m [0;32mNone[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m   1150[0m         [0;31m# Update with the entry specific variables[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mNoSectionError[0m: No section: 'blas'
+
+During handling of the above exception, another exception occurred:
+
+[0;31mKeyError[0m                                  Traceback (most recent call last)
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py[0m in [0;36m__get__[0;34m(self, cls, type_, delete_key)[0m
+[1;32m    353[0m             [0;32mtry[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 354[0;31m                 [0mval_str[0m [0;34m=[0m [0mcls[0m[0;34m.[0m[0mfetch_val_for_key[0m[0;34m([0m[0mself[0m[0;34m.[0m[0mname[0m[0;34m,[0m [0mdelete_key[0m[0;34m=[0m[0mdelete_key[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    355[0m                 [0mself[0m[0;34m.[0m[0mis_default[0m [0;34m=[0m [0;32mFalse[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py[0m in [0;36mfetch_val_for_key[0;34m(self, key, delete_key)[0m
+[1;32m    241[0m         [0;32mexcept[0m [0;34m([0m[0mNoOptionError[0m[0;34m,[0m [0mNoSectionError[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 242[0;31m             [0;32mraise[0m [0mKeyError[0m[0;34m([0m[0mkey[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    243[0m [0;34m[0m[0m
+
+[0;31mKeyError[0m: 'blas__ldflags'
+
+During handling of the above exception, another exception occurred:
+
+[0;31mAttributeError[0m                            Traceback (most recent call last)
+[0;32m/tmp/ipykernel_1915/3715064878.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [0mget_ipython[0m[0;34m([0m[0;34m)[0m[0;34m.[0m[0mrun_line_magic[0m[0;34m([0m[0;34m'matplotlib'[0m[0;34m,[0m [0;34m'inline'[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 2[0;31m [0;32mimport[0m [0mtheano[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      3[0m [0;32mimport[0m [0mpymc3[0m [0;32mas[0m [0mpm[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0;32mimport[0m [0msklearn[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/__init__.py[0m in [0;36m<module>[0;34m[0m
+[1;32m     81[0m [0m__api_version__[0m [0;34m=[0m [0;36m1[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     82[0m [0;34m[0m[0m
+[0;32m---> 83[0;31m [0;32mfrom[0m [0mtheano[0m [0;32mimport[0m [0mscalar[0m[0;34m,[0m [0mtensor[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     84[0m from theano.compile import (
+[1;32m     85[0m     [0mIn[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/__init__.py[0m in [0;36m<module>[0;34m[0m
+[1;32m     18[0m     [0mverify_grad[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     19[0m )
+[0;32m---> 20[0;31m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m [0;32mimport[0m [0mnnet[0m  [0;31m# used for softmax, sigmoid, etc.[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     21[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m [0;32mimport[0m [0msharedvar[0m  [0;31m# adds shared-variable constructors[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     22[0m from theano.tensor import (
+
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/nnet/__init__.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [0;32mimport[0m [0mwarnings[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      2[0m [0;34m[0m[0m
+[0;32m----> 3[0;31m [0;32mfrom[0m [0;34m.[0m [0;32mimport[0m [0mopt[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      4[0m [0;32mfrom[0m [0;34m.[0m[0mabstract_conv[0m [0;32mimport[0m [0mconv2d[0m [0;32mas[0m [0mabstract_conv2d[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0;32mfrom[0m [0;34m.[0m[0mabstract_conv[0m [0;32mimport[0m [0mconv2d_grad_wrt_inputs[0m[0;34m,[0m [0mconv3d[0m[0;34m,[0m [0mseparable_conv2d[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/nnet/opt.py[0m in [0;36m<module>[0;34m[0m
+[1;32m     30[0m [0;34m[0m[0m
+[1;32m     31[0m [0;31m# Cpu implementation[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 32[0;31m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m[0;34m.[0m[0mnnet[0m[0;34m.[0m[0mconv[0m [0;32mimport[0m [0mConvOp[0m[0;34m,[0m [0mconv2d[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     33[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m[0;34m.[0m[0mnnet[0m[0;34m.[0m[0mcorr[0m [0;32mimport[0m [0mCorrMM[0m[0;34m,[0m [0mCorrMM_gradInputs[0m[0;34m,[0m [0mCorrMM_gradWeights[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     34[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m[0;34m.[0m[0mnnet[0m[0;34m.[0m[0mcorr3d[0m [0;32mimport[0m [0mCorr3dMM[0m[0;34m,[0m [0mCorr3dMMGradInputs[0m[0;34m,[0m [0mCorr3dMMGradWeights[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/nnet/conv.py[0m in [0;36m<module>[0;34m[0m
+[1;32m     18[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mgraph[0m[0;34m.[0m[0mbasic[0m [0;32mimport[0m [0mApply[0m[0;34m[0m[0;34m[0m[0m
+[1;32m     19[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mgraph[0m[0;34m.[0m[0mop[0m [0;32mimport[0m [0mOpenMPOp[0m[0;34m[0m[0;34m[0m[0m
+[0;32m---> 20[0;31m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m [0;32mimport[0m [0mblas[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m     21[0m from theano.tensor.basic import (
+[1;32m     22[0m     [0mNotScalarConstantError[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/blas.py[0m in [0;36m<module>[0;34m[0m
+[1;32m    161[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mscalar[0m [0;32mimport[0m [0mbool[0m [0;32mas[0m [0mbool_t[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    162[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m [0;32mimport[0m [0mbasic[0m [0;32mas[0m [0mtt[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 163[0;31m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m[0;34m.[0m[0mblas_headers[0m [0;32mimport[0m [0mblas_header_text[0m[0;34m,[0m [0mblas_header_version[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    164[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m[0;34m.[0m[0mopt[0m [0;32mimport[0m [0min2out[0m[0;34m,[0m [0mlocal_dimshuffle_lift[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    165[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m[0;34m.[0m[0mtype[0m [0;32mimport[0m [0mvalues_eq_approx_remove_inf_nan[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/blas_headers.py[0m in [0;36m<module>[0;34m[0m
+[1;32m   1014[0m [0;34m[0m[0m
+[1;32m   1015[0m [0;34m[0m[0m
+[0;32m-> 1016[0;31m [0;32mif[0m [0;32mnot[0m [0mconfig[0m[0;34m.[0m[0mblas__ldflags[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m   1017[0m     [0m_logger[0m[0;34m.[0m[0mwarning[0m[0;34m([0m[0;34m"Using NumPy C-API based implementation for BLAS functions."[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   1018[0m [0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py[0m in [0;36m__get__[0;34m(self, cls, type_, delete_key)[0m
+[1;32m    356[0m             [0;32mexcept[0m [0mKeyError[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    357[0m                 [0;32mif[0m [0mcallable[0m[0;34m([0m[0mself[0m[0;34m.[0m[0mdefault[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0;32m--> 358[0;31m                     [0mval_str[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0mdefault[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m    359[0m                 [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m    360[0m                     [0mval_str[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0mdefault[0m[0;34m[0m[0;34m[0m[0m
+
+[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py[0m in [0;36mdefault_blas_ldflags[0;34m()[0m
+[1;32m   2619[0m             [0;31m# If the old private interface is available use it as it[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   2620[0m             [0;31m# don't print information to the user.[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m-> 2621[0;31m             [0mblas_info[0m [0;34m=[0m [0mnumpy[0m[0;34m.[0m[0mdistutils[0m[0;34m.[0m[0m__config__[0m[0;34m.[0m[0mblas_opt_info[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m   2622[0m         [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[1;32m   2623[0m             [0;31m# We do this import only here, as in some setup, if we[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+
+[0;31mAttributeError[0m: module 'numpy.distutils.__config__' has no attribute 'blas_opt_info'
+AttributeError: module 'numpy.distutils.__config__' has no attribute 'blas_opt_info'
 
