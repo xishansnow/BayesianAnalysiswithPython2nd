@@ -37,20 +37,22 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="第 4 章 广义线性回归模型" href="chapter04-GeneralizedLinearRegression.html" />
@@ -255,7 +257,7 @@
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -312,7 +314,7 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
@@ -452,7 +454,150 @@
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>第 3 章 线性回归模型</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   3.1 高斯线性回归
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     3.1.1 与机器学习的联系
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     3.1.2 线性回归模型的核心
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     3.1.3 线性模型与高自相关性问题
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       （1）解决方法 1：运行之前做中心化或归一化处理
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id7">
+       （2）解决办法 2：更换采样方法
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     3.1.4 对后验进行解释和可视化
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     3.1.5 皮尔逊相关系数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     3.1.6 多元高斯分布的皮尔逊相关系数
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id11">
+   3.2 更稳健的线性回归
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id12">
+   3.3 分层线性回归
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id13">
+     3.3.1 关于相关性与因果性
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id14">
+   3.4 多项式回归
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id15">
+     3.4.1 多项式回归系数的可解释性困局
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id16">
+     3.4.2 多项式回归不应成为代替其他模型的“终极模型”
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id17">
+   3.5 多元线性回归
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id18">
+     3.5.1 多元线性回归中的混淆变量和冗余变量
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id19">
+     3.5.2 多重共线性或相关性太高有影响吗？
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id20">
+     3.5.3 通过多元线性回归防止掩蔽效应
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id21">
+     3.5.4 在多元线性回归模型中增加变量间的交互作用
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id22">
+   3.6 变方差的线性回归模型
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id23">
+   3.7 总结
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id24">
+   3.8 练习
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="id1">
@@ -552,117 +697,157 @@ y_i= \alpha + x_i \beta \tag{式3.1}
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NoSectionError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py</span> in <span class="ni">fetch_val_for_key</span><span class="nt">(self, key, delete_key)</span>
-<span class="g g-Whitespace">    </span><span class="mi">237</span>             <span class="k">try</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">238</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_theano_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">239</span>             <span class="k">except</span> <span class="n">InterpolationError</span><span class="p">:</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py:238,</span> in <span class="ni">TheanoConfigParser.fetch_val_for_key</span><span class="nt">(self, key, delete_key)</span>
+<span class="g g-Whitespace">    </span><span class="mi">237</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">238</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_theano_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">239</span> <span class="k">except</span> <span class="n">InterpolationError</span><span class="p">:</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/configparser.py</span> in <span class="ni">get</span><span class="nt">(self, section, option, raw, vars, fallback)</span>
-<span class="g g-Whitespace">    </span><span class="mi">780</span>         <span class="k">try</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">781</span>             <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unify_values</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="nb">vars</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">782</span>         <span class="k">except</span> <span class="n">NoSectionError</span><span class="p">:</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/configparser.py:781,</span> in <span class="ni">RawConfigParser.get</span><span class="nt">(self, section, option, raw, vars, fallback)</span>
+<span class="g g-Whitespace">    </span><span class="mi">780</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">781</span>     <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unify_values</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="nb">vars</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">782</span> <span class="k">except</span> <span class="n">NoSectionError</span><span class="p">:</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/configparser.py</span> in <span class="ni">_unify_values</span><span class="nt">(self, section, vars)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1148</span>             <span class="k">if</span> <span class="n">section</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_section</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1149</span>                 <span class="k">raise</span> <span class="n">NoSectionError</span><span class="p">(</span><span class="n">section</span><span class="p">)</span> <span class="kn">from</span> <span class="bp">None</span>
-<span class="g g-Whitespace">   </span><span class="mi">1150</span>         <span class="c1"># Update with the entry specific variables</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/configparser.py:1149,</span> in <span class="ni">RawConfigParser._unify_values</span><span class="nt">(self, section, vars)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1148</span>     <span class="k">if</span> <span class="n">section</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_section</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1149</span>         <span class="k">raise</span> <span class="n">NoSectionError</span><span class="p">(</span><span class="n">section</span><span class="p">)</span> <span class="kn">from</span> <span class="bp">None</span>
+<span class="g g-Whitespace">   </span><span class="mi">1150</span> <span class="c1"># Update with the entry specific variables</span>
 
 <span class="ne">NoSectionError</span>: No section: &#39;blas&#39;
 
 <span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
 
 <span class="ne">KeyError</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py</span> in <span class="ni">__get__</span><span class="nt">(self, cls, type_, delete_key)</span>
-<span class="g g-Whitespace">    </span><span class="mi">353</span>             <span class="k">try</span><span class="p">:</span>
-<span class="ne">--&gt; </span><span class="mi">354</span>                 <span class="n">val_str</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">fetch_val_for_key</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">delete_key</span><span class="o">=</span><span class="n">delete_key</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">355</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">is_default</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py:354,</span> in <span class="ni">ConfigParam.__get__</span><span class="nt">(self, cls, type_, delete_key)</span>
+<span class="g g-Whitespace">    </span><span class="mi">353</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">354</span>     <span class="n">val_str</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">fetch_val_for_key</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">delete_key</span><span class="o">=</span><span class="n">delete_key</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">355</span>     <span class="bp">self</span><span class="o">.</span><span class="n">is_default</span> <span class="o">=</span> <span class="kc">False</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py</span> in <span class="ni">fetch_val_for_key</span><span class="nt">(self, key, delete_key)</span>
-<span class="g g-Whitespace">    </span><span class="mi">241</span>         <span class="k">except</span> <span class="p">(</span><span class="n">NoOptionError</span><span class="p">,</span> <span class="n">NoSectionError</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">242</span>             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">243</span> 
+<span class="nn">File /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py:242,</span> in <span class="ni">TheanoConfigParser.fetch_val_for_key</span><span class="nt">(self, key, delete_key)</span>
+<span class="g g-Whitespace">    </span><span class="mi">241</span> <span class="k">except</span> <span class="p">(</span><span class="n">NoOptionError</span><span class="p">,</span> <span class="n">NoSectionError</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">242</span>     <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
 
 <span class="ne">KeyError</span>: &#39;blas__ldflags&#39;
 
 <span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
 
 <span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2061</span><span class="o">/</span><span class="mf">3373398946.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="nn">Input In [1],</span> in <span class="ni">&lt;cell line: 6&gt;</span><span class="nt">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="ne">----&gt; </span><span class="mi">6</span> <span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
 <span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">import</span> <span class="nn">arviz</span> <span class="k">as</span> <span class="nn">az</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> 
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">az</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;arviz-darkgrid&#39;</span><span class="p">)</span>
 
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pymc3</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span> 
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pymc3</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">23</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span> <span class="kn">import</span> <span class="nn">platform</span>
 <span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="kn">import</span> <span class="nn">semver</span>
 <span class="ne">---&gt; </span><span class="mi">23</span> <span class="kn">import</span> <span class="nn">theano</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span> 
 <span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="n">_log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;pymc3&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">logging</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">handlers</span><span class="p">:</span>
 
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">theano</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">theano</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">83</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">75</span> <span class="c1"># This is the api version for ops that generate C code.  External ops</span>
+<span class="g g-Whitespace">     </span><span class="mi">76</span> <span class="c1"># might need manual changes if this number goes up.  An undefined</span>
+<span class="g g-Whitespace">     </span><span class="mi">77</span> <span class="c1"># __api_version__ can be understood to mean api version 0.</span>
+<span class="g g-Whitespace">     </span><span class="mi">78</span> <span class="c1">#</span>
+<span class="g g-Whitespace">     </span><span class="mi">79</span> <span class="c1"># This number is not tied to the release version and should change</span>
+<span class="g g-Whitespace">     </span><span class="mi">80</span> <span class="c1"># very rarely.</span>
 <span class="g g-Whitespace">     </span><span class="mi">81</span> <span class="n">__api_version__</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="g g-Whitespace">     </span><span class="mi">82</span> 
 <span class="ne">---&gt; </span><span class="mi">83</span> <span class="kn">from</span> <span class="nn">theano</span> <span class="kn">import</span> <span class="n">scalar</span><span class="p">,</span> <span class="n">tensor</span>
 <span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="kn">from</span> <span class="nn">theano.compile</span> <span class="kn">import</span> <span class="p">(</span>
 <span class="g g-Whitespace">     </span><span class="mi">85</span>     <span class="n">In</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">86</span>     <span class="n">Mode</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">93</span>     <span class="n">shared</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">94</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">95</span> <span class="kn">from</span> <span class="nn">theano.compile.function</span> <span class="kn">import</span> <span class="n">function</span><span class="p">,</span> <span class="n">function_dump</span>
 
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">theano</span><span class="o">/</span><span class="n">tensor</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">theano</span><span class="o">/</span><span class="n">tensor</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">20</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="kn">from</span> <span class="nn">theano.compile</span> <span class="kn">import</span> <span class="n">SpecifyShape</span><span class="p">,</span> <span class="n">specify_shape</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">theano.gradient</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>     <span class="n">Lop</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="n">Rop</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">verify_grad</span><span class="p">,</span>
 <span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="p">)</span>
 <span class="ne">---&gt; </span><span class="mi">20</span> <span class="kn">from</span> <span class="nn">theano.tensor</span> <span class="kn">import</span> <span class="n">nnet</span>  <span class="c1"># used for softmax, sigmoid, etc.</span>
 <span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="kn">from</span> <span class="nn">theano.tensor</span> <span class="kn">import</span> <span class="n">sharedvar</span>  <span class="c1"># adds shared-variable constructors</span>
 <span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="kn">from</span> <span class="nn">theano.tensor</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="n">blas</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span>     <span class="n">blas_c</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span>     <span class="n">xlogx</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">30</span> <span class="p">)</span>
 
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">theano</span><span class="o">/</span><span class="n">tensor</span><span class="o">/</span><span class="n">nnet</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">theano</span><span class="o">/</span><span class="n">tensor</span><span class="o">/</span><span class="n">nnet</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> 
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">opt</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">.abstract_conv</span> <span class="kn">import</span> <span class="n">conv2d</span> <span class="k">as</span> <span class="n">abstract_conv2d</span>
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">.abstract_conv</span> <span class="kn">import</span> <span class="n">conv2d_grad_wrt_inputs</span><span class="p">,</span> <span class="n">conv3d</span><span class="p">,</span> <span class="n">separable_conv2d</span>
 
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">theano</span><span class="o">/</span><span class="n">tensor</span><span class="o">/</span><span class="n">nnet</span><span class="o">/</span><span class="n">opt</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">30</span> 
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">theano</span><span class="o">/</span><span class="n">tensor</span><span class="o">/</span><span class="n">nnet</span><span class="o">/</span><span class="n">opt</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">32</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="kn">from</span> <span class="nn">theano.tensor.nnet.blocksparse</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span>     <span class="n">SparseBlockGemv</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span>     <span class="n">SparseBlockOuter</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span>     <span class="n">sparse_block_gemv_inplace</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span>     <span class="n">sparse_block_outer_inplace</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="p">)</span>
 <span class="g g-Whitespace">     </span><span class="mi">31</span> <span class="c1"># Cpu implementation</span>
 <span class="ne">---&gt; </span><span class="mi">32</span> <span class="kn">from</span> <span class="nn">theano.tensor.nnet.conv</span> <span class="kn">import</span> <span class="n">ConvOp</span><span class="p">,</span> <span class="n">conv2d</span>
 <span class="g g-Whitespace">     </span><span class="mi">33</span> <span class="kn">from</span> <span class="nn">theano.tensor.nnet.corr</span> <span class="kn">import</span> <span class="n">CorrMM</span><span class="p">,</span> <span class="n">CorrMM_gradInputs</span><span class="p">,</span> <span class="n">CorrMM_gradWeights</span>
 <span class="g g-Whitespace">     </span><span class="mi">34</span> <span class="kn">from</span> <span class="nn">theano.tensor.nnet.corr3d</span> <span class="kn">import</span> <span class="n">Corr3dMM</span><span class="p">,</span> <span class="n">Corr3dMMGradInputs</span><span class="p">,</span> <span class="n">Corr3dMMGradWeights</span>
 
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">theano</span><span class="o">/</span><span class="n">tensor</span><span class="o">/</span><span class="n">nnet</span><span class="o">/</span><span class="n">conv</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">theano</span><span class="o">/</span><span class="n">tensor</span><span class="o">/</span><span class="n">nnet</span><span class="o">/</span><span class="n">conv</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">20</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="kn">from</span> <span class="nn">theano.graph.basic</span> <span class="kn">import</span> <span class="n">Apply</span>
 <span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="kn">from</span> <span class="nn">theano.graph.op</span> <span class="kn">import</span> <span class="n">OpenMPOp</span>
 <span class="ne">---&gt; </span><span class="mi">20</span> <span class="kn">from</span> <span class="nn">theano.tensor</span> <span class="kn">import</span> <span class="n">blas</span>
 <span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="kn">from</span> <span class="nn">theano.tensor.basic</span> <span class="kn">import</span> <span class="p">(</span>
 <span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="n">NotScalarConstantError</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="n">as_tensor_variable</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span>     <span class="n">get_scalar_constant_value</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span>     <span class="n">patternbroadcast</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span> <span class="kn">from</span> <span class="nn">theano.tensor.nnet.abstract_conv</span> <span class="kn">import</span> <span class="n">get_conv_output_shape</span><span class="p">,</span> <span class="n">get_conv_shape_1axis</span>
 
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">theano</span><span class="o">/</span><span class="n">tensor</span><span class="o">/</span><span class="n">blas</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">theano</span><span class="o">/</span><span class="n">tensor</span><span class="o">/</span><span class="n">blas</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">163</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">    </span><span class="mi">161</span> <span class="kn">from</span> <span class="nn">theano.scalar</span> <span class="kn">import</span> <span class="nb">bool</span> <span class="k">as</span> <span class="n">bool_t</span>
 <span class="g g-Whitespace">    </span><span class="mi">162</span> <span class="kn">from</span> <span class="nn">theano.tensor</span> <span class="kn">import</span> <span class="n">basic</span> <span class="k">as</span> <span class="n">tt</span>
 <span class="ne">--&gt; </span><span class="mi">163</span> <span class="kn">from</span> <span class="nn">theano.tensor.blas_headers</span> <span class="kn">import</span> <span class="n">blas_header_text</span><span class="p">,</span> <span class="n">blas_header_version</span>
 <span class="g g-Whitespace">    </span><span class="mi">164</span> <span class="kn">from</span> <span class="nn">theano.tensor.opt</span> <span class="kn">import</span> <span class="n">in2out</span><span class="p">,</span> <span class="n">local_dimshuffle_lift</span>
 <span class="g g-Whitespace">    </span><span class="mi">165</span> <span class="kn">from</span> <span class="nn">theano.tensor.type</span> <span class="kn">import</span> <span class="n">values_eq_approx_remove_inf_nan</span>
 
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">theano</span><span class="o">/</span><span class="n">tensor</span><span class="o">/</span><span class="n">blas_headers</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">   </span><span class="mi">1014</span> 
-<span class="g g-Whitespace">   </span><span class="mi">1015</span> 
+<span class="n">File</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.12</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">theano</span><span class="o">/</span><span class="n">tensor</span><span class="o">/</span><span class="n">blas_headers</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">1016</span><span class="p">,</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">    </span><span class="mi">997</span>             <span class="n">header</span> <span class="o">+=</span> <span class="n">textwrap</span><span class="o">.</span><span class="n">dedent</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">998</span>                 <span class="sd">&quot;&quot;&quot;\</span>
+<span class="g g-Whitespace">    </span><span class="mi">999</span><span class="sd">                     static float sdot_(int* Nx, float* x, int* Sx, float* y, int* Sy)</span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1010</span><span class="sd">                     &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">1011</span>             <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1013</span>     <span class="k">return</span> <span class="n">header</span> <span class="o">+</span> <span class="n">blas_code</span>
 <span class="ne">-&gt; </span><span class="mi">1016</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="o">.</span><span class="n">blas__ldflags</span><span class="p">:</span>
 <span class="g g-Whitespace">   </span><span class="mi">1017</span>     <span class="n">_logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Using NumPy C-API based implementation for BLAS functions.&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1018</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1020</span> <span class="k">def</span> <span class="nf">mkl_threads_text</span><span class="p">():</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py</span> in <span class="ni">__get__</span><span class="nt">(self, cls, type_, delete_key)</span>
-<span class="g g-Whitespace">    </span><span class="mi">356</span>             <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">357</span>                 <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">358</span>                     <span class="n">val_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">()</span>
-<span class="g g-Whitespace">    </span><span class="mi">359</span>                 <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">360</span>                     <span class="n">val_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py:358,</span> in <span class="ni">ConfigParam.__get__</span><span class="nt">(self, cls, type_, delete_key)</span>
+<span class="g g-Whitespace">    </span><span class="mi">356</span> <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">357</span>     <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">358</span>         <span class="n">val_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">359</span>     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">360</span>         <span class="n">val_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span>
 
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py</span> in <span class="ni">default_blas_ldflags</span><span class="nt">()</span>
-<span class="g g-Whitespace">   </span><span class="mi">2619</span>             <span class="c1"># If the old private interface is available use it as it</span>
-<span class="g g-Whitespace">   </span><span class="mi">2620</span>             <span class="c1"># don&#39;t print information to the user.</span>
-<span class="ne">-&gt; </span><span class="mi">2621</span>             <span class="n">blas_info</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">distutils</span><span class="o">.</span><span class="n">__config__</span><span class="o">.</span><span class="n">blas_opt_info</span>
-<span class="g g-Whitespace">   </span><span class="mi">2622</span>         <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">2623</span>             <span class="c1"># We do this import only here, as in some setup, if we</span>
+<span class="nn">File /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py:2621,</span> in <span class="ni">default_blas_ldflags</span><span class="nt">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">2617</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">2618</span>     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">distutils</span><span class="p">,</span> <span class="s2">&quot;__config__&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">numpy</span><span class="o">.</span><span class="n">distutils</span><span class="o">.</span><span class="n">__config__</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">2619</span>         <span class="c1"># If the old private interface is available use it as it</span>
+<span class="g g-Whitespace">   </span><span class="mi">2620</span>         <span class="c1"># don&#39;t print information to the user.</span>
+<span class="ne">-&gt; </span><span class="mi">2621</span>         <span class="n">blas_info</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">distutils</span><span class="o">.</span><span class="n">__config__</span><span class="o">.</span><span class="n">blas_opt_info</span>
+<span class="g g-Whitespace">   </span><span class="mi">2622</span>     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">2623</span>         <span class="c1"># We do this import only here, as in some setup, if we</span>
+<span class="g g-Whitespace">   </span><span class="mi">2624</span>         <span class="c1"># just import theano and exit, with the import at global</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2630</span>         <span class="c1"># This happen with Python 2.7.3 |EPD 7.3-1 and numpy 1.8.1</span>
+<span class="g g-Whitespace">   </span><span class="mi">2631</span>         <span class="c1"># isort: off</span>
+<span class="g g-Whitespace">   </span><span class="mi">2632</span>         <span class="kn">import</span> <span class="nn">numpy.distutils.system_info</span>  <span class="c1"># noqa</span>
 
 <span class="ne">AttributeError</span>: module &#39;numpy.distutils.__config__&#39; has no attribute &#39;blas_opt_info&#39;
 </pre></div>
@@ -1880,8 +2065,8 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
+            
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="chapter02-ProgrammingProbabilistically.html" title="previous page">
         <i class="fas fa-angle-left"></i>
@@ -1898,19 +2083,17 @@ R^{2} = \frac{\mathbf{V}_{n=1}^{N} \mathbf{E}\left[\hat{y}^{s}\right]}{\mathbf{V
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Osvaldo Martin<br/>
-        
-            &copy; Copyright 2021.<br/>
-      </p>
-    </div>
-  </footer>
+  <p>
+    
+      By Osvaldo Martin<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
 </main>
 
 

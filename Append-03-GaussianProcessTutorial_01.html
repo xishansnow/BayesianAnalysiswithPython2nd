@@ -37,20 +37,22 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="附录 D：贝叶斯神经网络" href="Append-04-BayesianNN_Tutorial.html" />
@@ -255,7 +257,7 @@
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -312,7 +314,7 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
@@ -403,19 +405,113 @@
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>附录 C： 高斯过程</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   1 引言
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   2 数学基础
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     2.1 高斯分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     2.2 多元高斯分布（多元高斯分布）
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     2.3 核函数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     2.4 非参数模型
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   3 高斯过程
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   4 简单的实现案例
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     4.1 超参数的优化
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     4.2 高斯过程软件包
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id11">
+   5 总结和讨论
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     题外话
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id13">
+   参考文献
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#appendix-a">
+   Appendix A
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="c">
 <h1>附录 C： 高斯过程<a class="headerlink" href="#c" title="Permalink to this headline">¶</a></h1>
  <style>p{text-indent:2em;2}</style>
-<p>【原文】Jie Wang (2020). An Intuitive Tutorial to Gaussian Processes Regression. <a class="reference external" href="https://arxiv.org/abs/2009.10862">https://arxiv.org/abs/2009.10862</a></p>
+<p>【原文】Jie Wang (2020). An Intuitive Tutorial to Gaussian Processes Regression. https://arxiv.org/abs/2009.10862</p>
 <p>【摘要】本教程旨在提供对高斯过程回归（Gaussian processes regression,高斯过程回归）的直观理解。高斯过程回归模型因其表达方式的灵活性和内涵的不确定性预测能力而广泛用于机器学习应用中。本文首先解释了构建高斯过程的基本概念，包括多元正态分布、核、非参数模型、联合和条件概率等。然后，简明描述了高斯过程回归以及标准高斯过程回归算法的实现。除了标准高斯过程回归，本文还审查了目前最先进的高斯过程算法软件包。</p>
 <hr class="docutils" />
 <style>p{text-indent:2em;2}</style><div class="section" id="id1">
 <h2>1 引言<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>高斯过程模型是一种概率监督机器学习框架，已广泛用于回归和分类任务。高斯过程回归（高斯过程回归）模型可以结合先验知识（核）进行预测，并提供预测的不确定性度量 [1]。高斯过程模型是由计算机科学和统计学界开发的一种监督学习方法。具有工程背景的研究人员经常发现很难清楚地了解它。要理解高斯过程回归，即使只有基础知识也需要了解多元正态分布、核、非参数模型以及联合和条件概率。</p>
-<p>在本教程中，我们将提供高斯过程回归的简洁易懂的解释。我们首先回顾了高斯过程回归模型所基于的数学概念，以确保读者有足够的基础知识。为了提供对高斯过程回归的直观理解，图表被积极使用。为生成绘图而开发的代码在 <a class="reference external" href="https://github.com/jwangjie/Gaussian-Processes-Regression-Tutorial">https://github.com/jwangjie/Gaussian-Processes-Regression-Tutorial</a> 处提供。</p>
+<p>在本教程中，我们将提供高斯过程回归的简洁易懂的解释。我们首先回顾了高斯过程回归模型所基于的数学概念，以确保读者有足够的基础知识。为了提供对高斯过程回归的直观理解，图表被积极使用。为生成绘图而开发的代码在 https://github.com/jwangjie/Gaussian-Processes-Regression-Tutorial 处提供。</p>
 <p>在开始之前，首先要了解为什么要用高斯过程做回归。回归是一项常见的机器学习任务，可以描述为给定一些观测到的数据点（训练数据集），找到一个尽可能接近地表示数据集的函数，然后使用该函数对新数据点进行预测。可以使用多种函数形式进行回归，并且通常有不止一种可能的函数可以拟合观测到的数据。除了通过函数获得预测结果之外，我们还想知道这些预测的确定性程度。量化不确定性对于实现高效的学习过程非常有价值，应该更多地探索低确定性的领域。而高斯过程不仅可用于对新数据点进行预测，并可以告诉我们这些预测的不确定性程度。</p>
 <img src="https://github.com/jwangjie/Gaussian-Process-be-comfortable-using-it/blob/master/img/gpr_animation_wide.gif?raw=1" width="1000"/> 
 <p>高斯过程的动画示意图 [10]</p>
@@ -702,7 +798,7 @@ x_{2}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1831/2438433875.py:43: MatplotlibDeprecationWarning: Calling gca() with keyword arguments was deprecated in Matplotlib 3.4. Starting two minor releases later, gca() will take no keyword arguments. The gca() function should only be used to get the current axes, or if no axes exist, create new axes with default keyword arguments. To create a new axes with non-default arguments, use plt.axes() or plt.subplot().
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_1770/2438433875.py:43: MatplotlibDeprecationWarning: Calling gca() with keyword arguments was deprecated in Matplotlib 3.4. Starting two minor releases later, gca() will take no keyword arguments. The gca() function should only be used to get the current axes, or if no axes exist, create new axes with default keyword arguments. To create a new axes with non-default arguments, use plt.axes() or plt.subplot().
   ax = fig.gca(projection=&#39;3d&#39;)
 </pre></div>
 </div>
@@ -873,117 +969,6 @@ cov(x_i, x_j)=\exp\left(-~\frac{(x_i-x_j)^2}{2}\right)
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 3600x2400 with 0 Axes&gt;
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1831</span><span class="o">/</span><span class="mf">1931245098.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">21</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;200 samples of the 200-D gaussian kernelized prior&#39;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">22</span> <span class="c1">#plt.axis([0, 1, -3, 3])</span>
-<span class="ne">---&gt; </span><span class="mi">23</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="c1">#plt.savefig(&#39;priorT.png&#39;, bbox_inches=&#39;tight&#39;, dpi=300)</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/pyplot.py</span> in <span class="ni">show</span><span class="nt">(*args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">366</span>     <span class="sd">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">367</span><span class="sd">     _warn_if_gui_out_of_main_thread()</span>
-<span class="ne">--&gt; </span><span class="mi">368</span><span class="sd">     return _backend_mod.show(*args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">369</span><span class="sd"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">370</span><span class="sd"> </span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib_inline/backend_inline.py</span> in <span class="ni">show</span><span class="nt">(close, block)</span>
-<span class="g g-Whitespace">     </span><span class="mi">39</span><span class="sd">     try:</span>
-<span class="g g-Whitespace">     </span><span class="mi">40</span><span class="sd">         for figure_manager in Gcf.get_all_fig_managers():</span>
-<span class="ne">---&gt; </span><span class="mi">41</span><span class="sd">             display(</span>
-<span class="g g-Whitespace">     </span><span class="mi">42</span><span class="sd">                 figure_manager.canvas.figure,</span>
-<span class="g g-Whitespace">     </span><span class="mi">43</span><span class="sd">                 metadata=_fetch_figure_metadata(figure_manager.canvas.figure)</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/IPython/core/display.py</span> in <span class="ni">display</span><span class="nt">(include, exclude, metadata, transient, display_id, *objs, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">318</span><span class="sd">             publish_display_data(data=obj, metadata=metadata, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">319</span><span class="sd">         else:</span>
-<span class="ne">--&gt; </span><span class="mi">320</span><span class="sd">             format_dict, md_dict = format(obj, include=include, exclude=exclude)</span>
-<span class="g g-Whitespace">    </span><span class="mi">321</span><span class="sd">             if not format_dict:</span>
-<span class="g g-Whitespace">    </span><span class="mi">322</span><span class="sd">                 # nothing to display (e.g. _ipython_display_ took over)</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/IPython/core/formatters.py</span> in <span class="ni">format</span><span class="nt">(self, obj, include, exclude)</span>
-<span class="g g-Whitespace">    </span><span class="mi">178</span><span class="sd">             md = None</span>
-<span class="g g-Whitespace">    </span><span class="mi">179</span><span class="sd">             try:</span>
-<span class="ne">--&gt; </span><span class="mi">180</span><span class="sd">                 data = formatter(obj)</span>
-<span class="g g-Whitespace">    </span><span class="mi">181</span><span class="sd">             except:</span>
-<span class="g g-Whitespace">    </span><span class="mi">182</span><span class="sd">                 # FIXME: log the exception</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/decorator.py</span> in <span class="ni">fun</span><span class="nt">(*args, **kw)</span>
-<span class="g g-Whitespace">    </span><span class="mi">230</span><span class="sd">             if not kwsyntax:</span>
-<span class="g g-Whitespace">    </span><span class="mi">231</span><span class="sd">                 args, kw = fix(args, kw, sig)</span>
-<span class="ne">--&gt; </span><span class="mi">232</span><span class="sd">             return caller(func, *(extras + args), **kw)</span>
-<span class="g g-Whitespace">    </span><span class="mi">233</span><span class="sd">     fun.__name__ = func.__name__</span>
-<span class="g g-Whitespace">    </span><span class="mi">234</span><span class="sd">     fun.__doc__ = func.__doc__</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/IPython/core/formatters.py</span> in <span class="ni">catch_format_error</span><span class="nt">(method, self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">222</span><span class="sd">     &quot;&quot;&quot;</span><span class="n">show</span> <span class="n">traceback</span> <span class="n">on</span> <span class="n">failed</span> <span class="nb">format</span> <span class="n">call</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">223</span><span class="s2">     try:</span>
-<span class="ne">--&gt; </span><span class="mi">224</span><span class="s2">         r = method(self, *args, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">225</span><span class="s2">     except NotImplementedError:</span>
-<span class="g g-Whitespace">    </span><span class="mi">226</span><span class="s2">         # don&#39;t warn on NotImplementedErrors</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/IPython/core/formatters.py</span> in <span class="ni">__call__</span><span class="nt">(self, obj)</span>
-<span class="g g-Whitespace">    </span><span class="mi">339</span><span class="s2">                 pass</span>
-<span class="g g-Whitespace">    </span><span class="mi">340</span><span class="s2">             else:</span>
-<span class="ne">--&gt; </span><span class="mi">341</span><span class="s2">                 return printer(obj)</span>
-<span class="g g-Whitespace">    </span><span class="mi">342</span><span class="s2">             # Finally look for special method names</span>
-<span class="g g-Whitespace">    </span><span class="mi">343</span><span class="s2">             method = get_real_method(obj, self.print_method)</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/IPython/core/pylabtools.py</span> in <span class="ni">print_figure</span><span class="nt">(fig, fmt, bbox_inches, base64, **kwargs)</span>
-<span class="g g-Whitespace">    </span><span class="mi">149</span><span class="s2">         FigureCanvasBase(fig)</span>
-<span class="g g-Whitespace">    </span><span class="mi">150</span><span class="s2"> </span>
-<span class="ne">--&gt; </span><span class="mi">151</span><span class="s2">     fig.canvas.print_figure(bytes_io, **kw)</span>
-<span class="g g-Whitespace">    </span><span class="mi">152</span><span class="s2">     data = bytes_io.getvalue()</span>
-<span class="g g-Whitespace">    </span><span class="mi">153</span><span class="s2">     if fmt == &#39;svg&#39;:</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/backend_bases.py</span> in <span class="ni">print_figure</span><span class="nt">(self, filename, dpi, facecolor, edgecolor, orientation, format, bbox_inches, pad_inches, bbox_extra_artists, backend, **kwargs)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2297</span><span class="s2">             if bbox_inches:</span>
-<span class="g g-Whitespace">   </span><span class="mi">2298</span><span class="s2">                 if bbox_inches == &quot;tight&quot;:</span>
-<span class="ne">-&gt; </span><span class="mi">2299</span><span class="s2">                     bbox_inches = self.figure.get_tightbbox(</span>
-<span class="g g-Whitespace">   </span><span class="mi">2300</span><span class="s2">                         renderer, bbox_extra_artists=bbox_extra_artists)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2301</span><span class="s2">                     if pad_inches is None:</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/figure.py</span> in <span class="ni">get_tightbbox</span><span class="nt">(self, renderer, bbox_extra_artists)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1639</span><span class="s2">                 # need this conditional....</span>
-<span class="g g-Whitespace">   </span><span class="mi">1640</span><span class="s2">                 try:</span>
-<span class="ne">-&gt; </span><span class="mi">1641</span><span class="s2">                     bbox = ax.get_tightbbox(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1642</span><span class="s2">                         renderer, bbox_extra_artists=bbox_extra_artists)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1643</span><span class="s2">                 except TypeError:</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/axes/_base.py</span> in <span class="ni">get_tightbbox</span><span class="nt">(self, renderer, call_axes_locator, bbox_extra_artists, for_layout_only)</span>
-<span class="g g-Whitespace">   </span><span class="mi">4658</span><span class="s2">             clip_extent = a._get_clipping_extent_bbox()</span>
-<span class="g g-Whitespace">   </span><span class="mi">4659</span><span class="s2">             if clip_extent is not None:</span>
-<span class="ne">-&gt; </span><span class="mi">4660</span><span class="s2">                 clip_extent = mtransforms.Bbox.intersection(</span>
-<span class="g g-Whitespace">   </span><span class="mi">4661</span><span class="s2">                     clip_extent, axbbox)</span>
-<span class="g g-Whitespace">   </span><span class="mi">4662</span><span class="s2">                 if np.all(clip_extent.extents == axbbox.extents):</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/transforms.py</span> in <span class="ni">intersection</span><span class="nt">(bbox1, bbox2)</span>
-<span class="g g-Whitespace">    </span><span class="mi">678</span><span class="s2">         &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">    </span><span class="mi">679</span>         <span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">bbox1</span><span class="o">.</span><span class="n">xmin</span><span class="p">,</span> <span class="n">bbox2</span><span class="o">.</span><span class="n">xmin</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">680</span>         <span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">bbox1</span><span class="o">.</span><span class="n">xmax</span><span class="p">,</span> <span class="n">bbox2</span><span class="o">.</span><span class="n">xmax</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">681</span>         <span class="n">y0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">bbox1</span><span class="o">.</span><span class="n">ymin</span><span class="p">,</span> <span class="n">bbox2</span><span class="o">.</span><span class="n">ymin</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">682</span>         <span class="n">y1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">bbox1</span><span class="o">.</span><span class="n">ymax</span><span class="p">,</span> <span class="n">bbox2</span><span class="o">.</span><span class="n">ymax</span><span class="p">)</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/matplotlib/transforms.py</span> in <span class="ni">xmax</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">    </span><span class="mi">337</span>     <span class="k">def</span> <span class="nf">xmax</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">338</span>         <span class="sd">&quot;&quot;&quot;The right edge of the bounding box.&quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">339</span>         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_points</span><span class="p">()[:,</span> <span class="mi">0</span><span class="p">])</span>
-<span class="g g-Whitespace">    </span><span class="mi">340</span> 
-<span class="g g-Whitespace">    </span><span class="mi">341</span>     <span class="nd">@property</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/numpy/core/overrides.py</span> in <span class="ni">amax</span><span class="nt">(*args, **kwargs)</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/numpy/core/fromnumeric.py</span> in <span class="ni">_amax_dispatcher</span><span class="nt">(a, axis, out, keepdims, initial, where)</span>
-<span class="g g-Whitespace">   </span><span class="mi">2668</span> 
-<span class="g g-Whitespace">   </span><span class="mi">2669</span> 
-<span class="ne">-&gt; </span><span class="mi">2670</span> <span class="k">def</span> <span class="nf">_amax_dispatcher</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">2671</span>                      <span class="n">where</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="g g-Whitespace">   </span><span class="mi">2672</span>     <span class="k">return</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
-
-<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
@@ -1274,7 +1259,7 @@ k\left(\mathbf{x}_{i}, \mathbf{x}_{j}\right)=\sigma_{f}^{2} \exp \left(-\frac{1}
 <p><a class="reference external" href="https://sheffieldml.github.io/GPy/">GPy</a> 是最著名的高斯过程框架之一。 GPy 已经开发得相当成熟，并有详细的文档说明。 GPy 使用 NumPy 来执行所有计算。对于不需要大量计算或最新算法实现的任务，GPy 基本足够了，而且非常稳定。</p>
 <p>如果需要完成更大计算量的高斯过程回归任务，首选 GPU 加速。 <a class="reference external" href="https://www.gpflow.org/">GPflow 软件包</a> 起源于 GPy，很多接口都类似。 GPflow 利用 <strong>TensorFlow</strong> 作为其计算后端。 GPy 和 GPflow 框架之间的更多技术区别是 <a class="reference external" href="https://gpflow.readthedocs.io/en/master/intro.html#what-s-the-difference-between-gpy-and-gpflow">here</a>。</p>
 <p><a class="reference external" href="https://gpytorch.ai/">GPyTorch</a> 是通过 <strong>PyTorch</strong> 提供 GPU 加速的另一个框架。它包含很多 Up-to-date的高斯过程算法。与 GPflow 类似，GPyTorch 提供自动梯度计算能力，因此可以轻松地开发复杂模型，例如在高斯过程模型中嵌入深度神经网络。</p>
-<p>在快速浏览文档并实现高斯回归的基本教程 <a class="reference external" href="https://github.com/jwangjie/gpytorch/blob/master/examples/01_Exact_GPs/Simple_GP_Regression.ipynb">GPyTorch</a> 和 [GPflow](<a class="reference external" href="https://github">https://github</a>. com/jwangjie/gpytorch/blob/master/examples/01_Exact_GPs/Simple_GP_Regression_GPflow.ipynb）后，个人印象是 GPyTorch 更自动化， 而 GPflow 有更多控制。这也符合 TensorFlow 和 PyTorch 的使用体验。</p>
+<p>在快速浏览文档并实现高斯回归的基本教程 <a class="reference external" href="https://github.com/jwangjie/gpytorch/blob/master/examples/01_Exact_GPs/Simple_GP_Regression.ipynb">GPyTorch</a> 和 [GPflow](https://github. com/jwangjie/gpytorch/blob/master/examples/01_Exact_GPs/Simple_GP_Regression_GPflow.ipynb）后，个人印象是 GPyTorch 更自动化， 而 GPflow 有更多控制。这也符合 TensorFlow 和 PyTorch 的使用体验。</p>
 </div>
 </div>
 <div class="section" id="id11">
@@ -1296,16 +1281,16 @@ k\left(\mathbf{x}_{i}, \mathbf{x}_{j}\right)=\sigma_{f}^{2} \exp \left(-\frac{1}
 <div class="section" id="id13">
 <h2>参考文献<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
 <p>[1]	C. E. Rasmussen and C. K. I. Williams, Gaussian processes for machine learning. MIT Press, 2006.</p>
-<p>[2] R. Turner, “ML Tutorial: Gaussian Processes - YouTube,” 2017. [Online]. Available: <a class="reference external" href="https://www.youtube.com/watch?v=92-98SYOdlY&amp;feature=emb_title">https://www.youtube.com/watch?v=92-98SYOdlY&amp;feature=emb_title</a>.</p>
-<p>[3] A. Ng, “Multivariate Gaussian Distribution - Stanford University | Coursera,” 2015. [Online]. Available: <a class="reference external" href="https://www.coursera.org/learn/machine-learning/lecture/Cf8DF/multivariate-gaussian-distribution">https://www.coursera.org/learn/machine-learning/lecture/Cf8DF/multivariate-gaussian-distribution</a>.</p>
-<p>[4]	D. Lee, “Multivariate Gaussian Distribution - University of Pennsylvania | Coursera,” 2017. [Online]. Available: <a class="reference external" href="https://www.coursera.org/learn/robotics-learning/lecture/26CFf/1-3-1-multivariate-gaussian-distribution">https://www.coursera.org/learn/robotics-learning/lecture/26CFf/1-3-1-multivariate-gaussian-distribution</a>.</p>
+<p>[2] R. Turner, “ML Tutorial: Gaussian Processes - YouTube,” 2017. [Online]. Available: https://www.youtube.com/watch?v=92-98SYOdlY&amp;feature=emb_title.</p>
+<p>[3] A. Ng, “Multivariate Gaussian Distribution - Stanford University | Coursera,” 2015. [Online]. Available: https://www.coursera.org/learn/machine-learning/lecture/Cf8DF/multivariate-gaussian-distribution.</p>
+<p>[4]	D. Lee, “Multivariate Gaussian Distribution - University of Pennsylvania | Coursera,” 2017. [Online]. Available: https://www.coursera.org/learn/robotics-learning/lecture/26CFf/1-3-1-multivariate-gaussian-distribution.</p>
 <p>[5]	F. Dai, Machine Learning Cheat Sheet: Classical equations and diagrams in machine learning. 2017.</p>
-<p>[6]	N. de Freitas, “Machine learning - Introduction to Gaussian processes - YouTube,” 2013. [Online]. Available: <a class="reference external" href="https://www.youtube.com/watch?v=4vGiHC35j9s&amp;t=1424s">https://www.youtube.com/watch?v=4vGiHC35j9s&amp;t=1424s</a>.</p>
-<p>[7]	Y. Shi, “Gaussian Process, not quite for dummies,” 2019. [Online]. Available: <a class="reference external" href="https://yugeten.github.io/posts/2019/09/GP/">https://yugeten.github.io/posts/2019/09/GP/</a>.</p>
-<p>[8]	D. Duvenaud, “Kernel Cookbook,” 2014. [Online]. Available: <a class="reference external" href="https://www.cs.toronto.edu/~duvenaud/cookbook/">https://www.cs.toronto.edu/~duvenaud/cookbook/</a>.</p>
-<p>[9]	Y. Gal, “What my deep model doesn’t know.,” 2015. [Online]. Available: <a class="reference external" href="http://mlg.eng.cam.ac.uk/yarin/blog_3d801aa532c1ce.html">http://mlg.eng.cam.ac.uk/yarin/blog_3d801aa532c1ce.html</a>.</p>
-<p>[10] J. Hensman, “Gaussians.” 2019. [Online]. Available: <a class="reference external" href="https://github.com/mlss-2019/slides/blob/master/gaussian_processes/presentation_links.md">https://github.com/mlss-2019/slides/blob/master/gaussian_processes/presentation_links.md</a>.</p>
-<p>[11] Z. Dai, “GPSS2019 - Computationally efficient GPs” 2019. [Online]. Available: <a class="reference external" href="https://www.youtube.com/watch?list=PLZ_xn3EIbxZHoq8A3-2F4_rLyy61vkEpU&amp;v=7mCfkIuNHYw">https://www.youtube.com/watch?list=PLZ_xn3EIbxZHoq8A3-2F4_rLyy61vkEpU&amp;v=7mCfkIuNHYw</a>.</p>
+<p>[6]	N. de Freitas, “Machine learning - Introduction to Gaussian processes - YouTube,” 2013. [Online]. Available: https://www.youtube.com/watch?v=4vGiHC35j9s&amp;t=1424s.</p>
+<p>[7]	Y. Shi, “Gaussian Process, not quite for dummies,” 2019. [Online]. Available: https://yugeten.github.io/posts/2019/09/GP/.</p>
+<p>[8]	D. Duvenaud, “Kernel Cookbook,” 2014. [Online]. Available: https://www.cs.toronto.edu/~duvenaud/cookbook/.</p>
+<p>[9]	Y. Gal, “What my deep model doesn’t know.,” 2015. [Online]. Available: http://mlg.eng.cam.ac.uk/yarin/blog_3d801aa532c1ce.html.</p>
+<p>[10] J. Hensman, “Gaussians.” 2019. [Online]. Available: https://github.com/mlss-2019/slides/blob/master/gaussian_processes/presentation_links.md.</p>
+<p>[11] Z. Dai, “GPSS2019 - Computationally efficient GPs” 2019. [Online]. Available: https://www.youtube.com/watch?list=PLZ_xn3EIbxZHoq8A3-2F4_rLyy61vkEpU&amp;v=7mCfkIuNHYw.</p>
 <p>[12] Zoubin Ghahramani.  A Tutorial on Gaussian Processes (or why I don’t useSVMs). InMachine Learning Summer School (MLSS), 2011
 [13] Kevin P Murphy.Machine Learning: A Probabilistic Perspective. The MIT Press,2012</p>
 </div>
@@ -1337,8 +1322,8 @@ k\left(\mathbf{x}_{i}, \mathbf{x}_{j}\right)=\sigma_{f}^{2} \exp \left(-\frac{1}
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
+            
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="Append-02-VariationalInference_Tutorial.html" title="previous page">
         <i class="fas fa-angle-left"></i>
@@ -1355,19 +1340,17 @@ k\left(\mathbf{x}_{i}, \mathbf{x}_{j}\right)=\sigma_{f}^{2} \exp \left(-\frac{1}
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Osvaldo Martin<br/>
-        
-            &copy; Copyright 2021.<br/>
-      </p>
-    </div>
-  </footer>
+  <p>
+    
+      By Osvaldo Martin<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
 </main>
 
 

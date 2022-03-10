@@ -37,20 +37,22 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="附录 K：贝叶斯工作流程" href="Append-10-WorkFlow.html" />
@@ -255,7 +257,7 @@
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -312,7 +314,7 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
@@ -711,7 +713,409 @@
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>附录 J：贝叶斯优化</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   1 概述
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     1.1.从贝叶斯推断到贝叶斯工作流
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     1.2 为什么需要贝叶斯工作流？
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     1.3. 工作流及其与统计理论和实践的关系
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     1.4 组织贝叶斯工作流的诸多方面
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     1.5.文章的目的和结构
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   2 在拟合模型之前
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     2.1 选择初始模型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     2.2 模块化构建
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     2.3 缩放和转换参数
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     2.4 先验预测检查
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id12">
+     2.5 生成式和部分生成式模型
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id13">
+   3 拟合一个模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id14">
+     3.1 初值、适应和预热
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id15">
+     3.2 运行迭代算法需要多长时间
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id16">
+     3.3 近似算法和近似模型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id17">
+     3.4 快速适应，快速失败
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id18">
+   4 使用构造的数据发现和理解问题
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id19">
+     4.1 假数据模拟
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id20">
+     4.2 基于模拟的较正
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id21">
+     4.3 使用构造的数据进行实验
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id22">
+   5 解决计算问题
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id23">
+     5.1 统计计算的民间定理
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id24">
+     5.2 从简单和复杂的模型开始并在中间相遇
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id25">
+     5.3 掌握需要很长时间才能适应的模型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id26">
+     5.4 监控中间量
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id27">
+     5.5 堆叠以重新加权混合不良的链条
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id28">
+     5.6 具有多峰和其他困难几何形状的后验分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id29">
+     5.7 重参数化
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id30">
+     5.8 边缘化
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id31">
+     5.9 增加先验信息
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id32">
+     5.10 增加数据
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id33">
+   6 评估和使用拟合后的模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id34">
+     6.1 后验预测检查
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id35">
+     6.2 单个数据点和数据子集的交叉验证和影响
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id36">
+     6.3 先验信息的影响
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id37">
+     6.4 总结推断结果并传播不确定性
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id38">
+   7 修改模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id39">
+     7.1 为数据构建模型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id40">
+     7.2 合并额外的数据
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id41">
+     7.3 使用先验分布
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id42">
+     7.4 模型拓扑
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id43">
+   8. 理解和比较多个模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id44">
+     8.1 可视化彼此相关的模型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id45">
+     8.2 交叉验证和模型平均
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id46">
+     8.3 比较大量模型
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id47">
+   9 将建模当做软件开发
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id48">
+     9.1 版本控制使与他人和您过去自己的协作顺利进行
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id49">
+     9.2 边走边测试
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id50">
+     9.4 使其具有可读性和可维护性
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id51">
+   10. 包含模型构建和扩展的工作流示例：高尔夫推杆
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id52">
+     10.1 第一个模型：逻辑回归
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id53">
+     10.2 从第一原则建模
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id54">
+     10.3 在新数据上测试拟合后的模型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id55">
+     10.4 一种解释击球力度的新模型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id56">
+     10.5 通过加入一个模糊因子来扩展模型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id57">
+     10.6 高尔夫示例的一般教训
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id58">
+   11 具有不可预期的多峰后验的工作流示例：行星运动
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id59">
+     11.1 运动的机械模型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id60">
+     11.2 拟合一个简化模型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id61">
+     11.3 坏马尔可夫链，慢马尔可夫链？
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id62">
+     11.4 建立模型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id63">
+     11.5 行星运动示例的一般经验教训
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id64">
+   12 讨论
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id65">
+     12.1 统计建模和预测的不同视角
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id66">
+     12.2 迭代式模型构建的必要性
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id67">
+     12.3 模型选择和过拟合
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id68">
+     12.4 更大的数据集需要更大的模型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id69">
+     12.5 预测、泛化和后分层化
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id70">
+     12.6 继续往前走
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id71">
+   参考文献
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id72">
+   引文信息
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="j">
@@ -1061,46 +1465,46 @@ Monte Carlo (HMC; Neal, 2011, Betancourt, 2017a). Variational inference is a gen
 <p>[3]. Berger, J. O., Bernardo, J. M., and Sun, D. (2009). The formal definition of reference priors. Annals of Statistics 37, 905–938.</p>
 <p>[4]. Berk, R., Brown, L., Buja, A., Zhang, K., and Zhao, L. (2013). Valid post-selection inference. Annals of Statistics 41, 802–837.</p>
 <p>[5]. Berry, D. (1995). Statistics: A Bayesian Perspective. Duxbury Press.</p>
-<p>[6]. Betancourt, M. (2017a). A conceptual introduction to Hamiltonian Monte Carlo. <a class="reference external" href="http://arxiv.org/abs/1701.02434">arxiv.org/abs/1701.02434</a></p>
-<p>[7]. Betancourt, M. (2017b). Identifying Bayesian mixture models. Stan Case Studies 4. <a class="reference external" href="http://mc-stan.org/users/documentation/case-studies/identifying_mixture_models.html">mc-stan.org/users/documentation/case-studies/identifying_mixture_models.html</a></p>
-<p>[8]. Betancourt, M. (2018). Underdetermined linear regression. <a class="reference external" href="http://betanalpha.github.io/assets/case_studies/underdetermined_linear_regression.html">betanalpha.github.io/assets/case_studies/underdetermined_linear_regression.html</a></p>
-<p>[9]. Betancourt, M. (2020a). Towards a principled Bayesian workflow. <a class="reference external" href="http://betanalpha.github.io/assets/case_studies/principled_bayesian_workflow.html">betanalpha.github.io/assets/case_studies/principled_bayesian_workflow.html</a></p>
-<p>[10]. Betancourt, M. (2020b). Robust Gaussian Process Modeling. <a class="reference external" href="http://github.com/betanalpha/knitr_case_studies/tree/master/gaussian_processes">github.com/betanalpha/knitr_case_studies/tree/master/gaussian_processes</a></p>
+<p>[6]. Betancourt, M. (2017a). A conceptual introduction to Hamiltonian Monte Carlo. arxiv.org/abs/1701.02434</p>
+<p>[7]. Betancourt, M. (2017b). Identifying Bayesian mixture models. Stan Case Studies 4. mc-stan.org/users/documentation/case-studies/identifying_mixture_models.html</p>
+<p>[8]. Betancourt, M. (2018). Underdetermined linear regression. betanalpha.github.io/assets/case_studies/underdetermined_linear_regression.html</p>
+<p>[9]. Betancourt, M. (2020a). Towards a principled Bayesian workflow. betanalpha.github.io/assets/case_studies/principled_bayesian_workflow.html</p>
+<p>[10]. Betancourt, M. (2020b). Robust Gaussian Process Modeling. github.com/betanalpha/knitr_case_studies/tree/master/gaussian_processes</p>
 <p>[11]. Betancourt, M., and Girolami, M. (2015). Hamiltonian Monte Carlo for hierarchical models. In Current Trends in Bayesian Methodology with Applications, ed. S. K. Upadhyay, U. Singh, D. K. Dey, and A. Loganathan, 79–102.</p>
 <p>[12]. Blei, D. M., Kucukelbir, A., and McAuliffe, J. D. (2017). Variational inference: A review for statisticians. Journal of the American Statistical Association 112, 859–877.</p>
 <p>[13]. Blitzer, J., Dredze, M., and Pereira, F. (2007). Biographies, Bollywood, boom-boxes and blenders: Domain adaptation for sentiment classification. In Proceedings of the 45th Annual Meeting of the Association of Computational Linguistics, 440–447.</p>
 <p>[14]. Box, G. E. P. (1980). Sampling and Bayes inference in scientific modelling and robustness. Journal of the Royal Statistical Society A 143, 383–430.</p>
-<p>[15]. Broadie, M. (2018). Two simple putting models in golf. <a class="reference external" href="http://statmodeling.stat.columbia.edu/wp-content/uploads/2019/03/putt_models_20181017.pdf">statmodeling.stat.columbia.edu/wp-content/uploads/2019/03/putt_models_20181017.pdf</a></p>
-<p>[16]. Bryan, J. (2017). Project-oriented workflow. <a class="reference external" href="http://www.tidyverse.org/blog/2017/12/workflow-vs-script">www.tidyverse.org/blog/2017/12/workflow-vs-script</a></p>
+<p>[15]. Broadie, M. (2018). Two simple putting models in golf. statmodeling.stat.columbia.edu/wp-content/uploads/2019/03/putt_models_20181017.pdf</p>
+<p>[16]. Bryan, J. (2017). Project-oriented workflow. www.tidyverse.org/blog/2017/12/workflow-vs-script</p>
 <p>[17]. Bürkner, P.-C. (2017). brms: An R Package for Bayesian multilevel models using Stan. Journal of Statistical Software 80, 1–28.</p>
-<p>[18]. Carpenter, B. (2017). Typical sets and the curse of dimensionality. Stan Case Studies 4. <a class="reference external" href="http://mc-stan.org/users/documentation/case-studies/curse-dims.html">mc-stan.org/users/documentation/case-studies/curse-dims.html</a></p>
-<p>[19]. Carpenter, B. (2018). Predator-prey population dynamics: The Lotka-Volterra model in Stan. Stan Case Studies 5. <a class="reference external" href="http://mc-stan.org/users/documentation/case-studies/lotka-volterra-predator-prey.html">mc-stan.org/users/documentation/case-studies/lotka-volterra-predator-prey.html</a></p>
+<p>[18]. Carpenter, B. (2017). Typical sets and the curse of dimensionality. Stan Case Studies 4. mc-stan.org/users/documentation/case-studies/curse-dims.html</p>
+<p>[19]. Carpenter, B. (2018). Predator-prey population dynamics: The Lotka-Volterra model in Stan. Stan Case Studies 5. mc-stan.org/users/documentation/case-studies/lotka-volterra-predator-prey.html</p>
 <p>[20]. Carpenter, B., Gelman, A., Hoffman, M., Lee, D., Goodrich, B., Betancourt, M., Brubaker, M., Guo, J., Li, P., and Riddell, A. (2017). Stan: A probabilistic programming language. Journal of Statistical Software 76 (1).</p>
-<p>[21]. Chen, C., Li, O., Barnett, A., Su, J., and Rudin, C. (2019). This looks like that: Deep learning for interpretable image recognition. 33rd Conference on Neural Information Processing Systems. <a class="reference external" href="http://papers.nips.cc/paper/9095-this-looks-like-that-deep-learning-for-interpretable-image-recognition.pdf">papers.nips.cc/paper/9095-this-looks-like-that-deep-learning-for-interpretable-image-recognition.pdf</a></p>
+<p>[21]. Chen, C., Li, O., Barnett, A., Su, J., and Rudin, C. (2019). This looks like that: Deep learning for interpretable image recognition. 33rd Conference on Neural Information Processing Systems. papers.nips.cc/paper/9095-this-looks-like-that-deep-learning-for-interpretable-image-recognition.pdf</p>
 <p>[22]. Chiu, W. A., Wright, F. A., and Rusyn, I. (2017). A tiered, Bayesian approach to estimating of population variability for regulatory decision-making. ALTEX 34, 377–388.</p>
 <p>[23]. Chung, Y., Rabe-Hesketh, S., Gelman, A., Liu, J. C., and Dorie, A. (2013). A non-degenerate penalized likelihood estimator for hierarchical variance parameters in multilevel models. Psychometrika 78, 685–709.</p>
 <p>[24]. Chung, Y., Rabe-Hesketh, S., Gelman, A., Liu, J. C., and Dorie, A. (2014). Nonsingular covariance estimation in linear mixed models through weakly informative priors. Journal of Educational and Behavioral Statistics 40, 136–157.</p>
 <p>[25]. Clayton, D. G. (1992). Models for the analysis of cohort and case-control studies with inaccurately measured exposures. In Statistical Models for Longitudinal Studies of Exposure and Health, ed. J. H. Dwyer, M. Feinleib, P. Lippert, and H. Hoffmeister, 301–331. Oxford University Press.</p>
 <p>[26]. Cook, S., Gelman, A., and Rubin, D. B. (2006). Validation of software for Bayesian models using posterior quantiles. Journal of Computational and Graphical Statistics 15, 675–692.</p>
-<p>[27]. Daumé, H. (2009). Frustratingly easy domain adaptation. <a class="reference external" href="http://arxiv.org/abs/0907.1815">arxiv.org/abs/0907.1815</a></p>
+<p>[27]. Daumé, H. (2009). Frustratingly easy domain adaptation. arxiv.org/abs/0907.1815</p>
 <p>[28]. Deming, W. E., and Stephan, F. F. (1940). On a least squares adjustment of a sampled frequency table when the expected marginal totals are known. Annals of Mathematical Statistics 11, 427–444.</p>
 <p>[29]. Devezer, B., Nardin, L. G., Baumgaertner, B., and Buzbas, E. O. (2019). Scientific discovery in a model-centric framework: Reproducibility, innovation, and epistemic diversity. PLoS One 14,e0216125.</p>
-<p>[30]. Devezer, B., Navarro, D. J., Vanderkerckhove, J., and Buzbas, E. O. (2020). The case for formal methodology in scientific reform. <a class="reference external" href="http://doi.org/10.1101/2020.04.26.048306">doi.org/10.1101/2020.04.26.048306</a></p>
+<p>[30]. Devezer, B., Navarro, D. J., Vanderkerckhove, J., and Buzbas, E. O. (2020). The case for formal methodology in scientific reform. doi.org/10.1101/2020.04.26.048306</p>
 <p>[31]. Dragicevic, P., Jansen, Y., Sarma, A., Kay, M., and Chevalier, F. (2019). Increasing the transparency of research papers with explorable multiverse analyses. Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems, paper no. 65.</p>
 <p>[32]. Efron, B. (2013). Estimation and accuracy after model selection. Journal of the American Statistical Association 109, 991–1007.</p>
 <p>[33]. Finkel, J. R., and Manning, C. D. (2009). Hierarchical Bayesian domain adaptation. In Proceedings of Human Language Technologies: The 2009 Annual Conference of the North American Chapter of the Association for Computational Linguistics, 602–610.</p>
-<p>[34]. Fithian, W., Taylor, J., Tibshirani, R., and Tibshirani, R. J. (2015). Selective sequential model selection. <a class="reference external" href="http://arxiv.org/pdf/1512.02565.pdf">arxiv.org/pdf/1512.02565.pdf</a></p>
-<p>[35]. Flaxman, S., Mishra, S., Gandy, A., et al. (2020). Estimating the effects of non-pharmaceutical interventions on COVID-19 in Europe. Nature 584, 257–261. Data and code at <a class="reference external" href="http://github.com/ImperialCollegeLondon/covid19model">github.com/ImperialCollegeLondon/covid19model</a></p>
+<p>[34]. Fithian, W., Taylor, J., Tibshirani, R., and Tibshirani, R. J. (2015). Selective sequential model selection. arxiv.org/pdf/1512.02565.pdf</p>
+<p>[35]. Flaxman, S., Mishra, S., Gandy, A., et al. (2020). Estimating the effects of non-pharmaceutical interventions on COVID-19 in Europe. Nature 584, 257–261. Data and code at github.com/ImperialCollegeLondon/covid19model</p>
 <p>[36]. Fuglstad, G. A., Simpson, D., Lindgren, F., and Rue, H. (2019). Constructing priors that penalize the complexity of Gaussian random fields. Journal of the American Statistical Association 114,445–452.</p>
-<p>[37]. Gabry, J., et al. (2020a). rstanarm: Bayesian applied regression modeling via Stan, version 2.19.3. <a class="reference external" href="http://cran.r-project.org/package=rstanarm">cran.r-project.org/package=rstanarm</a></p>
-<p>[38]. Gabry, J., et al. (2020b). bayesplot: Plotting for Bayesian models, version 1.7.2. <a class="reference external" href="http://cran.r-project.org/package=bayesplot">cran.r-project.org/package=bayesplot</a></p>
+<p>[37]. Gabry, J., et al. (2020a). rstanarm: Bayesian applied regression modeling via Stan, version 2.19.3. cran.r-project.org/package=rstanarm</p>
+<p>[38]. Gabry, J., et al. (2020b). bayesplot: Plotting for Bayesian models, version 1.7.2. cran.r-project.org/package=bayesplot</p>
 <p>[39]. Gabry, J., Simpson, D., Vehtari, A., Betancourt, M., and Gelman, A. (2019). Visualization in Bayesian workflow (with discussion and rejoinder). Journal of the Royal Statistical Society A 182, 389–441.</p>
 <p>[40]. Gelman, A. (2003). A Bayesian formulation of exploratory data analysis and goodness-of-fit testing. International Statistical Review 71, 369–382.</p>
 <p>[41]. Gelman, A. (2004). Parameterization and Bayesian modeling. Journal of the American Statistical Association 99, 537–545.</p>
-<p>[42]. Gelman, A. (2011). Expanded graphical models: Inference, model comparison, model checking, fake-data debugging, and model understanding. <a class="reference external" href="http://www.stat.columbia.edu/~gelman/70presentations/ggr2handout.pdf">www.stat.columbia.edu/~gelman/70presentations/ggr2handout.pdf</a></p>
+<p>[42]. Gelman, A. (2011). Expanded graphical models: Inference, model comparison, model checking, fake-data debugging, and model understanding. www.stat.columbia.edu/~gelman/70presentations/ggr2handout.pdf</p>
 <p>[43]. Gelman, A. (2014). How do we choose our default methods? In Past, Present, and Future of Statistical Science, ed. X. Lin, C. Genest, D. L. Banks, G. Molenberghs, D. W. Scott, and J. L. Wang. London: CRC Press.</p>
-<p>[44]. Gelman, A. (2019). Model building and expansion for golf putting. Stan Case Studies 6. <a class="reference external" href="http://mc-stan.org/users/documentation/case-studies/golf.html">mc-stan.org/users/documentation/case-studies/golf.html</a></p>
-<p>[45]. Gelman, A., et al. (2020). Prior choice recommendations. <a class="reference external" href="http://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations">github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations</a></p>
+<p>[44]. Gelman, A. (2019). Model building and expansion for golf putting. Stan Case Studies 6. mc-stan.org/users/documentation/case-studies/golf.html</p>
+<p>[45]. Gelman, A., et al. (2020). Prior choice recommendations. github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations</p>
 <p>[46]. Gelman, A., and Azari, J. (2017). 19 things we learned from the 2016 election (with discussion). Statistics and Public Policy 4, 1–10.</p>
 <p>[47]. Gelman, A., Bois, F. Y., and Jiang, J. (1996). Physiological pharmacokinetic analysis using population modeling and informative prior distributions. Journal of the American Statistical Association 91, 1400–1412.</p>
 <p>[48]. Gelman, A., Carlin, J. B., Stern, H. S., Dunson, D. B., Vehtari, A., and Rubin, D. B. (2013). Bayesian Data Analysis, third edition. London: CRC Press.</p>
@@ -1108,16 +1512,16 @@ Monte Carlo (HMC; Neal, 2011, Betancourt, 2017a). Variational inference is a gen
 <p>[50]. Gelman, A., Hill, J., and Vehtari, A. (2020). Regression and Other Stories. Cambridge University Press.</p>
 <p>[51]. Gelman, A., Hill, J., and Yajima, M. (2012). Why we (usually) don’t have to worry about multiple comparisons. Journal of Research on Educational Effectiveness 5, 189–211.</p>
 <p>[52]. Gelman, A., Hullman, J., Wlezien, C., and Morris, G. E. (2020). Information, incentives, and goals in election forecasts. Judgment and Decision Making 15, 863–880.</p>
-<p>[53]. Gelman, A., and Loken, E. (2013). The garden of forking paths: Why multiple comparisons can be a problem, even when there is no “fishing expedition” or “p-hacking” and the research hypothesis was posited ahead of time. <a class="reference external" href="http://www.stat.columbia.edu/~gelman/research/unpublished/forking.pdf">www.stat.columbia.edu/~gelman/research/unpublished/forking.pdf</a></p>
+<p>[53]. Gelman, A., and Loken, E. (2013). The garden of forking paths: Why multiple comparisons can be a problem, even when there is no “fishing expedition” or “p-hacking” and the research hypothesis was posited ahead of time. www.stat.columbia.edu/~gelman/research/unpublished/forking.pdf</p>
 <p>[54]. Gelman, A., Meng, X. L., and Stern, H. S. (1996). Posterior predictive assessment of model fitness via realized discrepancies (with discussion). Statistica Sinica 6, 733–807.</p>
 <p>[55]. Gelman, A., Simpson, D., and Betancourt, M. (2017). The prior can often only be understood in the context of the likelihood. Entropy 19, 555.</p>
 <p>[56]. Gelman, A., Stevens, M., and Chan, V. (2003). Regression modeling and meta-analysis for decision making: A cost-benefit analysis of a incentives in telephone surveys. Journal of Business and Economic Statistics 21, 213–225.</p>
-<p>[57]. Gharamani, Z., Steinruecken, C., Smith, E., Janz, E., and Peharz, R. (2019). The Automatic Statistician: An artificial intelligence for data science. <a class="reference external" href="http://www.automaticstatistician.com/index">www.automaticstatistician.com/index</a></p>
+<p>[57]. Gharamani, Z., Steinruecken, C., Smith, E., Janz, E., and Peharz, R. (2019). The Automatic Statistician: An artificial intelligence for data science. www.automaticstatistician.com/index</p>
 <p>[58]. Ghitza, Y., and Gelman, A. (2020). Voter registration databases and MRP: Toward the use of large scale databases in public opinion research. Political Analysis 28, 507–531.</p>
-<p>[59]. Giordano, R. (2018). StanSensitivity. <a class="reference external" href="http://github.com/rgiordan/StanSensitivity">github.com/rgiordan/StanSensitivity</a></p>
+<p>[59]. Giordano, R. (2018). StanSensitivity. github.com/rgiordan/StanSensitivity</p>
 <p>[60]. Giordano, R., Broderick, T., and Jordan, M. I. (2018). Covariances, robustness, and variational Bayes. Journal of Machine Learning Research 19, 1981–2029.</p>
 <p>[61]. Goel, P. K., and DeGroot, M. H. (1981). Information about hyperparameters in hierarchical models.Journal of the American Statistical Association 76, 140–147.</p>
-<p>[62]. Grinsztajn, L., Semenova, E., Margossian, C. C., and Riou, J. (2020). Bayesian workflow for disease transmission modeling in Stan. <a class="reference external" href="http://mc-stan.org/users/documentation/case-studies/boarding_school_case_study.html">mc-stan.org/users/documentation/case-studies/boarding_school_case_study.html</a></p>
+<p>[62]. Grinsztajn, L., Semenova, E., Margossian, C. C., and Riou, J. (2020). Bayesian workflow for disease transmission modeling in Stan. mc-stan.org/users/documentation/case-studies/boarding_school_case_study.html</p>
 <p>[63]. Grolemund, G., and Wickham, H. (2017). R for Data Science. Sebastopol, Calif.: O’Reilly Media.</p>
 <p>[64]. Gunning, D. (2017). Explainable artificial intelligence (xai). U.S. Defense Advanced Research Projects Agency (DARPA) Program.</p>
 <p>[65]. Henderson, C. R. (1950). Estimation of genetic parameters (abstract). Annals of Mathematical Statistics 21, 309–310.</p>
@@ -1128,28 +1532,28 @@ Monte Carlo (HMC; Neal, 2011, Betancourt, 2017a). Variational inference is a gen
 <p>[70]. Hwang, Y., Tong, A. and Choi, J. (2016). The Automatic Statistician: A relational perspective. ICML 2016: Proceedings of the 33rd International Conference on Machine Learning.</p>
 <p>[71]. Jacquez, J. A. (1972). Compartmental Analysis in Biology and Medicine. Elsevier.</p>
 <p>[72]. Kale, A., Kay, M., and Hullman, J. (2019). Decision-making under uncertainty in research synthesis: Designing for the garden of forking paths. Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems, paper no. 202.</p>
-<p>[73]. Kamary, K., Mengersen, K., Robert, C. P., and Rousseau, J. (2019). Testing hypotheses via a mixture estimation model. <a class="reference external" href="http://arxiv.org/abs/1412.2044">arxiv.org/abs/1412.2044</a></p>
-<p>[74]. Katz, J. (2016). Who will be president? <a class="reference external" href="http://www.nytimes.com/interactive/2016/upshot/presidential-polls-forecast.html">www.nytimes.com/interactive/2016/upshot/presidential-polls-forecast.html</a></p>
-<p>[75]. Kay, M. (2020a). ggdist: Visualizations of distributions and uncertainty. R package version 2.2.0. <a class="reference external" href="http://mjskay.github.io/ggdist">mjskay.github.io/ggdist</a>. doi:10.5281/zenodo.3879620.</p>
-<p>[76]. Kay, M. (2020b). tidybayes: Tidy data and geoms for Bayesian models. R package version 2.1.1. <a class="reference external" href="http://mjskay.github.io/tidybayes">mjskay.github.io/tidybayes</a>. doi:10.5281/zenodo.1308151.</p>
+<p>[73]. Kamary, K., Mengersen, K., Robert, C. P., and Rousseau, J. (2019). Testing hypotheses via a mixture estimation model. arxiv.org/abs/1412.2044</p>
+<p>[74]. Katz, J. (2016). Who will be president? www.nytimes.com/interactive/2016/upshot/presidential-polls-forecast.html</p>
+<p>[75]. Kay, M. (2020a). ggdist: Visualizations of distributions and uncertainty. R package version 2.2.0. mjskay.github.io/ggdist. doi:10.5281/zenodo.3879620.</p>
+<p>[76]. Kay, M. (2020b). tidybayes: Tidy data and geoms for Bayesian models. R package version 2.1.1. mjskay.github.io/tidybayes. doi:10.5281/zenodo.1308151.</p>
 <p>[77]. Kennedy, L., Simpson, D., and Gelman, A. (2019). The experiment is just as important as the likelihood in understanding the prior: A cautionary note on robust cognitive modeling. Computational Brain and Behavior 2, 210–217.</p>
-<p>[78]. Kerman, J., and Gelman, A. (2004). Fully Bayesian computing. <a class="reference external" href="http://www.stat.columbia.edu/~gelman/research/unpublished/fullybayesiancomputing-nonblinded.pdf">www.stat.columbia.edu/~gelman/research/unpublished/fullybayesiancomputing-nonblinded.pdf</a></p>
+<p>[78]. Kerman, J., and Gelman, A. (2004). Fully Bayesian computing. www.stat.columbia.edu/~gelman/research/unpublished/fullybayesiancomputing-nonblinded.pdf</p>
 <p>[79]. Kerman, J., and Gelman, A. (2007). Manipulating and summarizing posterior simulations using random variable objects. Statistics and Computing 17, 235–244.</p>
 <p>[80]. Kucukelbir, A., Tran, D., Ranganath, R., Gelman, A., and Blei, D. M. (2017). Automatic differentiation variational inference. Journal of Machine Learning Research 18, 1–45.</p>
 <p>[81]. Kumar, R., Carroll, C., Hartikainen, A., and Martin, O. A. (2019). ArviZ a unified library for exploratory analysis of Bayesian models in Python. Journal of Open Source Software, doi:10.21105/joss.01143.</p>
-<p>[82]. Lambert, B., and Vehtari, A. (2020). R∗: A robust MCMC convergence diagnostic with uncertainty using gradient-boosted machines. <a class="reference external" href="http://arxiv.org/abs/2003.07900">arxiv.org/abs/2003.07900</a></p>
+<p>[82]. Lambert, B., and Vehtari, A. (2020). R∗: A robust MCMC convergence diagnostic with uncertainty using gradient-boosted machines. arxiv.org/abs/2003.07900</p>
 <p>[83]. Lee, M. D., Criss, A. H., Devezer, B., Donkin, C., Etz, A., Leite, F. P., Matzke, D., Rouder, J. N.,Trueblood, J. S., White, C. N., and Vandekerckhove, J. (2019). Robust modeling in cognitive science. Computational Brain and Behavior 2, 141–153.</p>
 <p>[84]. Lin, C. Y., Gelman, A., Price, P. N., and Krantz, D. H. (1999). Analysis of local decisions using hierarchical modeling, applied to home radon measurement and remediation (with discussion). Statistical Science 14, 305–337.</p>
 <p>[85]. Lindley, D. V. (1956). On a measure of the information provided by an experiment. Annals of Mathematical Statistics 27, 986–1005.</p>
 <p>[86]. Lins, L., Koop, D., Anderson, E. W., Callahan, S. P., Santos, E., Scheidegger, C. E., Freire, J., and Silva, C. T. (2008). Examining statistics of workflow evolution provenance: A first study. In Scientific and Statistical Database Management, SSDBM 2008, ed. B. Ludäscher and N. Mamoulis, 573–579. Berlin: Springer.</p>
 <p>[87]. Linzer, D. A. (2013). Dynamic Bayesian forecasting of presidential elections in the states. Journal of the American Statistical Association 108, 124–134.</p>
 <p>[88]. Liu, Y., Harding, A., Gilbert, R., and Journel, A. G. (2005). A workflow for multiple-point geostatistical simulation. In Geostatistics Banff 2004, ed. O. Leuangthong and C. V. Deutsch. Dordrecht: Springer.</p>
-<p>[89]. Loftus, J. (2015). Selective inference after cross-validation. <a class="reference external" href="http://arxiv.org/pdf/1511.08866.pdf">arxiv.org/pdf/1511.08866.pdf</a></p>
+<p>[89]. Loftus, J. (2015). Selective inference after cross-validation. arxiv.org/pdf/1511.08866.pdf</p>
 <p>[90]. Long, J. S. (2009). The Workflow of Data Analysis Using Stata. London: CRC Press.</p>
 <p>[91]. Mallows, C. L. (1973). Some comments on Cp. Technometrics 15, 661–675.</p>
-<p>[92]. Margossian, C. C., and Gelman, A. (2020). Bayesian model of planetary motion: Exploring ideas for a modeling workflow when dealing with ordinary differential equations and multimodality. <a class="reference external" href="http://github.com/stan-dev/example-models/tree/case-study/planet/knitr/planetary_motion">github.com/stan-dev/example-models/tree/case-study/planet/knitr/planetary_motion</a></p>
+<p>[92]. Margossian, C. C., and Gelman, A. (2020). Bayesian model of planetary motion: Exploring ideas for a modeling workflow when dealing with ordinary differential equations and multimodality. github.com/stan-dev/example-models/tree/case-study/planet/knitr/planetary_motion</p>
 <p>[93]. Margossian, C. C., Vehtari, A., Simpson, D., and Agrawal, R. (2020a). Hamiltonian Monte Carlo using an adjoint-differentiated Laplace approximation: Bayesian inference for latent Gaussian models and beyond. Advances in Neural Information Processing Systems 34. arXiv:2004.12550</p>
-<p>[94]. Margossian, C. C., Vehtari, A., Simpson, D., and Agrawal, R. (2020b). Approximate Bayesian inference for latent Gaussian models in Stan. Presented at StanCon2020. <a class="reference external" href="http://researchgate.net/publication/343690329_Approximate_Bayesian_inference_for_latent_Gaussian_models_in_Stan">researchgate.net/publication/343690329_Approximate_Bayesian_inference_for_latent_Gaussian_models_in_Stan</a></p>
+<p>[94]. Margossian, C. C., Vehtari, A., Simpson, D., and Agrawal, R. (2020b). Approximate Bayesian inference for latent Gaussian models in Stan. Presented at StanCon2020. researchgate.net/publication/343690329_Approximate_Bayesian_inference_for_latent_Gaussian_models_in_Stan</p>
 <p>[95]. Mayo, D. (2018). Statistical Inference as Severe Testing: How to Get Beyond the Statistics Wars. Cambridge University Press.</p>
 <p>[96]. McConnell, S. (2004). Code Complete, second edition. Microsoft Press.</p>
 <p>[97]. Meng, X. L., and van Dyk, D. A. (2001). The art of data augmentation. Journal of Computational and Graphical Statistics 10, 1–50.</p>
@@ -1159,9 +1563,9 @@ Monte Carlo (HMC; Neal, 2011, Betancourt, 2017a). Variational inference is a gen
 <p>[101]. Computational Methods in Systems Biology. CMSB 2018. Lecture Notes in Computer Science, vol. 11095, 309–312.</p>
 <p>[102]. Montgomery, J. M., and Nyhan, B. (2010). Bayesian model averaging: Theoretical developments and practical applications. Political Analysis 18, 245–270.</p>
 <p>[103]. Morgan, S. L., and Winship, C. (2014). Counterfactuals and Causal Inference: Methods and Principles for Social Research, second edition. Cambridge University Press.</p>
-<p>[104]. Morris, G. E., Gelman, A., and Heidemanns, M. (2020). How the Economist presidential forecast works. <a class="reference external" href="http://projects.economist.com/us-2020-forecast/president/how-this-works">projects.economist.com/us-2020-forecast/president/how-this-works</a></p>
+<p>[104]. Morris, G. E., Gelman, A., and Heidemanns, M. (2020). How the Economist presidential forecast works. projects.economist.com/us-2020-forecast/president/how-this-works</p>
 <p>[105]. Navarro, D. J. (2019). Between the devil and the deep blue sea: Tensions between scientific judgement and statistical model selection. Computational Brain and Behavior 2, 28–34.</p>
-<p>[106]. Navarro, D. J. (2020). If mathematical psychology did not exist we might need to invent it: A comment on theory building in psychology. Perspectives on Psychological Science. <a class="reference external" href="http://psyarxiv.com/ygbjp">psyarxiv.com/ygbjp</a></p>
+<p>[106]. Navarro, D. J. (2020). If mathematical psychology did not exist we might need to invent it: A comment on theory building in psychology. Perspectives on Psychological Science. psyarxiv.com/ygbjp</p>
 <p>[107]. Neal, R. M. (1993). Probabilistic inference using Markov chain Monte Carlo methods. Technical Report CRG-TR-93-1, Department of Computer Science, University of Toronto.</p>
 <p>[108]. Neal, R. M. (2011). MCMC using Hamiltonian dynamics. In Handbook of Markov Chain Monte Carlo, ed. S. Brooks, A. Gelman, G. L. Jones, and X. L. Meng, 113–162. London: CRC Press.</p>
 <p>[109]. Niederlová, V., Modrák, M., Tsyklauri, O., Huranová, M., and Štěpánek, O. (2019). Meta-analysis of genotype-phenotype associations in Bardet-Biedl Syndrome uncovers differences among causative genes. Human Mutation 40, 2068–2087.</p>
@@ -1180,44 +1584,44 @@ Monte Carlo (HMC; Neal, 2011, Betancourt, 2017a). Variational inference is a gen
 <p>[122]. Riebler, A., Sørbye, S. H., Simpson, D., and Rue, H. (2018). An intuitive Bayesian spatial model for disease mapping that accounts for scaling. Statistical Methods in Medical Research 25,1145–1165.</p>
 <p>[123]. Robert, C., and Casella, G. (2011). A short history of Markov chain Monte Carlo: Subjective recollections from incomplete data. Statistical Science 26, 102–115.</p>
 <p>[124]. Rubin, D. B. (1984). Bayesianly justifiable and relevant frequency calculations for the applied statistician. Annals of Statistics 12, 1151–1172.</p>
-<p>[125]. Rudin, C. (2018). Please stop explaining black box models for high stakes decisions. NeurIPS 2018 Workshop on Critiquing and Correcting Trends in Machine Learning. <a class="reference external" href="http://arxiv.org/abs/1811.10154">arxiv.org/abs/1811.10154</a></p>
+<p>[125]. Rudin, C. (2018). Please stop explaining black box models for high stakes decisions. NeurIPS 2018 Workshop on Critiquing and Correcting Trends in Machine Learning. arxiv.org/abs/1811.10154</p>
 <p>[126]. Rue, H., Martino, S., and Chopin, N. (2009). Approximate Bayesian inference for latent Gaussian models by using integrated nested Laplace approximations. Journal of the Royal Statistical Society B 71, 319–392.</p>
 <p>[127]. Sarma, A., and Kay, M. (2020). Prior setting in practice: Strategies and rationales used in choosing prior distributions for Bayesian analysis. Proceedings of the 2020 CHI Conference on Human Factors in Computing Systems.</p>
-<p>[128]. Savage, J. (2016). What is modern statistical workflow? <a class="reference external" href="http://khakieconomics.github.io/2016/08/29/What-is-a-modern-statistical-workflow.html">khakieconomics.github.io/2016/08/29/What-is-a-modern-statistical-workflow.html</a></p>
+<p>[128]. Savage, J. (2016). What is modern statistical workflow? khakieconomics.github.io/2016/08/29/What-is-a-modern-statistical-workflow.html</p>
 <p>[129]. Shi, X., and Stevens, R. (2008). SWARM: a scientific workflow for supporting bayesian approaches to improve metabolic models. CLADE ’08: Proceedings of the 6th International Workshop on Challenges of Large Applications in Distributed Environments, 25–34.</p>
 <p>[130]. Shirani-Mehr, H., Rothschild, D., Goel, S., and Gelman, A. (2018). Disentangling bias and variance in election polls. Journal of the American Statistical Association 118, 607–614.</p>
 <p>[131]. Simmons, J., Nelson, L., and Simonsohn, U. (2011). False-positive psychology: Undisclosed flexibility in data collection and analysis allow presenting anything as significant. Psychological Science 22, 1359–1366.</p>
 <p>[132]. Simpson, D., Rue, H., Riebler, A., Martins, T. G., and Sørbye, S. H. (2017). Penalising model component complexity: A principled, practical approach to constructing priors. Statistical Science 32, 1–28.</p>
 <p>[133]. Singer, E., Van Hoewyk, J., Gebler, N., Raghunathan, T., and McGonagle, K. (1999). The effects of incentives on response rates in interviewer-mediated surveys. Journal of Official Statistics 15, 217–230.</p>
-<p>[134]. Sivula, T., Magnusson, M, and Vehtari, A. (2020). Uncertainty in Bayesian leave-one-out cross-validation based model comparison. <a class="reference external" href="http://arxiv.org">arxiv.org</a>./abs/2008.10296</p>
+<p>[134]. Sivula, T., Magnusson, M, and Vehtari, A. (2020). Uncertainty in Bayesian leave-one-out cross-validation based model comparison. arxiv.org./abs/2008.10296</p>
 <p>[135]. Skrondal, A. and Rabe-Hesketh, S. (2004). Generalized Latent Variable Modeling: Multilevel, Longitudinal and Structural Equation Models. London: CRC Press.</p>
 <p>[136]. Smith, A. (2013). Sequential Monte Carlo Methods in Practice. New York: Springer.</p>
-<p>[137]. Stan Development Team (2020). Stan User’s Guide. <a class="reference external" href="http://mc-stan.org">mc-stan.org</a></p>
+<p>[137]. Stan Development Team (2020). Stan User’s Guide. mc-stan.org</p>
 <p>[138]. Steegen, S., Tuerlinckx, F., Gelman, A., and Vanpaemel, W. (2016). Increasing transparency through a multiverse analysis. Perspectives on Psychological Science 11, 702–712.</p>
 <p>[139]. Stone, M. (1974). Cross-validatory choice and assessment of statistical predictions (with discussion). Journal of the Royal Statistical Society B 36, 111–147.</p>
 <p>[140]. Stone, M. (1977). An asymptotic equivalence of choice of model cross-validation and Akaike’s criterion. Journal of the Royal Statistical Society B 36, 44–47.</p>
-<p>[141]. Talts, S., Betancourt, M., Simpson, D., Vehtari, A., and Gelman, A. (2020). Validating Bayesian inference algorithms with simulation-based calibration. <a class="reference external" href="http://www.stat.columbia.edu/~gelman/research/unpublished/sbc.pdf">www.stat.columbia.edu/~gelman/research/unpublished/sbc.pdf</a></p>
+<p>[141]. Talts, S., Betancourt, M., Simpson, D., Vehtari, A., and Gelman, A. (2020). Validating Bayesian inference algorithms with simulation-based calibration. www.stat.columbia.edu/~gelman/research/unpublished/sbc.pdf</p>
 <p>[142]. Taylor, J., and Tibshirani, R. J. (2015). Statistical learning and selective inference. Proceedings of the National Academy of Sciences 112, 7629–7634.</p>
 <p>[143]. Taylor, S. J., and Lethem, B. (2018). Forecasting at scale. American Statistician 72, 37–45.</p>
 <p>[144]. Tierney, L., and Kadane, J. B. (1986). Accurate approximations for posterior moments and marginal densities. Journal of the American Statistical Association 81, 82–86.</p>
 <p>[145]. Turner, K. J., and Lambert, P. S. (2015). Workflows for quantitative data analysis in the social sciences. International Journal on Software Tools for Technology Transfer 17, 321–338.</p>
 <p>[146]. Unwin, A., Volinsky, C., and Winkler, S. (2003). Parallel coordinates for exploratory modelling analysis. Computational Statistics and Data Analysis 43, 553–564.</p>
-<p>[147]. Vehtari, A. (2019). Cross-validation for hierarchical models. <a class="reference external" href="http://avehtari.github.io/modelselection/rats_kcv.html">avehtari.github.io/modelselection/rats_kcv.html</a></p>
-<p>[148]. Vehtari A., Gabry J., Magnusson M., Yao Y., Bürkner P., Paananen T., Gelman A. (2020). loo: Efficient leave-one-out cross-validation and WAIC for Bayesian models. R package version 2.3.1, <a class="reference external" href="http://mc-stan.org/loo">mc-stan.org/loo</a>.</p>
-<p>[149]. Vehtari, A., and Gabry, J. (2020). Bayesian stacking and pseudo-BMA weights using the loo package. <a class="reference external" href="http://mc-stan.org/loo/articles/loo2-weights.html">mc-stan.org/loo/articles/loo2-weights.html</a></p>
+<p>[147]. Vehtari, A. (2019). Cross-validation for hierarchical models. avehtari.github.io/modelselection/rats_kcv.html</p>
+<p>[148]. Vehtari A., Gabry J., Magnusson M., Yao Y., Bürkner P., Paananen T., Gelman A. (2020). loo: Efficient leave-one-out cross-validation and WAIC for Bayesian models. R package version 2.3.1, mc-stan.org/loo.</p>
+<p>[149]. Vehtari, A., and Gabry, J. (2020). Bayesian stacking and pseudo-BMA weights using the loo package. mc-stan.org/loo/articles/loo2-weights.html</p>
 <p>[150]. Vehtari, A., Gelman, A., and Gabry, J. (2017). Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC. Statistics and Computing 27, 1413–1432.</p>
 <p>[151]. Vehtari, A., Gelman, A., Simpson, D., Carpenter, D., and Bürkner, P.-C. (2020). Rank-normalization, folding, and localization: An improved R-hat for assessing convergence of MCMC. Bayesian Analysis.</p>
 <p>[152]. Vehtari, A., Gelman, A., Sivula, T., Jylanki, P., Tran, D., Sahai, S., Blomstedt, P., Cunningham,J. P., Schiminovich, D., and Robert, C. P. (2020). Expectation propagation as a way of life: A framework for Bayesian inference on partitioned data. Journal of Machine Learning Research 21, 1–53.</p>
-<p>[153]. Vehtari, A., Simpson, D., Gelman, A., Yao, Y., and Gabry, J. (2015). Pareto smoothed importance sampling. <a class="reference external" href="http://arxiv.org/abs/1507.02646">arxiv.org/abs/1507.02646</a></p>
+<p>[153]. Vehtari, A., Simpson, D., Gelman, A., Yao, Y., and Gabry, J. (2015). Pareto smoothed importance sampling. arxiv.org/abs/1507.02646</p>
 <p>[154]. Wang, W., and Gelman, A. (2015). Difficulty of selecting among multilevel models using predictive accuracy. Statistics and Its Interface 8 (2), 153–160.</p>
 <p>[155]. Weber, S., Gelman, A., Lee, D., Betancourt, M., Vehtari, A., and Racine-Poon, A. (2018). Bayesian aggregation of average data: An application in drug development. Annals of Applied Statistics 12, 1583–1604.</p>
-<p>[156]. Wickham, H. (2006). Exploratory model analysis with R and GGobi. <a class="reference external" href="http://had.co.nz/model-vis/2007-jsm.pdf">had.co.nz/model-vis/2007-jsm.pdf</a></p>
+<p>[156]. Wickham, H. (2006). Exploratory model analysis with R and GGobi. had.co.nz/model-vis/2007-jsm.pdf</p>
 <p>[157]. Wickham, H., Cook, D., and Hofmann, H. (2015). Visualizing statistical models: Removing the blindfold. Statistical Analysis and Data Mining: The ASA Data Science Journal 8, 203–225.</p>
 <p>[158]. Wickham, H., and Groelmund, G. (2017). R for Data Science. Sebastopol, Calif.: O’Reilly.</p>
 <p>[159]. Wilson, G., Aruliah, D. A., Brown, C. T., Hong, N. P. C., Davis, M., Guy, R. T., Haddock, S. H. D.,Huff, K. D., Mitchell, I. M., Plumbley, M. D., Waugh, B., White, E. P., and Wilson, P. (2014).Best practices for scientific computing. PLoS Biology 12, e1001745.</p>
 <p>[160]. Wilson, G., Bryan, J., Cranston, K., Kitzes, J. Nederbragt, L., and Teal, T. K. (2017). Good enough practices in scientific computing. PLoS Computational Biololgy 13, e1005510.</p>
-<p>[161]. Yao, Y., Cademartori, C., Vehtari, A., and Gelman, A. (2020). Adaptive path sampling in metastable posterior distributions. <a class="reference external" href="http://arxiv.org/abs/2009.00471">arxiv.org/abs/2009.00471</a></p>
-<p>[162]. Yao, Y., Vehtari, A., and Gelman, A. (2020). Stacking for non-mixing Bayesian computations: The curse and blessing of multimodal posteriors. <a class="reference external" href="http://arxiv.org/abs/2006.12335">arxiv.org/abs/2006.12335</a></p>
+<p>[161]. Yao, Y., Cademartori, C., Vehtari, A., and Gelman, A. (2020). Adaptive path sampling in metastable posterior distributions. arxiv.org/abs/2009.00471</p>
+<p>[162]. Yao, Y., Vehtari, A., and Gelman, A. (2020). Stacking for non-mixing Bayesian computations: The curse and blessing of multimodal posteriors. arxiv.org/abs/2006.12335</p>
 <p>[163]. Yao, Y., Vehtari, A., Simpson, D., and Gelman, A. (2018a). Yes, but did it work?: Evaluating variational inference. In Proceedings of International Conference on Machine Learning, 5581–5590.</p>
 <p>[164]. Yao, Y., Vehtari, A., Simpson, D., and Gelman, A. (2018b). Using stacking to average Bayesian predictive distributions (with discussion). Bayesian Analysis 13, 917–1003.</p>
 <p>[165]. Yu, B., and Kumbier, K. (2020). Veridical data science. Proceedings of the National Academy of Sciences 117, 3920–3929.</p>
@@ -1256,8 +1660,8 @@ year    = {2020}
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
+            
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="Append-08-ModelEnsembling.html" title="previous page">
         <i class="fas fa-angle-left"></i>
@@ -1274,19 +1678,17 @@ year    = {2020}
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Osvaldo Martin<br/>
-        
-            &copy; Copyright 2021.<br/>
-      </p>
-    </div>
-  </footer>
+  <p>
+    
+      By Osvaldo Martin<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
 </main>
 
 

@@ -1,7 +1,7 @@
 Traceback (most recent call last):
   File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/jupyter_cache/executors/utils.py", line 51, in single_nb_execution
     executenb(
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 1093, in execute
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 1204, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
   File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/util.py", line 84, in wrapped
     return just_run(coro(*args, **kwargs))
@@ -9,11 +9,11 @@ Traceback (most recent call last):
     return loop.run_until_complete(coro)
   File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/asyncio/base_events.py", line 616, in run_until_complete
     return future.result()
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 559, in async_execute
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 663, in async_execute
     await self.async_execute_cell(
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 854, in async_execute_cell
-    self._check_raise_for_error(cell, exec_reply)
-  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 756, in _check_raise_for_error
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
@@ -30,117 +30,157 @@ az.style.use('arviz-darkgrid')
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mNoSectionError[0m                            Traceback (most recent call last)
-[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py[0m in [0;36mfetch_val_for_key[0;34m(self, key, delete_key)[0m
-[1;32m    237[0m             [0;32mtry[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0;32m--> 238[0;31m                 [0;32mreturn[0m [0mself[0m[0;34m.[0m[0m_theano_cfg[0m[0;34m.[0m[0mget[0m[0;34m([0m[0msection[0m[0;34m,[0m [0moption[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m    239[0m             [0;32mexcept[0m [0mInterpolationError[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+File [0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py:238[0m, in [0;36mTheanoConfigParser.fetch_val_for_key[0;34m(self, key, delete_key)[0m
+[1;32m    237[0m [38;5;28;01mtry[39;00m:
+[0;32m--> 238[0m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_theano_cfg[49m[38;5;241;43m.[39;49m[43mget[49m[43m([49m[43msection[49m[43m,[49m[43m [49m[43moption[49m[43m)[49m
+[1;32m    239[0m [38;5;28;01mexcept[39;00m InterpolationError:
 
-[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/configparser.py[0m in [0;36mget[0;34m(self, section, option, raw, vars, fallback)[0m
-[1;32m    780[0m         [0;32mtry[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0;32m--> 781[0;31m             [0md[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0m_unify_values[0m[0;34m([0m[0msection[0m[0;34m,[0m [0mvars[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m    782[0m         [0;32mexcept[0m [0mNoSectionError[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+File [0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/configparser.py:781[0m, in [0;36mRawConfigParser.get[0;34m(self, section, option, raw, vars, fallback)[0m
+[1;32m    780[0m [38;5;28;01mtry[39;00m:
+[0;32m--> 781[0m     d [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_unify_values[49m[43m([49m[43msection[49m[43m,[49m[43m [49m[38;5;28;43mvars[39;49m[43m)[49m
+[1;32m    782[0m [38;5;28;01mexcept[39;00m NoSectionError:
 
-[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/configparser.py[0m in [0;36m_unify_values[0;34m(self, section, vars)[0m
-[1;32m   1148[0m             [0;32mif[0m [0msection[0m [0;34m!=[0m [0mself[0m[0;34m.[0m[0mdefault_section[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0;32m-> 1149[0;31m                 [0;32mraise[0m [0mNoSectionError[0m[0;34m([0m[0msection[0m[0;34m)[0m [0;32mfrom[0m [0;32mNone[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m   1150[0m         [0;31m# Update with the entry specific variables[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+File [0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/configparser.py:1149[0m, in [0;36mRawConfigParser._unify_values[0;34m(self, section, vars)[0m
+[1;32m   1148[0m     [38;5;28;01mif[39;00m section [38;5;241m!=[39m [38;5;28mself[39m[38;5;241m.[39mdefault_section:
+[0;32m-> 1149[0m         [38;5;28;01mraise[39;00m NoSectionError(section) [38;5;28;01mfrom[39;00m [38;5;28mNone[39m
+[1;32m   1150[0m [38;5;66;03m# Update with the entry specific variables[39;00m
 
 [0;31mNoSectionError[0m: No section: 'blas'
 
 During handling of the above exception, another exception occurred:
 
 [0;31mKeyError[0m                                  Traceback (most recent call last)
-[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py[0m in [0;36m__get__[0;34m(self, cls, type_, delete_key)[0m
-[1;32m    353[0m             [0;32mtry[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0;32m--> 354[0;31m                 [0mval_str[0m [0;34m=[0m [0mcls[0m[0;34m.[0m[0mfetch_val_for_key[0m[0;34m([0m[0mself[0m[0;34m.[0m[0mname[0m[0;34m,[0m [0mdelete_key[0m[0;34m=[0m[0mdelete_key[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m    355[0m                 [0mself[0m[0;34m.[0m[0mis_default[0m [0;34m=[0m [0;32mFalse[0m[0;34m[0m[0;34m[0m[0m
+File [0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py:354[0m, in [0;36mConfigParam.__get__[0;34m(self, cls, type_, delete_key)[0m
+[1;32m    353[0m [38;5;28;01mtry[39;00m:
+[0;32m--> 354[0m     val_str [38;5;241m=[39m [38;5;28;43mcls[39;49m[38;5;241;43m.[39;49m[43mfetch_val_for_key[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mname[49m[43m,[49m[43m [49m[43mdelete_key[49m[38;5;241;43m=[39;49m[43mdelete_key[49m[43m)[49m
+[1;32m    355[0m     [38;5;28mself[39m[38;5;241m.[39mis_default [38;5;241m=[39m [38;5;28;01mFalse[39;00m
 
-[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py[0m in [0;36mfetch_val_for_key[0;34m(self, key, delete_key)[0m
-[1;32m    241[0m         [0;32mexcept[0m [0;34m([0m[0mNoOptionError[0m[0;34m,[0m [0mNoSectionError[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0;32m--> 242[0;31m             [0;32mraise[0m [0mKeyError[0m[0;34m([0m[0mkey[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m    243[0m [0;34m[0m[0m
+File [0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py:242[0m, in [0;36mTheanoConfigParser.fetch_val_for_key[0;34m(self, key, delete_key)[0m
+[1;32m    241[0m [38;5;28;01mexcept[39;00m (NoOptionError, NoSectionError):
+[0;32m--> 242[0m     [38;5;28;01mraise[39;00m [38;5;167;01mKeyError[39;00m(key)
 
 [0;31mKeyError[0m: 'blas__ldflags'
 
 During handling of the above exception, another exception occurred:
 
 [0;31mAttributeError[0m                            Traceback (most recent call last)
-[0;32m/tmp/ipykernel_2173/3373398946.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      4[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      5[0m [0;32mimport[0m [0mseaborn[0m [0;32mas[0m [0msns[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 6[0;31m [0;32mimport[0m [0mpymc3[0m [0;32mas[0m [0mpm[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      7[0m [0;32mimport[0m [0marviz[0m [0;32mas[0m [0maz[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      8[0m [0;34m[0m[0m
+Input [0;32mIn [1][0m, in [0;36m<cell line: 6>[0;34m()[0m
+[1;32m      4[0m [38;5;28;01mimport[39;00m [38;5;21;01mpandas[39;00m [38;5;28;01mas[39;00m [38;5;21;01mpd[39;00m
+[1;32m      5[0m [38;5;28;01mimport[39;00m [38;5;21;01mseaborn[39;00m [38;5;28;01mas[39;00m [38;5;21;01msns[39;00m
+[0;32m----> 6[0m [38;5;28;01mimport[39;00m [38;5;21;01mpymc3[39;00m [38;5;28;01mas[39;00m [38;5;21;01mpm[39;00m
+[1;32m      7[0m [38;5;28;01mimport[39;00m [38;5;21;01marviz[39;00m [38;5;28;01mas[39;00m [38;5;21;01maz[39;00m
+[1;32m      9[0m az[38;5;241m.[39mstyle[38;5;241m.[39muse([38;5;124m'[39m[38;5;124marviz-darkgrid[39m[38;5;124m'[39m)
 
-[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/__init__.py[0m in [0;36m<module>[0;34m[0m
-[1;32m     21[0m [0;34m[0m[0m
-[1;32m     22[0m [0;32mimport[0m [0msemver[0m[0;34m[0m[0;34m[0m[0m
-[0;32m---> 23[0;31m [0;32mimport[0m [0mtheano[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     24[0m [0;34m[0m[0m
-[1;32m     25[0m [0m_log[0m [0;34m=[0m [0mlogging[0m[0;34m.[0m[0mgetLogger[0m[0;34m([0m[0;34m"pymc3"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+File [0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/pymc3/__init__.py:23[0m, in [0;36m<module>[0;34m[0m
+[1;32m     20[0m [38;5;28;01mimport[39;00m [38;5;21;01mplatform[39;00m
+[1;32m     22[0m [38;5;28;01mimport[39;00m [38;5;21;01msemver[39;00m
+[0;32m---> 23[0m [38;5;28;01mimport[39;00m [38;5;21;01mtheano[39;00m
+[1;32m     25[0m _log [38;5;241m=[39m logging[38;5;241m.[39mgetLogger([38;5;124m"[39m[38;5;124mpymc3[39m[38;5;124m"[39m)
+[1;32m     27[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m logging[38;5;241m.[39mroot[38;5;241m.[39mhandlers:
 
-[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/__init__.py[0m in [0;36m<module>[0;34m[0m
-[1;32m     81[0m [0m__api_version__[0m [0;34m=[0m [0;36m1[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     82[0m [0;34m[0m[0m
-[0;32m---> 83[0;31m [0;32mfrom[0m [0mtheano[0m [0;32mimport[0m [0mscalar[0m[0;34m,[0m [0mtensor[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     84[0m from theano.compile import (
-[1;32m     85[0m     [0mIn[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+File [0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/__init__.py:83[0m, in [0;36m<module>[0;34m[0m
+[1;32m     75[0m [38;5;66;03m# This is the api version for ops that generate C code.  External ops[39;00m
+[1;32m     76[0m [38;5;66;03m# might need manual changes if this number goes up.  An undefined[39;00m
+[1;32m     77[0m [38;5;66;03m# __api_version__ can be understood to mean api version 0.[39;00m
+[1;32m     78[0m [38;5;66;03m#[39;00m
+[1;32m     79[0m [38;5;66;03m# This number is not tied to the release version and should change[39;00m
+[1;32m     80[0m [38;5;66;03m# very rarely.[39;00m
+[1;32m     81[0m __api_version__ [38;5;241m=[39m [38;5;241m1[39m
+[0;32m---> 83[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m [38;5;28;01mimport[39;00m scalar, tensor
+[1;32m     84[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcompile[39;00m [38;5;28;01mimport[39;00m (
+[1;32m     85[0m     In,
+[1;32m     86[0m     Mode,
+[0;32m   (...)[0m
+[1;32m     93[0m     shared,
+[1;32m     94[0m )
+[1;32m     95[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcompile[39;00m[38;5;21;01m.[39;00m[38;5;21;01mfunction[39;00m [38;5;28;01mimport[39;00m function, function_dump
 
-[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/__init__.py[0m in [0;36m<module>[0;34m[0m
-[1;32m     18[0m     [0mverify_grad[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+File [0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/__init__.py:20[0m, in [0;36m<module>[0;34m[0m
+[1;32m      9[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcompile[39;00m [38;5;28;01mimport[39;00m SpecifyShape, specify_shape
+[1;32m     10[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mgradient[39;00m [38;5;28;01mimport[39;00m (
+[1;32m     11[0m     Lop,
+[1;32m     12[0m     Rop,
+[0;32m   (...)[0m
+[1;32m     18[0m     verify_grad,
 [1;32m     19[0m )
-[0;32m---> 20[0;31m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m [0;32mimport[0m [0mnnet[0m  [0;31m# used for softmax, sigmoid, etc.[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     21[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m [0;32mimport[0m [0msharedvar[0m  [0;31m# adds shared-variable constructors[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     22[0m from theano.tensor import (
+[0;32m---> 20[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtensor[39;00m [38;5;28;01mimport[39;00m nnet  [38;5;66;03m# used for softmax, sigmoid, etc.[39;00m
+[1;32m     21[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtensor[39;00m [38;5;28;01mimport[39;00m sharedvar  [38;5;66;03m# adds shared-variable constructors[39;00m
+[1;32m     22[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtensor[39;00m [38;5;28;01mimport[39;00m (
+[1;32m     23[0m     blas,
+[1;32m     24[0m     blas_c,
+[0;32m   (...)[0m
+[1;32m     29[0m     xlogx,
+[1;32m     30[0m )
 
-[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/nnet/__init__.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      1[0m [0;32mimport[0m [0mwarnings[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      2[0m [0;34m[0m[0m
-[0;32m----> 3[0;31m [0;32mfrom[0m [0;34m.[0m [0;32mimport[0m [0mopt[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      4[0m [0;32mfrom[0m [0;34m.[0m[0mabstract_conv[0m [0;32mimport[0m [0mconv2d[0m [0;32mas[0m [0mabstract_conv2d[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      5[0m [0;32mfrom[0m [0;34m.[0m[0mabstract_conv[0m [0;32mimport[0m [0mconv2d_grad_wrt_inputs[0m[0;34m,[0m [0mconv3d[0m[0;34m,[0m [0mseparable_conv2d[0m[0;34m[0m[0;34m[0m[0m
+File [0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/nnet/__init__.py:3[0m, in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [38;5;28;01mimport[39;00m [38;5;21;01mwarnings[39;00m
+[0;32m----> 3[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m [38;5;28;01mimport[39;00m opt
+[1;32m      4[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m[38;5;21;01mabstract_conv[39;00m [38;5;28;01mimport[39;00m conv2d [38;5;28;01mas[39;00m abstract_conv2d
+[1;32m      5[0m [38;5;28;01mfrom[39;00m [38;5;21;01m.[39;00m[38;5;21;01mabstract_conv[39;00m [38;5;28;01mimport[39;00m conv2d_grad_wrt_inputs, conv3d, separable_conv2d
 
-[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/nnet/opt.py[0m in [0;36m<module>[0;34m[0m
-[1;32m     30[0m [0;34m[0m[0m
-[1;32m     31[0m [0;31m# Cpu implementation[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
-[0;32m---> 32[0;31m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m[0;34m.[0m[0mnnet[0m[0;34m.[0m[0mconv[0m [0;32mimport[0m [0mConvOp[0m[0;34m,[0m [0mconv2d[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     33[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m[0;34m.[0m[0mnnet[0m[0;34m.[0m[0mcorr[0m [0;32mimport[0m [0mCorrMM[0m[0;34m,[0m [0mCorrMM_gradInputs[0m[0;34m,[0m [0mCorrMM_gradWeights[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     34[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m[0;34m.[0m[0mnnet[0m[0;34m.[0m[0mcorr3d[0m [0;32mimport[0m [0mCorr3dMM[0m[0;34m,[0m [0mCorr3dMMGradInputs[0m[0;34m,[0m [0mCorr3dMMGradWeights[0m[0;34m[0m[0;34m[0m[0m
+File [0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/nnet/opt.py:32[0m, in [0;36m<module>[0;34m[0m
+[1;32m     24[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtensor[39;00m[38;5;21;01m.[39;00m[38;5;21;01mnnet[39;00m[38;5;21;01m.[39;00m[38;5;21;01mblocksparse[39;00m [38;5;28;01mimport[39;00m (
+[1;32m     25[0m     SparseBlockGemv,
+[1;32m     26[0m     SparseBlockOuter,
+[1;32m     27[0m     sparse_block_gemv_inplace,
+[1;32m     28[0m     sparse_block_outer_inplace,
+[1;32m     29[0m )
+[1;32m     31[0m [38;5;66;03m# Cpu implementation[39;00m
+[0;32m---> 32[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtensor[39;00m[38;5;21;01m.[39;00m[38;5;21;01mnnet[39;00m[38;5;21;01m.[39;00m[38;5;21;01mconv[39;00m [38;5;28;01mimport[39;00m ConvOp, conv2d
+[1;32m     33[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtensor[39;00m[38;5;21;01m.[39;00m[38;5;21;01mnnet[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcorr[39;00m [38;5;28;01mimport[39;00m CorrMM, CorrMM_gradInputs, CorrMM_gradWeights
+[1;32m     34[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtensor[39;00m[38;5;21;01m.[39;00m[38;5;21;01mnnet[39;00m[38;5;21;01m.[39;00m[38;5;21;01mcorr3d[39;00m [38;5;28;01mimport[39;00m Corr3dMM, Corr3dMMGradInputs, Corr3dMMGradWeights
 
-[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/nnet/conv.py[0m in [0;36m<module>[0;34m[0m
-[1;32m     18[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mgraph[0m[0;34m.[0m[0mbasic[0m [0;32mimport[0m [0mApply[0m[0;34m[0m[0;34m[0m[0m
-[1;32m     19[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mgraph[0m[0;34m.[0m[0mop[0m [0;32mimport[0m [0mOpenMPOp[0m[0;34m[0m[0;34m[0m[0m
-[0;32m---> 20[0;31m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m [0;32mimport[0m [0mblas[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m     21[0m from theano.tensor.basic import (
-[1;32m     22[0m     [0mNotScalarConstantError[0m[0;34m,[0m[0;34m[0m[0;34m[0m[0m
+File [0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/nnet/conv.py:20[0m, in [0;36m<module>[0;34m[0m
+[1;32m     18[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mgraph[39;00m[38;5;21;01m.[39;00m[38;5;21;01mbasic[39;00m [38;5;28;01mimport[39;00m Apply
+[1;32m     19[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mgraph[39;00m[38;5;21;01m.[39;00m[38;5;21;01mop[39;00m [38;5;28;01mimport[39;00m OpenMPOp
+[0;32m---> 20[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtensor[39;00m [38;5;28;01mimport[39;00m blas
+[1;32m     21[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtensor[39;00m[38;5;21;01m.[39;00m[38;5;21;01mbasic[39;00m [38;5;28;01mimport[39;00m (
+[1;32m     22[0m     NotScalarConstantError,
+[1;32m     23[0m     as_tensor_variable,
+[1;32m     24[0m     get_scalar_constant_value,
+[1;32m     25[0m     patternbroadcast,
+[1;32m     26[0m )
+[1;32m     27[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtensor[39;00m[38;5;21;01m.[39;00m[38;5;21;01mnnet[39;00m[38;5;21;01m.[39;00m[38;5;21;01mabstract_conv[39;00m [38;5;28;01mimport[39;00m get_conv_output_shape, get_conv_shape_1axis
 
-[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/blas.py[0m in [0;36m<module>[0;34m[0m
-[1;32m    161[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mscalar[0m [0;32mimport[0m [0mbool[0m [0;32mas[0m [0mbool_t[0m[0;34m[0m[0;34m[0m[0m
-[1;32m    162[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m [0;32mimport[0m [0mbasic[0m [0;32mas[0m [0mtt[0m[0;34m[0m[0;34m[0m[0m
-[0;32m--> 163[0;31m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m[0;34m.[0m[0mblas_headers[0m [0;32mimport[0m [0mblas_header_text[0m[0;34m,[0m [0mblas_header_version[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m    164[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m[0;34m.[0m[0mopt[0m [0;32mimport[0m [0min2out[0m[0;34m,[0m [0mlocal_dimshuffle_lift[0m[0;34m[0m[0;34m[0m[0m
-[1;32m    165[0m [0;32mfrom[0m [0mtheano[0m[0;34m.[0m[0mtensor[0m[0;34m.[0m[0mtype[0m [0;32mimport[0m [0mvalues_eq_approx_remove_inf_nan[0m[0;34m[0m[0;34m[0m[0m
+File [0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/blas.py:163[0m, in [0;36m<module>[0;34m[0m
+[1;32m    161[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mscalar[39;00m [38;5;28;01mimport[39;00m [38;5;28mbool[39m [38;5;28;01mas[39;00m bool_t
+[1;32m    162[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtensor[39;00m [38;5;28;01mimport[39;00m basic [38;5;28;01mas[39;00m tt
+[0;32m--> 163[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtensor[39;00m[38;5;21;01m.[39;00m[38;5;21;01mblas_headers[39;00m [38;5;28;01mimport[39;00m blas_header_text, blas_header_version
+[1;32m    164[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtensor[39;00m[38;5;21;01m.[39;00m[38;5;21;01mopt[39;00m [38;5;28;01mimport[39;00m in2out, local_dimshuffle_lift
+[1;32m    165[0m [38;5;28;01mfrom[39;00m [38;5;21;01mtheano[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtensor[39;00m[38;5;21;01m.[39;00m[38;5;21;01mtype[39;00m [38;5;28;01mimport[39;00m values_eq_approx_remove_inf_nan
 
-[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/blas_headers.py[0m in [0;36m<module>[0;34m[0m
-[1;32m   1014[0m [0;34m[0m[0m
-[1;32m   1015[0m [0;34m[0m[0m
-[0;32m-> 1016[0;31m [0;32mif[0m [0;32mnot[0m [0mconfig[0m[0;34m.[0m[0mblas__ldflags[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m   1017[0m     [0m_logger[0m[0;34m.[0m[0mwarning[0m[0;34m([0m[0;34m"Using NumPy C-API based implementation for BLAS functions."[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m   1018[0m [0;34m[0m[0m
+File [0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/tensor/blas_headers.py:1016[0m, in [0;36m<module>[0;34m[0m
+[1;32m    997[0m             header [38;5;241m+[39m[38;5;241m=[39m textwrap[38;5;241m.[39mdedent(
+[1;32m    998[0m                 [38;5;124;03m"""\[39;00m
+[1;32m    999[0m [38;5;124;03m                    static float sdot_(int* Nx, float* x, int* Sx, float* y, int* Sy)[39;00m
+[0;32m   (...)[0m
+[1;32m   1010[0m [38;5;124;03m                    """[39;00m
+[1;32m   1011[0m             )
+[1;32m   1013[0m     [38;5;28;01mreturn[39;00m header [38;5;241m+[39m blas_code
+[0;32m-> 1016[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m [43mconfig[49m[38;5;241;43m.[39;49m[43mblas__ldflags[49m:
+[1;32m   1017[0m     _logger[38;5;241m.[39mwarning([38;5;124m"[39m[38;5;124mUsing NumPy C-API based implementation for BLAS functions.[39m[38;5;124m"[39m)
+[1;32m   1020[0m [38;5;28;01mdef[39;00m [38;5;21mmkl_threads_text[39m():
 
-[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py[0m in [0;36m__get__[0;34m(self, cls, type_, delete_key)[0m
-[1;32m    356[0m             [0;32mexcept[0m [0mKeyError[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[1;32m    357[0m                 [0;32mif[0m [0mcallable[0m[0;34m([0m[0mself[0m[0;34m.[0m[0mdefault[0m[0;34m)[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[0;32m--> 358[0;31m                     [0mval_str[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0mdefault[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m    359[0m                 [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[1;32m    360[0m                     [0mval_str[0m [0;34m=[0m [0mself[0m[0;34m.[0m[0mdefault[0m[0;34m[0m[0;34m[0m[0m
+File [0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/configparser.py:358[0m, in [0;36mConfigParam.__get__[0;34m(self, cls, type_, delete_key)[0m
+[1;32m    356[0m [38;5;28;01mexcept[39;00m [38;5;167;01mKeyError[39;00m:
+[1;32m    357[0m     [38;5;28;01mif[39;00m callable([38;5;28mself[39m[38;5;241m.[39mdefault):
+[0;32m--> 358[0m         val_str [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mdefault[49m[43m([49m[43m)[49m
+[1;32m    359[0m     [38;5;28;01melse[39;00m:
+[1;32m    360[0m         val_str [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39mdefault
 
-[0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py[0m in [0;36mdefault_blas_ldflags[0;34m()[0m
-[1;32m   2619[0m             [0;31m# If the old private interface is available use it as it[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
-[1;32m   2620[0m             [0;31m# don't print information to the user.[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
-[0;32m-> 2621[0;31m             [0mblas_info[0m [0;34m=[0m [0mnumpy[0m[0;34m.[0m[0mdistutils[0m[0;34m.[0m[0m__config__[0m[0;34m.[0m[0mblas_opt_info[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m   2622[0m         [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
-[1;32m   2623[0m             [0;31m# We do this import only here, as in some setup, if we[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+File [0;32m/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/theano/link/c/cmodule.py:2621[0m, in [0;36mdefault_blas_ldflags[0;34m()[0m
+[1;32m   2617[0m [38;5;28;01mtry[39;00m:
+[1;32m   2618[0m     [38;5;28;01mif[39;00m [38;5;28mhasattr[39m(numpy[38;5;241m.[39mdistutils, [38;5;124m"[39m[38;5;124m__config__[39m[38;5;124m"[39m) [38;5;129;01mand[39;00m numpy[38;5;241m.[39mdistutils[38;5;241m.[39m__config__:
+[1;32m   2619[0m         [38;5;66;03m# If the old private interface is available use it as it[39;00m
+[1;32m   2620[0m         [38;5;66;03m# don't print information to the user.[39;00m
+[0;32m-> 2621[0m         blas_info [38;5;241m=[39m [43mnumpy[49m[38;5;241;43m.[39;49m[43mdistutils[49m[38;5;241;43m.[39;49m[43m__config__[49m[38;5;241;43m.[39;49m[43mblas_opt_info[49m
+[1;32m   2622[0m     [38;5;28;01melse[39;00m:
+[1;32m   2623[0m         [38;5;66;03m# We do this import only here, as in some setup, if we[39;00m
+[1;32m   2624[0m         [38;5;66;03m# just import theano and exit, with the import at global[39;00m
+[0;32m   (...)[0m
+[1;32m   2630[0m         [38;5;66;03m# This happen with Python 2.7.3 |EPD 7.3-1 and numpy 1.8.1[39;00m
+[1;32m   2631[0m         [38;5;66;03m# isort: off[39;00m
+[1;32m   2632[0m         [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m[38;5;21;01m.[39;00m[38;5;21;01mdistutils[39;00m[38;5;21;01m.[39;00m[38;5;21;01msystem_info[39;00m  [38;5;66;03m# noqa[39;00m
 
 [0;31mAttributeError[0m: module 'numpy.distutils.__config__' has no attribute 'blas_opt_info'
 AttributeError: module 'numpy.distutils.__config__' has no attribute 'blas_opt_info'

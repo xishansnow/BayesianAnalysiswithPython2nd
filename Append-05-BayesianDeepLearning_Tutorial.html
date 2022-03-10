@@ -37,20 +37,22 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="附录 F：贝叶斯深度学习编程初步" href="Append-06-BayesianDeepLearningPymc3.html" />
@@ -255,7 +257,7 @@
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -312,7 +314,7 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
@@ -508,7 +510,206 @@
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>附录 E：贝叶斯深度学习</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   1 简介
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   2 什么是贝叶斯神经网络？
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   3 深度学习中贝叶斯方法的动机
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   4 用于贝叶斯深度学习的随机模型
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     4.1 概率图模型
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     4.2 根据概率图模型定义贝叶斯神经网络的随机模型
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   5 设置先验
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     5.1 良好的缺省先验
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   5.2 解决贝叶斯神经网络中的不可辨识性问题
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id10">
+     5.3 正则化和先验之间的联系
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id11">
+     5.4 满足一致性条件的先验
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id12">
+   6 监督程度和先验知识的替代形式
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id13">
+     6.1 含噪声标签和半监督学习
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id14">
+     6.2 数据增强
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id15">
+     6.3 元学习、转移学习和自我监督学习
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id16">
+   7 贝叶斯推断算法
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mcmc">
+     7.1 MCMC 方法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id17">
+     7.2 变分推断
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id18">
+     7.3 反向传播贝叶斯
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id19">
+     7.4 学习先验
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id20">
+   8 将贝叶斯方法用于深度学习
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dropout">
+     8.1 通过 Dropout 实现贝叶斯
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id21">
+     8.2 通过随机梯度下降实现贝叶斯
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sgd-mcmc">
+       8.2.1 基于 SGD 动力学的 MCMC 算法。
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sgd">
+       8.2.2 基于 SGD 动态的变分推断
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#n">
+     8.3 只对最后 n 层进行贝叶斯推断
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id22">
+     8.4 贝叶斯教师法
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id23">
+   9 评估贝叶斯神经网络的性能
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id24">
+   10 贝叶斯深度学习编程框架
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id25">
+     10.1 概率编程语言
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id26">
+     10.2 深度学习框架下的概率编程
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id27">
+   11 结论
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id28">
+   参考文献
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="e">
@@ -1084,7 +1285,7 @@ d(\check{p}, \hat{p})=\sqrt{\int_{0}^{1}(\check{p}-\hat{p})^{2} d \hat{p}}
 <p>[5].   Eli Bingham, Jonathan P. Chen, Martin Jankowiak, Fritz Obermeyer, Neeraj Pradhan, Theofanis Karaletsos, Rohit Singh, Paul Szerlip, Paul Horsfall, and Noah D. Goodman. Pyro: Deep universal probabilistic programming.J. Mach. Learn. Res., 20(1):973âĂŞ978, January 2019. ISSN 1532-4435.</p>
 <p>[6].  avid M. Blei, Alp Kucukelbir, and Jon D. McAuliffe. Variational inference: A review for statisticians.Journal of the American Statistical Association, 112(518):859–877, 2017.</p>
 <p>[7].  harles Blundell, Julien Cornebise, Koray Kavukcuoglu, and Daan Wierstra. Weight uncertainty in neural network. In Proceedings of the 32nd International Conference on Machine Learning, volume 37 ofProceedings of Machine Learning Research, pages 1613–1622, 2015.</p>
-<p>[8].  icolas Brosse, Carlos Riquelme, Alice Martin, Sylvain Gelly, and ÃĽric Moulines. On last-layer algorithms for classification: Decoupling representation from uncertainty estimation.CoRR, abs/2001.08049, 2020. URL <a class="reference external" href="http://arxiv">http://arxiv</a>. org/abs/2001.08049.</p>
+<p>[8].  icolas Brosse, Carlos Riquelme, Alice Martin, Sylvain Gelly, and ÃĽric Moulines. On last-layer algorithms for classification: Decoupling representation from uncertainty estimation.CoRR, abs/2001.08049, 2020. URL http://arxiv. org/abs/2001.08049.</p>
 <p>[9].  . L. Buntine. Operations for learning with graphical models.Journal of Artificial Intelligence Research, 2:159–225, Dec 1994. ISSN 1076–9757.</p>
 <p>[10].  ob Carpenter, Andrew Gelman, Matthew D Hoffman, Daniel Lee, Ben Goodrich, Michael Betancourt, Marcus Brubaker, Jiqiang Guo, Peter Li, and Allen Riddell. Stan: A probabilistic programming language.Journal of statistical software, 76(1), 2017.</p>
 <p>[11].  odolfo C. Cavalcante, Rodrigo C. Brasileiro, Victor L.F. Souza, Jarley P. Nobrega, and Adriano L.I. Oliveira. Computational intelligence and financial markets: A survey and future directions.Expert Systems with Applications, 55:194–211.</p>
@@ -1093,12 +1294,12 @@ d(\check{p}, \hat{p})=\sqrt{\int_{0}^{1}(\check{p}-\hat{p})^{2} d \hat{p}}
 <p>[14].  tefan Depeweg, Jose-Miguel Hernandez-Lobato, Finale Doshi-Velez, and Steffen Udluft. Decomposition of uncertainty  in Bayesian deep learning for efficient and risk-sensitive learning. InProceedings of the 35th International Conference on Machine Learning, volume 80 ofProceedings of Machine Learning Research, pages 1184–1193, 2018.</p>
 <p>[15].  lexander Etz, Quentin F. Gronau, Fabian Dablander, Peter A. Edelsbrunner, and Beth Baribault. How to become a Bayesian in eight easy steps: An annotated reading list.Psychonomic Bulletin &amp; Review, 25:219–234, 2018.</p>
 <p>[16].  . Frenay and M. Verleysen. Classification in the presence of label noise: A survey.IEEE Transactions on Neural Networks and Learning Systems, 25(5):845–869, 2014.</p>
-<p>[17].  arin Gal and Zoubin Ghahramani. Bayesian convolutional neural networks with Bernoulli approximate variational inference.CoRR, abs/1506.02158, 2015. URL <a class="reference external" href="http://arxiv.org/abs/1506.02158">http://arxiv.org/abs/1506.02158</a>.</p>
+<p>[17].  arin Gal and Zoubin Ghahramani. Bayesian convolutional neural networks with Bernoulli approximate variational inference.CoRR, abs/1506.02158, 2015. URL http://arxiv.org/abs/1506.02158.</p>
 <p>[18].  arin Gal and Zoubin Ghahramani. Dropout as a Bayesian approximation: Representing model uncertainty in deep learning. InProceedings of the 33rd International Conference on Machine Learning - Volume 48, ICMLâĂŹ16, page 1050âĂŞ1059, 2016.</p>
 <p>[19].  arin Gal, Riashat Islam, and Zoubin Ghahramani. Deep Bayesian active learning with image data. InProceedings of the 34th International Conference on Machine Learning - Volume 70, ICMLâĂŹ17, page 1183âĂŞ1192, 2017.</p>
 <p>[20].  rancis Galton. Vox Populi.Nature, 75(1949):450–451, Mar 1907. ISSN 1476–4687.</p>
 <p>[21].  ndrew Gelman and other Stan developers. Prior choice recommendations, 2020. Retrieved from
-<a class="reference external" href="https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations">https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations</a> [last seen 13.07.2020].</p>
+https://github.com/stan-dev/stan/wiki/Prior-Choice-Recommendations [last seen 13.07.2020].</p>
 <p>[22].  dward I. George, George Casella, and Edward I. George. Explaining the Gibbs sampler.The American Statistician, 1992.</p>
 <p>[23].  oubin Ghahramani and Matthew J. Beal. Propagation algorithms for variational Bayesian learning. In T. K. Leen, T. G. Dietterich, and V. Tresp, editors,Advances in Neural Information Processing Systems 13, pages 507–513. MIT Press, 2001.</p>
 <p>[24].  ilmann Gneiting and Adrian E Raftery. Strictly proper scoring rules, prediction, and estimation.Journal of the American Statistical Association, 102(477):359–378, 2007.</p>
@@ -1110,9 +1311,9 @@ d(\check{p}, \hat{p})=\sqrt{\int_{0}^{1}(\check{p}-\hat{p})^{2} d \hat{p}}
 <p>[30].  eoffrey Hinton, Oriol Vinyals, and Jeff Dean. Distilling the knowledge in a neural network.arXiv preprint arXiv:1503.02531, 2015. In NIPS 2014 Deep Learning Workshop.</p>
 <p>[31].  atthew D Hoffman and Andrew Gelman. The No-U-Turn sampler: adaptively setting path lengths in Hamiltonian Monte Carlo.Journal of Machine Learning Research, 15(1):1593–1623, 2014.</p>
 <p>[32].  atthew D. Hoffman, David M. Blei, Chong Wang, and John Paisley. Stochastic variational inference.J. Mach. Learn. Res., 14(1):1303–1347, May 2013. ISSN 1532-4435.</p>
-<p>[33].  imothy Hospedales, Antreas Antoniou, Paul Micaelli, and Amos Storkey. Meta-learning in neural networks: A survey. CoRR, abs/2004.05439, 2020. URL <a class="reference external" href="http://arxiv.org/abs/2004.05439">http://arxiv.org/abs/2004.05439</a>.</p>
+<p>[33].  imothy Hospedales, Antreas Antoniou, Paul Micaelli, and Amos Storkey. Meta-learning in neural networks: A survey. CoRR, abs/2004.05439, 2020. URL http://arxiv.org/abs/2004.05439.</p>
 <p>[34].  iri Hron, Alex Matthews, and Zoubin Ghahramani. Variational Bayesian dropout: pitfalls and fixes. InProceedings of the 35th International Conference on Machine Learning, volume 80 ofProceedings of Machine Learning Research, pages 2019–2028, 2018.</p>
-<p>[35].  atarzyna Janocha and Wojciech Marian Czarnecki. On loss functions for deep neural networks in classification. Schedae Informaticae, 1/2016, 2017. ISSN 2083-8476. doi: 10.4467/20838476si.16.004.6185. URL <a class="reference external" href="http://dx.doi.org/10.4467/20838476SI.16.004.6185">http://dx.doi.org/10.4467/20838476SI.16.004.6185</a>.</p>
+<p>[35].  atarzyna Janocha and Wojciech Marian Czarnecki. On loss functions for deep neural networks in classification. Schedae Informaticae, 1/2016, 2017. ISSN 2083-8476. doi: 10.4467/20838476si.16.004.6185. URL http://dx.doi.org/10.4467/20838476SI.16.004.6185.</p>
 <p>[36].  . Jing and Y. Tian. Self-supervised visual feature learning with deep neural networks: A survey.IEEE Transactions on Pattern Analysis and Machine Intelligence, pages 1–1, 2020.</p>
 <p>[37].  lex Kendall and Yarin Gal. What uncertainties do we need in Bayesian deep learning for computer vision? In Proceedings of the 31st International Conference on Neural Information Processing Systems, NIPSâĂŹ17, page 5580âĂŞ5590, 2017. ISBN 9781510860964.</p>
 <p>[38].  . Ker, L. Wang, J. Rao, and T. Lim. Deep learning applications in medical image analysis.IEEE Access, 6:9375–9389, 2018.</p>
@@ -1123,7 +1324,7 @@ d(\check{p}, \hat{p})=\sqrt{\int_{0}^{1}(\check{p}-\hat{p})^{2} d \hat{p}}
 <p>[43].  urk P Kingma, Tim Salimans, and Max Welling. Variational dropout and the local reparameterization trick. In C. Cortes, N. D. Lawrence, D. D. Lee, M. Sugiyama, and R. Garnett, editors,Advances in Neural Information Processing Systems 28, pages 2575–2583. Curran Associates, Inc., 2015.</p>
 <p>[44].  rmen Der Kiureghian and Ove Ditlevsen. Aleatory or epistemic? does it matter?Structural Safety, 31(2):105–112, 2009. ISSN 0167–4730. Risk Acceptance and Risk Communication.</p>
 <p>[45].  noop Korattikara, Vivek Rathod, Kevin Murphy, and Max Welling. Bayesian dark knowledge. InProceedings of the 28th International Conference on Neural Information Processing Systems - Volume 2, NIPSâĂŹ15, page 3438âĂŞ3446, 2015.</p>
-<p>[46].  gustinus Kristiadi, Matthias Hein, and Philipp Hennig. Being Bayesian, even just a bit, fixes overconfidence in ReLU networks.CoRR, abs/2002.10118, 2020. URL <a class="reference external" href="http://arxiv.org/abs/2002.10118">http://arxiv.org/abs/2002.10118</a>.</p>
+<p>[46].  gustinus Kristiadi, Matthias Hein, and Philipp Hennig. Being Bayesian, even just a bit, fixes overconfidence in ReLU networks.CoRR, abs/2002.10118, 2020. URL http://arxiv.org/abs/2002.10118.</p>
 <p>[47].  olodymyr Kuleshov, Nathan Fenner, and Stefano Ermon. Accurate uncertainties for deep learning using calibrated regression. InProceedings of the 35th International Conference on Machine Learning, volume 80 ofProceedings of Machine Learning Research, pages 2796–2804, 2018.</p>
 <p>[48].  . Kunwar, U. Pal, and M. Blumenstein. Semi-supervised online Bayesian network learner for handwritten characters recognition. In2014 22nd International Conference on Pattern Recognition, pages 3104–3109, 2014.</p>
 <p>[49].  alaji Lakshminarayanan, Alexander Pritzel, and Charles Blundell. Simple and scalable predictive uncertainty estimation using deep ensembles. In I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett, editors,Advances in Neural Information Processing Systems 30, pages 6402–6413. Curran Associates, Inc., 2017.</p>
@@ -1134,7 +1335,7 @@ d(\check{p}, \hat{p})=\sqrt{\int_{0}^{1}(\check{p}-\hat{p})^{2} d \hat{p}}
 <p>[54].  avid J. C. MacKay. A practical Bayesian framework for backpropagation networks.Neural Computation, 4(3):448–472, 1992.</p>
 <p>[55].  esley J Maddox, Pavel Izmailov, Timur Garipov, Dmitry P Vetrov, and Andrew Gordon Wilson. A simple baseline for Bayesian uncertainty in deep learning. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d’Alché-Buc, E. Fox, and R. Garnett, editors,Advances in Neural Information Processing Systems 32, pages 13153–13164. Curran Associates, Inc., 2019.</p>
 <p>[56].  tephan Mandt, Matthew D Hoffman, and David M Blei. Stochastic gradient descent as approximate Bayesian inference. The Journal of Machine Learning Research, 18(1):4873–4907, 2017.</p>
-<p>[57].  ditya Krishna Menon, Ankit Singh Rawat, Sashank J. Reddi, Seungyeon Kim, and Sanjiv Kumar. Why distillation helps: a statistical perspective.CoRR, abs/2005.10419, 2020. URL <a class="reference external" href="https://arxiv.org/abs/2005.10419">https://arxiv.org/abs/2005.10419</a>.</p>
+<p>[57].  ditya Krishna Menon, Ankit Singh Rawat, Sashank J. Reddi, Seungyeon Kim, and Sanjiv Kumar. Why distillation helps: a statistical perspective.CoRR, abs/2005.10419, 2020. URL https://arxiv.org/abs/2005.10419.</p>
 <p>[58].  ohn Mitros and Brian Mac Namee. On the validity of Bayesian neural networks for uncertainty estimation. InAICS,2019.</p>
 <p>[59].  evin P. Murphy.Machine Learning: A Probabilistic Perspective. The MIT Press, 2012. ISBN 0262018020.</p>
 <p>[60].  ric Nalisnick, Akihiro Matsukawa, Yee Whye Teh, Dilan Gorur, and Balaji Lakshminarayanan. Do deep generative models know what they don’t know? InInternational Conference on Learning Representations, 2019.</p>
@@ -1147,35 +1348,35 @@ d(\check{p}, \hat{p})=\sqrt{\int_{0}^{1}(\check{p}-\hat{p})^{2} d \hat{p}}
 <p>[67].  . J. Pan and Q. Yang. A survey on transfer learning.IEEE Transactions on Knowledge and Data Engineering, 22(10): 1345–1359, 2010.</p>
 <p>[68].  im Pearce, Felix Leibfried, Alexandra Brintrup, Mohamed Zaki, and Andy Neely. Uncertainty in neural networks: Approximately Bayesian ensembling. InAISTATS 2020, 2020.</p>
 <p>[69].  icholas G Polson, Vadim Sokolov, et al. Deep learning: a Bayesian perspective.Bayesian Analysis, 12(4):1275–1304, 2017.</p>
-<p>[70].  rya A Pourzanjani, Richard M Jiang, Brian Mitchell, Paul J Atzberger, and Linda R Petzold. Bayesian inference over the Stiefel manifold via the Givens representation.CoRR, abs/1710.09443, 2017. URL <a class="reference external" href="http://arxiv.org/abs/1710.09443">http://arxiv.org/abs/1710.09443</a>.</p>
+<p>[70].  rya A Pourzanjani, Richard M Jiang, Brian Mitchell, Paul J Atzberger, and Linda R Petzold. Bayesian inference over the Stiefel manifold via the Givens representation.CoRR, abs/1710.09443, 2017. URL http://arxiv.org/abs/1710.09443.</p>
 <p>[71].  amira Pouyanfar, Saad Sadiq, Yilin Yan, Haiman Tian, Yudong Tao, Maria Presa Reyes, Mei-Ling Shyu, Shu-Ching Chen, and S. S. Iyengar. A survey on deep learning: Algorithms, techniques, and applications.</p>
-<p>[72].  uo-Jun Qi and Jiebo Luo. Small data challenges in big data era: A survey of recent progress on unsupervised and semi-supervised methods.CoRR, abs/1903.11260, 2019. URL <a class="reference external" href="http://arxiv.org/abs/1903.11260">http://arxiv.org/abs/1903.11260</a>.</p>
+<p>[72].  uo-Jun Qi and Jiebo Luo. Small data challenges in big data era: A survey of recent progress on unsupervised and semi-supervised methods.CoRR, abs/1903.11260, 2019. URL http://arxiv.org/abs/1903.11260.</p>
 <p>[73].  ipeng Qiu, Tianxiang Sun, Yige Xu, Yunfan Shao, Ning Dai, and Xuanjing Huang. Pre-trained models for natural language processing: A survey.CoRR, abs/2003.08271, 2020.</p>
 <p>[74].  ing Rao and Jelena Frtunikj. Deep learning for self-driving cars: Chances and challenges. InProceedings of the 1st International Workshop on Software Engineering for AI in Autonomous Systems, SEFAIS âĂŹ18, pages 35–38, 2018.</p>
 <p>[75].  ippolyt Ritter, Aleksandar Botev, and David Barber. A scalable laplace approximation for neural networks. In International Conference on Learning Representations, 2018.</p>
 <p>[76].  hristian Robert.The Bayesian choice: from decision-theoretic foundations to computational implementation. Springer Science &amp; Business Media, 2007.</p>
-<p>[77].  ohn Salvatier, Thomas V Wieckiâ, and Christopher Fonnesbeck. PyMC3: Python probabilistic programming framework. PeerJ Computer Science, 2:e55, 2016. <a class="reference external" href="https://doi.org/10.7717/peerj-cs.55">https://doi.org/10.7717/peerj-cs.55</a>.</p>
-<p>[78].  abeel Seedat and Christopher Kanan. Towards calibrated and scalable uncertainty representations for neural networks. CoRR, abs/1911.00104, 2019. URL <a class="reference external" href="http://arxiv.org/abs/1911.00104">http://arxiv.org/abs/1911.00104</a>.</p>
-<p>[79].  oan SerrÃă, David ÃĄlvarez, VicenÃğ GÃşmez, Olga Slizovskaia, JosÃľ F. NÃžÃśez, and Jordi Luque. Input complexity and out-of-distribution detection with likelihood-based generative models.CoRR, abs/1909.11480, 2020. URL <a class="reference external" href="http://arxiv.org/abs/1909.11480">http://arxiv.org/abs/1909.11480</a>.</p>
-<p>[80].  aniele Silvestro and Tobias Andermann. Prior choice affects ability of Bayesian neural networks to identify unknowns. CoRR, abs/2005.04987, 2020. URL <a class="reference external" href="http://arxiv.org/abs/2005.04987">http://arxiv.org/abs/2005.04987</a>.</p>
+<p>[77].  ohn Salvatier, Thomas V Wieckiâ, and Christopher Fonnesbeck. PyMC3: Python probabilistic programming framework. PeerJ Computer Science, 2:e55, 2016. https://doi.org/10.7717/peerj-cs.55.</p>
+<p>[78].  abeel Seedat and Christopher Kanan. Towards calibrated and scalable uncertainty representations for neural networks. CoRR, abs/1911.00104, 2019. URL http://arxiv.org/abs/1911.00104.</p>
+<p>[79].  oan SerrÃă, David ÃĄlvarez, VicenÃğ GÃşmez, Olga Slizovskaia, JosÃľ F. NÃžÃśez, and Jordi Luque. Input complexity and out-of-distribution detection with likelihood-based generative models.CoRR, abs/1909.11480, 2020. URL http://arxiv.org/abs/1909.11480.</p>
+<p>[80].  aniele Silvestro and Tobias Andermann. Prior choice affects ability of Bayesian neural networks to identify unknowns. CoRR, abs/2005.04987, 2020. URL http://arxiv.org/abs/2005.04987.</p>
 <p>[81].  dward Snelson and Zoubin Ghahramani. Compact approximations to Bayesian predictive distributions. InProceedings of the 22nd International Conference on Machine Learning, ICML âĂŹ05, page 840âĂŞ847, 2005.</p>
-<p>[82].  ihyuk Sohn, David Berthelot, Chun-Liang Li, Zizhao Zhang, Nicholas Carlini, Ekin D. Cubuk, Alex Kurakin, Han Zhang, and Colin Raffel. FixMatch: Simplifying semi-supervised learning with consistency and confidence.CoRR, abs/2001.07685, 2020. URL <a class="reference external" href="https://arxiv.org/abs/2001.07685">https://arxiv.org/abs/2001.07685</a>.</p>
+<p>[82].  ihyuk Sohn, David Berthelot, Chun-Liang Li, Zizhao Zhang, Nicholas Carlini, Ekin D. Cubuk, Alex Kurakin, Han Zhang, and Colin Raffel. FixMatch: Simplifying semi-supervised learning with consistency and confidence.CoRR, abs/2001.07685, 2020. URL https://arxiv.org/abs/2001.07685.</p>
 <p>[83].  itish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan Salakhutdinov. Dropout: A simple way to prevent neural networks from overfitting.Journal of Machine Learning Research, 15(56):1929–1958, 2014.</p>
 <p>[84].  artin A. Tanner and Wing Hung Wong. The calculation of posterior distributions by data augmentation.Journal of the American Statistical Association, 82(398):528–540, 1987.</p>
 <p>[85].  . M. Titterington. Bayesian methods for neural networks and related models.Statist. Sci., 19(1):128–139, 02 2004.</p>
 <p>[86].  drian Corduneanu Tommi and Tommi Jaakkola. On information regularization. InIn Proceedings of the 19th UAI,2003.</p>
-<p>[87].  ustin Tran, Matthew D. Hoffman, Rif A. Saurous, Eugene Brevdo, Kevin Murphy, and David M. Blei. Deep probabilistic programming.CoRR, abs/1701.03757, 2017. URL <a class="reference external" href="http://arxiv.org/abs/1701.03757">http://arxiv.org/abs/1701.03757</a>.</p>
-<p>[88].  oan Tran, Thanh-Toan Do, Ian Reid, and Gustavo Carneiro. Bayesian generative active deep learning.CoRR, abs/1904.11643, 2019. URL <a class="reference external" href="http://arxiv.org/abs/1904.11643">http://arxiv.org/abs/1904.11643</a>.</p>
+<p>[87].  ustin Tran, Matthew D. Hoffman, Rif A. Saurous, Eugene Brevdo, Kevin Murphy, and David M. Blei. Deep probabilistic programming.CoRR, abs/1701.03757, 2017. URL http://arxiv.org/abs/1701.03757.</p>
+<p>[88].  oan Tran, Thanh-Toan Do, Ian Reid, and Gustavo Carneiro. Bayesian generative active deep learning.CoRR, abs/1904.11643, 2019. URL http://arxiv.org/abs/1904.11643.</p>
 <p>[89].  ao Wang and Dit-Yan Yeung. Towards Bayesian deep learning: A framework and some existing methods.IEEE Trans.
 on Knowl. and Data Eng., 28(12):3395–3408, December 2016. ISSN 1041–4347.</p>
 <p>[90].  uan-Chieh Wang, Paul Vicol, James Lucas, Li Gu, Roger Grosse, and Richard Zemel. Adversarial distillation of Bayesian neural network posteriors. InProceedings of the 35th International Conference on Machine Learning, volume 80 of Proceedings of Machine Learning Research, pages 5190–5199, 2018.</p>
 <p>[91].  ax Welling and Yee W Teh. Bayesian learning via stochastic gradient Langevin dynamics. InProceedings of the 28th international conference on machine learning, ICML âĂŹ11, pages 681–688, 2011.</p>
 <p>[92].  eming Wen, Paul Vicol, Jimmy Ba, Dustin Tran, and Roger Grosse. Flipout: Efficient pseudo-independent weight perturbations on mini-batches. InInternational Conference on Learning Representations, 2018.</p>
-<p>[93].  ndrew Gordon Wilson and Pavel Izmailov. Bayesian deep learning and a probabilistic perspective of generalization. CoRR, abs/2002.08791, 2020. URL <a class="reference external" href="http://arxiv.org/abs/2002.08791">http://arxiv.org/abs/2002.08791</a>.</p>
+<p>[93].  ndrew Gordon Wilson and Pavel Izmailov. Bayesian deep learning and a probabilistic perspective of generalization. CoRR, abs/2002.08791, 2020. URL http://arxiv.org/abs/2002.08791.</p>
 <p>[94].  . H. Wolpert. The lack of a priori distinctions between learning algorithms.Neural Computation, 8(7):1341–1390, 1996.</p>
-<p>[95].  izhe Xie, Zihang Dai, Eduard H. Hovy, Minh-Thang Luong, and Quoc V. Le. Unsupervised data augmentation.CoRR, abs/1904.12848, 2019. URL <a class="reference external" href="http://arxiv.org/abs/1904.12848">http://arxiv.org/abs/1904.12848</a>.</p>
+<p>[95].  izhe Xie, Zihang Dai, Eduard H. Hovy, Minh-Thang Luong, and Quoc V. Le. Unsupervised data augmentation.CoRR, abs/1904.12848, 2019. URL http://arxiv.org/abs/1904.12848.</p>
 <p>[96].  hipeng Yu, Balaji Krishnapuram, Rómer Rosales, and R. Bharat Rao. Bayesian co-training.Journal of Machine Learning Research, 12(80):2649–2680, 2011.</p>
-<p>[97].  iaming Zeng, Adam Lesnikowski, and Jose M. Alvarez. The relevance of Bayesian layer positioning to model  uncertainty in deep Bayesian active learning.CoRR, abs/1811.12535, 2018. URL <a class="reference external" href="http://arxiv.org/abs/1811.12535">http://arxiv.org/abs/1811.12535</a>.</p>
+<p>[97].  iaming Zeng, Adam Lesnikowski, and Jose M. Alvarez. The relevance of Bayesian layer positioning to model  uncertainty in deep Bayesian active learning.CoRR, abs/1811.12535, 2018. URL http://arxiv.org/abs/1811.12535.</p>
 <p>[98].  hiyuan Zhang, Samy Bengio, Moritz Hardt, Benjamin Recht, and Oriol Vinyals. Understanding deep learning requires rethinking generalization. In 5th International Conference on Learning Representations, ICLR, 2017.</p>
 <p>[99].  hi-Hua Zhou.Ensemble Methods: Foundations and Algorithms. Chapman and Hall/CRC, 1st edition, 2012.</p>
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig01.webp" />
@@ -1217,8 +1418,8 @@ on Knowl. and Data Eng., 28(12):3395–3408, December 2016. ISSN 1041–4347.</p
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
+            
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="Append-04-BayesianNN_Tutorial.html" title="previous page">
         <i class="fas fa-angle-left"></i>
@@ -1235,19 +1436,17 @@ on Knowl. and Data Eng., 28(12):3395–3408, December 2016. ISSN 1041–4347.</p
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Osvaldo Martin<br/>
-        
-            &copy; Copyright 2021.<br/>
-      </p>
-    </div>
-  </footer>
+  <p>
+    
+      By Osvaldo Martin<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
 </main>
 
 

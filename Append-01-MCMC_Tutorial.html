@@ -37,20 +37,22 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe"
-        const thebe_selector_input = "pre"
-        const thebe_selector_output = ".output"
-    </script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="附录 B： 变分法推断" href="Append-02-VariationalInference_Tutorial.html" />
@@ -255,7 +257,7 @@
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
@@ -312,7 +314,7 @@
         </div>
 
         <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
             
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
@@ -379,7 +381,77 @@
 </div>
     <div id="main-content" class="row">
         <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>附录 A： MCMC 推断</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   1 问题及其非直观的解释
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   2 问题设置
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mcmc">
+   3 MCMC 采样的代码说明
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     （1）位置提议
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id4">
+     （2）位置评估
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   4 为什么会起作用？
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   5 可视化 MCMC
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id7">
+   6 建议宽度
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id8">
+   7 扩展到更复杂的模型
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id9">
+   8 总结
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="a-mcmc">
@@ -668,7 +740,19 @@ P ( x ) = \int _ { z } P ( x , z ) d z \tag{A.2 }
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
   warnings.warn(msg, FutureWarning)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
+  warnings.warn(msg, FutureWarning)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
+  warnings.warn(msg, FutureWarning)
 /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
+  warnings.warn(msg, FutureWarning)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
   warnings.warn(msg, FutureWarning)
 </pre></div>
 </div>
@@ -691,14 +775,6 @@ P ( x ) = \int _ { z } P ( x , z ) d z \tag{A.2 }
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
-  warnings.warn(msg, FutureWarning)
-/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/seaborn/distributions.py:2619: FutureWarning: `distplot` is a deprecated function and will be removed in a future version. Please adapt your code to use either `displot` (a figure-level function with similar flexibility) or `histplot` (an axes-level function for histograms).
   warnings.warn(msg, FutureWarning)
 </pre></div>
 </div>
@@ -735,8 +811,6 @@ P ( x ) = \int _ { z } P ( x , z ) d z \tag{A.2 }
         0.16104345])
 </pre></div>
 </div>
-<img alt="_images/Append-01-MCMC_Tutorial_9_12.png" src="_images/Append-01-MCMC_Tutorial_9_12.png" />
-<img alt="_images/Append-01-MCMC_Tutorial_9_13.png" src="_images/Append-01-MCMC_Tutorial_9_13.png" />
 <img alt="_images/Append-01-MCMC_Tutorial_9_14.png" src="_images/Append-01-MCMC_Tutorial_9_14.png" />
 <img alt="_images/Append-01-MCMC_Tutorial_9_15.png" src="_images/Append-01-MCMC_Tutorial_9_15.png" />
 <img alt="_images/Append-01-MCMC_Tutorial_9_16.png" src="_images/Append-01-MCMC_Tutorial_9_16.png" />
@@ -755,6 +829,8 @@ P ( x ) = \int _ { z } P ( x , z ) d z \tag{A.2 }
 <img alt="_images/Append-01-MCMC_Tutorial_9_29.png" src="_images/Append-01-MCMC_Tutorial_9_29.png" />
 <img alt="_images/Append-01-MCMC_Tutorial_9_30.png" src="_images/Append-01-MCMC_Tutorial_9_30.png" />
 <img alt="_images/Append-01-MCMC_Tutorial_9_31.png" src="_images/Append-01-MCMC_Tutorial_9_31.png" />
+<img alt="_images/Append-01-MCMC_Tutorial_9_32.png" src="_images/Append-01-MCMC_Tutorial_9_32.png" />
+<img alt="_images/Append-01-MCMC_Tutorial_9_33.png" src="_images/Append-01-MCMC_Tutorial_9_33.png" />
 </div>
 </div>
 <p>MCMC 的神奇之处在于，只要做足够长的时间，就会产生来自模型后验分布的样本。有一个严格的数学证明可以保证这一点，但在这里不会详细说明。为了解这会产生什么，让我们抽取大量样本（建议值）并绘制其曲线图。</p>
@@ -764,61 +840,6 @@ P ( x ) = \int _ { z } P ( x , z ) d z \tag{A.2 }
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span> 
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">posterior</span><span class="p">)</span> 
 <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;mu&#39;</span><span class="p">);</span> 
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1759</span><span class="o">/</span><span class="mf">268937468.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">posterior</span> <span class="o">=</span> <span class="n">sampler</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">15000</span><span class="p">,</span> <span class="n">mu_init</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">posterior</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;mu&#39;</span><span class="p">);</span>
-
-<span class="nn">/tmp/ipykernel_1759/2334080286.py</span> in <span class="ni">sampler</span><span class="nt">(data, samples, mu_init, proposal_width, plot, mu_prior_mu, mu_prior_sd)</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> 
-<span class="g g-Whitespace">     </span><span class="mi">13</span>        <span class="c1"># 计算当前值和建议值的先验概率 Compute prior probability of current and proposed mu</span>
-<span class="ne">---&gt; </span><span class="mi">14</span>        <span class="n">prior_current</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_prior_mu</span><span class="p">,</span> <span class="n">mu_prior_sd</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">mu_current</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span>        <span class="n">prior_proposal</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_prior_mu</span><span class="p">,</span> <span class="n">mu_prior_sd</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">mu_proposal</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> 
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">__call__</span><span class="nt">(self, *args, **kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">863</span> 
-<span class="g g-Whitespace">    </span><span class="mi">864</span>     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
-<span class="ne">--&gt; </span><span class="mi">865</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">freeze</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">866</span>     <span class="fm">__call__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">freeze</span><span class="o">.</span><span class="vm">__doc__</span>
-<span class="g g-Whitespace">    </span><span class="mi">867</span> 
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">freeze</span><span class="nt">(self, *args, **kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">860</span> 
-<span class="g g-Whitespace">    </span><span class="mi">861</span>         <span class="s2">&quot;&quot;&quot;</span>
-<span class="ne">--&gt; </span><span class="mi">862</span><span class="s2">         return rv_frozen(self, *args, **kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">863</span><span class="s2"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">864</span><span class="s2">     def __call__(self, *args, **kwds):</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">__init__</span><span class="nt">(self, dist, *args, **kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">437</span><span class="s2"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">438</span><span class="s2">         # create a new instance</span>
-<span class="ne">--&gt; </span><span class="mi">439</span><span class="s2">         self.dist = dist.__class__(**dist._updated_ctor_param())</span>
-<span class="g g-Whitespace">    </span><span class="mi">440</span><span class="s2"> </span>
-<span class="g g-Whitespace">    </span><span class="mi">441</span><span class="s2">         shapes, _, _ = self.dist._parse_args(*args, **kwds)</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">__init__</span><span class="nt">(self, momtype, a, b, xtol, badvalue, name, longname, shapes, extradoc, seed)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1737</span><span class="s2">             else:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1738</span><span class="s2">                 dct = dict(distcont)</span>
-<span class="ne">-&gt; </span><span class="mi">1739</span><span class="s2">                 self._construct_doc(docdict, dct.get(self.name))</span>
-<span class="g g-Whitespace">   </span><span class="mi">1740</span><span class="s2"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">1741</span><span class="s2">     def __getstate__(self):</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages/scipy/stats/_distn_infrastructure.py</span> in <span class="ni">_construct_doc</span><span class="nt">(self, docdict, shapes_vals)</span>
-<span class="g g-Whitespace">    </span><span class="mi">800</span><span class="s2">         if shapes_vals is None:</span>
-<span class="g g-Whitespace">    </span><span class="mi">801</span><span class="s2">             shapes_vals = ()</span>
-<span class="ne">--&gt; </span><span class="mi">802</span><span class="s2">         vals = &#39;, &#39;.join(&#39;</span><span class="si">%.3g</span><span class="s2">&#39; % val for val in shapes_vals)</span>
-<span class="g g-Whitespace">    </span><span class="mi">803</span><span class="s2">         tempdict[&#39;vals&#39;] = vals</span>
-<span class="g g-Whitespace">    </span><span class="mi">804</span><span class="s2"> </span>
-
-<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
@@ -896,7 +917,7 @@ P ( x ) = \int _ { z } P ( x , z ) d z \tag{A.2 }
 <h2>7 扩展到更复杂的模型<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>我们还可以为标准差添加一个 <span class="math notranslate nohighlight">\(\sigma\)</span> 参数，然后对第二个参数执行相同的步骤。在此情况下，要为 <span class="math notranslate nohighlight">\(\mu\)</span> 和 <span class="math notranslate nohighlight">\(\sigma\)</span> 两者生成建议值，不过算法逻辑几乎相同。</p>
 <p>我们也可以针对不同的模型从非常不同的分布（如：二项分布）抽取数据，但依然使用相同算法并得到正确后验。这就是概率编程巨大的好处：只需定义想要的模型，让 MCMC 负责推断。</p>
-<p>例如：下面的模型可以很容易地用 PyMC3 编写。我们继续使用 <code class="docutils literal notranslate"><span class="pre">Metropolis</span> <span class="pre">采样器</span></code>（自动调整建议宽度），并得到了相同的结果。有关更多信息以及更复杂的示例，请参阅 PyMC3 文档 （<a class="reference external" href="http://pymc-devs.github.io/pymc3/getting_started/%EF%BC%89%E3%80%82">http://pymc-devs.github.io/pymc3/getting_started/）。</a></p>
+<p>例如：下面的模型可以很容易地用 PyMC3 编写。我们继续使用 <code class="docutils literal notranslate"><span class="pre">Metropolis</span> <span class="pre">采样器</span></code>（自动调整建议宽度），并得到了相同的结果。有关更多信息以及更复杂的示例，请参阅 PyMC3 文档 （http://pymc-devs.github.io/pymc3/getting_started/）。</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span> 
@@ -945,8 +966,8 @@ P ( x ) = \int _ { z } P ( x , z ) d z \tag{A.2 }
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
+            
+                <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="chapter09-WheretoGoNext.html" title="previous page">
         <i class="fas fa-angle-left"></i>
@@ -963,19 +984,17 @@ P ( x ) = \int _ { z } P ( x , z ) d z \tag{A.2 }
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            
         </div>
     </div>
     <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Osvaldo Martin<br/>
-        
-            &copy; Copyright 2021.<br/>
-      </p>
-    </div>
-  </footer>
+  <p>
+    
+      By Osvaldo Martin<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
 </main>
 
 
