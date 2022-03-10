@@ -733,7 +733,7 @@ Laurent Valentin Jospin, Wray Buntine, Farid Boussaid, Hamid Laga, and Mohammed 
 <p>深度学习导致了机器学习的革命，为解决现实生活中复杂而具挑战性的问题提供了解决方案。然而，深度学习模型容易过拟合，这对其泛化能力产生了不利影响。此外，深度学习模型存在预测结果过于自信的问题。上述特点对于诸如自动驾驶汽车 [74]、医疗诊断 [38] 、交易和金融 [11] 等应用来说存在严重的问题，因为无声的失败会导致戏剧性的结果。因此，人们提出了许多方法来减轻风险，特别是通过<code class="docutils literal notranslate"><span class="pre">随机神经网络（SNN）</span></code>来估计模型预测结果的不确定性。贝叶斯范式为分析和训练随机神经网络提供了严格框架，并广泛地支持了学习算法的发展。</p>
 <p>统计学中的贝叶斯范式通常与纯粹的频率主义范式相对立，其主要区别在于假设检验方面[15]。贝叶斯范式基于两个简单理念。第一，概率是对事件发生信念的衡量，而不仅是当样本数量趋于无穷大时对事件发生频率的某种约束。其次，先验信念会影响后验信念。而这些理念都被一个非常简单的反转条件概率公式，以及其在贝叶斯统计中的解释所概括，这就是贝叶斯定理：</p>
 <div class="math notranslate nohighlight" id="equation-1">
-<span class="eqno">(5)<a class="headerlink" href="#equation-1" title="Permalink to this equation">¶</a></span>\[
+<span class="eqno">(3)<a class="headerlink" href="#equation-1" title="Permalink to this equation">¶</a></span>\[
 P(H \mid D)=\frac{P(D \mid H) P(H)}{P(D)}=\frac{P(D \mid H) P(H)}{\int_{H} P\left(D \mid H^{\prime}\right) P\left(H^{\prime}\right) d H^{\prime}}=\frac{P(D, H)}{\int_{H} P\left(D, H^{\prime}\right) d H^{\prime}}
 \]</div>
 <p>在传统解释中，<span class="math notranslate nohighlight">\(H\)</span> 和 <span class="math notranslate nohighlight">\(D\)</span> 可能被简单地认为是一组输出结果。但贝叶斯解释则明确认为 <span class="math notranslate nohighlight">\(H\)</span> 是一个假设（如深层神经网络的参数），而 <span class="math notranslate nohighlight">\(D\)</span> 是一些数据。这在传统解释中不存在，因为人们无法为一个假设定义概率。<span class="math notranslate nohighlight">\(P(D|H)\)</span> 被称为似然，<span class="math notranslate nohighlight">\(P(H)\)</span> 被称为先验，<span class="math notranslate nohighlight">\(P(D)\)</span> 被称为证据，<span class="math notranslate nohighlight">\(P(H|D)\)</span> 为后验。按照概率论的定义，<span class="math notranslate nohighlight">\(P(D|H)P(H)=P(D,H)\)</span> 为 <span class="math notranslate nohighlight">\(D\)</span> 和 <span class="math notranslate nohighlight">\(H\)</span> 的联合概率。</p>
@@ -753,7 +753,7 @@ P(H \mid D)=\frac{P(D \mid H) P(H)}{P(D)}=\frac{P(D \mid H) P(H)}{\int_{H} P\lef
 <p><strong>（1）传统神经网络的问题</strong>
 人工神经网络（ANN）的目标是表示一个任意的函数 <span class="math notranslate nohighlight">\(y=N N(x)\)</span>。传统的人工神经网络（如前馈网络、循环网络、分支网络……）是用一个输入层、若干个隐藏层和一个输出层连接构建的。通常把输入变量命名为 <span class="math notranslate nohighlight">\(\mathbb{x}\)</span>，把输出变量（预测）命名为 <span class="math notranslate nohighlight">\(\mathbb{y}\)</span> 。其中，在最简单的前馈网络中，每一层都表示为前一层的线性转换，后接一个非线性运算 <span class="math notranslate nohighlight">\(nl\)</span>（又称激活函数）。</p>
 <div class="math notranslate nohighlight" id="equation-2">
-<span class="eqno">(6)<a class="headerlink" href="#equation-2" title="Permalink to this equation">¶</a></span>\[\begin{split}
+<span class="eqno">(4)<a class="headerlink" href="#equation-2" title="Permalink to this equation">¶</a></span>\[\begin{split}
 \begin{aligned}
 &amp;\boldsymbol{l}_{0}=x \\
 &amp;\boldsymbol{l}_{i}=n l_{i}\left(\boldsymbol{W}_{i} \boldsymbol{l}_{i-1}+\boldsymbol{b}_{i}\right) \quad \forall i \in[1, n] \\
@@ -768,7 +768,7 @@ P(H \mid D)=\frac{P(D \mid H) P(H)}{P(D)}=\frac{P(D \mid H) P(H)}{\int_{H} P\lef
 <p>随机神经网络是一种通过将随机成分引入网络（通过给予网络图 3b中所示随机激活或图 3c中所示的随机权重）来模拟很多可能的模型参数 <span class="math notranslate nohighlight">\(θ\)</span> 及其相关概率分布 <span class="math notranslate nohighlight">\(p(θ)\)</span> 的人工神经网络。因此，随机神经网络可以被视为集成学习的一种特殊情况[99]，不过随机神经网络不是训练单个模型，而是训练一组模型并聚合其预测结果。</p>
 <p>集成学习的主要动机来自以下观察：大量性能一般但独立的预测器输出，在聚合后，可以产生比单个优良性能预测器更好的预测输出 [20]。该方式同样适用于随机神经网络。据观察，尽管没有证据表明随机神经网络是提高准确性的最佳方法，但其预测输出确实优于其对应的点估计结果。不过，使用随机神经网络架构的主要目标是更好地了解与底层过程相关的不确定性，而这是通过比较不同参数 <span class="math notranslate nohighlight">\(θ\)</span> 采样的模型及其预测来实现的。如果不同的模型输出基本一致，则不确定性较低；如果不一致，那么不确定性就很高。这个过程可以总结如下：</p>
 <div class="math notranslate nohighlight" id="equation-3">
-<span class="eqno">(7)<a class="headerlink" href="#equation-3" title="Permalink to this equation">¶</a></span>\[\begin{split}
+<span class="eqno">(5)<a class="headerlink" href="#equation-3" title="Permalink to this equation">¶</a></span>\[\begin{split}
 \begin{aligned}
 &amp;\theta \sim p(\theta) \\
 &amp;y=N N_{\theta}(x)+\epsilon
@@ -778,7 +778,7 @@ P(H \mid D)=\frac{P(D \mid H) P(H)}{P(D)}=\frac{P(D \mid H) P(H)}{\int_{H} P\lef
 <p><strong>（3）贝叶斯神经网络</strong></p>
 <p>使用贝叶斯推断 [54] 训练的任何随机神经网络，都可以被称为贝叶斯神经网络。要设计贝叶斯神经网络，第一步是选择深度神经网络架构，即功能模型。然后选择一个随机模型，即模型参数的先验分布 <span class="math notranslate nohighlight">\(p(θ)\)</span> 和对模型 <span class="math notranslate nohighlight">\(p(y|x,θ)\)</span> 预测能力的先验置信度（图 4a）。模型的参数化可以被理解为是训练集 <span class="math notranslate nohighlight">\(D\)</span> 支撑下的假设 <span class="math notranslate nohighlight">\(mathcal{H}\)</span> 。本文其余部分会将模型参数表示为 <span class="math notranslate nohighlight">\(θ\)</span>，并使用 <span class="math notranslate nohighlight">\(D\)</span> 表示训练集，用 <span class="math notranslate nohighlight">\(D_x\)</span> 表示训练特征，用 <span class="math notranslate nohighlight">\(D_y\)</span> 表示训练标签，这主要是为了区分训练数据和任何输入/输出对 <span class="math notranslate nohighlight">\((x，y)\)</span>。应用贝叶斯定理，并加强模型参数和输入之间的独立性，贝叶斯后验可以写为：</p>
 <div class="math notranslate nohighlight" id="equation-4">
-<span class="eqno">(8)<a class="headerlink" href="#equation-4" title="Permalink to this equation">¶</a></span>\[
+<span class="eqno">(6)<a class="headerlink" href="#equation-4" title="Permalink to this equation">¶</a></span>\[
 p(\theta \mid D)=\frac{p\left(D_{y} \mid D_{x}, \theta\right) p(\theta)}{\int_{\theta} p\left(D_{y} \mid D_{x}, \theta^{\prime}\right) p\left(\theta^{\prime}\right) d \theta^{\prime}} \propto p\left(D_{y} \mid D_{x}, \theta\right) p(\theta)
 \]</div>
 <p>计算这个分布而且使用标准方法从中采样，通常是一个棘手的问题，特别是证据 <span class="math notranslate nohighlight">\(\int p\left(D_{u} \mid D_{x}, \theta^{\prime}\right) p\left(\theta^{\prime}\right)\)</span> 的计算非常困难（即式 4 的分母）。为解决该问题，前人设计了两种方法：</p>
@@ -788,18 +788,18 @@ p(\theta \mid D)=\frac{p\left(D_{y} \mid D_{x}, \theta\right) p(\theta)}{\int_{\
 <p><img alt="" src="https://gitee.com/XiShanSnow/imagebed/raw/master/images/articles/bayesian_stat_20210918_fig04.webp" /></p>
 <p>给定贝叶斯后验或其变分近似，在给定某个输入的情况下，可以计算模型预测输出的边缘概率分布 [93]，这可以准确量化模型的不确定性：</p>
 <div class="math notranslate nohighlight" id="equation-5">
-<span class="eqno">(9)<a class="headerlink" href="#equation-5" title="Permalink to this equation">¶</a></span>\[
+<span class="eqno">(7)<a class="headerlink" href="#equation-5" title="Permalink to this equation">¶</a></span>\[
 p(\boldsymbol{y} \mid \boldsymbol{x}, D)=\int_{\theta} p\left(\boldsymbol{y} \mid \boldsymbol{x}, \boldsymbol{\theta}^{\prime}\right) p\left(\boldsymbol{\theta}^{\prime} \mid D\right) d \boldsymbol{\theta}^{\prime}
 \]</div>
 <p>在实践中，分布 <span class="math notranslate nohighlight">\(p(\boldsymbol{y} \mid \boldsymbol{x}, D)\)</span> 是使用式 3 间接采样的。而 <span class="math notranslate nohighlight">\(θ\)</span> 从变分分布 <span class="math notranslate nohighlight">\(q_φ(θ)\)</span> 中抽取或均匀地从 MCMC 采样集合 <span class="math notranslate nohighlight">\(\Theta\)</span> 中抽取。使用蒙特卡罗方法计算的一些统计量，可以对最终预测结果和不确定性做出汇总（图 4c）。</p>
 <p>对贝叶斯神经网络的回归预测结果做汇总，通常方法是执行模型平均 （Model Average）[17]：</p>
 <div class="math notranslate nohighlight" id="equation-6">
-<span class="eqno">(10)<a class="headerlink" href="#equation-6" title="Permalink to this equation">¶</a></span>\[
+<span class="eqno">(8)<a class="headerlink" href="#equation-6" title="Permalink to this equation">¶</a></span>\[
 \hat{\boldsymbol{y}}=\frac{1}{|\Theta|} \sum_{\theta_{i} \in \Theta} N N_{\theta_{i}}(\boldsymbol{x})
 \]</div>
 <p>该方法在集成学习中非常普遍，以至于有时也直接被称为集成。为量化不确定性，协方差矩阵可以计算如下：</p>
 <div class="math notranslate nohighlight" id="equation-7">
-<span class="eqno">(11)<a class="headerlink" href="#equation-7" title="Permalink to this equation">¶</a></span>\[
+<span class="eqno">(9)<a class="headerlink" href="#equation-7" title="Permalink to this equation">¶</a></span>\[
 \Sigma_{\boldsymbol{y} \mid x, D}=\frac{1}{|\Theta|-1} \sum_{\theta_{i} \in \Theta}\left(N N_{\theta_{i}}(\boldsymbol{x})-\hat{\boldsymbol{y}}\right)\left(N N_{\theta_{i}}(\boldsymbol{x})-\hat{\boldsymbol{y}}\right)^{\top}
 \]</div>
 <p>在执行分类任务时，模型平均会给出每个类别的相对概率，此时也可以被视为不确定性的度量：
@@ -808,7 +808,7 @@ $<span class="math notranslate nohighlight">\(
 \)</span>$ (式 8)</p>
 <p>此时，最有可能的类别被视为最终的预测结果（当所有类别的假阳性成本相等时）。</p>
 <div class="math notranslate nohighlight" id="equation-9">
-<span class="eqno">(12)<a class="headerlink" href="#equation-9" title="Permalink to this equation">¶</a></span>\[
+<span class="eqno">(10)<a class="headerlink" href="#equation-9" title="Permalink to this equation">¶</a></span>\[
 \hat{\boldsymbol{y}}=\underset{i}{\arg \max } p_{i} \in \hat{\boldsymbol{p}}
 \]</div>
 <p>如果不同类别的假阳性成本不同，则应使用它来计算风险并选择风险最小的预测。</p>
@@ -1098,12 +1098,12 @@ E L B O=\int_{\varepsilon} q_{\phi}(t(\varepsilon, \boldsymbol{\phi})) \log \lef
 <p>尽管有悖于直觉，但在学习了后验之后再学习先验也是可能的。这在用已有知识设置了部分先验，并在得到后验之前学习剩余自由参数的先验时，显得非常有意义。在标准贝叶斯统计学中，这被称为 <code class="docutils literal notranslate"><span class="pre">经验贝叶斯</span></code>。当待学习的先验超参数数量远小于模型本身参数数量时，这通常是有效的近似。</p>
 <p>给定一个参数化的先验分布 <span class="math notranslate nohighlight">\(p_ξ(H)\)</span>，最大化数据似然是学习参数 <span class="math notranslate nohighlight">\(ξ\)</span> 的一个好方法。</p>
 <div class="math notranslate nohighlight" id="equation-49">
-<span class="eqno">(13)<a class="headerlink" href="#equation-49" title="Permalink to this equation">¶</a></span>\[
+<span class="eqno">(11)<a class="headerlink" href="#equation-49" title="Permalink to this equation">¶</a></span>\[
 \hat{\xi}=\underset{\xi}{\arg \max } P(D \mid \xi)=\underset{\xi}{\arg \max } \int_{H} p_{\xi}\left(D \mid H^{\prime}\right) p_{\xi}\left(H^{\prime}\right) d H^{\prime}
 \]</div>
 <p>一般来说，直接寻找 <span class="math notranslate nohighlight">\(ξ\)</span> 是一个难解的问题，但当使用变分推断时，可以利用 ELBO 的一个特定属性 [26]。即 ELBO 是数据的对数似然减去变分后验和先验的 <code class="docutils literal notranslate"><span class="pre">KL</span> <span class="pre">散度</span></code>（见公式 46）。</p>
 <div class="math notranslate nohighlight" id="equation-50">
-<span class="eqno">(14)<a class="headerlink" href="#equation-50" title="Permalink to this equation">¶</a></span>\[
+<span class="eqno">(12)<a class="headerlink" href="#equation-50" title="Permalink to this equation">¶</a></span>\[
 \log (P(D \mid \xi))=E L B O+D_{K L}\left(q_{\phi} \| P\right)
 \]</div>
 <p>这意味着最大化 ELBO （现在是 <span class="math notranslate nohighlight">\(ξ\)</span> 和 <span class="math notranslate nohighlight">\(φ\)</span> 的函数） 相当于最大化数据的对数似然下界，当 <span class="math notranslate nohighlight">\(q_φ\)</span> 是一个适合 <span class="math notranslate nohighlight">\(P\)</span> 的泛化分布族时，该下限会更紧致。第 7.3 节中介绍的后向贝叶斯算法只需稍作修改即可，见算法 3。</p>
@@ -1170,7 +1170,7 @@ z_{i, j} \sim \text { Bernouilli }\left(p_{i}\right) \\
 <p>许多方法都是基于拉普拉斯近似，它允许通过使用最大后验估计作为平均值、使用损失（假设损失代表对数似然）的海森矩阵作为逆协方差矩阵来拟合高斯后验。计算海森矩阵，从而计算损失的曲率，对于现代大规模的神经网络架构来说通常难以实现，所以需要近似方法，例如 KFAC[75]。KFAC 是一种可扩展方法，使用 Kronecker 分解法来拟合一个具有块对角线协方差矩阵的高斯作为后验。另一种获得二阶导数估计的方法是在多个 SGD 迭代中估计梯度方差。SWAG[55] 就是利用该思想来拟合了一个具有低秩正对角协方差矩阵的高斯后验。还有一个名为 Vadam[40]的类似方法，用于 Adam 算法。不过上述方法如果能够捕捉到后验的某个峰值的精细形状，那么它们就不能拟合其他峰值。</p>
 <p>在文献 [49] 中，作者提出使用热重启来获得不同的点估计网络，而不是拟合一个参数分布。这种方法被称为深度集成（见图 13），过去曾被用来进行模型平均化，但 [49] 的主要贡献是<strong>表明它能实现良好的校准误差估计</strong>。虽然 [49] 的作者声称其方法是非贝叶斯的，但已经证明他们的方法可以从贝叶斯角度来理解 [68,93]，特别是如果使用正则化（即隐含一个先验），不同的点估计应该对应于贝叶斯后验的峰值。为了成为真正的贝叶斯，这些不同峰值的相对后验概率应该在模型平均化过程中得到考虑。这可以解释为用参数为多个 Direc 三角函数的分布来逼近后验（可以被认为是某种变分推断）。即使对于这种变分分布，也不可能以对传统优化有意义的方式计算ELBO。</p>
 <div class="math notranslate nohighlight" id="equation-55">
-<span class="eqno">(15)<a class="headerlink" href="#equation-55" title="Permalink to this equation">¶</a></span>\[
+<span class="eqno">(13)<a class="headerlink" href="#equation-55" title="Permalink to this equation">¶</a></span>\[
 q_{\phi}(\boldsymbol{\theta})=\sum_{\theta_{i} \in \phi} \alpha_{\theta_{i}} \delta_{\theta_{i}}(\boldsymbol{\theta})
 \]</div>
 <p>其中 <span class="math notranslate nohighlight">\(α_θ\)</span> 是正常数，其和为 1</p>
@@ -1210,7 +1210,7 @@ q_{\phi}(\boldsymbol{\theta})=\sum_{\theta_{i} \in \phi} \alpha_{\theta_{i}} \de
 <p><strong>（1） 分类问题</strong></p>
 <p>对于二元分类器来说，测试事件集可以被选为所有数据点的集合，这些数据点的预测接受概率在所选 <span class="math notranslate nohighlight">\(δ\)</span> 对应的区间 <span class="math notranslate nohighlight">\([p-δ,p+δ]\)</span> 内，或者对于小数据集来说，可以选择 <span class="math notranslate nohighlight">\([0,p]\)</span> 或 <span class="math notranslate nohighlight">\([1-p,1]\)</span>。经验频率由以下公式给出：</p>
 <div class="math notranslate nohighlight" id="equation-58">
-<span class="eqno">(16)<a class="headerlink" href="#equation-58" title="Permalink to this equation">¶</a></span>\[
+<span class="eqno">(14)<a class="headerlink" href="#equation-58" title="Permalink to this equation">¶</a></span>\[
 \check{p}=\frac{\sum_{\check{y} \in T_{y}} \check{\boldsymbol{y}} \cdot \mathbb{I}_{[\hat{p}-\delta, \hat{p}+\delta]}(\hat{\boldsymbol{y}})}{\sum_{\check{\boldsymbol{y}} \in T_{\boldsymbol{y}}} \mathbb{I}_{[\hat{p}-\delta, \hat{p}+\delta]}(\hat{\boldsymbol{y}})}
 \]</div>
 <p>对于多类分类器，校准曲线可以针对每一类独立地检查所有其他类别。在这种情况下，问题被简化为二进制分类器。</p>
@@ -1218,7 +1218,7 @@ q_{\phi}(\boldsymbol{\theta})=\sum_{\theta_{i} \in \phi} \alpha_{\theta_{i}} \de
 <p>回归问题稍微复杂一些，因为神经网络不会像分类器那样输出置信水平，而是输出可能输出的分布。解决方案是使用具有已知概率分布的中间统计量。</p>
 <p>假设对于一组足够大的、随机选择的输入 x，<span class="math notranslate nohighlight">\(\hat y\)</span> 之间相互独立，可以假设归一化平方误差和遵循卡方律。</p>
 <div class="math notranslate nohighlight" id="equation-59">
-<span class="eqno">(17)<a class="headerlink" href="#equation-59" title="Permalink to this equation">¶</a></span>\[
+<span class="eqno">(15)<a class="headerlink" href="#equation-59" title="Permalink to this equation">¶</a></span>\[
 (\hat{\boldsymbol{y}}-\check{\boldsymbol{y}})^{\top} \Sigma_{\hat{\boldsymbol{y}}}^{-1}(\hat{\boldsymbol{y}}-\check{\boldsymbol{y}}) \sim \chi_{\operatorname{Dim}(\boldsymbol{y})}^{2}
 \]</div>
 <p>这允许将预测概率作为观察到预测和真实值之间的方差归一化距离等于或低于实际距离的概率归因于测试集合中的每个数据点。形式上，预测的概率计算如下：
@@ -1247,7 +1247,7 @@ d(\check{p}, \hat{p})=\sqrt{\int_{0}^{1}(\check{p}-\hat{p})^{2} d \hat{p}}
 <p>此外，学者们也提出了其他措施。例如，预期校准误差及其变种[63]，它们基本都是理想校准曲线距离的离散化变体。</p>
 <p>这些措施对于总结校准很好，但对于正确学习校准模型却不太适用。统计学中用于优化校准的工具是评分规则 [24]。评分规则是一个函数 <span class="math notranslate nohighlight">\(S(P,x)\)</span>，其中 <span class="math notranslate nohighlight">\(P\)</span> 是一个预测性的概率分布，类似贝叶斯神经网络给出的边缘概率，<span class="math notranslate nohighlight">\(x\)</span> 是一个事件。给定目标分布 <span class="math notranslate nohighlight">\(Q\)</span> ，记 <span class="math notranslate nohighlight">\(S(P，Q)=E_{x∼Q}[S(P，x)]\)</span>。按照习惯，评分规则是正向的，使得优化目标变为最大化 <span class="math notranslate nohighlight">\(S(P，Q)\)</span>。评分规则的一个重要属性是：其最大值倾向于一个校准良好的模型，即：</p>
 <div class="math notranslate nohighlight" id="equation-64">
-<span class="eqno">(18)<a class="headerlink" href="#equation-64" title="Permalink to this equation">¶</a></span>\[
+<span class="eqno">(16)<a class="headerlink" href="#equation-64" title="Permalink to this equation">¶</a></span>\[
 \bar{S}(Q, Q) \geq \bar{S}(P, Q) \quad \forall P 
 \]</div>
 <p>在这种情况下，计分规则被称为适合的计分规则。如果也有 ̄<span class="math notranslate nohighlight">\(S(Q,Q)= ̄S(P,Q)⇒P=Q\)</span> ，那么该评分规则被称为严格适合的。</p>
